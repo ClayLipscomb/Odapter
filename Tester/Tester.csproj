@@ -1,0 +1,155 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{3E35F869-EEF8-4848-BFD2-CE50321CD5E4}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>Tester</RootNamespace>
+    <AssemblyName>Tester</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Oracle.DataAccess, Version=2.122.1.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\Oracle.DataAccess.dll</HintPath>
+    </Reference>
+    <Reference Include="Oracle.ManagedDataAccess, Version=4.122.1.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=MSIL">
+      <HintPath>..\packages\Oracle.ManagedDataAccess.12.2.1100\lib\net40\Oracle.ManagedDataAccess.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="generated\CaseConversion.cs" />
+    <Compile Include="generated\OdptBaseAdapter.cs" />
+    <Compile Include="generated\OdptBaseEntity.cs" />
+    <Compile Include="generated\OdptObjectType.cs" />
+    <Compile Include="generated\OdptPackage.cs" />
+    <Compile Include="generated\OdptTable.cs" />
+    <Compile Include="generated\OdptView.cs" />
+    <Compile Include="generated\OrclPower.cs" />
+    <Compile Include="Sample.cs" />
+    <Compile Include="Tester.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+    <None Include="schema\package\filtered_pkg.pkb" />
+    <None Include="schema\package\filtered_pkg.pks" />
+    <None Include="schema\package\odpt_pkg_log.pkb" />
+    <None Include="schema\package\odpt_pkg_log.pks" />
+    <None Include="schema\package\odpt_pkg_exclude#.pks" />
+    <None Include="schema\package\odpt_pkg_exclude%24.pks" />
+    <None Include="schema\package\odpt_pkg_include%25.pks" />
+    <None Include="schema\package\odpt_pkg_main.pkb" />
+    <None Include="schema\package\odpt_pkg_main.pks" />
+    <None Include="schema\package\odpt_pkg_sample.pkb" />
+    <None Include="schema\package\odpt_pkg_sample.pks" />
+    <None Include="schema\package\odpt_pkg_sql.pkb" />
+    <None Include="schema\package\odpt_pkg_sql.pks" />
+    <None Include="schema\package\odpt_pkg_table_big.pkb" />
+    <None Include="schema\package\odpt_pkg_table_big.pks" />
+    <None Include="schema\package\odpt_pkg_table_number.pkb" />
+    <None Include="schema\package\odpt_pkg_table_number.pks" />
+    <None Include="schema\package\odpt_pkg_empty.pks" />
+    <None Include="schema\type\odpt_base_sc_trans_type_ot.tpb" />
+    <None Include="schema\type\odpt_base_sc_trans_type_ot.tps" />
+    <None Include="schema\type\odpt_big_ot.tps" />
+    <None Include="schema\type\odpt_po_vendor_ot.tpb" />
+    <None Include="schema\type\odpt_po_vendor_ot.tps" />
+    <None Include="schema\type\odpt_sc_tt_tbl_unique_ot.tpb" />
+    <None Include="schema\type\odpt_sc_tt_tbl_unique_ot.tps" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.6.1 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="lib\Oracle.DataAccess.dll" />
+    <Content Include="schema\create schema.sql" />
+    <Content Include="schema\misc\odpt_sequences.sql" />
+    <Content Include="schema\table\odpt_table_big.sql" />
+    <Content Include="schema\table\odpt_table_logs.sql" />
+    <Content Include="schema\table\odpt_table_number.sql" />
+    <Content Include="schema\table\odpt_table_object.sql" />
+    <Content Include="schema\view\odpt_view_big.sql" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

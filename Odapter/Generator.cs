@@ -1,0 +1,1369 @@
+﻿//------------------------------------------------------------------------------
+//    Odapter - a C# code generator for Oracle packages
+//    Copyright(C) 2018 Clay Lipscomb
+//
+//    This program is free software: you can redistribute it and/or modify
+//    it under the terms of the GNU General Public License as published by
+//    the Free Software Foundation, either version 3 of the License, or
+//    (at your option) any later version.
+//
+//    This program is distributed in the hope that it will be useful,
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.See the
+//    GNU General Public License for more details.
+//
+//    You should have received a copy of the GNU General Public License
+//    along with this program.If not, see<http://www.gnu.org/licenses/>.
+//------------------------------------------------------------------------------
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.IO;
+using System.Globalization;
+
+namespace Odapter {
+    public class Generator {
+        #region User Defined Options
+        private String _outputPath;
+        private String _schema;
+        private String _filter;
+        private String _databaseInstance;
+        private String _login;
+        private String _password;
+        private String _baseNamespace = "Schema"; // default
+
+        //private Int32 _maxAssocArraySize = 32767;
+        //public Int32 MaxAssocArraySize { get { return _maxAssocArraySize; } set { _maxAssocArraySize = value; } }
+        //private Int32 _maxReturnAndOutArgStringSize = 4000;
+        //public Int32 MaxReturnAndOutArgStringSize { get { return _maxReturnAndOutArgStringSize; } set { _maxReturnAndOutArgStringSize = value; } }
+        private String _objectTypeNamespace { get; set; }
+
+        //public Boolean MapCursorColumnsByName { get; set; }
+        //public Boolean DefaultAllowUnmappedColumns { get; set; }
+        //public Boolean PreserveLeadingAndTrailingOracleUnderscores { get; set; }
+        public String CSharpTypeUsedForOracleInteger { set { Translater.CSharpTypeUsedForOracleInteger = value; } }
+        public CSharpVersion CSharpVersion = CSharpVersion.ThreeZero;
+        private Boolean IsCSharp30 { get { return CSharpVersion == CSharpVersion.ThreeZero; } }
+        private Boolean IsCSharp40 { get { return CSharpVersion == CSharpVersion.FourZero; } }
+        #endregion
+
+        #region Member Variables
+        private List<String> GeneratedPacakgeRecordTypes = new List<string>();
+        private Action<string> _displayMessageMethod;
+        #endregion
+
+        #region Constants/Readonly
+        // method parameter names - over 30 characters to avoid Oracle clash
+        private const String _oracleConnectionParamName = "optionalPreexistingOpenConnection"; // over 30 characters to avoid Oracle clash
+        private const String PARAM_NAME_MAP_BY_POSITION                     = "mapColumnToObjectPropertyByPosition";
+        private const String PARAM_NAME_ALLOW_UNMAPPED_COLUMNS              = "allowUnmappedColumnsToBeExcluded"; 
+        private const String PARAM_NAME_MAXIMUM_ROWS_CURSOR                 = "optionalMaxNumberRowsToReadFromAnyCursor"; 
+        private const String PARAM_NAME_CONVERT_COLUMN_NAME_TO_TITLE_CASE   = "convertColumnNameToTitleCaseInCaption"; 
+
+        // local variable names generated from a base name
+        private readonly String LOCAL_VAR_NAME_RETURN           = GenerateLocalVariableName("ret");
+        private readonly String LOCAL_VAR_NAME_READER           = GenerateLocalVariableName("rdr");
+        private readonly String LOCAL_VAR_NAME_COMMAND          = GenerateLocalVariableName("cmd");
+        private readonly string LOCAL_VAR_NAME_COMMAND_TRACE    = GenerateLocalVariableName("cmdTrace");
+        private readonly String LOCAL_VAR_NAME_CONNECTION       = GenerateLocalVariableName("conn");
+        private readonly string LOCAL_VAR_NAME_ROWS_AFFECTED    = GenerateLocalVariableName("rowsAffected");
+        private const String FUNC_RETURN_PARAM_NAME = "!RETURN";
+        private const String ORCL_UTIL_NAMESPACE = "Odapter";
+        private const String ORCL_UTIL_CLASS = "Hydrator";
+        public const String APPLICATION_NAME = "Odapter";
+        private const string BASE_PERMISSION_ERROR_MSG = "Permission error writing ";
+
+        public const string USING = "using";
+        public readonly string USING_ORACLE_DATAACCESS_CLIENT = USING + " " + "Oracle." + (Parameter.Instance.IsCSharp40 ? "Managed" : "") + "DataAccess.Client";
+        public readonly string USING_ORACLE_DATAACCESS_TYPES = USING + " " + "Oracle." + (Parameter.Instance.IsCSharp40 ? "Managed" : "") + "DataAccess.Types";
+
+        public readonly String COMMENT_AUTO_GENERATED = "//------------------------------------------------------------------------------"
+                                + Environment.NewLine + "// <auto-generated>"
+                                + Environment.NewLine + "//     This code was auto-generated by " + APPLICATION_NAME + "."
+                                + Environment.NewLine + "//     Direct edits will be lost if the code is regenerated."
+                                + Environment.NewLine + "// </auto-generated>"
+                                + Environment.NewLine + "//------------------------------------------------------------------------------"
+                                + Environment.NewLine;
+
+        public readonly String COMMENT_AUTO_GENERATED_FOR_EDIT = "//------------------------------------------------------------------------------"
+                                + Environment.NewLine + "// <auto-generated>"
+                                + Environment.NewLine + "//     This code was auto-generated by " + APPLICATION_NAME + "."
+                                + Environment.NewLine + "//     It can be edited as necessary after initial generation."
+                                + Environment.NewLine + "//     To avoid overwrite, Deploy Base DTOs? must be unchecked during subsequent generation."
+                                + Environment.NewLine + "// </auto-generated>"
+                                + Environment.NewLine + "//------------------------------------------------------------------------------"
+                                + Environment.NewLine;
+        #endregion
+
+        #region Nested Classes
+        private class GenericType {
+            //public string SchemaPackageNamespace { get; set; }
+            public string PackageTypeName { get; set; }
+            public string TypeName { get; set; }
+            public bool WeaklyTyped { get; set; }
+            public GenericType(string packageTypeName, string typeName, bool weaklyTyped) {
+                //SchemaPackageNamespace = schemaPackageNamespace;
+                PackageTypeName = packageTypeName;
+                TypeName = typeName;
+                WeaklyTyped = weaklyTyped;
+            }
+        }
+        #endregion
+
+        #region Constructors
+        public Generator(String schema, String outputPath, Action<string> messageMethod,
+                        String instance, String login, String password, String baseNamespace, 
+                        String objectTypeNameSpace, String filter) {
+            _displayMessageMethod = messageMethod;
+            _outputPath = outputPath;
+            _schema = schema;
+            _databaseInstance = instance;
+            _login = login;
+            _password = password;
+            _baseNamespace = baseNamespace;
+            _objectTypeNamespace = objectTypeNameSpace; // must have internally in order to generate "using" for other entity types
+            _filter = filter;
+
+            // to be safe, default to true unless UI tell us otherwise
+            //DefaultAllowUnmappedColumns = false;
+        }
+        #endregion
+
+        #region Namespace Generation
+        public static string GenerateNamespaceSchema(String baseNamespace, String schema) {
+            return String.IsNullOrEmpty(schema) 
+                    ? "" 
+                    : (String.IsNullOrEmpty(baseNamespace) 
+                        ? ""
+                        : baseNamespace + ".") + CaseConverter.ConvertUnderscoreDelimitedToPascalCase(schema); 
+        }
+
+        public string GenerateNamespaceSchema() { return Generator.GenerateNamespaceSchema(_baseNamespace, _schema); }
+
+        public static string GenerateNamespacePackage(String baseNamespace, String schema) {
+            return String.IsNullOrEmpty(schema) ? "" : Generator.GenerateNamespaceSchema(baseNamespace, schema) + ".Package"; 
+        }
+
+        //public static string GenerateNamespacePackageRecord(String baseNamespace, String schema) {
+        //    return String.IsNullOrEmpty(schema) ? "" : Generator.GenerateNamespaceSchema(baseNamespace, schema);
+        //}
+
+        public static string GenerateNamespaceObjectType(String baseNamespace, String schema) {
+            return String.IsNullOrEmpty(schema) ? "" : Generator.GenerateNamespaceSchema(baseNamespace, schema) +".Type.Object";
+        }
+
+        public static string GenerateNamespaceTable(String baseNamespace, String schema) {
+            return String.IsNullOrEmpty(schema) ? "" : Generator.GenerateNamespaceSchema(baseNamespace, schema) +".Table";
+        }
+
+        public static string GenerateNamespaceView(String baseNamespace, String schema) {
+            return String.IsNullOrEmpty(schema) ? "" : Generator.GenerateNamespaceSchema(baseNamespace, schema) +".View";
+        }
+        #endregion
+
+        #region Base Class Name Generation
+        public static string GenerateBaseAdapterClassName(String schema) {
+            return String.IsNullOrEmpty(schema) ? "" : CaseConverter.ConvertUnderscoreDelimitedToPascalCase(schema) + "Adapter";
+        }
+
+        public static string GenerateBaseRecordClassName(String schema) {
+            return String.IsNullOrEmpty(schema) ? "" : CaseConverter.ConvertUnderscoreDelimitedToPascalCase(schema) + "PackageRecord";
+        }
+
+        public static string GenerateBaseObjectTypeClassName(String schema) {
+            return String.IsNullOrEmpty(schema) ? "" : CaseConverter.ConvertUnderscoreDelimitedToPascalCase(schema) + "ObjectType";
+        }
+
+        public static string GenerateBaseTableClassName(String schema) {
+            return String.IsNullOrEmpty(schema) ? "" : CaseConverter.ConvertUnderscoreDelimitedToPascalCase(schema) + "Table";
+        }
+
+        public static string GenerateBaseViewClassName(String schema) {
+            return String.IsNullOrEmpty(schema) ? "" : CaseConverter.ConvertUnderscoreDelimitedToPascalCase(schema) + "View";
+        }
+
+        //private string GetEntityNamespace<TEntity>() {
+        //    if (typeof(TEntity).Equals(typeof(ObjectType))) {
+        //        return ObjectTypeNamespace;
+        //    } else if (typeof(TEntity).Equals(typeof(Table))) {
+        //        return TableNamespace;
+        //    } else if (typeof(TEntity).Equals(typeof(View))) {
+        //        return ViewNamespace;
+        //    }
+        //    return "Undefined_namespace_for_type_" + typeof(TEntity).Name;
+        //}
+        #endregion
+
+        #region Package Method Generation
+        /// <summary>
+        /// create C# return type for the method that wraps a procedure
+        /// </summary>
+        /// <param name="args">Oracle arguments of the proc</param>
+        /// <returns></returns>
+        public static string GenerateMethodReturnType(Procedure proc) {
+            if (!proc.IsFunction()) return CSharp.VOID;
+            return Translater.ConvertOracleArgTypeToCSharpType(proc.Arguments[0], false);//, proc.Arguments.Count > 1 ? proc.Arguments[1] : null);
+        }
+
+        /// <summary>
+        /// Return a list of the C# generic types of a proc's out cursor arguments
+        /// </summary>
+        /// <param name="args"></param>
+        /// <returns>list of types</returns>
+        private List<GenericType> GetMethodGenericTypes(Procedure proc) {
+            List<GenericType> genericTypes = new List<GenericType>(); // created empty list
+
+            string cSharpType, packageTypeName;
+            foreach (Argument arg in proc.Arguments) {
+                if (arg.DataLevel != 0) continue; // all signature arguments are initially found at 0 data level
+                if (arg.DataType == Orcl.REF_CURSOR && arg.InOut.Equals(Orcl.OUT)) { // only out cursors can use generics
+                    //Argument nextArg = arg.NextArgument;// (proc.Arguments.IndexOf(arg) + 1 < proc.Arguments.Count ? proc.Arguments[proc.Arguments.IndexOf(arg) + 1] : null);
+                    cSharpType = Translater.ConvertOracleArgTypeToCSharpType(arg, false);
+                    packageTypeName = arg.NextArgument != null && !String.IsNullOrEmpty(arg.NextArgument.TypeName)
+                            //&& (arg.NextArgument.TypeName.StartsWith(Parameter.Instance.Filter)) 
+                            && String.IsNullOrWhiteSpace(Parameter.Instance.Filter)
+                            && !arg.PackageName.Equals(arg.NextArgument.TypeName)
+                        ? Translater.ConvertOracleNameToCSharpName(arg.NextArgument.TypeName, false)
+                        : null;
+                    //schemaPackageNamespace = arg.NextArgument != null
+                    //        && (packageTypeName != null 
+                    //            || ( !String.IsNullOrEmpty(arg.NextArgument.TypeOwner) && !arg.Owner.Equals(arg.NextArgument.TypeOwner) ) 
+                    //        )
+                    //    ? GenerateNamespacePackage(Parameter.Instance.NamespaceBase, Translater.ConvertOracleNameToCSharpName(arg.NextArgument.TypeOwner, false))
+                    //    //? Translater.ConvertOracleNameToCSharpName(arg.NextArgument.TypeOwner, false)
+                    //    : null;
+                    if (!genericTypes.Exists(a => a.TypeName == CSharp.ExtractSubtypeFromListType(cSharpType, false)))
+                        genericTypes.Add(new GenericType(packageTypeName, CSharp.ExtractSubtypeFromListType(cSharpType, false), 
+                            arg.NextArgument == null || arg.NextArgument.DataLevel == arg.DataLevel));
+                }
+            }
+            return genericTypes;
+        }
+
+        /// <summary>
+        /// Determine all optional Oracle proc params that can be implemented in C# as optional params. For C# 4.0 optional params,
+        ///  an optional param must follow all required params. For C# 3.0, there are no optional params.
+        /// </summary>
+        /// <param name="args">Oracle argument list for function</param>
+        /// <returns>A list of the Oracle param names that can be optional in C#</returns>
+        private List<String> GetOptionalCSharpParameters(List<Argument> args) {
+            List<String> optionalParamNames = new List<String>();
+            if (!IsCSharp30) {
+                for (int i = args.Count - 1; i >= 0; i--) { // loop in reverse - C# optinal params must be declared after req params
+                    if (args[i].Defaulted) optionalParamNames.Add(args[i].ArgumentName);
+                    else break; // quit upon finding first required arg
+                }
+            }
+            return optionalParamNames;
+        }
+
+        /// <summary>
+        /// Create C# code of methods' arguments with types, comma delimited as in a method signature
+        /// </summary>
+        /// <param name="args"></param>
+        /// <returns></returns>
+        private string GenerateMethodArgumentsCommaDelimited(List<Argument> args, bool methodHasGenerics, bool dynamicMapping,
+                                                            bool commentOutOnWrap, bool excludeTypes) {
+
+            // based on Oracle params, determine all the C# optional params that can be implemented
+            List<String> optionalParamNamesInCSharp = GetOptionalCSharpParameters(args);
+
+            // loop arguments and build list
+            List<string> argList = new List<string>();
+            int argNum = 1; // start our arg numbering at 1 for the sake of the modulus check below
+
+            foreach (Argument arg in args) {
+                if (arg.DataLevel != 0) continue; // all signature arguments are initially found at 0 data level
+                if (arg.IsReturnArgument) continue; // ignore return value, only doing true args at this point
+
+                if (arg.DataLevel == 0 && !string.IsNullOrEmpty(arg.ArgumentName)) {
+                    argList.Add(
+                        (((argNum++ - 5) % 6 == 0) ? "\r\n" + Tab(2) + (commentOutOnWrap ? "//" : "") + Tab(2) : "") // wrap as argument count increases
+                        + (arg.InOut.Equals(Orcl.INOUT) ? "ref " : (arg.InOut.Equals(Orcl.OUT) ? "out " : "")) // pass inout/out args as ref/out in C#, respectively
+                        + (excludeTypes
+                            ? ""
+                            : Translater.ConvertOracleArgTypeToCSharpType(arg, false) + " ")
+                        + Translater.ConvertOracleNameToCSharpName(arg.ArgumentName, true)
+                        + (optionalParamNamesInCSharp.Contains(arg.ArgumentName) ? " = null" : "") // an optional C# 4.0 param defaulted to null
+                        );
+                }
+            }
+
+            //_maximumRowsCursorParamName
+            // if method is using generics (i.e., proc has an out cursor) then add optional arguments 
+            if (methodHasGenerics) {
+
+                if (dynamicMapping) {
+                    // mapping arguments with defaults 
+                    argList.Add(("\r\n" + Tab(2) + (commentOutOnWrap ? "//" : "") + Tab(2)) // wrap as argument count increases
+                        + (excludeTypes ? "" : "bool ") + PARAM_NAME_MAP_BY_POSITION
+                        + (excludeTypes
+                            ? ""
+                            : (IsCSharp30 ? "" : " = false"))
+                            );
+                    argNum++;
+                    argList.Add("" // wrap as argument count increases
+                        + (excludeTypes ? "" : "bool ") + PARAM_NAME_ALLOW_UNMAPPED_COLUMNS
+                        + (excludeTypes
+                            ? ""
+                            : (IsCSharp30 ? "" : " = false"))
+                            );
+                    argNum++;
+                } 
+
+                //if (true) {
+                //    // row count limit argument
+                //    argList.Add((((argNum++ - 5) % 6 == 0) ? "\r\n" + Tab(2) + (commentOutOnWrap ? "//" : "") + Tab(2) : "") // wrap as argument count increases
+                //        + CSharp.UINT32 + "? " + _maximumRowsCursorParamName + (IsCSharp30 ? "" : " = null"));
+                //}
+            }
+            // datatable column name conversion to title case arg
+            if (dynamicMapping && !Translater.UseGenericListForCursor) {
+                argList.Add((((argNum++ - 5) % 6 == 0) ? "\r\n" + Tab(2) + (commentOutOnWrap ? "//" : "") + Tab(2) : "") // wrap as argument count increases
+                    + CSharp.BOOLEAN + " " + PARAM_NAME_CONVERT_COLUMN_NAME_TO_TITLE_CASE + (IsCSharp30 ? "" : " = false"));
+            }
+
+            // row count limit argument for any method with cursor cursor (generics or datatable)
+            if (methodHasGenerics || (dynamicMapping && !Translater.UseGenericListForCursor)) {
+                argList.Add((((argNum++ - 5) % 6 == 0) ? "\r\n" + Tab(2) + (commentOutOnWrap ? "//" : "") + Tab(2) : "") // wrap as argument count increases
+                    + CSharp.UINT32 + "? " + PARAM_NAME_MAXIMUM_ROWS_CURSOR + (IsCSharp30 ? "" : " = null"));
+            }
+
+            // add optional Oracle connection arg for all methods
+            argList.Add((((argNum++ - 5) % 6 == 0) ? "\r\n" + Tab(2) + (commentOutOnWrap ? "//" : "") + Tab(2) : "") // wrap as argument count increases
+                + "OracleConnection" + " " + _oracleConnectionParamName + (IsCSharp30 ? "" : " = null"));
+
+            return String.Join(", ", argList.ToArray());
+        }
+
+        /// <summary>
+        /// Generate constraint code for generic types
+        /// </summary>
+        /// <param name="genericTypes"></param>
+        /// <returns></returns>
+        private string GenerateMethodConstraintsCode(List<GenericType> genericTypes, bool dynamicMapping) {
+            StringBuilder sb = new StringBuilder("");
+            foreach (GenericType gt in genericTypes) {
+                sb.AppendLine();
+                sb.Append(Tab(4) + "where " + gt.TypeName + " : class"
+                    + (dynamicMapping || gt.WeaklyTyped 
+                        ? "" 
+                        : ", " 
+//                            + (gt.SchemaPackageNamespace == null 
+//                                ? "" 
+//                                : gt.SchemaPackageNamespace + ".")
+//                                : GenerateNamespacePackage(Parameter.Instance.NamespaceBase, gt.SchemaPackageNamespace) + ".")
+                            + (gt.PackageTypeName == null ? "" : gt.PackageTypeName + ".")
+                            + "I" + gt.TypeName.Substring(CSharp.GENERIC_TYPE_PREFIX.Length))
+                    + ", new()");
+            }
+            return sb.ToString();
+        }
+
+        /// <summary>
+        /// Generate code to retrieve an associative array value from an out argument/return
+        /// </summary>
+        /// <param name="cSharpArgType"></param>
+        /// <param name="cSharpArgName"></param>
+        /// <param name="parametersVarName"></param>
+        /// <param name="oracleArgName"></param>
+        /// <param name="tabIndentCount"></param>
+        /// <returns></returns>
+        private string GenerateAssocArrayOutArgumentRetrieveCode(String cSharpArgType,  String cSharpArgName, string parametersVarName, 
+                Argument oracleArg, int tabIndentCount) {
+
+            StringBuilder sb = new StringBuilder("");
+            sb.AppendLine(Tab(5) + cSharpArgName + " = new " + cSharpArgType + "();");
+            String oracleArrayCode = "(" + parametersVarName + "[\"" + oracleArg.ArgumentName + "\"].Value as "
+                + Translater.ConvertOracleTypeToOdpNetType(oracleArg.NextArgument.DataType 
+                /*CSharp.ConvertCSharpTypeToOdpNetType(CSharp.ExtractSubtypeFromListType(cSharpArgType, true)*/) + "[])";
+            sb.AppendLine(Tab(5) + "for (int _i = 0; _i < " + oracleArrayCode + ".Length; _i++)");
+            sb.AppendLine(Tab(tabIndentCount + 1) + cSharpArgName + ".Add(" + oracleArrayCode + "[_i].IsNull");
+
+            if (CSharp.IsOdpNetType(CSharp.ExtractSubtypeFromListType(cSharpArgType, false))) {
+                sb.AppendLine(Tab(tabIndentCount + 2) + "? " + CSharp.ExtractSubtypeFromListType(cSharpArgType, true) + ".Null ");
+            } else {
+                sb.AppendLine(Tab(tabIndentCount + 2) + "? (" + CSharp.ExtractSubtypeFromListType(cSharpArgType, false) + ")null ");
+            }
+
+            if (CSharp.IsOdpNetType(CSharp.ExtractSubtypeFromListType(cSharpArgType, false))) {
+                sb.AppendLine(Tab(tabIndentCount + 2) + ": (" + CSharp.ExtractSubtypeFromListType(cSharpArgType, false) + ")"
+                    + "(" + oracleArrayCode + "[_i].ToString()));");
+            } else {
+                sb.AppendLine(Tab(tabIndentCount + 2) 
+                    + ": " + (CSharp.ExtractSubtypeFromListType(cSharpArgType, true).Equals(CSharp.BIG_INTEGER) ? CSharp.BIG_INTEGER + ".Parse" : "Convert.To" + CSharp.ExtractSubtypeFromListType(cSharpArgType, true))
+                    + "((" + oracleArrayCode + "[_i].ToString())));");
+            }
+            return sb.ToString();
+        }
+
+        /// <summary>
+        /// Generate C# code which retrieves data for all out arguments of proc
+        /// </summary>
+        /// <param name="args"></param>
+        /// <param name="parametersVarName"></param>
+        /// <returns></returns>
+        private string GenerateOutArgumentRetrieveCode(List<Argument> args, List<GenericType> genericTypesUsed, string parametersVarName, bool dynamicMapping = false) {
+            StringBuilder sb = new StringBuilder("");
+            bool prevArgIsAssocArray = false, isAssocArray = false;
+
+            foreach (Argument arg in args) {
+                String cSharpArgType = Translater.ConvertOracleArgTypeToCSharpType(arg, true);
+                String cSharpArgName = Translater.ConvertOracleNameToCSharpName(arg.ArgumentName, true);
+
+                // ignore argument if not an out parameter
+                if (arg.IsReturnArgument || arg.DataLevel != 0 || !arg.InOut.EndsWith(Orcl.OUT) || string.IsNullOrEmpty(arg.ArgumentName)) continue;
+
+                isAssocArray = (arg.DataType == Orcl.ASSOCIATITVE_ARRAY);
+                if (isAssocArray || prevArgIsAssocArray) sb.AppendLine(); // visually delimit assoc array code with blank line
+
+                if (arg.DataType == Orcl.REF_CURSOR) {
+                    String outListSubType = CSharp.ExtractSubtypeFromListType(cSharpArgType, false);
+                    String returnListSubTypeFullyQualifiedPackageTypeName = null;
+                    if (genericTypesUsed.Count > 0) {
+                        GenericType gt = genericTypesUsed.Find(g => g.TypeName == outListSubType && g.PackageTypeName != null);
+                        if (gt != null) returnListSubTypeFullyQualifiedPackageTypeName = gt.PackageTypeName;
+                    }
+
+                    sb.AppendLine(Tab(5) + "if (" + "!((" + CSharp.ORACLE_REF_CURSOR + ")" + parametersVarName + "[\"" + arg.ArgumentName + "\"].Value).IsNull" + ")");
+                    sb.AppendLine(Tab(6) + "using (OracleDataReader " + LOCAL_VAR_NAME_READER + " = ((" + CSharp.ORACLE_REF_CURSOR + ")" + parametersVarName + "[\"" + arg.ArgumentName + "\"].Value).GetDataReader()) {");
+                    sb.Append(Tab(7) + cSharpArgName + " = ");
+                    if (dynamicMapping) {
+                        sb.AppendLine(ORCL_UTIL_CLASS + ".ReadResult"
+                            + (cSharpArgType == CSharp.DATATABLE ? "" : "<" + CSharp.ExtractSubtypeFromListType(cSharpArgType, false) + ">")
+                            + "(" + LOCAL_VAR_NAME_READER 
+                                    + (cSharpArgType == CSharp.DATATABLE
+                                        ? ", " + PARAM_NAME_CONVERT_COLUMN_NAME_TO_TITLE_CASE
+                                        : ", " + PARAM_NAME_MAP_BY_POSITION + ", " + PARAM_NAME_ALLOW_UNMAPPED_COLUMNS)
+                                            + ", " + PARAM_NAME_MAXIMUM_ROWS_CURSOR // max rows to read
+                            + ");");
+                    } else {
+                        sb.AppendLine((returnListSubTypeFullyQualifiedPackageTypeName == null ? "" : returnListSubTypeFullyQualifiedPackageTypeName + ".Instance.")
+                            + CSharp.READ_RESULT + "I" + CSharp.ExtractSubtypeFromListType(cSharpArgType, false).Substring(2)
+                            + "<" + CSharp.ExtractSubtypeFromListType(cSharpArgType, false) + ">"
+                            + "(" + LOCAL_VAR_NAME_READER
+                            + ", " + PARAM_NAME_MAXIMUM_ROWS_CURSOR // max rows to read
+                            + ");");
+                    }
+                    sb.AppendLine(Tab(6) + "}" + " // using OracleDataReader");
+                    //firstOutCursorFound = true;
+                } else if (isAssocArray) {
+                    sb.Append(GenerateAssocArrayOutArgumentRetrieveCode(cSharpArgType, cSharpArgName, parametersVarName, arg, 5));
+                } else if (arg.DataType == Orcl.NESTED_TABLE) {
+                    sb.AppendLine(Tab(5) + "// " + " ORACLE_NESTED_TABLE out param " + arg.ArgumentName + " TO BE CODED"); // .NET can't handle this
+                    sb.AppendLine(Tab(5) + " " + cSharpArgName + " = null;");
+                } else if (arg.DataType == Orcl.RECORD) {
+                    sb.AppendLine(Tab(5) + "// " + " ORACLE_RECORD out param " + arg.ArgumentName + "TO BE CODED");
+                    sb.AppendLine(Tab(5) + " " + cSharpArgName + " = null;");
+                } else { // primitive types
+                    sb.AppendLine(Tab(5) // check for null value
+                        + Translater.ConvertOracleNameToCSharpName(arg.ArgumentName, true)
+                        + " = " + parametersVarName + "[\"" + arg.ArgumentName + "\"].Status == OracleParameterStatus.NullFetched");
+                    if (CSharp.IsOdpNetType(cSharpArgType)) {
+                        sb.AppendLine(Tab(6) // assign null value
+                            + "? " + Translater.ConvertOracleArgTypeToCSharpType(arg, true) + ".Null");
+                        sb.AppendLine(Tab(6) // assign non-null value
+                            + ": (" + Translater.ConvertOracleArgTypeToCSharpType(arg, false) + ")"
+                            + parametersVarName + "[\"" + arg.ArgumentName + "\"].Value;");
+                    } else {
+                        sb.AppendLine(Tab(6) // assign null value
+                            + "? (" + Translater.ConvertOracleArgTypeToCSharpType(arg, false) + ")null");
+                        sb.AppendLine(Tab(6) // assign non-null value
+                            + (cSharpArgType.Trim('?').Equals(CSharp.BIG_INTEGER) ? ":" + (CSharp.BIG_INTEGER + ".Parse") : ": Convert.To" + cSharpArgType)
+                            + "(" + parametersVarName + "[\"" + arg.ArgumentName + "\"].Value.ToString());");
+                    }
+                }
+                prevArgIsAssocArray = isAssocArray;
+            }
+            return sb.ToString();
+        }
+
+        /// <summary>
+        /// Generate C# code that binds all arguments to call proc
+        /// </summary>
+        /// <param name="args"></param>
+        /// <param name="parametersVarName"></param>
+        /// <returns></returns>
+        private string GenerateArgumentBindCode(List<Argument> args, string parametersVarName) {
+            StringBuilder sb = new StringBuilder("");
+            bool prevArgIsAssocArray = false, isAssocArray = false;
+
+            // determine all C# optional params based on Oracle params
+            List<String> optionalParamNamesInCSharp = GetOptionalCSharpParameters(args);// new List<String>();
+
+            foreach (Argument arg in args) {
+                string cSharpArgName = Translater.ConvertOracleNameToCSharpName(arg.ArgumentName, true);
+                string cSharpArgType = Translater.ConvertOracleArgTypeToCSharpType(arg, /*(args.IndexOf(arg) + 1 < args.Count ? args[args.IndexOf(arg) + 1] : null),*/ true);
+                string clientOracleDbType = Translater.ConvertOracleArgTypeToCSharpOracleDbType(arg, (args.IndexOf(arg) + 1 < args.Count ? args[args.IndexOf(arg) + 1] : null));
+                isAssocArray = (arg.DataType == Orcl.ASSOCIATITVE_ARRAY);
+
+                if (isAssocArray) sb.AppendLine(); // visually delimit assoc array code with blank line
+
+                if (arg.IsReturnArgument) {
+                    // standard init used for all return types
+                    sb.AppendLine(Tab(5) + parametersVarName + ".Add(new OracleParameter("
+                        + "\"" + FUNC_RETURN_PARAM_NAME + "\""
+                        + ", " + clientOracleDbType
+                        + (isAssocArray ? ", " + Parameter.Instance.MaxAssocArraySize.ToString() : "")
+                        + (cSharpArgType == CSharp.STRING ? ", " + Translater.GetStringArgBindSize(arg.DataType).ToString() : "") // returning String requires size
+                        + ", null"
+                        + ", ParameterDirection.ReturnValue));");
+
+                    // and for associative arrays
+                    if (isAssocArray) {
+                        sb.AppendLine(Tab(5) + parametersVarName + "[\"" + FUNC_RETURN_PARAM_NAME + "\"].CollectionType = OracleCollectionType.PLSQLAssociativeArray;");
+                        // for assoc array of variable length types, set the ArrayBindSize with the maximum length of the type
+                        if (cSharpArgType.Equals(CSharp.LIST_OF_STRING)) {
+                            sb.AppendLine(Tab(5) +  parametersVarName + "[\"" + FUNC_RETURN_PARAM_NAME + "\"].ArrayBindSize = new int[" + Parameter.Instance.MaxAssocArraySize.ToString() + "];");
+                            sb.AppendLine(Tab(5) 
+                                + "for (int _i = 0; _i < " + Parameter.Instance.MaxAssocArraySize.ToString() + "; _i++) { " + parametersVarName + "[\"" + FUNC_RETURN_PARAM_NAME + "\"].ArrayBindSize[_i] = "
+                                + Translater.GetCharLength(arg, (args.IndexOf(arg) + 1 < args.Count ? args[args.IndexOf(arg) + 1] : null)) + "; }");
+                        }
+                    }
+                } else if (arg.DataLevel == 0 && !string.IsNullOrEmpty(arg.ArgumentName)) {
+                    // determine whether C# parameter can be defined as optional
+                    bool isCSharpParamOptional = optionalParamNamesInCSharp.Contains(arg.ArgumentName);
+
+                    // standard init used for all parameter types
+                    sb.AppendLine(Tab(5)
+                        + (isCSharpParamOptional ? "if (" + cSharpArgName + " != null) " + (isAssocArray ? "{\r\n" + Tab(6) : "") : "")  // do not bind optional arg if not set
+                        + parametersVarName + ".Add(new OracleParameter("
+                        + "\"" + arg.ArgumentName + "\""
+                        + ", " + clientOracleDbType
+                        + (isAssocArray ? ", " + (arg.InOut.EndsWith(Orcl.OUT.ToString()) ? Parameter.Instance.MaxAssocArraySize.ToString() : "(" + cSharpArgName + " == null ? 0 : " + cSharpArgName + ".Count)") : "")
+                        + (arg.InOut.EndsWith(Orcl.OUT.ToString()) && cSharpArgType == CSharp.STRING ? ", " + Translater.GetStringArgBindSize(arg.DataType).ToString() : "") // returning String requires size
+                        + ", " + (arg.InOut.Equals(Orcl.OUT.ToString()) || isAssocArray ? "null" : cSharpArgName)
+                        + ", ParameterDirection." + (arg.InOut.StartsWith(Orcl.IN.ToString()) ? "Input" : "") + (arg.InOut.EndsWith(Orcl.OUT.ToString()) ? "Output" : "") + ")"
+                        + ");");
+
+                    // and for associative arrays
+                    if (isAssocArray) {
+                        string cSharpArgSubTypeNullable = Translater.ConvertOracleArgTypeToCSharpType(args[args.IndexOf(arg) + 1], false); // e.g., Int32? for List<Int32>
+                        if (arg.InOut.StartsWith(Orcl.IN.ToString()))
+                            sb.AppendLine(Tab(5) + (isCSharpParamOptional ? "\t" : "") + parametersVarName + "[\"" + arg.ArgumentName + "\"].Value = " 
+                                + "(" + cSharpArgName + " == null || " + cSharpArgName + ".Count == 0 ? new "
+                                + cSharpArgSubTypeNullable + "[]{} : "
+                                    //+ (cSharpArgSubTypeNullable == CSharp.STRING || cSharpArgSubTypeNullable == CSharp.DATE_TIME + "?" ? "null" : "0") + "} : "
+                                + cSharpArgName + ".ToArray()" + ");");
+                        sb.AppendLine(Tab(5) + (isCSharpParamOptional ? "\t" : "") + parametersVarName + "[\"" + arg.ArgumentName + "\"].CollectionType = OracleCollectionType.PLSQLAssociativeArray;");
+                        // for assoc array of variable length types, set the ArrayBindSize with the maximum length of the type
+                        if (cSharpArgType.Equals(CSharp.LIST_OF_STRING)) {
+                            sb.AppendLine(Tab(5) + (isCSharpParamOptional ? "\t" : "") + parametersVarName + "[\"" + arg.ArgumentName + "\"].ArrayBindSize = new int[" + Parameter.Instance.MaxAssocArraySize.ToString() + "];");
+                            sb.AppendLine(Tab(5) + (isCSharpParamOptional ? "\t" : "")
+                                + "for (int _i = 0; _i < " + Parameter.Instance.MaxAssocArraySize.ToString() + "; _i++) { " + parametersVarName + "[\"" + arg.ArgumentName + "\"].ArrayBindSize[_i] = "
+                                + Translater.GetCharLength(arg, (args.IndexOf(arg) + 1 < args.Count ? args[args.IndexOf(arg) + 1] : null)) + "; }");
+                        }
+                        if (isCSharpParamOptional) sb.AppendLine(Tab(5) + "}");
+                    }
+                }
+
+                prevArgIsAssocArray = isAssocArray;
+            }
+            return sb.ToString();
+        }
+
+        /// <summary>
+        /// Generate complete C# method for a given stored proc
+        /// </summary>
+        /// <param name="proc"></param>
+        /// <returns></returns>
+        private string GenerateMethodCode(Procedure proc, bool forceDynamicMapping) {
+            StringBuilder methodText = new StringBuilder("");
+            String methodReturnType = GenerateMethodReturnType(proc);
+            List<GenericType> genericTypesUsed = new List<GenericType>();
+
+            // get generic types (for cursors when in given translation mode) used by the method
+            if (Translater.UseGenericListForCursor) genericTypesUsed = GetMethodGenericTypes(proc);
+
+            /////////////////////////////////////////////////////////////////////////
+            // bypass creation of methods that use certain types of arguments/returns
+            String ignoreReason;
+            if (proc.IsIgnoredDueToOracleArgumentTypes(out ignoreReason)) {
+                methodText.AppendLine();
+                methodText.AppendLine(Tab(2) + "// **PROC IGNORED** - " + ignoreReason);
+                methodText.Append(Tab(2) + "//" + " public " + methodReturnType + " " + Translater.ConvertOracleProcNameToMethodName(proc));
+                if (genericTypesUsed.Count > 0) methodText.Append("<" + String.Join(", ", genericTypesUsed.Select(gt => gt.TypeName).ToList()) + ">");
+                methodText.Append("(" + GenerateMethodArgumentsCommaDelimited(proc.Arguments, genericTypesUsed.Count > 0, forceDynamicMapping, true, false) + ")");
+                return methodText.ToString();
+            }
+
+            string paramVarName = LOCAL_VAR_NAME_COMMAND + ".Parameters";
+
+            // method header
+            methodText.AppendLine();
+            methodText.Append(Tab(2) + "public " + methodReturnType + " " + Translater.ConvertOracleProcNameToMethodName(proc));
+
+            // if the method is using generics for cursors, add all generic lists to sig
+            if (genericTypesUsed.Count > 0) methodText.Append("<" + String.Join(", ", genericTypesUsed.Select(gt => gt.TypeName).ToList())  + ">");
+
+            // arguments
+            methodText.Append("(" + GenerateMethodArgumentsCommaDelimited(proc.Arguments, genericTypesUsed.Count > 0, forceDynamicMapping, false, false) + ")");
+
+            // generic constraint
+            if (genericTypesUsed.Count > 0) methodText.Append(GenerateMethodConstraintsCode(genericTypesUsed, forceDynamicMapping));
+
+            methodText.Append(" {");
+            methodText.AppendLine();
+
+            // create/default return variable and default OUT parameters
+            if (proc.IsFunction() || proc.HasOutArgument()) {
+                methodText.Append(Tab(3));
+                foreach (Argument arg in proc.Arguments) 
+                    if (arg.IsReturnArgument || (arg.DataLevel == 0 && arg.InOut.Equals(Orcl.OUT))) {
+                        String cSharpType = Translater.ConvertOracleArgTypeToCSharpType(arg, !arg.IsReturnArgument);
+                        String cSharpName = arg.IsReturnArgument ? LOCAL_VAR_NAME_RETURN : Translater.ConvertOracleNameToCSharpName(arg.ArgumentName, true);
+                        methodText.Append((arg.IsReturnArgument ? cSharpType + " " : "") + cSharpName +
+                             (CSharp.IsList(cSharpType) ? " = new " + cSharpType + "()" : " = null") + "; ");
+                    }
+                methodText.AppendLine();
+            }
+
+            // local connection variable
+            methodText.AppendLine(Tab(3) + "OracleConnection " + LOCAL_VAR_NAME_CONNECTION + " = " + _oracleConnectionParamName + " ?? GetConnection();");
+
+            // begin body
+            methodText.AppendLine(Tab(3) + "try {");
+
+            // start using of OracleCommand
+            methodText.AppendLine(Tab(4) + "using (OracleCommand " + LOCAL_VAR_NAME_COMMAND
+                + " = new OracleCommand(" + "\"" 
+                + _schema.ToUpper() + "."
+                + (String.IsNullOrEmpty(proc.PackageName) ? "" : proc.PackageName + ".") 
+                + proc.ProcedureName + "\"" + ", " + LOCAL_VAR_NAME_CONNECTION + ")) {");
+            methodText.AppendLine(Tab(5) + LOCAL_VAR_NAME_COMMAND + ".CommandType = CommandType.StoredProcedure;");
+
+            // For versions above C# 3.0, bind by name since it is necessary to handle not binding/settting Oracle optional parameters; 
+            /// the corresponding C# optional params are defaulted to null. C# 3.0 has no optional params and thus we cannot replicate
+            //  Oracle optional parameters; so we will use the defauult bind by position.
+            if (!IsCSharp30) methodText.AppendLine(Tab(5) + LOCAL_VAR_NAME_COMMAND + ".BindByName = true;");
+
+            methodText.Append(GenerateArgumentBindCode(proc.Arguments, paramVarName));
+
+            // initialize trace time
+            methodText.AppendLine();
+            methodText.AppendLine(Tab(5) + "OracleCommandTrace " + LOCAL_VAR_NAME_COMMAND_TRACE + " = "
+                + "IsTracing(" + LOCAL_VAR_NAME_COMMAND + ") ? new OracleCommandTrace(" + LOCAL_VAR_NAME_COMMAND + ") : null;");
+
+            // execute proc call
+            methodText.AppendLine(Tab(5) + "int " + LOCAL_VAR_NAME_ROWS_AFFECTED + " = " + LOCAL_VAR_NAME_COMMAND + ".ExecuteNonQuery();");
+
+            // set return value
+            if (proc.IsFunction()) {
+                if (proc.ReturnOracleDataType == Orcl.REF_CURSOR) {
+                    String returnListSubType = CSharp.ExtractSubtypeFromListType(methodReturnType, false);
+                    String returnListSubTypeFullyQualifiedPackageTypeName = null;
+                    if (genericTypesUsed.Count > 0) {
+                        GenericType gt = genericTypesUsed.Find(g => g.TypeName == returnListSubType && /*g.SchemaPackageNamespace != null && */ g.PackageTypeName != null);
+                        if (gt != null) returnListSubTypeFullyQualifiedPackageTypeName = /*gt.SchemaPackageNamespace + "." +*/ gt.PackageTypeName;
+                    }
+                    int t = 6;
+                    methodText.AppendLine(Tab(t - 1) + "if (" + "!((" + CSharp.ORACLE_REF_CURSOR + ")" + paramVarName + "[\"" + FUNC_RETURN_PARAM_NAME + "\"].Value).IsNull" + ")");
+                    methodText.AppendLine(Tab(t) + "using (OracleDataReader " + LOCAL_VAR_NAME_READER + " = ((" + CSharp.ORACLE_REF_CURSOR + ")" + paramVarName + "[\"" + FUNC_RETURN_PARAM_NAME + "\"].Value).GetDataReader()) {");
+                    methodText.AppendLine(Tab(t + 1) + LOCAL_VAR_NAME_RETURN + " = "
+                        + (forceDynamicMapping 
+                            ? ORCL_UTIL_CLASS + "."
+                            : returnListSubTypeFullyQualifiedPackageTypeName != null 
+                                ? returnListSubTypeFullyQualifiedPackageTypeName + ".Instance." 
+                                : "") 
+                        + CSharp.READ_RESULT + (forceDynamicMapping ? "" : "I" + returnListSubType.Substring(2))
+                        + (methodReturnType == CSharp.DATATABLE ? "" : "<" + returnListSubType + ">")
+                        + "(" + LOCAL_VAR_NAME_READER 
+                        + (methodReturnType == CSharp.DATATABLE
+                            ? ", " + PARAM_NAME_CONVERT_COLUMN_NAME_TO_TITLE_CASE
+                            : (forceDynamicMapping ? ", " + PARAM_NAME_MAP_BY_POSITION + ", " + PARAM_NAME_ALLOW_UNMAPPED_COLUMNS : ""))
+                        + ", " + PARAM_NAME_MAXIMUM_ROWS_CURSOR // max rows to read
+                        + ");");
+                    methodText.AppendLine(Tab(t) + "}"
+                        + " // using OracleDataReader"
+                    );
+                } else if (proc.ReturnOracleDataType == Orcl.ASSOCIATITVE_ARRAY) {
+                    StringBuilder sb = new StringBuilder("");
+                    String oracleArrayCode = "(" + paramVarName + "[\"" + FUNC_RETURN_PARAM_NAME + "\"].Value as "
+                        + Translater.ConvertOracleTypeToOdpNetType(proc.Arguments[0].NextArgument.DataType
+                        /*CSharp.ConvertCSharpTypeToOdpNetType(CSharp.ExtractSubtypeFromListType(cSharpArgType, true)*/) + "[])";
+                    sb.AppendLine(Tab(5) + "for (int _i = 0; _i < " + oracleArrayCode + ".Length; _i++)");
+                    sb.AppendLine(Tab(6) + LOCAL_VAR_NAME_RETURN + ".Add(" + oracleArrayCode + "[_i].IsNull");
+
+                    if (CSharp.IsOdpNetType(CSharp.ExtractSubtypeFromListType(methodReturnType, true))) {
+                        sb.AppendLine(Tab(7) + "? " + CSharp.ExtractSubtypeFromListType(methodReturnType, true) + ".Null ");
+                    } else {
+                        sb.AppendLine(Tab(7) + "? (" + CSharp.ExtractSubtypeFromListType(methodReturnType, false) + ")null ");
+                    }
+
+                    if (CSharp.IsOdpNetType(CSharp.ExtractSubtypeFromListType(methodReturnType, false))) {
+                        sb.AppendLine(Tab(7) + ": (" + CSharp.ExtractSubtypeFromListType(methodReturnType, false) + ")"
+                            + "(" + oracleArrayCode + "[_i].ToString()));");
+                    } else {
+                        sb.AppendLine(Tab(7) 
+                            + ": " + (CSharp.ExtractSubtypeFromListType(methodReturnType, true).Equals(CSharp.BIG_INTEGER) 
+                                ? CSharp.BIG_INTEGER + ".Parse"
+                                : "Convert.To" + CSharp.ExtractSubtypeFromListType(methodReturnType, true) )
+                            + "((" + oracleArrayCode + "[_i].ToString())));");
+                    }
+                    methodText.Append(sb.ToString());
+                } else if (proc.ReturnOracleDataType == Orcl.RECORD) {
+                    methodText.AppendLine(Tab(5) + "// get return for record TO BE CODED");
+                } else if (proc.ReturnOracleDataType == Orcl.NESTED_TABLE) {
+                    methodText.AppendLine(Tab(5) + "// get return for nested table TO BE CODED");
+                } else { // primitve types
+                    methodText.AppendLine(Tab(5) // check for null value
+                        + LOCAL_VAR_NAME_RETURN + " = " + paramVarName + "[\"" + FUNC_RETURN_PARAM_NAME + "\"].Status == OracleParameterStatus.NullFetched");
+                    if (CSharp.IsOdpNetType(methodReturnType)) { // assign non-null value
+                        methodText.AppendLine(Tab(6) // assign null value
+                            + "? " + methodReturnType.TrimEnd(CSharp.NULLABLE_SUFFIX.ToCharArray()) + ".Null");
+                        methodText.AppendLine(Tab(6) 
+                            + ": (" + methodReturnType + ")"
+                            + paramVarName + "[\"" + FUNC_RETURN_PARAM_NAME + "\"].Value;");
+                    } else {
+                        methodText.AppendLine(Tab(6) // assign null value
+                            + "? (" + methodReturnType + ")null");
+                        methodText.AppendLine(Tab(6) // assign non-null value
+                            + (methodReturnType.Trim('?').Equals(CSharp.BIG_INTEGER) ? ": " + (CSharp.BIG_INTEGER + ".Parse") : ": Convert.To" + methodReturnType.TrimEnd('?'))
+                            + "(" + paramVarName + "[\"" + FUNC_RETURN_PARAM_NAME + "\"].Value.ToString());");
+                    }
+                }
+            }
+
+            // get data from output parameters
+            methodText.Append(GenerateOutArgumentRetrieveCode(proc.Arguments, genericTypesUsed, paramVarName, forceDynamicMapping));
+
+            // trace completion of command
+            methodText.AppendLine(Tab(5) + "if (" + LOCAL_VAR_NAME_COMMAND_TRACE + " != null) TraceCompletion(" + LOCAL_VAR_NAME_COMMAND_TRACE 
+                + (proc.ReturnOracleDataType == Orcl.REF_CURSOR 
+                    ? ", " + LOCAL_VAR_NAME_RETURN + (methodReturnType == CSharp.DATATABLE ? ".Rows" : "") + ".Count" 
+                    : "") + ");");
+
+            // end using of OracleCommand
+            methodText.AppendLine(Tab(4) + "}" + " // using OracleCommand" );
+
+            /////////////////
+            // finally clause
+            methodText.AppendLine(Tab(3) + "} finally {");
+            methodText.AppendLine(  Tab(4) + "if (" + _oracleConnectionParamName + " == null) {");
+            methodText.AppendLine(      Tab(5) + LOCAL_VAR_NAME_CONNECTION + ".Close();");
+            methodText.AppendLine(      Tab(5) + LOCAL_VAR_NAME_CONNECTION + ".Dispose();");
+            methodText.AppendLine(  Tab(4) + "}");
+            methodText.AppendLine(Tab(3) + "}");
+            /////////////////
+
+            // return a value for function
+            if (proc.IsFunction()) methodText.AppendLine(Tab(3) + "return " + LOCAL_VAR_NAME_RETURN + ";");
+
+            // close body
+            methodText.Append(Tab(2) + "} // " + Translater.ConvertOracleProcNameToMethodName(proc));
+
+            return methodText.ToString();
+        }
+
+        /// <summary>
+        /// Generate all versions of a method required for a proc 
+        /// </summary>
+        /// <param name="proc"></param>
+        /// <param name="classText"></param>
+        private void GenerateAllMethodVersions(Procedure proc, ref StringBuilder classText) {
+
+            // if method has at least one cursor, main version of method will use generics 
+            if (proc.HasArgumentOfOracleType(Orcl.REF_CURSOR)) {
+                // create main method using generics
+                Translater.UseGenericListForCursor = true;
+
+                // dynamic mapping
+                if ((proc.UsesWeaklyTypedCursor() || Parameter.Instance.IsGenerateDynamicMappingMethodForTypedCursor) && !proc.HasInArgumentOfOracleTypeRefCursor()) {
+                    classText.AppendLine(GenerateMethodCode(proc, true));
+                }
+                // static mapping
+                if (!proc.UsesWeaklyTypedCursor()) classText.AppendLine(GenerateMethodCode(proc, false));
+
+                // create extra method (w/o generics) for DataTable version of weakly typed cursors in return/args
+                if (proc.UsesWeaklyTypedCursor() && !proc.HasInArgumentOfOracleTypeRefCursor()) {
+                    Translater.UseGenericListForCursor = false;
+                    classText.AppendLine(GenerateMethodCode(proc, true));
+                }
+            } else {
+                // just create basic non-generic method 
+                classText.AppendLine(GenerateMethodCode(proc, false));
+            }
+        }
+#endregion
+
+#region Base Class Generation
+        private string GenerateBaseEntityClass(string baseClassName, string classNamespace, string ancestorClassName) {
+            StringBuilder classText = new StringBuilder("");
+
+            // method header
+            classText.AppendLine(Tab() + CSharp.ATTRIBUTE_SERIALIZABLE);
+            classText.AppendLine(Tab() + "public abstract class " + baseClassName + (String.IsNullOrEmpty(ancestorClassName) ? "" : " : " + ancestorClassName) + " {");
+            classText.AppendLine();
+            classText.AppendLine(Tab() + "}" + " // " + baseClassName);
+
+            return classText.ToString();
+        }
+#endregion
+
+#region Package Record Type Generation
+        private string GenerateRecordTypeReadResultMethod(PackageRecord rec) {
+            String cSharpType = rec.CSharpType;
+            
+            StringBuilder classText = new StringBuilder("");
+            String interfaceName = "I" + cSharpType;
+            String methodName = CSharp.READ_RESULT + interfaceName;
+            String genericType = CSharp.GENERIC_TYPE_PREFIX + cSharpType;
+            String paramNameOracleReader = "rdr"; // Oracle clash not possible
+
+            // signature
+            classText.AppendLine(Tab(2) + "public List<" + genericType + "> " + methodName + "<" + genericType + ">"
+                + "(OracleDataReader " + paramNameOracleReader + "" 
+                + ", " + CSharp.UINT32 + "? " + PARAM_NAME_MAXIMUM_ROWS_CURSOR + (Parameter.Instance.IsCSharp30 ? "" : " = " + CSharp.NULL) + ")");
+            classText.AppendLine(Tab(4) + "where " + genericType + " : class, " + interfaceName + ", new()  " + " {");
+
+            classText.AppendLine(Tab(3) + "List<" + genericType + "> " + LOCAL_VAR_NAME_RETURN + " = new List<" + genericType + ">();");
+
+            classText.AppendLine(Tab(3) + "if (" + paramNameOracleReader + " != " + CSharp.NULL + " && " + paramNameOracleReader + ".HasRows) {");
+            classText.AppendLine(Tab(4) + "while (" + paramNameOracleReader + ".Read()) {"); 
+            classText.AppendLine(Tab(5) + genericType + " obj = new " + genericType + "();");
+            foreach (Field f in rec.Attributes) { // loop through all fields
+                classText.Append(Tab(5) + "if (!" + paramNameOracleReader + ".IsDBNull(" + f.MapPosition + ")) "
+                    + "obj." + Translater.ConvertOracleRecordFieldNameToCSharpPropertyName(f.Name, rec.Name, false) + " = ");
+
+                if (f.CSharpType.TrimEnd('?').Equals(CSharp.DECIMAL) && Orcl.IsOracleNumberEquivalent(f.AttrType)) {
+                    classText.Append("(Decimal?)OracleDecimal.SetPrecision(" + paramNameOracleReader + ".GetOracleDecimal(" + f.MapPosition.ToString() + "), 29)");
+                } else if (f.CSharpType.TrimEnd('?').Equals(CSharp.DATE_TIME) && f.AttrType.Equals(Orcl.TIMESTAMP)) {
+                    classText.Append(paramNameOracleReader + ".GetOracleTimeStamp(" + f.MapPosition.ToString() + ").Value"); // extract DateTime value from TimeStamp
+                } else if (CSharp.IsOdpNetType(f.CSharpType)) {
+                    classText.Append("(" + f.CSharpType + ")" + paramNameOracleReader + ".GetOracleValue(" + f.MapPosition.ToString() + ")"); // ODP.NET
+                } else if (f.CSharpType.TrimEnd('?').Equals(CSharp.BIG_INTEGER)) {
+                    classText.Append(CSharp.BIG_INTEGER + ".Parse(" + paramNameOracleReader + ".GetValue(" + f.MapPosition.ToString() + ").ToString())"); // primitive
+                } else {
+                    classText.Append("Convert.To" + f.CSharpType.TrimEnd('?') + "(" + paramNameOracleReader + ".GetValue(" + f.MapPosition.ToString() + "))"); // primitive
+                }
+                classText.AppendLine(";");
+            }
+            classText.AppendLine(Tab(5) + LOCAL_VAR_NAME_RETURN + ".Add(obj);");
+            classText.AppendLine(Tab(5) + "if (" + PARAM_NAME_MAXIMUM_ROWS_CURSOR + " != null && " + LOCAL_VAR_NAME_RETURN + ".Count >= " + PARAM_NAME_MAXIMUM_ROWS_CURSOR + ") break;");
+            classText.AppendLine(Tab(4) + "}");
+            classText.AppendLine(Tab(3) + "}");
+
+            classText.AppendLine(Tab(3) + "return " + LOCAL_VAR_NAME_RETURN + ";");
+            classText.AppendLine(Tab(2) + "} // " + methodName);
+            return classText.ToString();
+        }
+
+        public void WriteBaseEntityClasses(string baseClassName) {
+            string fileName = _outputPath + @"\" + CaseConverter.ConvertUnderscoreDelimitedToPascalCase(_schema) + "BaseEntity.cs";
+
+            try {
+                StreamWriter outFile = new StreamWriter(fileName);
+
+                StringBuilder headerText = new StringBuilder("");
+                headerText = new StringBuilder("");
+                headerText.AppendLine(COMMENT_AUTO_GENERATED_FOR_EDIT);
+                headerText.AppendLine("using System;");
+                headerText.AppendLine(USING_ORACLE_DATAACCESS_CLIENT + ";");
+                headerText.AppendLine();
+
+                outFile.Write(headerText);
+
+                // namespace should be at schema level to avoid class name clashes
+                outFile.WriteLine("namespace " + GenerateNamespaceSchema() + " {");
+
+                // determine the class name of the base entity
+                string baseEntityClassName = CaseConverter.ConvertUnderscoreDelimitedToPascalCase(_schema) + "Entity";
+
+                // create all base entity classes
+                outFile.WriteLine(GenerateBaseEntityClass(baseEntityClassName, 
+                    GenerateNamespaceSchema(), null));
+                outFile.WriteLine(GenerateBaseEntityClass(CaseConverter.ConvertUnderscoreDelimitedToPascalCase(_schema) + "PackageRecord",
+                    GenerateNamespaceSchema(), baseEntityClassName));
+                outFile.WriteLine(GenerateBaseEntityClass(CaseConverter.ConvertUnderscoreDelimitedToPascalCase(_schema) + "Table", 
+                    GenerateNamespaceSchema(),  baseEntityClassName));
+                outFile.WriteLine(GenerateBaseEntityClass(CaseConverter.ConvertUnderscoreDelimitedToPascalCase(_schema) + "View",
+                    GenerateNamespaceSchema(), baseEntityClassName));
+                outFile.WriteLine(GenerateBaseEntityClass(CaseConverter.ConvertUnderscoreDelimitedToPascalCase(_schema) + "ObjectType",
+                    GenerateNamespaceSchema(), baseEntityClassName));
+
+                // close namespace 
+                outFile.Write("" + "} // " + GenerateNamespaceSchema());
+
+                outFile.Close();
+            } catch (UnauthorizedAccessException) {
+                DisplayMessage(BASE_PERMISSION_ERROR_MSG + Path.GetFileName(fileName));
+            } catch (Exception e) {
+                DisplayMessage("Error writing " + Path.GetFileName(fileName) + " - " + e.Message);
+            }
+        }
+#endregion
+
+#region Package Class Generation
+        private string GenerateBasePackageClass(string className) {
+            StringBuilder classText = new StringBuilder("");
+
+            // method header
+            classText.AppendLine("\t" + "public abstract class " + className + " {");
+
+            // default GetConnectionString()
+            classText.AppendLine(Tab(2) + "protected string GetConnectionString() { return \"data source=" 
+                + _databaseInstance + ";user id=" + _login + ";password=" + _password + ";enlist=false\"; }");
+
+            // default GetConnection()
+            classText.AppendLine();
+            classText.AppendLine(Tab(2) + "protected OracleConnection GetConnection() {");
+            classText.AppendLine("\t\t\t" + "OracleConnection connection = new OracleConnection(GetConnectionString());");
+            classText.AppendLine("\t\t\t" + "connection.Open();");
+            classText.AppendLine("\t\t\t" + "return connection;");
+            classText.AppendLine(Tab(2) + "}");
+
+            // default IsTracing()
+            classText.AppendLine();
+            classText.AppendLine(Tab(2) + "/// <summary>");
+            classText.AppendLine(Tab(2) + "/// Determine if completion of OracleCommand execution should be traced (hook)");
+            classText.AppendLine(Tab(2) + "/// </summary>");
+            classText.AppendLine(Tab(2) + "/// <param name=\"cmd\">An OracleCommand prepared for executing</param>");
+            classText.AppendLine(Tab(2) + "/// <returns>true if command should be traced</returns>");
+            classText.AppendLine(Tab(2) + "protected bool IsTracing(OracleCommand cmd) {");
+            classText.AppendLine("\t\t\t" + "return false;");
+            classText.AppendLine(Tab(2) + "}");
+
+            // default Trace()
+            classText.AppendLine();
+            classText.AppendLine(Tab(2) + "/// <summary>");
+            classText.AppendLine(Tab(2) + "/// Perform trace functionality for a completed OracleCommand (hook)");
+            classText.AppendLine(Tab(2) + "/// </summary>");
+            classText.AppendLine(Tab(2) + "/// <param name=\"cmdTrace\">An OracleCommandTrace just executed</param>");
+            classText.AppendLine(Tab(2) + "/// <param name=\"returnRowCount\">Row count returned in cursor</param>");
+            classText.AppendLine(Tab(2) + "protected void TraceCompletion(Odapter.OracleCommandTrace cmdTrace, int? returnRowCount) {");
+            classText.AppendLine("\t\t\t" + "// stop the timer first");
+            classText.AppendLine("\t\t\t" + "cmdTrace.Stopwatch.Stop();");
+            classText.AppendLine("\t\t\t" + "// trace logic goes here");
+            classText.AppendLine("\t\t\t" + "return;");
+            classText.AppendLine(Tab(2) + "}");
+
+            classText.AppendLine();
+            classText.AppendLine(Tab(2) + "/// <summary>");
+            classText.AppendLine(Tab(2) + "/// Perform trace functionality for a completed OracleCommand (hook)");
+            classText.AppendLine(Tab(2) + "/// </summary>");
+            classText.AppendLine(Tab(2) + "/// <param name=\"cmdTrace\">An OracleCommandTrace just executed</param>");
+            classText.AppendLine(Tab(2) + "protected void TraceCompletion(Odapter.OracleCommandTrace cmdTrace) {");
+            classText.AppendLine("\t\t\t" + "TraceCompletion(cmdTrace, null);");
+            classText.AppendLine("\t\t\t" + "return;");
+            classText.AppendLine(Tab(2) + "}");
+
+            classText.AppendLine(Tab() + "}" + " // " + className);
+
+            return classText.ToString();
+        }
+
+        public void WriteBasePackageClass(string baseClassName) {
+            string fileName = _outputPath + @"\" + CaseConverter.ConvertUnderscoreDelimitedToPascalCase(_schema) + "BaseAdapter.cs";
+
+            try {
+                StreamWriter outFile = new StreamWriter(fileName);
+
+                StringBuilder headerText = new StringBuilder("");
+                headerText = new StringBuilder("");
+                headerText.AppendLine(COMMENT_AUTO_GENERATED_FOR_EDIT);
+                headerText.AppendLine("using System;");
+                headerText.AppendLine(USING_ORACLE_DATAACCESS_CLIENT + ";");
+                headerText.AppendLine();
+                outFile.Write(headerText);
+
+                // namespace should be at schema level
+                outFile.WriteLine("namespace " + GenerateNamespaceSchema() + " {");
+
+                // create base package manager class
+                outFile.WriteLine(GenerateBasePackageClass(baseClassName));
+
+                // close namespace for 
+                outFile.Write("" + "} // " + GenerateNamespaceSchema());
+
+                outFile.Close();
+            } catch (UnauthorizedAccessException) {
+                DisplayMessage(BASE_PERMISSION_ERROR_MSG + Path.GetFileName(fileName));
+            } catch (Exception e) {
+                DisplayMessage("Error writing " + Path.GetFileName(fileName) + " - " + e.Message);
+            }
+        }
+
+        public void WritePackageClasses(List<Package> packages, string packageNamespace, string ancestorAdapterClassName, bool partialPackage, 
+                                List<PackageRecord> records, string ancestorRecordTypeClassName, 
+                                bool serializableRecordType, bool partialRecordType) {
+
+            if (packages.Count == 0) return;
+            DisplayMessage("Coding packages and record types...");
+
+            string fileName = _outputPath + @"\" + CaseConverter.ConvertUnderscoreDelimitedToPascalCase(_schema)
+                //+ (_filter == null ? "" : CaseConverter.ConvertToCapitalized(_filter)) 
+                + "Package.cs";
+
+            try {
+                StreamWriter outFilePackage = new StreamWriter(fileName);
+
+                WriteAutoGeneratedComment(outFilePackage);
+
+                StringBuilder headerText = new StringBuilder("");
+
+                // create using statements
+
+                // package file
+                headerText = new StringBuilder("");
+                headerText.AppendLine("using System;");
+                //if (!IsCSharp30) headerText.AppendLine("using System.Numerics;");
+                headerText.AppendLine("using System.Collections.Generic;");
+                headerText.AppendLine("using System.Data;");
+                headerText.AppendLine("using System.Data.Common;");
+                headerText.AppendLine(USING_ORACLE_DATAACCESS_CLIENT + ";");
+                headerText.AppendLine(USING_ORACLE_DATAACCESS_TYPES + ";");
+                headerText.AppendLine("using System.Collections;");
+                headerText.AppendLine("using System.Diagnostics;");
+                headerText.AppendLine("using System.Runtime.Serialization;");
+                headerText.AppendLine("using System.Xml;");
+                headerText.AppendLine("using System.Xml.Serialization;");
+                headerText.AppendLine("using " + ORCL_UTIL_NAMESPACE + ";");
+                outFilePackage.Write(headerText);
+
+                outFilePackage.WriteLine("using System.Linq;");
+
+                outFilePackage.WriteLine();
+
+                // write namespace 
+                outFilePackage.WriteLine("namespace " + packageNamespace + " {");
+
+                foreach (Package pack in packages) {
+                    //DisplayMessage("Coding package " + pack.PackageName);
+                    String className = CaseConverter.ConvertUnderscoreDelimitedToPascalCase(pack.PackageName);
+                    StringBuilder classText = new StringBuilder("");
+    
+                    // class definition
+                    classText.AppendLine();
+                    classText.AppendLine(Tab() + "public " + (partialPackage ? "partial " : "") + "class " + className + " : " + GenerateNamespaceSchema() + "." + ancestorAdapterClassName + " {");
+
+                    // created as Singleton
+                    classText.AppendLine(Tab(2) + "private " + className + "() { }");
+                    classText.AppendLine(Tab(2) + "private static " + className + " _instance = new " + className + "();");
+                    classText.AppendLine(Tab(2) + "public static " + className + " Instance { get { return _instance; } }");
+
+                    // for each record type in this package
+                    int i = 0;
+                    foreach (PackageRecord rec in records
+                        .Where(r => (r.PackageName ?? "").Equals(pack.PackageName) || (r.Name ?? "").Equals(pack.PackageName))
+                        .GroupBy(r => new { r.Name, r.CSharpType } )
+                        .Select(g => g.First())
+                        .ToList()) {
+
+                        // unless otherwise specified, skip creation of records derived from a package outside of the filter or schema
+                        if (!Parameter.Instance.IsDuplicatePackageRecordOriginatingOutsideFilterAndSchema) {
+                            // owned by another schema
+                            if (!(rec.Owner ?? "").Equals(pack.Owner)) continue;
+
+                            // owned by package within schema but was filtered out 
+                            if (!packages.Exists(p => p.PackageName.Equals(rec.Name))) continue;
+                        }
+
+                        // always skip record creation if owned by another package *within* both the filter and schema
+                        if (!(rec.Name ?? "").Equals(pack.PackageName) 
+                            && packages.Exists(p => p.PackageName.Equals(rec.Name)) // package of origin of record being created
+//                            && records.Exists(r => r.PackageName.Equals(rec.Name) && r.SubName.Equals(rec.SubName)) 
+                            ) {
+                            i++;
+                            continue;
+                        }
+
+                        String reasonMsg;
+                        if (!rec.IsIgnoredDueToOracleTypes(out reasonMsg)) {
+                            // create interface for record class
+                            classText.AppendLine();
+                            classText.Append(GenerateEntityInterface(rec, 1));
+                        }
+
+                        // create DTO 
+                        classText.AppendLine();
+                        classText.Append(GenerateEntityClass<Field>(rec, ancestorRecordTypeClassName, serializableRecordType, partialRecordType,
+                            Parameter.Instance.IsDataContractPackageRecord, Parameter.Instance.IsXmlElementPackageRecord, 2));
+
+                        if (!rec.IsIgnoredDueToOracleTypes(out reasonMsg)) {
+                            // create custom reader
+                            classText.AppendLine();
+                            classText.Append(GenerateRecordTypeReadResultMethod(rec));
+                        }
+                    }
+
+                    // create method for each package proc
+                    foreach (Procedure proc in pack.Procedures) GenerateAllMethodVersions(proc, ref classText);
+                    classText.AppendLine(Tab() + "} // " + className);
+
+                    // write entire class to file
+                    outFilePackage.Write(classText);
+                }
+
+                // close class and namespace for package
+                outFilePackage.Write("" + "} // " + packageNamespace);
+
+                outFilePackage.Close();
+            } catch (UnauthorizedAccessException) {
+                DisplayMessage(BASE_PERMISSION_ERROR_MSG + Path.GetFileName(fileName));
+            } catch (Exception e) {
+                DisplayMessage("Error writing " + Path.GetFileName(fileName) + " - " + e.Message);
+            }
+        }
+#endregion
+
+#region Entity Generation (Object Type, Table, View, etc.)
+        /// <summary>
+        /// Generate the class for an Oracle entity 
+        /// </summary>
+        /// <typeparam name="TEntityAttribute"></typeparam>
+        /// <param name="entity"></param>
+        /// <param name="ancestorClassName">Use as ancestor class if there is no ancestor class already defined in Oracle (e.g., object type)</param>
+        /// <param name="isSerializable"></param>
+        /// <param name="isPartial"></param>
+        /// <param name="tabIndentCount"></param>
+        /// <returns></returns>
+        private string GenerateEntityClass<TEntityAttribute>(IEntity entity, string ancestorClassName, bool isSerializable, bool isPartial, 
+            bool isDataContract, bool isXmlElement, int tabIndentCount) {
+
+            String className = entity.CSharpType ?? Translater.ConvertOracleNameToCSharpName(entity.EntityName, false);
+            bool isPackageRecord = entity is PackageRecord;
+            StringBuilder classText = new StringBuilder("");
+
+            String classFirstLine = "public" + (entity.Instantiable ? "" : " abstract") + (isPartial ? " partial" : "") + " class " + className
+                + (!String.IsNullOrEmpty(entity.AncestorTypeName)
+                        ? " : " + Translater.ConvertOracleNameToCSharpName(entity.AncestorTypeName, false) // Oracle ancestor gets precedence
+                        : (!String.IsNullOrEmpty(ancestorClassName)
+                            ? " : " + GenerateNamespaceSchema() + "." + ancestorClassName + (isPackageRecord ? ", " + "I" + className : "")
+                            : "")) // user defined ancestor
+                + " {"; // start entity type class;
+
+            /////////////////////////////////////////////////////////////////////////////
+            // bypass creation of package records that using unimplemented Oracle types
+            String ignoreReason;
+            if (isPackageRecord && ((Entity)entity).IsIgnoredDueToOracleTypes(out ignoreReason)) {
+                classText.AppendLine(Tab(2) + "// **RECORD IGNORED** - " + ignoreReason);
+                classText.AppendLine(Tab(2) + "// " + classFirstLine);
+                return classText.ToString();
+            }
+
+            // C# attributes: DataContract, Serializable
+            if (isDataContract || isSerializable) classText.Append(Tab(tabIndentCount));
+            if (isDataContract) classText.Append(GenerateDataContractAttribute());
+            if (isSerializable) classText.Append(CSharp.ATTRIBUTE_SERIALIZABLE);
+            if (isDataContract || isSerializable) classText.AppendLine();
+
+            classText.AppendLine(Tab(tabIndentCount) + classFirstLine);
+
+            if (isPartial) classText.AppendLine(Tab(tabIndentCount + 1) + "private " + CSharp.BYTE + " " + "propertyToEnsuresPartialClassNamesAreUniqueAtCompileTime" + " { get; set; }");
+
+            foreach (IEntityAttribute attr in entity.Attributes) { // generate all attributes
+                String nonPublicMemberName = Translater.ConvertOracleNameToCSharpName(attr.AttrName, true);
+                String cSharpType = attr.CSharpType ?? 
+                    Translater.ConvertOracleTypeToCSharpType(Translater.BuildAggregateOracleType(attr), attr.AttrName, false, null);
+                if (attr.AttrTypeOwner != null && !attr.AttrTypeOwner.Equals(entity.Owner) && !attr.AttrTypeOwner.Equals("SYS")) {
+                    cSharpType = GenerateNamespaceObjectType(_baseNamespace, attr.AttrTypeOwner) + "." + cSharpType;
+                }
+
+                //if (isRecordType && !MapCursorColumnsByName) classText.AppendLine(("\t") + "\t\t[MapAttribute(Position = " + ((Field)attr).MapPosition.ToString() + ")]");
+                // C# attributes
+                if (isDataContract || isXmlElement) classText.Append(Tab(tabIndentCount + 1));
+                if (isDataContract) classText.Append("[DataMember(Order=" + attr.Position.ToString() 
+                    + ", IsRequired=" + (attr.Nullable ? "false" : "true") + ")]");
+                if (isXmlElement) classText.Append("[XmlElement(Order=" + attr.Position.ToString() + ", IsNullable=true)]");
+                if (isDataContract || isXmlElement) classText.AppendLine();
+
+                classText.Append(Tab(tabIndentCount + 1) + "public virtual "
+                    + (attr.ContainerClassName == null ? "" : attr.ContainerClassName + ".")
+                    + cSharpType + " " + Translater.ConvertOracleNameToCSharpName(attr.AttrName, false)
+                    + (Parameter.Instance.IsUseAutoImplementedProperties 
+                        ? " { get; set; }"
+                        : " { get { return " + nonPublicMemberName + "; } set { " + nonPublicMemberName + " = value; } }"));
+                classText.AppendLine(Parameter.Instance.IsUseAutoImplementedProperties 
+                    ? ""
+                    : " protected " + (attr.ContainerClassName == null ? "" : attr.ContainerClassName + ".") + cSharpType + " " + nonPublicMemberName + ";");
+            }
+
+            classText.AppendLine(Tab(tabIndentCount) + "} // " + className); // end entity type class
+            return classText.ToString();
+        }
+
+        /// <summary>
+        /// Generate the interface for an entity class
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <param name="tabIndentCount">number of tabs to indent</param>
+        /// <returns></returns>
+        private string GenerateEntityInterface(IEntity entity, int tabIndentCount) {
+            //String interfaceName = entity.CSharpType ?? 
+            //    (entity is PackageRecord 
+            //        ? ((PackageRecord)entity).PackageName.Equals( ((PackageRecord)entity).Name) 
+            //            ?  "" 
+            //            : Translater.ConvertOracleNameToCSharpName(((PackageRecord)entity).Name, false)
+            //        : "") +
+            //    Translater.ConvertOracleNameToCSharpName(entity.EntityName, false);
+
+            String interfaceName = entity.CSharpType ?? Translater.ConvertOracleNameToCSharpName(entity.EntityName, false);
+
+            StringBuilder classText = new StringBuilder("");
+            classText.AppendLine(Tab(tabIndentCount + 1) + "public" + " interface I" + interfaceName + " {"); // start record interface
+            foreach (IEntityAttribute attr in entity.Attributes) { // loop through all fields
+                String cSharpType = attr.CSharpType ?? Translater.ConvertOracleTypeToCSharpType(attr.AttrType, attr.AttrName, false, null);
+                classText.AppendLine(Tab(tabIndentCount + 2) + (attr.ContainerClassName == null ? "" : attr.ContainerClassName + ".") + cSharpType 
+                    + " " + Translater.ConvertOracleNameToCSharpName(attr.AttrName, false)
+                    + " { get; set; }");
+            }
+            classText.AppendLine(Tab(tabIndentCount + 1) + "} // I" + interfaceName); // end record interface
+            return classText.ToString();
+        }
+
+        private void WriteUnpackagedEntityClasses<TEntity, TEntityAttribute>(List<TEntity> entities, string entityNamespace, string ancestorClassName, 
+            bool isSerializable, bool isPartial, bool isDataMember, bool isXmlElement)
+            where TEntity : IEntity
+            where TEntityAttribute : IEntityAttribute {
+
+            // except for object types, do not create file if there are no entities
+            if (entities.Count == 0 && !typeof(TEntity).Equals(typeof(ObjectType))) return;
+
+            DisplayMessage("Coding " + typeof(TEntity).Name.ToLower() + "s...");
+
+            string fileName = _outputPath + @"\" + CaseConverter.ConvertUnderscoreDelimitedToPascalCase(_schema)
+                //+ (_filter == null ? "" : CaseConverter.ConvertToCapitalized(_filter))
+                + typeof(TEntity).Name + ".cs";
+            try {
+                StreamWriter outFile = new StreamWriter(fileName);
+
+                WriteAutoGeneratedComment(outFile);
+
+                // create using statements
+                StringBuilder headerText = new StringBuilder("");
+                headerText.AppendLine("using System;");
+                //if (!IsCSharp30) headerText.AppendLine("using System.Numerics;");
+                headerText.AppendLine("using System.Runtime.Serialization;");
+                headerText.AppendLine("using System.Xml;");
+                headerText.AppendLine("using System.Xml.Serialization;");
+                headerText.AppendLine(USING_ORACLE_DATAACCESS_TYPES + ";");
+                if (typeof(TEntity).Equals(typeof(Table)) || typeof(TEntity).Equals(typeof(View)))
+                    headerText.AppendLine("using " + _objectTypeNamespace + ";"); // tables and views need access to object type in case column uses one as a type
+                outFile.Write(headerText);
+                outFile.WriteLine();
+
+                // write namespace 
+                outFile.WriteLine("namespace " + entityNamespace + " {");
+
+                foreach (TEntity entity in entities) {
+                    //DisplayMessage("Coding object type " + entity.EntityName);
+                    if (entities.IndexOf(entity) != 0) outFile.WriteLine();
+                    outFile.Write(GenerateEntityClass<TEntityAttribute>(entity, ancestorClassName, isSerializable, isPartial, isDataMember, isXmlElement, 1));
+                }
+
+                // close class and namespace for package
+                outFile.Write("" + "} // " + entityNamespace);
+                outFile.Close();
+            } catch (UnauthorizedAccessException) {
+                DisplayMessage(BASE_PERMISSION_ERROR_MSG + Path.GetFileName(fileName));
+            } catch (Exception e) {
+                DisplayMessage("Error writing " + Path.GetFileName(fileName) + " - " + e.Message);
+            }
+        }
+
+        public void WriteObjectTypeClasses(List<ObjectType> objectTypes, string entityNamespace, string ancestorClassName, bool serializable, bool partial) {
+            WriteUnpackagedEntityClasses<ObjectType, ObjectTypeAttribute>(objectTypes, entityNamespace, ancestorClassName,
+                serializable, partial, Parameter.Instance.IsDataContractObjectType, Parameter.Instance.IsXmlElementObjectType);
+        }
+
+        public void WriteTableClasses(List<Table> tables, string entityNamespace, string ancestorClassName, bool serializable, bool partial) {
+            WriteUnpackagedEntityClasses<Table, Column>(tables, entityNamespace, ancestorClassName,
+                serializable, partial, Parameter.Instance.IsDataContractTable, Parameter.Instance.IsXmlElementTable);
+        }
+
+        public void WriteViewClasses(List<View> views, string entityNamespace, string ancestorClassName, bool serializable, bool partial) {
+            WriteUnpackagedEntityClasses<View, Column>(views, entityNamespace, ancestorClassName,
+                serializable, partial, Parameter.Instance.IsDataContractView, Parameter.Instance.IsXmlElementView);
+        }
+#endregion
+
+#region Miscellanous Methods
+        private void WriteAutoGeneratedComment(StreamWriter outFile) {
+            StringBuilder headerText = new StringBuilder("");
+            headerText.AppendLine(COMMENT_AUTO_GENERATED);
+            //headerText.AppendLine("//------------------------------------------------------------------------------");
+            //headerText.AppendLine("// <auto-generated>");
+            //headerText.AppendLine("//     This code was auto-generated by " + APPLICATION_NAME + ".");
+            //headerText.AppendLine("//     Direct edits will be lost if the code is regenerated.");
+            //headerText.AppendLine("// </auto-generated>");
+            //headerText.AppendLine("//------------------------------------------------------------------------------");
+            //headerText.AppendLine("");
+            outFile.Write(headerText);
+        }
+        
+        /// <summary>
+        /// Deploy copy of necessary code that is not generated from schema
+        /// </summary>
+        public void DeployUtilityClasses(bool overwrite) {
+            string fileName, filePath;
+
+            // deploy OrclPower
+            fileName = @"OrclPower.cs";
+            filePath = _outputPath + @"\" + fileName;
+            try {
+                if (overwrite || !File.Exists(filePath)) {
+                    File.Delete(filePath); // delete existing file since we have to write file in sections
+                    File.WriteAllText(filePath, COMMENT_AUTO_GENERATED + Environment.NewLine);
+                    if (IsCSharp30) File.AppendAllText(filePath, "#define CSHARP30\r\n");   // for C# 3.0, add compiler option
+                    File.AppendAllText(filePath, Properties.Resources.OrclPower);           // write body of source code
+                }
+            } catch (UnauthorizedAccessException) {
+                DisplayMessage(BASE_PERMISSION_ERROR_MSG + Path.GetFileName(fileName));
+            } catch (Exception e) {
+                DisplayMessage("Error writing " + Path.GetFileName(fileName) + " - " + e.Message);
+            }
+
+            // deploy CaseConversion
+            fileName = @"CaseConversion.cs";
+            filePath = _outputPath + @"\" + fileName;
+            try {
+                if (overwrite || !File.Exists(filePath)) {
+                    File.Delete(filePath); // delete existing file since we have to write file in sections
+                    File.WriteAllText(filePath, COMMENT_AUTO_GENERATED + Environment.NewLine);
+                    File.AppendAllText(filePath, Properties.Resources.CaseConversion);  // write body of source code
+                }
+            } catch (UnauthorizedAccessException) {
+                DisplayMessage(BASE_PERMISSION_ERROR_MSG + Path.GetFileName(fileName));
+            } catch (Exception e) {
+                DisplayMessage("Error writing " + Path.GetFileName(fileName) + " - " + e.Message);
+            }
+
+        }
+
+        /// <summary>
+        /// Return a string spaces to be used as a single tab 
+        /// </summary>
+        /// <returns></returns>
+        private string Tab() {
+            return Tab(1);
+        }
+
+        /// <summary>
+        /// Return a string of spaces for a given number of tabs 
+        /// </summary>
+        /// <param name="count"></param>
+        /// <returns></returns>
+        private string Tab(int count) {
+            string tabs = "";
+            for (int i = 0; i < count; i++) tabs += new String(' ', 4); // tab is 4 spaces
+            return tabs;
+        }
+
+        private String GenerateDataContractAttribute() {
+            return @"[" + CSharp.ATTRIBUTE_DATA_CONTRACT + "("
+                + (String.IsNullOrEmpty(Parameter.Instance.NamespaceDataContract)
+                    ? ""
+                    : @"Namespace=""" + Parameter.Instance.NamespaceDataContract + @"""") 
+                + ")]";
+        }
+
+        private static String GenerateLocalVariableName(string baseLocalVarName) {
+            return Parameter.Instance.LocalVariableNameSuffix + baseLocalVarName;
+        }
+
+        private void DisplayMessage(String msg) { _displayMessageMethod(msg); }
+#endregion
+    }
+}
