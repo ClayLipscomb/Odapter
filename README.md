@@ -1,7 +1,7 @@
 Odapter - a C# code generator for Oracle packages
 ========================================
 
-Odapter generates C# adapter classes which provide maximum integration with an Oracle schema's packages. Generated DTO Lists are hydrated from any returned cursor results sets, both strongly (record type based) and weakly typed. The generated C# provides de facto compile-time resolution with Oracle packages from within the IDE. Additionally, C# DTOs are generated for object types, tables and views.
+Odapter generates C# adapter classes that provide maximum integration with an Oracle schema's packages. Generated DTO Lists are hydrated from any returned cursor results sets, both strongly (record type based) and weakly typed. The generated C# provides de facto compile-time resolution with Oracle packages from within the IDE. Additionally, C# DTOs can be generated for object types, tables and views.
 
 ### Minimum System Requirements
 
@@ -127,6 +127,20 @@ END odpt_pkg_sample;
 ###### Generated Code
 
 ```C#
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.Common;
+using Oracle.ManagedDataAccess.Client;
+using Oracle.ManagedDataAccess.Types;
+using System.Collections;
+using System.Diagnostics;
+using System.Runtime.Serialization;
+using System.Xml;
+using System.Xml.Serialization;
+using Odapter;
+using System.Linq;
+
 namespace Schema.Odpt.Package {
     public partial class OdptPkgSample : Schema.Odpt.OdptAdapter {
         private OdptPkgSample() { }
