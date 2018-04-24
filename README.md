@@ -1,7 +1,7 @@
 Odapter - a C# code generator for Oracle packages
 ========================================
 
-Odapter generates C# adapter classes that provide maximum integration with an Oracle schema's packages. Generated DTO Lists are hydrated from any returned cursor results sets, both strongly (record type based) and weakly typed. The generated C# provides de facto compile-time resolution with Oracle packages from within the IDE. Additionally, C# DTOs can be generated for object types, tables and views.
+Odapter generates C# adapter classes that provide maximum integration with an Oracle schema's packages. Generated DTO Lists will be hydrated from returned cursor results sets, both strongly (record type based) and weakly typed. The generated C# provides de facto compile-time resolution with Oracle packages from within the IDE. Additionally, C# DTOs can be generated for object types, tables and views.
 
 ### Minimum System Requirements
 
@@ -14,7 +14,7 @@ Odapter generates C# adapter classes that provide maximum integration with an Or
     - Managed Driver if targeting .NET Framework 4.0 or higher
     - Unmanaged Driver if targeting .NET Framework 3.5
 
-### Oracle to C# Translation Concepts
+### Oracle to C# Translation Examples
 
 | PL/SQL and Schema Objects                           | C# |
 | --------------------------------------------------- | -------- |
@@ -29,32 +29,32 @@ Odapter generates C# adapter classes that provide maximum integration with an Or
 
 ### Code Generation Features
 
-* Generates adapter class for each package and nested DTOs for respective record types
+* Generates adapter class for each package and nested DTO for each respective record type
 * Translates all common Oracle data types to C#
-* Translates Oracle associative array type to C#
+* Translates Oracle associative array type to C# List
 * Configurable translation of Oracle NUMBER, DATE and TIMESTAMP types to C# (including ODP.NET safe types OracleDecimal, OracleDate, OracleTimestamp)
 * Translates Oracle IN, OUT and IN OUT parameters to C#
 * Translates Oracle optional (defaulted) parameters to C# (4.0+)
 * Translates strongly and weakly typed cursors (both as function return and OUT parameters) to C#
 * Generates DTO for each object type, table, and view
-* Configurable for either auto-implemented or protected field wrapped DTO properties
+* Configurable for either auto-implemented, or protected field wrapped, DTO properties
 * Generates ancestor classes and basic schema connection code
 * Configurable C# namespaces and base class names
 * Generates post hook for profiling a package procedure invoked from C#
-* Optionally filters schema objects via prefix and special characters
+* Optionally filters schema objects via prefix and/or special characters
 * Optionally generates C# classes as partial for packages, package record types, object types, tables and views
 * Optionally generates C# DTOs with Serializable, DataContract/DataMember (incl. namespace) or XmlElementAttribute attributes for package record types, object types, tables and views
 * Generates C# 3.0 or 4.0+ code (respectively .NET 3.5 or 4.0+)
 * Generates single C# file for all packages, object types, tables and views, respectively
 * Handles package referencing a record type defined in a diffferent package (including filtered)
-* Easily adaptable to legacy C# projects and Oracle schemas
+* Easily adaptable to legacy .NET projects and Oracle schemas
 * Locates and parses local TNSNAMES.ORA for Oracle instances
 * Persists custom generation settings to config file for multiple projects or schemas
 
 ### Run Time Features - Packages
 
 * Invokes packaged functions and stored procedures
-* Hydrates a List of (record type derived) DTOs from a returned (or OUT param) strongly typed cursor result set
+* Hydrates a List of (record type derived) DTOs from a returned (incl. OUT param) strongly typed cursor result set
 * Hydrates a List of DTOs from a returned weakly typed cursor result set using configurable mapping:
     - Mapping by name: column name to property name (translates underscore_delimited to PascalCase)
     - Mapping by position: column position to property attribute position (unmapped column silent fail option)
@@ -67,7 +67,7 @@ Odapter generates C# adapter classes that provide maximum integration with an Or
 1. Download Odapter/bin/x64/Release/Odapter.exe and run
 2. If Oracle Client Homes are found, select appropriate value
 3. Enter DB Instance, Schema, Login and Password
-4. Enter the Output Path with to be the destination of the generated files (your project folder)
+4. Enter the Output Path for all generated files (your project folder)
 5. If project is using the .NET 3.5 framework, select 3.0 as the C# Version
 6. For all other fields, use default settings
 6. Click Generate 
