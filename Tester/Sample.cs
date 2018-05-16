@@ -28,13 +28,13 @@ namespace Odapter.Sample {
     public class Sample {
         private const String HELLO = "Hello", GOODBYE = "Goodbye";
 
-        // declare class dervied from record type DTO package
+        // class derived from record type DTO package
         private class MyClassDerived : OdptPkgSample.TTableBigPartial { 
             public String      StringPropertyExtra { get; set; }    // custom property
             public List<Int32> Int32ListPropertyExtra { get; set; } // custom property
         }
 
-        // declare custom class to map only 4 columns; properties for the Date and Timestap columns will be excluded
+        // custom class to map only 4 columns; properties for Date and Timestap columns are excluded
         private class MyClassOriginal {
             public Int64? Id { get; set; }                          // maps to id column
             public Int64? ColInteger { get; set; }                  // maps to col_integer column
@@ -50,15 +50,14 @@ namespace Odapter.Sample {
             Decimal?    pInDecimal = 10.0M;
             String      pInOutString = HELLO;
             DateTime?   pOutDate;
-            List<Int64?> pInOutListInt64 = new List<Int64?> {2, 3, 5, 7, 11, 13, 17, 19, 29, 31};
-            List<Int64?> pInOutListInt64Copy = pInOutListInt64;
+            List<Int64?> pInOutListInt64 = new List<Int64?> {2, 3, 5, 7, 11, 13, 17, 19, 29, 31}, pInOutListInt64Copy = pInOutListInt64;
 
             // hydrate DTO List from typed result set
             List<MyClassDerived> myClassDerivedList = OdptPkgSample.Instance.GetRowsTypedRet<MyClassDerived>(pInDecimal, ref pInOutString, ref pInOutListInt64, out pOutDate, rowLimit);
-            Debug.Assert(pInOutString.Equals(GOODBYE));                 // confirm OUT arg from package function
+            Debug.Assert(pInOutString.Equals(GOODBYE));                                 // confirm OUT arg from package function
             for (int i = 0; i < pInOutListInt64.Count; i++)
-                Debug.Assert(pInOutListInt64[i].Equals(pInOutListInt64Copy[i] * 7)); // confirm all value multipled by 7 in func
-            Debug.Assert(pOutDate.Equals(new DateTime (1999, 12, 31))); // confirm OUT arg from package function
+                Debug.Assert(pInOutListInt64[i].Equals(pInOutListInt64Copy[i] * 7));    // confirm all values were multipled by 7 in func
+            Debug.Assert(pOutDate.Equals(new DateTime (1999, 12, 31)));                 // confirm OUT arg from package function
             Debug.Assert(myClassDerivedList.Count == rowLimit);
 
             // hydrate DTO List from untyped result set by mapping column name to property name (default); force unmapped columns to be ignored (non-default)
@@ -69,7 +68,8 @@ namespace Odapter.Sample {
             DataTable myDataTable = OdptPkgSample.Instance.GetRowsUntypedRet(pInInt64, true, rowLimit);
             List<String> dataTableCaptions = new List<string> { "Id", "Col Integer", "Col Number", "Col Varchar2 Max", "Col Date", "Col Timestamp" };
             Debug.Assert(myDataTable.Rows.Count == rowLimit);
-            for (int i = 0; i < dataTableCaptions.Count;  i++) Debug.Assert(myDataTable.Columns[i].Caption.Equals(dataTableCaptions[i]));
+            for (int i = 0; i < dataTableCaptions.Count;  i++)
+                Debug.Assert(myDataTable.Columns[i].Caption.Equals(dataTableCaptions[i]));  // confirm captions were created from column name
         }
     }
 }

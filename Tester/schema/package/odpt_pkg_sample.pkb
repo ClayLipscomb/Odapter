@@ -1,7 +1,7 @@
 CREATE OR REPLACE PACKAGE BODY ODPT.odpt_pkg_sample AS
                                      
     FUNCTION get_rows_typed_ret (p_in_number IN NUMBER, p_in_out_varchar2 IN OUT VARCHAR2, p_in_out_assocarray_integer IN OUT t_assocarray_integer, 
-        p_out_date OUT DATE) RETURN t_ref_cursor_table_big_partial IS
+            p_out_date OUT DATE) RETURN t_ref_cursor_table_big_partial IS
         l_cursor    t_ref_cursor_table_big_partial;
         l_idx		INTEGER;        
     BEGIN
@@ -10,7 +10,7 @@ CREATE OR REPLACE PACKAGE BODY ODPT.odpt_pkg_sample AS
         FROM        odpt_table_big
         ORDER BY    id;    
 
-        -- multiply each value in assoc array by 7 
+        -- multiply each value in assoc array by 7 before returning
         l_idx := p_in_out_assocarray_integer.FIRST;
         WHILE l_idx IS NOT NULL LOOP
             p_in_out_assocarray_integer(l_idx) := p_in_out_assocarray_integer(l_idx) * 7;

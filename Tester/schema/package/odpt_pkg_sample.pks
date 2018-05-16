@@ -1,7 +1,7 @@
 CREATE OR REPLACE PACKAGE ODPT.odpt_pkg_sample AS
 
     -- assoc array of integers
-	TYPE t_assocarray_integer IS TABLE OF INTEGER INDEX BY PLS_INTEGER;  
+    TYPE t_assocarray_integer IS TABLE OF INTEGER INDEX BY PLS_INTEGER;  
 
     -- typed cursor
     TYPE t_table_big_partial IS RECORD (
