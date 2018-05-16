@@ -434,6 +434,6 @@ namespace Odapter.Sample {
         }
     }
 }
-``
+```
 
 See Tester/Tester.cs for more code samples.
