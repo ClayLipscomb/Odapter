@@ -1,7 +1,7 @@
 Odapter - a C# code generator for Oracle packages
 ========================================
 
-Odapter generates C# adapter classes that provide maximum integration with an Oracle schema's packages. Generated DTO Lists will be hydrated from returned cursor results sets, both strongly (record type based) and weakly typed. The generated C# provides de facto compile-time resolution with Oracle packages from within the IDE. Additionally, C# DTOs can be generated for object types, tables and views.
+Odapter generates C# adapter classes that provide maximum integration with an Oracle schema's packages. Generated DTO Lists will be hydrated from returned cursor results sets, both typed (record type based) and untyped. The generated C# provides de facto compile-time resolution with Oracle packages from within the IDE. Additionally, C# DTOs can be generated for object types, tables and views.
 
 ### Minimum System Requirements
 
@@ -35,7 +35,7 @@ Odapter generates C# adapter classes that provide maximum integration with an Or
 * Configurable translation of Oracle NUMBER, DATE and TIMESTAMP types to C# (including ODP.NET safe types OracleDecimal, OracleDate, OracleTimestamp)
 * Translates Oracle IN, OUT and IN OUT parameters to C#
 * Translates Oracle optional (defaulted) parameters to C# (4.0+)
-* Translates strongly and weakly typed cursors (both as function return and OUT parameters) to C#
+* Translates typed and untyped cursors (both as function return and OUT parameters) to C#
 * Generates DTO for each object type, table, and view
 * Configurable for either auto-implemented, or protected field wrapped, DTO properties
 * Generates ancestor classes and basic schema connection code
@@ -54,12 +54,12 @@ Odapter generates C# adapter classes that provide maximum integration with an Or
 ### Run Time Features - Packages
 
 * Invokes packaged functions and stored procedures
-* Hydrates a List of (record type derived) DTOs from a returned (incl. OUT param) strongly typed cursor result set
-* Hydrates a List of DTOs from a returned weakly typed cursor result set using configurable mapping:
+* Hydrates a List of (record type derived) DTOs from a returned (incl. OUT param) typed cursor result set
+* Hydrates a List of DTOs from a returned untyped cursor result set using configurable mapping:
     - Mapping by name: column name to property name (translates underscore_delimited to PascalCase)
     - Mapping by position: column position to property attribute position (unmapped column silent fail option)
     - For performance, uses thread-safe static cache for mappings of C# DTO to Oracle result set
-* Constructs (from underlying columns) and hydrates DataTable from returned strongly or weakly typed cursor result set
+* Constructs (from underlying columns) and hydrates DataTable from returned typed or untyped cursor result set
 * Optionally limits the number of rows returned from any cursor result set
 
 ### Getting Started: Generating Code for Packages
@@ -76,13 +76,13 @@ Odapter generates C# adapter classes that provide maximum integration with an Or
 9. Add "using Schema.YourSchemaName.Package" to project files in order to access packages
 10. See Tester/Tester.cs for code examples
 
-### Code Sample #1
+### Code Sample 
 ###### Package Specification
 
 ```SQLPL
 CREATE OR REPLACE PACKAGE ODPT.odpt_pkg_sample AS
 
-    -- strongly typed cursor
+    -- typed cursor
     TYPE t_table_big_partial IS RECORD (
         id                  odpt_table_big.id%TYPE,                 -- NUMBER
         col_integer         odpt_table_big.col_integer%TYPE,        -- INTEGER
@@ -92,8 +92,12 @@ CREATE OR REPLACE PACKAGE ODPT.odpt_pkg_sample AS
         col_timestamp       odpt_table_big.col_timestamp%TYPE);     -- TIMESTAMP
     TYPE t_ref_cursor_table_big_partial IS REF CURSOR RETURN t_table_big_partial;
 	
+    -- untyped cursor 
+    TYPE t_ref_cursor IS REF CURSOR;
+    
     FUNCTION get_rows_typed_ret (p_in_number IN NUMBER, p_in_out_varchar2 IN OUT VARCHAR2, p_out_date OUT DATE) RETURN t_ref_cursor_table_big_partial;
-
+    FUNCTION get_rows_untyped_ret (p_in_integer IN INTEGER) RETURN t_ref_cursor;
+    
 END odpt_pkg_sample;
 /
 ```
@@ -116,6 +120,17 @@ CREATE OR REPLACE PACKAGE BODY ODPT.odpt_pkg_sample AS
         RETURN l_cursor;
     END;	
 
+    FUNCTION get_rows_untyped_ret (p_in_integer IN INTEGER) RETURN t_ref_cursor IS
+        l_cursor    t_ref_cursor;
+    BEGIN
+        OPEN l_cursor FOR
+        SELECT      id, col_integer, col_number, col_varchar2_max, col_date, col_timestamp
+        FROM        odpt_table_big
+        ORDER BY    id;    
+
+        RETURN l_cursor;
+    END;	
+    
 END odpt_pkg_sample;
 /
 ```
@@ -142,6 +157,7 @@ using Odapter;
 using System.Linq;
 
 namespace Schema.Odpt.Package {
+
     public partial class OdptPkgSample : Schema.Odpt.OdptAdapter {
         private OdptPkgSample() { }
         private static OdptPkgSample _instance = new OdptPkgSample();
@@ -228,8 +244,65 @@ namespace Schema.Odpt.Package {
             }
             return __ret;
         } // GetRowsTypedRet
+
+        public List<T_returnUntyped> GetRowsUntypedRet<T_returnUntyped>(Int64? pInInteger, 
+                bool mapColumnToObjectPropertyByPosition = false, bool allowUnmappedColumnsToBeExcluded = false, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, 
+                OracleConnection optionalPreexistingOpenConnection = null)
+                where T_returnUntyped : class, new() {
+            List<T_returnUntyped> __ret = new List<T_returnUntyped>(); 
+            OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
+            try {
+                using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_SAMPLE.GET_ROWS_UNTYPED_RET", __conn)) {
+                    __cmd.CommandType = CommandType.StoredProcedure;
+                    __cmd.BindByName = true;
+                    __cmd.Parameters.Add(new OracleParameter("!RETURN", OracleDbType.RefCursor, null, ParameterDirection.ReturnValue));
+                    __cmd.Parameters.Add(new OracleParameter("P_IN_INTEGER", OracleDbType.Int64, pInInteger, ParameterDirection.Input));
+
+                    OracleCommandTrace __cmdTrace = IsTracing(__cmd) ? new OracleCommandTrace(__cmd) : null;
+                    int __rowsAffected = __cmd.ExecuteNonQuery();
+                    if (!((OracleRefCursor)__cmd.Parameters["!RETURN"].Value).IsNull)
+                        using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["!RETURN"].Value).GetDataReader()) {
+                            __ret = Hydrator.ReadResult<T_returnUntyped>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
+                        } // using OracleDataReader
+                    if (__cmdTrace != null) TraceCompletion(__cmdTrace, __ret.Count);
+                } // using OracleCommand
+            } finally {
+                if (optionalPreexistingOpenConnection == null) {
+                    __conn.Close();
+                    __conn.Dispose();
+                }
+            }
+            return __ret;
+        } // GetRowsUntypedRet
+
+        public DataTable GetRowsUntypedRet(Int64? pInInteger, Boolean convertColumnNameToTitleCaseInCaption = false, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null) {
+            DataTable __ret = null; 
+            OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
+            try {
+                using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_SAMPLE.GET_ROWS_UNTYPED_RET", __conn)) {
+                    __cmd.CommandType = CommandType.StoredProcedure;
+                    __cmd.BindByName = true;
+                    __cmd.Parameters.Add(new OracleParameter("!RETURN", OracleDbType.RefCursor, null, ParameterDirection.ReturnValue));
+                    __cmd.Parameters.Add(new OracleParameter("P_IN_INTEGER", OracleDbType.Int64, pInInteger, ParameterDirection.Input));
+
+                    OracleCommandTrace __cmdTrace = IsTracing(__cmd) ? new OracleCommandTrace(__cmd) : null;
+                    int __rowsAffected = __cmd.ExecuteNonQuery();
+                    if (!((OracleRefCursor)__cmd.Parameters["!RETURN"].Value).IsNull)
+                        using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["!RETURN"].Value).GetDataReader()) {
+                            __ret = Hydrator.ReadResult(__rdr, convertColumnNameToTitleCaseInCaption, optionalMaxNumberRowsToReadFromAnyCursor);
+                        } // using OracleDataReader
+                    if (__cmdTrace != null) TraceCompletion(__cmdTrace, __ret.Rows.Count);
+                } // using OracleCommand
+            } finally {
+                if (optionalPreexistingOpenConnection == null) {
+                    __conn.Close();
+                    __conn.Dispose();
+                }
+            }
+            return __ret;
+        } // GetRowsUntypedRet
     } // OdptPkgSample
-}
+} // Schema.Odpt.Package
 ```
 
 ###### Executing Generated Code
@@ -238,20 +311,55 @@ namespace Schema.Odpt.Package {
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Data;
 using Schema.Odpt.Package;
 
 namespace Odapter.Sample {
     public class Sample {
-        public void TestSample() {
-            uint? rowLimit = 10;
-            Decimal? pInDecimal = 10.0M;
-            String pInOutString = "Hello";
-            DateTime? pOutDate;
+        private const String HELLO = "Hello", GOODBYE = "Goodbye";
 
-            List<OdptPkgSample.TTableBigPartial> retTableBigPartialList = OdptPkgSample.Instance.GetRowsTypedRet<OdptPkgSample.TTableBigPartial>(pInDecimal, ref pInOutString, out pOutDate, rowLimit);
-            Debug.Assert(retTableBigPartialList.Count == rowLimit);
-            Debug.Assert(pInOutString.Equals("Goodbye"));
-            Debug.Assert(pOutDate.Equals(new DateTime(1999, 12, 31)));
+        // declare class dervied from record type DTO package
+        private class MyClassDerived : OdptPkgSample.TTableBigPartial { 
+            public String      StringPropertyExtra { get; set; }    // custom property
+            public List<Int32> Int32ListPropertyExtra { get; set; } // custom property
+        }
+
+        // declare custom class to map only 4 columns; properties for the Date and Timestap columns will be excluded
+        private class MyClassOriginal {
+            public Int64? Id { get; set; }                          // maps to id column
+            public Int64? ColInteger { get; set; }                  // maps to col_integer column
+            public Decimal? ColNumber { get; set; }                 // maps to col_number column
+            public String ColVarchar2Max { get; set; }              // maps to col_varchar2_max column
+            public String StringPropertyExtra { get; set; }         // custom property
+            public List<Int32> Int32ListPropertyExtra { get; set; } // custom property
+        }
+
+        public void Test() {
+            uint?       rowLimit = 25;
+            Int64?      pInInt64 = 100000000000000;
+            Decimal?    pInDecimal = 10.0M;
+            String      pInOutString = HELLO;
+            DateTime?   pOutDate;
+
+            // hydrate DTO List from typed result set
+            List<MyClassDerived> myClassDerivedList = OdptPkgSample.Instance.GetRowsTypedRet<MyClassDerived>(pInDecimal, ref pInOutString, out pOutDate, rowLimit);
+            Debug.Assert(myClassDerivedList.Count == rowLimit);
+            Debug.Assert(pInOutString.Equals(GOODBYE));                 // confirm OUT arg from package function
+            Debug.Assert(pOutDate.Equals(new DateTime (1999, 12, 31))); // confirm OUT arg from package function
+
+            // hydrate DTO List from untyped result set by mapping column name to property name (default); force unmapped columns to be ignored (non-default)
+            List<MyClassOriginal> myClassOriginalList = OdptPkgSample.Instance.GetRowsUntypedRet<MyClassOriginal>(pInInt64, false, true, rowLimit);
+            Debug.Assert(myClassOriginalList.Count == rowLimit);
+
+            // hydrate Datatable from all columns in untyped result set; convert column names to DataTable captions
+            DataTable myDataTable = OdptPkgSample.Instance.GetRowsUntypedRet(pInInt64, true, rowLimit);
+            Debug.Assert(myDataTable.Rows.Count == rowLimit);
+            Debug.Assert(myDataTable.Columns[0].Caption.Equals("Id"));
+            Debug.Assert(myDataTable.Columns[1].Caption.Equals("Col Integer"));
+            Debug.Assert(myDataTable.Columns[2].Caption.Equals("Col Number"));
+            Debug.Assert(myDataTable.Columns[3].Caption.Equals("Col Varchar2 Max"));
+            Debug.Assert(myDataTable.Columns[4].Caption.Equals("Col Date"));
+            Debug.Assert(myDataTable.Columns[5].Caption.Equals("Col Timestamp"));
         }
     }
 }

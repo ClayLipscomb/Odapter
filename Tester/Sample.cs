@@ -21,20 +21,55 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Data;
 using Schema.Odpt.Package;
 
 namespace Odapter.Sample {
     public class Sample {
+        private const String HELLO = "Hello", GOODBYE = "Goodbye";
+
+        // declare class dervied from record type DTO package
+        private class MyClassDerived : OdptPkgSample.TTableBigPartial { 
+            public String      StringPropertyExtra { get; set; }    // custom property
+            public List<Int32> Int32ListPropertyExtra { get; set; } // custom property
+        }
+
+        // declare custom class to map only 4 columns; properties for the Date and Timestap columns will be excluded
+        private class MyClassOriginal {
+            public Int64? Id { get; set; }                          // maps to id column
+            public Int64? ColInteger { get; set; }                  // maps to col_integer column
+            public Decimal? ColNumber { get; set; }                 // maps to col_number column
+            public String ColVarchar2Max { get; set; }              // maps to col_varchar2_max column
+            public String StringPropertyExtra { get; set; }         // custom property
+            public List<Int32> Int32ListPropertyExtra { get; set; } // custom property
+        }
+
         public void Test() {
-            uint?       rowLimit = 10;
+            uint?       rowLimit = 25;
+            Int64?      pInInt64 = 100000000000000;
             Decimal?    pInDecimal = 10.0M;
-            String      pInOutString = "Hello";
+            String      pInOutString = HELLO;
             DateTime?   pOutDate;
 
-            List<OdptPkgSample.TTableBigPartial> retTableBigPartialList = OdptPkgSample.Instance.GetRowsTypedRet<OdptPkgSample.TTableBigPartial>(pInDecimal, ref pInOutString, out pOutDate, rowLimit, null);
-            Debug.Assert(retTableBigPartialList.Count == rowLimit);
-            Debug.Assert(pInOutString.Equals("Goodbye"));
-            Debug.Assert(pOutDate.Equals(new DateTime (1999, 12, 31)));
+            // hydrate DTO List from typed result set
+            List<MyClassDerived> myClassDerivedList = OdptPkgSample.Instance.GetRowsTypedRet<MyClassDerived>(pInDecimal, ref pInOutString, out pOutDate, rowLimit);
+            Debug.Assert(myClassDerivedList.Count == rowLimit);
+            Debug.Assert(pInOutString.Equals(GOODBYE));                 // confirm OUT arg from package function
+            Debug.Assert(pOutDate.Equals(new DateTime (1999, 12, 31))); // confirm OUT arg from package function
+
+            // hydrate DTO List from untyped result set by mapping column name to property name (default); force unmapped columns to be ignored (non-default)
+            List<MyClassOriginal> myClassOriginalList = OdptPkgSample.Instance.GetRowsUntypedRet<MyClassOriginal>(pInInt64, false, true, rowLimit);
+            Debug.Assert(myClassOriginalList.Count == rowLimit);
+
+            // hydrate Datatable from all columns in untyped result set; convert column names to DataTable captions
+            DataTable myDataTable = OdptPkgSample.Instance.GetRowsUntypedRet(pInInt64, true, rowLimit);
+            Debug.Assert(myDataTable.Rows.Count == rowLimit);
+            Debug.Assert(myDataTable.Columns[0].Caption.Equals("Id"));
+            Debug.Assert(myDataTable.Columns[1].Caption.Equals("Col Integer"));
+            Debug.Assert(myDataTable.Columns[2].Caption.Equals("Col Number"));
+            Debug.Assert(myDataTable.Columns[3].Caption.Equals("Col Varchar2 Max"));
+            Debug.Assert(myDataTable.Columns[4].Caption.Equals("Col Date"));
+            Debug.Assert(myDataTable.Columns[5].Caption.Equals("Col Timestamp"));
         }
     }
 }

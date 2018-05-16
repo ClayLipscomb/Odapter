@@ -13,5 +13,16 @@ CREATE OR REPLACE PACKAGE BODY ODPT.odpt_pkg_sample AS
         RETURN l_cursor;
     END;	
 
+    FUNCTION get_rows_untyped_ret (p_in_integer IN INTEGER) RETURN t_ref_cursor IS
+        l_cursor    t_ref_cursor;
+    BEGIN
+        OPEN l_cursor FOR
+        SELECT      id, col_integer, col_number, col_varchar2_max, col_date, col_timestamp
+        FROM        odpt_table_big
+        ORDER BY    id;    
+
+        RETURN l_cursor;
+    END;	
+    
 END odpt_pkg_sample;
 /
