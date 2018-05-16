@@ -1,4 +1,4 @@
-CREATE OR REPLACE PACKAGE BODY ODPT.odpt_pkg_sample AS
+CREATE OR REPLACE PACKAGE BODY ODPT.odpt_pkg_example AS
                                      
     FUNCTION get_rows_typed_ret (p_in_number IN NUMBER, p_in_out_varchar2 IN OUT VARCHAR2, p_in_out_assocarray_integer IN OUT t_assocarray_integer, 
             p_out_date OUT DATE) RETURN t_ref_cursor_table_big_partial IS
@@ -33,5 +33,5 @@ CREATE OR REPLACE PACKAGE BODY ODPT.odpt_pkg_sample AS
         RETURN l_cursor;
     END;	
     
-END odpt_pkg_sample;
+END odpt_pkg_example;
 /

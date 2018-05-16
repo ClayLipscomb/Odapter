@@ -74,13 +74,13 @@ Odapter generates C# adapter classes that provide maximum integration with an Or
 7. After successful generation, enter a .config file name in File Source and click Save Current
 8. Open your project and add the generated files
 9. Add "using Schema.YourSchemaName.Package" to project files in order to access packages
-10. See Tester/Tester.cs for code examples
+10. See Tester/Tester.cs and below for code examples
 
 ### Code Example
-###### Package Specification - Tester/schema/package/odpt_pkg_sample.pks
+###### Package Specification - Tester/schema/package/odpt_pkg_example.pks
 
 ```SQLPL
-CREATE OR REPLACE PACKAGE ODPT.odpt_pkg_sample AS
+CREATE OR REPLACE PACKAGE ODPT.odpt_pkg_example AS
 
     -- assoc array of integers
     TYPE t_assocarray_integer IS TABLE OF INTEGER INDEX BY PLS_INTEGER;  
@@ -102,14 +102,14 @@ CREATE OR REPLACE PACKAGE ODPT.odpt_pkg_sample AS
         p_out_date OUT DATE) RETURN t_ref_cursor_table_big_partial;
     FUNCTION get_rows_untyped_ret (p_in_integer IN INTEGER) RETURN t_ref_cursor;
     
-END odpt_pkg_sample;
+END odpt_pkg_example;
 /
 ```
 
-###### Package Body  - Tester/schema/package/odpt_pkg_sample.pkb
+###### Package Body  - Tester/schema/package/odpt_pkg_example.pkb
 
 ```SQLPL
-CREATE OR REPLACE PACKAGE BODY ODPT.odpt_pkg_sample AS
+CREATE OR REPLACE PACKAGE BODY ODPT.odpt_pkg_example AS
                                      
     FUNCTION get_rows_typed_ret (p_in_number IN NUMBER, p_in_out_varchar2 IN OUT VARCHAR2, p_in_out_assocarray_integer IN OUT t_assocarray_integer, 
             p_out_date OUT DATE) RETURN t_ref_cursor_table_big_partial IS
@@ -144,13 +144,13 @@ CREATE OR REPLACE PACKAGE BODY ODPT.odpt_pkg_sample AS
         RETURN l_cursor;
     END;	
     
-END odpt_pkg_sample;
+END odpt_pkg_example;
 /
 ```
 
 ###### Generation 
 
-![](Tester/SampleCodeScreenShot.png "")
+![](Tester/ExampleCodeScreenShot.png "")
 
 ###### Generated Code - Tester/generated/OdptPackage.cs
 
@@ -170,10 +170,10 @@ using Odapter;
 using System.Linq;
 
 namespace Schema.Odpt.Package {
-    public partial class OdptPkgSample : Schema.Odpt.OdptAdapter {
-        private OdptPkgSample() { }
-        private static OdptPkgSample _instance = new OdptPkgSample();
-        public static OdptPkgSample Instance { get { return _instance; } }
+    public partial class OdptPkgExample : Schema.Odpt.OdptAdapter {
+        private OdptPkgExample() { }
+        private static OdptPkgExample _instance = new OdptPkgExample();
+        public static OdptPkgExample Instance { get { return _instance; } }
 
         public interface ITTableBigPartial {
             Int64? Id { get; set; }
@@ -226,7 +226,7 @@ namespace Schema.Odpt.Package {
             List<T_TTableBigPartial> __ret = new List<T_TTableBigPartial>(); pOutDate = null; 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
             try {
-                using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_SAMPLE.GET_ROWS_TYPED_RET", __conn)) {
+                using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_EXAMPLE.GET_ROWS_TYPED_RET", __conn)) {
                     __cmd.CommandType = CommandType.StoredProcedure;
                     __cmd.BindByName = true;
                     __cmd.Parameters.Add(new OracleParameter("!RETURN", OracleDbType.RefCursor, null, ParameterDirection.ReturnValue));
@@ -274,7 +274,7 @@ namespace Schema.Odpt.Package {
             List<T_TTableBigPartial> __ret = new List<T_TTableBigPartial>(); pOutDate = null; 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
             try {
-                using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_SAMPLE.GET_ROWS_TYPED_RET", __conn)) {
+                using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_EXAMPLE.GET_ROWS_TYPED_RET", __conn)) {
                     __cmd.CommandType = CommandType.StoredProcedure;
                     __cmd.BindByName = true;
                     __cmd.Parameters.Add(new OracleParameter("!RETURN", OracleDbType.RefCursor, null, ParameterDirection.ReturnValue));
@@ -323,7 +323,7 @@ namespace Schema.Odpt.Package {
             List<T_returnUntyped> __ret = new List<T_returnUntyped>(); 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
             try {
-                using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_SAMPLE.GET_ROWS_UNTYPED_RET", __conn)) {
+                using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_EXAMPLE.GET_ROWS_UNTYPED_RET", __conn)) {
                     __cmd.CommandType = CommandType.StoredProcedure;
                     __cmd.BindByName = true;
                     __cmd.Parameters.Add(new OracleParameter("!RETURN", OracleDbType.RefCursor, null, ParameterDirection.ReturnValue));
@@ -350,7 +350,7 @@ namespace Schema.Odpt.Package {
             DataTable __ret = null; 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
             try {
-                using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_SAMPLE.GET_ROWS_UNTYPED_RET", __conn)) {
+                using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_EXAMPLE.GET_ROWS_UNTYPED_RET", __conn)) {
                     __cmd.CommandType = CommandType.StoredProcedure;
                     __cmd.BindByName = true;
                     __cmd.Parameters.Add(new OracleParameter("!RETURN", OracleDbType.RefCursor, null, ParameterDirection.ReturnValue));
@@ -372,7 +372,7 @@ namespace Schema.Odpt.Package {
             }
             return __ret;
         } // GetRowsUntypedRet
-    } // OdptPkgSample
+    } // OdptPkgExample
 } // Schema.Odpt.Package
 ```
 
@@ -390,8 +390,8 @@ namespace Odapter.Example {
         private const String HELLO = "Hello", GOODBYE = "Goodbye";
 
         // class derived from record type DTO package
-        private class MyClassDerived : OdptPkgSample.TTableBigPartial { 
-            public String      StringPropertyExtra { get; set; }    // custom property
+        private class MyClassDerived : OdptPkgExample.TTableBigPartial {
+            public String StringPropertyExtra { get; set; }    // custom property
             public List<Int32> Int32ListPropertyExtra { get; set; } // custom property
         }
 
@@ -406,34 +406,32 @@ namespace Odapter.Example {
         }
 
         public void Test() {
-            uint?       rowLimit = 25;
-            Int64?      pInInt64 = 100000000000000;
-            Decimal?    pInDecimal = 10.0M;
-            String      pInOutString = HELLO;
-            DateTime?   pOutDate;
-            List<Int64?> pInOutListInt64 = new List<Int64?> {2, 3, 5, 7, 11, 13, 17, 19, 29, 31}, pInOutListInt64Copy = pInOutListInt64;
+            uint? rowLimit = 25;
+            Int64? pInInt64 = 100000000000000000;
+            Decimal? pInDecimal = 10.0M;
+            String pInOutString = HELLO;
+            DateTime? pOutDate;
+            List<Int64?> pInOutListInt64 = new List<Int64?> { 2, 3, 5, 7, 11, 13, 17, 19, 29, 31 }, pInOutListInt64Copy = pInOutListInt64;
 
             // hydrate DTO List from typed result set
-            List<MyClassDerived> myClassDerivedList = OdptPkgSample.Instance.GetRowsTypedRet<MyClassDerived>(pInDecimal, ref pInOutString, ref pInOutListInt64, out pOutDate, rowLimit);
+            List<MyClassDerived> myClassDerivedList = OdptPkgExample.Instance.GetRowsTypedRet<MyClassDerived>(pInDecimal, ref pInOutString, ref pInOutListInt64, out pOutDate, rowLimit);
             Debug.Assert(pInOutString.Equals(GOODBYE));                                 // confirm OUT arg from package function
             for (int i = 0; i < pInOutListInt64.Count; i++)
-                Debug.Assert(pInOutListInt64[i].Equals(pInOutListInt64Copy[i] * 7));    // confirm all values were multipled by 7 in func
-            Debug.Assert(pOutDate.Equals(new DateTime (1999, 12, 31)));                 // confirm OUT arg from package function
+                Debug.Assert(pInOutListInt64[i].Equals(pInOutListInt64Copy[i] * 7));    // confirm all values were multiplied by 7 in func
+            Debug.Assert(pOutDate.Equals(new DateTime(1999, 12, 31)));                 // confirm OUT arg from package function
             Debug.Assert(myClassDerivedList.Count == rowLimit);
 
             // hydrate DTO List from untyped result set by mapping column name to property name (default); force unmapped columns to be ignored (non-default)
-            List<MyClassOriginal> myClassOriginalList = OdptPkgSample.Instance.GetRowsUntypedRet<MyClassOriginal>(pInInt64, false, true, rowLimit);
+            List<MyClassOriginal> myClassOriginalList = OdptPkgExample.Instance.GetRowsUntypedRet<MyClassOriginal>(pInInt64, false, true, rowLimit);
             Debug.Assert(myClassOriginalList.Count == rowLimit);
 
             // hydrate Datatable from all columns in untyped result set; convert column names to DataTable captions
-            DataTable myDataTable = OdptPkgSample.Instance.GetRowsUntypedRet(pInInt64, true, rowLimit);
+            DataTable myDataTable = OdptPkgExample.Instance.GetRowsUntypedRet(pInInt64, true, rowLimit);
             List<String> dataTableCaptions = new List<string> { "Id", "Col Integer", "Col Number", "Col Varchar2 Max", "Col Date", "Col Timestamp" };
-            Debug.Assert(myDataTable.Rows.Count == rowLimit);
-            for (int i = 0; i < dataTableCaptions.Count;  i++)
+            for (int i = 0; i < dataTableCaptions.Count; i++)
                 Debug.Assert(myDataTable.Columns[i].Caption.Equals(dataTableCaptions[i]));  // confirm captions were created from column name
+            Debug.Assert(myDataTable.Rows.Count == rowLimit);
         }
     }
 }
 ```
-
-See Tester/Tester.cs for more code examples.

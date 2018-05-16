@@ -111,8 +111,8 @@
     <None Include="schema\package\odpt_pkg_include%25.pks" />
     <None Include="schema\package\odpt_pkg_main.pkb" />
     <None Include="schema\package\odpt_pkg_main.pks" />
-    <None Include="schema\package\odpt_pkg_sample.pkb" />
-    <None Include="schema\package\odpt_pkg_sample.pks" />
+    <None Include="schema\package\odpt_pkg_example.pkb" />
+    <None Include="schema\package\odpt_pkg_example.pks" />
     <None Include="schema\package\odpt_pkg_sql.pkb" />
     <None Include="schema\package\odpt_pkg_sql.pks" />
     <None Include="schema\package\odpt_pkg_table_big.pkb" />
@@ -141,8 +141,8 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ExampleCodeScreenShot.png" />
     <Content Include="lib\Oracle.DataAccess.dll" />
-    <Content Include="SampleCodeScreenShot.png" />
     <Content Include="schema\create schema.sql" />
     <Content Include="schema\misc\odpt_sequences.sql" />
     <Content Include="schema\table\odpt_table_big.sql" />

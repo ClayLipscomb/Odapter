@@ -1,4 +1,4 @@
-CREATE OR REPLACE PACKAGE ODPT.odpt_pkg_sample AS
+CREATE OR REPLACE PACKAGE ODPT.odpt_pkg_example AS
 
     -- assoc array of integers
     TYPE t_assocarray_integer IS TABLE OF INTEGER INDEX BY PLS_INTEGER;  
@@ -20,5 +20,5 @@ CREATE OR REPLACE PACKAGE ODPT.odpt_pkg_sample AS
         p_out_date OUT DATE) RETURN t_ref_cursor_table_big_partial;
     FUNCTION get_rows_untyped_ret (p_in_integer IN INTEGER) RETURN t_ref_cursor;
     
-END odpt_pkg_sample;
+END odpt_pkg_example;
 /

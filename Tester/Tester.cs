@@ -28,7 +28,7 @@
 
 #define FILTER_PREFIX
 #define DYNAMIC_MAPPING_FOR_TYPED_CURSOR
-#define SEED_TABLES
+//#define SEED_TABLES
 //#define CSHARP30
 #define EXAMPLE
 
