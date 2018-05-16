@@ -76,8 +76,8 @@ Odapter generates C# adapter classes that provide maximum integration with an Or
 9. Add "using Schema.YourSchemaName.Package" to project files in order to access packages
 10. See Tester/Tester.cs for code examples
 
-### Code Sample 
-###### Package Specification - odpt_pkg_sample.pks
+### Code Example
+###### Package Specification - Tester/schema/package/odpt_pkg_sample.pks
 
 ```SQLPL
 CREATE OR REPLACE PACKAGE ODPT.odpt_pkg_sample AS
@@ -106,7 +106,7 @@ END odpt_pkg_sample;
 /
 ```
 
-###### Package Body  - odpt_pkg_sample.pkb
+###### Package Body  - Tester/schema/package/odpt_pkg_sample.pkb
 
 ```SQLPL
 CREATE OR REPLACE PACKAGE BODY ODPT.odpt_pkg_sample AS
@@ -152,7 +152,7 @@ END odpt_pkg_sample;
 
 ![](Tester/SampleCodeScreenShot.png "")
 
-###### Generated Code - OdptPackage.cs
+###### Generated Code - Tester/generated/OdptPackage.cs
 
 ```C#
 using System;
@@ -376,7 +376,7 @@ namespace Schema.Odpt.Package {
 } // Schema.Odpt.Package
 ```
 
-###### Executing Generated Code - Sample.cs
+###### Executing Generated Code - Tester/Example.cs
 
 ```C#
 using System;
@@ -385,8 +385,8 @@ using System.Diagnostics;
 using System.Data;
 using Schema.Odpt.Package;
 
-namespace Odapter.Sample {
-    public class Sample {
+namespace Odapter.Example {
+    public class Example {
         private const String HELLO = "Hello", GOODBYE = "Goodbye";
 
         // class derived from record type DTO package
@@ -436,4 +436,4 @@ namespace Odapter.Sample {
 }
 ```
 
-See Tester/Tester.cs for more code samples.
+See Tester/Tester.cs for more code examples.

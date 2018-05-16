@@ -16,16 +16,16 @@
 //    along with this program.If not, see<http://www.gnu.org/licenses/>.
 //------------------------------------------------------------------------------
 
-#define SAMPLE
-#if SAMPLE
+#define EXAMPLE
+#if EXAMPLE
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Data;
 using Schema.Odpt.Package;
 
-namespace Odapter.Sample {
-    public class Sample {
+namespace Odapter.Example {
+    public class Example {
         private const String HELLO = "Hello", GOODBYE = "Goodbye";
 
         // class derived from record type DTO package

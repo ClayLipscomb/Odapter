@@ -30,7 +30,7 @@
 #define DYNAMIC_MAPPING_FOR_TYPED_CURSOR
 #define SEED_TABLES
 //#define CSHARP30
-#define SAMPLE
+#define EXAMPLE
 
 using System;
 using System.Collections.Generic;
@@ -45,8 +45,8 @@ using Oracle.DataAccess.Types;
 using Oracle.ManagedDataAccess.Client;
 using Oracle.ManagedDataAccess.Types;
 #endif
-#if SAMPLE
-using Odapter.Sample;
+#if EXAMPLE
+using Odapter.Example;
 #endif
 using Schema.Odpt.Package;
 using Schema.Odpt.Table;
@@ -96,8 +96,8 @@ namespace Odapter.Tester {
                 SeedTableBig();
                 SeedTableNumber();
 #endif
-#if SAMPLE
-                (new Odapter.Sample.Sample()).Test();
+#if EXAMPLE
+                (new Odapter.Example.Example()).Test();
 #endif
                 TestStringCalls();
 
