@@ -50,12 +50,16 @@ namespace Odapter.Sample {
             Decimal?    pInDecimal = 10.0M;
             String      pInOutString = HELLO;
             DateTime?   pOutDate;
+            List<Int64?> pInOutListInt64 = new List<Int64?> {2, 3, 5, 7, 11, 13, 17, 19, 29, 31};
+            List<Int64?> pInOutListInt64Copy = pInOutListInt64;
 
             // hydrate DTO List from typed result set
-            List<MyClassDerived> myClassDerivedList = OdptPkgSample.Instance.GetRowsTypedRet<MyClassDerived>(pInDecimal, ref pInOutString, out pOutDate, rowLimit);
-            Debug.Assert(myClassDerivedList.Count == rowLimit);
+            List<MyClassDerived> myClassDerivedList = OdptPkgSample.Instance.GetRowsTypedRet<MyClassDerived>(pInDecimal, ref pInOutString, ref pInOutListInt64, out pOutDate, rowLimit);
             Debug.Assert(pInOutString.Equals(GOODBYE));                 // confirm OUT arg from package function
+            for (int i = 0; i < pInOutListInt64.Count; i++)
+                Debug.Assert(pInOutListInt64[i].Equals(pInOutListInt64Copy[i] * 7)); // confirm all value multipled by 7 in func
             Debug.Assert(pOutDate.Equals(new DateTime (1999, 12, 31))); // confirm OUT arg from package function
+            Debug.Assert(myClassDerivedList.Count == rowLimit);
 
             // hydrate DTO List from untyped result set by mapping column name to property name (default); force unmapped columns to be ignored (non-default)
             List<MyClassOriginal> myClassOriginalList = OdptPkgSample.Instance.GetRowsUntypedRet<MyClassOriginal>(pInInt64, false, true, rowLimit);
@@ -63,13 +67,9 @@ namespace Odapter.Sample {
 
             // hydrate Datatable from all columns in untyped result set; convert column names to DataTable captions
             DataTable myDataTable = OdptPkgSample.Instance.GetRowsUntypedRet(pInInt64, true, rowLimit);
+            List<String> dataTableCaptions = new List<string> { "Id", "Col Integer", "Col Number", "Col Varchar2 Max", "Col Date", "Col Timestamp" };
             Debug.Assert(myDataTable.Rows.Count == rowLimit);
-            Debug.Assert(myDataTable.Columns[0].Caption.Equals("Id"));
-            Debug.Assert(myDataTable.Columns[1].Caption.Equals("Col Integer"));
-            Debug.Assert(myDataTable.Columns[2].Caption.Equals("Col Number"));
-            Debug.Assert(myDataTable.Columns[3].Caption.Equals("Col Varchar2 Max"));
-            Debug.Assert(myDataTable.Columns[4].Caption.Equals("Col Date"));
-            Debug.Assert(myDataTable.Columns[5].Caption.Equals("Col Timestamp"));
+            for (int i = 0; i < dataTableCaptions.Count;  i++) Debug.Assert(myDataTable.Columns[i].Caption.Equals(dataTableCaptions[i]));
         }
     }
 }

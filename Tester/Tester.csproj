@@ -142,6 +142,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="lib\Oracle.DataAccess.dll" />
+    <Content Include="SampleCodeScreenShot.png" />
     <Content Include="schema\create schema.sql" />
     <Content Include="schema\misc\odpt_sequences.sql" />
     <Content Include="schema\table\odpt_table_big.sql" />

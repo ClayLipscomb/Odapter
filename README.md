@@ -1,7 +1,7 @@
 Odapter - a C# code generator for Oracle packages
 ========================================
 
-Odapter generates C# adapter classes that provide maximum integration with an Oracle schema's packages. Generated DTO Lists will be hydrated from returned cursor results sets, both typed (record type based) and untyped. The generated C# provides de facto compile-time resolution with Oracle packages from within the IDE. Additionally, C# DTOs can be generated for object types, tables and views.
+Odapter generates C# adapter classes that provide maximum integration with an Oracle schema's packages. Generated DTO Lists will be hydrated from returned cursor results sets, both typed (record type based) and untyped (simple REF CURSOR). The generated C# provides de facto compile-time resolution with Oracle packages from within the IDE. Additionally, C# DTOs can be generated for object types, tables and views.
 
 ### Minimum System Requirements
 
@@ -36,7 +36,7 @@ Odapter generates C# adapter classes that provide maximum integration with an Or
 * Translates Oracle IN, OUT and IN OUT parameters to C#
 * Translates Oracle optional (defaulted) parameters to C# (4.0+)
 * Translates typed and untyped cursors (both as function return and OUT parameters) to C#
-* Generates DTO for each object type, table, and view
+* Generates DTO class for each object type, table, and view in
 * Configurable for either auto-implemented, or protected field wrapped, DTO properties
 * Generates ancestor classes and basic schema connection code
 * Configurable C# namespaces and base class names
@@ -77,10 +77,13 @@ Odapter generates C# adapter classes that provide maximum integration with an Or
 10. See Tester/Tester.cs for code examples
 
 ### Code Sample 
-###### Package Specification
+###### Package Specification - odpt_pkg_sample.pks
 
 ```SQLPL
 CREATE OR REPLACE PACKAGE ODPT.odpt_pkg_sample AS
+
+    -- assoc array of integers
+	TYPE t_assocarray_integer IS TABLE OF INTEGER INDEX BY PLS_INTEGER;  
 
     -- typed cursor
     TYPE t_table_big_partial IS RECORD (
@@ -95,26 +98,36 @@ CREATE OR REPLACE PACKAGE ODPT.odpt_pkg_sample AS
     -- untyped cursor 
     TYPE t_ref_cursor IS REF CURSOR;
     
-    FUNCTION get_rows_typed_ret (p_in_number IN NUMBER, p_in_out_varchar2 IN OUT VARCHAR2, p_out_date OUT DATE) RETURN t_ref_cursor_table_big_partial;
+    FUNCTION get_rows_typed_ret (p_in_number IN NUMBER, p_in_out_varchar2 IN OUT VARCHAR2, p_in_out_assocarray_integer IN OUT t_assocarray_integer, 
+        p_out_date OUT DATE) RETURN t_ref_cursor_table_big_partial;
     FUNCTION get_rows_untyped_ret (p_in_integer IN INTEGER) RETURN t_ref_cursor;
     
 END odpt_pkg_sample;
 /
 ```
 
-###### Package Body
+###### Package Body  - odpt_pkg_sample.pkb
 
 ```SQLPL
 CREATE OR REPLACE PACKAGE BODY ODPT.odpt_pkg_sample AS
                                      
-    FUNCTION get_rows_typed_ret (p_in_number IN NUMBER, p_in_out_varchar2 IN OUT VARCHAR2, p_out_date OUT DATE) RETURN t_ref_cursor_table_big_partial IS
+    FUNCTION get_rows_typed_ret (p_in_number IN NUMBER, p_in_out_varchar2 IN OUT VARCHAR2, p_in_out_assocarray_integer IN OUT t_assocarray_integer, 
+        p_out_date OUT DATE) RETURN t_ref_cursor_table_big_partial IS
         l_cursor    t_ref_cursor_table_big_partial;
+        l_idx		INTEGER;        
     BEGIN
         OPEN l_cursor FOR
         SELECT      id, col_integer, col_number, col_varchar2_max, col_date, col_timestamp
         FROM        odpt_table_big
         ORDER BY    id;    
 
+        -- multiply each value in assoc array by 7 
+        l_idx := p_in_out_assocarray_integer.FIRST;
+        WHILE l_idx IS NOT NULL LOOP
+            p_in_out_assocarray_integer(l_idx) := p_in_out_assocarray_integer(l_idx) * 7;
+            l_idx := p_in_out_assocarray_integer.NEXT(l_idx);
+        END LOOP;
+        
         p_in_out_varchar2 := 'Goodbye';        
         p_out_date := TO_DATE ('31-DEC-1999');        
         RETURN l_cursor;
@@ -122,7 +135,7 @@ CREATE OR REPLACE PACKAGE BODY ODPT.odpt_pkg_sample AS
 
     FUNCTION get_rows_untyped_ret (p_in_integer IN INTEGER) RETURN t_ref_cursor IS
         l_cursor    t_ref_cursor;
-    BEGIN
+    BEGIN    
         OPEN l_cursor FOR
         SELECT      id, col_integer, col_number, col_varchar2_max, col_date, col_timestamp
         FROM        odpt_table_big
@@ -137,9 +150,9 @@ END odpt_pkg_sample;
 
 ###### Generation 
 
-![](Odapter/OdapterScreenShot.png "")
+![](Tester/SampleCodeScreenShot.png "")
 
-###### Generated Code
+###### Generated Code - OdptPackage.cs
 
 ```C#
 using System;
@@ -157,7 +170,6 @@ using Odapter;
 using System.Linq;
 
 namespace Schema.Odpt.Package {
-
     public partial class OdptPkgSample : Schema.Odpt.OdptAdapter {
         private OdptPkgSample() { }
         private static OdptPkgSample _instance = new OdptPkgSample();
@@ -169,7 +181,7 @@ namespace Schema.Odpt.Package {
             Decimal? ColNumber { get; set; }
             String ColVarchar2Max { get; set; }
             DateTime? ColDate { get; set; }
-            OracleTimeStamp? ColTimestamp { get; set; }
+            DateTime? ColTimestamp { get; set; }
         } // ITTableBigPartial
 
         [DataContract(Namespace="http://odpt.business.com")][Serializable()]
@@ -186,7 +198,7 @@ namespace Schema.Odpt.Package {
             [DataMember(Order=4, IsRequired=false)][XmlElement(Order=4, IsNullable=true)]
             public virtual DateTime? ColDate { get; set; }
             [DataMember(Order=5, IsRequired=false)][XmlElement(Order=5, IsNullable=true)]
-            public virtual OracleTimeStamp? ColTimestamp { get; set; }
+            public virtual DateTime? ColTimestamp { get; set; }
         } // TTableBigPartial
 
         public List<T_TTableBigPartial> ReadResultITTableBigPartial<T_TTableBigPartial>(OracleDataReader rdr, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null)
@@ -200,7 +212,7 @@ namespace Schema.Odpt.Package {
                     if (!rdr.IsDBNull(2)) obj.ColNumber = (Decimal?)OracleDecimal.SetPrecision(rdr.GetOracleDecimal(2), 29);
                     if (!rdr.IsDBNull(3)) obj.ColVarchar2Max = Convert.ToString(rdr.GetValue(3));
                     if (!rdr.IsDBNull(4)) obj.ColDate = Convert.ToDateTime(rdr.GetValue(4));
-                    if (!rdr.IsDBNull(5)) obj.ColTimestamp = (OracleTimeStamp?)rdr.GetOracleValue(5);
+                    if (!rdr.IsDBNull(5)) obj.ColTimestamp = rdr.GetOracleTimeStamp(5).Value;
                     __ret.Add(obj);
                     if (optionalMaxNumberRowsToReadFromAnyCursor != null && __ret.Count >= optionalMaxNumberRowsToReadFromAnyCursor) break;
                 }
@@ -208,8 +220,56 @@ namespace Schema.Odpt.Package {
             return __ret;
         } // ReadResultITTableBigPartial
 
-        public List<T_TTableBigPartial> GetRowsTypedRet<T_TTableBigPartial>(Decimal? pInNumber, ref String pInOutVarchar2, out DateTime? pOutDate, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, 
-                OracleConnection optionalPreexistingOpenConnection = null)
+        public List<T_TTableBigPartial> GetRowsTypedRet<T_TTableBigPartial>(Decimal? pInNumber, ref String pInOutVarchar2, ref List<Int64?> pInOutAssocarrayInteger, out DateTime? pOutDate, 
+                bool mapColumnToObjectPropertyByPosition = false, bool allowUnmappedColumnsToBeExcluded = false, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
+                where T_TTableBigPartial : class, new() {
+            List<T_TTableBigPartial> __ret = new List<T_TTableBigPartial>(); pOutDate = null; 
+            OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
+            try {
+                using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_SAMPLE.GET_ROWS_TYPED_RET", __conn)) {
+                    __cmd.CommandType = CommandType.StoredProcedure;
+                    __cmd.BindByName = true;
+                    __cmd.Parameters.Add(new OracleParameter("!RETURN", OracleDbType.RefCursor, null, ParameterDirection.ReturnValue));
+                    __cmd.Parameters.Add(new OracleParameter("P_IN_NUMBER", OracleDbType.Decimal, pInNumber, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("P_IN_OUT_VARCHAR2", OracleDbType.Varchar2, 32767, pInOutVarchar2, ParameterDirection.InputOutput));
+
+                    __cmd.Parameters.Add(new OracleParameter("P_IN_OUT_ASSOCARRAY_INTEGER", OracleDbType.Int64, 1000, null, ParameterDirection.InputOutput));
+                    __cmd.Parameters["P_IN_OUT_ASSOCARRAY_INTEGER"].Value = (pInOutAssocarrayInteger == null || pInOutAssocarrayInteger.Count == 0 ? new Int64?[]{} : pInOutAssocarrayInteger.ToArray());
+                    __cmd.Parameters["P_IN_OUT_ASSOCARRAY_INTEGER"].CollectionType = OracleCollectionType.PLSQLAssociativeArray;
+                    __cmd.Parameters.Add(new OracleParameter("P_OUT_DATE", OracleDbType.Date, null, ParameterDirection.Output));
+
+                    OracleCommandTrace __cmdTrace = IsTracing(__cmd) ? new OracleCommandTrace(__cmd) : null;
+                    int __rowsAffected = __cmd.ExecuteNonQuery();
+                    if (!((OracleRefCursor)__cmd.Parameters["!RETURN"].Value).IsNull)
+                        using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["!RETURN"].Value).GetDataReader()) {
+                            __ret = Hydrator.ReadResult<T_TTableBigPartial>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
+                        } // using OracleDataReader
+                    pInOutVarchar2 = __cmd.Parameters["P_IN_OUT_VARCHAR2"].Status == OracleParameterStatus.NullFetched
+                        ? (String)null
+                        : Convert.ToString(__cmd.Parameters["P_IN_OUT_VARCHAR2"].Value.ToString());
+
+                    pInOutAssocarrayInteger = new List<Int64?>();
+                    for (int _i = 0; _i < (__cmd.Parameters["P_IN_OUT_ASSOCARRAY_INTEGER"].Value as OracleDecimal[]).Length; _i++)
+                        pInOutAssocarrayInteger.Add((__cmd.Parameters["P_IN_OUT_ASSOCARRAY_INTEGER"].Value as OracleDecimal[])[_i].IsNull
+                            ? (Int64?)null 
+                            : Convert.ToInt64(((__cmd.Parameters["P_IN_OUT_ASSOCARRAY_INTEGER"].Value as OracleDecimal[])[_i].ToString())));
+
+                    pOutDate = __cmd.Parameters["P_OUT_DATE"].Status == OracleParameterStatus.NullFetched
+                        ? (DateTime?)null
+                        : Convert.ToDateTime(__cmd.Parameters["P_OUT_DATE"].Value.ToString());
+                    if (__cmdTrace != null) TraceCompletion(__cmdTrace, __ret.Count);
+                } // using OracleCommand
+            } finally {
+                if (optionalPreexistingOpenConnection == null) {
+                    __conn.Close();
+                    __conn.Dispose();
+                }
+            }
+            return __ret;
+        } // GetRowsTypedRet
+
+        public List<T_TTableBigPartial> GetRowsTypedRet<T_TTableBigPartial>(Decimal? pInNumber, ref String pInOutVarchar2, ref List<Int64?> pInOutAssocarrayInteger, out DateTime? pOutDate, 
+                UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
                 where T_TTableBigPartial : class, ITTableBigPartial, new() {
             List<T_TTableBigPartial> __ret = new List<T_TTableBigPartial>(); pOutDate = null; 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
@@ -220,6 +280,10 @@ namespace Schema.Odpt.Package {
                     __cmd.Parameters.Add(new OracleParameter("!RETURN", OracleDbType.RefCursor, null, ParameterDirection.ReturnValue));
                     __cmd.Parameters.Add(new OracleParameter("P_IN_NUMBER", OracleDbType.Decimal, pInNumber, ParameterDirection.Input));
                     __cmd.Parameters.Add(new OracleParameter("P_IN_OUT_VARCHAR2", OracleDbType.Varchar2, 32767, pInOutVarchar2, ParameterDirection.InputOutput));
+
+                    __cmd.Parameters.Add(new OracleParameter("P_IN_OUT_ASSOCARRAY_INTEGER", OracleDbType.Int64, 1000, null, ParameterDirection.InputOutput));
+                    __cmd.Parameters["P_IN_OUT_ASSOCARRAY_INTEGER"].Value = (pInOutAssocarrayInteger == null || pInOutAssocarrayInteger.Count == 0 ? new Int64?[]{} : pInOutAssocarrayInteger.ToArray());
+                    __cmd.Parameters["P_IN_OUT_ASSOCARRAY_INTEGER"].CollectionType = OracleCollectionType.PLSQLAssociativeArray;
                     __cmd.Parameters.Add(new OracleParameter("P_OUT_DATE", OracleDbType.Date, null, ParameterDirection.Output));
 
                     OracleCommandTrace __cmdTrace = IsTracing(__cmd) ? new OracleCommandTrace(__cmd) : null;
@@ -231,6 +295,13 @@ namespace Schema.Odpt.Package {
                     pInOutVarchar2 = __cmd.Parameters["P_IN_OUT_VARCHAR2"].Status == OracleParameterStatus.NullFetched
                         ? (String)null
                         : Convert.ToString(__cmd.Parameters["P_IN_OUT_VARCHAR2"].Value.ToString());
+
+                    pInOutAssocarrayInteger = new List<Int64?>();
+                    for (int _i = 0; _i < (__cmd.Parameters["P_IN_OUT_ASSOCARRAY_INTEGER"].Value as OracleDecimal[]).Length; _i++)
+                        pInOutAssocarrayInteger.Add((__cmd.Parameters["P_IN_OUT_ASSOCARRAY_INTEGER"].Value as OracleDecimal[])[_i].IsNull
+                            ? (Int64?)null 
+                            : Convert.ToInt64(((__cmd.Parameters["P_IN_OUT_ASSOCARRAY_INTEGER"].Value as OracleDecimal[])[_i].ToString())));
+
                     pOutDate = __cmd.Parameters["P_OUT_DATE"].Status == OracleParameterStatus.NullFetched
                         ? (DateTime?)null
                         : Convert.ToDateTime(__cmd.Parameters["P_OUT_DATE"].Value.ToString());
@@ -305,7 +376,7 @@ namespace Schema.Odpt.Package {
 } // Schema.Odpt.Package
 ```
 
-###### Executing Generated Code
+###### Executing Generated Code - Sample.cs
 
 ```C#
 using System;
@@ -340,12 +411,16 @@ namespace Odapter.Sample {
             Decimal?    pInDecimal = 10.0M;
             String      pInOutString = HELLO;
             DateTime?   pOutDate;
+            List<Int64?> pInOutListInt64 = new List<Int64?> {2, 3, 5, 7, 11, 13, 17, 19, 29, 31};
+            List<Int64?> pInOutListInt64Copy = pInOutListInt64;
 
             // hydrate DTO List from typed result set
-            List<MyClassDerived> myClassDerivedList = OdptPkgSample.Instance.GetRowsTypedRet<MyClassDerived>(pInDecimal, ref pInOutString, out pOutDate, rowLimit);
-            Debug.Assert(myClassDerivedList.Count == rowLimit);
+            List<MyClassDerived> myClassDerivedList = OdptPkgSample.Instance.GetRowsTypedRet<MyClassDerived>(pInDecimal, ref pInOutString, ref pInOutListInt64, out pOutDate, rowLimit);
             Debug.Assert(pInOutString.Equals(GOODBYE));                 // confirm OUT arg from package function
+            for (int i = 0; i < pInOutListInt64.Count; i++) 
+                Debug.Assert(pInOutListInt64[i].Equals(pInOutListInt64Copy[i] * 7)); // confirm all value multipled by 7 in func
             Debug.Assert(pOutDate.Equals(new DateTime (1999, 12, 31))); // confirm OUT arg from package function
+            Debug.Assert(myClassDerivedList.Count == rowLimit);
 
             // hydrate DTO List from untyped result set by mapping column name to property name (default); force unmapped columns to be ignored (non-default)
             List<MyClassOriginal> myClassOriginalList = OdptPkgSample.Instance.GetRowsUntypedRet<MyClassOriginal>(pInInt64, false, true, rowLimit);
@@ -353,14 +428,12 @@ namespace Odapter.Sample {
 
             // hydrate Datatable from all columns in untyped result set; convert column names to DataTable captions
             DataTable myDataTable = OdptPkgSample.Instance.GetRowsUntypedRet(pInInt64, true, rowLimit);
+            List<String> dataTableCaptions = new List<string> { "Id", "Col Integer", "Col Number", "Col Varchar2 Max", "Col Date", "Col Timestamp" };
             Debug.Assert(myDataTable.Rows.Count == rowLimit);
-            Debug.Assert(myDataTable.Columns[0].Caption.Equals("Id"));
-            Debug.Assert(myDataTable.Columns[1].Caption.Equals("Col Integer"));
-            Debug.Assert(myDataTable.Columns[2].Caption.Equals("Col Number"));
-            Debug.Assert(myDataTable.Columns[3].Caption.Equals("Col Varchar2 Max"));
-            Debug.Assert(myDataTable.Columns[4].Caption.Equals("Col Date"));
-            Debug.Assert(myDataTable.Columns[5].Caption.Equals("Col Timestamp"));
+            for (int i = 0; i < dataTableCaptions.Count;  i++) Debug.Assert(myDataTable.Columns[i].Caption.Equals(dataTableCaptions[i]));
         }
     }
 }
 ``
+
+See Tester/Tester.cs for more code samples.

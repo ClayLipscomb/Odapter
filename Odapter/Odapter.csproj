@@ -150,7 +150,6 @@
     <Content Include="bin\x64\Release\Odapter.exe" />
     <Content Include="Dapper\License.txt" />
     <Content Include="FodyWeavers.xml" />
-    <Content Include="OdapterScreenShot.png" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
