@@ -24,18 +24,15 @@
 //#define SAFETYPE_DATE             // DATE as safe type OracleDate
 //#define SAFETYPE_TIMESTAMP        // TIMESTAMP as safe type OracleTimeStamp
 
-//#define SAFETYPE_INTERVAL         // INTERVAL DAY TO SECOND as safe type OracleIntervalDS
-
-#define FILTER_PREFIX
-#define DYNAMIC_MAPPING_FOR_TYPED_CURSOR
-//#define SEED_TABLES
-//#define CSHARP30
-#define EXAMPLE
+#define ODPT_FILTER_PREFIX
+#define MAPPING_FOR_TYPED_CURSOR
+#define SEED_TABLES
+#define CSHARP30
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+//using System.Text;
 using System.Data;
 using System.Diagnostics;
 #if CSHARP30
@@ -45,13 +42,17 @@ using Oracle.DataAccess.Types;
 using Oracle.ManagedDataAccess.Client;
 using Oracle.ManagedDataAccess.Types;
 #endif
-#if EXAMPLE
-using Odapter.Example;
-#endif
+#if ODPT_FILTER_PREFIX
+using Schema.Odpt.Odpt.Package;
+using Schema.Odpt.Odpt.Table;
+using Schema.Odpt.Odpt.Type.Object;
+using Schema.Odpt.Odpt.View;
+#else
 using Schema.Odpt.Package;
 using Schema.Odpt.Table;
 using Schema.Odpt.Type.Object;
 using Schema.Odpt.View;
+#endif
 
 namespace Odapter.Tester {
     class Program {
@@ -83,6 +84,8 @@ namespace Odapter.Tester {
             private const int MAX_STRING_SIZE_FOR_CHAR_COL = 2000;
             private const int MAX_STRING_SIZE_FOR_NCHAR_COL = 1000;
 
+            private const Double MIN_BINARY_DOUBLE = 2.2250738585072014e-130d;
+            private const Double MAX_BINARY_DOUBLE = 1.7976931348623157e125d;
             private const Decimal MAX_DECIMAL =  792281625142643375935439.5033M;
             private const Decimal MIN_DECIMAL = -792281625142643375935439.5033M;
                                                //792281625142643375935439 50335
@@ -95,9 +98,6 @@ namespace Odapter.Tester {
 #if SEED_TABLES
                 SeedTableBig();
                 SeedTableNumber();
-#endif
-#if EXAMPLE
-                (new Odapter.Example.Example()).Test();
 #endif
                 TestStringCalls();
 
@@ -151,30 +151,29 @@ namespace Odapter.Tester {
 #else
                     OracleDecimal.MinValue, OracleDecimal.MinValue, OracleDecimal.MinValue, 
 #endif
-                    Single.MinValue, Double.MinValue, 
+                    Single.MinValue, MIN_BINARY_DOUBLE, 
                     "A", new string('?', MAX_STRING_SIZE_FOR_VARCHAR_COL), "B", new string('?', MAX_STRING_SIZE_FOR_VARCHAR_COL), "C", new string('?', MAX_STRING_SIZE_FOR_NVARCHAR_COL),
                     "D", new string('?', MAX_STRING_SIZE_FOR_CHAR_COL), "E", new string('?', MAX_STRING_SIZE_FOR_NCHAR_COL),
 #if !SAFETYPE_DATE
-                    DateTime.MinValue,
+                    DateTime.MinValue.AddMilliseconds(1),
 #else
                     OracleDate.MinValue, 
 #endif
 #if !SAFETYPE_TIMESTAMP
-                    DateTime.MinValue, 
+                    DateTime.MinValue.AddMilliseconds(1), 
 #else
                     OracleTimeStamp.MinValue.AddMilliseconds(1), 
 #endif
 #if !SAFETYPE_TIMESTAMP
-                    DateTime.MinValue, 
+                    DateTime.MinValue.AddMilliseconds(1), 
 #else
                     OracleTimeStamp.MinValue.AddMilliseconds(1), 
 #endif
 #if !SAFETYPE_TIMESTAMP
-                    DateTime.MinValue, 
+                    DateTime.MinValue.AddMilliseconds(1), 
 #else
                     OracleTimeStamp.MinValue.AddMilliseconds(1), 
 #endif
-
                     null);
 
                 // max values for INTEGER, NUMBER, DATE, TIMESTAMP
@@ -194,7 +193,7 @@ namespace Odapter.Tester {
 #else
                     OracleDecimal.MaxValue, OracleDecimal.MaxValue, OracleDecimal.MaxValue,
 #endif
-                    Single.MaxValue, Double.MaxValue, 
+                    Single.MaxValue, MAX_BINARY_DOUBLE, 
                     "A", new string('?', MAX_STRING_SIZE_FOR_VARCHAR_COL), "B", new string('?', MAX_STRING_SIZE_FOR_VARCHAR_COL), "C", new string('?', MAX_STRING_SIZE_FOR_NVARCHAR_COL),
                     "D", new string('?', MAX_STRING_SIZE_FOR_CHAR_COL), "E", new string('?', MAX_STRING_SIZE_FOR_NCHAR_COL),
 #if !SAFETYPE_DATE
@@ -257,7 +256,13 @@ namespace Odapter.Tester {
                 OdptPkgTableNumber.Instance.InsertRow(  null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 
                                                         null, null, null, null, null, null, null, null, null, null, null, null, null);
                 // min values 
-                OdptPkgTableNumber.Instance.InsertRow(  MIN_DECIMAL, -9, -99, -999, -9999, -99999, 
+                OdptPkgTableNumber.Instance.InsertRow(  MIN_DECIMAL / 100000000,
+#if CSHARP30
+                                                        0, 0, // unmanaged bug treats OracleDbType.Byte as unsigned and throws on negative number
+#else
+                                                        -9, -99,
+#endif
+                                                        -999, -9999, -99999, 
                                                         -Convert.ToInt32(new string('9', 6)), -Convert.ToInt32(new string('9', 7)), -Convert.ToInt32(new string('9', 8)), -Convert.ToInt32(new string('9', 9)),
 
 #if SAFETYPE_INTEGER
@@ -269,7 +274,12 @@ namespace Odapter.Tester {
 #else
                                                         -Convert.ToInt64(new string('9', 10)), -Convert.ToInt64(new string('9', 18)), Int64.MinValue, Int64.MinValue,
 #endif
-                                                        -9, -99, -999, -9999, -99999, -Convert.ToInt32(new string('9', 9)),
+#if CSHARP30
+                                                        0, 0, // unmanaged bug treats OracleDbType.Byte as unsigned and throws on negative number
+#else
+                                                        -9, -99,
+#endif
+                                                        -999, -9999, -99999, -Convert.ToInt32(new string('9', 9)),
 
 #if SAFETYPE_INTEGER
                                                         -new OracleDecimal(new string('9', 10)), -new OracleDecimal(new string('9', 18)), -new OracleDecimal(new string('9', 19)), -new OracleDecimal(new string('9', 28)), -new OracleDecimal(new string('9', 29)), -new OracleDecimal(new string('9', 38)),
@@ -281,7 +291,7 @@ namespace Odapter.Tester {
                                                         -Convert.ToInt64(new string('9', 10)), -Convert.ToInt64(new string('9', 18)), Int64.MinValue, Int64.MinValue, Int64.MinValue, Int64.MinValue,
 #endif
                                                         -9.9M, -99.999M, -Convert.ToDecimal(new string('9', 4) + "." + new string('9', 11)), /* 15.11 */ -Convert.ToDecimal(new string('9', 10) + "." + new string('8', 21)), /* 31.21 */ 
-                                                        -Convert.ToDecimal(new string('9', 1) + "." + new string('8', 20)), /* 38.37 */ MIN_DECIMAL, null);
+                                                        -Convert.ToDecimal(new string('9', 1) + "." + new string('8', 20)), /* 38.37 */ MIN_DECIMAL / 100000000, null);
 
                 // max values 
                 OdptPkgTableNumber.Instance.InsertRow( MAX_DECIMAL, 9, 99, 999, 9999, 99999,
@@ -321,7 +331,7 @@ namespace Odapter.Tester {
 
             public void TestCursorFilteredPackageTableBig() {
                 uint? rowLimit = TABLE_BIG_ROWS_TO_RETRIEVE;
-#if FILTER_PREFIX
+#if ODPT_FILTER_PREFIX
                 List<OdptPkgTableBig.FilteredPkgTTableBigFiltered> retList, outList, outList2;
 #else
                 List<FilteredPkg.TTableBigFiltered> retList, outList, outList2;
@@ -329,7 +339,7 @@ namespace Odapter.Tester {
                 DataTable retDataTable, outDataTable, outDataTable2;
 
                 retList = OdptPkgTableBig.Instance.GetRowsTypedFilteredPkg<
-#if FILTER_PREFIX
+#if ODPT_FILTER_PREFIX
                     OdptPkgTableBig.FilteredPkgTTableBigFiltered
 #else
                     FilteredPkg.TTableBigFiltered
@@ -340,7 +350,7 @@ namespace Odapter.Tester {
                 Debug.Assert(outList2.Count == rowLimit);
 
                 retList = OdptPkgTableBig.Instance.GetRowsUntypedFilteredPkg<
-#if FILTER_PREFIX
+#if ODPT_FILTER_PREFIX
                     OdptPkgTableBig.FilteredPkgTTableBigFiltered, OdptPkgTableBig.FilteredPkgTTableBigFiltered, OdptPkgTableBig.FilteredPkgTTableBigFiltered
 #else
                     FilteredPkg.TTableBigFiltered, FilteredPkg.TTableBigFiltered, FilteredPkg.TTableBigFiltered
@@ -361,7 +371,7 @@ namespace Odapter.Tester {
                 List<OdptPkgTableBig.TTableBig> retTableBigList, outTableBigList;
                 List<OdptPkgTableBig.TTableBigChar> outTableBigCharList;
 
-                // static mapping
+                // static, no mapping
                 // ret
                 retTableBigList = OdptPkgTableBig.Instance.GetRowsTypedRet<OdptPkgTableBig.TTableBig>(rowLimit, null);
                 Debug.Assert(retTableBigList.Count == rowLimit);
@@ -378,20 +388,20 @@ namespace Odapter.Tester {
                 retTableBigList = OdptPkgTableBig.Instance.GetRowsTypedOut2Ret<OdptPkgTableBig.TTableBig, OdptPkgTableBig.TTableBigChar>(out outTableBigList, out outTableBigCharList, rowLimit, null);
                 Debug.Assert(retTableBigList.Count == rowLimit && outTableBigList.Count == rowLimit && outTableBigCharList.Count == rowLimit);
 
-#if DYNAMIC_MAPPING_FOR_TYPED_CURSOR
-                // dynamic mapping
+#if MAPPING_FOR_TYPED_CURSOR
+                // mapping
                 List<TTableBigMapByPositionAll> retTableBigMapByPositionAllList, outTableBigMapByPositionAllList;
                 List<TTableBigMapByPositionPartial> retTableBigMapByPositionPartialList, outTableBigMapByPositionPartialList;
                 List<TTableBigCharMapByPositionAll> outTableBigCharMapByPositionAllList;
                 List<TTableBigCharMapByPositionPartial> outTableBigCharMapByPositionPartialList;
 
-                // list ret - dynamic mapping by name
+                // list ret - mapping by name
                 retTableBigList = OdptPkgTableBig.Instance.GetRowsTypedRet<OdptPkgTableBig.TTableBig>(false, false, rowLimit, null);
 
-                // list ret - dynamic mapping by position, NOT allowing unmapped columns
+                // list ret - mapping by position, NOT allowing unmapped columns
                 retTableBigMapByPositionAllList = OdptPkgTableBig.Instance.GetRowsTypedRet<TTableBigMapByPositionAll>(true, false, rowLimit, null);
 
-                // list ret - dynamic mapping by position, allowing unmapped columns
+                // list ret - mapping by position, allowing unmapped columns
                 retTableBigMapByPositionPartialList = OdptPkgTableBig.Instance.GetRowsTypedRet<TTableBigMapByPositionPartial>(true, true, rowLimit, null);
                 Debug.Assert(retTableBigList.Count == rowLimit && retTableBigMapByPositionAllList.Count == rowLimit && retTableBigMapByPositionPartialList.Count == rowLimit);
 
@@ -426,7 +436,7 @@ namespace Odapter.Tester {
                 List<OdptPkgTableNumber.TTableNumber> retTableNumberList, outTableNumberList;
                 List<OdptPkgTableNumber.TTableNumberDec> outTableNumberDecList;
 
-                // static mapping
+                // static, no mapping
                 // ret
                 retTableNumberList = OdptPkgTableNumber.Instance.GetRowsTypedRet<OdptPkgTableNumber.TTableNumber>(rowLimit, null);
                 Debug.Assert(retTableNumberList.Count > 0);
@@ -443,20 +453,20 @@ namespace Odapter.Tester {
                 retTableNumberList = OdptPkgTableNumber.Instance.GetRowsTypedOut2Ret<OdptPkgTableNumber.TTableNumber, OdptPkgTableNumber.TTableNumberDec>(out outTableNumberList, out outTableNumberDecList, rowLimit, null);
                 Debug.Assert(retTableNumberList.Count > 0 && outTableNumberList.Count > 0 && outTableNumberDecList.Count > 0);
 
-#if DYNAMIC_MAPPING_FOR_TYPED_CURSOR
-                // dynamic mapping
+#if MAPPING_FOR_TYPED_CURSOR
+                // mapping
                 List<TTableNumberMapByPositionAll> retTableNumberMapByPositionAllList, outTableNumberMapByPositionAllList;
                 List<TTableNumberMapByPositionPartial> retTableNumberMapByPositionPartialList, outTableNumberMapByPositionPartialList;
                 List<TTableNumberDecMapByPositionAll> outTableNumberDecMapByPositionAllList;
                 List<TTableNumberDecMapByPositionPartial> outTableNumberDecMapByPositionPartialList;
 
-                // list ret - dynamic mapping by name
+                // list ret - mapping by name
                 retTableNumberList = OdptPkgTableNumber.Instance.GetRowsTypedRet<OdptPkgTableNumber.TTableNumber>(false, false, rowLimit, null);
 
-                // list ret - dynamic mapping by position, NOT allowing unmapped columns
+                // list ret - mapping by position, NOT allowing unmapped columns
                 retTableNumberMapByPositionAllList = OdptPkgTableNumber.Instance.GetRowsTypedRet<TTableNumberMapByPositionAll>(true, false, rowLimit, null);
 
-                // list ret - dynamic mapping by position, allowing unmapped columns
+                // list ret - mapping by position, allowing unmapped columns
                 retTableNumberMapByPositionPartialList = OdptPkgTableNumber.Instance.GetRowsTypedRet<TTableNumberMapByPositionPartial>(true, true, rowLimit, null);
                 Debug.Assert(retTableNumberList.Count > 0 && retTableNumberMapByPositionAllList.Count > 0 && retTableNumberMapByPositionPartialList.Count > 0);
 
@@ -499,13 +509,13 @@ namespace Odapter.Tester {
                 // DataTable ret
                 retTableBigDataTable = OdptPkgTableBig.Instance.GetRowsUntypedRet(true, rowLimit, null);
 
-                // list ret - dynamic mapping by name
+                // list ret - mapping by name
                 retTableBigList = OdptPkgTableBig.Instance.GetRowsUntypedRet<OdptPkgTableBig.TTableBig>(false, false, rowLimit, null);
 
-                // list ret - dynamic mapping by position, NOT allowing unmapped columns
+                // list ret - mapping by position, NOT allowing unmapped columns
                 retTableBigMapByPositionAllList = OdptPkgTableBig.Instance.GetRowsUntypedRet<TTableBigMapByPositionAll>(true, false, rowLimit, null);
 
-                // list ret - dynamic mapping by position, allowing unmapped columns
+                // list ret - mapping by position, allowing unmapped columns
                 retTableBigMapByPositionPartialList = OdptPkgTableBig.Instance.GetRowsUntypedRet<TTableBigMapByPositionPartial>(true, true, rowLimit, null);
                 Debug.Assert(retTableBigDataTable.Rows.Count == rowLimit && retTableBigList.Count == rowLimit && retTableBigMapByPositionAllList.Count == rowLimit && retTableBigMapByPositionPartialList.Count == rowLimit);
 
@@ -550,13 +560,13 @@ namespace Odapter.Tester {
                 // DataTable ret
                 retTableNumberDataTable = OdptPkgTableNumber.Instance.GetRowsUntypedRet(true, rowLimit, null);
 
-                // list ret - dynamic mapping by name
+                // list ret - mapping by name
                 retTableNumberList = OdptPkgTableNumber.Instance.GetRowsUntypedRet<OdptPkgTableNumber.TTableNumber>(false, false, rowLimit, null);
 
-                // list ret - dynamic mapping by position, NOT allowing unmapped columns
+                // list ret - mapping by position, NOT allowing unmapped columns
                 retTableNumberMapByPositionAllList = OdptPkgTableNumber.Instance.GetRowsUntypedRet<TTableNumberMapByPositionAll>(true, false, rowLimit, null);
 
-                // list ret - dynamic mapping by position, allowing unmapped columns
+                // list ret - mapping by position, allowing unmapped columns
                 retTableNumberMapByPositionPartialList = OdptPkgTableNumber.Instance.GetRowsUntypedRet<TTableNumberMapByPositionPartial>(true, true, rowLimit, null);
                 Debug.Assert(retTableNumberDataTable.Rows.Count > 0 && retTableNumberList.Count > 0 && retTableNumberMapByPositionAllList.Count > 0 && retTableNumberMapByPositionPartialList.Count > 0);
 
@@ -747,7 +757,7 @@ namespace Odapter.Tester {
 
                 //pInDouble = 1.7976931348623157e308d; // BINARY_DOUBLE_MAX_NORMAL fails to return
                 //pInDouble = 2.2250738585072014e-308d; // BINARY_DOUBLE_MIN_NORMAL fails to return
-                List<Double?> doubleTestValues = new List<Double?>() { 1.7976931348623157e125d, 2.2250738585072014e-130d, 0.0d, null
+                List<Double?> doubleTestValues = new List<Double?>() { MAX_BINARY_DOUBLE, MIN_BINARY_DOUBLE, 0.0d, null
 #if !CSHARP30
                     , Double.NaN
 #endif
@@ -944,9 +954,9 @@ namespace Odapter.Tester {
                     if (pInTimeStamp.Value.IsNull) {
                         if (!pInOutTimeStamp.Value.IsNull || !pOutTimeStamp.Value.IsNull || !retTimeStamp.Value.IsNull) throw new Exception("Error");
                     } else {
-                        if (!OracleTimeStamp.SetPrecision(pInTimeStamp.Value, 6).Equals(OracleTimeStamp.SetPrecision(pInOutTimeStamp.Value, 6))) throw new Exception( "Error" );
-                        if (!OracleTimeStamp.SetPrecision(pInTimeStamp.Value, 6).Equals(OracleTimeStamp.SetPrecision(pOutTimeStamp.Value, 6))) throw new Exception( "Error" );
-                        if (!OracleTimeStamp.SetPrecision(pInTimeStamp.Value, 6).Equals(OracleTimeStamp.SetPrecision(retTimeStamp.Value, 6))) throw new Exception( "Error" );
+                        if (!OracleTimeStamp.SetPrecision(pInTimeStamp.Value, 5).Equals(OracleTimeStamp.SetPrecision(pInOutTimeStamp.Value, 5))) throw new Exception( "Error" );
+                        if (!OracleTimeStamp.SetPrecision(pInTimeStamp.Value, 5).Equals(OracleTimeStamp.SetPrecision(pOutTimeStamp.Value, 5))) throw new Exception( "Error" );
+                        if (!OracleTimeStamp.SetPrecision(pInTimeStamp.Value, 5).Equals(OracleTimeStamp.SetPrecision(retTimeStamp.Value, 5))) throw new Exception( "Error" );
                     }
 #endif
                 }

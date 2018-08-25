@@ -91,11 +91,16 @@
     <Compile Include="generated\OdptBaseAdapter.cs" />
     <Compile Include="generated\OdptBaseEntity.cs" />
     <Compile Include="generated\OdptObjectType.cs" />
+    <Compile Include="generated\OdptOdptBaseAdapter.cs" />
+    <Compile Include="generated\OdptOdptBaseEntity.cs" />
+    <Compile Include="generated\OdptOdptObjectType.cs" />
+    <Compile Include="generated\OdptOdptPackage.cs" />
+    <Compile Include="generated\OdptOdptTable.cs" />
+    <Compile Include="generated\OdptOdptView.cs" />
     <Compile Include="generated\OdptPackage.cs" />
     <Compile Include="generated\OdptTable.cs" />
     <Compile Include="generated\OdptView.cs" />
     <Compile Include="generated\OrclPower.cs" />
-    <Compile Include="Example.cs" />
     <Compile Include="Tester.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -141,7 +146,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="ExampleCodeScreenShot.png" />
     <Content Include="lib\Oracle.DataAccess.dll" />
     <Content Include="schema\create schema.sql" />
     <Content Include="schema\misc\odpt_sequences.sql" />
@@ -150,6 +154,7 @@
     <Content Include="schema\table\odpt_table_number.sql" />
     <Content Include="schema\table\odpt_table_object.sql" />
     <Content Include="schema\view\odpt_view_big.sql" />
+    <Content Include="Test Instructions.txt" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

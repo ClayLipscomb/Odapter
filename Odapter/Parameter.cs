@@ -46,9 +46,11 @@ namespace Odapter {
             IsSerializablePackageRecord = IsSerializableObjectType = IsSerializableTable = IsSerializableView = false;
             IsXmlElementPackageRecord = IsXmlElementObjectType = IsXmlElementTable = IsXmlElementView = false;
             IsDataContractPackageRecord = IsDataContractObjectType = IsDataContractTable = IsDataContractView = false;
+            IsIncludeFilterPrefixInNaming = true;
 
             NamespaceBase = "Schema";
             NamespacePackage = NamespaceObjectType = NamespaceTable = NamespaceView = "";
+            NamespaceSchema = "";
             NamespaceDataContract = "";
 
             AncestorClassNamePackage = AncestorClassNamePackageRecord = AncestorClassNameObjectType = AncestorClassNameTable = AncestorClassNameView = "";
@@ -89,12 +91,13 @@ namespace Odapter {
         public Boolean IsCSharp40 { get { return CSharpVersion == CSharpVersion.FourZero; } }
 
         // namespaces
-        public String NamespaceBase { get; set; }//{ get { return _baseNamespace; } set { _baseNamespace = value; } } private String _baseNamespace = "Schema";
+        public String NamespaceBase { get; set; }
         public String NamespacePackage { get; set; }
         public String NamespaceObjectType { get; set; } // must have internally in order to generate "using" for other entity types
         public String NamespaceTable { get; set; }
         public String NamespaceView { get; set; }
         public String NamespaceDataContract { get; set; }
+        public String NamespaceSchema { get; set; } // de facto full namespace for schema (includes filter, if any)
 
         // ancestor class names
         public string AncestorClassNamePackage { get; set; }
@@ -131,6 +134,8 @@ namespace Odapter {
         public Boolean IsPartialTable { get; set; }
         public Boolean IsPartialView { get; set; }
 
+        public Boolean IsIncludeFilterPrefixInNaming { get; set; }
+
         // sizing
         public Int16 MaxAssocArraySize { get; set; }
         public Int16 MaxReturnAndOutArgStringSize { get; set; }
@@ -152,14 +157,8 @@ namespace Odapter {
         public String LocalVariableNameSuffix { get; set; }
 
         // miscellaneous
-        //[XmlIgnore]
         public Boolean IsDeployResources { get; set; }  // will overwrite existing file
-        //[XmlIgnore]
         public Boolean IsGenerateBaseAdapter { get; set; }  // will not overwrite existing file
-        //[XmlIgnore]
         public Boolean IsGenerateBaseEntities { get; set; } // will not overwrite existing file
-
-        //[XmlIgnore]
-        //public Boolean IsOdpManaged { get; set; } 
     }
 }

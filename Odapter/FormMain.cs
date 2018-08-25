@@ -67,7 +67,7 @@ namespace Odapter {
             columnHeader.Text = "Status";
             columnHeader.Width = ListViewMessage.Width - 30;
             this.ListViewMessage.Columns.AddRange(new ColumnHeader[] { columnHeader });
-            //            this.ListViewMessage.Colum .ColumnHeadersDefaultCellStyle.Font = new Font(this.dataGridView1.ColumnHeadersDefaultCellStyle.Font, FontStyle.Bold);
+            // this.ListViewMessage.Colum .ColumnHeadersDefaultCellStyle.Font = new Font(this.dataGridView1.ColumnHeadersDefaultCellStyle.Font, FontStyle.Bold);
         }
 
         public void DisplayMessage(string txt) {
@@ -153,38 +153,32 @@ namespace Odapter {
 
                 ExtractToParameters();
 
-                // set these option first since Loader does some translation - we need to adjust the Loader to do no translation at some point
-                Translater.CSharpTypeUsedForOracleInteger = Parameter.Instance.CSharpTypeUsedForOracleInteger;// GetCSharpTypeUsedForOracleInteger(); ;
+                // Set these options first since Loader does some translation. In the future, we need to modify Loader to do no translation (if possible).
+                Translater.CSharpTypeUsedForOracleInteger = Parameter.Instance.CSharpTypeUsedForOracleInteger;
                 Translater.CSharpTypeUsedForOracleNumber = Parameter.Instance.CSharpTypeUsedForOracleNumber;
                 Translater.CSharpTypeUsedForOracleDate = Parameter.Instance.CSharpTypeUsedForOracleDate;
                 Translater.CSharpTypeUsedForOracleTimeStamp = Parameter.Instance.CSharpTypeUsedForOracleTimeStamp;
                 Translater.CSharpTypeUsedForOracleIntervalDayToSecond = Parameter.Instance.CSharpTypeUsedForOracleIntervalDayToSecond;
-                Translater.ConvertOracleNumberToIntegerIfColumnNameIsId = Parameter.Instance.IsConvertOracleNumberToIntegerIfColumnNameIsId;// cbConvertOracleNumberToIntegerIfColumnNameIsId.Checked;
-                Translater.ObjectTypeNamespace = Parameter.Instance.NamespaceObjectType;// txtObjectTypeNamespace.Text;
+                Translater.ConvertOracleNumberToIntegerIfColumnNameIsId = Parameter.Instance.IsConvertOracleNumberToIntegerIfColumnNameIsId;
+                Translater.ObjectTypeNamespace = Parameter.Instance.NamespaceObjectType;
 
                 // retrieve necessary data from schema
                 Loader loader = new Loader(DisplayMessage);
                 try {
-                    //connection = (OracleConnection)loader.GetConnection();
-                    DisplayMessage(DbInstance /*cmbDBInstance.SelectedValue.ToString()*/ + " " + txtSchema.Text + (String.IsNullOrEmpty(txtFilter.Text) ? "" : " " + txtFilter.Text + "*") + " generation:");
+                    DisplayMessage(DbInstance + " " + txtSchema.Text + (String.IsNullOrEmpty(txtFilter.Text) ? "" : " " + txtFilter.Text + "*") + " generation:");
                     loader.Load();
                 } catch (Exception e) {
                     DisplayMessage(e.Message);
                     return;
                 } finally {
-                    //if (connection != null) connection.Close();
                 }
 
                 // generate code
                 Generator generator = new Generator(loader.Schema, txtOutputPath.Text, DisplayMessage,
                     DbInstance, txtLogin.Text, txtPassword.Text, txtBaseNamespace.Text,
-                    txtObjectTypeNamespace.Text, txtFilter.Text);
+                    txtObjectTypeNamespace.Text);
 
-                generator.CSharpVersion = Parameter.Instance.CSharpVersion;//rbCSharp30.Checked ? CSharpVersion.ThreeZero : (rbCSharp40.Checked ? CSharpVersion.FourZero : CSharpVersion.FiveZero);
-
-                // advanced SP options
-                Parameter.Instance.MaxAssocArraySize = Convert.ToInt16(txtMaxAssocArraySize.Text);
-                Parameter.Instance.MaxReturnAndOutArgStringSize = Convert.ToInt16(txtMaxReturnArgStringSize.Text);
+                generator.CSharpVersion = Parameter.Instance.CSharpVersion;
 
                 ////////////////////////
                 // generate base classes
@@ -212,19 +206,18 @@ namespace Odapter {
             }
         }
 
-        private void GenerateNamespacesAndClasses() {
+        private void GenerateNamespacesAndBaseClassNames() {
             String schema = String.IsNullOrEmpty(txtSchema.Text) ? null : txtSchema.Text;
             String baseNamespace = txtBaseNamespace.Text;
-            //            txtLogin.Text = schema;
-            //            String schemaCapitalized = (new CultureInfo("en-US", false).TextInfo).ToTitleCase(schema.ToLower());
-            //            txtBaseConnectionClass.Text = schemaCapitalized + "BasePackage";
+            String filterInName = (cbIncludeFilterPrefixInNaming.Checked && !String.IsNullOrWhiteSpace(txtFilter.Text)) ? txtFilter.Text.Trim() : String.Empty;
 
             // namespaces
-            txtPackageNamespace.Text = Generator.GenerateNamespacePackage(baseNamespace, schema);
-            txtRecordTypeNamespace.Text = Generator.GenerateNamespacePackage(baseNamespace, schema);
-            txtObjectTypeNamespace.Text = Generator.GenerateNamespaceObjectType(baseNamespace, schema);
-            txtTableNamespace.Text = Generator.GenerateNamespaceTable(baseNamespace, schema);
-            txtViewNamespace.Text = Generator.GenerateNamespaceView(baseNamespace, schema);
+            Parameter.Instance.NamespaceSchema = Generator.GenerateNamespaceSchema(baseNamespace, schema, filterInName); // immediately store because UI has no field
+            txtPackageNamespace.Text = Generator.GenerateNamespacePackage(baseNamespace, schema, filterInName);
+            txtRecordTypeNamespace.Text = Generator.GenerateNamespacePackage(baseNamespace, schema, filterInName);
+            txtObjectTypeNamespace.Text = Generator.GenerateNamespaceObjectType(baseNamespace, schema, filterInName);
+            txtTableNamespace.Text = Generator.GenerateNamespaceTable(baseNamespace, schema, filterInName);
+            txtViewNamespace.Text = Generator.GenerateNamespaceView(baseNamespace, schema, filterInName);
 
             // base classes
             txtBasePackageClass.Text = Generator.GenerateBaseAdapterClassName(schema);
@@ -236,17 +229,18 @@ namespace Odapter {
 
 #region Enable/Disable
         private void SetEnabledDisabled() {
-            SetEnabledDisabledbDuplicatePackageRecordOriginatingOutsideFilterAndSchema();
+            SetEnabledDisabledbFilterRelatedFields();
             cmbCSharpTypeUsedForOracleIntervalDayToSecond.Enabled = false; // pending implementation
         }
 
-        private void SetEnabledDisabledbDuplicatePackageRecordOriginatingOutsideFilterAndSchema() {
-            cbDuplicatePackageRecordOriginatingOutsideFilterAndSchema.Enabled = !String.IsNullOrEmpty(txtFilter.Text);
+        private void SetEnabledDisabledbFilterRelatedFields() {
+            cbDuplicatePackageRecordOriginatingOutsideFilterAndSchema.Enabled = cbIncludeFilterPrefixInNaming.Enabled 
+                = !String.IsNullOrEmpty(txtFilter.Text);
         }
 
-#endregion
+        #endregion
 
-#region Events
+        #region Events
         private void cbGeneratePOCOExtension_CheckStateChanged(object sender, EventArgs e) {
             //SetEnabledGenerateExtensionControls(cbGeneratePOCOExtension.Checked);
         }
@@ -306,11 +300,16 @@ namespace Odapter {
 
         private void txtSchema_TextChanged(object sender, EventArgs e) {
             txtLogin.Text = txtSchema.Text;
-            GenerateNamespacesAndClasses();
+            GenerateNamespacesAndBaseClassNames();
         }
 
         private void txtBaseNamespace_TextChanged(object sender, EventArgs e) {
-            GenerateNamespacesAndClasses();
+            GenerateNamespacesAndBaseClassNames();
+        }
+
+        private void txtFilter_TextChanged(object sender, EventArgs e) {
+            GenerateNamespacesAndBaseClassNames();
+            SetEnabledDisabledbFilterRelatedFields();
         }
 
         private void txtPackageNamespace_TextChanged(object sender, EventArgs e) {
@@ -515,6 +514,7 @@ namespace Odapter {
             cbPartialTables.Checked = Parameter.Instance.IsPartialTable;
             cbPartialViews.Checked = Parameter.Instance.IsPartialView;
 
+            cbIncludeFilterPrefixInNaming.Checked = Parameter.Instance.IsIncludeFilterPrefixInNaming;
             txtMaxAssocArraySize.Text = Parameter.Instance.MaxAssocArraySize.ToString();
             txtMaxReturnArgStringSize.Text = Parameter.Instance.MaxReturnAndOutArgStringSize.ToString();
             cbDeployResources.Checked = Parameter.Instance.IsDeployResources;
@@ -600,6 +600,7 @@ namespace Odapter {
             Parameter.Instance.IsPartialTable = cbPartialTables.Checked;
             Parameter.Instance.IsPartialView = cbPartialViews.Checked;
 
+            Parameter.Instance.IsIncludeFilterPrefixInNaming = cbIncludeFilterPrefixInNaming.Checked;
             Parameter.Instance.IsDeployResources = cbDeployResources.Checked;
             Parameter.Instance.IsGenerateBaseAdapter = cbGenerateBaseAdapterClass.Checked;
             Parameter.Instance.IsGenerateBaseEntities = cbGenerateBaseDtoClasses.Checked;
@@ -699,10 +700,6 @@ namespace Odapter {
 
         private void cbDuplicatePackageRecordOriginatingOutsideFilterAndSchema_CheckedChanged(object sender, EventArgs e) {
 
-        }
-
-        private void txtFilter_TextChanged(object sender, EventArgs e) {
-            SetEnabledDisabledbDuplicatePackageRecordOriginatingOutsideFilterAndSchema();
         }
     }
 }
