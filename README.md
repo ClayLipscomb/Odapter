@@ -67,12 +67,12 @@ Odapter generates C# adapter classes that provide maximum integration with an Or
 1. Download Odapter/bin/x64/Release/Odapter.exe and run
 2. If Oracle Client Homes are found, select appropriate value
 3. Enter DB Instance, Schema, Login and Password
-4. If project uses only a prefixed subset of the schema's packages, enter Filter Prefix value
+4. If your project uses only a prefixed subset of the schema's packages, enter Filter Prefix value
 5. Enter the Output Path for all generated files (your project folder)
-6. If project is using the .NET 3.5 framework, select 3.0 as the C# Version
+6. If your project is using the .NET 3.5 framework, select 3.0 as the C# Version
 7. For all other fields, use default settings
 8. Click Generate 
-9. After successful generation, enter a .config file name in File Source and click Save Current
+9. After successful generation, enter a project based .config file name in File Source and click Save Current
 10. Open your project and add the generated files
 11. Add "using Schema.YourSchemaName.YourFilterPrefixIfAny.Package" to project files in order to access packages
 12. See Tester/Tester.cs and code below for examples
