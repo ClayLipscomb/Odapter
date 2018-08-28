@@ -108,11 +108,8 @@ namespace Odapter {
                         // read tnsnames.ora file
                         int iCount;
                         for (iCount = 0; iCount < Regex.Matches(System.IO.File.ReadAllText(fiTNS.FullName), RegExPattern).Count; iCount++) {
-                            DBNamesCollection.Add(Regex.Matches(
-                                System.IO.File.ReadAllText(fiTNS.FullName),
-                                RegExPattern)[iCount].Value.Trim().ToUpper().Substring(0,
-                                Regex.Matches(System.IO.File.ReadAllText(fiTNS.FullName),
-                                RegExPattern)[iCount].Value.Trim().ToUpper().IndexOf(" ")));
+                            DBNamesCollection.Add(Regex.Matches(System.IO.File.ReadAllText(fiTNS.FullName), RegExPattern)[iCount].Value.Trim().ToUpper()
+                                .Substring(0, Regex.Matches(System.IO.File.ReadAllText(fiTNS.FullName), RegExPattern)[iCount].Value.Trim().ToUpper().IndexOf("=")).Trim());
                         }
                     }
                 }
