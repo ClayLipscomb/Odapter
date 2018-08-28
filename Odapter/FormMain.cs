@@ -456,11 +456,15 @@ namespace Odapter {
             if (cmbClientHome.Items.Count > 0) {
                 string oraHomeKey = (string)this.cmbClientHome.SelectedValue;
                 if (String.IsNullOrWhiteSpace(oraHomeKey)) return;
-                List<string> tnsNames = tnsNamesReader.LoadTnsNames(oraHomeKey);
-                if (tnsNames.Count > 0)
-                    cmbDBInstance.DataSource = tnsNames;
-                else
-                    DisplayMessage("Warning: TNSNAMES.ORA not found.");
+                try {
+                    List<string> tnsNames = tnsNamesReader.LoadTnsNames(oraHomeKey);
+                    if (tnsNames.Count > 0)
+                        cmbDBInstance.DataSource = tnsNames;
+                    else
+                        DisplayMessage("Warning: TNSNAMES.ORA not found.");
+                } catch {
+                    DisplayMessage("Warning: TNSNAMES.ORA parse failed.");
+                }
             }
         }
 
