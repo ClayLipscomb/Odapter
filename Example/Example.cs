@@ -18,13 +18,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Data;
 using System.Diagnostics;
-using Oracle.ManagedDataAccess.Client;  // .NET 4.0 required
-using Oracle.ManagedDataAccess.Types;   // .NET 4.0 required
 using Schema.Odpt.Xmpl.Package;         // access to generated code for packages
 
 namespace Odapter.Example {

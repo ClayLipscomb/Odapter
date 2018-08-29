@@ -75,8 +75,9 @@ Odapter generates C# adapter classes that provide maximum integration with an Or
 9. Click Generate 
 10. After successful generation, enter a project based .config file name in File Source and click Save Current
 11. Open your project and add the generated files
-12. Add "using Schema.YourSchemaName.YourFilterPrefixIfAny.Package" to project files in order to access packages
-13. See Tester/Tester.cs and code below for examples
+12. If your project targets the .NET 3.5 framework, add a reference for the unmanaged ODP.NET driver; if .NET 4.0 or higher, add a reference for the managed ODP.NET driver.
+13. Add "using Schema.YourSchemaName.YourFilterPrefixIfAny.Package" to project files in order to access packages
+14. See Tester/Tester.cs and code below for examples
 
 ### Code Example
 ###### Package Specification - Tester/schema/package/odpt_pkg_example.pks
@@ -343,13 +344,8 @@ namespace Schema.Odpt.Xmpl.Package {
 ```C#
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Data;
 using System.Diagnostics;
-using Oracle.ManagedDataAccess.Client;  // .NET 4.0 required
-using Oracle.ManagedDataAccess.Types;   // .NET 4.0 required
 using Schema.Odpt.Xmpl.Package;         // access to generated code for packages
 
 namespace Odapter.Example {
