@@ -155,7 +155,7 @@ END xmpl_pkg_example;
 
 ![](Example/ExampleCodeScreenShot.png "")
 
-###### Generated Code - Tester/generated/OdptXmplPackage.cs
+###### Generated Code - Example/generated/OdptXmplPackage.cs
 
 ```C#
 //------------------------------------------------------------------------------
