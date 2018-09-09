@@ -2,9 +2,11 @@ Tester Instructions
 
 The tests should be run in order below.
 
-Initialization for 4.0 Tests
+Initialization for C# 4.0 Tests
 ----------------------------
-Run /bin/x64/Debug/Odapter.exe and generate using _Odpt-NoFilter.config.
+a) Run /bin/x64/Debug/Odapter.exe and generate using _Odpt-NoFilter.config.
+
+b) Change target framework of Tester project to .NET Framework 4
 
 
 C# 4.0 Standard Test
@@ -52,9 +54,11 @@ SEED_TABLES
 c) Compile and run Tester project
 
 
-Initialization for 3.0 Tests
+Initialization for C# 3.0 Tests
 ----------------------------
-Run /bin/x64/Debug/Odapter.exe and generate using _Odpt-NoFilter-3.0.config.
+a) Run /bin/x64/Debug/Odapter.exe and generate using _Odpt-NoFilter-3.0.config.
+
+b) Change target framework of Tester project to .NET Framework 3.5
 
 
 C# 3.0 Standard Test
@@ -84,4 +88,3 @@ SEED_TABLES
 CSHARP30
 
 c) Compile and run Tester project
-
