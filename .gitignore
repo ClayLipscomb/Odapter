@@ -290,3 +290,5 @@ paket-files/
 __pycache__/
 *.pyc
 /Example
+/Tester/schema/package/odpt_pkg_main - Copy.pks
+/Tester/schema/package/odpt_pkg_main - Copy.pkb

@@ -27,12 +27,11 @@
 #define ODPT_FILTER_PREFIX
 #define MAPPING_FOR_TYPED_CURSOR
 #define SEED_TABLES
-#define CSHARP30
+//#define CSHARP30
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
-//using System.Text;
 using System.Data;
 using System.Diagnostics;
 #if CSHARP30
@@ -654,12 +653,21 @@ namespace Odapter.Tester {
                     Debug.Assert(pIn.Equals(pInOut) && pIn.Equals(pOut) && pIn.Equals(ret));
                 }
 
+                // INTEGER indexed associative array
                 pInList = testValues;
                 pInOutList = testValues;
                 retList = OdptPkgMain.Instance.FuncAaInteger(pInList, ref pInOutList, out pOutList, null);
                 for (int i = 0; i < pInList.Count; i++) if (!pInList[i].Equals(pInOutList[i])) throw new Exception("Error");
                 for (int i = 0; i < pInList.Count; i++) if (!pInList[i].Equals(pOutList[i])) throw new Exception("Error");
                 for (int i = 0; i < pInList.Count; i++) if (!pInList[i].Equals(retList[i])) throw new Exception("Error");
+
+                // VARCHAR2 indexed associative array will not execute successfully due to limiation of ODP.NET
+                //pInList = testValues;
+                //pInOutList = testValues;
+                //retList = OdptPkgMain.Instance.FuncAaIntegerV(pInList, ref pInOutList, out pOutList, null);
+                //for (int i = 0; i < pInList.Count; i++) if (!pInList[i].Equals(pInOutList[i])) throw new Exception("Error");
+                //for (int i = 0; i < pInList.Count; i++) if (!pInList[i].Equals(pOutList[i])) throw new Exception("Error");
+                //for (int i = 0; i < pInList.Count; i++) if (!pInList[i].Equals(retList[i])) throw new Exception("Error");
 
                 // INT
                 for (int i = 0; i < testValues.Count; i++){
@@ -1645,7 +1653,7 @@ namespace Odapter.Tester {
         }
 
         public class Database {
-            private string _dataSource = "localhost", _login = "ODPT", _password = "odpt";
+            private readonly string _dataSource = "localhost", _login = "ODPT", _password = "odpt";
 
             public long TestConnection() {
                 using (OracleConnection connection = (OracleConnection)GetConnection()) {
