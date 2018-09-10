@@ -1,6 +1,6 @@
 CREATE OR REPLACE PACKAGE ODPT.odpt_pkg_main AS
 
-	-- associative array types
+	-- associative array types - INTEGER indexed
 	TYPE t_assocarray_integer IS TABLE OF odpt_table_big.col_integer%TYPE INDEX BY PLS_INTEGER;  
 	TYPE t_assocarray_binary_integer IS TABLE OF BINARY_INTEGER INDEX BY PLS_INTEGER;  
 	TYPE t_assocarray_pls_integer IS TABLE OF PLS_INTEGER INDEX BY PLS_INTEGER;  
@@ -26,6 +26,9 @@ CREATE OR REPLACE PACKAGE ODPT.odpt_pkg_main AS
 	TYPE t_assocarray_timestamp_prec9 IS TABLE OF odpt_table_big.col_timestamp_prec9%TYPE INDEX BY PLS_INTEGER;  
 
 	TYPE t_assocarray_boolean IS TABLE OF BOOLEAN INDEX BY PLS_INTEGER;  
+
+	-- associative array types - VARCHAR2 indexed
+	TYPE t_assocarray_integer_v IS TABLE OF odpt_table_big.col_integer%TYPE INDEX BY VARCHAR2(100);  
 	
 	-- data types ignored (not implemented) in code generation
 	TYPE t_record_type_ignored IS RECORD (
@@ -42,7 +45,7 @@ CREATE OR REPLACE PACKAGE ODPT.odpt_pkg_main AS
 		f_clob								CLOB,
 		f_nclob								NCLOB,
 		f_xmltype							XMLTYPE,
-		f_long								LONG,						-- deprecated
+		f_long								LONG,				-- deprecated
 		f_long_raw							LONG RAW,			-- deprecated
 		f_last								NUMBER
 	);
@@ -102,9 +105,10 @@ CREATE OR REPLACE PACKAGE ODPT.odpt_pkg_main AS
 	FUNCTION func_aa_timestamp (p_in IN t_assocarray_timestamp, p_in_out IN OUT t_assocarray_timestamp, p_out OUT t_assocarray_timestamp) RETURN t_assocarray_timestamp;
 	FUNCTION func_aa_timestamp_prec0 (p_in IN t_assocarray_timestamp_prec0, p_in_out IN OUT t_assocarray_timestamp_prec0, p_out OUT t_assocarray_timestamp_prec0) RETURN t_assocarray_timestamp_prec0;
 	FUNCTION func_aa_timestamp_prec9 (p_in IN t_assocarray_timestamp_prec9, p_in_out IN OUT t_assocarray_timestamp_prec9, p_out OUT t_assocarray_timestamp_prec9) RETURN t_assocarray_timestamp_prec9;
-	
-	----------------------------------
-	-- UNIMPLEMENTED and COMMENTED OUT	
+
+
+	--------------------------------------------------
+	-- UNIMPLEMENTED and COMMENTED OUT in generated C#
 	-- pending implementation
 	FUNCTION func_blob(p_in IN BLOB, p_in_out IN OUT BLOB, p_out OUT BLOB) RETURN BLOB;
 	FUNCTION func_clob(p_in IN CLOB, p_in_out IN OUT CLOB, p_out OUT CLOB) RETURN CLOB;
@@ -128,6 +132,10 @@ CREATE OR REPLACE PACKAGE ODPT.odpt_pkg_main AS
 	FUNCTION func_aa_binary_integer (p_in IN t_assocarray_binary_integer, p_in_out IN OUT t_assocarray_binary_integer, p_out OUT t_assocarray_binary_integer) RETURN t_assocarray_binary_integer;
 	FUNCTION func_aa_pls_integer (p_in IN t_assocarray_pls_integer, p_in_out IN OUT t_assocarray_pls_integer, p_out OUT t_assocarray_pls_integer) RETURN t_assocarray_pls_integer;
 	FUNCTION func_aa_boolean (p_in IN t_assocarray_boolean, p_in_out IN OUT t_assocarray_boolean, p_out OUT t_assocarray_boolean) RETURN t_assocarray_boolean;
+
+    -- implemented but successful execution is not possible due to ODP.NET not handling VARCHAR2-indexed associative array; cannot commented out due
+    --      Oracle argument view not revealing if associative array is VARCHAR2-indexed
+    FUNCTION func_aa_integer_v (p_in IN t_assocarray_integer_v, p_in_out IN OUT t_assocarray_integer_v, p_out OUT t_assocarray_integer_v) RETURN t_assocarray_integer_v;
 	
 	-- will not be implemented due to deprecation, demand or practicality
 	FUNCTION func_long(p_in IN LONG, p_in_out IN OUT LONG, p_out OUT LONG) RETURN LONG;
