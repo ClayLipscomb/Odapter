@@ -1,7 +1,7 @@
 Odapter - a C# code generator for Oracle packages
 ========================================
 
-Odapter generates C# adapter classes that provide maximum integration with an Oracle schema's packages. Included with standard package invocation is the hydration of DTO Lists from returned cursor results sets, both typed (record type based) and untyped (simple REF CURSOR). The generated C# provides the developer de facto compile-time resolution with Oracle packages from within the IDE. Optionally, C# DTOs can be generated from Oracle object types, tables and views.
+Odapter generates C# adapter classes that provide integration with an Oracle schema's packages. An adapter class handles the invocation of a package's procedures including the hydration of DTO Lists from returned cursor results sets, both typed (record type based) and untyped (simple REF CURSOR). From within the IDE, the generated C# provides the developer de facto compile-time resolution with the packages. Optionally, standalone C# DTOs can be generated from Oracle object types, tables and views.
 
 ### Minimum System Requirements
 
@@ -18,7 +18,7 @@ Odapter generates C# adapter classes that provide maximum integration with an Or
 
 | PL/SQL and Schema Objects                           | C# |
 | --------------------------------------------------- | -------- |
-| Case insensitive                                    | Case senstive | 
+| Case insensitive                                    | Case sensitive | 
 | underscore_delimited naming                         | PascalCase & camelCase naming     |
 | Package Record Type Field                           | Property     |
 | Package Record Type                                 | Nested public class of properties    |
@@ -29,24 +29,25 @@ Odapter generates C# adapter classes that provide maximum integration with an Or
 
 ### Code Generation Features
 
-* Generates adapter class for each package and nested DTO for each respective record type
+* Generates adapter class for each package with respective method for each procedure/function
+* Generates nested DTO class and interface for each record type
 * Translates all common Oracle data types to C#
-* Translates Oracle associative array type to C# List of the associative array's value type
+* Translates Oracle integer-indexed associative array type to C# List of the value type
 * Configurable translation of Oracle NUMBER, DATE and TIMESTAMP types to C# (including ODP.NET safe types OracleDecimal, OracleDate, OracleTimestamp)
 * Translates Oracle IN, OUT and IN OUT parameters to C#
 * Translates Oracle optional (defaulted) parameters to C# (4.0+)
 * Translates typed and untyped cursors (both as function return and OUT parameters) to C#
-* Generates DTO class for each object type, table, and view in
+* Generates standalone DTO class for each object type, table, and view
 * Configurable for either auto-implemented, or protected field wrapped, DTO properties
-* Generates ancestor classes and basic schema connection code
-* Configurable C# namespaces and base class names
+* Generates initial ancestor classes and schema connection code for editing
+* Configurable C# namespaces and ancestor class names
 * Generates post hook for profiling a package procedure invoked from C#
 * Optionally filters schema objects via prefix and/or special characters
 * Optionally generates C# classes as partial for packages, package record types, object types, tables and views
 * Optionally generates C# DTOs with Serializable, DataContract/DataMember (incl. namespace) or XmlElementAttribute attributes for package record types, object types, tables and views
 * Generates C# 3.0 or 4.0+ code (respectively .NET 3.5 or 4.0+)
 * Generates single C# file for all packages, object types, tables and views, respectively
-* Handles package referencing a record type defined in a diffferent package (including filtered)
+* Handles package referencing a record type defined in a different package (including filtered)
 * Easily adaptable to legacy .NET projects and Oracle schemas
 * Locates and parses local TNSNAMES.ORA for Oracle instances
 * Persists custom generation settings to config file for multiple projects or schemas
