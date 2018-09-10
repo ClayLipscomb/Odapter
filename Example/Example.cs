@@ -54,8 +54,8 @@ namespace OdapterExample {
         public List<Int32> Int32ListPropertyExtra { get; set; } // custom property
     }
 
-    // DTO with only 4 column properties from result set (Date and Timestap columns excluded)
-    public class ClassOriginalMapByName {                       // Use class to map by name
+    // DTO with only 4 column properties (Date and Timestap col excluded)
+    public class ClassOriginalMapByName {                       // Type and name must match, order irrelvant
         public Int64? Id { get; set; }                          // maps id to PascalCase public property
         public Int64? ColInteger { get; set; }                  // maps col_integer to PascalCase public property
 
@@ -69,8 +69,8 @@ namespace OdapterExample {
         public List<Int32> Int32ListPropertyExtra { get; set; } // custom property
     }
 
-    // DTO with only 4 column properties from  result set (Date and Timestap columns excluded)
-    public class ClassOriginalMapByPosition {   // Use class to map by position
+    // DTO with only 4 column properties (Date and Timestap cols excluded)
+    public class ClassOriginalMapByPosition {   // Use to map by position. Type and order must match, name irrelevant.
         [MapAttribute(Position = 0)]            // maps to column 0 (first column)
         public Int64? MyCol1 { get; set; }
         [MapAttribute(Position = 1)]            // maps to column 1
@@ -103,7 +103,7 @@ namespace OdapterExample {
             List<ClassOriginalMapByName> myClassOriginalMapByNameList;
             List<ClassOriginalMapByPosition> myClassOriginalMapByPositionList;
 
-            // 1. hydrate DTO List from typed result set by using class inherited from package record type DTO
+            // 1. Hydrate DTO List from typed result set by using class inherited from package record type DTO.
             pInOutListInt64 = somePrimeNumbers; 
             myClassInheritedList = XmplPkgExample.Instance.GetRowsTypedRet<ClassInherited>(pInDecimal, ref pInOutString, ref pInOutListInt64, out pOutDate, rowLimit);
             Debug.Assert(myClassInheritedList.Count == rowLimit);
@@ -112,7 +112,7 @@ namespace OdapterExample {
                 Debug.Assert(pInOutListInt64[i].Equals(somePrimeNumbers[i] * 7));       // confirm all values were multiplied by 7 in func
             Debug.Assert(pOutDate.Equals(new DateTime(1999, 12, 31)));                  // confirm OUT date arg from package function
 
-            // 2. hydrate DTO List from typed result set by using class implementing package record type interface
+            // 2. Hydrate DTO List from typed result set by using class implementing package record type interface.
             pInOutListInt64 = somePrimeNumbers;
             myClassImplementedList = XmplPkgExample.Instance.GetRowsTypedRet<ClassImplemented>(pInDecimal, ref pInOutString, ref pInOutListInt64, out pOutDate, rowLimit);
             Debug.Assert(myClassImplementedList.Count == rowLimit);
@@ -121,28 +121,33 @@ namespace OdapterExample {
                 Debug.Assert(pInOutListInt64[i].Equals(somePrimeNumbers[i] * 7));       // confirm all values were multiplied by 7 in func
             Debug.Assert(pOutDate.Equals(new DateTime(1999, 12, 31)));                  // confirm OUT date arg from package function
 
-            // 3. hydrate DTO List from untyped result set by mapping column name to property name (default mapping); force unmapped columns to be ignored (non-default)
+            // 3. Hydrate DTO List from untyped result set by mapping column name to property name (default mapping); 
+            //      force unmapped columns to be ignored (non-default).
             myClassOriginalMapByNameList = XmplPkgExample.Instance.GetRowsUntypedRet<ClassOriginalMapByName>(pInInt64, false, true, rowLimit);
             Debug.Assert(myClassOriginalMapByNameList.Count == rowLimit);
 
-            // 4. hydrate DTO List from untyped result set by mapping column name to property name (default mapping); unmapped columns will throw (default)
+            // 4. Hydrate DTO List from untyped result set by mapping column name to property name (default mapping); 
+            //      unmapped columns will throw (default).
             try {
                 myClassOriginalMapByNameList = XmplPkgExample.Instance.GetRowsUntypedRet<ClassOriginalMapByName>(pInInt64, false, false, rowLimit);
             } catch {
                 Debug.Assert(true);
             }
 
-            // 5. hydrate DTO List from untyped result set by mapping column position to property position (non-default mappin6g); force unmapped columns to be ignored (non-default)
+            // 5. Hydrate DTO List from untyped result set by mapping column position to property position (non-default mappin6g); 
+            //      force unmapped columns to be ignored (non-default)
             myClassOriginalMapByPositionList = XmplPkgExample.Instance.GetRowsUntypedRet<ClassOriginalMapByPosition>(pInInt64, true, true, rowLimit);
 
-            // 6. hydrate DTO List from untyped result set by mapping column position to property position (non-default mapping); unmapped columns will throw (default)
+            // 6. Hydrate DTO List from untyped result set by mapping column position to property position (non-default mapping); 
+            //      unmapped columns will throw (default)
             try {
                 myClassOriginalMapByPositionList = XmplPkgExample.Instance.GetRowsUntypedRet<ClassOriginalMapByPosition>(pInInt64, true, false, rowLimit);
             } catch {
                 Debug.Assert(true);
             }
 
-            // 7. hydrate Datatable from all columns in untyped result set; convert column names to DataTable captions
+            // 7. Hydrate Datatable from all columns in untyped result set, column names are converted to DataTable captions.
+            //      No DTO is required.
             DataTable myDataTable = XmplPkgExample.Instance.GetRowsUntypedRet(pInInt64, true, rowLimit);
             Debug.Assert(myDataTable.Rows.Count == rowLimit);
             List<String> dataTableCaptions = new List<string> { "Id", "Col Integer", "Col Number", "Col Varchar2 Max", "Col Date", "Col Timestamp" };
