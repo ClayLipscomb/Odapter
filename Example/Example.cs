@@ -27,23 +27,20 @@ using Odapter;                          // map by position attribute
 namespace OdapterExample {
     class Program {
         static void Main(string[] args) {
-            Example example = new Example();
-            example.Run();
+            (new Example()).Run();
         }
     }
 
-    // The underlying result set of the package function invoked below has 6 columns: 
-    //  "id", "col_integer", "col_number", "col_varchar2_max", "col_date", "col_timestamp"
-    // The following DTO classes will be used in different ways for this result set.
+    // The following DTO classes will be used in different ways for the same result set.
 
-    // DTO that inherits the package record type DTO, adding custom properties 
-    public class ClassInherited : XmplPkgExample.TTableBigPartial {     // no mapping required
-        public String StringPropertyExtra { get; set; }         // custom property
-        public List<Int32> Int32ListPropertyExtra { get; set; } // custom property
+    // Inherits the package record type DTO, adding custom properties 
+    public class DtoInherited : XmplPkgExample.TTableBigPartial {   // no mapping required
+        public String StringPropertyExtra { get; set; }             // custom property
+        public List<Int32> Int32ListPropertyExtra { get; set; }     // custom property
     }
 
-    // DTO that implements the package record type interface, adding custom properties 
-    public class ClassImplemented : XmplPkgExample.ITTableBigPartial {  // no mapping required
+    // Implements the package record type interface, adding custom properties 
+    public class DtoImplemented : XmplPkgExample.ITTableBigPartial {  // no mapping required
         public Int64? Id { get; set; }
         public Int64? ColInteger { get; set; }
         public Decimal? ColNumber { get; set; }
@@ -54,23 +51,23 @@ namespace OdapterExample {
         public List<Int32> Int32ListPropertyExtra { get; set; } // custom property
     }
 
-    // DTO with only 4 column properties (Date and Timestap col excluded)
-    public class ClassOriginalMapByName {                       // Type and name must match, order irrelvant
-        public Int64? Id { get; set; }                          // maps id to PascalCase public property
-        public Int64? ColInteger { get; set; }                  // maps col_integer to PascalCase public property
+    // Has only 4 column properties (Date and Timestap col excluded)
+    public class DtoOriginalMapByName {         // Type and name must match, order irrelvant
+        public Int64? Id { get; set; }          // maps id to PascalCase public property
+        public Int64? ColInteger { get; set; }  // maps col_integer to PascalCase public property
 
-        protected Decimal? colNumber;                           // maps col_number to camelCase non-public field
+        protected Decimal? colNumber;           // maps col_number to camelCase non-public field
         public Decimal? MyNumber { get { return colNumber; } set { colNumber = value; } } // PascalCase public property will not map
 
-        private String _colVarchar2Max;                         // maps col_varchar2_max to underscore prefixed camelCase non-public field
+        private String _colVarchar2Max;         // maps col_varchar2_max to underscore prefixed camelCase non-public field
         public virtual String MyVarchar2Max { get { return _colVarchar2Max; } set { _colVarchar2Max = value; } } // PascalCase public property will not map
 
         public String StringPropertyExtra { get; set; }         // custom property
         public List<Int32> Int32ListPropertyExtra { get; set; } // custom property
     }
 
-    // DTO with only 4 column properties (Date and Timestap cols excluded)
-    public class ClassOriginalMapByPosition {   // Use to map by position. Type and order must match, name irrelevant.
+    // Has only 4 column properties (Date and Timestap cols excluded)
+    public class DtoOriginalMapByPosition {     // Type and order must match, name irrelevant.
         [MapAttribute(Position = 0)]            // maps to column 0 (first column)
         public Int64? MyCol1 { get; set; }
         [MapAttribute(Position = 1)]            // maps to column 1
@@ -98,61 +95,62 @@ namespace OdapterExample {
             String pInOutString = HELLO;
             DateTime? pOutDate;
             List<Int64?> pInOutListInt64, somePrimeNumbers = new List<Int64?> { 2, 3, 5, 7, 11, 13, 17, 19, 29, 31 };
-            List<ClassInherited> myClassInheritedList;
-            List<ClassImplemented> myClassImplementedList;
-            List<ClassOriginalMapByName> myClassOriginalMapByNameList;
-            List<ClassOriginalMapByPosition> myClassOriginalMapByPositionList;
+            List<DtoInherited> dtoInheritedList;
+            List<DtoImplemented> dtoImplementedList;
+            List<DtoOriginalMapByName> dtoOriginalMapByNameList;
+            List<DtoOriginalMapByPosition> dtoOriginalMapByPositionList;
+            DataTable dataTable;
 
-            // 1. Hydrate DTO List from typed result set by using class inherited from package record type DTO.
+            // 1. Hydrate DTO List from typed result set by using DTO inherited from package record type DTO.
             pInOutListInt64 = somePrimeNumbers; 
-            myClassInheritedList = XmplPkgExample.Instance.GetRowsTypedRet<ClassInherited>(pInDecimal, ref pInOutString, ref pInOutListInt64, out pOutDate, rowLimit);
-            Debug.Assert(myClassInheritedList.Count == rowLimit);
-            Debug.Assert(pInOutString.Equals(GOODBYE));                                 // confirm OUT string arg from package function
+            dtoInheritedList = XmplPkgExample.Instance.GetRowsTypedRet<DtoInherited>(pInDecimal, ref pInOutString, ref pInOutListInt64, out pOutDate, rowLimit);
+            Debug.Assert(dtoInheritedList.Count == rowLimit);
+            Debug.Assert(pInOutString.Equals(GOODBYE));                             // confirm OUT string arg from package function
             for (int i = 0; i < pInOutListInt64.Count; i++)
-                Debug.Assert(pInOutListInt64[i].Equals(somePrimeNumbers[i] * 7));       // confirm all values were multiplied by 7 in func
-            Debug.Assert(pOutDate.Equals(new DateTime(1999, 12, 31)));                  // confirm OUT date arg from package function
+                Debug.Assert(pInOutListInt64[i].Equals(somePrimeNumbers[i] * 7));   // confirm all values were multiplied by 7 in func
+            Debug.Assert(pOutDate.Equals(new DateTime(1999, 12, 31)));              // confirm OUT date arg from package function
 
-            // 2. Hydrate DTO List from typed result set by using class implementing package record type interface.
+            // 2. Hydrate DTO List from typed result set by using DTO implementing package record type interface.
             pInOutListInt64 = somePrimeNumbers;
-            myClassImplementedList = XmplPkgExample.Instance.GetRowsTypedRet<ClassImplemented>(pInDecimal, ref pInOutString, ref pInOutListInt64, out pOutDate, rowLimit);
-            Debug.Assert(myClassImplementedList.Count == rowLimit);
-            Debug.Assert(pInOutString.Equals(GOODBYE));                                 // confirm OUT string arg from package function
+            dtoImplementedList = XmplPkgExample.Instance.GetRowsTypedRet<DtoImplemented>(pInDecimal, ref pInOutString, ref pInOutListInt64, out pOutDate, rowLimit);
+            Debug.Assert(dtoImplementedList.Count == rowLimit);
+            Debug.Assert(pInOutString.Equals(GOODBYE));                             // confirm OUT string arg from package function
             for (int i = 0; i < pInOutListInt64.Count; i++)
-                Debug.Assert(pInOutListInt64[i].Equals(somePrimeNumbers[i] * 7));       // confirm all values were multiplied by 7 in func
-            Debug.Assert(pOutDate.Equals(new DateTime(1999, 12, 31)));                  // confirm OUT date arg from package function
+                Debug.Assert(pInOutListInt64[i].Equals(somePrimeNumbers[i] * 7));   // confirm all values were multiplied by 7 in func
+            Debug.Assert(pOutDate.Equals(new DateTime(1999, 12, 31)));              // confirm OUT date arg from package function
 
-            // 3. Hydrate DTO List from untyped result set by mapping column name to property name (default mapping); 
-            //      force unmapped columns to be ignored (non-default).
-            myClassOriginalMapByNameList = XmplPkgExample.Instance.GetRowsUntypedRet<ClassOriginalMapByName>(pInInt64, false, true, rowLimit);
-            Debug.Assert(myClassOriginalMapByNameList.Count == rowLimit);
+            // 3. Hydrate DTO List from untyped result set by mapping column name to property name (default); 
+            //      unmapped columns will be ignored (non-default).
+            dtoOriginalMapByNameList = XmplPkgExample.Instance.GetRowsUntypedRet<DtoOriginalMapByName>(pInInt64, false, true, rowLimit);
+            Debug.Assert(dtoOriginalMapByNameList.Count == rowLimit);
 
-            // 4. Hydrate DTO List from untyped result set by mapping column name to property name (default mapping); 
-            //      unmapped columns will throw (default).
+            // 4. Hydrate DTO List from untyped result set by mapping column name to property name (default); 
+            //      an unmapped column will throw (default).
             try {
-                myClassOriginalMapByNameList = XmplPkgExample.Instance.GetRowsUntypedRet<ClassOriginalMapByName>(pInInt64, false, false, rowLimit);
+                dtoOriginalMapByNameList = XmplPkgExample.Instance.GetRowsUntypedRet<DtoOriginalMapByName>(pInInt64, false, false, rowLimit);
             } catch {
                 Debug.Assert(true);
             }
 
-            // 5. Hydrate DTO List from untyped result set by mapping column position to property position (non-default mappin6g); 
-            //      force unmapped columns to be ignored (non-default)
-            myClassOriginalMapByPositionList = XmplPkgExample.Instance.GetRowsUntypedRet<ClassOriginalMapByPosition>(pInInt64, true, true, rowLimit);
+            // 5. Hydrate DTO List from untyped result set by mapping column position to property position (non-default); 
+            //      unmapped columns will be ignored (non-default)
+            dtoOriginalMapByPositionList = XmplPkgExample.Instance.GetRowsUntypedRet<DtoOriginalMapByPosition>(pInInt64, true, true, rowLimit);
 
-            // 6. Hydrate DTO List from untyped result set by mapping column position to property position (non-default mapping); 
-            //      unmapped columns will throw (default)
+            // 6. Hydrate DTO List from untyped result set by mapping column position to property position (non-default); 
+            //      an unmapped column will throw (default).
             try {
-                myClassOriginalMapByPositionList = XmplPkgExample.Instance.GetRowsUntypedRet<ClassOriginalMapByPosition>(pInInt64, true, false, rowLimit);
+                dtoOriginalMapByPositionList = XmplPkgExample.Instance.GetRowsUntypedRet<DtoOriginalMapByPosition>(pInInt64, true, false, rowLimit);
             } catch {
                 Debug.Assert(true);
             }
 
             // 7. Hydrate Datatable from all columns in untyped result set, column names are converted to DataTable captions.
-            //      No DTO is required.
-            DataTable myDataTable = XmplPkgExample.Instance.GetRowsUntypedRet(pInInt64, true, rowLimit);
-            Debug.Assert(myDataTable.Rows.Count == rowLimit);
+            //      No DTO or generic required.
+            dataTable = XmplPkgExample.Instance.GetRowsUntypedRet(pInInt64, true, rowLimit);
+            Debug.Assert(dataTable.Rows.Count == rowLimit);
             List<String> dataTableCaptions = new List<string> { "Id", "Col Integer", "Col Number", "Col Varchar2 Max", "Col Date", "Col Timestamp" };
             for (int i = 0; i < dataTableCaptions.Count; i++)
-                Debug.Assert(myDataTable.Columns[i].Caption.Equals(dataTableCaptions[i]));  // confirm captions were created from column name
+                Debug.Assert(dataTable.Columns[i].Caption.Equals(dataTableCaptions[i]));  // confirm captions were created from column name
         }
     }
 }
