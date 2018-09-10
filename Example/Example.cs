@@ -32,18 +32,18 @@ namespace OdapterExample {
         }
     }
 
-    // The underlying result set of the package function invoked below set has 6 columns: 
+    // The underlying result set of the package function invoked below has 6 columns: 
     //  "id", "col_integer", "col_number", "col_varchar2_max", "col_date", "col_timestamp"
     // The following DTO classes will be used in different ways for this result set.
 
-    // DTO that inherits the package record type DTO, adding custom properties (no mapping)
-    public class ClassInherited : XmplPkgExample.TTableBigPartial {
+    // DTO that inherits the package record type DTO, adding custom properties 
+    public class ClassInherited : XmplPkgExample.TTableBigPartial {     // no mapping required
         public String StringPropertyExtra { get; set; }         // custom property
         public List<Int32> Int32ListPropertyExtra { get; set; } // custom property
     }
 
-    // DTO that implements the package record type interface, adding custom properties (no mapping)
-    public class ClassImplemented : XmplPkgExample.ITTableBigPartial {
+    // DTO that implements the package record type interface, adding custom properties 
+    public class ClassImplemented : XmplPkgExample.ITTableBigPartial {  // no mapping required
         public Int64? Id { get; set; }
         public Int64? ColInteger { get; set; }
         public Decimal? ColNumber { get; set; }
@@ -54,30 +54,30 @@ namespace OdapterExample {
         public List<Int32> Int32ListPropertyExtra { get; set; } // custom property
     }
 
-    // DTO with only 4 columns from the result set (properties for Date and Timestap columns excluded); used to map by *name*; 
-    public class ClassOriginalMapByName {
-        public Int64? Id { get; set; }                          // maps id column to PascalCase public property
-        public Int64? ColInteger { get; set; }                  // maps col_integer column to PascalCase public property
+    // DTO with only 4 column properties from result set (Date and Timestap columns excluded)
+    public class ClassOriginalMapByName {                       // Use class to map by name
+        public Int64? Id { get; set; }                          // maps id to PascalCase public property
+        public Int64? ColInteger { get; set; }                  // maps col_integer to PascalCase public property
 
-        protected Decimal? colNumber;                           // maps col_number column to camelCase non-public field
+        protected Decimal? colNumber;                           // maps col_number to camelCase non-public field
         public Decimal? MyNumber { get { return colNumber; } set { colNumber = value; } } // PascalCase public property will not map
 
-        private String _colVarchar2Max;                         // maps col_varchar2_max column to underscore prefixed camelCase non-public field
+        private String _colVarchar2Max;                         // maps col_varchar2_max to underscore prefixed camelCase non-public field
         public virtual String MyVarchar2Max { get { return _colVarchar2Max; } set { _colVarchar2Max = value; } } // PascalCase public property will not map
 
         public String StringPropertyExtra { get; set; }         // custom property
         public List<Int32> Int32ListPropertyExtra { get; set; } // custom property
     }
 
-    // DTO with only 4 columns mapped from the result set (properties for Date and Timestap columns excluded); used to map by *position*; 
-    public class ClassOriginalMapByPosition {
-        [MapAttribute(Position = 0)]        // first column is position 0
+    // DTO with only 4 column properties from  result set (Date and Timestap columns excluded)
+    public class ClassOriginalMapByPosition {   // Use class to map by position
+        [MapAttribute(Position = 0)]            // maps to column 0 (first column)
         public Int64? MyCol1 { get; set; }
-        [MapAttribute(Position = 1)]
+        [MapAttribute(Position = 1)]            // maps to column 1
         public Int64? MyCol2 { get; set; }
-        [MapAttribute(Position = 2)]
+        [MapAttribute(Position = 2)]            // maps to column 2
         public Decimal? MyCol3 { get; set; }
-        [MapAttribute(Position = 3)]
+        [MapAttribute(Position = 3)]            // maps to column 3
         public String MyCol4 { get; set; }
 
         public String StringPropertyExtra { get; set; }         // custom property
