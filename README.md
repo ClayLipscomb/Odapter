@@ -33,7 +33,7 @@ Odapter generates C# adapter classes that provide integration with an Oracle sch
 * Generates nested DTO class and interface for each record type
 * Translates all common Oracle data types to C#
 * Translates Oracle integer-indexed associative array type to C# List of the value type
-* Configurable translation of Oracle NUMBER, DATE and TIMESTAMP types to C# (including ODP.NET safe types OracleDecimal, OracleDate, OracleTimestamp)
+* Configurable translation of Oracle INTEGER, NUMBER, DATE and TIMESTAMP types to C#, including options for ODP.NET safe types (OracleDecimal, OracleDate, OracleTimestamp)
 * Translates Oracle IN, OUT and IN OUT parameters to C#
 * Translates Oracle optional (defaulted) parameters to C# (4.0+)
 * Translates typed and untyped cursors (both as function return and OUT parameters) to C#
@@ -82,7 +82,7 @@ Odapter generates C# adapter classes that provide integration with an Oracle sch
 For examples, see code below and Tester/Tester.cs.
 
 ### Code Example
-###### Package Specification - Tester/schema/package/odpt_pkg_example.pks
+###### Package Specification - Tester/schema/package/xmpl_pkg_example.pks
 
 ```SQLPL
 CREATE OR REPLACE PACKAGE ODPT.xmpl_pkg_example AS
