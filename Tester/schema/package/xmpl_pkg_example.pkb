@@ -26,9 +26,11 @@ CREATE OR REPLACE PACKAGE BODY ODPT.xmpl_pkg_example AS
         l_cursor    t_ref_cursor;
     BEGIN    
         OPEN l_cursor FOR
-        SELECT      id, col_integer, col_number, col_varchar2_max, col_date, col_timestamp
-        FROM        odpt_table_big
-        ORDER BY    id;    
+           'SELECT      id, col_integer, col_number, 
+                        col_varchar2_max varchar2_max_col /* use alias to test DataTable caption */, 
+                        col_date, col_timestamp 
+            FROM        odpt_table_big
+            ORDER BY    id';    
 
         RETURN l_cursor;
     END;	
