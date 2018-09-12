@@ -379,8 +379,8 @@ namespace OdapterExample {
         public List<Int32> Int32ListPropertyExtra { get; set; } // custom property
     }
 
-    // Has only 4 column properties (Date and Timestap col excluded)
-    public class DtoOriginalMapByName {         // Type and name must match, order irrelvant
+    // Custom DTO with only 4 column properties (Date and Timestap col excluded)
+    public class DtoOriginalMapByName {         // Column type and name must match, order and alias irrelvant
         public Int64? Id { get; set; }          // maps id to PascalCase public property
         public Int64? ColInteger { get; set; }  // maps col_integer to PascalCase public property
 
@@ -394,8 +394,8 @@ namespace OdapterExample {
         public List<Int32> Int32ListPropertyExtra { get; set; } // custom property
     }
 
-    // Has only 4 column properties (Date and Timestap cols excluded)
-    public class DtoOriginalMapByPosition {     // Type and order must match, name irrelevant.
+    // Custom DTO with only 4 column properties (Date and Timestap cols excluded)
+    public class DtoOriginalMapByPosition {     // Column type and order must match, name and alias irrelevant.
         [MapAttribute(Position = 0)]            // maps to column 0 (first column)
         public Int64? MyCol1 { get; set; }
         [MapAttribute(Position = 1)]            // maps to column 1
@@ -476,7 +476,7 @@ namespace OdapterExample {
             //      No DTO or generic required.
             dataTable = XmplPkgExample.Instance.GetRowsUntypedRet(pInInt64, true, rowLimit);
             Debug.Assert(dataTable.Rows.Count == rowLimit);
-            List<String> dataTableCaptions = new List<string> { "Id", "Col Integer", "Col Number", "Col Varchar2 Max", "Col Date", "Col Timestamp" };
+            List<String> dataTableCaptions = new List<string> { "Id", "Col Integer", "Col Number", "Varchar2 Max Col", "Col Date", "Col Timestamp" };
             for (int i = 0; i < dataTableCaptions.Count; i++)
                 Debug.Assert(dataTable.Columns[i].Caption.Equals(dataTableCaptions[i]));  // confirm captions were created from column name
         }
