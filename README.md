@@ -60,7 +60,7 @@ Odapter generates C# adapter classes that provide integration with an Oracle sch
     - Mapping by name: column name to property name (underscore_delimited column translated to public PascalCase, protected camelCase or privated underscore prefixed camelCase property)
     - Mapping by position: column position to property position via attribute
     - For performance, uses thread-safe static cache for mappings of C# DTO to Oracle result set
-* Constructs (from underlying columns) and hydrates DataTable from returned untyped cursor result set
+* Constructs (from underlying columns) and hydrates DataTable from returned untyped cursor result set; captions are created from column name or alias
 * Optionally limits the number of rows returned from any cursor result set
 
 ### Getting Started: Generating Code for Packages
