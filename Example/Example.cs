@@ -51,8 +51,8 @@ namespace OdapterExample {
         public List<Int32> Int32ListPropertyExtra { get; set; } // custom property
     }
 
-    // Custom DTO with only 4 column properties (Date and Timestap col excluded)
-    public class DtoOriginalMapByName {         // Column type and name must match, order and alias irrelvant
+    // Custom DTO for map by name with only 4 column properties (Date, Timestamp col excluded)
+    public class DtoCustomMapByName {         // Column type and name must match, order and alias irrelvant
         public Int64? Id { get; set; }          // maps id to PascalCase public property
         public Int64? ColInteger { get; set; }  // maps col_integer to PascalCase public property
 
@@ -66,8 +66,8 @@ namespace OdapterExample {
         public List<Int32> Int32ListPropertyExtra { get; set; } // custom property
     }
 
-    // Custom DTO with only 4 column properties (Date and Timestap cols excluded)
-    public class DtoOriginalMapByPosition {     // Column type and order must match, name and alias irrelevant.
+    // Custom DTO for map by position with only 4 column properties (Date, Timestamp cols excluded)
+    public class DtoCustomMapByPosition {     // Column type and order must match, name and alias irrelevant.
         [MapAttribute(Position = 0)]            // maps to column 0 (first column)
         public Int64? MyCol1 { get; set; }
         [MapAttribute(Position = 1)]            // maps to column 1
@@ -97,8 +97,8 @@ namespace OdapterExample {
             List<Int64?> pInOutListInt64, somePrimeNumbers = new List<Int64?> { 2, 3, 5, 7, 11, 13, 17, 19, 29, 31 };
             List<DtoInherited> dtoInheritedList;
             List<DtoImplemented> dtoImplementedList;
-            List<DtoOriginalMapByName> dtoOriginalMapByNameList;
-            List<DtoOriginalMapByPosition> dtoOriginalMapByPositionList;
+            List<DtoCustomMapByName> dtoOriginalMapByNameList;
+            List<DtoCustomMapByPosition> dtoOriginalMapByPositionList;
             DataTable dataTable;
 
             // 1. Hydrate DTO List from typed result set by using DTO inherited from package record type DTO.
@@ -121,27 +121,27 @@ namespace OdapterExample {
 
             // 3. Hydrate DTO List from untyped result set by mapping column name to property name (default); 
             //      unmapped columns will be ignored (non-default).
-            dtoOriginalMapByNameList = XmplPkgExample.Instance.GetRowsUntypedRet<DtoOriginalMapByName>(pInInt64, false, true, rowLimit);
+            dtoOriginalMapByNameList = XmplPkgExample.Instance.GetRowsUntypedRet<DtoCustomMapByName>(pInInt64, false, true, rowLimit);
             Debug.Assert(dtoOriginalMapByNameList.Count == rowLimit);
 
             // 4. Hydrate DTO List from untyped result set by mapping column name to property name (default); 
             //      an unmapped column will throw (default).
             try {
-                dtoOriginalMapByNameList = XmplPkgExample.Instance.GetRowsUntypedRet<DtoOriginalMapByName>(pInInt64, false, false, rowLimit);
-            } catch {
-                Debug.Assert(true);
+                dtoOriginalMapByNameList = XmplPkgExample.Instance.GetRowsUntypedRet<DtoCustomMapByName>(pInInt64, false, false, rowLimit);
+            } catch (Exception ex) {
+                if (!ex.Message.StartsWith("Hydrator.BuildMappings")) Debug.Assert(false);
             }
 
             // 5. Hydrate DTO List from untyped result set by mapping column position to property position (non-default); 
             //      unmapped columns will be ignored (non-default)
-            dtoOriginalMapByPositionList = XmplPkgExample.Instance.GetRowsUntypedRet<DtoOriginalMapByPosition>(pInInt64, true, true, rowLimit);
+            dtoOriginalMapByPositionList = XmplPkgExample.Instance.GetRowsUntypedRet<DtoCustomMapByPosition>(pInInt64, true, true, rowLimit);
 
             // 6. Hydrate DTO List from untyped result set by mapping column position to property position (non-default); 
             //      an unmapped column will throw (default).
             try {
-                dtoOriginalMapByPositionList = XmplPkgExample.Instance.GetRowsUntypedRet<DtoOriginalMapByPosition>(pInInt64, true, false, rowLimit);
-            } catch {
-                Debug.Assert(true);
+                dtoOriginalMapByPositionList = XmplPkgExample.Instance.GetRowsUntypedRet<DtoCustomMapByPosition>(pInInt64, true, false, rowLimit);
+            } catch (Exception ex) {
+                if (!ex.Message.StartsWith("Hydrator.BuildMappings")) Debug.Assert(false);
             }
 
             // 7. Hydrate Datatable from all columns in untyped result set, column names are converted to DataTable captions.
