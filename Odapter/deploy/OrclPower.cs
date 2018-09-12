@@ -496,7 +496,7 @@ namespace Odapter {
                     int propertyMapPosition = ((MapAttribute)Attribute.GetCustomAttribute(property, typeof(MapAttribute))).Position;
                     if (c != propertyMapPosition) {
                         throw new Exception("Hydrator.BuildMappings<T>() - property map position mismatch with reader columns near property position " + propertyMapPosition.ToString()
-                            + "on class " + typeof(T).FullName + "." + "Check for duplicate or missing position values on properties.");
+                            + " on class " + typeof(T).FullName + "." + " Check for duplicate or missing position values on properties.");
                     }
 
                     // valid property found, add completed mapping to our list
@@ -520,7 +520,7 @@ namespace Odapter {
                             if (allowUnmappedColumns) {
                                 continue; // unmapped column will be ignored - a "silent failed mapping"
                             } else {
-                                throw new Exception("Hydrator.BuildMappings() - Could not find an _underscorePrefixedCamelCase non-public field, "
+                                throw new Exception("Hydrator.BuildMappings<T>() - Could not find an _underscorePrefixedCamelCase non-public field, "
                                     + "a camelCase non-public field, nor a PascalCase public property on " + typeof(T).FullName + " for column " + reader.GetName(c));
                             }
                         }
