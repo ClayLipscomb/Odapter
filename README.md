@@ -78,7 +78,8 @@ Odapter generates C# adapter classes that provide integration with an Oracle sch
 11. Open your project and add the generated files
 12. If your project targets the .NET 3.5 framework, add a reference for the unmanaged ODP.NET driver; if .NET 4.0 or higher, add a reference for the managed ODP.NET driver.
 13. Add "using Schema.YourSchemaName.YourFilterPrefixIfAny.Package" to project files in order to access packages
-14. See Tester/Tester.cs and code below for examples
+
+For examples, see code below and Tester/Tester.cs.
 
 ### Code Example
 ###### Package Specification - Tester/schema/package/odpt_pkg_example.pks
