@@ -1340,8 +1340,8 @@ namespace Odapter {
             this.cbIncludeFilterPrefixInNaming.Text = "Include Filter Prefix in Namespace and File Name?";
             this.cbIncludeFilterPrefixInNaming.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.toolTip1.SetToolTip(this.cbIncludeFilterPrefixInNaming, "Incorporate the Filter Prefix value into namespaces and generated file names. Thi" +
-        "s is useful in cases where packages of multiple projects exists in the same sche" +
-        "ma (e.g., APPS).");
+        "s is \r\nuseful in cases where packages of multiple projects exists in the same sc" +
+        "hema (e.g., APPS).");
             this.cbIncludeFilterPrefixInNaming.UseVisualStyleBackColor = true;
             // 
             // cbGenerateObjectType
