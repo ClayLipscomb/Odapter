@@ -31,12 +31,33 @@ namespace Odapter {
         public static String ObjectTypeNamespace = "";
         //public static readonly string GENERIC_TYPE_PREFIX = "T_"; 
         public static readonly List<String> OracleTypesIgnored = new List<String> {
-            Orcl.PLSQL_BOOLEAN, Orcl.NESTED_TABLE, Orcl.VARRAY, Orcl.OBJECT_TYPE, Orcl.REF, Orcl.BFILE, Orcl.RAW, Orcl.XML_TYPE, Orcl.NUMERIC,
-            Orcl.DECIMAL, Orcl.ROWID, Orcl.UROWID, Orcl.LONG, Orcl.LONG_RAW, Orcl.TIMESTAMP_WITH_TIME_ZONE, Orcl.TIMESTAMP_WITH_LOCAL_TIME_ZONE,
-            Orcl.INTERVAL_YEAR_TO_MONTH, Orcl.INTERVAL_DAY_TO_SECOND, Orcl.BLOB, Orcl.CLOB, Orcl.NCLOB, Orcl.UNDEFINED, Orcl.RECORD
-
             // types explicitly not implemented in ODP.NET managed: ARRAY (Varray, Nested Table), BOOLEAN, OBJECT, REF, XML_TYPE
             // https://docs.oracle.com/database/121/ODPNT/OracleDbTypeEnumerationType.htm#ODPNT2286
+            Orcl.VARRAY, Orcl.NESTED_TABLE, Orcl.PLSQL_BOOLEAN, Orcl.BOOLEAN, Orcl.OBJECT_TYPE, Orcl.REF, Orcl.XML_TYPE,
+
+            // types not implemented by Odapter
+            Orcl.LONG, Orcl.LONG_RAW, // deprecated by Oracle
+            Orcl.BFILE, Orcl.RAW, Orcl.NUMERIC,
+            Orcl.DECIMAL, Orcl.ROWID, Orcl.UROWID, 
+            Orcl.TIMESTAMP_WITH_TIME_ZONE, Orcl.TIMESTAMP_WITH_LOCAL_TIME_ZONE,
+            Orcl.INTERVAL_YEAR_TO_MONTH, Orcl.INTERVAL_DAY_TO_SECOND, Orcl.UNDEFINED, Orcl.RECORD
+        };
+
+        public static readonly List<String> TypesImplementedForAssociativeArrays = new List<String> {
+            Orcl.BINARY_FLOAT,
+            Orcl.CHAR,
+            Orcl.DATE,
+            Orcl.NCHAR,
+            Orcl.NUMBER, /* equiv or subtypes --> */ Orcl.INTEGER, Orcl.INT, Orcl.SMALLINT, Orcl.FLOAT, Orcl.DOUBLE_PRECISION, Orcl.BINARY_DOUBLE,
+            Orcl.BINARY_FLOAT, // not officially supported but it is working for me
+            Orcl.NVARCHAR2,
+            Orcl.RAW,
+            Orcl.ROWID,
+            Orcl.UROWID,
+            Orcl.VARCHAR2, /* equiv or subtypes --> */ Orcl.VARCHAR, Orcl.STRING
+
+            // associative array types explicitly not implemented in ODP.NET 
+            // https://docs.oracle.com/cd/E85694_01/ODPNT/featOraCommand.htm#GUID-05A6D391-E77F-41AF-83A2-FE86A3D98872
         };
 
         #region Properties
@@ -98,6 +119,30 @@ namespace Odapter {
             }
             get {
                 return _cSharpTypeUsedForOracleIntervalDayToSecond;
+            }
+        }
+
+        private static string _cSharpTypeUsedForOracleBlob;
+        public static string CSharpTypeUsedForOracleBlob {
+            set {
+                if (value != CSharp.BYTE_ARRAY && value != CSharp.ORACLE_BLOB)
+                    throw new Exception("C# type " + value + " not allowed as translation for Oracle BLOB.");
+                _cSharpTypeUsedForOracleBlob = value;
+            }
+            get {
+                return _cSharpTypeUsedForOracleBlob;
+            }
+        }
+
+        private static string _cSharpTypeUsedForOracleClob;
+        public static string CSharpTypeUsedForOracleClob {
+            set {
+                if (value != CSharp.STRING && value != CSharp.ORACLE_CLOB)
+                    throw new Exception("C# type " + value + " not allowed as translation for Oracle CLOB and NCLOB.");
+                _cSharpTypeUsedForOracleClob = value;
+            }
+            get {
+                return _cSharpTypeUsedForOracleClob;
             }
         }
         #endregion
@@ -379,11 +424,6 @@ namespace Odapter {
                 if (attr.Precision != null || attr.Scale == 0) oracleType += "(" + (attr.Precision ?? 38).ToString();
                 if (attr.Precision != null || attr.Scale == 0) oracleType += "," + (attr.Scale ?? 0).ToString();
                 if (attr.Precision != null || attr.Scale == 0) oracleType += ")";
-
-                ////if (attr.Precision != null) oracleType += "(" + attr.Precision.ToString();
-                ////if (attr.Scale != null && attr.Scale != 0) oracleType += "," + attr.Scale.ToString();
-                ////if (attr.Precision != null) oracleType += ")";
-
             } else if (oracleType.Contains(Orcl.VARCHAR)) {
                 if (attr.Length >= 1) oracleType = oracleType + "(" + attr.Length + ")";
             }
@@ -416,7 +456,7 @@ namespace Odapter {
             }
 
             // a nested table to a List (even though we are not handling nested tables yet)
-            if (oracleArg.DataType == Orcl.NESTED_TABLE) return  CSharp.ListOf(ConvertOracleArgTypeToCSharpType(oracleArg.NextArgument, true));
+            if (oracleArg.DataType == Orcl.NESTED_TABLE) return CSharp.ListOf(ConvertOracleArgTypeToCSharpType(oracleArg.NextArgument, true));
 
             // a cursor translates to a List
             // a strongly typed cursor is a generic list, but based on record type
@@ -460,7 +500,6 @@ namespace Odapter {
             //                  TABLE           null
             //                  UNDEFINED       null
             //                  VARRAY          null
-//            string oracleType = oracleArg.PlsType != null ? oracleArg.PlsType.Trim() : (oracleArg.DataType != null ? oracleArg.DataType.Trim() : "");
 
             // handle simple types
             string oracleType;
@@ -502,6 +541,8 @@ namespace Odapter {
             string cSharpTypeUsedForOracleDate  = Translater.CSharpTypeUsedForOracleDate + (typeNotNullable ? "" : "?");
             string cSharpTypeUsedForOracleTimeStamp = Translater.CSharpTypeUsedForOracleTimeStamp + (typeNotNullable ? "" : "?");
             string cSharpTypeUsedForOracleIntervalDayToSecond = Translater.CSharpTypeUsedForOracleIntervalDayToSecond + (typeNotNullable ? "" : "?");
+            string cSharpTypeUsedForOracleBlob = Translater.CSharpTypeUsedForOracleBlob; // no types require ?
+            string cSharpTypeUsedForOracleClob = Translater.CSharpTypeUsedForOracleClob; // no types require ?
             //string timeSpanType = CSharp.TIME_SPAN + (typeNotNullable ? "" : "?");
             string cSharpTypeUsedForOracleNumber = _cSharpTypeUsedForOracleNumber + (typeNotNullable ? "" : "?");
 
@@ -611,12 +652,14 @@ namespace Odapter {
                     return cSharpTypeUsedForOracleIntervalDayToSecond;
 
                 case Orcl.CLOB:
-                case Orcl.LONG:
                 case Orcl.NCLOB:
-                case Orcl.BFILE:
+                    return cSharpTypeUsedForOracleClob;
                 case Orcl.BLOB:
+                    return cSharpTypeUsedForOracleBlob;
+                case Orcl.BFILE:
                 case Orcl.RAW:
-                case Orcl.LONG_RAW:
+                case Orcl.LONG:         // deprecated by Oracle
+                case Orcl.LONG_RAW:     // deprecated by Oracle
                     return CSharp.BYTE_ARRAY;
 
                 case Orcl.ANYDATA:

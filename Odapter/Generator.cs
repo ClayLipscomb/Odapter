@@ -26,12 +26,12 @@ using System.Globalization;
 namespace Odapter {
     public class Generator {
         #region User Defined Options
-        private String _outputPath;
-        private String _schema;
-        private String _databaseInstance;
-        private String _login;
-        private String _password;
-        private String _baseNamespace = "Schema"; // default
+        private readonly String _outputPath;
+        private readonly String _schema;
+        private readonly String _databaseInstance;
+        private readonly String _login;
+        private readonly String _password;
+        private readonly String _baseNamespace = "Schema"; // default
 
         private String _objectTypeNamespace { get; set; }
 
@@ -42,8 +42,8 @@ namespace Odapter {
         #endregion
 
         #region Member Variables
-        private List<String> GeneratedPacakgeRecordTypes = new List<string>();
-        private Action<string> _displayMessageMethod;
+        private readonly List<String> GeneratedPacakgeRecordTypes = new List<string>();
+        private readonly Action<string> _displayMessageMethod;
         #endregion
 
         #region Constants/Readonly
@@ -364,7 +364,7 @@ namespace Odapter {
         }
 
         /// <summary>
-        /// Generate code to retrieve an associative array value from an out argument/return
+        /// Generate code to retrieve an associative array value from an out argument
         /// </summary>
         /// <param name="cSharpArgType"></param>
         /// <param name="cSharpArgName"></param>
@@ -434,7 +434,7 @@ namespace Odapter {
                     if (dynamicMapping) {
                         sb.AppendLine(ORCL_UTIL_CLASS + ".ReadResult"
                             + (cSharpArgType == CSharp.DATATABLE ? "" : "<" + CSharp.ExtractSubtypeFromListType(cSharpArgType, false) + ">")
-                            + "(" + LOCAL_VAR_NAME_READER 
+                            + "(" + LOCAL_VAR_NAME_READER
                                     + (cSharpArgType == CSharp.DATATABLE
                                         ? ", " + PARAM_NAME_CONVERT_COLUMN_NAME_TO_TITLE_CASE
                                         : ", " + PARAM_NAME_MAP_BY_POSITION + ", " + PARAM_NAME_ALLOW_UNMAPPED_COLUMNS)
@@ -452,28 +452,32 @@ namespace Odapter {
                     //firstOutCursorFound = true;
                 } else if (isAssocArray) {
                     sb.Append(GenerateAssocArrayOutArgumentRetrieveCode(cSharpArgType, cSharpArgName, parametersVarName, arg, 5));
-                } else if (arg.DataType == Orcl.NESTED_TABLE) {
-                    sb.AppendLine(Tab(5) + "// " + " ORACLE_NESTED_TABLE out param " + arg.ArgumentName + " TO BE CODED"); // .NET can't handle this
-                    sb.AppendLine(Tab(5) + " " + cSharpArgName + " = null;");
-                } else if (arg.DataType == Orcl.RECORD) {
-                    sb.AppendLine(Tab(5) + "// " + " ORACLE_RECORD out param " + arg.ArgumentName + "TO BE CODED");
-                    sb.AppendLine(Tab(5) + " " + cSharpArgName + " = null;");
-                } else { // primitive types
-                    sb.AppendLine(Tab(5) // check for null value
-                        + Translater.ConvertOracleNameToCSharpName(arg.ArgumentName, true)
-                        + " = " + parametersVarName + "[\"" + arg.ArgumentName + "\"].Status == OracleParameterStatus.NullFetched");
+                //} else if (new List<String> { Orcl.BLOB, Orcl.CLOB, Orcl.NCLOB }.Contains(arg.DataType)) {
+                //    sb.AppendLine(Tab(5) // check for null value
+                //        + Translater.ConvertOracleNameToCSharpName(arg.ArgumentName, true)
+                //        + " = " + parametersVarName + "[\"" + arg.ArgumentName + "\"].Status == OracleParameterStatus.NullFetched");
+
+                //    sb.AppendLine(Tab(6) // assign null value
+                //        + "? (" + Translater.ConvertOracleArgTypeToCSharpType(arg, true) + ")null");
+
+                //    sb.AppendLine(Tab(6) // assign non-null value
+                //        + ": ((" + Translater.ConvertOracleTypeToOdpNetType(arg.DataType) + ")"
+                //        + parametersVarName + "[\"" + arg.ArgumentName + "\"].Value).Value;");
+                } else { // standard types (built-ins)
+                    sb.AppendLine(Tab(5) + Translater.ConvertOracleNameToCSharpName(arg.ArgumentName, true) + " = " + parametersVarName 
+                        + "[\"" + arg.ArgumentName + "\"].Status == OracleParameterStatus.NullFetched"); // check for null value
+
                     if (CSharp.IsOdpNetType(cSharpArgType)) {
-                        sb.AppendLine(Tab(6) // assign null value
-                            + "? " + Translater.ConvertOracleArgTypeToCSharpType(arg, true) + ".Null");
-                        sb.AppendLine(Tab(6) // assign non-null value
-                            + ": (" + Translater.ConvertOracleArgTypeToCSharpType(arg, false) + ")"
-                            + parametersVarName + "[\"" + arg.ArgumentName + "\"].Value;");
+                        sb.AppendLine(Tab(6) + "? " + Translater.ConvertOracleArgTypeToCSharpType(arg, true) + ".Null"); // assign null value
+                        sb.AppendLine(Tab(6) + ": (" + Translater.ConvertOracleArgTypeToCSharpType(arg, false) + ")" 
+                            + parametersVarName + "[\"" + arg.ArgumentName + "\"].Value;"); // assign non-null value
                     } else {
-                        sb.AppendLine(Tab(6) // assign null value
-                            + "? (" + Translater.ConvertOracleArgTypeToCSharpType(arg, false) + ")null");
-                        sb.AppendLine(Tab(6) // assign non-null value
-                            + (cSharpArgType.Trim('?').Equals(CSharp.BIG_INTEGER) ? ":" + (CSharp.BIG_INTEGER + ".Parse") : ": Convert.To" + cSharpArgType)
-                            + "(" + parametersVarName + "[\"" + arg.ArgumentName + "\"].Value.ToString());");
+                        bool isLobDataType = new List<String> { Orcl.BLOB, Orcl.CLOB, Orcl.NCLOB }.Contains(arg.DataType);
+                        sb.AppendLine(Tab(6) + "? (" + Translater.ConvertOracleArgTypeToCSharpType(arg, isLobDataType) + ")null"); // assign null value
+                        if (isLobDataType) // assign non-null value 
+                            sb.AppendLine(Tab(6) + ": ((" + Translater.ConvertOracleTypeToOdpNetType(arg.DataType) + ")" + parametersVarName + "[\"" + arg.ArgumentName + "\"].Value).Value;");
+                        else
+                            sb.AppendLine(Tab(6) + ": Convert.To" + cSharpArgType + "(" + parametersVarName + "[\"" + arg.ArgumentName + "\"].Value.ToString());");
                     }
                 }
                 prevArgIsAssocArray = isAssocArray;
@@ -636,8 +640,8 @@ namespace Odapter {
             methodText.AppendLine(Tab(5) + LOCAL_VAR_NAME_COMMAND + ".CommandType = CommandType.StoredProcedure;");
 
             // For versions above C# 3.0, bind by name since it is necessary to handle not binding/settting Oracle optional parameters; 
-            /// the corresponding C# optional params are defaulted to null. C# 3.0 has no optional params and thus we cannot replicate
-            //  Oracle optional parameters; so we will use the defauult bind by position.
+            // the corresponding C# optional params are defaulted to null. C# 3.0 has no optional params and thus we cannot replicate
+            // Oracle optional parameters; so we will use the defauult bind by position for 3.0.
             if (!IsCSharp30) methodText.AppendLine(Tab(5) + LOCAL_VAR_NAME_COMMAND + ".BindByName = true;");
 
             methodText.Append(GenerateArgumentBindCode(proc.Arguments, paramVarName));
@@ -663,14 +667,14 @@ namespace Odapter {
                     methodText.AppendLine(Tab(t - 1) + "if (" + "!((" + CSharp.ORACLE_REF_CURSOR + ")" + paramVarName + "[\"" + FUNC_RETURN_PARAM_NAME + "\"].Value).IsNull" + ")");
                     methodText.AppendLine(Tab(t) + "using (OracleDataReader " + LOCAL_VAR_NAME_READER + " = ((" + CSharp.ORACLE_REF_CURSOR + ")" + paramVarName + "[\"" + FUNC_RETURN_PARAM_NAME + "\"].Value).GetDataReader()) {");
                     methodText.AppendLine(Tab(t + 1) + LOCAL_VAR_NAME_RETURN + " = "
-                        + (forceDynamicMapping 
+                        + (forceDynamicMapping
                             ? ORCL_UTIL_CLASS + "."
-                            : returnListSubTypeFullyQualifiedPackageTypeName != null 
-                                ? returnListSubTypeFullyQualifiedPackageTypeName + ".Instance." 
-                                : "") 
+                            : returnListSubTypeFullyQualifiedPackageTypeName != null
+                                ? returnListSubTypeFullyQualifiedPackageTypeName + ".Instance."
+                                : "")
                         + CSharp.READ_RESULT + (forceDynamicMapping ? "" : "I" + returnListSubType.Substring(2))
                         + (methodReturnType == CSharp.DATATABLE ? "" : "<" + returnListSubType + ">")
-                        + "(" + LOCAL_VAR_NAME_READER 
+                        + "(" + LOCAL_VAR_NAME_READER
                         + (methodReturnType == CSharp.DATATABLE
                             ? ", " + PARAM_NAME_CONVERT_COLUMN_NAME_TO_TITLE_CASE
                             : (forceDynamicMapping ? ", " + PARAM_NAME_MAP_BY_POSITION + ", " + PARAM_NAME_ALLOW_UNMAPPED_COLUMNS : ""))
@@ -696,34 +700,49 @@ namespace Odapter {
                     if (CSharp.IsOdpNetType(CSharp.ExtractSubtypeFromListType(methodReturnType, false))) {
                         sb.AppendLine(Tab(7) + ": (" + CSharp.ExtractSubtypeFromListType(methodReturnType, false) + ")"
                             + "(" + oracleArrayCode + "[_i].ToString()));");
+                    } else if (proc.Arguments[0].NextArgument.DataType.Equals(Orcl.BLOB)) {
+                        sb.AppendLine(Tab(7) + ": (" + oracleArrayCode + "[_i].Value));");
                     } else {
-                        sb.AppendLine(Tab(7) 
-                            + ": " + (CSharp.ExtractSubtypeFromListType(methodReturnType, true).Equals(CSharp.BIG_INTEGER) 
+                        sb.AppendLine(Tab(7)
+                            + ": " + (CSharp.ExtractSubtypeFromListType(methodReturnType, true).Equals(CSharp.BIG_INTEGER)
                                 ? CSharp.BIG_INTEGER + ".Parse"
-                                : "Convert.To" + CSharp.ExtractSubtypeFromListType(methodReturnType, true) )
+                                : "Convert.To" + CSharp.ExtractSubtypeFromListType(methodReturnType, true))
                             + "((" + oracleArrayCode + "[_i].ToString())));");
                     }
                     methodText.Append(sb.ToString());
-                } else if (proc.ReturnOracleDataType == Orcl.RECORD) {
-                    methodText.AppendLine(Tab(5) + "// get return for record TO BE CODED");
-                } else if (proc.ReturnOracleDataType == Orcl.NESTED_TABLE) {
-                    methodText.AppendLine(Tab(5) + "// get return for nested table TO BE CODED");
-                } else { // primitve types
+                } else if (CSharp.IsOdpNetType(methodReturnType)) { // assign non-null value
                     methodText.AppendLine(Tab(5) // check for null value
                         + LOCAL_VAR_NAME_RETURN + " = " + paramVarName + "[\"" + FUNC_RETURN_PARAM_NAME + "\"].Status == OracleParameterStatus.NullFetched");
-                    if (CSharp.IsOdpNetType(methodReturnType)) { // assign non-null value
-                        methodText.AppendLine(Tab(6) // assign null value
-                            + "? " + methodReturnType.TrimEnd(CSharp.NULLABLE_SUFFIX.ToCharArray()) + ".Null");
-                        methodText.AppendLine(Tab(6) 
-                            + ": (" + methodReturnType + ")"
-                            + paramVarName + "[\"" + FUNC_RETURN_PARAM_NAME + "\"].Value;");
-                    } else {
+                    methodText.AppendLine(Tab(6) // assign null value
+                        + "? " + methodReturnType.TrimEnd(CSharp.NULLABLE_SUFFIX.ToCharArray()) + ".Null");
+                    methodText.AppendLine(Tab(6)
+                        + ": (" + methodReturnType + ")"
+                        + paramVarName + "[\"" + FUNC_RETURN_PARAM_NAME + "\"].Value;");
+                } else if (new List<String> { Orcl.BLOB, Orcl.CLOB, Orcl.NCLOB }.Contains(proc.ReturnOracleDataType)) {
+                    methodText.AppendLine(Tab(5) // check for null value
+                        + LOCAL_VAR_NAME_RETURN + " = " + paramVarName + "[\"" + FUNC_RETURN_PARAM_NAME + "\"].Status == OracleParameterStatus.NullFetched");
+                    methodText.AppendLine(Tab(6) // assign null value
+                        + "? (" + Translater.ConvertOracleArgTypeToCSharpType(proc.Arguments[0], true) + ")null");
+                    methodText.AppendLine(Tab(6) // assign non-null value
+                        + ": ((" + Translater.ConvertOracleTypeToOdpNetType(proc.ReturnOracleDataType) + ")"
+                        + paramVarName + "[\"" + FUNC_RETURN_PARAM_NAME + "\"].Value).Value;");
+                } else { // built-in types
+                    methodText.AppendLine(Tab(5) // check for null value
+                        + LOCAL_VAR_NAME_RETURN + " = " + paramVarName + "[\"" + FUNC_RETURN_PARAM_NAME + "\"].Status == OracleParameterStatus.NullFetched");
+                    //if (CSharp.IsOdpNetType(methodReturnType)) { // assign non-null value
+                    //    methodText.AppendLine(Tab(6) // assign null value
+                    //        + "? " + methodReturnType.TrimEnd(CSharp.NULLABLE_SUFFIX.ToCharArray()) + ".Null");
+                    //    methodText.AppendLine(Tab(6)
+                    //        + ": (" + methodReturnType + ")"
+                    //        + paramVarName + "[\"" + FUNC_RETURN_PARAM_NAME + "\"].Value;");
+                    //} else {
                         methodText.AppendLine(Tab(6) // assign null value
                             + "? (" + methodReturnType + ")null");
                         methodText.AppendLine(Tab(6) // assign non-null value
                             + (methodReturnType.Trim('?').Equals(CSharp.BIG_INTEGER) ? ": " + (CSharp.BIG_INTEGER + ".Parse") : ": Convert.To" + methodReturnType.TrimEnd('?'))
+                            //": Convert." + (cSharpArgType.Equals(CSharp.BYTE_ARRAY) ? "FromBase64String" : "To" + cSharpArgType)
                             + "(" + paramVarName + "[\"" + FUNC_RETURN_PARAM_NAME + "\"].Value.ToString());");
-                    }
+                    //}
                 }
             }
 
@@ -830,12 +849,14 @@ namespace Odapter {
 
                 if (f.CSharpType.TrimEnd('?').Equals(CSharp.DECIMAL) && Orcl.IsOracleNumberEquivalent(f.AttrType)) {
                     classText.Append("(Decimal?)OracleDecimal.SetPrecision(" + paramNameOracleReader + ".GetOracleDecimal(" + f.MapPosition.ToString() + "), 29)");
-                } else if (f.CSharpType.TrimEnd('?').Equals(CSharp.DATE_TIME) && f.AttrType.Equals(Orcl.TIMESTAMP)) {
-                    classText.Append(paramNameOracleReader + ".GetOracleTimeStamp(" + f.MapPosition.ToString() + ").Value"); // extract DateTime value from TimeStamp
+//                } else if (f.CSharpType.TrimEnd('?').Equals(CSharp.DATE_TIME) && f.AttrType.Equals(Orcl.TIMESTAMP)) {
+//                    classText.Append(paramNameOracleReader + ".GetOracleTimeStamp(" + f.MapPosition.ToString() + ").Value"); // extract DateTime value from TimeStamp
                 } else if (CSharp.IsOdpNetType(f.CSharpType)) {
                     classText.Append("(" + f.CSharpType + ")" + paramNameOracleReader + ".GetOracleValue(" + f.MapPosition.ToString() + ")"); // ODP.NET
-                } else if (f.CSharpType.TrimEnd('?').Equals(CSharp.BIG_INTEGER)) {
-                    classText.Append(CSharp.BIG_INTEGER + ".Parse(" + paramNameOracleReader + ".GetValue(" + f.MapPosition.ToString() + ").ToString())"); // primitive
+                } else if ((new List<String> { Orcl.BLOB, Orcl.CLOB, Orcl.NCLOB }).Contains(f.AttrType)) {
+                    classText.Append(paramNameOracleReader + "." + CSharp.GET_ORACLE + CaseConverter.ConvertToCapitalized(f.AttrType.Substring(f.AttrType.Length - 4, 4)) + "(" + f.MapPosition.ToString() + ").Value");
+//                } else if (f.CSharpType.TrimEnd('?').Equals(CSharp.BIG_INTEGER)) {
+//                    classText.Append(CSharp.BIG_INTEGER + ".Parse(" + paramNameOracleReader + ".GetValue(" + f.MapPosition.ToString() + ").ToString())");
                 } else {
                     classText.Append("Convert.To" + f.CSharpType.TrimEnd('?') + "(" + paramNameOracleReader + ".GetValue(" + f.MapPosition.ToString() + "))"); // primitive
                 }

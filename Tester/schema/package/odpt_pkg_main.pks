@@ -19,6 +19,10 @@ CREATE OR REPLACE PACKAGE ODPT.odpt_pkg_main AS
 	TYPE t_assocarray_char IS TABLE OF odpt_table_big.col_char_max%TYPE INDEX BY PLS_INTEGER;  
 	TYPE t_assocarray_nchar IS TABLE OF odpt_table_big.col_nchar_max%TYPE INDEX BY PLS_INTEGER;  
   
+	TYPE t_assocarray_blob IS TABLE OF odpt_table_big.col_blob%TYPE INDEX BY PLS_INTEGER;  
+	TYPE t_assocarray_clob IS TABLE OF odpt_table_big.col_clob%TYPE INDEX BY PLS_INTEGER;  
+	TYPE t_assocarray_nclob IS TABLE OF odpt_table_big.col_nclob%TYPE INDEX BY PLS_INTEGER;  
+
 	TYPE t_assocarray_date IS TABLE OF odpt_table_big.col_date%TYPE INDEX BY PLS_INTEGER;  
   
 	TYPE t_assocarray_timestamp IS TABLE OF odpt_table_big.col_timestamp%TYPE INDEX BY PLS_INTEGER;  
@@ -89,6 +93,10 @@ CREATE OR REPLACE PACKAGE ODPT.odpt_pkg_main AS
 	FUNCTION func_date(p_in IN DATE, p_in_out IN OUT DATE, p_out OUT DATE) RETURN DATE;
 	FUNCTION func_timestamp(p_in IN TIMESTAMP, p_in_out IN OUT TIMESTAMP, p_out OUT TIMESTAMP)	RETURN TIMESTAMP;
 
+	FUNCTION func_blob(p_in IN BLOB, p_in_out IN OUT BLOB, p_out OUT BLOB) RETURN BLOB;
+	FUNCTION func_clob(p_in IN CLOB, p_in_out IN OUT CLOB, p_out OUT CLOB) RETURN CLOB;
+	FUNCTION func_nclob(p_in IN NCLOB, p_in_out IN OUT NCLOB, p_out OUT NCLOB) RETURN NCLOB;
+
 	FUNCTION func_aa_integer (p_in IN t_assocarray_integer, p_in_out IN OUT t_assocarray_integer, p_out OUT t_assocarray_integer) RETURN t_assocarray_integer;
 	FUNCTION func_aa_smallint (p_in IN t_assocarray_smallint, p_in_out IN OUT t_assocarray_smallint, p_out OUT t_assocarray_smallint) RETURN t_assocarray_smallint;
 	FUNCTION func_aa_number (p_in IN t_assocarray_number, p_in_out IN OUT t_assocarray_number, p_out OUT t_assocarray_number) RETURN t_assocarray_number;
@@ -105,14 +113,13 @@ CREATE OR REPLACE PACKAGE ODPT.odpt_pkg_main AS
 	FUNCTION func_aa_timestamp (p_in IN t_assocarray_timestamp, p_in_out IN OUT t_assocarray_timestamp, p_out OUT t_assocarray_timestamp) RETURN t_assocarray_timestamp;
 	FUNCTION func_aa_timestamp_prec0 (p_in IN t_assocarray_timestamp_prec0, p_in_out IN OUT t_assocarray_timestamp_prec0, p_out OUT t_assocarray_timestamp_prec0) RETURN t_assocarray_timestamp_prec0;
 	FUNCTION func_aa_timestamp_prec9 (p_in IN t_assocarray_timestamp_prec9, p_in_out IN OUT t_assocarray_timestamp_prec9, p_out OUT t_assocarray_timestamp_prec9) RETURN t_assocarray_timestamp_prec9;
-
+	FUNCTION func_aa_blob (p_in IN t_assocarray_blob, p_in_out IN OUT t_assocarray_blob, p_out OUT t_assocarray_blob) RETURN t_assocarray_blob;
+	FUNCTION func_aa_clob (p_in IN t_assocarray_clob, p_in_out IN OUT t_assocarray_clob, p_out OUT t_assocarray_clob) RETURN t_assocarray_clob;
+	FUNCTION func_aa_nclob (p_in IN t_assocarray_nclob, p_in_out IN OUT t_assocarray_nclob, p_out OUT t_assocarray_nclob) RETURN t_assocarray_nclob;
 
 	--------------------------------------------------
 	-- UNIMPLEMENTED and COMMENTED OUT in generated C#
 	-- pending implementation
-	FUNCTION func_blob(p_in IN BLOB, p_in_out IN OUT BLOB, p_out OUT BLOB) RETURN BLOB;
-	FUNCTION func_clob(p_in IN CLOB, p_in_out IN OUT CLOB, p_out OUT CLOB) RETURN CLOB;
-	FUNCTION func_nclob(p_in IN NCLOB, p_in_out IN OUT NCLOB, p_out OUT NCLOB) RETURN NCLOB;
 	FUNCTION func_xmltype(p_in IN XMLTYPE, p_in_out IN OUT XMLTYPE, p_out OUT XMLTYPE) RETURN XMLTYPE;
 	FUNCTION func_rowid(p_in IN ROWID, p_in_out IN OUT ROWID, p_out OUT ROWID)	RETURN ROWID;
 	FUNCTION func_urowid(p_in IN UROWID, p_in_out IN OUT UROWID, p_out OUT UROWID) RETURN UROWID;
@@ -133,7 +140,7 @@ CREATE OR REPLACE PACKAGE ODPT.odpt_pkg_main AS
 	FUNCTION func_aa_pls_integer (p_in IN t_assocarray_pls_integer, p_in_out IN OUT t_assocarray_pls_integer, p_out OUT t_assocarray_pls_integer) RETURN t_assocarray_pls_integer;
 	FUNCTION func_aa_boolean (p_in IN t_assocarray_boolean, p_in_out IN OUT t_assocarray_boolean, p_out OUT t_assocarray_boolean) RETURN t_assocarray_boolean;
 
-    -- implemented but successful execution is not possible due to ODP.NET not handling VARCHAR2-indexed associative array; cannot commented out due
+    -- implemented but successful execution is not possible due to ODP.NET not handling VARCHAR2-indexed associative array; cannot comment out due
     --      Oracle argument view not revealing if associative array is VARCHAR2-indexed
     FUNCTION func_aa_integer_v (p_in IN t_assocarray_integer_v, p_in_out IN OUT t_assocarray_integer_v, p_out OUT t_assocarray_integer_v) RETURN t_assocarray_integer_v;
 	

@@ -32,8 +32,8 @@ namespace Odapter {
         #region C# Types
         public const string SBYTE = "SByte";
         public const string BYTE = "Byte";
-        public const string SBYTE_ARRAY = BYTE + ARRAY_BRACKETS;
-        public const string BYTE_ARRAY = SBYTE + ARRAY_BRACKETS;
+        public const string SBYTE_ARRAY = SBYTE + ARRAY_BRACKETS;
+        public const string BYTE_ARRAY = BYTE + ARRAY_BRACKETS;
         public const string INT16 = "Int16"; // short
         public const string UINT16 = "UInt16"; // unsigned short
         public const string INT32 = "Int32"; // int
@@ -71,13 +71,13 @@ namespace Odapter {
         public const string ORACLE_INTERVAL_YM = ODP_NET_TYPE_PREFIX + "IntervalYM";
         public const string ORACLE_XLM_TYPE = ODP_NET_TYPE_PREFIX + "XmlType";
         public const string ORACLE_STRING = ODP_NET_TYPE_PREFIX + "String";
-        public const string ORACLE_BFILE = ODP_NET_TYPE_PREFIX + "BFile";
-        public const string ORACLE_BLOB = ODP_NET_TYPE_PREFIX + "Blob";
-        public const string ORACLE_CLOB = ODP_NET_TYPE_PREFIX + "Clob";
+        public const string ORACLE_BFILE = ODP_NET_TYPE_PREFIX + "BFile";           // class
+        public const string ORACLE_BLOB = ODP_NET_TYPE_PREFIX + "Blob";             // class
+        public const string ORACLE_CLOB = ODP_NET_TYPE_PREFIX + "Clob";             // class
         public const string ORACLE_BINARY = ODP_NET_TYPE_PREFIX + "Binary";
         public const string ORACLE_REF = ODP_NET_TYPE_PREFIX + "Ref";
-        public const string ORACLE_REF_CURSOR = ODP_NET_TYPE_PREFIX + "RefCursor";
-        public const string ORACLE_XML_TYPE = ODP_NET_TYPE_PREFIX + "XmlType";
+        public const string ORACLE_REF_CURSOR = ODP_NET_TYPE_PREFIX + "RefCursor";  // class
+        public const string ORACLE_XML_TYPE = ODP_NET_TYPE_PREFIX + "XmlType";      
 
         public const string NULL = "null";
         #endregion
@@ -87,21 +87,22 @@ namespace Odapter {
         public const string ATTRIBUTE_DATA_CONTRACT = @"DataContract";
         public const string PARTIAL = "partial";
         public const string ABSTRACT = "abstract";
+        public const string GET_ORACLE = "GetOracle";
         //public const string USING = "using";
         #endregion
 
         #region ODP.NET OracleDbType Enum values
         private const string ORACLEDDBTYPE = "OracleDbType.";
-        public const string ORACLEDBTYPE_BYTE = ORACLEDDBTYPE + "Byte";
-        public const string ORACLEDBTYPE_INT16 = ORACLEDDBTYPE + "Int16";
-        public const string ORACLEDBTYPE_INT32 = ORACLEDDBTYPE + "Int32";
-        public const string ORACLEDBTYPE_INT64 = ORACLEDDBTYPE + "Int64";
+        public const string ORACLEDBTYPE_BYTE = ORACLEDDBTYPE + BYTE;
+        public const string ORACLEDBTYPE_INT16 = ORACLEDDBTYPE + INT16;
+        public const string ORACLEDBTYPE_INT32 = ORACLEDDBTYPE + INT32;
+        public const string ORACLEDBTYPE_INT64 = ORACLEDDBTYPE + INT64;
+        public const string ORACLEDBTYPE_DECIMAL = ORACLEDDBTYPE + DECIMAL;
+        public const string ORACLEDBTYPE_DOUBLE = ORACLEDDBTYPE + DOUBLE;
         public const string ORACLEDBTYPE_DATE = ORACLEDDBTYPE + "Date";
         public const string ORACLEDBTYPE_TIMESTAMP = ORACLEDDBTYPE + "TimeStamp";
         public const string ORACLEDBTYPE_TIMESTAMP_TZ = ORACLEDDBTYPE + "TimeStampTZ";
         public const string ORACLEDBTYPE_TIMESTAMP_LTZ = ORACLEDDBTYPE + "TimeStampLTZ";
-        public const string ORACLEDBTYPE_DECIMAL = ORACLEDDBTYPE + "Decimal";
-        public const string ORACLEDBTYPE_DOUBLE = ORACLEDDBTYPE + "Double";
         public const string ORACLEDBTYPE_BINARY_DOUBLE = ORACLEDDBTYPE + "BinaryDouble";
         public const string ORACLEDBTYPE_BINARY_FLOAT = ORACLEDDBTYPE + "BinaryFloat";
         public const string ORACLEDBTYPE_VARCHAR2 = ORACLEDDBTYPE + "Varchar2";

@@ -29,6 +29,11 @@ CREATE OR REPLACE PACKAGE ODPT.odpt_pkg_table_big AS
 			col_timestamp odpt_table_big.col_timestamp%TYPE,
 			col_timestamp_prec0 odpt_table_big.col_timestamp_prec0%TYPE,
 			col_timestamp_prec9 odpt_table_big.col_timestamp_prec9%TYPE,
+
+			col_blob odpt_table_big.col_blob%TYPE,
+			col_clob odpt_table_big.col_clob%TYPE,
+			col_nclob odpt_table_big.col_nclob%TYPE,
+
 			col_last odpt_table_big.col_last%TYPE);
 	TYPE t_ref_cursor_table_big IS REF CURSOR RETURN t_table_big;
 
@@ -44,6 +49,7 @@ CREATE OR REPLACE PACKAGE ODPT.odpt_pkg_table_big AS
 			col_char_max odpt_table_big.col_char_max%TYPE,
 			col_nchar_min odpt_table_big.col_nchar_min%TYPE,
 			col_nchar_max odpt_table_big.col_nchar_max%TYPE,
+
 			col_last odpt_table_big.col_last%TYPE);
 	TYPE t_ref_cursor_table_big_char IS REF CURSOR RETURN t_table_big_char;
 	
@@ -75,7 +81,11 @@ CREATE OR REPLACE PACKAGE ODPT.odpt_pkg_table_big AS
 							p_col_date IN odpt_table_big.col_date%TYPE,
 							p_col_timestamp IN odpt_table_big.col_timestamp%TYPE,
 							p_col_timestamp_prec0 IN odpt_table_big.col_timestamp_prec0%TYPE,
-							p_col_timestamp_prec9 IN odpt_table_big.col_timestamp_prec9%TYPE
+							p_col_timestamp_prec9 IN odpt_table_big.col_timestamp_prec9%TYPE,
+
+							p_col_blob IN odpt_table_big.col_blob%TYPE,
+							p_col_clob IN odpt_table_big.col_clob%TYPE,
+							p_col_nclob IN odpt_table_big.col_nclob%TYPE
 							) RETURN INTEGER;
 								
 	FUNCTION insert_row (p_row IN odpt_table_big%ROWTYPE) RETURN INTEGER;

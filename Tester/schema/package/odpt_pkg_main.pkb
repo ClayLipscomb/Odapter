@@ -514,7 +514,28 @@ CREATE OR REPLACE PACKAGE BODY ODPT.odpt_pkg_main AS
 		p_out := p_in;
 		RETURN p_in;
 	END;
-    
+   
+    FUNCTION func_aa_blob (p_in IN t_assocarray_blob, p_in_out IN OUT t_assocarray_blob, p_out OUT t_assocarray_blob) RETURN t_assocarray_blob IS
+    BEGIN
+		p_in_out := p_in;
+		p_out := p_in;
+		RETURN p_in;
+	END;
+
+    FUNCTION func_aa_clob (p_in IN t_assocarray_clob, p_in_out IN OUT t_assocarray_clob, p_out OUT t_assocarray_clob) RETURN t_assocarray_clob IS
+    BEGIN
+		p_in_out := p_in;
+		p_out := p_in;
+		RETURN p_in;
+	END;
+
+    FUNCTION func_aa_nclob (p_in IN t_assocarray_nclob, p_in_out IN OUT t_assocarray_nclob, p_out OUT t_assocarray_nclob) RETURN t_assocarray_nclob IS
+    BEGIN
+		p_in_out := p_in;
+		p_out := p_in;
+		RETURN p_in;
+	END;
+
    ---------------
     FUNCTION func_aa_integer_v (p_in IN t_assocarray_integer_v, p_in_out IN OUT t_assocarray_integer_v, p_out OUT t_assocarray_integer_v) RETURN t_assocarray_integer_v IS
     BEGIN

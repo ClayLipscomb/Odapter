@@ -50,6 +50,7 @@ namespace Odapter {
         public const string VARCHAR2 = "VARCHAR2"; //
         public const string NVARCHAR2 = "NVARCHAR2";
         public const string CHAR = "CHAR"; //
+        public const string BLOB = "BLOB"; //
         public const string CLOB = "CLOB"; //
         public const string NCLOB = "NCLOB";
         public const string LONG = "LONG"; //
@@ -69,7 +70,6 @@ namespace Odapter {
         public const string RAW = "RAW"; //
         public const string LONG_RAW = "LONG RAW";  //
         public const string BFILE = "BFILE"; //
-        public const string BLOB = "BLOB"; //
         public const string BINARY_DOUBLE = "BINARY_DOUBLE"; //
         public const string BINARY_FLOAT = "BINARY_FLOAT"; //
         public const string TIMESTAMP = "TIMESTAMP"; //
@@ -94,12 +94,12 @@ namespace Odapter {
         public const string YES = "YES";
         #endregion
 
-        private static List<String> _oracleKeywords = new List<String>(){ "SELECT", "FROM", "WHERE", "ORDER BY", "GROUP BY", "HAVING",
-                                                                        "UNION", "AS", "LIKE", "INSERT", "INTO", "TRUNC", 
-                                                                        "TO_DATE", "TO_CHAR", "TO_NUMBER", "TO_TIMESTAMP",
-                                                                        "VALUES", "SUBSTR", "LOWER", "UPPER", "NVL", "NVL2",
-                                                                        "REPLACE", "CHR", "LENGTH", "INSTR", "SYSDATE",
-                                                                        "SYSTIMESTAMP", "COUNT", "MIN", "MAX", "ROWNUM"};
+        private static readonly List<String> _oracleKeywords = new List<String>(){  "SELECT", "FROM", "WHERE", "ORDER BY", "GROUP BY", "HAVING",
+                                                                                    "UNION", "AS", "LIKE", "INSERT", "INTO", "TRUNC", 
+                                                                                    "TO_DATE", "TO_CHAR", "TO_NUMBER", "TO_TIMESTAMP",
+                                                                                    "VALUES", "SUBSTR", "LOWER", "UPPER", "NVL", "NVL2",
+                                                                                    "REPLACE", "CHR", "LENGTH", "INSTR", "SYSDATE",
+                                                                                    "SYSTIMESTAMP", "COUNT", "MIN", "MAX", "ROWNUM"};
 
         /// <summary>
         /// Determine if Oracle type is an unqualified NUMBER or an equivalent (i.e., no precision or scale)

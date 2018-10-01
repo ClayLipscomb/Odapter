@@ -60,12 +60,13 @@ namespace Odapter {
 
         public Boolean IsIgnoredDueToOracleArgumentTypes(out String reasonMsg) {
             reasonMsg = "";
+            String unimplemntedType = "";
 
-            if (HasArgumentOfOracleTypeAssocArrayOfPlsType()) {
-                reasonMsg = ".NET cannot send/receive an associative array of a PL/SQL type";
+            if (HasArgumentOfOracleTypeAssocArrayOfUnimplementedType(out unimplemntedType)) {
+                reasonMsg = ".NET cannot send/receive an associative array of a " + unimplemntedType;
                 return true;
             } else if (HasInArgumentOfOracleTypeRefCursor()) {
-                reasonMsg = ".NET cannot send a " + Orcl.REF_CURSOR;
+                reasonMsg = ".NET cannot send/receive a " + Orcl.REF_CURSOR;
                 return true;
             } else {
                 foreach (String oraType in Translater.OracleTypesIgnored) 
@@ -128,19 +129,27 @@ namespace Odapter {
         }
 
         /// <summary>
-        /// Does procedure have at least one associative array of a PL/SQL type as return or argument?
+        /// Does procedure have at least one associative array of an unimplemented type as return or argument?
         /// </summary>
         /// <returns></returns>
-        public Boolean HasArgumentOfOracleTypeAssocArrayOfPlsType() {
+        public Boolean HasArgumentOfOracleTypeAssocArrayOfUnimplementedType(out String unimplementedType) {
+            unimplementedType = null;
             foreach (Argument arg in Arguments) {
                 if (Arguments.IndexOf(arg) == Arguments.Count - 1) return false; // reached end of arg list since assoc array uses "2 args"
-                // check argument and its subsequent argument for the combo of assoc array and record
-                if (arg.DataType == Orcl.ASSOCIATITVE_ARRAY
-                    && (    Arguments[Arguments.IndexOf(arg) + 1].DataType == Orcl.RECORD
-                        ||  Arguments[Arguments.IndexOf(arg) + 1].DataType == Orcl.PLS_INTEGER
-                        ||  Arguments[Arguments.IndexOf(arg) + 1].DataType == Orcl.BINARY_INTEGER
-                        ||  Arguments[Arguments.IndexOf(arg) + 1].DataType == Orcl.PLSQL_BOOLEAN ) ) 
+                // check type of argument and its subsequent argument
+                if (    arg.DataType == Orcl.ASSOCIATITVE_ARRAY
+                    &&  !Translater.TypesImplementedForAssociativeArrays.Contains(Arguments[Arguments.IndexOf(arg) + 1].DataType)) { 
+                    //Arguments[Arguments.IndexOf(arg) + 1].DataType == Orcl.RECORD
+                    //    ||  Arguments[Arguments.IndexOf(arg) + 1].DataType == Orcl.BLOB
+                    //    ||  Arguments[Arguments.IndexOf(arg) + 1].DataType == Orcl.CLOB
+                    //    ||  Arguments[Arguments.IndexOf(arg) + 1].DataType == Orcl.NCLOB
+                    //    ||  Arguments[Arguments.IndexOf(arg) + 1].DataType == Orcl.TIMESTAMP
+                    //    ||  Arguments[Arguments.IndexOf(arg) + 1].DataType == Orcl.PLS_INTEGER
+                    //    ||  Arguments[Arguments.IndexOf(arg) + 1].DataType == Orcl.BINARY_INTEGER
+                    //    ||  Arguments[Arguments.IndexOf(arg) + 1].DataType == Orcl.PLSQL_BOOLEAN)) {
+                    unimplementedType = Arguments[Arguments.IndexOf(arg) + 1].DataType;
                     return true;
+                }
             }
             return false;
         }

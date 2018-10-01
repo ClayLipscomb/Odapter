@@ -24,7 +24,11 @@ CREATE OR REPLACE PACKAGE BODY ODPT.odpt_pkg_table_big AS
 								p_col_date IN odpt_table_big.col_date%TYPE,
 								p_col_timestamp IN odpt_table_big.col_timestamp%TYPE,
 								p_col_timestamp_prec0 IN odpt_table_big.col_timestamp_prec0%TYPE,								
-								p_col_timestamp_prec9 IN odpt_table_big.col_timestamp_prec9%TYPE								
+								p_col_timestamp_prec9 IN odpt_table_big.col_timestamp_prec9%TYPE,
+								
+								p_col_blob IN odpt_table_big.col_blob%TYPE,
+								p_col_clob IN odpt_table_big.col_clob%TYPE,
+								p_col_nclob IN odpt_table_big.col_nclob%TYPE
 								) RETURN INTEGER IS
       l_id			INTEGER;
    BEGIN
@@ -55,6 +59,9 @@ CREATE OR REPLACE PACKAGE BODY ODPT.odpt_pkg_table_big AS
 					col_timestamp,
 					col_timestamp_prec0,
 					col_timestamp_prec9,
+					col_blob,
+					col_clob,
+					col_nclob,
 					col_last)
       VALUES (	l_id,
 					p_col_number_id,
@@ -80,6 +87,9 @@ CREATE OR REPLACE PACKAGE BODY ODPT.odpt_pkg_table_big AS
 					p_col_timestamp,
 					p_col_timestamp_prec0,
 					p_col_timestamp_prec9,
+					p_col_blob,
+					p_col_clob,
+					p_col_nclob,
 					NULL);
 
 		RETURN l_id;
@@ -110,7 +120,10 @@ CREATE OR REPLACE PACKAGE BODY ODPT.odpt_pkg_table_big AS
 					p_row.col_date,
 					p_row.col_timestamp,
 					p_row.col_timestamp_prec0,
-					p_row.col_timestamp_prec9
+					p_row.col_timestamp_prec9,
+					p_row.col_blob,
+					p_row.col_clob,
+					p_row.col_nclob
 		);		
 	END;
 	

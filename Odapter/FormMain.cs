@@ -159,6 +159,9 @@ namespace Odapter {
                 Translater.CSharpTypeUsedForOracleDate = Parameter.Instance.CSharpTypeUsedForOracleDate;
                 Translater.CSharpTypeUsedForOracleTimeStamp = Parameter.Instance.CSharpTypeUsedForOracleTimeStamp;
                 Translater.CSharpTypeUsedForOracleIntervalDayToSecond = Parameter.Instance.CSharpTypeUsedForOracleIntervalDayToSecond;
+                Translater.CSharpTypeUsedForOracleBlob = Parameter.Instance.CSharpTypeUsedForOracleBlob;
+                Translater.CSharpTypeUsedForOracleClob = Parameter.Instance.CSharpTypeUsedForOracleClob;
+                //Translater.CSharpTypeUsedForOracleBFile = Parameter.Instance.CSharpTypeUsedForOracleBFile;
                 Translater.ConvertOracleNumberToIntegerIfColumnNameIsId = Parameter.Instance.IsConvertOracleNumberToIntegerIfColumnNameIsId;
                 Translater.ObjectTypeNamespace = Parameter.Instance.NamespaceObjectType;
 
@@ -439,6 +442,23 @@ namespace Odapter {
                 new { Value = CSharp.TIME_SPAN,             Text = CSharp.TIME_SPAN + " (e-7 max)" },
                 new { Value = CSharp.ORACLE_INTERVAL_DS,    Text = CSharp.ORACLE_INTERVAL_DS + " (ODP.NET safe type)" }
             };
+
+            // BLOB
+            cmbCSharpTypeUsedForOracleBlob.DisplayMember = "Text";
+            cmbCSharpTypeUsedForOracleBlob.ValueMember = "Value";
+            cmbCSharpTypeUsedForOracleBlob.DataSource = new[] {
+                new { Value = CSharp.BYTE_ARRAY,    Text = CSharp.BYTE_ARRAY + "" },
+                new { Value = CSharp.ORACLE_BLOB,   Text = CSharp.ORACLE_BLOB + " (ODP.NET safe type)" }
+            };
+
+            // CLOB, NCLOB
+            cmbCSharpTypeUsedForOracleClob.DisplayMember = "Text";
+            cmbCSharpTypeUsedForOracleClob.ValueMember = "Value";
+            cmbCSharpTypeUsedForOracleClob.DataSource = new[] {
+                new { Value = CSharp.STRING,        Text = CSharp.STRING + "" },
+                new { Value = CSharp.ORACLE_CLOB,   Text = CSharp.ORACLE_CLOB + " (ODP.NET safe type)" }
+            };
+
         }
 
         private void BindOracleHome() {
@@ -530,6 +550,8 @@ namespace Odapter {
             cmbCSharpTypeUsedForOracleDate.SelectedValue = Parameter.Instance.CSharpTypeUsedForOracleDate;
             cmbCSharpTypeUsedForOracleTimestamp.SelectedValue = Parameter.Instance.CSharpTypeUsedForOracleTimeStamp;
             cmbCSharpTypeUsedForOracleIntervalDayToSecond.SelectedValue = Parameter.Instance.CSharpTypeUsedForOracleIntervalDayToSecond;
+            cmbCSharpTypeUsedForOracleBlob.SelectedValue = Parameter.Instance.CSharpTypeUsedForOracleBlob;
+            cmbCSharpTypeUsedForOracleClob.SelectedValue = Parameter.Instance.CSharpTypeUsedForOracleClob;
             cbConvertOracleNumberToIntegerIfColumnNameIsId.Checked = Parameter.Instance.IsConvertOracleNumberToIntegerIfColumnNameIsId;
 
             cbDuplicatePackageRecordOriginatingOutsideFilterAndSchema.Checked = Parameter.Instance.IsDuplicatePackageRecordOriginatingOutsideFilterAndSchema;
@@ -573,6 +595,9 @@ namespace Odapter {
             Parameter.Instance.CSharpTypeUsedForOracleDate = cmbCSharpTypeUsedForOracleDate.SelectedValue.ToString();// CSharp.DATE_TIME;
             Parameter.Instance.CSharpTypeUsedForOracleTimeStamp = cmbCSharpTypeUsedForOracleTimestamp.SelectedValue.ToString(); // CSharp.DATE_TIME;
             Parameter.Instance.CSharpTypeUsedForOracleIntervalDayToSecond = cmbCSharpTypeUsedForOracleIntervalDayToSecond.SelectedValue.ToString(); // CSharp.TIME_SPAN;
+            Parameter.Instance.CSharpTypeUsedForOracleBlob = cmbCSharpTypeUsedForOracleBlob.SelectedValue.ToString();
+            Parameter.Instance.CSharpTypeUsedForOracleClob = cmbCSharpTypeUsedForOracleClob.SelectedValue.ToString();
+
             Parameter.Instance.IsConvertOracleNumberToIntegerIfColumnNameIsId = cbConvertOracleNumberToIntegerIfColumnNameIsId.Checked;
 
             Parameter.Instance.IsGeneratePackage = cbGeneratePackage.Checked;

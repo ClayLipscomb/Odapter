@@ -10,7 +10,7 @@ CREATE TABLE ODPT.odpt_table_big (
 	col_double_precision				DOUBLE PRECISION,
 --	col_numeric							NUMERIC,		-- implementation to be determined
 --	col_decimal							DECIMAL,		-- implementation to be determined
-	col_float							FLOAT,		-- FLOAT(126)
+	col_float							FLOAT,			-- FLOAT(126)
 	col_binary_float					BINARY_FLOAT,
 	col_binary_double					BINARY_DOUBLE,
 	
@@ -26,34 +26,34 @@ CREATE TABLE ODPT.odpt_table_big (
 	col_nchar_max						NCHAR(1000),
 --	col_ref								REF odpt_big_ot,
 	
---	col_binary_integer				BINARY_INTEGER,		-- not a SQL type
---	col_pls_integer					PLS_INTEGER,			-- not a SQL type
--- col_string							STRING,					--	not a SQL type
--- col_boolean							BOOLEAN,					-- not a SQL type
+--	col_binary_integer					BINARY_INTEGER,		-- not a SQL type
+--	col_pls_integer						PLS_INTEGER,		-- not a SQL type
+--	col_string							STRING,				-- not a SQL type
+--	col_boolean							BOOLEAN,			-- not a SQL type
 	
--- col_rowid							ROWID,
--- col_urowid							UROWID,
+--	col_rowid							ROWID,
+--	col_urowid							UROWID,
 	
 	col_date							DATE,
 	col_timestamp						TIMESTAMP,
 	col_timestamp_prec0					TIMESTAMP(0),
 	col_timestamp_prec9					TIMESTAMP(9),
 --	col_timestamp_t_z					TIMESTAMP WITH TIME ZONE,
---	col_timestamp_t_z_prec0			TIMESTAMP(0) WITH TIME ZONE,
---	col_timestamp_t_z_prec9			TIMESTAMP(9) WITH TIME ZONE,
---	col_timestamp_l_t_z				TIMESTAMP WITH TIME ZONE,
---	col_timestamp_l_t_z_prec0		TIMESTAMP(0) WITH TIME ZONE,
---	col_timestamp_l_t_z_prec9		TIMESTAMP(9) WITH TIME ZONE,
+--	col_timestamp_t_z_prec0				TIMESTAMP(0) WITH TIME ZONE,
+--	col_timestamp_t_z_prec9				TIMESTAMP(9) WITH TIME ZONE,
+--	col_timestamp_l_t_z					TIMESTAMP WITH TIME ZONE,
+--	col_timestamp_l_t_z_prec0			TIMESTAMP(0) WITH TIME ZONE,
+--	col_timestamp_l_t_z_prec9			TIMESTAMP(9) WITH TIME ZONE,
 
--- col_xmltype							XMLTYPE,
+--	col_xmltype							XMLTYPE,
 --	col_mlslabel						MLSLABEL,
 --	col_raw								RAW(1),
--- col_bfile							BFILE,
--- col_blob								BLOB,
--- col_clob								CLOB,
--- col_nclob							NCLOB,
--- col_long								LONG,				-- deprecated by Oracle
--- col_long_raw						LONG RAW,		-- deprecated by Oracle
+--	col_bfile							BFILE,
+	col_blob							BLOB,
+	col_clob							CLOB,
+	col_nclob							NCLOB,
+--	col_long							LONG,			-- deprecated by Oracle
+--	col_long_raw						LONG RAW,		-- deprecated by Oracle
 	col_last							VARCHAR2(4000)
 );
 

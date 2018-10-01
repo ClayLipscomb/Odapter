@@ -32,6 +32,11 @@ CREATE OR REPLACE PACKAGE ODPT.filtered_pkg AS
 			col_timestamp odpt_table_big.col_timestamp%TYPE,
 			col_timestamp_prec0 odpt_table_big.col_timestamp_prec0%TYPE,
 			col_timestamp_prec9 odpt_table_big.col_timestamp_prec9%TYPE,
+
+			col_blob odpt_table_big.col_blob%TYPE,
+			col_clob odpt_table_big.col_clob%TYPE,
+			col_nclob odpt_table_big.col_nclob%TYPE,
+
 			col_last odpt_table_big.col_last%TYPE);
 	TYPE t_ref_cur_table_big_filtered IS REF CURSOR RETURN t_table_big_filtered;
 

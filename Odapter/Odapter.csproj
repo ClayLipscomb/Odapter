@@ -123,7 +123,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="App.config" />
-    <None Include="bin\x64\Debug\_Example.config" />
+    <None Include="bin\x64\Debug\_Odpt-Example.config" />
     <None Include="bin\x64\Debug\_Odpt-3.0.config" />
     <None Include="bin\x64\Debug\_Odpt-NoFilter.config" />
     <None Include="bin\x64\Debug\_Odpt-SafeType.config" />

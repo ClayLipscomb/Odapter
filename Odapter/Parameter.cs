@@ -71,6 +71,9 @@ namespace Odapter {
             CSharpTypeUsedForOracleDate = CSharp.DATE_TIME;
             CSharpTypeUsedForOracleTimeStamp = CSharp.DATE_TIME;
             CSharpTypeUsedForOracleIntervalDayToSecond = CSharp.TIME_SPAN;
+            CSharpTypeUsedForOracleBlob = CSharp.BYTE_ARRAY;
+            CSharpTypeUsedForOracleClob = CSharp.STRING;
+            CSharpTypeUsedForOracleBFile = CSharp.BYTE_ARRAY;
 
             IsDeployResources = IsGenerateBaseAdapter = IsGenerateBaseEntities = true;
         }
@@ -146,6 +149,9 @@ namespace Odapter {
         public String CSharpTypeUsedForOracleDate { get; set; }
         public String CSharpTypeUsedForOracleTimeStamp { get; set; }
         public String CSharpTypeUsedForOracleIntervalDayToSecond { get; set; }
+        public String CSharpTypeUsedForOracleBlob { get; set; }
+        public String CSharpTypeUsedForOracleClob { get; set; }
+        public String CSharpTypeUsedForOracleBFile { get; set; }    // pending implementation
         public Boolean IsConvertOracleNumberToIntegerIfColumnNameIsId { get; set; }
 
         // advanced options
