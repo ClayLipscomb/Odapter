@@ -491,7 +491,7 @@ namespace Odapter {
                     else
                         property = properties[c]; // get the next property to be mapped
 
-                    // Always check property position against columns position at this point since the properties are sorted. If they 
+                    // Always check property position against column position at this point since the properties are sorted. If they 
                     //  don't match, something is definitely wrong in the attribute settings.
                     int propertyMapPosition = ((MapAttribute)Attribute.GetCustomAttribute(property, typeof(MapAttribute))).Position;
                     if (c != propertyMapPosition) {
@@ -520,7 +520,7 @@ namespace Odapter {
                             if (allowUnmappedColumns) {
                                 continue; // unmapped column will be ignored - a "silent failed mapping"
                             } else {
-                                throw new Exception("Hydrator.BuildMappings<T>() - Could not find an _underscorePrefixedCamelCase non-public field, "
+                                throw new Exception("Hydrator.BuildMappings() - Could not find an _underscorePrefixedCamelCase non-public field, "
                                     + "a camelCase non-public field, nor a PascalCase public property on " + typeof(T).FullName + " for column " + reader.GetName(c));
                             }
                         }
