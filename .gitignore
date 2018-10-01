@@ -289,7 +289,5 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
-/Example
-/Tester/schema/package/odpt_pkg_main - Copy.pks
-/Tester/schema/package/odpt_pkg_main - Copy.pkb
-/Odapter/deploy/OrclPower - Copy.cs
+/Example/bin/Debug/Example.exe.config
+/Example/bin/Debug/Oracle.ManagedDataAccess.dll
