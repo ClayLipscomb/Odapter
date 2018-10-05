@@ -68,13 +68,13 @@ namespace OdapterExample {
 
     // Custom DTO for map by position with only 4 column properties (Date, Timestamp cols excluded)
     public class DtoCustomMapByPosition {     // Column type and order must match, name and alias irrelevant.
-        [MapAttribute(Position = 0)]            // maps to column 0 (first column)
+        [HydratorMapAttribute(Position = 0)]            // maps to column 0 (first column)
         public Int64? MyCol1 { get; set; }
-        [MapAttribute(Position = 1)]            // maps to column 1
+        [HydratorMapAttribute(Position = 1)]            // maps to column 1
         public Int64? MyCol2 { get; set; }
-        [MapAttribute(Position = 2)]            // maps to column 2
+        [HydratorMapAttribute(Position = 2)]            // maps to column 2
         public Decimal? MyCol3 { get; set; }
-        [MapAttribute(Position = 3)]            // maps to column 3
+        [HydratorMapAttribute(Position = 3)]            // maps to column 3
         public String MyCol4 { get; set; }
 
         public String StringPropertyExtra { get; set; }         // custom property

@@ -35,11 +35,12 @@ using System.Collections.Concurrent;
 #endif
 
 namespace Odapter {
-#region Classes Supplemental to Hydrator
+    #region Classes Supplemental to Hydrator
     /// <summary>
     /// Attribute used by Hydrator when mapping by position
     /// </summary>
-    public class MapAttribute : Attribute { public Int32 Position { get; set; } }
+    [AttributeUsage(AttributeTargets.Property)]
+    public class HydratorMapAttribute : Attribute { public Int32 Position { get; set; } }
 
     /// <summary>
     /// An Oracle column name and type
@@ -462,7 +463,7 @@ namespace Odapter {
             if (mapByPosition) {
                 properties = properties.Select(x => new {
                     Property = x,
-                    Attribute = (MapAttribute)Attribute.GetCustomAttribute(x, typeof(MapAttribute))
+                    Attribute = (HydratorMapAttribute)Attribute.GetCustomAttribute(x, typeof(HydratorMapAttribute))
                 })
                     .Where(x => x.Attribute != null && x.Attribute.Position >= 0).OrderBy(x => x.Attribute.Position) // important to order by position
                     .Select(x => x.Property).ToArray();
@@ -493,7 +494,7 @@ namespace Odapter {
 
                     // Always check property position against column position at this point since the properties are sorted. If they 
                     //  don't match, something is definitely wrong in the attribute settings.
-                    int propertyMapPosition = ((MapAttribute)Attribute.GetCustomAttribute(property, typeof(MapAttribute))).Position;
+                    int propertyMapPosition = ((HydratorMapAttribute)Attribute.GetCustomAttribute(property, typeof(HydratorMapAttribute))).Position;
                     if (c != propertyMapPosition) {
                         throw new Exception("Hydrator.BuildMappings<T>() - property map position mismatch with reader columns near property position " + propertyMapPosition.ToString()
                             + " on class " + typeof(T).FullName + "." + " Check for duplicate or missing position values on properties.");
@@ -601,7 +602,7 @@ namespace Odapter {
         ///     mapping mode.</typeparam>
         /// <param name="reader">A reader already prepared for fetching result set and positioned on the row by a Read()</param>
         /// <param name="mapByPosition">Map by position will map a column to a public property based on their shared sequential position 
-        /// in the class T and reader, respectively. A property position is defined by decorating it with MapAttribute and setting
+        /// in the class T and reader, respectively. A property position is defined by decorating it with HydratorMapAttribute and setting
         /// the attribute's Position property. (Undecorated properties are ignored.) Otherwise, map by name (default) will attempt to
         /// map from an underscore_delimited column via translation to an _underscorePrefixedCamelCase non-public instance field, a camelCase 
         /// non-public instance field, or PascalCase public instance property (searching in this order). Both mapping modes assume the 
@@ -632,7 +633,7 @@ namespace Odapter {
         ///     mapping mode.</typeparam>
         /// <param name="reader">A reader already prepared for fetching result set</param>
         /// <param name="mapByPosition">Map by position will map a column to a public property based on their shared sequential position 
-        /// in the class T and reader, respectively. A property position is defined by decorating it with MapAttribute and setting
+        /// in the class T and reader, respectively. A property position is defined by decorating it with HydratorMapAttribute and setting
         /// the attribute's Position property. (Undecorated properties are ignored.) Otherwise, map by name (default) will attempt to
         /// map from an underscore_delimited column via translation to an _underscorePrefixedCamelCase non-public instance field, a camelCase 
         /// non-public instance field, or PascalCase public instance property (searching in this order). Both mapping modes assume the 

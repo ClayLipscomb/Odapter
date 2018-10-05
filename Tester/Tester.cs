@@ -1354,7 +1354,7 @@ namespace Odapter.Tester {
 #region DTOs
 #region Table Big
         public class TTableBigMapByPositionAll : OdptPkgTableBig.ITTableBig {
-            [MapAttribute(Position = 0)]
+            [HydratorMapAttribute(Position = 0)]
             public virtual
 #if SAFETYPE_INTEGER
                             OracleDecimal?
@@ -1367,7 +1367,7 @@ namespace Odapter.Tester {
 #endif
                                     Id
             { get; set; }
-            [MapAttribute(Position = 1)]
+            [HydratorMapAttribute(Position = 1)]
             public virtual
 #if SAFETYPE_INTEGER
                             OracleDecimal?
@@ -1380,7 +1380,7 @@ namespace Odapter.Tester {
 #endif
                                     ColNumberId
             { get; set; }
-            [MapAttribute(Position = 2)]
+            [HydratorMapAttribute(Position = 2)]
             public virtual
 #if SAFETYPE_INTEGER
                             OracleDecimal?
@@ -1393,7 +1393,7 @@ namespace Odapter.Tester {
 #endif
                                     ColInteger
             { get; set; }
-            [MapAttribute(Position = 3)]
+            [HydratorMapAttribute(Position = 3)]
             public virtual
 #if SAFETYPE_INTEGER
                             OracleDecimal?
@@ -1406,7 +1406,7 @@ namespace Odapter.Tester {
 #endif
                                     ColInt
             { get; set; }
-            [MapAttribute(Position = 4)]
+            [HydratorMapAttribute(Position = 4)]
             public virtual
 #if SAFETYPE_INTEGER
                             OracleDecimal?
@@ -1419,7 +1419,7 @@ namespace Odapter.Tester {
 #endif
                                     ColSmallint
             { get; set; }
-            [MapAttribute(Position = 5)]
+            [HydratorMapAttribute(Position = 5)]
             public virtual
 #if SAFETYPE_NUMBER
                             OracleDecimal?
@@ -1428,7 +1428,7 @@ namespace Odapter.Tester {
 #endif
                                     ColNumber
             { get; set; }
-            [MapAttribute(Position = 6)]
+            [HydratorMapAttribute(Position = 6)]
             public virtual
 #if SAFETYPE_NUMBER
                             OracleDecimal?
@@ -1437,7 +1437,7 @@ namespace Odapter.Tester {
 #endif
                                     ColDoublePrecision
             { get; set; }
-            [MapAttribute(Position = 7)]
+            [HydratorMapAttribute(Position = 7)]
             public virtual
 #if SAFETYPE_NUMBER
                             OracleDecimal?
@@ -1446,31 +1446,31 @@ namespace Odapter.Tester {
 #endif
                                     ColFloat
             { get; set; }
-            [MapAttribute(Position = 8)]
+            [HydratorMapAttribute(Position = 8)]
             public virtual Single? ColBinaryFloat { get; set; }
-            [MapAttribute(Position = 9)]
+            [HydratorMapAttribute(Position = 9)]
             public virtual Double? ColBinaryDouble { get; set; }
-            [MapAttribute(Position = 10)]
+            [HydratorMapAttribute(Position = 10)]
             public virtual String ColVarcharMin { get; set; }
-            [MapAttribute(Position = 11)]
+            [HydratorMapAttribute(Position = 11)]
             public virtual String ColVarcharMax { get; set; }
-            [MapAttribute(Position = 12)]
+            [HydratorMapAttribute(Position = 12)]
             public virtual String ColVarchar2Min { get; set; }
-            [MapAttribute(Position = 13)]
+            [HydratorMapAttribute(Position = 13)]
             public virtual String ColVarchar2Max { get; set; }
-            [MapAttribute(Position = 14)]
+            [HydratorMapAttribute(Position = 14)]
             public virtual String ColNvarchar2Min { get; set; }
-            [MapAttribute(Position = 15)]
+            [HydratorMapAttribute(Position = 15)]
             public virtual String ColNvarchar2Max { get; set; }
-            [MapAttribute(Position = 16)]
+            [HydratorMapAttribute(Position = 16)]
             public virtual String ColCharMin { get; set; }
-            [MapAttribute(Position = 17)]
+            [HydratorMapAttribute(Position = 17)]
             public virtual String ColCharMax { get; set; }
-            [MapAttribute(Position = 18)]
+            [HydratorMapAttribute(Position = 18)]
             public virtual String ColNcharMin { get; set; }
-            [MapAttribute(Position = 19)]
+            [HydratorMapAttribute(Position = 19)]
             public virtual String ColNcharMax { get; set; }
-            [MapAttribute(Position = 20)]
+            [HydratorMapAttribute(Position = 20)]
             public virtual
 #if SAFETYPE_DATE
                             OracleDate?
@@ -1479,7 +1479,7 @@ namespace Odapter.Tester {
 #endif
                                     ColDate
             { get; set; }
-            [MapAttribute(Position = 21)]
+            [HydratorMapAttribute(Position = 21)]
             public virtual
 #if SAFETYPE_TIMESTAMP
                             OracleTimeStamp? 
@@ -1489,7 +1489,7 @@ namespace Odapter.Tester {
                                     ColTimestamp
             { get; set; }
 
-            [MapAttribute(Position = 22)]
+            [HydratorMapAttribute(Position = 22)]
             public virtual
 #if SAFETYPE_TIMESTAMP
                             OracleTimeStamp? 
@@ -1500,7 +1500,7 @@ namespace Odapter.Tester {
             { get; set; }
 
 
-            [MapAttribute(Position = 23)]
+            [HydratorMapAttribute(Position = 23)]
             public virtual
 #if SAFETYPE_TIMESTAMP
                             OracleTimeStamp? 
@@ -1510,7 +1510,7 @@ namespace Odapter.Tester {
                                     ColTimestampPrec9
             { get; set; }
 
-            [MapAttribute(Position = 24)]
+            [HydratorMapAttribute(Position = 24)]
             public virtual
 #if SAFETYPE_BLOB
                             OracleBlob
@@ -1518,7 +1518,7 @@ namespace Odapter.Tester {
                             Byte[]
 #endif
                                 ColBlob { get; set; }
-            [MapAttribute(Position = 25)]
+            [HydratorMapAttribute(Position = 25)]
             public virtual
 #if SAFETYPE_CLOB
                             OracleClob
@@ -1526,7 +1526,7 @@ namespace Odapter.Tester {
                             String
 #endif
                                 ColClob { get; set; }
-            [MapAttribute(Position = 26)]
+            [HydratorMapAttribute(Position = 26)]
             public virtual
 #if SAFETYPE_CLOB
                             OracleClob
@@ -1534,7 +1534,7 @@ namespace Odapter.Tester {
                             String
 #endif
                                 ColNclob { get; set; }
-            [MapAttribute(Position = 27)]
+            [HydratorMapAttribute(Position = 27)]
             public virtual String ColLast { get; set; }
         } // TTableBig
 
@@ -1543,7 +1543,7 @@ namespace Odapter.Tester {
         }
 
         public class TTableBigCharMapByPositionAll : OdptPkgTableBig.ITTableBigChar {
-            [MapAttribute(Position = 0)]
+            [HydratorMapAttribute(Position = 0)]
             public virtual
 #if SAFETYPE_INTEGER
                             OracleDecimal?
@@ -1555,27 +1555,27 @@ namespace Odapter.Tester {
                             Int64?
 #endif
                                     Id { get; set; }
-            [MapAttribute(Position = 1)]
+            [HydratorMapAttribute(Position = 1)]
             public virtual String ColVarcharMin { get; set; }
-            [MapAttribute(Position = 2)]
+            [HydratorMapAttribute(Position = 2)]
             public virtual String ColVarcharMax { get; set; }
-            [MapAttribute(Position = 3)]
+            [HydratorMapAttribute(Position = 3)]
             public virtual String ColVarchar2Min { get; set; }
-            [MapAttribute(Position = 4)]
+            [HydratorMapAttribute(Position = 4)]
             public virtual String ColVarchar2Max { get; set; }
-            [MapAttribute(Position = 5)]
+            [HydratorMapAttribute(Position = 5)]
             public virtual String ColNvarchar2Min { get; set; }
-            [MapAttribute(Position = 6)]
+            [HydratorMapAttribute(Position = 6)]
             public virtual String ColNvarchar2Max { get; set; }
-            [MapAttribute(Position = 7)]
+            [HydratorMapAttribute(Position = 7)]
             public virtual String ColCharMin { get; set; }
-            [MapAttribute(Position = 8)]
+            [HydratorMapAttribute(Position = 8)]
             public virtual String ColCharMax { get; set; }
-            [MapAttribute(Position = 9)]
+            [HydratorMapAttribute(Position = 9)]
             public virtual String ColNcharMin { get; set; }
-            [MapAttribute(Position = 10)]
+            [HydratorMapAttribute(Position = 10)]
             public virtual String ColNcharMax { get; set; }
-            [MapAttribute(Position = 11)]
+            [HydratorMapAttribute(Position = 11)]
             public virtual String ColLast { get; set; }
         } // TTableBig
 
@@ -1585,7 +1585,7 @@ namespace Odapter.Tester {
 #endregion
 #region Table Number
         public class TTableNumberMapByPositionAll : OdptPkgTableNumber.ITTableNumber {
-            [MapAttribute(Position = 0)]
+            [HydratorMapAttribute(Position = 0)]
             public virtual
 #if SAFETYPE_INTEGER
                             OracleDecimal? 
@@ -1598,7 +1598,7 @@ namespace Odapter.Tester {
 #endif
                                     Id
             { get; set; }
-            [MapAttribute(Position = 1)]
+            [HydratorMapAttribute(Position = 1)]
             public virtual
 #if SAFETYPE_NUMBER
                             OracleDecimal?
@@ -1607,43 +1607,43 @@ namespace Odapter.Tester {
 #endif
                                     ColNumber
             { get; set; }
-            [MapAttribute(Position = 2)]
+            [HydratorMapAttribute(Position = 2)]
             public virtual 
                             SByte? 
                                     ColNumber1 { get; set; }
-            [MapAttribute(Position = 3)]
+            [HydratorMapAttribute(Position = 3)]
             public virtual 
                             SByte? 
                                     ColNumber2 { get; set; }
-            [MapAttribute(Position = 4)]
+            [HydratorMapAttribute(Position = 4)]
             public virtual 
                             Int16? 
                                     ColNumber3 { get; set; }
-            [MapAttribute(Position = 5)]
+            [HydratorMapAttribute(Position = 5)]
             public virtual 
                             Int16? 
                                     ColNumber4 { get; set; }
-            [MapAttribute(Position = 6)]
+            [HydratorMapAttribute(Position = 6)]
             public virtual 
                             Int32? 
                                     ColNumber5 { get; set; }
-            [MapAttribute(Position = 7)]
+            [HydratorMapAttribute(Position = 7)]
             public virtual 
                             Int32? 
                                     ColNumber6 { get; set; }
-            [MapAttribute(Position = 8)]
+            [HydratorMapAttribute(Position = 8)]
             public virtual 
                             Int32? 
                                     ColNumber7 { get; set; }
-            [MapAttribute(Position = 9)]
+            [HydratorMapAttribute(Position = 9)]
             public virtual 
                             Int32? 
                                     ColNumber8 { get; set; }
-            [MapAttribute(Position = 10)]
+            [HydratorMapAttribute(Position = 10)]
             public virtual 
                             Int32? 
                                     ColNumber9 { get; set; }
-            [MapAttribute(Position = 11)]
+            [HydratorMapAttribute(Position = 11)]
             public virtual
 #if SAFETYPE_INTEGER
                             OracleDecimal? 
@@ -1655,7 +1655,7 @@ namespace Odapter.Tester {
                             Int64?
 #endif
                                     ColNumber10 { get; set; }
-            [MapAttribute(Position = 12)]
+            [HydratorMapAttribute(Position = 12)]
             public virtual
 #if SAFETYPE_INTEGER
                             OracleDecimal? 
@@ -1668,7 +1668,7 @@ namespace Odapter.Tester {
 #endif
                                     ColNumber18
             { get; set; }
-            [MapAttribute(Position = 13)]
+            [HydratorMapAttribute(Position = 13)]
             public virtual
 #if SAFETYPE_INTEGER
                             OracleDecimal? 
@@ -1680,7 +1680,7 @@ namespace Odapter.Tester {
                             Int64?
 #endif
                                     ColNumber19 { get; set; }
-            [MapAttribute(Position = 14)]
+            [HydratorMapAttribute(Position = 14)]
             public virtual
 #if SAFETYPE_INTEGER
                             OracleDecimal? 
@@ -1693,31 +1693,31 @@ namespace Odapter.Tester {
 #endif
                                     ColNumber38
             { get; set; }
-            [MapAttribute(Position = 15)]
+            [HydratorMapAttribute(Position = 15)]
             public virtual 
                             SByte? 
                                     ColNumber1Scale0 { get; set; }
-            [MapAttribute(Position = 16)]
+            [HydratorMapAttribute(Position = 16)]
             public virtual 
                             SByte? 
                                     ColNumber2Scale0 { get; set; }
-            [MapAttribute(Position = 17)]
+            [HydratorMapAttribute(Position = 17)]
             public virtual 
                             Int16? 
                                     ColNumber3Scale0 { get; set; }
-            [MapAttribute(Position = 18)]
+            [HydratorMapAttribute(Position = 18)]
             public virtual 
                             Int16? 
                                     ColNumber4Scale0 { get; set; }
-            [MapAttribute(Position = 19)]
+            [HydratorMapAttribute(Position = 19)]
             public virtual 
                             Int32? 
                                     ColNumber5Scale0 { get; set; }
-            [MapAttribute(Position = 20)]
+            [HydratorMapAttribute(Position = 20)]
             public virtual 
                             Int32? 
                                     ColNumber9Scale0 { get; set; }
-            [MapAttribute(Position = 21)]
+            [HydratorMapAttribute(Position = 21)]
             public virtual
 #if SAFETYPE_INTEGER
                             OracleDecimal? 
@@ -1730,7 +1730,7 @@ namespace Odapter.Tester {
 #endif
                                     ColNumber10Scale0
             { get; set; }
-            [MapAttribute(Position = 22)]
+            [HydratorMapAttribute(Position = 22)]
             public virtual
 #if SAFETYPE_INTEGER
                             OracleDecimal? 
@@ -1743,7 +1743,7 @@ namespace Odapter.Tester {
 #endif
                                     ColNumber18Scale0
             { get; set; }
-            [MapAttribute(Position = 23)]
+            [HydratorMapAttribute(Position = 23)]
             public virtual
 #if SAFETYPE_INTEGER
                             OracleDecimal? 
@@ -1756,7 +1756,7 @@ namespace Odapter.Tester {
 #endif
                                     ColNumber19Scale0
             { get; set; }
-            [MapAttribute(Position = 24)]
+            [HydratorMapAttribute(Position = 24)]
             public virtual
 #if SAFETYPE_INTEGER
                             OracleDecimal? 
@@ -1769,7 +1769,7 @@ namespace Odapter.Tester {
 #endif
                                     ColNumber28Scale0
             { get; set; }
-            [MapAttribute(Position = 25)]
+            [HydratorMapAttribute(Position = 25)]
             public virtual
 #if SAFETYPE_INTEGER
                             OracleDecimal? 
@@ -1782,7 +1782,7 @@ namespace Odapter.Tester {
 #endif
                                     ColNumber29Scale0
             { get; set; }
-            [MapAttribute(Position = 26)]
+            [HydratorMapAttribute(Position = 26)]
             public virtual
 #if SAFETYPE_INTEGER
                             OracleDecimal? 
@@ -1795,7 +1795,7 @@ namespace Odapter.Tester {
 #endif
                                     ColNumber38Scale0
             { get; set; }
-            [MapAttribute(Position = 27)]
+            [HydratorMapAttribute(Position = 27)]
             public virtual
 #if SAFETYPE_NUMBER
                             OracleDecimal?
@@ -1804,7 +1804,7 @@ namespace Odapter.Tester {
 #endif
                                     ColNumber2Scale1
             { get; set; }
-            [MapAttribute(Position = 28)]
+            [HydratorMapAttribute(Position = 28)]
             public virtual
 #if SAFETYPE_NUMBER
                             OracleDecimal?
@@ -1813,7 +1813,7 @@ namespace Odapter.Tester {
 #endif
                                     ColNumber5Scale3
             { get; set; }
-            [MapAttribute(Position = 29)]
+            [HydratorMapAttribute(Position = 29)]
             public virtual
 #if SAFETYPE_NUMBER
                             OracleDecimal?
@@ -1822,7 +1822,7 @@ namespace Odapter.Tester {
 #endif
                                     ColNumber15Scale11
             { get; set; }
-            [MapAttribute(Position = 30)]
+            [HydratorMapAttribute(Position = 30)]
             public virtual
 #if SAFETYPE_NUMBER
                             OracleDecimal?
@@ -1831,7 +1831,7 @@ namespace Odapter.Tester {
 #endif
                                     ColNumber31Scale21
             { get; set; }
-            [MapAttribute(Position = 31)]
+            [HydratorMapAttribute(Position = 31)]
             public virtual
 #if SAFETYPE_NUMBER
                             OracleDecimal?
@@ -1840,7 +1840,7 @@ namespace Odapter.Tester {
 #endif
                                     ColNumber38Scale37
             { get; set; }
-            [MapAttribute(Position = 32)]
+            [HydratorMapAttribute(Position = 32)]
             public virtual
 #if SAFETYPE_NUMBER
                             OracleDecimal?
@@ -1863,7 +1863,7 @@ namespace Odapter.Tester {
         }
 
         public class TTableNumberDecMapByPositionAll : OdptPkgTableNumber.ITTableNumberDec {
-            [MapAttribute(Position = 0)]
+            [HydratorMapAttribute(Position = 0)]
             public virtual
 #if SAFETYPE_INTEGER
                             OracleDecimal?
@@ -1875,7 +1875,7 @@ namespace Odapter.Tester {
                             Int64?
 #endif
                                     Id { get; set; }
-            [MapAttribute(Position = 1)]
+            [HydratorMapAttribute(Position = 1)]
             public virtual
 #if SAFETYPE_NUMBER
                             OracleDecimal?
@@ -1883,7 +1883,7 @@ namespace Odapter.Tester {
                             Decimal?
 #endif
                                     ColNumber { get; set; }
-            [MapAttribute(Position = 2)]
+            [HydratorMapAttribute(Position = 2)]
             public virtual
 #if SAFETYPE_NUMBER
                             OracleDecimal?
@@ -1891,7 +1891,7 @@ namespace Odapter.Tester {
                             Decimal?
 #endif
                                     ColNumber2Scale1 { get; set; }
-            [MapAttribute(Position = 3)]
+            [HydratorMapAttribute(Position = 3)]
             public virtual
 #if SAFETYPE_NUMBER
                             OracleDecimal?
@@ -1899,7 +1899,7 @@ namespace Odapter.Tester {
                             Decimal?
 #endif
                                     ColNumber5Scale3 { get; set; }
-            [MapAttribute(Position = 4)]
+            [HydratorMapAttribute(Position = 4)]
             public virtual
 #if SAFETYPE_NUMBER
                             OracleDecimal?
@@ -1907,7 +1907,7 @@ namespace Odapter.Tester {
                             Decimal?
 #endif
                                     ColNumber15Scale11 { get; set; }
-            [MapAttribute(Position = 5)]
+            [HydratorMapAttribute(Position = 5)]
             public virtual
 #if SAFETYPE_NUMBER
                             OracleDecimal?
@@ -1915,7 +1915,7 @@ namespace Odapter.Tester {
                             Decimal?
 #endif
                                     ColNumber31Scale21 { get; set; }
-            [MapAttribute(Position = 6)]
+            [HydratorMapAttribute(Position = 6)]
             public virtual
 #if SAFETYPE_NUMBER
                             OracleDecimal?
@@ -1923,7 +1923,7 @@ namespace Odapter.Tester {
                             Decimal?
 #endif
                                     ColNumber38Scale37 { get; set; }
-            [MapAttribute(Position = 7)]
+            [HydratorMapAttribute(Position = 7)]
             public virtual
 #if SAFETYPE_NUMBER
                             OracleDecimal?
