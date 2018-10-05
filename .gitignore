@@ -291,3 +291,8 @@ __pycache__/
 *.pyc
 /Example/bin/Debug/Example.exe.config
 /Example/bin/Debug/Oracle.ManagedDataAccess.dll
+/Odapter/deploy/OrclPower - Copy.cs
+/Example/Example - Copy.cs
+/Odapter/FormMain - Copy.cs
+/Odapter/Translater - Copy.cs
+/Tester/Tester - Copy.cs
