@@ -22,7 +22,7 @@ using System.Data;
 using System.Diagnostics;
 using Schema.Odpt.Xmpl.Package;         // generated code for packages
 using Oracle.ManagedDataAccess.Types;   // ODP.NET safe types
-using Odapter;                          // map by position attribute
+using Odapter;                          // attribute used to map by position
 
 namespace OdapterExample {
     class Program {
@@ -46,7 +46,7 @@ namespace OdapterExample {
         public Decimal? ColNumber { get; set; }
         public String ColVarchar2Max { get; set; }
         public DateTime? ColDate { get; set; }
-        public OracleTimeStamp? ColTimestamp { get; set; }
+        public OracleTimeStamp? ColTimestamp { get; set; }      // ODP.NET safe type struct
         public String StringPropertyExtra { get; set; }         // custom property
         public List<Int32> Int32ListPropertyExtra { get; set; } // custom property
     }
@@ -89,12 +89,16 @@ namespace OdapterExample {
         }
 
         public void Test() {
-            uint? rowLimit = 25;                    // limit result set to 25 rows, underlying table has over 1000 rows
-            Int64? pInInt64 = 100000000000000000;   // 18 digit long
-            Decimal? pInDecimal = 10.0M;
+            uint? rowLimit = 25;                                    // limit result sets to 25 rows, underlying table has over 1000 rows
+            Int64? pInInt64 = 999999999999999999;                   // 18 digit long
+            Decimal? pInDecimal = 79228162514264337593543950335M;   // 28 digit decimal (Decimal.MaxValue)
             String pInOutString = HELLO;
             DateTime? pOutDate;
+
+            // List used as argument for Oracle associative array
             List<Int64?> pInOutListInt64, somePrimeNumbers = new List<Int64?> { 2, 3, 5, 7, 11, 13, 17, 19, 29, 31 };
+
+            // DTO Lists and a datatable to be hydrated from Oracle cursor
             List<DtoInherited> dtoInheritedList;
             List<DtoImplemented> dtoImplementedList;
             List<DtoCustomMapByName> dtoOriginalMapByNameList;
