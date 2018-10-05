@@ -60,6 +60,36 @@ namespace Odapter {
             // https://docs.oracle.com/cd/E85694_01/ODPNT/featOraCommand.htm#GUID-05A6D391-E77F-41AF-83A2-FE86A3D98872
         };
 
+        public class CustomTranslatedCSharpType {
+            public String CSharpType { get; private set; }
+            private String TranslationNote { get; set; }
+            public String DisplayDescription { get; private set; }
+            public CustomTranslatedCSharpType(String cSharpType, String translationNote) {
+                CSharpType = cSharpType;
+                TranslationNote = translationNote;
+                DisplayDescription = cSharpType + (String.IsNullOrWhiteSpace(translationNote) ? "" : " (" + translationNote + ")");
+            }
+        }
+
+        public static readonly IDictionary<String, List<CustomTranslatedCSharpType>> CustomTypeTranslationOptions = new Dictionary<String, List<CustomTranslatedCSharpType>>() {
+            {Orcl.INTEGER, new List<CustomTranslatedCSharpType> {                   new CustomTranslatedCSharpType(CSharp.INT32, @"9 digit limit, not recommended"),
+                                                                                    new CustomTranslatedCSharpType(CSharp.INT64, @"18 digit limit, usually safe"),
+                                                                                    new CustomTranslatedCSharpType(CSharp.DECIMAL, @"28 digit limit"),
+                                                                                    new CustomTranslatedCSharpType(CSharp.ORACLE_DECIMAL, @"ODP.NET safe type struct") } },
+            {Orcl.NUMBER, new List<CustomTranslatedCSharpType> {                    new CustomTranslatedCSharpType(CSharp.DECIMAL, @"28 dig limit, auto rounding"),
+                                                                                    new CustomTranslatedCSharpType(CSharp.ORACLE_DECIMAL, @"ODP.NET safe type struct") } },
+            {Orcl.DATE, new List<CustomTranslatedCSharpType> {                      new CustomTranslatedCSharpType(CSharp.DATE_TIME, @"no BC"),
+                                                                                    new CustomTranslatedCSharpType(CSharp.ORACLE_DATE, @"ODP.NET safe type struct") } },
+            {Orcl.TIMESTAMP, new List<CustomTranslatedCSharpType> {                 new CustomTranslatedCSharpType(CSharp.DATE_TIME, @"e-7 max, no BC, no time zone"),
+                                                                                    new CustomTranslatedCSharpType(CSharp.ORACLE_TIMESTAMP, @"ODP.NET safe type struct") } },
+            {Orcl.INTERVAL_DAY_TO_SECOND, new List<CustomTranslatedCSharpType> {    new CustomTranslatedCSharpType(CSharp.TIME_SPAN, @"e-7 max"),
+                                                                                    new CustomTranslatedCSharpType(CSharp.ORACLE_INTERVAL_DS, @"ODP.NET safe type struct") } },
+            {Orcl.BLOB, new List<CustomTranslatedCSharpType> {                      new CustomTranslatedCSharpType(CSharp.BYTE_ARRAY, @""),
+                                                                                    new CustomTranslatedCSharpType(CSharp.ORACLE_BLOB, @"ODP.NET safe type class") } },
+            {Orcl.CLOB, new List<CustomTranslatedCSharpType> {                      new CustomTranslatedCSharpType(CSharp.STRING, @""),
+                                                                                    new CustomTranslatedCSharpType(CSharp.ORACLE_CLOB, @"ODP.NET safe type class") } }
+        };
+
         #region Properties
         private static string _cSharpTypeUsedForOracleInteger = CSharp.DECIMAL;
         public static string CSharpTypeUsedForOracleInteger {

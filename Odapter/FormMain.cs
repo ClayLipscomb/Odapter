@@ -37,11 +37,10 @@ namespace Odapter {
         private TnsNamesReader tnsNamesReader = new TnsNamesReader();
 
         public FormMain() {
-
             System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
             FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
-
             this.Text = Generator.APPLICATION_NAME + " " + fvi.ProductVersion;
+
             InitializeComponent();
             InitMessageConsole();
             BindAllComboBoxes();
@@ -64,7 +63,7 @@ namespace Odapter {
             ListViewMessage.Refresh();
 
             ColumnHeader columnHeader = new ColumnHeader();
-            columnHeader.Text = "Status";
+            columnHeader.Text = @"Status";
             columnHeader.Width = ListViewMessage.Width - 30;
             this.ListViewMessage.Columns.AddRange(new ColumnHeader[] { columnHeader });
             // this.ListViewMessage.Colum .ColumnHeadersDefaultCellStyle.Font = new Font(this.dataGridView1.ColumnHeadersDefaultCellStyle.Font, FontStyle.Bold);
@@ -203,9 +202,9 @@ namespace Odapter {
                     generator.WriteViewClasses(loader.Views, txtViewNamespace.Text, Generator.GenerateBaseViewClassName(txtSchema.Text), cbSerializableViews.Checked, cbPartialViews.Checked);
 
                 generator.DeployUtilityClasses(cbDeployResources.Checked);
-                DisplayMessage("Generation completed.");
+                DisplayMessage(@"Generation completed.");
             } else {
-                DisplayMessage("No 'Code To Generate' options have been selected.");
+                DisplayMessage(@"No 'Code To Generate' options have been selected.");
             }
         }
 
@@ -382,8 +381,8 @@ namespace Odapter {
             cmbCSharpVersion.DisplayMember = "Text";
             cmbCSharpVersion.ValueMember = "Value";
             cmbCSharpVersion.DataSource = new[] { 
-                new { Value = CSharpVersion.ThreeZero,   Text = "3.0" }, 
-                new { Value = CSharpVersion.FourZero,    Text = "4.0 +" }
+                new { Value = CSharpVersion.ThreeZero,   Text = @"3.0" }, 
+                new { Value = CSharpVersion.FourZero,    Text = @"4.0 +" }
             };
         }
 
@@ -400,70 +399,28 @@ namespace Odapter {
         }
 
         private void BindOracleToCSharpTypes() {
-            // INTEGER
-            cmbCSharpTypeUsedForOracleInteger.DisplayMember = "Text";
-            cmbCSharpTypeUsedForOracleInteger.ValueMember = "Value";
-            cmbCSharpTypeUsedForOracleInteger.DataSource = new[] { 
-                new { Value = CSharp.INT32,          Text = CSharp.INT32 + " (9 digit limit, not recommended)" }, 
-                new { Value = CSharp.INT64,          Text = CSharp.INT64 + " (18 digit limit, usually safe)" }, 
-                new { Value = CSharp.DECIMAL,        Text = CSharp.DECIMAL + " (28 digit limit)"  }, 
-                new { Value = CSharp.ORACLE_DECIMAL, Text = CSharp.ORACLE_DECIMAL + " (ODP.NET safe type)" }
+            // map combobox to Oracle type
+            IDictionary<ComboBox, String> comboBoxOracleTypes = new Dictionary<ComboBox, String>() {
+                { cmbCSharpTypeUsedForOracleInteger,                Orcl.INTEGER },
+                { cmbCSharpTypeUsedForOracleNumber,                 Orcl.NUMBER },
+                { cmbCSharpTypeUsedForOracleDate,                   Orcl.DATE },
+                { cmbCSharpTypeUsedForOracleTimestamp,              Orcl.TIMESTAMP },
+                { cmbCSharpTypeUsedForOracleIntervalDayToSecond,    Orcl.INTERVAL_DAY_TO_SECOND },
+                { cmbCSharpTypeUsedForOracleBlob,                   Orcl.BLOB },
+                { cmbCSharpTypeUsedForOracleClob,                   Orcl.CLOB }
             };
 
-            // NUMBER
-            cmbCSharpTypeUsedForOracleNumber.DisplayMember = "Text";
-            cmbCSharpTypeUsedForOracleNumber.ValueMember = "Value";
-            cmbCSharpTypeUsedForOracleNumber.DataSource = new[] { 
-                new { Value = CSharp.DECIMAL,           Text = CSharp.DECIMAL + " (28 dig limit, auto rounding)"  },
-                new { Value = CSharp.ORACLE_DECIMAL,    Text = CSharp.ORACLE_DECIMAL + " (ODP.NET safe type)" }//, 
-                //new { Value = CSharp.STRING,            Text = CSharp.STRING + " (unlimited, non-numeric type)" }
+            // bind each combobox
+            foreach (var cmbBoxOracleType in comboBoxOracleTypes) {
+                cmbBoxOracleType.Key.ValueMember = @"CSharpType";
+                cmbBoxOracleType.Key.DisplayMember = @"DisplayDescription";
+                cmbBoxOracleType.Key.DataSource = Translater.CustomTypeTranslationOptions[cmbBoxOracleType.Value];
             };
-
-            // DATE
-            cmbCSharpTypeUsedForOracleDate.DisplayMember = "Text";
-            cmbCSharpTypeUsedForOracleDate.ValueMember = "Value";
-            cmbCSharpTypeUsedForOracleDate.DataSource = new[] { 
-                new { Value = CSharp.DATE_TIME,     Text = CSharp.DATE_TIME + " (no BC)" }, 
-                new { Value = CSharp.ORACLE_DATE,   Text = CSharp.ORACLE_DATE + " (ODP.NET safe type)" }
-            };
-
-            // TIMESTAMP
-            cmbCSharpTypeUsedForOracleTimestamp.DisplayMember = "Text";
-            cmbCSharpTypeUsedForOracleTimestamp.ValueMember = "Value";
-            cmbCSharpTypeUsedForOracleTimestamp.DataSource = new[] { 
-                new { Value = CSharp.DATE_TIME,         Text = CSharp.DATE_TIME + " (e-7 max, no BC, no time zone)" },
-                new { Value = CSharp.ORACLE_TIMESTAMP,  Text = CSharp.ORACLE_TIMESTAMP + " (ODP.NET safe type)" }
-            };
-
-            // INTERVAL DAY TO SECOND
-            cmbCSharpTypeUsedForOracleIntervalDayToSecond.DisplayMember = "Text";
-            cmbCSharpTypeUsedForOracleIntervalDayToSecond.ValueMember = "Value";
-            cmbCSharpTypeUsedForOracleIntervalDayToSecond.DataSource = new[] { 
-                new { Value = CSharp.TIME_SPAN,             Text = CSharp.TIME_SPAN + " (e-7 max)" },
-                new { Value = CSharp.ORACLE_INTERVAL_DS,    Text = CSharp.ORACLE_INTERVAL_DS + " (ODP.NET safe type)" }
-            };
-
-            // BLOB
-            cmbCSharpTypeUsedForOracleBlob.DisplayMember = "Text";
-            cmbCSharpTypeUsedForOracleBlob.ValueMember = "Value";
-            cmbCSharpTypeUsedForOracleBlob.DataSource = new[] {
-                new { Value = CSharp.BYTE_ARRAY,    Text = CSharp.BYTE_ARRAY + "" },
-                new { Value = CSharp.ORACLE_BLOB,   Text = CSharp.ORACLE_BLOB + " (ODP.NET safe type)" }
-            };
-
-            // CLOB, NCLOB
-            cmbCSharpTypeUsedForOracleClob.DisplayMember = "Text";
-            cmbCSharpTypeUsedForOracleClob.ValueMember = "Value";
-            cmbCSharpTypeUsedForOracleClob.DataSource = new[] {
-                new { Value = CSharp.STRING,        Text = CSharp.STRING + "" },
-                new { Value = CSharp.ORACLE_CLOB,   Text = CSharp.ORACLE_CLOB + " (ODP.NET safe type)" }
-            };
-
         }
 
         private void BindOracleHome() {
-            cmbClientHome.DisplayMember = "Description";
-            cmbClientHome.ValueMember = "Value";
+            cmbClientHome.DisplayMember = @"Description";
+            cmbClientHome.ValueMember = @"Value";
             List<OracleHome> oraHomes = new List<OracleHome>();
             oraHomes = tnsNamesReader.GetOracleHomes();
             oraHomes.Insert(0, new OracleHome("", ""));
