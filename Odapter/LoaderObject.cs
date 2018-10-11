@@ -94,16 +94,6 @@ namespace Odapter {
         }
 
         /// <summary>
-        /// Determine if a given Oracle type is found in any of the arguments/return including nested arguments
-        /// </summary>
-        /// <param name="oracleType"></param>
-        /// <param name="checkNestedArgs"></param>
-        /// <returns></returns>
-        //public Boolean UsesOracleType(String oracleType) {
-        //    return UsesOracleType(oracleType, true);
-        //}
-
-        /// <summary>
         /// Determine if procedure has an argument/return of a given Oracle type. Nested levels of argument
         ///     are not considered, only the main argument type.
         /// </summary>
@@ -138,15 +128,7 @@ namespace Odapter {
                 if (Arguments.IndexOf(arg) == Arguments.Count - 1) return false; // reached end of arg list since assoc array uses "2 args"
                 // check type of argument and its subsequent argument
                 if (    arg.DataType == Orcl.ASSOCIATITVE_ARRAY
-                    &&  !Translater.TypesImplementedForAssociativeArrays.Contains(Arguments[Arguments.IndexOf(arg) + 1].DataType)) { 
-                    //Arguments[Arguments.IndexOf(arg) + 1].DataType == Orcl.RECORD
-                    //    ||  Arguments[Arguments.IndexOf(arg) + 1].DataType == Orcl.BLOB
-                    //    ||  Arguments[Arguments.IndexOf(arg) + 1].DataType == Orcl.CLOB
-                    //    ||  Arguments[Arguments.IndexOf(arg) + 1].DataType == Orcl.NCLOB
-                    //    ||  Arguments[Arguments.IndexOf(arg) + 1].DataType == Orcl.TIMESTAMP
-                    //    ||  Arguments[Arguments.IndexOf(arg) + 1].DataType == Orcl.PLS_INTEGER
-                    //    ||  Arguments[Arguments.IndexOf(arg) + 1].DataType == Orcl.BINARY_INTEGER
-                    //    ||  Arguments[Arguments.IndexOf(arg) + 1].DataType == Orcl.PLSQL_BOOLEAN)) {
+                        && !Translater.TypesImplementedForAssociativeArrays.Contains(Arguments[Arguments.IndexOf(arg) + 1].DataType)) { 
                     unimplementedType = Arguments[Arguments.IndexOf(arg) + 1].DataType;
                     return true;
                 }
@@ -185,67 +167,6 @@ namespace Odapter {
         public int? CharLength { get; set; }
         public bool Defaulted { get { return (defaulted == "Y" ? true : false); } } private string defaulted { get; set; }
         public bool IsReturnArgument { get { return (Position == 0 && DataLevel == 0 && ArgumentName == null && InOut == Orcl.OUT); } }
-    }
-
-    // a field of a PL/SQL record
-    public class Field : IComparable<Field>, IEntityAttribute {
-        // standard entity properties
-        public string EntityName { get { return Name; } set { Name = value; } }
-        public string AttrName { get { return Name; } set { Name = value; } }
-        public string AttrType { get { return DataType; } set { DataType = value; } }
-        public string AttrTypeOwner { get { return TypeOwner; } set { TypeOwner = value; } }
-        public string AttrTypeMod { get; set; }
-        public int? Length { get { return DataLength; } set { DataLength = value; } } 
-        public int? Precision { get { return DataPrecision; } set { DataPrecision = value; } } 
-        public int? Scale { get { return DataScale; } set { DataScale = value; } } 
-        public int Position { get { return MapPosition; } set { MapPosition = value; } }  
-        public String CSharpType { get; set; }
-        public bool Nullable { get { return true; } }
-        public String ContainerClassName { get; set; } // Container class if C# type is nested class
-
-        // field specific
-        public String Name { get; set; }
-        public int MapPosition { get; set; }
-        public int CompareTo(Field f) { return Name.CompareTo(f.Name); }
-        public String DataType { get; set; }
-        public String TypeOwner { get; set; }
-        public int? DataLength { get; set; }
-        public int? DataPrecision { get; set; }
-        public int? DataScale { get; set; }
-    }
-
-    // a PL/SQL package record type
-    public class PackageRecord : Entity, IEntity, IComparable<PackageRecord> {
-        // standard entity properties
-        public string EntityName { get { return CSharpType; } set { CSharpType = value; } } 
-        public string AncestorTypeName { get; set; }
-        public bool Instantiable { get { return true; } }
-        public String CSharpType { get; set; }
-
-        // record specific
-
-        /// <summary>
-        /// Package containing argument from which record is derived
-        /// </summary>
-        public string PackageName { get; set; } 
-
-        /// <summary>
-        /// Package name of record definition; could be different from package with argument using it
-        /// </summary>
-        public String Name { get; set; }
-
-        /// <summary>
-        /// Name of record
-        /// </summary>
-        public String SubName { get; set; }
-
-        /// <summary>
-        /// Schema of record defintion; could be different from schema with argument using it
-        /// </summary>
-        public String Owner { get; set; }
-
-        //public List<IEntityAttribute> Fields { get { return Attributes; } } // alias for Attributes
-        public int CompareTo(PackageRecord r) { return CSharpType.CompareTo(r.CSharpType); }
     }
 
     /// <summary>
@@ -308,21 +229,33 @@ namespace Odapter {
     }
 
     /// <summary>
-    /// Field for a package record type - TO BE USED WHEN GenerateEntityClass() HANDLES RECORD TYPES
+    ///  Field for package record type
     /// </summary>
-    //public class RecordTypeField : EntityAttribute, IComparable<RecordTypeField> {
-    //    public override string EntityName { get; set; }
-    //    public override string AttrName { get; set; }
-    //    public override string AttrType { get; set; }
-    //    public override int Length { get; set; }
-    //    public override int Precision { get; set; }
-    //    public override int Scale { get; set; }
-    //    public override int Position { get; set; }
+    public class Field : IComparable<Field>, IEntityAttribute {
+        // standard entity properties
+        public string EntityName { get { return Name; } set { Name = value; } }
+        public string AttrName { get { return Name; } set { Name = value; } }
+        public string AttrType { get { return DataType; } set { DataType = value; } }
+        public string AttrTypeOwner { get { return TypeOwner; } set { TypeOwner = value; } }
+        public string AttrTypeMod { get; set; }
+        public int? Length { get { return DataLength; } set { DataLength = value; } }
+        public int? Precision { get { return DataPrecision; } set { DataPrecision = value; } }
+        public int? Scale { get { return DataScale; } set { DataScale = value; } }
+        public int Position { get { return MapPosition; } set { MapPosition = value; } }
+        public String CSharpType { get; set; }
+        public bool Nullable { get { return true; } }
+        public String ContainerClassName { get; set; } // Container class if C# type is nested class
 
-    //    public String CSharpType { get; set; }
-    //    public Int32 MapPosition { get; set; }
-    //    public int CompareTo(RecordTypeField f) { return AttrName.CompareTo(f.AttrName); }
-    //}
+        // field specific
+        public String Name { get; set; }
+        public int MapPosition { get; set; }
+        public int CompareTo(Field f) { return Name.CompareTo(f.Name); }
+        public String DataType { get; set; }
+        public String TypeOwner { get; set; }
+        public int? DataLength { get; set; }
+        public int? DataPrecision { get; set; }
+        public int? DataScale { get; set; }
+    }
 
     /// <summary>
     /// Interface of an entity. Should be implemented mapping to underlying sys view column if naming is different.
@@ -399,16 +332,39 @@ namespace Odapter {
     }
 
     /// <summary>
-    /// Record Type as type of Entity - TO BE USED WHEN GenerateEntityClass() HANDLES RECORD TYPES
+    /// Package record type as type of Entity
     /// </summary>
-    //public class RecordType : Entity<RecordTypeField>, IComparable<RecordType> {
-    //    public override string EntityName { get; set; }
+    public class PackageRecord : Entity, IEntity, IComparable<PackageRecord> {
+        // standard entity properties
+        public string EntityName { get { return CSharpType; } set { CSharpType = value; } }
+        public string AncestorTypeName { get; set; }
+        public bool Instantiable { get { return true; } }
+        public String CSharpType { get; set; }
 
-    //    public string PackageName { get; set; }
-    //    public String SubName { get; set; }
-    //    public String Owner { get; set; }
-    //    public String CSharpType { get; set; }
-    //    public int CompareTo(RecordType r) { return CSharpType.CompareTo(r.CSharpType); }
-    //}
+        // record specific
+
+        /// <summary>
+        /// Package containing argument from which record is derived
+        /// </summary>
+        public string PackageName { get; set; }
+
+        /// <summary>
+        /// Package name of record definition; could be different from package with argument using it
+        /// </summary>
+        public String Name { get; set; }
+
+        /// <summary>
+        /// Name of record
+        /// </summary>
+        public String SubName { get; set; }
+
+        /// <summary>
+        /// Schema of record defintion; could be different from schema with argument using it
+        /// </summary>
+        public String Owner { get; set; }
+
+        //public List<IEntityAttribute> Fields { get { return Attributes; } } // alias for Attributes
+        public int CompareTo(PackageRecord r) { return CSharpType.CompareTo(r.CSharpType); }
+    }
     #endregion
 }
