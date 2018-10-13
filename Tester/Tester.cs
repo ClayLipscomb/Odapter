@@ -29,7 +29,7 @@
 #define ODPT_FILTER_PREFIX          // "ODPT" as filter prefix of schema
 #define MAPPING_FOR_TYPED_CURSOR    // optional overloads for typed cursors methods are generated for mapping
 #define SEED_TABLES                 // seed all tables with test data
-//#define CSHARP30                    // C# 3.0 (.NET 3.5)
+#define CSHARP30                    // C# 3.0 (.NET 3.5)
 
 //#define LARGE_LOB_SIZE
 
@@ -810,9 +810,9 @@ namespace Odapter.Tester {
                 // assoc array (INTEGER indexed)
                 pInList = pInOutList = testValues;
                 retList = OdptPkgMain.Instance.FuncAaInteger(pInList, ref pInOutList, out pOutList, null);
-                for (int i = 0; i < pInList.Count; i++) if (!pInList[i].Equals(pInOutList[i])) throw new Exception("Error");
-                for (int i = 0; i < pInList.Count; i++) if (!pInList[i].Equals(pOutList[i])) throw new Exception("Error");
-                for (int i = 0; i < pInList.Count; i++) if (!pInList[i].Equals(retList[i])) throw new Exception("Error");
+                for (int i = 0; i < pInList.Count; i++) Debug.Assert(pInList[i].Equals(pInOutList[i]));
+                for (int i = 0; i < pInList.Count; i++) Debug.Assert(pInList[i].Equals(pOutList[i]));
+                for (int i = 0; i < pInList.Count; i++) Debug.Assert(pInList[i].Equals(retList[i]));
 
                 // VARCHAR2 indexed associative array will not execute successfully due to limiation of ODP.NET
                 //pInList = testValues;
@@ -874,39 +874,39 @@ namespace Odapter.Tester {
                 // assoc array
                 pInListDecimal = pInOutListDecimal = decimalTestValues;
                 retListDecimal = OdptPkgMain.Instance.FuncAaNumber(pInListDecimal, ref pInOutListDecimal, out pOutListDecimal, null);
-                for (int i = 0; i < pInListDecimal.Count; i++) if (!pInListDecimal[i].Equals(pInOutListDecimal[i])) throw new Exception("Error");
-                for (int i = 0; i < pInListDecimal.Count; i++) if (!pInListDecimal[i].Equals(pOutListDecimal[i])) throw new Exception("Error");
-                for (int i = 0; i < pInListDecimal.Count; i++) if (!pInListDecimal[i].Equals(retListDecimal[i])) throw new Exception("Error");
+                for (int i = 0; i < pInListDecimal.Count; i++) Debug.Assert(pInListDecimal[i].Equals(pInOutListDecimal[i]));
+                for (int i = 0; i < pInListDecimal.Count; i++) Debug.Assert(pInListDecimal[i].Equals(pOutListDecimal[i]));
+                for (int i = 0; i < pInListDecimal.Count; i++) Debug.Assert(pInListDecimal[i].Equals(retListDecimal[i]));
 
                 // FLOAT
                 // standard call
                 for (int i = 0; i < decimalTestValues.Count; i++) {
                     pInDecimal = pInOutDecimal = decimalTestValues[i]; 
                     retDecimal = OdptPkgMain.Instance.FuncFloat(pInDecimal, ref pInOutDecimal, out pOutDecimal, null);
-                    if (!pInDecimal.Equals(pInOutDecimal) || !pInDecimal.Equals(pOutDecimal) || !pInDecimal.Equals(retDecimal)) throw new Exception("Error");
+                    Debug.Assert(pInDecimal.Equals(pInOutDecimal) && pInDecimal.Equals(pOutDecimal) && pInDecimal.Equals(retDecimal));
                 }
 
                 // assoc array
                 pInListDecimal = pInOutListDecimal = decimalTestValues;
                 retListDecimal = OdptPkgMain.Instance.FuncAaFloat(pInListDecimal, ref pInOutListDecimal, out pOutListDecimal, null);
-                for (int i = 0; i < pInListDecimal.Count; i++) if (!pInListDecimal[i].Equals(pInOutListDecimal[i])) throw new Exception("Error");
-                for (int i = 0; i < pInListDecimal.Count; i++) if (!pInListDecimal[i].Equals(pOutListDecimal[i])) throw new Exception("Error");
-                for (int i = 0; i < pInListDecimal.Count; i++) if (!pInListDecimal[i].Equals(retListDecimal[i])) throw new Exception("Error");
+                for (int i = 0; i < pInListDecimal.Count; i++) Debug.Assert(pInListDecimal[i].Equals(pInOutListDecimal[i]));
+                for (int i = 0; i < pInListDecimal.Count; i++) Debug.Assert(pInListDecimal[i].Equals(pOutListDecimal[i]));
+                for (int i = 0; i < pInListDecimal.Count; i++) Debug.Assert(pInListDecimal[i].Equals(retListDecimal[i]));
 
                 // DOUBLE_PRECISION
                 // standard call
                 for (int i = 0; i < decimalTestValues.Count; i++) {
                     pInDecimal = pInOutDecimal = decimalTestValues[i];
                     retDecimal = OdptPkgMain.Instance.FuncDoublePrecision(pInDecimal, ref pInOutDecimal, out pOutDecimal, null);
-                    if (!pInDecimal.Equals(pInOutDecimal) || !pInDecimal.Equals(pOutDecimal) || !pInDecimal.Equals(retDecimal)) throw new Exception("Error");
+                    Debug.Assert(pInDecimal.Equals(pInOutDecimal) && pInDecimal.Equals(pOutDecimal) && pInDecimal.Equals(retDecimal));
                 }
 
                 // assoc array
                 pInListDecimal = pInOutListDecimal = decimalTestValues;
                 retListDecimal = OdptPkgMain.Instance.FuncAaDoublePrecision(pInListDecimal, ref pInOutListDecimal, out pOutListDecimal, null);
-                for (int i = 0; i < pInListDecimal.Count; i++) if (!pInListDecimal[i].Equals(pInOutListDecimal[i])) throw new Exception("Error");
-                for (int i = 0; i < pInListDecimal.Count; i++) if (!pInListDecimal[i].Equals(pOutListDecimal[i])) throw new Exception("Error");
-                for (int i = 0; i < pInListDecimal.Count; i++) if (!pInListDecimal[i].Equals(retListDecimal[i])) throw new Exception("Error");
+                for (int i = 0; i < pInListDecimal.Count; i++) Debug.Assert(pInListDecimal[i].Equals(pInOutListDecimal[i]));
+                for (int i = 0; i < pInListDecimal.Count; i++) Debug.Assert(pInListDecimal[i].Equals(pOutListDecimal[i]));
+                for (int i = 0; i < pInListDecimal.Count; i++) Debug.Assert(pInListDecimal[i].Equals(retListDecimal[i]));
             }
 
             /// <summary>
@@ -935,15 +935,15 @@ namespace Odapter.Tester {
                 foreach (Double? dt in doubleTestValues) {
                     pInDouble = pInOutDouble = dt; 
                     retDouble = OdptPkgMain.Instance.FuncBinaryDouble(pInDouble, ref pInOutDouble, out pOutDouble, null);
-                    if (!Util.IsEqual(pInDouble, pInOutDouble) || !Util.IsEqual(pInDouble, pOutDouble) || !Util.IsEqual(pInDouble, retDouble)) throw new Exception("Error");
+                    Debug.Assert(Util.IsEqual(pInDouble, pInOutDouble) && Util.IsEqual(pInDouble, pOutDouble) && Util.IsEqual(pInDouble, retDouble));
                 }
 
                 // assoc array
                 pInListDouble = pInOutListDouble = doubleTestValues;
                 retListDouble = OdptPkgMain.Instance.FuncAaBinaryDouble(pInListDouble, ref pInOutListDouble, out pOutListDouble, null);
-                for (int i = 0; i < pInListDouble.Count; i++) if (!Util.IsEqual(pInListDouble[i], pInOutListDouble[i])) throw new Exception("Error");
-                for (int i = 0; i < pInListDouble.Count; i++) if (!Util.IsEqual(pInListDouble[i], pOutListDouble[i])) throw new Exception("Error");
-                for (int i = 0; i < pInListDouble.Count; i++) if (!Util.IsEqual(pInListDouble[i], retListDouble[i])) throw new Exception("Error");
+                for (int i = 0; i < pInListDouble.Count; i++) Debug.Assert(Util.IsEqual(pInListDouble[i], pInOutListDouble[i]));
+                for (int i = 0; i < pInListDouble.Count; i++) Debug.Assert(Util.IsEqual(pInListDouble[i], pOutListDouble[i]));
+                for (int i = 0; i < pInListDouble.Count; i++) Debug.Assert(Util.IsEqual(pInListDouble[i], retListDouble[i]));
             }
 
             /// <summary>
@@ -967,15 +967,15 @@ namespace Odapter.Tester {
                 foreach (Single? st in singleTestValues) {
                     pInSingle = pInOutSingle = st; 
                     retSingle = OdptPkgMain.Instance.FuncBinaryFloat(pInSingle, ref pInOutSingle, out pOutSingle, null);
-                    if (!Util.IsEqual(pInSingle, pInOutSingle) || !Util.IsEqual(pInSingle, pOutSingle) || !Util.IsEqual(pInSingle, retSingle)) throw new Exception("Error");
+                    Debug.Assert(Util.IsEqual(pInSingle, pInOutSingle) && Util.IsEqual(pInSingle, pOutSingle) && Util.IsEqual(pInSingle, retSingle));
                 }
 
                 // assoc array
                 pInListSingle = pInOutListSingle = singleTestValues;
                 retListSingle = OdptPkgMain.Instance.FuncAaBinaryFloat(pInListSingle, ref pInOutListSingle, out pOutListSingle, null);
-                for (int i = 0; i < pInListSingle.Count; i++) if (!Util.IsEqual(pInListSingle[i], pInOutListSingle[i])) throw new Exception("Error");
-                for (int i = 0; i < pInListSingle.Count; i++) if (!Util.IsEqual(pInListSingle[i], pOutListSingle[i])) throw new Exception("Error");
-                for (int i = 0; i < pInListSingle.Count; i++) if (!Util.IsEqual(pInListSingle[i], retListSingle[i])) throw new Exception("Error");
+                for (int i = 0; i < pInListSingle.Count; i++) Debug.Assert(Util.IsEqual(pInListSingle[i], pInOutListSingle[i]));
+                for (int i = 0; i < pInListSingle.Count; i++) Debug.Assert(Util.IsEqual(pInListSingle[i], pOutListSingle[i]));
+                for (int i = 0; i < pInListSingle.Count; i++) Debug.Assert(Util.IsEqual(pInListSingle[i], retListSingle[i]));
             }
 
             /// <summary>
@@ -1112,7 +1112,10 @@ namespace Odapter.Tester {
                 retString = OdptPkgMain.Instance.FuncNclob(pInString, ref pInOutString, out pOutString, conn);
                 Debug.Assert(
 #if SAFETYPE_CLOB
-                    (pInString.Value.Equals(pInOutString.Value)) && (pInString.Value.Equals(pOutString.Value)) && (pInString.Value.Equals(retString.Value))
+                    (pInString.Value.Equals(pInOutString.Value))
+    #if !CSHARP30   // 3.0 is failing to hydrate the out and return; 'ORA-24806: LOB form mismatch'
+                        && (pInString.Value.Equals(pOutString.Value)) && (pInString.Value.Equals(retString.Value))
+    #endif
 #else
                     pInString.Equals(pInOutString) && pInString.Equals(pOutString) && pInString.Equals(retString)
 #endif
@@ -1188,9 +1191,9 @@ namespace Odapter.Tester {
                 DateTime? pInDateTime, pInOutDateTime, pOutDateTime, retDateTime;
                 List<DateTime?> pInListDateTime, pInOutListDateTime, pOutListDateTime, retListDateTime;
                 List<DateTime?> dateTimeTestValues = new List<DateTime?>() { 
-#if !CSHARP30 // Unmanaged has issues with time portion, min value and max value
+    #if !CSHARP30 // Unmanaged has issues with time portion, min value and max value
                     DateTime.Now, DateTime.MaxValue.AddMilliseconds(-1), DateTime.MinValue.AddMilliseconds(1),
-#endif
+    #endif
                     null };
 #else
                 OracleDate? pInDateTime, pInOutDateTime, pOutDateTime, retDateTime;
@@ -1212,8 +1215,10 @@ namespace Odapter.Tester {
                     if (pInDateTime.Value.IsNull) {
                         Debug.Assert(pInOutDateTime.Value.IsNull && pOutDateTime.Value.IsNull && retDateTime.Value.IsNull);
                     } else {
+    #if !CSHARP30 // Unmanaged OracleDate.Equals() is always false, works fine with Managed
                         Debug.Assert(pInDateTime.Equals(pInOutDateTime) && pInDateTime.Equals(pOutDateTime) && pInDateTime.Equals(retDateTime));
-                    }    
+    #endif
+                    }
 #endif
                 }
 
@@ -1221,13 +1226,15 @@ namespace Odapter.Tester {
                 pInListDateTime = pInOutListDateTime = dateTimeTestValues;
                 retListDateTime = OdptPkgMain.Instance.FuncAaDate(pInListDateTime, ref pInOutListDateTime, out pOutListDateTime, null);
 #if !SAFETYPE_DATE
-                for (int i = 0; i < pInListDateTime.Count; i++) if (pInListDateTime[i] - pInOutListDateTime[i] > TimeSpan.FromSeconds(1)) throw new Exception("Error");
-                for (int i = 0; i < pInListDateTime.Count; i++) if (pInListDateTime[i] - pOutListDateTime[i] > TimeSpan.FromSeconds(1)) throw new Exception("Error");
-                for (int i = 0; i < pInListDateTime.Count; i++) if (pInListDateTime[i] - retListDateTime[i] > TimeSpan.FromSeconds(1)) throw new Exception("Error");
+                for (int i = 0; i < pInListDateTime.Count; i++) Debug.Assert(!(pInListDateTime[i] - pInOutListDateTime[i] > TimeSpan.FromSeconds(1)));
+                for (int i = 0; i < pInListDateTime.Count; i++) Debug.Assert(!(pInListDateTime[i] - pOutListDateTime[i] > TimeSpan.FromSeconds(1)));
+                for (int i = 0; i < pInListDateTime.Count; i++) Debug.Assert(!(pInListDateTime[i] - retListDateTime[i] > TimeSpan.FromSeconds(1)));
 #else
-                for (int i = 0; i < pInListDateTime.Count; i++) if (!pInListDateTime[i].Equals(pInOutListDateTime[i])) throw new Exception("Error");
-                for (int i = 0; i < pInListDateTime.Count; i++) if (!pInListDateTime[i].Equals(pOutListDateTime[i])) throw new Exception("Error");
-                for (int i = 0; i < pInListDateTime.Count; i++) if (!pInListDateTime[i].Equals(retListDateTime[i])) throw new Exception("Error");
+    #if !CSHARP30 // Unmanaged OracleDate.Equals() is always false, works fine with Managed
+                for (int i = 0; i < pInListDateTime.Count; i++) Debug.Assert(pInListDateTime[i].Equals(pInOutListDateTime[i]));
+                for (int i = 0; i < pInListDateTime.Count; i++) Debug.Assert(pInListDateTime[i].Equals(pOutListDateTime[i]));
+                for (int i = 0; i < pInListDateTime.Count; i++) Debug.Assert(pInListDateTime[i].Equals(retListDateTime[i]));
+    #endif
 #endif
 
 #if !SAFETYPE_TIMESTAMP
@@ -1239,7 +1246,7 @@ namespace Odapter.Tester {
 #endif
                     null };
 #else
-                    OracleTimeStamp? pInTimeStamp, pInOutTimeStamp, pOutTimeStamp, retTimeStamp;
+                OracleTimeStamp? pInTimeStamp, pInOutTimeStamp, pOutTimeStamp, retTimeStamp;
                 //List<OracleTimeStamp?> pInListTimeStamp, pInOutListTimeStamp, pOutListTimeStamp, retListTimeStamp;
                 List<OracleTimeStamp?> timeStampTestValues = new List<OracleTimeStamp?>() { OracleTimeStamp.GetSysDate(), OracleTimeStamp.MaxValue.AddMilliseconds(-1), OracleTimeStamp.MinValue.AddMilliseconds(1), OracleTimeStamp.Null };
 #endif
@@ -1249,16 +1256,16 @@ namespace Odapter.Tester {
                     pInTimeStamp = pInOutTimeStamp = timeStampTestValues[i];
                     retTimeStamp = OdptPkgMain.Instance.FuncTimestamp(pInTimeStamp, ref pInOutTimeStamp, out pOutTimeStamp, null);
 #if !SAFETYPE_TIMESTAMP
-                    if (pInTimeStamp - pInOutTimeStamp > TimeSpan.FromSeconds(1)) throw new Exception( "Error" );
-                    if (pInTimeStamp - pOutTimeStamp > TimeSpan.FromSeconds(1)) throw new Exception( "Error" );
-                    if (pInTimeStamp - retTimeStamp > TimeSpan.FromSeconds(1)) throw new Exception( "Error" );
+                    Debug.Assert(!(pInTimeStamp - pInOutTimeStamp > TimeSpan.FromSeconds(1)));
+                    Debug.Assert(!(pInTimeStamp - pOutTimeStamp > TimeSpan.FromSeconds(1)));
+                    Debug.Assert(!(pInTimeStamp - retTimeStamp > TimeSpan.FromSeconds(1)));
 #else
                     if (pInTimeStamp.Value.IsNull) {
-                        if (!pInOutTimeStamp.Value.IsNull || !pOutTimeStamp.Value.IsNull || !retTimeStamp.Value.IsNull) throw new Exception("Error");
+                        Debug.Assert(pInOutTimeStamp.Value.IsNull && pOutTimeStamp.Value.IsNull && retTimeStamp.Value.IsNull);
                     } else {
-                        if (!OracleTimeStamp.SetPrecision(pInTimeStamp.Value, 5).Equals(OracleTimeStamp.SetPrecision(pInOutTimeStamp.Value, 5))) throw new Exception( "Error" );
-                        if (!OracleTimeStamp.SetPrecision(pInTimeStamp.Value, 5).Equals(OracleTimeStamp.SetPrecision(pOutTimeStamp.Value, 5))) throw new Exception( "Error" );
-                        if (!OracleTimeStamp.SetPrecision(pInTimeStamp.Value, 5).Equals(OracleTimeStamp.SetPrecision(retTimeStamp.Value, 5))) throw new Exception( "Error" );
+                        Debug.Assert(OracleTimeStamp.SetPrecision(pInTimeStamp.Value, 5).Equals(OracleTimeStamp.SetPrecision(pInOutTimeStamp.Value, 5)));
+                        Debug.Assert(OracleTimeStamp.SetPrecision(pInTimeStamp.Value, 5).Equals(OracleTimeStamp.SetPrecision(pOutTimeStamp.Value, 5)));
+                        Debug.Assert(OracleTimeStamp.SetPrecision(pInTimeStamp.Value, 5).Equals(OracleTimeStamp.SetPrecision(retTimeStamp.Value, 5)));
                     }
 #endif
                 }

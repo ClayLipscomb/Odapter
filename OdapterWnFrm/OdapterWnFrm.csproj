@@ -99,6 +99,7 @@
     <None Include="bin\x64\Debug\_Odpt-Example.config" />
     <None Include="bin\x64\Debug\_Odpt-NoFilter-3.0.config" />
     <None Include="bin\x64\Debug\_Odpt-NoFilter.config" />
+    <None Include="bin\x64\Debug\_Odpt-SafeType-3.0.config" />
     <None Include="bin\x64\Debug\_Odpt-SafeType.config" />
     <None Include="bin\x64\Debug\_Odpt.config" />
     <None Include="packages.config" />
