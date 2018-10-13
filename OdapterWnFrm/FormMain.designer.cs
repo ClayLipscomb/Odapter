@@ -157,12 +157,12 @@ namespace OdapterWnFrm {
             // 
             this.BtnStart.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BtnStart.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.BtnStart.Location = new System.Drawing.Point(715, 48);
+            this.BtnStart.Location = new System.Drawing.Point(715, 37);
             this.BtnStart.Margin = new System.Windows.Forms.Padding(4);
             this.BtnStart.Name = "BtnStart";
-            this.BtnStart.Size = new System.Drawing.Size(101, 28);
+            this.BtnStart.Size = new System.Drawing.Size(101, 51);
             this.BtnStart.TabIndex = 1;
-            this.BtnStart.Text = "Generate";
+            this.BtnStart.Text = "Generate Code";
             this.BtnStart.UseVisualStyleBackColor = true;
             this.BtnStart.Click += new System.EventHandler(this.btnStart_Clicked);
             // 
@@ -1135,12 +1135,12 @@ namespace OdapterWnFrm {
             this.lblMaxAssocArraySize.BackColor = System.Drawing.Color.Transparent;
             this.lblMaxAssocArraySize.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMaxAssocArraySize.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.lblMaxAssocArraySize.Location = new System.Drawing.Point(189, 152);
+            this.lblMaxAssocArraySize.Location = new System.Drawing.Point(135, 152);
             this.lblMaxAssocArraySize.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblMaxAssocArraySize.Name = "lblMaxAssocArraySize";
-            this.lblMaxAssocArraySize.Size = new System.Drawing.Size(263, 17);
+            this.lblMaxAssocArraySize.Size = new System.Drawing.Size(317, 17);
             this.lblMaxAssocArraySize.TabIndex = 3;
-            this.lblMaxAssocArraySize.Text = "* Max Size of Associative Array Arg";
+            this.lblMaxAssocArraySize.Text = "* Max Size of Associative Array Return/Arg";
             this.lblMaxAssocArraySize.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // lblFilter
