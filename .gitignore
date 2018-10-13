@@ -6,18 +6,28 @@
 **/exclude/
 *.pdb
 
-# Odapter - x86
+# x86
 Odapter/bin/Debug/
 Odapter/bin/Release/
+OdapterWnFrm/bin/Debug/
+OdapterWnFrm/bin/Release/
 
 # Odapter - x64 config files
-Odapter/bin/x64/Debug/EI.config
-Odapter/bin/x64/Debug/*.exe.config
-Odapter/bin/x64/Release/*.exe.config
+Odapter/bin/x64/Debug/*.dll.config
+Odapter/bin/x64/Release/*.config
+
+# OdapterWnFrm - x64 config files
+OdapterWnFrm/bin/x64/Debug/EI.config
+OdapterWnFrm/bin/x64/Debug/*.exe.config
+OdapterWnFrm/bin/x64/Release/*.config
+
+# DLLs
+Odapter/bin/x64/Debug/*.dll
+Odapter/bin/x64/Release/*.dll
 
 # executables
 *.exe
-!/Odapter/bin/x64/Release/Odapter.exe
+!/OdapterWnFrm/bin/x64/Release/Odapter.exe
 
 # Tester - x64 Release and x86
 Tester/bin/
@@ -29,6 +39,18 @@ Tester/bin/x64/Debug/*.dll
 Tester/bin/x64/Debug/*.config
 Tester/bin/x64/Debug/*.exe.config
 Tester/bin/x64/Release/*.exe.config
+
+# Example - x64 Release and x86
+Example/bin/
+Example/bin/x64/Release/
+Example/bin/x64/Debug/
+Example/bin/Debug/
+Example/bin/Release/
+Example/bin/x64/Debug/*.dll
+Example/bin/x64/Debug/*.config
+Example/bin/x64/Debug/*.exe.config
+Example/bin/x64/Release/*.exe.config
+
 #################
 
 # User-specific files
@@ -289,10 +311,3 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
-/Example/bin/Debug/Example.exe.config
-/Example/bin/Debug/Oracle.ManagedDataAccess.dll
-/Odapter/deploy/OrclPower - Copy.cs
-/Example/Example - Copy.cs
-/Odapter/FormMain - Copy.cs
-/Odapter/Translater - Copy.cs
-/Tester/Tester - Copy.cs
