@@ -16,8 +16,8 @@
 //    along with this program.If not, see<http://www.gnu.org/licenses/>.
 //------------------------------------------------------------------------------
 
-//#define SHORT_INTEGER             // INTEGER as Int32
-//#define DECIMAL_INTEGER           // INTEGER as Decimal
+//#define SHORT_INTEGER               // INTEGER as Int32
+//#define DECIMAL_INTEGER             // INTEGER as Decimal
 
 //#define SAFETYPE_INTEGER            // INTEGER as safe type OracleDecimal
 //#define SAFETYPE_NUMBER             // NUMBER as safe type OracleDecimal
@@ -29,7 +29,7 @@
 #define ODPT_FILTER_PREFIX          // "ODPT" as filter prefix of schema
 #define MAPPING_FOR_TYPED_CURSOR    // optional overloads for typed cursors methods are generated for mapping
 #define SEED_TABLES                 // seed all tables with test data
-#define CSHARP30                    // C# 3.0 (.NET 3.5)
+//#define CSHARP30                    // C# 3.0 (.NET 3.5)
 
 //#define LARGE_LOB_SIZE
 
