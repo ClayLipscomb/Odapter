@@ -32,13 +32,7 @@ namespace Odapter {
         public static Parameter Instance { get { return _instance; } set { _instance = value; } }
 
         public void RestoreDefaults() {
-            OracleHome = "";
-            DatabaseInstance = "";
-            Filter = "";
-            Schema = "";
-            UserLogin = "";
-            Password = "";
-            OutputPath = "";
+            OracleHome = DatabaseInstance = Filter = Schema = UserLogin = Password =  OutputPath = String.Empty;
 
             IsGeneratePackage = true;
             IsGenerateObjectType = IsGenerateTable = IsGenerateView = false;
@@ -49,9 +43,9 @@ namespace Odapter {
             IsIncludeFilterPrefixInNaming = true;
 
             NamespaceBase = "Schema";
-            NamespacePackage = NamespaceObjectType = NamespaceTable = NamespaceView = "";
-            NamespaceSchema = "";
-            NamespaceDataContract = "";
+            NamespacePackage = NamespaceObjectType = NamespaceTable = NamespaceView = String.Empty;
+            NamespaceSchema = String.Empty;
+            NamespaceDataContract = String.Empty;
 
             AncestorClassNamePackage = AncestorClassNamePackageRecord = AncestorClassNameObjectType = AncestorClassNameTable = AncestorClassNameView = "";
 
@@ -157,7 +151,7 @@ namespace Odapter {
         // advanced options
         public Boolean IsDuplicatePackageRecordOriginatingOutsideFilterAndSchema { get; set; }
         public Boolean IsExcludeObjectsNamesWithSpecificChars { get; set; }
-        public char[] ObjectNameCharsToExclude;// = new char[] { '$', '#' };
+        public char[] ObjectNameCharsToExclude;
         public Boolean IsGenerateDynamicMappingMethodForTypedCursor { get; set; }
         public Boolean IsUseAutoImplementedProperties { get; set; }
         public String LocalVariableNameSuffix { get; set; }
