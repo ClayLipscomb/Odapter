@@ -34,12 +34,12 @@ namespace Odapter {
         public const string BYTE = "Byte";
         public const string SBYTE_ARRAY = SBYTE + ARRAY_BRACKETS;
         public const string BYTE_ARRAY = BYTE + ARRAY_BRACKETS;
-        public const string INT16 = "Int16"; // short
-        public const string UINT16 = "UInt16"; // unsigned short
-        public const string INT32 = "Int32"; // int
-        public const string UINT32 = "UInt32"; // unsigned int
-        public const string INT64 = "Int64"; //:Convert.ToString(System.U U System.Int64);//. typeof(System.Int64. ).ToString();  //"Int64"; // long
-        public const string UINT64 = "UInt64"; // unsigned long
+        public const string INT16 = "Int16";            // short
+        public const string UINT16 = "UInt16";          // unsigned short
+        public const string INT32 = "Int32";            // int
+        public const string UINT32 = "UInt32";          // unsigned int
+        public const string INT64 = "Int64";            // long
+        public const string UINT64 = "UInt64";          // unsigned long
         public const string BIG_INTEGER = "BigInteger";
         public const string BIG_RATIONAL = "BigRational";
         public const string DATE_TIME = "DateTime";
@@ -57,8 +57,8 @@ namespace Odapter {
         public const string LIST = "List";
         public const string VOID = "void";
         public const string GENERIC_TYPE_PREFIX = "T_";
-        public const string NULLABLE_SUFFIX = "?";
-        private const string ARRAY_BRACKETS = "[]";
+        public const string NULLABLE_SUFFIX = @"?";
+        private const string ARRAY_BRACKETS = @"[]";
 
         // ODP.NET types (important for assoc array out/return args)
         private const string ODP_NET_TYPE_PREFIX = "Oracle";
@@ -83,12 +83,12 @@ namespace Odapter {
         #endregion
 
         #region Code Syntax
-        public const string ATTRIBUTE_SERIALIZABLE = "[Serializable()]";
+        public const string ATTRIBUTE_SERIALIZABLE = @"[Serializable()]";
         public const string ATTRIBUTE_DATA_CONTRACT = @"DataContract";
         public const string PARTIAL = "partial";
         public const string ABSTRACT = "abstract";
         public const string GET_ORACLE = "GetOracle";
-        //public const string USING = "using";
+        public const string USING = "using";
         #endregion
 
         #region ODP.NET OracleDbType Enum values
