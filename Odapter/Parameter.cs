@@ -53,7 +53,7 @@ namespace Odapter {
             AncestorClassNamePackage = AncestorClassNamePackageRecord = AncestorClassNameObjectType = AncestorClassNameTable = AncestorClassNameView = "";
 
             MaxAssocArraySize = 1000;
-            MaxReturnAndOutArgStringSize = 8000;
+            MaxReturnAndOutArgStringSize = 32767;
             CSharpVersion = CSharpVersion.FourZero;
             IsDuplicatePackageRecordOriginatingOutsideFilterAndSchema = true;
             IsExcludeObjectsNamesWithSpecificChars = true;
