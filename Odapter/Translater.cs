@@ -23,13 +23,12 @@ using System.Text;
 
 namespace Odapter {
     /// <summary>
-    /// Handle translatiion from Oracle to C#
+    /// Handle translation from Oracle to C#
     /// </summary>
     public class Translater {
         public static Boolean UseGenericListForCursor = false;
         public static Boolean ConvertOracleNumberToIntegerIfColumnNameIsId = true;
         public static String ObjectTypeNamespace = "";
-        //public static readonly string GENERIC_TYPE_PREFIX = "T_"; 
         public static readonly List<String> OracleTypesIgnored = new List<String> {
             // types explicitly not implemented in ODP.NET managed: ARRAY (Varray, Nested Table), BOOLEAN, OBJECT, REF, XML_TYPE
             // https://docs.oracle.com/database/121/ODPNT/OracleDbTypeEnumerationType.htm#ODPNT2286
@@ -780,9 +779,8 @@ namespace Odapter {
         /// Return the character limit for string types
         /// </summary>
         /// <param name="oracleArg"></param>
-        /// <param name="nextArg"></param>
         /// <returns></returns>
-        public static Int32? GetCharLength(Argument oracleArg, Argument nextArgUnused) {
+        public static Int32? GetCharLength(Argument oracleArg) {
             // for an associative array we must look at subsequent arg for the value
             return (oracleArg.DataType == Orcl.ASSOCIATITVE_ARRAY ? oracleArg.NextArgument : oracleArg).CharLength;
         }

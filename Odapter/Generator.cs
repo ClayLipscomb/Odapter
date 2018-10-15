@@ -521,7 +521,7 @@ namespace Odapter {
                             sb.AppendLine(Tab(5) + LOCAL_VAR_NAME_COMMAND_PARAMS + "[\"" + FUNC_RETURN_PARAM_NAME + "\"].ArrayBindSize = new int[" + Parameter.Instance.MaxAssocArraySize.ToString() + "];");
                             sb.AppendLine(Tab(5) 
                                 + "for (int _i = 0; _i < " + Parameter.Instance.MaxAssocArraySize.ToString() + "; _i++) { " + LOCAL_VAR_NAME_COMMAND_PARAMS + "[\"" + FUNC_RETURN_PARAM_NAME + "\"].ArrayBindSize[_i] = "
-                                + Translater.GetCharLength(arg, (args.IndexOf(arg) + 1 < args.Count ? args[args.IndexOf(arg) + 1] : null)) + "; }");
+                                + Translater.GetCharLength(arg) + "; }");
                         }
                     }
                 } else if (arg.DataLevel == 0 && !string.IsNullOrEmpty(arg.ArgumentName)) {
@@ -555,7 +555,7 @@ namespace Odapter {
                             sb.AppendLine(Tab(5) + (isCSharpParamOptional ? "\t" : "") + LOCAL_VAR_NAME_COMMAND_PARAMS + "[\"" + arg.ArgumentName + "\"].ArrayBindSize = new int[" + Parameter.Instance.MaxAssocArraySize.ToString() + "];");
                             sb.AppendLine(Tab(5) + (isCSharpParamOptional ? "\t" : "")
                                 + "for (int _i = 0; _i < " + Parameter.Instance.MaxAssocArraySize.ToString() + "; _i++) { " + LOCAL_VAR_NAME_COMMAND_PARAMS + "[\"" + arg.ArgumentName + "\"].ArrayBindSize[_i] = "
-                                + Translater.GetCharLength(arg, (args.IndexOf(arg) + 1 < args.Count ? args[args.IndexOf(arg) + 1] : null)) + "; }");
+                                + Translater.GetCharLength(arg) + "; }");
                         }
                         if (isCSharpParamOptional) sb.AppendLine(Tab(5) + "}");
                     }
