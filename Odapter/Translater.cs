@@ -29,6 +29,7 @@ namespace Odapter {
         public static Boolean UseGenericListForCursor = false;
         public static Boolean ConvertOracleNumberToIntegerIfColumnNameIsId = true;
         public static String ObjectTypeNamespace = "";
+
         public static readonly List<String> OracleTypesIgnored = new List<String> {
             // types explicitly not implemented in ODP.NET managed: ARRAY (Varray, Nested Table), BOOLEAN, OBJECT, REF, XML_TYPE
             // https://docs.oracle.com/database/121/ODPNT/OracleDbTypeEnumerationType.htm#ODPNT2286
@@ -213,16 +214,16 @@ namespace Odapter {
             String oracleNameAdjusted = oracleName;
 
             // replace special characters with alphanumerics equivalent
-            oracleNameAdjusted = oracleNameAdjusted.Replace("!", "exclamationpoint" + CHARACTER_ABBREV);
-            oracleNameAdjusted = oracleNameAdjusted.Replace("@", "atsign" + CHARACTER_ABBREV);
-            oracleNameAdjusted = oracleNameAdjusted.Replace("#", "poundsign" + CHARACTER_ABBREV);
-            oracleNameAdjusted = oracleNameAdjusted.Replace("$", "dollarsign" + CHARACTER_ABBREV);
-            oracleNameAdjusted = oracleNameAdjusted.Replace("%", "percentsign" + CHARACTER_ABBREV);
-            oracleNameAdjusted = oracleNameAdjusted.Replace("^", "caret" + CHARACTER_ABBREV);
-            oracleNameAdjusted = oracleNameAdjusted.Replace("&", "ampersand" + CHARACTER_ABBREV);
-            oracleNameAdjusted = oracleNameAdjusted.Replace("*", "asterisk" + CHARACTER_ABBREV);
-            oracleNameAdjusted = oracleNameAdjusted.Replace(".", "period" + CHARACTER_ABBREV);
-            oracleNameAdjusted = oracleNameAdjusted.Replace("?", "questionmark" + CHARACTER_ABBREV);
+            oracleNameAdjusted = oracleNameAdjusted.Replace(@"!", "exclamationpoint" + CHARACTER_ABBREV);
+            oracleNameAdjusted = oracleNameAdjusted.Replace(@"@", "atsign" + CHARACTER_ABBREV);
+            oracleNameAdjusted = oracleNameAdjusted.Replace(@"#", "poundsign" + CHARACTER_ABBREV);
+            oracleNameAdjusted = oracleNameAdjusted.Replace(@"$", "dollarsign" + CHARACTER_ABBREV);
+            oracleNameAdjusted = oracleNameAdjusted.Replace(@"%", "percentsign" + CHARACTER_ABBREV);
+            oracleNameAdjusted = oracleNameAdjusted.Replace(@"^", "caret" + CHARACTER_ABBREV);
+            oracleNameAdjusted = oracleNameAdjusted.Replace(@"&", "ampersand" + CHARACTER_ABBREV);
+            oracleNameAdjusted = oracleNameAdjusted.Replace(@"*", "asterisk" + CHARACTER_ABBREV);
+            oracleNameAdjusted = oracleNameAdjusted.Replace(@".", "period" + CHARACTER_ABBREV);
+            oracleNameAdjusted = oracleNameAdjusted.Replace(@"?", "questionmark" + CHARACTER_ABBREV);
 
             String cSharpName = (useCamelCase
                 ? CaseConverter.ConvertUnderscoreDelimitedToCamelCase(oracleNameAdjusted)
@@ -763,20 +764,25 @@ namespace Odapter {
         /// </summary>
         /// <param name="oracleType"></param>
         /// <returns></returns>
-        public static short GetStringArgBindSize (String oracleType) { 
+        public static Int32 GetStringArgBindSize (String oracleType) { 
 
             switch (oracleType) {
-                // fixed length of 2000
                 case Orcl.CHAR:
                 case Orcl.NCHAR:
-                    return 2000;
-            }
+                    return 2000; // fixed length of 2000
 
-            return Parameter.Instance.MaxReturnAndOutArgStringSize;
+                case Orcl.NCLOB:
+                case Orcl.CLOB:
+                    return Int32.MaxValue; // max value allowed for OracleParameter size param
+
+                // VARCHAR2, VARCHAR, NVARCHAR2 or equivalents
+                default:
+                    return Parameter.Instance.MaxReturnAndOutArgStringSize; // custom defined value
+            }
         }
 
         /// <summary>
-        /// Return the character limit for string types
+        /// Return the CharLength value of an Oracle argument. 
         /// </summary>
         /// <param name="oracleArg"></param>
         /// <returns></returns>

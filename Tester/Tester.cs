@@ -89,7 +89,7 @@ namespace Odapter.Tester {
             private const int MAX_STRING_SIZE_FOR_CHAR_COL = 2000;
             private const int MAX_STRING_SIZE_FOR_NCHAR_COL = 1000;
 
-            // actual max of LOB columns is 4 GB (4*1024*1024*1024-1 bytes) 4,294,967,295
+            // actual max of LOB *column* is 4 GB (4*1024*1024*1024-1 bytes) 4,294,967,295
             private const int LOB_SIZE =
 #if LARGE_LOB_SIZE
                 (100 * 1024 * 1024) - 1;    // out of memory occurs at 1GB, will test at 0.1 GB
