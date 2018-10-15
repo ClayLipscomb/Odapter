@@ -70,6 +70,7 @@ namespace Odapter.Tester {
             private const uint TABLE_BIG_ROWS_TO_INSERT = 1000;
             private const uint TABLE_BIG_ROWS_TO_RETRIEVE = 100;
 
+            // VARCHAR2, VARCHAR, NVARCHAR2, STRING
             private const int MAX_STRING_SIZE_FOR_VARCHAR_ARG = 
 #if CSHARP30
                 5    // >= 4096 overflows against XE with managed
@@ -1050,18 +1051,6 @@ namespace Odapter.Tester {
                 pOutListString = null;
                 retListString = OdptPkgMain.Instance.FuncAaNchar(pInListString, ref pInOutListString, out pOutListString, null);
                 Debug.Assert(pInListString.Except(pInOutListString).Count() == 0 && pInListString.Except(pOutListString).Count() == 0 && pInListString.Except(retListString).Count() == 0);
-
-                // CLOB
-                // standard call
-                //pInString = pInOutString = "CLOB IN ARG "  + new string('?', MAX_STRING_SIZE_FOR_CLOB_COL);
-                //retString = OdptPkgMain.Instance.FuncClob(pInString, ref pInOutString, out pOutString, null);
-                //Debug.Assert(pInString.Equals(pInOutString) && pInString.Equals(pOutString) && pInString.Equals(retString));
-
-                // NCLOB
-                // standard call
-                //pInString = pInOutString = "NCLOB IN ARG " + new string('?', MAX_STRING_SIZE_FOR_NCLOB_COL);
-                //retString = OdptPkgMain.Instance.FuncNclob(pInString, ref pInOutString, out pOutString, null);
-                //Debug.Assert(pInString.Equals(pInOutString) && pInString.Equals(pOutString) && pInString.Equals(retString));
             }
 
             /// <summary>
@@ -1173,7 +1162,6 @@ namespace Odapter.Tester {
                 );
 
                 // assoc array of BLOBs not supported by ODP.NET
-
 #if SAFETYPE_BLOB
                 pInByteArray.Dispose(); pInOutByteArray.Dispose(); pOutByteArray.Dispose(); retByteArray.Dispose();
 #endif
