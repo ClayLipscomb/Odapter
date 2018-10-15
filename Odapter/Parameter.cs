@@ -25,6 +25,9 @@ using System.Globalization;
 using System.Xml.Serialization;
 
 namespace Odapter {
+    /// <summary>
+    /// Contains all parameter data sent to code generator
+    /// </summary>
     [Serializable]
     public class Parameter {
         private Parameter() { RestoreDefaults(); }
@@ -151,7 +154,7 @@ namespace Odapter {
         // advanced options
         public Boolean IsDuplicatePackageRecordOriginatingOutsideFilterAndSchema { get; set; }
         public Boolean IsExcludeObjectsNamesWithSpecificChars { get; set; }
-        public char[] ObjectNameCharsToExclude;
+        public char[] ObjectNameCharsToExclude { get; set; }
         public Boolean IsGenerateDynamicMappingMethodForTypedCursor { get; set; }
         public Boolean IsUseAutoImplementedProperties { get; set; }
         public String LocalVariableNameSuffix { get; set; }
