@@ -38,7 +38,7 @@ namespace Odapter {
             // types not implemented by Odapter
             Orcl.LONG, Orcl.LONG_RAW, // deprecated by Oracle
             Orcl.BFILE, Orcl.RAW, Orcl.NUMERIC,
-            Orcl.DECIMAL, Orcl.ROWID, Orcl.UROWID, 
+            Orcl.DECIMAL, Orcl.ROWID, Orcl.UROWID,
             Orcl.TIMESTAMP_WITH_TIME_ZONE, Orcl.TIMESTAMP_WITH_LOCAL_TIME_ZONE,
             Orcl.INTERVAL_YEAR_TO_MONTH, Orcl.INTERVAL_DAY_TO_SECOND, Orcl.UNDEFINED, Orcl.RECORD
         };
@@ -58,6 +58,19 @@ namespace Odapter {
 
             // associative array types explicitly not implemented in ODP.NET 
             // https://docs.oracle.com/cd/E85694_01/ODPNT/featOraCommand.htm#GUID-05A6D391-E77F-41AF-83A2-FE86A3D98872
+        };
+
+        public class CSharpVersionOption {
+            public CSharpVersion Version { get; private set; }
+            public String DisplayDescription { get; private set; }
+            public CSharpVersionOption(CSharpVersion version, String displayDescription) {
+                Version = version;
+                DisplayDescription = displayDescription;
+            }
+        }
+
+        public static readonly List<CSharpVersionOption> CSharpOptions = new List<CSharpVersionOption> {
+            new CSharpVersionOption(CSharpVersion.ThreeZero, @"3.0"), new CSharpVersionOption(CSharpVersion.FourZero , @"4.0 +")
         };
 
         public class CustomTranslatedCSharpType {

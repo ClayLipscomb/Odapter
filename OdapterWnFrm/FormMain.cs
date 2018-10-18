@@ -378,12 +378,9 @@ namespace OdapterWnFrm {
         }
 
         private void BindCSharpVersion() {
-            cmbCSharpVersion.DisplayMember = "Text";
-            cmbCSharpVersion.ValueMember = "Value";
-            cmbCSharpVersion.DataSource = new[] { 
-                new { Value = CSharpVersion.ThreeZero,   Text = @"3.0" }, 
-                new { Value = CSharpVersion.FourZero,    Text = @"4.0 +" }
-            };
+            cmbCSharpVersion.DisplayMember = "DisplayDescription";
+            cmbCSharpVersion.ValueMember = "Version";
+            cmbCSharpVersion.DataSource = Translater.CSharpOptions;
         }
 
         private void BindSettingsFiles() {
