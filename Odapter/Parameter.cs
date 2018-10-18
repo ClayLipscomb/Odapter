@@ -23,6 +23,9 @@ using System.Text;
 using System.IO;
 using System.Globalization;
 using System.Xml.Serialization;
+using System.Xml;
+using System.Reflection;
+using System.Diagnostics;
 
 namespace Odapter {
     /// <summary>
@@ -50,7 +53,7 @@ namespace Odapter {
             NamespaceSchema = String.Empty;
             NamespaceDataContract = String.Empty;
 
-            AncestorClassNamePackage = AncestorClassNamePackageRecord = AncestorClassNameObjectType = AncestorClassNameTable = AncestorClassNameView = "";
+            AncestorClassNamePackage = AncestorClassNamePackageRecord = AncestorClassNameObjectType = AncestorClassNameTable = AncestorClassNameView = String.Empty;
 
             MaxAssocArraySize = 1000;
             MaxReturnAndOutArgStringSize = 32767;
@@ -75,6 +78,7 @@ namespace Odapter {
             IsDeployResources = IsGenerateBaseAdapter = IsGenerateBaseEntities = true;
         }
 
+        #region Properties
         // schema and connection
         public String OracleHome { get; set; }
         public String DatabaseInstance { get; set; }
@@ -163,5 +167,54 @@ namespace Odapter {
         public Boolean IsDeployResources { get; set; }  // will overwrite existing file
         public Boolean IsGenerateBaseAdapter { get; set; }  // will not overwrite existing file
         public Boolean IsGenerateBaseEntities { get; set; } // will not overwrite existing file
+        [XmlIgnore]
+        public List<String> ConfigFileNames { get { return GetLocalConfigFileNames(); }  }
+        #endregion Properties
+
+        #region File Methods
+        private String GetExecutablePath() {
+            return Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+        }
+
+        private List<String> GetLocalConfigFileNames() {
+            List<String> files = (new DirectoryInfo(GetExecutablePath()))
+                .GetFiles(@"*.config", SearchOption.TopDirectoryOnly)
+                .Where(n => !n.Name.EndsWith(@"exe.config", true, CultureInfo.CurrentCulture))
+                .OrderBy(f => f.Name)
+                .Select(f => f.Name).ToList();
+            return files;
+        }
+
+        /// <summary>
+        /// Save all params to config file
+        /// </summary>
+        /// <param name="fileName"></param>
+        public void SaveToFile(string fileName) {
+            System.Xml.Serialization.XmlSerializer xs = new System.Xml.Serialization.XmlSerializer(typeof(Parameter));
+            Stream fs = new FileStream(GetExecutablePath() + @"\" + fileName, FileMode.Create);
+            XmlTextWriter xtw = new XmlTextWriter(fs, Encoding.UTF8);
+            xtw.Formatting = Formatting.Indented;
+            xtw.WriteStartDocument(true);
+            xs.Serialize(xtw, Parameter.Instance);
+            xtw.Flush();
+            xtw.Close();
+        }
+
+        /// <summary>
+        /// Load all params from config file
+        /// </summary>
+        /// <param name="fileName"></param>
+        public void LoadFromFile(string fileName) {
+            StreamReader reader = new StreamReader(GetExecutablePath() + @"\" + fileName);
+            try {
+                System.Xml.Serialization.XmlSerializer xs = new System.Xml.Serialization.XmlSerializer(typeof(Parameter));
+                Parameter.Instance = (Parameter)xs.Deserialize(reader);
+            } catch {
+                throw;
+            } finally {
+                reader.Close();
+            }
+        }
+        #endregion File Methods
     }
 }

@@ -22,14 +22,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
-using System.Threading;
-using System.Linq;
-using System.Globalization;
-using System.Xml.Serialization;
-using System.Xml;
-using System.IO;
 using System.Text;
-using System.Reflection;
 using System.Diagnostics;
 using Odapter;
 
@@ -44,7 +37,7 @@ namespace OdapterWnFrm {
 
             InitializeComponent();
             InitMessageConsole();
-            BindAllComboBoxes();
+            BindComboBoxes();
 
             if (cmbSettingsFile.Items.Count > 1) {
                 // automatically select 1st config file and params will be loaded into form
@@ -58,7 +51,7 @@ namespace OdapterWnFrm {
             SetEnabledDisabled();
         }
 
-#region Messaging
+        #region Messaging
         private void InitMessageConsole() {
             ListViewMessage.Clear() ;
             ListViewMessage.Refresh();
@@ -81,9 +74,9 @@ namespace OdapterWnFrm {
         }
 
         public Action<string> DisplayMessageMethod;
-#endregion
+        #endregion
 
-#region Utility
+        #region Utility
         /// <summary>
         /// find any control recursively given an id
         /// </summary>
@@ -99,9 +92,9 @@ namespace OdapterWnFrm {
             }
             return null;
         }
-#endregion
+        #endregion
 
-#region Validations
+        #region Validations
         private bool ValidateRequiredFields() {
             bool missingRequiredFields = false;
 
@@ -145,7 +138,7 @@ namespace OdapterWnFrm {
 
             return !missingRequiredFields;
         }
-#endregion
+        #endregion
 
         private void Run() {
             // load all source data from schema
@@ -230,7 +223,7 @@ namespace OdapterWnFrm {
             txtBaseViewClass.Text = Generator.GenerateBaseViewClassName(schema);
         }
 
-#region Enable/Disable
+        #region Enable/Disable
         private void SetEnabledDisabled() {
             SetEnabledDisabledbFilterRelatedFields();
             cmbCSharpTypeUsedForOracleIntervalDayToSecond.Enabled = false; // pending implementation
@@ -240,7 +233,6 @@ namespace OdapterWnFrm {
             cbDuplicatePackageRecordOriginatingOutsideFilterAndSchema.Enabled = cbIncludeFilterPrefixInNaming.Enabled 
                 = !String.IsNullOrEmpty(txtFilter.Text);
         }
-
         #endregion
 
         #region Events
@@ -266,9 +258,13 @@ namespace OdapterWnFrm {
         }
 
         private void cmbSettingsFile_SelectedIndexChanged(object sender, EventArgs e) {
-            //return;
             if (cmbSettingsFile.SelectedIndex <= 0) return;
-            LoadSettingsFromFile(cmbSettingsFile.Text);
+            try {
+                Parameter.Instance.LoadFromFile(cmbSettingsFile.Text);
+                SetFromParameters();
+            } catch (Exception ex) {
+                DisplayMessage("Failed to load settings: " + ex.Message);
+            }
         }
 
         private void btnRestoreDefaults_Click(object sender, EventArgs e) {
@@ -282,7 +278,10 @@ namespace OdapterWnFrm {
                     return;
                 }
             }
-            SaveSettings(cmbSettingsFile.Text);
+
+            ExtractToParameters();
+            Parameter.Instance.SaveToFile(cmbSettingsFile.Text);
+            BindSettingsFiles(); // refreshes list to reflect new file, if any
         }
 
         private void txtDBInstance_TextChanged(object sender, EventArgs e) {
@@ -368,13 +367,13 @@ namespace OdapterWnFrm {
 
         private void cbXmlElementTable_CheckedChanged(object sender, EventArgs e) {
         }
-#endregion
+        #endregion
 
-#region Binding
-        private void BindAllComboBoxes() {
+        #region Binding
+        private void BindComboBoxes() {
             BindOracleHome();
             BindOracleToCSharpTypes();
-            BindSettingsFiles();
+            BindSettingsFiles();    // this triggers the setting of all param data if at least one file exists
             BindCSharpVersion();
         }
 
@@ -389,13 +388,9 @@ namespace OdapterWnFrm {
 
         private void BindSettingsFiles() {
             // retrieve list of all config files from directory sorted alphabetically
-            List<FileInfo> files = (new DirectoryInfo(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)))
-                .GetFiles("*.config", SearchOption.TopDirectoryOnly)
-                .Where(n => !n.Name.EndsWith("exe.config", true, CultureInfo.CurrentCulture))
-                .OrderBy(f => f.Name).ToList();
             cmbSettingsFile.Items.Clear();
-            cmbSettingsFile.Items.Add("");
-            foreach (FileInfo fi in files) cmbSettingsFile.Items.Add(fi.Name);
+            cmbSettingsFile.Items.Add("");  // empty item at top
+            foreach (String fn in Parameter.Instance.ConfigFileNames) cmbSettingsFile.Items.Add(fn);
             cmbSettingsFile.Text = "";
         }
 
@@ -548,11 +543,11 @@ namespace OdapterWnFrm {
             Parameter.Instance.MaxAssocArraySize = Convert.ToInt16(txtMaxAssocArraySize.Text);
             Parameter.Instance.MaxReturnAndOutArgStringSize = Convert.ToInt16(txtMaxReturnArgStringSize.Text);
 
-            Parameter.Instance.CSharpTypeUsedForOracleInteger = cmbCSharpTypeUsedForOracleInteger.SelectedValue.ToString();// GetCSharpTypeUsedForOracleInteger();
-            Parameter.Instance.CSharpTypeUsedForOracleNumber = cmbCSharpTypeUsedForOracleNumber.SelectedValue.ToString();// CSharp.DECIMAL;
-            Parameter.Instance.CSharpTypeUsedForOracleDate = cmbCSharpTypeUsedForOracleDate.SelectedValue.ToString();// CSharp.DATE_TIME;
-            Parameter.Instance.CSharpTypeUsedForOracleTimeStamp = cmbCSharpTypeUsedForOracleTimestamp.SelectedValue.ToString(); // CSharp.DATE_TIME;
-            Parameter.Instance.CSharpTypeUsedForOracleIntervalDayToSecond = cmbCSharpTypeUsedForOracleIntervalDayToSecond.SelectedValue.ToString(); // CSharp.TIME_SPAN;
+            Parameter.Instance.CSharpTypeUsedForOracleInteger = cmbCSharpTypeUsedForOracleInteger.SelectedValue.ToString();
+            Parameter.Instance.CSharpTypeUsedForOracleNumber = cmbCSharpTypeUsedForOracleNumber.SelectedValue.ToString();
+            Parameter.Instance.CSharpTypeUsedForOracleDate = cmbCSharpTypeUsedForOracleDate.SelectedValue.ToString();
+            Parameter.Instance.CSharpTypeUsedForOracleTimeStamp = cmbCSharpTypeUsedForOracleTimestamp.SelectedValue.ToString();
+            Parameter.Instance.CSharpTypeUsedForOracleIntervalDayToSecond = cmbCSharpTypeUsedForOracleIntervalDayToSecond.SelectedValue.ToString();
             Parameter.Instance.CSharpTypeUsedForOracleBlob = cmbCSharpTypeUsedForOracleBlob.SelectedValue.ToString();
             Parameter.Instance.CSharpTypeUsedForOracleClob = cmbCSharpTypeUsedForOracleClob.SelectedValue.ToString();
 
@@ -605,39 +600,7 @@ namespace OdapterWnFrm {
             SetFromParameters();
             BindSettingsFiles();
         }
-#endregion
-
-#region Settings
-        private String GetExecutablePath() {
-            string path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            return path;
-        }
-
-        private void SaveSettings(string fileName) {
-            ExtractToParameters();
-            System.Xml.Serialization.XmlSerializer xs = new System.Xml.Serialization.XmlSerializer(typeof(Parameter));
-            Stream fs = new FileStream(GetExecutablePath() + @"\" + fileName, FileMode.Create);
-            XmlTextWriter xtw = new XmlTextWriter(fs, Encoding.UTF8);
-            xtw.Formatting = Formatting.Indented;
-            xtw.WriteStartDocument(true);
-            xs.Serialize(xtw, Parameter.Instance);
-            xtw.Flush();
-            xtw.Close();
-            BindSettingsFiles();
-        }
-
-        private void LoadSettingsFromFile(string fileName) {
-            try {
-                System.Xml.Serialization.XmlSerializer xs = new System.Xml.Serialization.XmlSerializer(typeof(Parameter));
-                StreamReader reader = new StreamReader(GetExecutablePath() + @"\" + fileName);
-                Parameter.Instance = (Parameter)xs.Deserialize(reader);
-                reader.Close();
-                SetFromParameters();
-            } catch (Exception ex) {
-                DisplayMessage("Failed to load settings: " + ex.Message);
-            }
-        }
-#endregion
+        #endregion
 
         public String DbInstance { 
             get {
