@@ -140,68 +140,6 @@ namespace OdapterWnFrm {
         }
         #endregion
 
-        private void Run() {
-            // load all source data from schema
-            if (cbGeneratePackage.Checked || cbGenerateObjectType.Checked || cbGenerateTable.Checked || cbGenerateView.Checked) {
-
-                ExtractToParameters();
-
-                // Set these options first since Loader does some translation. In the future, we need to modify Loader to do no translation (if possible).
-                Translater.CSharpTypeUsedForOracleInteger = Parameter.Instance.CSharpTypeUsedForOracleInteger;
-                Translater.CSharpTypeUsedForOracleNumber = Parameter.Instance.CSharpTypeUsedForOracleNumber;
-                Translater.CSharpTypeUsedForOracleDate = Parameter.Instance.CSharpTypeUsedForOracleDate;
-                Translater.CSharpTypeUsedForOracleTimeStamp = Parameter.Instance.CSharpTypeUsedForOracleTimeStamp;
-                Translater.CSharpTypeUsedForOracleIntervalDayToSecond = Parameter.Instance.CSharpTypeUsedForOracleIntervalDayToSecond;
-                Translater.CSharpTypeUsedForOracleBlob = Parameter.Instance.CSharpTypeUsedForOracleBlob;
-                Translater.CSharpTypeUsedForOracleClob = Parameter.Instance.CSharpTypeUsedForOracleClob;
-                //Translater.CSharpTypeUsedForOracleBFile = Parameter.Instance.CSharpTypeUsedForOracleBFile;
-                Translater.ConvertOracleNumberToIntegerIfColumnNameIsId = Parameter.Instance.IsConvertOracleNumberToIntegerIfColumnNameIsId;
-                Translater.ObjectTypeNamespace = Parameter.Instance.NamespaceObjectType;
-
-                // retrieve necessary data from schema
-                Loader loader = new Loader(DisplayMessage);
-                try {
-                    DisplayMessage(DbInstance + " " + txtSchema.Text + (String.IsNullOrEmpty(txtFilter.Text) ? "" : " " + txtFilter.Text + "*") + " generation:");
-                    loader.Load();
-                } catch (Exception e) {
-                    DisplayMessage(e.Message);
-                    return;
-                } finally {
-                }
-
-                // generate code
-                Generator generator = new Generator(loader.Schema, txtOutputPath.Text, DisplayMessage,
-                    DbInstance, txtLogin.Text, txtPassword.Text, txtBaseNamespace.Text,
-                    txtObjectTypeNamespace.Text);
-
-                generator.CSharpVersion = Parameter.Instance.CSharpVersion;
-
-                ////////////////////////
-                // generate base classes
-                if (cbGenerateBaseAdapterClass.Checked) // base class used by a package, proc wrapper class and function wrapper class
-                    generator.WriteBasePackageClass(txtBasePackageClass.Text);
-                if (cbGenerateBaseDtoClasses.Checked) // base class used by all record types in a package
-                    generator.WriteBaseEntityClasses(txtBaseRecordTypeClass.Text);
-
-                //////////////////////////////////
-                // generate schema-derived classes
-                if (cbGeneratePackage.Checked)
-                    generator.WritePackageClasses(loader.Packages, txtPackageNamespace.Text, txtBasePackageClass.Text, cbPartialPackageClasses.Checked,
-                        loader.PacakgeRecordTypes, txtBaseRecordTypeClass.Text, cbSerializablePOCOs.Checked, cbPartialPackageClasses.Checked);
-                if (cbGenerateObjectType.Checked)
-                    generator.WriteObjectTypeClasses(loader.ObjectTypes, txtObjectTypeNamespace.Text, Generator.GenerateBaseObjectTypeClassName(txtSchema.Text), cbSerializableObjectTypes.Checked, cbPartialObjectTypes.Checked);
-                if (cbGenerateTable.Checked)
-                    generator.WriteTableClasses(loader.Tables, txtTableNamespace.Text, Generator.GenerateBaseTableClassName(txtSchema.Text), cbSerializableTables.Checked, cbPartialTables.Checked);
-                if (cbGenerateView.Checked)
-                    generator.WriteViewClasses(loader.Views, txtViewNamespace.Text, Generator.GenerateBaseViewClassName(txtSchema.Text), cbSerializableViews.Checked, cbPartialViews.Checked);
-
-                generator.DeployUtilityClasses(cbDeployResources.Checked);
-                DisplayMessage(@"Generation completed.");
-            } else {
-                DisplayMessage(@"No 'Code To Generate' options have been selected.");
-            }
-        }
-
         private void GenerateNamespacesAndBaseClassNames() {
             String schema = String.IsNullOrEmpty(txtSchema.Text) ? null : txtSchema.Text;
             String baseNamespace = txtBaseNamespace.Text;
@@ -296,7 +234,7 @@ namespace OdapterWnFrm {
             if (!ValidateRequiredFields()) return;
             Cursor.Current = Cursors.WaitCursor;
             ExtractToParameters();
-            Run();
+            Generator.Run(DisplayMessage);
             Cursor.Current = Cursors.Default;
         }
 
