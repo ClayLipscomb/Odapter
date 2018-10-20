@@ -32,6 +32,48 @@ CREATE OR REPLACE PACKAGE BODY ODPT.odpt_pkg_main AS
 		RETURN 0;
 	END;
    
+    PROCEDURE duplicate_signature(p_param_in1 IN INTEGER, p_param_in_out1 IN OUT INTEGER, p_param_out1 OUT INTEGER) IS
+    BEGIN
+  		p_param_in_out1 := p_param_in1 + 1;
+      	p_param_out1 := p_param_in1 + 1;    
+        RETURN;
+    END;
+  
+    PROCEDURE duplicate_signature(p_param_in2 IN INTEGER, p_param_in_out2 IN OUT INTEGER, p_param_out2 OUT INTEGER) IS
+    BEGIN
+  		p_param_in_out2 := p_param_in2 + 2;
+      	p_param_out2 := p_param_in2 + 2;    
+        RETURN;
+    END;
+  
+    PROCEDURE duplicate_signature(p_param_in3 IN INTEGER, p_param_in_out3 IN OUT INTEGER, p_param_out3 OUT INTEGER) IS
+    BEGIN
+  		p_param_in_out3 := p_param_in3 + 3;
+      	p_param_out3 := p_param_in3 + 3;    
+        RETURN;
+    END;
+   
+    FUNCTION duplicate_signature(p_param_in1 IN INTEGER, p_param_in_out1 IN OUT INTEGER, p_param_out1 OUT INTEGER) RETURN INTEGER IS
+    BEGIN
+  		p_param_in_out1 := p_param_in1 + 1;
+      	p_param_out1 := p_param_in1 + 1;    
+        RETURN p_param_in1 + 1;
+    END;
+    
+    FUNCTION duplicate_signature(p_param_in2 IN INTEGER, p_param_in_out2 IN OUT INTEGER, p_param_out2 OUT INTEGER) RETURN INTEGER IS
+    BEGIN
+  		p_param_in_out2 := p_param_in2 + 2;
+      	p_param_out2 := p_param_in2 + 2;    
+        RETURN p_param_in2 + 2;
+    END;
+    
+    FUNCTION duplicate_signature(p_param_in3 IN INTEGER, p_param_in_out3 IN OUT INTEGER, p_param_out3 OUT INTEGER) RETURN INTEGER IS
+    BEGIN
+  		p_param_in_out3 := p_param_in3 + 3;
+      	p_param_out3 := p_param_in3 + 3;    
+        RETURN p_param_in3 + 3;    
+    END;   
+   
 	PROCEDURE proc_optional_param(p_in_number_required IN NUMBER, p_in_out_number_required IN OUT NUMBER, p_in_number_optional IN NUMBER DEFAULT 0, p_in_varchar2_optional IN VARCHAR2 DEFAULT 'TEST') IS
 	BEGIN
 		p_in_out_number_required := p_in_number_required;

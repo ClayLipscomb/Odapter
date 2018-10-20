@@ -19,16 +19,16 @@
 //#define SHORT_INTEGER               // INTEGER as Int32
 //#define DECIMAL_INTEGER             // INTEGER as Decimal
 
-#define SAFETYPE_INTEGER            // INTEGER as safe type OracleDecimal
-#define SAFETYPE_NUMBER             // NUMBER as safe type OracleDecimal
-#define SAFETYPE_DATE               // DATE as safe type OracleDate
-#define SAFETYPE_TIMESTAMP          // TIMESTAMP as safe type OracleTimeStamp
-#define SAFETYPE_BLOB               // BLOB as safe type OracleBlob
-#define SAFETYPE_CLOB               // CLOB, NCLOB as safe type OracleClob
+//#define SAFETYPE_INTEGER            // INTEGER as safe type OracleDecimal
+//#define SAFETYPE_NUMBER             // NUMBER as safe type OracleDecimal
+//#define SAFETYPE_DATE               // DATE as safe type OracleDate
+//#define SAFETYPE_TIMESTAMP          // TIMESTAMP as safe type OracleTimeStamp
+//#define SAFETYPE_BLOB               // BLOB as safe type OracleBlob
+//#define SAFETYPE_CLOB               // CLOB, NCLOB as safe type OracleClob
 
 #define ODPT_FILTER_PREFIX          // "ODPT" as filter prefix of schema
 #define MAPPING_FOR_TYPED_CURSOR    // optional overloads for typed cursors methods are generated for mapping
-//#define SEED_TABLES                 // seed all tables with test data
+#define SEED_TABLES                 // seed all tables with test data
 //#define CSHARP30                    // C# 3.0 (.NET 3.5)
 
 //#define LARGE_LOB_SIZE
@@ -136,6 +136,9 @@ namespace Odapter.Tester {
 
                 TestCursorFilteredPackageTableBig();
 
+#if !CSHARP30 // unmanaged driver can't handle duplicate signatures
+                TestDuplicateSignatureCalls();
+#endif
                 TestNoParamCalls();
                 TestOptionalParamCalls();
                 TestMiscCalls();
@@ -1310,6 +1313,33 @@ namespace Odapter.Tester {
                     OdptPkgMain.Instance.ProcNocopyIncrement(pIn, ref pInOut, out pOut, null);
                     Debug.Assert(pInOut.Equals(pIn + 1) && pOut.Equals(pIn + 1));
                 }
+            }
+
+            public void TestDuplicateSignatureCalls() {
+#if SAFETYPE_INTEGER
+                OracleDecimal?
+#else
+                Int64?
+#endif
+                    pIn = 1, pInOut = -1, pOut, ret;
+
+                OdptPkgMain.Instance.DuplicateSignature1(pIn, ref pInOut, out pOut, null);
+                Debug.Assert(pInOut.Equals(pIn + 1) && pOut.Equals(pIn + 1));
+
+                OdptPkgMain.Instance.DuplicateSignature2(pIn, ref pInOut, out pOut, null);
+                Debug.Assert(pInOut.Equals(pIn + 2) && pOut.Equals(pIn + 2));
+
+                OdptPkgMain.Instance.DuplicateSignature3(pIn, ref pInOut, out pOut, null);
+                Debug.Assert(pInOut.Equals(pIn + 3) && pOut.Equals(pIn + 3));
+
+                ret = OdptPkgMain.Instance.DuplicateSignature4(pIn, ref pInOut, out pOut, null);
+                Debug.Assert(pInOut.Equals(pIn + 1) && pOut.Equals(pIn + 1) && ret.Equals(pIn + 1));
+
+                ret = OdptPkgMain.Instance.DuplicateSignature5(pIn, ref pInOut, out pOut, null);
+                Debug.Assert(pInOut.Equals(pIn + 2) && pOut.Equals(pIn + 2) && ret.Equals(pIn + 2));
+
+                ret = OdptPkgMain.Instance.DuplicateSignature6(pIn, ref pInOut, out pOut, null);
+                Debug.Assert(pInOut.Equals(pIn + 3) && pOut.Equals(pIn + 3) && ret.Equals(pIn + 3));
             }
 
             public void TestNoParamCalls() {

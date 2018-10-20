@@ -54,14 +54,24 @@ CREATE OR REPLACE PACKAGE ODPT.odpt_pkg_main AS
 		f_last								NUMBER
 	);
 	TYPE t_cursor_typed_ignored IS REF CURSOR RETURN t_record_type_ignored;
-	
+    
     PROCEDURE proc_underscore_suffix;
     PROCEDURE proc_underscore_suffix_;
+    
     PROCEDURE proc_raise_exception;    
+    
     PROCEDURE proc_nocopy_increment(p_in IN INTEGER, p_in_out_nocopy IN OUT NOCOPY INTEGER, p_out_nocopy OUT NOCOPY INTEGER);
+    
     PROCEDURE proc_no_param;
     FUNCTION func_no_param RETURN NUMBER;
-
+    
+    PROCEDURE duplicate_signature(p_param_in1 IN INTEGER, p_param_in_out1 IN OUT INTEGER, p_param_out1 OUT INTEGER);
+    PROCEDURE duplicate_signature(p_param_in2 IN INTEGER, p_param_in_out2 IN OUT INTEGER, p_param_out2 OUT INTEGER);
+    PROCEDURE duplicate_signature(p_param_in3 IN INTEGER, p_param_in_out3 IN OUT INTEGER, p_param_out3 OUT INTEGER);
+    FUNCTION duplicate_signature(p_param_in1 IN INTEGER, p_param_in_out1 IN OUT INTEGER, p_param_out1 OUT INTEGER) RETURN INTEGER;
+    FUNCTION duplicate_signature(p_param_in2 IN INTEGER, p_param_in_out2 IN OUT INTEGER, p_param_out2 OUT INTEGER) RETURN INTEGER;
+    FUNCTION duplicate_signature(p_param_in3 IN INTEGER, p_param_in_out3 IN OUT INTEGER, p_param_out3 OUT INTEGER) RETURN INTEGER;
+    
 	PROCEDURE proc_optional_param(p_in_number_required IN NUMBER, p_in_out_number_required IN OUT NUMBER, p_in_number_optional IN NUMBER DEFAULT 0, p_in_varchar2_optional IN VARCHAR2 DEFAULT 'TEST');
 	FUNCTION func_optional_param(p_in_number_required IN NUMBER, p_in_out_number_required IN OUT NUMBER, 
 		p_in_number_optional IN NUMBER DEFAULT 0, p_in_varchar2_optional IN VARCHAR2 DEFAULT 'TEST') RETURN NUMBER;

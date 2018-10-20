@@ -578,7 +578,7 @@ namespace Odapter {
         /// </summary>
         /// <param name="proc"></param>
         /// <returns></returns>
-        private string GenerateMethodCode(Procedure proc, bool forceDynamicMapping) {
+        private string GenerateMethodCode(Procedure proc, Package pack, bool forceDynamicMapping) {
             StringBuilder methodText = new StringBuilder("");
             String methodReturnType = GenerateMethodReturnType(proc);
             List<GenericType> genericTypesUsed = new List<GenericType>();
@@ -592,7 +592,7 @@ namespace Odapter {
             if (proc.IsIgnoredDueToOracleArgumentTypes(out ignoreReason)) {
                 methodText.AppendLine();
                 methodText.AppendLine(Tab(2) + "// **PROC IGNORED** - " + ignoreReason);
-                methodText.Append(Tab(2) + "//" + " public " + methodReturnType + " " + Translater.ConvertOracleProcNameToMethodName(proc));
+                methodText.Append(Tab(2) + "//" + " public " + methodReturnType + " " + Translater.ConvertOracleProcNameToMethodName(proc, pack));
                 if (genericTypesUsed.Count > 0) methodText.Append("<" + String.Join(", ", genericTypesUsed.Select(gt => gt.TypeName).ToList()) + ">");
                 methodText.Append("(" + GenerateMethodArgumentsCommaDelimited(proc.Arguments, genericTypesUsed.Count > 0, forceDynamicMapping, true, false) + ")");
                 return methodText.ToString();
@@ -600,7 +600,7 @@ namespace Odapter {
 
             // method header
             methodText.AppendLine();
-            methodText.Append(Tab(2) + "public " + methodReturnType + " " + Translater.ConvertOracleProcNameToMethodName(proc));
+            methodText.Append(Tab(2) + "public " + methodReturnType + " " + Translater.ConvertOracleProcNameToMethodName(proc, pack));
 
             // if the method is using generics for cursors, add all generic lists to sig
             if (genericTypesUsed.Count > 0) methodText.Append("<" + String.Join(", ", genericTypesUsed.Select(gt => gt.TypeName).ToList())  + ">");
@@ -682,7 +682,7 @@ namespace Odapter {
             if (proc.IsFunction()) methodText.AppendLine(Tab(3) + "return " + LOCAL_VAR_NAME_RETURN + ";");
 
             // close body
-            methodText.Append(Tab(2) + "} // " + Translater.ConvertOracleProcNameToMethodName(proc));
+            methodText.Append(Tab(2) + "} // " + Translater.ConvertOracleProcNameToMethodName(proc, pack));
 
             return methodText.ToString();
         }
@@ -692,7 +692,7 @@ namespace Odapter {
         /// </summary>
         /// <param name="proc"></param>
         /// <param name="classText"></param>
-        private void GenerateAllMethodVersions(Procedure proc, ref StringBuilder classText) {
+        private void GenerateAllMethodVersions(Procedure proc, Package pack, ref StringBuilder classText) {
 
             // if method has at least one cursor, main version of method will use generics 
             if (proc.HasArgumentOfOracleType(Orcl.REF_CURSOR)) {
@@ -701,19 +701,19 @@ namespace Odapter {
 
                 // dynamic mapping
                 if ((proc.UsesWeaklyTypedCursor() || Parameter.Instance.IsGenerateDynamicMappingMethodForTypedCursor) && !proc.HasInArgumentOfOracleTypeRefCursor()) {
-                    classText.AppendLine(GenerateMethodCode(proc, true));
+                    classText.AppendLine(GenerateMethodCode(proc, pack, true));
                 }
                 // static mapping
-                if (!proc.UsesWeaklyTypedCursor()) classText.AppendLine(GenerateMethodCode(proc, false));
+                if (!proc.UsesWeaklyTypedCursor()) classText.AppendLine(GenerateMethodCode(proc, pack, false));
 
                 // create extra method (w/o generics) for DataTable version of weakly typed cursors in return/args
                 if (proc.UsesWeaklyTypedCursor() && !proc.HasInArgumentOfOracleTypeRefCursor()) {
                     Translater.UseGenericListForCursor = false;
-                    classText.AppendLine(GenerateMethodCode(proc, true));
+                    classText.AppendLine(GenerateMethodCode(proc, pack, true));
                 }
             } else {
                 // just create basic non-generic method 
-                classText.AppendLine(GenerateMethodCode(proc, false));
+                classText.AppendLine(GenerateMethodCode(proc, pack, false));
             }
         }
 #endregion
@@ -1020,7 +1020,7 @@ namespace Odapter {
                     }
 
                     // create method for each package proc
-                    foreach (Procedure proc in pack.Procedures) GenerateAllMethodVersions(proc, ref classText);
+                    foreach (Procedure proc in pack.Procedures) GenerateAllMethodVersions(proc, pack, ref classText);
                     classText.AppendLine(Tab() + "} // " + className);
 
                     // write entire class to file

@@ -251,11 +251,15 @@ namespace Odapter {
         /// </summary>
         /// <param name="proc"></param>
         /// <returns></returns>
-        public static String ConvertOracleProcNameToMethodName(Procedure proc) {
+        public static String ConvertOracleProcNameToMethodName(Procedure proc, Package package) {
             String methodName = ConvertOracleNameToCSharpName(proc.ProcedureName, false);
 
             // prevent identical class name and method name - yes, I've seen this happen in Oracle
             if (proc.PackageName != null && proc.PackageName == proc.ProcedureName) methodName += "Proc";
+
+            // if proc has duplicate sig, append overload number to name to keep unique in C#
+            if (package.HasDuplicateSignature(proc)) methodName += proc.Overload;
+
             return methodName;
         }
 
@@ -265,7 +269,7 @@ namespace Odapter {
         /// <param name="oracleArg"></param>
         /// <returns></returns>
         public static string ConvertOracleRecordNameToCSharpName(Argument oracleArg) {
-            // Type and subtype can be null (e.g., a bug in the view bug when a record type based on a table). In this case, 
+            // Type and subtype can be null (e.g., a bug in the view when a record type based on a table). In this case, 
             //      use proc name (which is what subtype usually is anyway) and some extra special text. We need a 
             //      better algorithm to guarantee uniqueness in the C# namespace.
             if (String.IsNullOrEmpty(oracleArg.TypeSubname)) 
