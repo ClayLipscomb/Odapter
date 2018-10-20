@@ -23,7 +23,6 @@ using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Text;
-using System.Diagnostics;
 using Odapter;
 
 namespace OdapterWnFrm {
@@ -31,9 +30,7 @@ namespace OdapterWnFrm {
         private TnsNamesReader tnsNamesReader = new TnsNamesReader();
 
         public FormMain() {
-            System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
-            FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
-            this.Text = Generator.APPLICATION_NAME + " " + fvi.ProductVersion;
+            this.Text = Generator.GetAppNameVersionLabel();
 
             InitializeComponent();
             InitMessageConsole();
@@ -51,7 +48,7 @@ namespace OdapterWnFrm {
             SetEnabledDisabled();
         }
 
-        #region Messaging
+#region Messaging
         private void InitMessageConsole() {
             ListViewMessage.Clear() ;
             ListViewMessage.Refresh();
@@ -74,9 +71,9 @@ namespace OdapterWnFrm {
         }
 
         public Action<string> DisplayMessageMethod;
-        #endregion
+#endregion
 
-        #region Utility
+#region Utility
         /// <summary>
         /// find any control recursively given an id
         /// </summary>
@@ -92,9 +89,9 @@ namespace OdapterWnFrm {
             }
             return null;
         }
-        #endregion
+#endregion
 
-        #region Validations
+#region Validations
         private bool ValidateRequiredFields() {
             bool missingRequiredFields = false;
 
@@ -138,7 +135,7 @@ namespace OdapterWnFrm {
 
             return !missingRequiredFields;
         }
-        #endregion
+#endregion
 
         private void GenerateNamespacesAndBaseClassNames() {
             String schema = String.IsNullOrEmpty(txtSchema.Text) ? null : txtSchema.Text;
@@ -161,7 +158,7 @@ namespace OdapterWnFrm {
             txtBaseViewClass.Text = Generator.GenerateBaseViewClassName(schema);
         }
 
-        #region Enable/Disable
+#region Enable/Disable
         private void SetEnabledDisabled() {
             SetEnabledDisabledbFilterRelatedFields();
             cmbCSharpTypeUsedForOracleIntervalDayToSecond.Enabled = false; // pending implementation
@@ -171,9 +168,9 @@ namespace OdapterWnFrm {
             cbDuplicatePackageRecordOriginatingOutsideFilterAndSchema.Enabled = cbIncludeFilterPrefixInNaming.Enabled 
                 = !String.IsNullOrEmpty(txtFilter.Text);
         }
-        #endregion
+#endregion
 
-        #region Events
+#region Events
         private void cbGeneratePOCOExtension_CheckStateChanged(object sender, EventArgs e) {
             //SetEnabledGenerateExtensionControls(cbGeneratePOCOExtension.Checked);
         }
@@ -305,9 +302,9 @@ namespace OdapterWnFrm {
 
         private void cbXmlElementTable_CheckedChanged(object sender, EventArgs e) {
         }
-        #endregion
+#endregion
 
-        #region Binding
+#region Binding
         private void BindComboBoxes() {
             BindOracleHome();
             BindOracleToCSharpTypes();
@@ -535,7 +532,7 @@ namespace OdapterWnFrm {
             SetFromParameters();
             BindSettingsFiles();
         }
-        #endregion
+#endregion
 
         public String DbInstance { 
             get {
