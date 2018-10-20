@@ -1,10 +1,27 @@
 CREATE OR REPLACE PACKAGE BODY ODPT.odpt_pkg_main AS
 
+    PROCEDURE proc_underscore_suffix IS
+	BEGIN
+        RETURN;
+	END;
+
     PROCEDURE proc_underscore_suffix_ IS
 	BEGIN
         RETURN;
 	END;
 
+    PROCEDURE proc_raise_exception IS
+    BEGIN        
+        RAISE_APPLICATION_ERROR(-9999, 'Exception');
+    END;
+    
+    PROCEDURE proc_nocopy_increment(p_in IN INTEGER, p_in_out_nocopy IN OUT NOCOPY INTEGER, p_out_nocopy OUT NOCOPY INTEGER) IS
+    BEGIN   
+		p_in_out_nocopy := p_in_out_nocopy + 1;
+		p_out_nocopy := p_in + 1;
+        RETURN;
+    END;
+    
 	PROCEDURE proc_no_param IS
 	BEGIN
 		RETURN;

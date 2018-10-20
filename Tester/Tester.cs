@@ -19,16 +19,16 @@
 //#define SHORT_INTEGER               // INTEGER as Int32
 //#define DECIMAL_INTEGER             // INTEGER as Decimal
 
-//#define SAFETYPE_INTEGER            // INTEGER as safe type OracleDecimal
-//#define SAFETYPE_NUMBER             // NUMBER as safe type OracleDecimal
-//#define SAFETYPE_DATE               // DATE as safe type OracleDate
-//#define SAFETYPE_TIMESTAMP          // TIMESTAMP as safe type OracleTimeStamp
-//#define SAFETYPE_BLOB               // BLOB as safe type OracleBlob
-//#define SAFETYPE_CLOB               // CLOB, NCLOB as safe type OracleClob
+#define SAFETYPE_INTEGER            // INTEGER as safe type OracleDecimal
+#define SAFETYPE_NUMBER             // NUMBER as safe type OracleDecimal
+#define SAFETYPE_DATE               // DATE as safe type OracleDate
+#define SAFETYPE_TIMESTAMP          // TIMESTAMP as safe type OracleTimeStamp
+#define SAFETYPE_BLOB               // BLOB as safe type OracleBlob
+#define SAFETYPE_CLOB               // CLOB, NCLOB as safe type OracleClob
 
 #define ODPT_FILTER_PREFIX          // "ODPT" as filter prefix of schema
 #define MAPPING_FOR_TYPED_CURSOR    // optional overloads for typed cursors methods are generated for mapping
-#define SEED_TABLES                 // seed all tables with test data
+//#define SEED_TABLES                 // seed all tables with test data
 //#define CSHARP30                    // C# 3.0 (.NET 3.5)
 
 //#define LARGE_LOB_SIZE
@@ -138,6 +138,7 @@ namespace Odapter.Tester {
 
                 TestNoParamCalls();
                 TestOptionalParamCalls();
+                TestMiscCalls();
                 CompileTimeChecks();
 
                 //Console.WriteLine( "Complete." );
@@ -1284,6 +1285,31 @@ namespace Odapter.Tester {
 
                 OdptBigOt objectBig = new OdptBigOt();
                 OdptPoVendorOt objectPoVendor = new OdptPoVendorOt();
+            }
+
+            public void TestMiscCalls() {
+                OdptPkgMain.Instance.ProcUnderscoreSuffix(null);
+                OdptPkgMain.Instance.ProcUnderscoreSuffixUnderscorechar(null);
+
+                try {
+                    OdptPkgMain.Instance.ProcRaiseException(null);
+                    Debug.Assert(false);
+                } catch (Exception ex) {
+                    Debug.Assert(ex.Message.StartsWith("ORA-21000"));
+                }
+
+                // NOCOPY test
+#if SAFETYPE_NUMBER
+                OracleDecimal? 
+#else
+                Int64?
+#endif
+                    pIn, pInOut, pOut;
+                for (pIn = 1; pIn <= 3; pIn = pIn + 1) {
+                    pInOut = pIn;
+                    OdptPkgMain.Instance.ProcNocopyIncrement(pIn, ref pInOut, out pOut, null);
+                    Debug.Assert(pInOut.Equals(pIn + 1) && pOut.Equals(pIn + 1));
+                }
             }
 
             public void TestNoParamCalls() {

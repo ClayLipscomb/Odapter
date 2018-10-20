@@ -55,9 +55,12 @@ CREATE OR REPLACE PACKAGE ODPT.odpt_pkg_main AS
 	);
 	TYPE t_cursor_typed_ignored IS REF CURSOR RETURN t_record_type_ignored;
 	
-	PROCEDURE proc_underscore_suffix_;
-	PROCEDURE proc_no_param;
-	FUNCTION func_no_param RETURN NUMBER;
+    PROCEDURE proc_underscore_suffix;
+    PROCEDURE proc_underscore_suffix_;
+    PROCEDURE proc_raise_exception;    
+    PROCEDURE proc_nocopy_increment(p_in IN INTEGER, p_in_out_nocopy IN OUT NOCOPY INTEGER, p_out_nocopy OUT NOCOPY INTEGER);
+    PROCEDURE proc_no_param;
+    FUNCTION func_no_param RETURN NUMBER;
 
 	PROCEDURE proc_optional_param(p_in_number_required IN NUMBER, p_in_out_number_required IN OUT NUMBER, p_in_number_optional IN NUMBER DEFAULT 0, p_in_varchar2_optional IN VARCHAR2 DEFAULT 'TEST');
 	FUNCTION func_optional_param(p_in_number_required IN NUMBER, p_in_out_number_required IN OUT NUMBER, 
