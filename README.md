@@ -67,7 +67,7 @@ Odapter generates C# adapter classes that provide integration with an Oracle sch
 
 ### Getting Started: Generating Code for Packages
 
-1. Download Odapter.exe from OdapterWnFrm/bin/x64/Release and run
+1. Download Odapter.exe from [OdapterWnFrm/bin/x64/Release](/OdapterWnFrm/bin/x64/Release) and run
 2. If Oracle Client Homes are found, select appropriate value
 3. Select Instance (If TNSNAMES.ORA file is not found/parsed in Step 2, Instance can be entered)
 4. Enter Schema, Login and Password
