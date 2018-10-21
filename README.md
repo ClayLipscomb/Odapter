@@ -6,7 +6,7 @@ Odapter is a [single executable](/OdapterWnFrm/bin/x64/Release) that generates C
 ### Minimum System Requirements
 
 * Oracle RDBMS 11g
-* Windows 64-bit OS
+* Windows 64-bit 
 * .NET Framework 
     - 4.0 minimum for code generator
     - 3.5 minimum for project
@@ -81,7 +81,7 @@ Odapter is a [single executable](/OdapterWnFrm/bin/x64/Release) that generates C
 12. If your project targets .NET 3.5, add a reference for the unmanaged ODP.NET driver; if .NET 4.0 or higher, add a reference for the managed ODP.NET driver.
 13. Add "using Schema.YourSchemaName.YourFilterPrefixIfAny.Package" to project files in order to access packages
 
-For examples, see code below and Tester/Tester.cs.
+For examples, see code below and [Tester.cs](/Tester).
 
 ### Code Example
 ###### Package Specification - Tester/schema/package/xmpl_pkg_example.pks
