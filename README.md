@@ -1,7 +1,7 @@
 Odapter - a C# code generator for Oracle packages
 ========================================
 
-Odapter generates C# adapter classes that provide integration with an Oracle schema's packages. An adapter class handles the invocation of a package's procedures including the hydration of DTO Lists from returned cursor results sets, both typed (record type based) and untyped (simple REF CURSOR). From within the IDE, the generated C# provides the developer de facto compile-time resolution with the packages. Optionally, standalone C# DTOs can be generated from Oracle object types, tables and views.
+Odapter generates C# adapter classes that provide integration with an Oracle schema's packages. An adapter class handles the invocation of a package's procedures including the hydration of DTO Lists from returned cursor results sets, both typed (record type based) and untyped (simple REF CURSOR). From within the IDE, the generated C# provides the developer de facto compile-time resolution with the packages. Optionally, standalone C# DTOs can be generated from Oracle object types, tables and views. Odapter is a [single executable](/OdapterWnFrm/bin/x64/Release).
 
 ### Minimum System Requirements
 
