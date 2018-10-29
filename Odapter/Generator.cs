@@ -980,11 +980,11 @@ namespace Odapter {
     
                     // class definition
                     classText.AppendLine();
-                    classText.AppendLine(Tab() + "public " + (partialPackage ? "partial " : "") + "class " + className + " : " + Parameter.Instance.NamespaceSchema + "." + ancestorAdapterClassName + " {");
+                    classText.AppendLine(Tab() + "public sealed " + (partialPackage ? "partial " : "") + "class " + className + " : " + Parameter.Instance.NamespaceSchema + "." + ancestorAdapterClassName + " {");
 
                     // created as Singleton
                     classText.AppendLine(Tab(2) + "private " + className + "() { }");
-                    classText.AppendLine(Tab(2) + "private static " + className + " _instance = new " + className + "();");
+                    classText.AppendLine(Tab(2) + "private static readonly " + className + " _instance = new " + className + "();");
                     classText.AppendLine(Tab(2) + "public static " + className + " Instance { get { return _instance; } }");
 
                     // for each record type in this package
