@@ -21,9 +21,9 @@ using Odapter;
 
 namespace Schema.Odpt.Package {
 
-    public partial class FilteredPkg : Schema.Odpt.OdptAdapter {
+    public sealed partial class FilteredPkg : Schema.Odpt.OdptAdapter {
         private FilteredPkg() { }
-        private static FilteredPkg _instance = new FilteredPkg();
+        private static readonly FilteredPkg _instance = new FilteredPkg();
         public static FilteredPkg Instance { get { return _instance; } }
 
         public interface ITTableBigFiltered {
@@ -160,15 +160,15 @@ namespace Schema.Odpt.Package {
         } // ReadResultITTableBigFiltered
     } // FilteredPkg
 
-    public partial class OdptPkgEmpty : Schema.Odpt.OdptAdapter {
+    public sealed partial class OdptPkgEmpty : Schema.Odpt.OdptAdapter {
         private OdptPkgEmpty() { }
-        private static OdptPkgEmpty _instance = new OdptPkgEmpty();
+        private static readonly OdptPkgEmpty _instance = new OdptPkgEmpty();
         public static OdptPkgEmpty Instance { get { return _instance; } }
     } // OdptPkgEmpty
 
-    public partial class OdptPkgLog : Schema.Odpt.OdptAdapter {
+    public sealed partial class OdptPkgLog : Schema.Odpt.OdptAdapter {
         private OdptPkgLog() { }
-        private static OdptPkgLog _instance = new OdptPkgLog();
+        private static readonly OdptPkgLog _instance = new OdptPkgLog();
         public static OdptPkgLog Instance { get { return _instance; } }
 
         public void DeleteLog(SByte? pSeverity, DateTime? pToDate, OracleConnection optionalPreexistingOpenConnection = null) {
@@ -638,9 +638,9 @@ namespace Schema.Odpt.Package {
         } // TypeSeverityWarning
     } // OdptPkgLog
 
-    public partial class OdptPkgMain : Schema.Odpt.OdptAdapter {
+    public sealed partial class OdptPkgMain : Schema.Odpt.OdptAdapter {
         private OdptPkgMain() { }
-        private static OdptPkgMain _instance = new OdptPkgMain();
+        private static readonly OdptPkgMain _instance = new OdptPkgMain();
         public static OdptPkgMain Instance { get { return _instance; } }
 
         // **RECORD IGNORED** - .NET cannot send/receive a PL/SQL BOOLEAN field
@@ -2725,9 +2725,9 @@ namespace Schema.Odpt.Package {
         } // ProcUnderscoreSuffixUnderscorechar
     } // OdptPkgMain
 
-    public partial class OdptPkgSql : Schema.Odpt.OdptAdapter {
+    public sealed partial class OdptPkgSql : Schema.Odpt.OdptAdapter {
         private OdptPkgSql() { }
-        private static OdptPkgSql _instance = new OdptPkgSql();
+        private static readonly OdptPkgSql _instance = new OdptPkgSql();
         public static OdptPkgSql Instance { get { return _instance; } }
 
         // **PROC IGNORED** - .NET cannot send/receive a PL/SQL BOOLEAN
@@ -2876,9 +2876,9 @@ namespace Schema.Odpt.Package {
         } // WhereConditionRangeParam
     } // OdptPkgSql
 
-    public partial class OdptPkgTableBig : Schema.Odpt.OdptAdapter {
+    public sealed partial class OdptPkgTableBig : Schema.Odpt.OdptAdapter {
         private OdptPkgTableBig() { }
-        private static OdptPkgTableBig _instance = new OdptPkgTableBig();
+        private static readonly OdptPkgTableBig _instance = new OdptPkgTableBig();
         public static OdptPkgTableBig Instance { get { return _instance; } }
 
         public interface ITTableBig {
@@ -4016,9 +4016,9 @@ namespace Schema.Odpt.Package {
         } // TruncTable
     } // OdptPkgTableBig
 
-    public partial class OdptPkgTableNumber : Schema.Odpt.OdptAdapter {
+    public sealed partial class OdptPkgTableNumber : Schema.Odpt.OdptAdapter {
         private OdptPkgTableNumber() { }
-        private static OdptPkgTableNumber _instance = new OdptPkgTableNumber();
+        private static readonly OdptPkgTableNumber _instance = new OdptPkgTableNumber();
         public static OdptPkgTableNumber Instance { get { return _instance; } }
 
         public interface ITTableNumber {
@@ -5007,9 +5007,9 @@ namespace Schema.Odpt.Package {
         } // TruncTable
     } // OdptPkgTableNumber
 
-    public partial class XmplPkgExample : Schema.Odpt.OdptAdapter {
+    public sealed partial class XmplPkgExample : Schema.Odpt.OdptAdapter {
         private XmplPkgExample() { }
-        private static XmplPkgExample _instance = new XmplPkgExample();
+        private static readonly XmplPkgExample _instance = new XmplPkgExample();
         public static XmplPkgExample Instance { get { return _instance; } }
 
         public interface ITTableBigPartial {

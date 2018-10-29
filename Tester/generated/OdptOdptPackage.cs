@@ -21,15 +21,15 @@ using Odapter;
 
 namespace Schema.Odpt.Odpt.Package {
 
-    public partial class OdptPkgEmpty : Schema.Odpt.Odpt.OdptAdapter {
+    public sealed partial class OdptPkgEmpty : Schema.Odpt.Odpt.OdptAdapter {
         private OdptPkgEmpty() { }
-        private static OdptPkgEmpty _instance = new OdptPkgEmpty();
+        private static readonly OdptPkgEmpty _instance = new OdptPkgEmpty();
         public static OdptPkgEmpty Instance { get { return _instance; } }
     } // OdptPkgEmpty
 
-    public partial class OdptPkgLog : Schema.Odpt.Odpt.OdptAdapter {
+    public sealed partial class OdptPkgLog : Schema.Odpt.Odpt.OdptAdapter {
         private OdptPkgLog() { }
-        private static OdptPkgLog _instance = new OdptPkgLog();
+        private static readonly OdptPkgLog _instance = new OdptPkgLog();
         public static OdptPkgLog Instance { get { return _instance; } }
 
         public void DeleteLog(SByte? pSeverity, DateTime? pToDate, OracleConnection optionalPreexistingOpenConnection = null) {
@@ -499,9 +499,9 @@ namespace Schema.Odpt.Odpt.Package {
         } // TypeSeverityWarning
     } // OdptPkgLog
 
-    public partial class OdptPkgMain : Schema.Odpt.Odpt.OdptAdapter {
+    public sealed partial class OdptPkgMain : Schema.Odpt.Odpt.OdptAdapter {
         private OdptPkgMain() { }
-        private static OdptPkgMain _instance = new OdptPkgMain();
+        private static readonly OdptPkgMain _instance = new OdptPkgMain();
         public static OdptPkgMain Instance { get { return _instance; } }
 
         // **RECORD IGNORED** - .NET cannot send/receive a PL/SQL BOOLEAN field
@@ -2586,9 +2586,9 @@ namespace Schema.Odpt.Odpt.Package {
         } // ProcUnderscoreSuffixUnderscorechar
     } // OdptPkgMain
 
-    public partial class OdptPkgSql : Schema.Odpt.Odpt.OdptAdapter {
+    public sealed partial class OdptPkgSql : Schema.Odpt.Odpt.OdptAdapter {
         private OdptPkgSql() { }
-        private static OdptPkgSql _instance = new OdptPkgSql();
+        private static readonly OdptPkgSql _instance = new OdptPkgSql();
         public static OdptPkgSql Instance { get { return _instance; } }
 
         // **PROC IGNORED** - .NET cannot send/receive a PL/SQL BOOLEAN
@@ -2737,9 +2737,9 @@ namespace Schema.Odpt.Odpt.Package {
         } // WhereConditionRangeParam
     } // OdptPkgSql
 
-    public partial class OdptPkgTableBig : Schema.Odpt.Odpt.OdptAdapter {
+    public sealed partial class OdptPkgTableBig : Schema.Odpt.Odpt.OdptAdapter {
         private OdptPkgTableBig() { }
-        private static OdptPkgTableBig _instance = new OdptPkgTableBig();
+        private static readonly OdptPkgTableBig _instance = new OdptPkgTableBig();
         public static OdptPkgTableBig Instance { get { return _instance; } }
 
         public interface IFilteredPkgTTableBigFiltered {
@@ -4010,9 +4010,9 @@ namespace Schema.Odpt.Odpt.Package {
         } // TruncTable
     } // OdptPkgTableBig
 
-    public partial class OdptPkgTableNumber : Schema.Odpt.Odpt.OdptAdapter {
+    public sealed partial class OdptPkgTableNumber : Schema.Odpt.Odpt.OdptAdapter {
         private OdptPkgTableNumber() { }
-        private static OdptPkgTableNumber _instance = new OdptPkgTableNumber();
+        private static readonly OdptPkgTableNumber _instance = new OdptPkgTableNumber();
         public static OdptPkgTableNumber Instance { get { return _instance; } }
 
         public interface ITTableNumber {
