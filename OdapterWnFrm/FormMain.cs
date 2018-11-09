@@ -441,7 +441,7 @@ namespace OdapterWnFrm {
 
             cbDuplicatePackageRecordOriginatingOutsideFilterAndSchema.Checked = Parameter.Instance.IsDuplicatePackageRecordOriginatingOutsideFilterAndSchema;
             cbExcludeObjectNamesWithSpecificChars.Checked = Parameter.Instance.IsExcludeObjectsNamesWithSpecificChars;
-            txtExcludeChars.Text = String.Join<Char>("", Parameter.Instance.ObjectNameCharsToExclude);
+            txtExcludeChars.Text = Parameter.Instance.ObjectNameCharsToExcludeAsString;
             cbGeneratedDynamicMethodForTypedCursor.Checked = Parameter.Instance.IsGenerateDynamicMappingMethodForTypedCursor;
             cbUseAutoImplementedProperties.Checked = Parameter.Instance.IsUseAutoImplementedProperties;
             txtLocalVariableNameSuffix.Text = Parameter.Instance.LocalVariableNameSuffix ?? "";
@@ -521,7 +521,7 @@ namespace OdapterWnFrm {
 
             Parameter.Instance.IsDuplicatePackageRecordOriginatingOutsideFilterAndSchema = cbDuplicatePackageRecordOriginatingOutsideFilterAndSchema.Checked;
             Parameter.Instance.IsExcludeObjectsNamesWithSpecificChars = cbExcludeObjectNamesWithSpecificChars.Checked;
-            Parameter.Instance.ObjectNameCharsToExclude = txtExcludeChars.Text.Trim().Replace(" ", "").ToCharArray();
+            Parameter.Instance.ObjectNameCharsToExcludeAsString = txtExcludeChars.Text;
             Parameter.Instance.IsGenerateDynamicMappingMethodForTypedCursor = cbGeneratedDynamicMethodForTypedCursor.Checked;
             Parameter.Instance.IsUseAutoImplementedProperties = cbUseAutoImplementedProperties.Checked;
             Parameter.Instance.LocalVariableNameSuffix = txtLocalVariableNameSuffix.Text ?? "";

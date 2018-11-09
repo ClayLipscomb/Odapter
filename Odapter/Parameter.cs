@@ -169,6 +169,12 @@ namespace Odapter {
         public Boolean IsGenerateBaseEntities { get; set; } // will not overwrite existing file
         [XmlIgnore]
         public List<String> ConfigFileNames { get { return GetLocalConfigFileNames(); }  }
+
+        [XmlIgnore]
+        public String ObjectNameCharsToExcludeAsString {
+            get => String.Join<Char>("", this.ObjectNameCharsToExclude);
+            set { this.ObjectNameCharsToExclude = value.Trim().Replace(" ", "").ToCharArray(); }
+        }
         #endregion Properties
 
         #region File Methods
