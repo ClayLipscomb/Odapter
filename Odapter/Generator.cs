@@ -1023,7 +1023,7 @@ namespace Odapter {
                         // create DTO 
                         classText.AppendLine();
                         classText.Append(GenerateEntityClass<Field>(rec, ancestorRecordTypeClassName, 
-                            Parameter.Instance.IsSerializablePackageRecord, Parameter.Instance.IsPartialPackageRecord,
+                            Parameter.Instance.IsSerializablePackageRecord, Parameter.Instance.IsPartialPackage,
                             Parameter.Instance.IsDataContractPackageRecord, Parameter.Instance.IsXmlElementPackageRecord, 2));
 
                         if (!rec.IsIgnoredDueToOracleTypes(out reasonMsg)) {

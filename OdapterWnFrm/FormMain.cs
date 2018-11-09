@@ -254,10 +254,14 @@ namespace OdapterWnFrm {
         }
 
         private void cbGeneratePackage_CheckedChanged(object sender, EventArgs e) {
-            cbGenerateRecordType.Checked = txtPackageNamespace.Enabled = txtBaseRecordTypeClass.Enabled = cbGeneratePackage.Checked;
+            cbGenerateRecordType.Checked = txtPackageNamespace.Enabled = txtBasePackageClass.Enabled = txtBaseRecordTypeClass.Enabled = cbGeneratePackage.Checked;
             if (cbGeneratePackage.Checked) {
-                txtBasePackageClass.Enabled = cbGenerateBaseAdapterClass.Checked = cbGenerateBaseDtoClasses.Checked = true;
+                cbGenerateBaseAdapterClass.Checked = cbGenerateBaseDtoClasses.Checked = true;
             }
+        }
+
+        private void cbPartialPackage_CheckedChanged(object sender, EventArgs e) {
+            cbPartialPOCOs.Checked = cbPartialPackageClasses.Checked;
         }
 
         private void cmbClientHome_SelectedIndexChanged(object sender, EventArgs e) {
@@ -418,7 +422,7 @@ namespace OdapterWnFrm {
             cbSerializableViews.Checked = Parameter.Instance.IsSerializableView;
 
             cbPartialPackageClasses.Checked = Parameter.Instance.IsPartialPackage;
-            cbPartialPOCOs.Checked = Parameter.Instance.IsPartialPackageRecord;
+            cbPartialPOCOs.Checked = Parameter.Instance.IsPartialPackage;
             cbPartialObjectTypes.Checked = Parameter.Instance.IsPartialObjectType;
             cbPartialTables.Checked = Parameter.Instance.IsPartialTable;
             cbPartialViews.Checked = Parameter.Instance.IsPartialView;
@@ -509,7 +513,6 @@ namespace OdapterWnFrm {
             Parameter.Instance.IsSerializableView = cbSerializableViews.Checked;
 
             Parameter.Instance.IsPartialPackage = cbPartialPackageClasses.Checked;
-            Parameter.Instance.IsPartialPackageRecord = cbPartialPOCOs.Checked;
             Parameter.Instance.IsPartialObjectType = cbPartialObjectTypes.Checked;
             Parameter.Instance.IsPartialTable = cbPartialTables.Checked;
             Parameter.Instance.IsPartialView = cbPartialViews.Checked;

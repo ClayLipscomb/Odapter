@@ -42,7 +42,7 @@ namespace Odapter {
 
             IsGeneratePackage = true;
             IsGenerateObjectType = IsGenerateTable = IsGenerateView = false;
-            IsPartialPackage = IsPartialPackageRecord = IsPartialObjectType = IsPartialTable = IsPartialView = false;
+            IsPartialPackage = IsPartialObjectType = IsPartialTable = IsPartialView = false;
             IsSerializablePackageRecord = IsSerializableObjectType = IsSerializableTable = IsSerializableView = false;
             IsXmlElementPackageRecord = IsXmlElementObjectType = IsXmlElementTable = IsXmlElementView = false;
             IsDataContractPackageRecord = IsDataContractObjectType = IsDataContractTable = IsDataContractView = false;
@@ -133,7 +133,6 @@ namespace Odapter {
         public Boolean IsSerializableView { get; set; }
 
         public Boolean IsPartialPackage { get; set; }
-        public Boolean IsPartialPackageRecord { get; set; }
         public Boolean IsPartialObjectType { get; set; }
         public Boolean IsPartialTable { get; set; }
         public Boolean IsPartialView { get; set; }

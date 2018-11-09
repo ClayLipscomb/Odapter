@@ -278,6 +278,7 @@ namespace OdapterWnFrm {
             // 
             this.cbPartialPOCOs.AutoSize = true;
             this.cbPartialPOCOs.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.cbPartialPOCOs.Enabled = false;
             this.cbPartialPOCOs.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbPartialPOCOs.ForeColor = System.Drawing.SystemColors.HotTrack;
             this.cbPartialPOCOs.Location = new System.Drawing.Point(460, 98);
@@ -887,6 +888,7 @@ namespace OdapterWnFrm {
             this.cbPartialPackageClasses.Size = new System.Drawing.Size(18, 17);
             this.cbPartialPackageClasses.TabIndex = 4;
             this.cbPartialPackageClasses.UseVisualStyleBackColor = true;
+            this.cbPartialPackageClasses.CheckedChanged += new System.EventHandler(this.cbPartialPackage_CheckedChanged);
             // 
             // txtObjectTypeNamespace
             // 
