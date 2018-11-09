@@ -25,6 +25,7 @@ using System.Globalization;
 using System.Xml.Serialization;
 using System.Xml;
 using System.Reflection;
+using System.ComponentModel;
 using System.Diagnostics;
 
 namespace Odapter {
@@ -32,10 +33,26 @@ namespace Odapter {
     /// Contains all parameter data sent to code generator
     /// </summary>
     [Serializable]
-    public class Parameter {
+    public class Parameter : INotifyPropertyChanged {
         private Parameter() { RestoreDefaults(); }
         private static Parameter _instance = new Parameter();
         public static Parameter Instance { get { return _instance; } set { _instance = value; } }
+
+        #region INotifyPropertyChanged Interface
+        /// <summary>
+        /// Occurs when a property value changes.
+        /// </summary>
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        /// <summary>
+        /// Raises the property changed event.
+        /// </summary>
+        /// <param name="propertyName">Name of the property.</param>
+        private void RaisePropertyChanged(string propertyName) {
+            PropertyChangedEventHandler handler = this.PropertyChanged;
+            if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
+        }
+        #endregion
 
         public void RestoreDefaults() {
             OracleHome = DatabaseInstance = Filter = Schema = UserLogin = Password =  OutputPath = String.Empty;
@@ -81,9 +98,25 @@ namespace Odapter {
         #region Properties
         // schema and connection
         public String OracleHome { get; set; }
-        public String DatabaseInstance { get; set; }
-        public String Schema { get; set; }
-        public String Filter { get; set; }
+
+        private String _databaseInstance;
+        public String DatabaseInstance {
+            get => _databaseInstance;
+            set { if (value != _databaseInstance) { _databaseInstance = value; RaisePropertyChanged("DatabaseInstance"); } }
+        }
+
+        private String _schema;
+        public String Schema {
+            get => _schema;
+            set { if (value != _schema) { _schema = value; RaisePropertyChanged("Schema"); } }
+        }
+
+        private String _filter;
+        public String Filter {
+            get => _filter;
+            set { if (value != _filter) { _filter = value; RaisePropertyChanged("Filter"); } }
+        }
+
         public String UserLogin { get; set; }
         public String Password { get; set; }
 
@@ -95,7 +128,12 @@ namespace Odapter {
         public Boolean IsCSharp40 { get { return CSharpVersion == CSharpVersion.FourZero; } }
 
         // namespaces
-        public String NamespaceBase { get; set; }
+        private String _namespaceBase;
+        public String NamespaceBase {
+            get => _namespaceBase;
+            set { if (value != _namespaceBase) { _namespaceBase = value; RaisePropertyChanged("NamespaceBase"); } }
+        }
+
         public String NamespacePackage { get; set; }
         public String NamespaceObjectType { get; set; } // must have internally in order to generate "using" for other entity types
         public String NamespaceTable { get; set; }
@@ -111,7 +149,12 @@ namespace Odapter {
         public string AncestorClassNameView { get; set; }
 
         // code to generate
-        public String OutputPath { get; set; }
+        private String _outputPath;
+        public String OutputPath {
+            get => _outputPath;
+            set { if (value != _outputPath) { _outputPath = value; RaisePropertyChanged("OutputPath"); }  } 
+        }
+
         public Boolean IsGeneratePackage { get; set; }
         public Boolean IsGenerateObjectType { get; set; }
         public Boolean IsGenerateTable { get; set; }
@@ -137,7 +180,11 @@ namespace Odapter {
         public Boolean IsPartialTable { get; set; }
         public Boolean IsPartialView { get; set; }
 
-        public Boolean IsIncludeFilterPrefixInNaming { get; set; }
+        private Boolean _isIncludeFilterPrefixInNaming;
+        public Boolean IsIncludeFilterPrefixInNaming {
+            get => _isIncludeFilterPrefixInNaming;
+            set { _isIncludeFilterPrefixInNaming = value; RaisePropertyChanged("IsIncludeFilterPrefixInNaming"); }
+        }
 
         // sizing
         public Int16 MaxAssocArraySize { get; set; }
@@ -171,7 +218,7 @@ namespace Odapter {
 
         [XmlIgnore]
         public String ObjectNameCharsToExcludeAsString {
-            get => String.Join<Char>("", this.ObjectNameCharsToExclude);
+            get => String.Join<Char>("", this.ObjectNameCharsToExclude); 
             set { this.ObjectNameCharsToExclude = value.Trim().Replace(" ", "").ToCharArray(); }
         }
         #endregion Properties
@@ -210,6 +257,7 @@ namespace Odapter {
         /// </summary>
         /// <param name="fileName"></param>
         public void LoadFromFile(string fileName) {
+            if (String.IsNullOrWhiteSpace(fileName)) return;
             StreamReader reader = new StreamReader(GetExecutablePath() + @"\" + fileName);
             try {
                 System.Xml.Serialization.XmlSerializer xs = new System.Xml.Serialization.XmlSerializer(typeof(Parameter));
