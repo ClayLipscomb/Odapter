@@ -120,10 +120,12 @@ namespace OdapterWnFrm {
             this.lblSettingsFile = new System.Windows.Forms.Label();
             this.lblCSharpTypeUsedForOracleBlob = new System.Windows.Forms.Label();
             this.lblCSharpTypeUsedForOracleClob = new System.Windows.Forms.Label();
+            this.lblCSharpTypeUsedForRefCursor = new System.Windows.Forms.Label();
             this.gbSettings = new System.Windows.Forms.GroupBox();
             this.cmbSettingsFile = new System.Windows.Forms.ComboBox();
             this.btnRestoreDefaults = new System.Windows.Forms.Button();
             this.gbOracleToCSharpCustomTranslation = new System.Windows.Forms.GroupBox();
+            this.cmbCSharpTypeUsedForRefCursor = new System.Windows.Forms.ComboBox();
             this.cmbCSharpTypeUsedForOracleClob = new System.Windows.Forms.ComboBox();
             this.cmbCSharpTypeUsedForOracleBlob = new System.Windows.Forms.ComboBox();
             this.cmbCSharpTypeUsedForOracleIntervalDayToSecond = new System.Windows.Forms.ComboBox();
@@ -1176,7 +1178,7 @@ namespace OdapterWnFrm {
             this.cbConvertOracleNumberToIntegerIfColumnNameIsId.BackColor = System.Drawing.Color.Transparent;
             this.cbConvertOracleNumberToIntegerIfColumnNameIsId.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbConvertOracleNumberToIntegerIfColumnNameIsId.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.cbConvertOracleNumberToIntegerIfColumnNameIsId.Location = new System.Drawing.Point(215, 69);
+            this.cbConvertOracleNumberToIntegerIfColumnNameIsId.Location = new System.Drawing.Point(215, 96);
             this.cbConvertOracleNumberToIntegerIfColumnNameIsId.Margin = new System.Windows.Forms.Padding(4);
             this.cbConvertOracleNumberToIntegerIfColumnNameIsId.Name = "cbConvertOracleNumberToIntegerIfColumnNameIsId";
             this.cbConvertOracleNumberToIntegerIfColumnNameIsId.Size = new System.Drawing.Size(277, 26);
@@ -1279,7 +1281,7 @@ namespace OdapterWnFrm {
             // 
             this.lblCSharpTypeUsedForOracleNumber.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblCSharpTypeUsedForOracleNumber.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.lblCSharpTypeUsedForOracleNumber.Location = new System.Drawing.Point(3, 47);
+            this.lblCSharpTypeUsedForOracleNumber.Location = new System.Drawing.Point(3, 74);
             this.lblCSharpTypeUsedForOracleNumber.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblCSharpTypeUsedForOracleNumber.Name = "lblCSharpTypeUsedForOracleNumber";
             this.lblCSharpTypeUsedForOracleNumber.Size = new System.Drawing.Size(208, 16);
@@ -1292,7 +1294,7 @@ namespace OdapterWnFrm {
             // 
             this.lblCSharpTypeUsedForOracleInteger.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblCSharpTypeUsedForOracleInteger.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.lblCSharpTypeUsedForOracleInteger.Location = new System.Drawing.Point(3, 21);
+            this.lblCSharpTypeUsedForOracleInteger.Location = new System.Drawing.Point(3, 48);
             this.lblCSharpTypeUsedForOracleInteger.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblCSharpTypeUsedForOracleInteger.Name = "lblCSharpTypeUsedForOracleInteger";
             this.lblCSharpTypeUsedForOracleInteger.Size = new System.Drawing.Size(208, 16);
@@ -1378,7 +1380,7 @@ namespace OdapterWnFrm {
             // 
             this.lblCSharpTypeUsedForOracleTimestamp.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblCSharpTypeUsedForOracleTimestamp.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.lblCSharpTypeUsedForOracleTimestamp.Location = new System.Drawing.Point(3, 124);
+            this.lblCSharpTypeUsedForOracleTimestamp.Location = new System.Drawing.Point(3, 151);
             this.lblCSharpTypeUsedForOracleTimestamp.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblCSharpTypeUsedForOracleTimestamp.Name = "lblCSharpTypeUsedForOracleTimestamp";
             this.lblCSharpTypeUsedForOracleTimestamp.Size = new System.Drawing.Size(208, 16);
@@ -1391,7 +1393,7 @@ namespace OdapterWnFrm {
             // 
             this.lblCSharpUsedForOracleIntervalDayToSecond.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblCSharpUsedForOracleIntervalDayToSecond.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.lblCSharpUsedForOracleIntervalDayToSecond.Location = new System.Drawing.Point(20, 204);
+            this.lblCSharpUsedForOracleIntervalDayToSecond.Location = new System.Drawing.Point(20, 231);
             this.lblCSharpUsedForOracleIntervalDayToSecond.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblCSharpUsedForOracleIntervalDayToSecond.Name = "lblCSharpUsedForOracleIntervalDayToSecond";
             this.lblCSharpUsedForOracleIntervalDayToSecond.Size = new System.Drawing.Size(191, 16);
@@ -1405,7 +1407,7 @@ namespace OdapterWnFrm {
             // 
             this.lblCSharpTypeUsedForOracleDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblCSharpTypeUsedForOracleDate.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.lblCSharpTypeUsedForOracleDate.Location = new System.Drawing.Point(3, 97);
+            this.lblCSharpTypeUsedForOracleDate.Location = new System.Drawing.Point(3, 124);
             this.lblCSharpTypeUsedForOracleDate.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblCSharpTypeUsedForOracleDate.Name = "lblCSharpTypeUsedForOracleDate";
             this.lblCSharpTypeUsedForOracleDate.Size = new System.Drawing.Size(208, 16);
@@ -1444,7 +1446,7 @@ namespace OdapterWnFrm {
             // 
             this.lblCSharpTypeUsedForOracleBlob.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblCSharpTypeUsedForOracleBlob.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.lblCSharpTypeUsedForOracleBlob.Location = new System.Drawing.Point(3, 150);
+            this.lblCSharpTypeUsedForOracleBlob.Location = new System.Drawing.Point(3, 177);
             this.lblCSharpTypeUsedForOracleBlob.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblCSharpTypeUsedForOracleBlob.Name = "lblCSharpTypeUsedForOracleBlob";
             this.lblCSharpTypeUsedForOracleBlob.Size = new System.Drawing.Size(208, 16);
@@ -1457,7 +1459,7 @@ namespace OdapterWnFrm {
             // 
             this.lblCSharpTypeUsedForOracleClob.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblCSharpTypeUsedForOracleClob.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.lblCSharpTypeUsedForOracleClob.Location = new System.Drawing.Point(3, 177);
+            this.lblCSharpTypeUsedForOracleClob.Location = new System.Drawing.Point(3, 204);
             this.lblCSharpTypeUsedForOracleClob.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblCSharpTypeUsedForOracleClob.Name = "lblCSharpTypeUsedForOracleClob";
             this.lblCSharpTypeUsedForOracleClob.Size = new System.Drawing.Size(208, 16);
@@ -1465,6 +1467,20 @@ namespace OdapterWnFrm {
             this.lblCSharpTypeUsedForOracleClob.Text = "CLOB && NCLOB";
             this.lblCSharpTypeUsedForOracleClob.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.toolTip1.SetToolTip(this.lblCSharpTypeUsedForOracleClob, "An Oracle CLOB or NCLOB");
+            // 
+            // lblCSharpTypeUsedForRefCursor
+            // 
+            this.lblCSharpTypeUsedForRefCursor.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCSharpTypeUsedForRefCursor.ForeColor = System.Drawing.SystemColors.HotTrack;
+            this.lblCSharpTypeUsedForRefCursor.Location = new System.Drawing.Point(30, 22);
+            this.lblCSharpTypeUsedForRefCursor.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblCSharpTypeUsedForRefCursor.Name = "lblCSharpTypeUsedForRefCursor";
+            this.lblCSharpTypeUsedForRefCursor.Size = new System.Drawing.Size(181, 16);
+            this.lblCSharpTypeUsedForRefCursor.TabIndex = 65;
+            this.lblCSharpTypeUsedForRefCursor.Text = "REF CURSOR";
+            this.lblCSharpTypeUsedForRefCursor.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.toolTip1.SetToolTip(this.lblCSharpTypeUsedForRefCursor, "An Oracle INTEGER, INTEGER equivalent, or any NUMBER with a precision > 9 and no " +
+        "scale.");
             // 
             // gbSettings
             // 
@@ -1511,6 +1527,8 @@ namespace OdapterWnFrm {
             // 
             // gbOracleToCSharpCustomTranslation
             // 
+            this.gbOracleToCSharpCustomTranslation.Controls.Add(this.cmbCSharpTypeUsedForRefCursor);
+            this.gbOracleToCSharpCustomTranslation.Controls.Add(this.lblCSharpTypeUsedForRefCursor);
             this.gbOracleToCSharpCustomTranslation.Controls.Add(this.cmbCSharpTypeUsedForOracleClob);
             this.gbOracleToCSharpCustomTranslation.Controls.Add(this.lblCSharpTypeUsedForOracleClob);
             this.gbOracleToCSharpCustomTranslation.Controls.Add(this.cmbCSharpTypeUsedForOracleBlob);
@@ -1538,12 +1556,23 @@ namespace OdapterWnFrm {
             this.gbOracleToCSharpCustomTranslation.TabStop = false;
             this.gbOracleToCSharpCustomTranslation.Text = "Oracle to C# Custom Translation";
             // 
+            // cmbCSharpTypeUsedForRefCursor
+            // 
+            this.cmbCSharpTypeUsedForRefCursor.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbCSharpTypeUsedForRefCursor.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmbCSharpTypeUsedForRefCursor.FormattingEnabled = true;
+            this.cmbCSharpTypeUsedForRefCursor.Location = new System.Drawing.Point(215, 16);
+            this.cmbCSharpTypeUsedForRefCursor.Margin = new System.Windows.Forms.Padding(4);
+            this.cmbCSharpTypeUsedForRefCursor.Name = "cmbCSharpTypeUsedForRefCursor";
+            this.cmbCSharpTypeUsedForRefCursor.Size = new System.Drawing.Size(315, 25);
+            this.cmbCSharpTypeUsedForRefCursor.TabIndex = 66;
+            // 
             // cmbCSharpTypeUsedForOracleClob
             // 
             this.cmbCSharpTypeUsedForOracleClob.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbCSharpTypeUsedForOracleClob.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbCSharpTypeUsedForOracleClob.FormattingEnabled = true;
-            this.cmbCSharpTypeUsedForOracleClob.Location = new System.Drawing.Point(214, 173);
+            this.cmbCSharpTypeUsedForOracleClob.Location = new System.Drawing.Point(214, 200);
             this.cmbCSharpTypeUsedForOracleClob.Margin = new System.Windows.Forms.Padding(4);
             this.cmbCSharpTypeUsedForOracleClob.Name = "cmbCSharpTypeUsedForOracleClob";
             this.cmbCSharpTypeUsedForOracleClob.Size = new System.Drawing.Size(315, 25);
@@ -1554,7 +1583,7 @@ namespace OdapterWnFrm {
             this.cmbCSharpTypeUsedForOracleBlob.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbCSharpTypeUsedForOracleBlob.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbCSharpTypeUsedForOracleBlob.FormattingEnabled = true;
-            this.cmbCSharpTypeUsedForOracleBlob.Location = new System.Drawing.Point(214, 146);
+            this.cmbCSharpTypeUsedForOracleBlob.Location = new System.Drawing.Point(214, 173);
             this.cmbCSharpTypeUsedForOracleBlob.Margin = new System.Windows.Forms.Padding(4);
             this.cmbCSharpTypeUsedForOracleBlob.Name = "cmbCSharpTypeUsedForOracleBlob";
             this.cmbCSharpTypeUsedForOracleBlob.Size = new System.Drawing.Size(315, 25);
@@ -1565,7 +1594,7 @@ namespace OdapterWnFrm {
             this.cmbCSharpTypeUsedForOracleIntervalDayToSecond.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbCSharpTypeUsedForOracleIntervalDayToSecond.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbCSharpTypeUsedForOracleIntervalDayToSecond.FormattingEnabled = true;
-            this.cmbCSharpTypeUsedForOracleIntervalDayToSecond.Location = new System.Drawing.Point(214, 201);
+            this.cmbCSharpTypeUsedForOracleIntervalDayToSecond.Location = new System.Drawing.Point(214, 228);
             this.cmbCSharpTypeUsedForOracleIntervalDayToSecond.Margin = new System.Windows.Forms.Padding(4);
             this.cmbCSharpTypeUsedForOracleIntervalDayToSecond.Name = "cmbCSharpTypeUsedForOracleIntervalDayToSecond";
             this.cmbCSharpTypeUsedForOracleIntervalDayToSecond.Size = new System.Drawing.Size(315, 25);
@@ -1577,7 +1606,7 @@ namespace OdapterWnFrm {
             this.cmbCSharpTypeUsedForOracleTimestamp.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbCSharpTypeUsedForOracleTimestamp.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbCSharpTypeUsedForOracleTimestamp.FormattingEnabled = true;
-            this.cmbCSharpTypeUsedForOracleTimestamp.Location = new System.Drawing.Point(214, 119);
+            this.cmbCSharpTypeUsedForOracleTimestamp.Location = new System.Drawing.Point(214, 146);
             this.cmbCSharpTypeUsedForOracleTimestamp.Margin = new System.Windows.Forms.Padding(4);
             this.cmbCSharpTypeUsedForOracleTimestamp.Name = "cmbCSharpTypeUsedForOracleTimestamp";
             this.cmbCSharpTypeUsedForOracleTimestamp.Size = new System.Drawing.Size(315, 25);
@@ -1588,7 +1617,7 @@ namespace OdapterWnFrm {
             this.cmbCSharpTypeUsedForOracleDate.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbCSharpTypeUsedForOracleDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbCSharpTypeUsedForOracleDate.FormattingEnabled = true;
-            this.cmbCSharpTypeUsedForOracleDate.Location = new System.Drawing.Point(214, 92);
+            this.cmbCSharpTypeUsedForOracleDate.Location = new System.Drawing.Point(214, 119);
             this.cmbCSharpTypeUsedForOracleDate.Margin = new System.Windows.Forms.Padding(4);
             this.cmbCSharpTypeUsedForOracleDate.Name = "cmbCSharpTypeUsedForOracleDate";
             this.cmbCSharpTypeUsedForOracleDate.Size = new System.Drawing.Size(315, 25);
@@ -1599,7 +1628,7 @@ namespace OdapterWnFrm {
             this.cmbCSharpTypeUsedForOracleNumber.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbCSharpTypeUsedForOracleNumber.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbCSharpTypeUsedForOracleNumber.FormattingEnabled = true;
-            this.cmbCSharpTypeUsedForOracleNumber.Location = new System.Drawing.Point(214, 42);
+            this.cmbCSharpTypeUsedForOracleNumber.Location = new System.Drawing.Point(214, 69);
             this.cmbCSharpTypeUsedForOracleNumber.Margin = new System.Windows.Forms.Padding(4);
             this.cmbCSharpTypeUsedForOracleNumber.Name = "cmbCSharpTypeUsedForOracleNumber";
             this.cmbCSharpTypeUsedForOracleNumber.Size = new System.Drawing.Size(315, 25);
@@ -1610,7 +1639,7 @@ namespace OdapterWnFrm {
             this.cmbCSharpTypeUsedForOracleInteger.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbCSharpTypeUsedForOracleInteger.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbCSharpTypeUsedForOracleInteger.FormattingEnabled = true;
-            this.cmbCSharpTypeUsedForOracleInteger.Location = new System.Drawing.Point(214, 16);
+            this.cmbCSharpTypeUsedForOracleInteger.Location = new System.Drawing.Point(214, 43);
             this.cmbCSharpTypeUsedForOracleInteger.Margin = new System.Windows.Forms.Padding(4);
             this.cmbCSharpTypeUsedForOracleInteger.Name = "cmbCSharpTypeUsedForOracleInteger";
             this.cmbCSharpTypeUsedForOracleInteger.Size = new System.Drawing.Size(315, 25);
@@ -1667,7 +1696,7 @@ namespace OdapterWnFrm {
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Gainsboro;
-            this.ClientSize = new System.Drawing.Size(1209, 668);
+            this.ClientSize = new System.Drawing.Size(1209, 664);
             this.Controls.Add(this.gbOracleToCSharpCustomTranslation);
             this.Controls.Add(this.gbSettings);
             this.Controls.Add(this.BtnStart);
@@ -1804,6 +1833,8 @@ namespace OdapterWnFrm {
         private System.Windows.Forms.ComboBox cmbCSharpTypeUsedForOracleBlob;
         private System.Windows.Forms.Label lblCSharpTypeUsedForOracleClob;
         private System.Windows.Forms.ComboBox cmbCSharpTypeUsedForOracleClob;
+        private System.Windows.Forms.ComboBox cmbCSharpTypeUsedForRefCursor;
+        private System.Windows.Forms.Label lblCSharpTypeUsedForRefCursor;
     }
 }
 

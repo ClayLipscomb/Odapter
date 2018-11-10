@@ -126,7 +126,7 @@ namespace Odapter {
                             //  and the C# name of the record parsed out of the assoc array C# type.
                             LoadRecordType(arguments[arguments.IndexOf(arg) + 1],
                                             arguments.GetRange(arguments.IndexOf(arg) + 2, arguments.Count - arguments.IndexOf(arg) - 2),
-                                            CSharp.ExtractSubtypeFromListType(assocArrayCSharpType, false));
+                                            CSharp.ExtractSubtypeFromGenericCollectionType(assocArrayCSharpType, false));
                         }
                         continue;
                     default:

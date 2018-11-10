@@ -258,8 +258,8 @@ namespace Odapter {
                     //    ? GenerateNamespacePackage(Parameter.Instance.NamespaceBase, Translater.ConvertOracleNameToCSharpName(arg.NextArgument.TypeOwner, false))
                     //    //? Translater.ConvertOracleNameToCSharpName(arg.NextArgument.TypeOwner, false)
                     //    : null;
-                    if (!genericTypes.Exists(a => a.TypeName == CSharp.ExtractSubtypeFromListType(cSharpType, false)))
-                        genericTypes.Add(new GenericType(packageTypeName, CSharp.ExtractSubtypeFromListType(cSharpType, false), 
+                    if (!genericTypes.Exists(a => a.TypeName == CSharp.ExtractSubtypeFromGenericCollectionType(cSharpType, false)))
+                        genericTypes.Add(new GenericType(packageTypeName, CSharp.ExtractSubtypeFromGenericCollectionType(cSharpType, false), 
                             arg.NextArgument == null || arg.NextArgument.DataLevel == arg.DataLevel));
                 }
             }
@@ -389,7 +389,7 @@ namespace Odapter {
         private string GenerateRefCursorOutArgumentRetrieveCode(List<GenericType> genericTypesUsed, String cSharpArgType, String cSharpArgName, String oracleArgName,
                 int tabIndentCount, bool dynamicMapping = false) {
 
-            String outListSubType = CSharp.ExtractSubtypeFromListType(cSharpArgType, false);
+            String outListSubType = CSharp.ExtractSubtypeFromGenericCollectionType(cSharpArgType, false);
             String returnListSubTypeFullyQualifiedPackageTypeName = null;
             if (genericTypesUsed.Count > 0) {
                 GenericType gt = genericTypesUsed.Find(g => g.TypeName == outListSubType && g.PackageTypeName != null);
@@ -402,7 +402,7 @@ namespace Odapter {
             sb.Append(Tab(tabIndentCount + 2) + cSharpArgName + " = ");
             if (dynamicMapping) {
                 sb.AppendLine(ORCL_UTIL_CLASS + ".ReadResult"
-                    + (cSharpArgType == CSharp.DATATABLE ? "" : "<" + CSharp.ExtractSubtypeFromListType(cSharpArgType, false) + ">")
+                    + (cSharpArgType == CSharp.DATATABLE ? "" : "<" + CSharp.ExtractSubtypeFromGenericCollectionType(cSharpArgType, false) + ">")
                     + "(" + LOCAL_VAR_NAME_READER
                             + (cSharpArgType == CSharp.DATATABLE
                                 ? ", " + PARAM_NAME_CONVERT_COLUMN_NAME_TO_TITLE_CASE
@@ -411,8 +411,8 @@ namespace Odapter {
                     + ");");
             } else {
                 sb.AppendLine((returnListSubTypeFullyQualifiedPackageTypeName == null ? "" : returnListSubTypeFullyQualifiedPackageTypeName + ".Instance.")
-                    + CSharp.READ_RESULT + "I" + CSharp.ExtractSubtypeFromListType(cSharpArgType, false).Substring(2)
-                    + "<" + CSharp.ExtractSubtypeFromListType(cSharpArgType, false) + ">"
+                    + CSharp.READ_RESULT + "I" + CSharp.ExtractSubtypeFromGenericCollectionType(cSharpArgType, false).Substring(2)
+                    + "<" + CSharp.ExtractSubtypeFromGenericCollectionType(cSharpArgType, false) + ">"
                     + "(" + LOCAL_VAR_NAME_READER
                     + ", " + PARAM_NAME_MAXIMUM_ROWS_CURSOR // max rows to read
                     + ");");
@@ -438,18 +438,18 @@ namespace Odapter {
             sb.AppendLine(Tab(5) + "for (int _i = 0; _i < " + oracleArrayCode + ".Length; _i++)");
             sb.AppendLine(Tab(tabIndentCount + 1) + cSharpArgName + ".Add(" + oracleArrayCode + "[_i].IsNull");
 
-            if (CSharp.IsOdpNetType(CSharp.ExtractSubtypeFromListType(cSharpArgType, false))) {
-                sb.AppendLine(Tab(tabIndentCount + 2) + "? " + CSharp.ExtractSubtypeFromListType(cSharpArgType, true) + ".Null ");
+            if (CSharp.IsOdpNetType(CSharp.ExtractSubtypeFromGenericCollectionType(cSharpArgType, false))) {
+                sb.AppendLine(Tab(tabIndentCount + 2) + "? " + CSharp.ExtractSubtypeFromGenericCollectionType(cSharpArgType, true) + ".Null ");
             } else {
-                sb.AppendLine(Tab(tabIndentCount + 2) + "? (" + CSharp.ExtractSubtypeFromListType(cSharpArgType, false) + ")null ");
+                sb.AppendLine(Tab(tabIndentCount + 2) + "? (" + CSharp.ExtractSubtypeFromGenericCollectionType(cSharpArgType, false) + ")null ");
             }
 
-            if (CSharp.IsOdpNetType(CSharp.ExtractSubtypeFromListType(cSharpArgType, false))) {
-                sb.AppendLine(Tab(tabIndentCount + 2) + ": (" + CSharp.ExtractSubtypeFromListType(cSharpArgType, false) + ")"
+            if (CSharp.IsOdpNetType(CSharp.ExtractSubtypeFromGenericCollectionType(cSharpArgType, false))) {
+                sb.AppendLine(Tab(tabIndentCount + 2) + ": (" + CSharp.ExtractSubtypeFromGenericCollectionType(cSharpArgType, false) + ")"
                     + "(" + oracleArrayCode + "[_i].ToString()));");
             } else {
                 sb.AppendLine(Tab(tabIndentCount + 2) 
-                    + ": " + (CSharp.ExtractSubtypeFromListType(cSharpArgType, true).Equals(CSharp.BIG_INTEGER) ? CSharp.BIG_INTEGER + ".Parse" : "Convert.To" + CSharp.ExtractSubtypeFromListType(cSharpArgType, true))
+                    + ": " + (CSharp.ExtractSubtypeFromGenericCollectionType(cSharpArgType, true).Equals(CSharp.BIG_INTEGER) ? CSharp.BIG_INTEGER + ".Parse" : "Convert.To" + CSharp.ExtractSubtypeFromGenericCollectionType(cSharpArgType, true))
                     + "((" + oracleArrayCode + "[_i].ToString())));");
             }
             return sb.ToString();
@@ -636,7 +636,9 @@ namespace Odapter {
                         String cSharpType = Translater.ConvertOracleArgTypeToCSharpType(arg, !arg.IsReturnArgument);
                         String cSharpName = arg.IsReturnArgument ? LOCAL_VAR_NAME_RETURN : Translater.ConvertOracleNameToCSharpName(arg.ArgumentName, true);
                         methodText.Append((arg.IsReturnArgument ? cSharpType + " " : "") + cSharpName +
-                             (CSharp.IsList(cSharpType) ? " = new " + cSharpType + "()" : " = null") + "; ");
+                             (CSharp.IsValidGenericCollectionType(cSharpType) 
+                                ? " = new " + (arg.DataType.Equals(Orcl.REF_CURSOR) ? Translater.ConvertOracleArgTypeToCSharpType(arg, !arg.IsReturnArgument, true) : cSharpType) + "()" 
+                                : " = null") + "; ");
                     }
                 methodText.AppendLine();
             }
@@ -1223,9 +1225,10 @@ namespace Odapter {
         /// <param name="displayMessageMethod">Method used to display message in UI</param>
         public static void Run(Action<String> displayMessageMethod) {
 
-            if (Parameter.Instance.IsGeneratePackage || Parameter.Instance.IsGenerateObjectType || Parameter.Instance.IsGenerateTable || Parameter.Instance.IsGenerateView) { 
+            if (Parameter.Instance.IsGeneratePackage || Parameter.Instance.IsGenerateObjectType || Parameter.Instance.IsGenerateTable || Parameter.Instance.IsGenerateView) {
 
                 // Set these options first since Loader does some translation. In the future, we need to modify Loader to do no translation (if possible).
+                Translater.CSharpTypeUsedForOracleRefCursor = Parameter.Instance.CSharpTypeUsedForOracleRefCursor;
                 Translater.CSharpTypeUsedForOracleInteger = Parameter.Instance.CSharpTypeUsedForOracleInteger;
                 Translater.CSharpTypeUsedForOracleNumber = Parameter.Instance.CSharpTypeUsedForOracleNumber;
                 Translater.CSharpTypeUsedForOracleDate = Parameter.Instance.CSharpTypeUsedForOracleDate;

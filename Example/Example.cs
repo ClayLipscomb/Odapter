@@ -39,7 +39,7 @@ namespace OdapterExample {
         public List<Int32> Int32ListPropertyExtra { get; set; }     // custom property
     }
 
-    // Implements the package record type interface, adding custom properties 
+    // Implements the package record type's interface, adding custom properties 
     public class DtoImplemented : XmplPkgExample.ITTableBigPartial {  // no mapping required
         public Int64? Id { get; set; }
         public Int64? ColInteger { get; set; }
@@ -98,52 +98,52 @@ namespace OdapterExample {
             // List used as argument for Oracle associative array
             List<Int64?> pInOutListInt64, somePrimeNumbers = new List<Int64?> { 2, 3, 5, 7, 11, 13, 17, 19, 29, 31 };
 
-            // DTO Lists and a datatable to be hydrated from Oracle cursor
-            List<DtoInherited> dtoInheritedList;
-            List<DtoImplemented> dtoImplementedList;
-            List<DtoCustomMapByName> dtoOriginalMapByNameList;
-            List<DtoCustomMapByPosition> dtoOriginalMapByPositionList;
+            // DTO ICollections and a datatable to be hydrated from Oracle cursor
+            ICollection<DtoInherited> dtoInheritedResultSet;
+            ICollection<DtoImplemented> dtoImplementedResultSet;
+            ICollection<DtoCustomMapByName> dtoOriginalMapByNameResultSet;
+            ICollection<DtoCustomMapByPosition> dtoOriginalMapByPositionLResultSet;
             DataTable dataTable;
 
-            // 1. Hydrate DTO List from typed result set by using DTO inherited from package record type DTO.
+            // 1. Hydrate DTO ICollection from typed result set by using DTO inherited from package record type DTO.
             pInOutListInt64 = somePrimeNumbers; 
-            dtoInheritedList = XmplPkgExample.Instance.GetRowsTypedRet<DtoInherited>(pInDecimal, ref pInOutString, ref pInOutListInt64, out pOutDate, rowLimit);
-            Debug.Assert(dtoInheritedList.Count == rowLimit);
+            dtoInheritedResultSet = XmplPkgExample.Instance.GetRowsTypedRet<DtoInherited>(pInDecimal, ref pInOutString, ref pInOutListInt64, out pOutDate, rowLimit);
+            Debug.Assert(dtoInheritedResultSet.Count == rowLimit);
             Debug.Assert(pInOutString.Equals(GOODBYE));                             // confirm OUT string arg from package function
             for (int i = 0; i < pInOutListInt64.Count; i++)
                 Debug.Assert(pInOutListInt64[i].Equals(somePrimeNumbers[i] * 7));   // confirm all values were multiplied by 7 in func
             Debug.Assert(pOutDate.Equals(new DateTime(1999, 12, 31)));              // confirm OUT date arg from package function
 
-            // 2. Hydrate DTO List from typed result set by using DTO implementing package record type interface.
+            // 2. Hydrate DTO ICollection from typed result set by using DTO implementing package record type interface.
             pInOutListInt64 = somePrimeNumbers;
-            dtoImplementedList = XmplPkgExample.Instance.GetRowsTypedRet<DtoImplemented>(pInDecimal, ref pInOutString, ref pInOutListInt64, out pOutDate, rowLimit);
-            Debug.Assert(dtoImplementedList.Count == rowLimit);
+            dtoImplementedResultSet = XmplPkgExample.Instance.GetRowsTypedRet<DtoImplemented>(pInDecimal, ref pInOutString, ref pInOutListInt64, out pOutDate, rowLimit);
+            Debug.Assert(dtoImplementedResultSet.Count == rowLimit);
             Debug.Assert(pInOutString.Equals(GOODBYE));                             // confirm OUT string arg from package function
             for (int i = 0; i < pInOutListInt64.Count; i++)
                 Debug.Assert(pInOutListInt64[i].Equals(somePrimeNumbers[i] * 7));   // confirm all values were multiplied by 7 in func
             Debug.Assert(pOutDate.Equals(new DateTime(1999, 12, 31)));              // confirm OUT date arg from package function
 
-            // 3. Hydrate DTO List from untyped result set by mapping column name to property name (default); 
+            // 3. Hydrate DTO ICollection from untyped result set by mapping column name to property name (default); 
             //      unmapped columns will be ignored (non-default).
-            dtoOriginalMapByNameList = XmplPkgExample.Instance.GetRowsUntypedRet<DtoCustomMapByName>(pInInt64, false, true, rowLimit);
-            Debug.Assert(dtoOriginalMapByNameList.Count == rowLimit);
+            dtoOriginalMapByNameResultSet = XmplPkgExample.Instance.GetRowsUntypedRet<DtoCustomMapByName>(pInInt64, false, true, rowLimit);
+            Debug.Assert(dtoOriginalMapByNameResultSet.Count == rowLimit);
 
-            // 4. Hydrate DTO List from untyped result set by mapping column name to property name (default); 
+            // 4. Hydrate DTO ICollection from untyped result set by mapping column name to property name (default); 
             //      an unmapped column will throw (default).
             try {
-                dtoOriginalMapByNameList = XmplPkgExample.Instance.GetRowsUntypedRet<DtoCustomMapByName>(pInInt64, false, false, rowLimit);
+                dtoOriginalMapByNameResultSet = XmplPkgExample.Instance.GetRowsUntypedRet<DtoCustomMapByName>(pInInt64, false, false, rowLimit);
             } catch (Exception ex) {
                 if (!ex.Message.StartsWith("Hydrator.BuildMappings")) Debug.Assert(false);
             }
 
-            // 5. Hydrate DTO List from untyped result set by mapping column position to property position (non-default); 
+            // 5. Hydrate DTO ICollection from untyped result set by mapping column position to property position (non-default); 
             //      unmapped columns will be ignored (non-default)
-            dtoOriginalMapByPositionList = XmplPkgExample.Instance.GetRowsUntypedRet<DtoCustomMapByPosition>(pInInt64, true, true, rowLimit);
+            dtoOriginalMapByPositionLResultSet = XmplPkgExample.Instance.GetRowsUntypedRet<DtoCustomMapByPosition>(pInInt64, true, true, rowLimit);
 
-            // 6. Hydrate DTO List from untyped result set by mapping column position to property position (non-default); 
+            // 6. Hydrate DTO ICollection from untyped result set by mapping column position to property position (non-default); 
             //      an unmapped column will throw (default).
             try {
-                dtoOriginalMapByPositionList = XmplPkgExample.Instance.GetRowsUntypedRet<DtoCustomMapByPosition>(pInInt64, true, false, rowLimit);
+                dtoOriginalMapByPositionLResultSet = XmplPkgExample.Instance.GetRowsUntypedRet<DtoCustomMapByPosition>(pInInt64, true, false, rowLimit);
             } catch (Exception ex) {
                 if (!ex.Message.StartsWith("Hydrator.BuildMappings")) Debug.Assert(false);
             }

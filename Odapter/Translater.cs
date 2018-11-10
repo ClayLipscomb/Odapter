@@ -85,6 +85,12 @@ namespace Odapter {
         }
 
         public static readonly IDictionary<String, List<CustomTranslatedCSharpType>> CustomTypeTranslationOptions = new Dictionary<String, List<CustomTranslatedCSharpType>>() {
+            {Orcl.REF_CURSOR, new List<CustomTranslatedCSharpType> {                new CustomTranslatedCSharpType(CSharp.ICOLLECTION, @""),
+                                                                                    new CustomTranslatedCSharpType(CSharp.ILIST, @""),
+                                                                                    new CustomTranslatedCSharpType(CSharp.LIST, @"") } },
+            {Orcl.ASSOCIATITVE_ARRAY, new List<CustomTranslatedCSharpType> {        new CustomTranslatedCSharpType(CSharp.LIST, @""), 
+                                                                                    new CustomTranslatedCSharpType(CSharp.ILIST, @""),
+                                                                                    new CustomTranslatedCSharpType(CSharp.ICOLLECTION, @"") } }, 
             {Orcl.INTEGER, new List<CustomTranslatedCSharpType> {                   new CustomTranslatedCSharpType(CSharp.INT32, @"9 digit limit, not recommended"),
                                                                                     new CustomTranslatedCSharpType(CSharp.INT64, @"18 digit limit, usually safe"),
                                                                                     new CustomTranslatedCSharpType(CSharp.DECIMAL, @"28 digit limit"),
@@ -104,11 +110,13 @@ namespace Odapter {
         };
 
         #region Properties
+        public static string CSharpTypeUsedForOracleRefCursor { get; set; } = CSharp.ICOLLECTION;
+        public static string CSharpTypeUsedForOracleAssocArray { get; set; } = CSharp.LIST;
+
         private static string _cSharpTypeUsedForOracleInteger = CSharp.DECIMAL;
         public static string CSharpTypeUsedForOracleInteger {
             set {
-                if (value != CSharp.INT32 && value != CSharp.INT64 && value != CSharp.DECIMAL
-                        && value != CSharp.ORACLE_DECIMAL && value != CSharp.BIG_INTEGER)
+                if (value != CSharp.INT32 && value != CSharp.INT64 && value != CSharp.DECIMAL  && value != CSharp.ORACLE_DECIMAL )
                     throw new Exception("C# type " + value + " not allowed as translation for Oracle INTEGER.");
                 _cSharpTypeUsedForOracleInteger = value;
             }
@@ -120,7 +128,7 @@ namespace Odapter {
         private static string _cSharpTypeUsedForOracleNumber;
         public static string CSharpTypeUsedForOracleNumber {
             set {
-                if (value != CSharp.DECIMAL && value != CSharp.ORACLE_DECIMAL && value != CSharp.STRING)
+                if (value != CSharp.DECIMAL && value != CSharp.ORACLE_DECIMAL)
                     throw new Exception("C# type " + value + " not allowed as translation for Oracle NUMBER.");
                 _cSharpTypeUsedForOracleNumber = value;
             }
@@ -482,10 +490,10 @@ namespace Odapter {
         /// Convert the type of an Oracle argument to its equivalent C# argument type
         /// </summary>
         /// <param name="oracleArg">Oracle argument to be converted</param>
-        /// <param name="nextArg">The Oracle argument succeeding the primary argument in prodedure argument list.</param>
         /// <param name="typeNotNullable">Determines whether C# type can not be nullable, defaults to false. </param>
+        /// <param name="nonInterfaceType">Do not convert to C# interface type.</param>
         /// <returns></returns>
-        public static string ConvertOracleArgTypeToCSharpType(Argument oracleArg, bool typeNotNullable) {
+        internal static string ConvertOracleArgTypeToCSharpType(Argument oracleArg, bool typeNotNullable, bool nonInterfaceType = false) {
             if (oracleArg == null) return null;
 
             // a PL/SQL record will have a custom class built for it; here we only need to return that class name as the type
@@ -498,12 +506,12 @@ namespace Odapter {
             if (oracleArg.DataType == Orcl.ASSOCIATITVE_ARRAY) {
                 string arrayType = (oracleArg.NextArgument.DataType == Orcl.RECORD 
                     ? ConvertOracleRecordNameToCSharpName(oracleArg)
-                    : ConvertOracleArgTypeToCSharpType(oracleArg.NextArgument, false/*, typeNotNullable: true*/));
-                return CSharp.ListOf(arrayType);
+                    : ConvertOracleArgTypeToCSharpType(oracleArg.NextArgument, false));
+                return CSharp.GenericCollectionOf(CSharp.LIST, arrayType);
             }
 
             // a nested table to a List (even though we are not handling nested tables yet)
-            if (oracleArg.DataType == Orcl.NESTED_TABLE) return CSharp.ListOf(ConvertOracleArgTypeToCSharpType(oracleArg.NextArgument, true));
+            if (oracleArg.DataType == Orcl.NESTED_TABLE) return CSharp.GenericCollectionOf(CSharp.LIST, ConvertOracleArgTypeToCSharpType(oracleArg.NextArgument, true));
 
             // a cursor translates to a List
             // a strongly typed cursor is a generic list, but based on record type
@@ -512,13 +520,14 @@ namespace Odapter {
                 return (oracleArg.NextArgument == null || oracleArg.NextArgument.DataLevel == oracleArg.DataLevel // is it weakly typed cursor?
                     ? (UseGenericListForCursor
                         // generic list; create informative subtype name that is unique among multilple untyped (cursor) args in proc
-                        ? CSharp.ListOf(CSharp.GENERIC_TYPE_PREFIX
+                        ? CSharp.GenericCollectionOf((nonInterfaceType ? CSharp.LIST : CSharpTypeUsedForOracleRefCursor), CSharp.GENERIC_TYPE_PREFIX
                             + (ConvertOracleNameToCSharpName(oracleArg.ArgumentName, true) ?? "return") + "Untyped")
                         // otherwise, we are configured to use a Datatable
                         : CSharp.DATATABLE) 
                     : (UseGenericListForCursor
                         // generic list of a type based on, or extended from, the cursor's record type; include record type in name
-                        ? CSharp.ListOf(CSharp.GENERIC_TYPE_PREFIX + ConvertOracleArgTypeToCSharpType(oracleArg.NextArgument, /*null,*/ true))
+                        ? CSharp.GenericCollectionOf((nonInterfaceType ? CSharp.LIST : CSharpTypeUsedForOracleRefCursor), CSharp.GENERIC_TYPE_PREFIX 
+                            + ConvertOracleArgTypeToCSharpType(oracleArg.NextArgument, true))
                         // a databale for strongly typed cursor is not practical, but technically it could be used in the future
                         : CSharp.DATATABLE)  
                     );
@@ -575,7 +584,7 @@ namespace Odapter {
         /// <param name="typeNotNullable">make the C# type not nullable</param>
         /// <param name="oracleTypeName">required for Oracle "object" type</param>
         /// <returns></returns>
-        public static string ConvertOracleTypeToCSharpType(String oracleType, String oracleName, bool typeNotNullable, String oracleTypeName) {
+        internal static string ConvertOracleTypeToCSharpType(String oracleType, String oracleName, bool typeNotNullable, String oracleTypeName) {
             
             // create all type names dependent on typeNotNullable argument
             string cSharpTypeUsedForOracleInteger = _cSharpTypeUsedForOracleInteger + (typeNotNullable ? "" : "?");

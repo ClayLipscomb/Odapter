@@ -55,6 +55,10 @@ namespace Odapter {
         public const string XML_DOCUMENT = "XmlDocument";
         public const string DATATABLE = "DataTable";
         public const string LIST = "List";
+        public const string ILIST = "IList";
+        public const string ICOLLECTION = "ICollection";
+        public const string OF_T = "<T>";
+        public static readonly List<String> GENERIC_COLLECTION_BASE_TYPES = new List<String>() { LIST, ILIST, ICOLLECTION };  // implemented to date
         public const string VOID = "void";
         public const string GENERIC_TYPE_PREFIX = "T_";
         public const string NULLABLE_SUFFIX = @"?";
@@ -77,7 +81,7 @@ namespace Odapter {
         public const string ORACLE_BINARY = ODP_NET_TYPE_PREFIX + "Binary";
         public const string ORACLE_REF = ODP_NET_TYPE_PREFIX + "Ref";
         public const string ORACLE_REF_CURSOR = ODP_NET_TYPE_PREFIX + "RefCursor";  // class
-        public const string ORACLE_XML_TYPE = ODP_NET_TYPE_PREFIX + "XmlType";      
+        public const string ORACLE_XML_TYPE = ODP_NET_TYPE_PREFIX + "XmlType";
 
         public const string NULL = "null";
         #endregion
@@ -140,17 +144,17 @@ namespace Odapter {
             CASE, FLOAT, PARAMS, TYPEOF,
             CATCH, FOR, PRIVATE, UINT,
             CHAR, FOREACH, PROTECTED, ULONG,
-            CHECKED, GOTO, PUBLIC, UNCHECKED, 
-            CLASS, IF, READONLY, UNSAFE, 
-            CONST, IMPLICIT, REF, USHORT, 
-            CONTINUE, IN, RETURN, USING, 
+            CHECKED, GOTO, PUBLIC, UNCHECKED,
+            CLASS, IF, READONLY, UNSAFE,
+            CONST, IMPLICIT, REF, USHORT,
+            CONTINUE, IN, RETURN, USING,
             DECIMAL, INT, SBYTE, VIRTUAL,
             DEFAULT, INTERFACE, SEALED, VOLATILE,
-            DELEGATE, INTERNAL, SHORT, VOID, 
+            DELEGATE, INTERNAL, SHORT, VOID,
             DO, IS, SIZEOF, WHILE,
             DOUBLE, LOCK, STACKALLOC,
             ELSE, LONG, STATIC,
-            ENUM, NAMESPACE, STRING, 
+            ENUM, NAMESPACE, STRING,
             // a few contextual keywords I don't want to allow 
             DYNAMIC, GET, LET, PARTIAL, SET, VALUE, VAR
         }
@@ -164,33 +168,35 @@ namespace Odapter {
         /// </summary>
         /// <param name="word"></param>
         /// <returns></returns>
-        public static bool IsKeyword(string word) {
+        internal static bool IsKeyword(string word) {
             return Enum.IsDefined(typeof(Keyword), word.ToUpper());
         }
 
         /// <summary>
-        /// Accept a C# list and return the sub type
+        /// Accepts generic collection type and returns its sub type
         /// </summary>
-        /// <param name="listType">C# list type</param>
+        /// <param name="genCollType">Generic collection type</param>
         /// <param name="excludeNullableSymbol">Whether to exclude nullable symbol from returned subtype</param>
         /// <returns></returns>
-        public static string ExtractSubtypeFromListType(string listType, bool excludeNullableSymbol) {
-            if (!IsList(listType)) return "InvalidListTypeSentToExtractSubtypeFromListType" + listType;
-            string subType = listType.Substring(LIST.Length + 1, listType.Length - LIST.Length - 2);
+        internal static string ExtractSubtypeFromGenericCollectionType(string genCollType, bool excludeNullableSymbol) {
+            if (!IsValidGenericCollectionType(genCollType)) return "InvalidTypeSentToExtractSubtypeFromGenericCollectionType:" + genCollType;
+            string subType = genCollType.Substring(genCollType.IndexOf('<') + 1, genCollType.Length - genCollType.IndexOf('<') - 2);
             return (excludeNullableSymbol ? subType.TrimEnd(NULLABLE_SUFFIX.ToCharArray()) : subType);
         }
 
         /// <summary>
-        /// Is C# type a list
+        /// Determines if type is a valid generic collection type
         /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>
-        public static bool IsList(string type) {
-            return type.StartsWith(LIST + "<") && type.EndsWith(">");
+        internal static bool IsValidGenericCollectionType(String type) {
+            if (!type.EndsWith(">")) return false;
+            foreach (String gcbt in CSharp.GENERIC_COLLECTION_BASE_TYPES) if (type.StartsWith(gcbt + "<")) return true;
+            return false;
         }
 
-        public static string ListOf(string type) {
-            return LIST + "<" + type + ">";
+        internal static string GenericCollectionOf(String genCollectionBaseType, string subType) {
+            return genCollectionBaseType + "<" + subType + ">";
         }
 
         /// <summary>
@@ -198,7 +204,7 @@ namespace Odapter {
         /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>
-        public static bool IsOdpNetType(string type) {
+        internal static bool IsOdpNetType(string type) {
             return !String.IsNullOrEmpty(type) && type.StartsWith(ODP_NET_TYPE_PREFIX);
         }
 
@@ -207,13 +213,15 @@ namespace Odapter {
         /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>
-        public static bool IsTypeNullable(string type) {
+        internal static bool IsTypeNullable(string type) {
             if (String.IsNullOrEmpty(type)) return false;
 
             return type.EndsWith(NULLABLE_SUFFIX)
                 || type.Equals(STRING)
                 || type.Equals(DATATABLE)
-                || type.StartsWith(LIST);
+                || type.StartsWith(LIST)
+                || type.StartsWith(ILIST)
+                || type.StartsWith(ICOLLECTION);
         }
     }
 }

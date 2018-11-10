@@ -83,6 +83,8 @@ namespace Odapter {
             IsConvertOracleNumberToIntegerIfColumnNameIsId = true;
             IsUseAutoImplementedProperties = true;
 
+            CSharpTypeUsedForOracleRefCursor = CSharp.ICOLLECTION;
+            CSharpTypeUsedForOracleAssociativeArray = CSharp.LIST;
             CSharpTypeUsedForOracleInteger = CSharp.INT64;
             CSharpTypeUsedForOracleNumber = CSharp.DECIMAL;
             CSharpTypeUsedForOracleDate = CSharp.DATE_TIME;
@@ -191,6 +193,8 @@ namespace Odapter {
         public Int16 MaxReturnAndOutArgStringSize { get; set; }
 
         // type mapping
+        public String CSharpTypeUsedForOracleRefCursor { get; set; }
+        public String CSharpTypeUsedForOracleAssociativeArray { get; set; }
         public String CSharpTypeUsedForOracleInteger { get; set; }
         public String CSharpTypeUsedForOracleNumber { get; set; }
         public String CSharpTypeUsedForOracleDate { get; set; }

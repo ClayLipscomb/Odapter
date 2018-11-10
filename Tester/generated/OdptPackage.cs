@@ -247,11 +247,11 @@ namespace Schema.Odpt.Package {
             }
         } // GetDistinctCriteria
 
-        public List<T_returnUntyped> GetLog<T_returnUntyped>(DateTime? pLogDtFrom = null, DateTime? pLogDtTo = null, String pUserName = null, String pInterface = null, 
+        public ICollection<T_returnUntyped> GetLog<T_returnUntyped>(DateTime? pLogDtFrom = null, DateTime? pLogDtTo = null, String pUserName = null, String pInterface = null, 
                 SByte? pSeverity = null, String pSource = null, 
                 bool mapColumnToObjectPropertyByPosition = false, bool allowUnmappedColumnsToBeExcluded = false, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
                 where T_returnUntyped : class, new() {
-            List<T_returnUntyped> __ret = new List<T_returnUntyped>(); 
+            ICollection<T_returnUntyped> __ret = new List<T_returnUntyped>(); 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
             try {
                 using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_LOG.GET_LOG", __conn)) {
@@ -1855,11 +1855,11 @@ namespace Schema.Odpt.Package {
         } // FuncClob
 
         // **PROC IGNORED** - .NET cannot send/receive a PL/SQL BOOLEAN
-        // public List<T_TRecordTypeIgnored> FuncCursorTypedIgnored<T_TRecordTypeIgnored>(
+        // public ICollection<T_TRecordTypeIgnored> FuncCursorTypedIgnored<T_TRecordTypeIgnored>(
         //        bool mapColumnToObjectPropertyByPosition = false, bool allowUnmappedColumnsToBeExcluded = false, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
 
         // **PROC IGNORED** - .NET cannot send/receive a PL/SQL BOOLEAN
-        // public List<T_TRecordTypeIgnored> FuncCursorTypedIgnored<T_TRecordTypeIgnored>(UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
+        // public ICollection<T_TRecordTypeIgnored> FuncCursorTypedIgnored<T_TRecordTypeIgnored>(UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
 
         public DateTime? FuncDate(DateTime? pIn, ref DateTime? pInOut, out DateTime? pOut, OracleConnection optionalPreexistingOpenConnection = null) {
             DateTime? __ret = null; pOut = null; 
@@ -3103,11 +3103,11 @@ namespace Schema.Odpt.Package {
             }
         } // DeleteRow
 
-        public List<T_TTableBigFiltered> GetRowsTypedFilteredPkg<T_TTableBigFiltered>(out List<T_TTableBigFiltered> pRefCursor, out List<T_TTableBigFiltered> pRefCursor2, 
+        public ICollection<T_TTableBigFiltered> GetRowsTypedFilteredPkg<T_TTableBigFiltered>(out ICollection<T_TTableBigFiltered> pRefCursor, out ICollection<T_TTableBigFiltered> pRefCursor2, 
                 bool mapColumnToObjectPropertyByPosition = false, bool allowUnmappedColumnsToBeExcluded = false, 
                 UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
                 where T_TTableBigFiltered : class, new() {
-            List<T_TTableBigFiltered> __ret = new List<T_TTableBigFiltered>(); pRefCursor = new List<T_TTableBigFiltered>(); pRefCursor2 = new List<T_TTableBigFiltered>(); 
+            ICollection<T_TTableBigFiltered> __ret = new List<T_TTableBigFiltered>(); pRefCursor = new List<T_TTableBigFiltered>(); pRefCursor2 = new List<T_TTableBigFiltered>(); 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
             try {
                 using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_TABLE_BIG.GET_ROWS_TYPED_FILTERED_PKG", __conn)) {
@@ -3142,9 +3142,9 @@ namespace Schema.Odpt.Package {
             return __ret;
         } // GetRowsTypedFilteredPkg
 
-        public List<T_TTableBigFiltered> GetRowsTypedFilteredPkg<T_TTableBigFiltered>(out List<T_TTableBigFiltered> pRefCursor, out List<T_TTableBigFiltered> pRefCursor2, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
+        public ICollection<T_TTableBigFiltered> GetRowsTypedFilteredPkg<T_TTableBigFiltered>(out ICollection<T_TTableBigFiltered> pRefCursor, out ICollection<T_TTableBigFiltered> pRefCursor2, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
                 where T_TTableBigFiltered : class, FilteredPkg.ITTableBigFiltered, new() {
-            List<T_TTableBigFiltered> __ret = new List<T_TTableBigFiltered>(); pRefCursor = new List<T_TTableBigFiltered>(); pRefCursor2 = new List<T_TTableBigFiltered>(); 
+            ICollection<T_TTableBigFiltered> __ret = new List<T_TTableBigFiltered>(); pRefCursor = new List<T_TTableBigFiltered>(); pRefCursor2 = new List<T_TTableBigFiltered>(); 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
             try {
                 using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_TABLE_BIG.GET_ROWS_TYPED_FILTERED_PKG", __conn)) {
@@ -3179,7 +3179,7 @@ namespace Schema.Odpt.Package {
             return __ret;
         } // GetRowsTypedFilteredPkg
 
-        public Int64? GetRowsTypedOut<T_TTableBig>(out List<T_TTableBig> pRefCursor, 
+        public Int64? GetRowsTypedOut<T_TTableBig>(out ICollection<T_TTableBig> pRefCursor, 
                 bool mapColumnToObjectPropertyByPosition = false, bool allowUnmappedColumnsToBeExcluded = false, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, 
                 OracleConnection optionalPreexistingOpenConnection = null)
                 where T_TTableBig : class, new() {
@@ -3212,7 +3212,7 @@ namespace Schema.Odpt.Package {
             return __ret;
         } // GetRowsTypedOut
 
-        public Int64? GetRowsTypedOut<T_TTableBig>(out List<T_TTableBig> pRefCursor, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
+        public Int64? GetRowsTypedOut<T_TTableBig>(out ICollection<T_TTableBig> pRefCursor, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
                 where T_TTableBig : class, ITTableBig, new() {
             Int64? __ret = null; pRefCursor = new List<T_TTableBig>(); 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
@@ -3243,7 +3243,7 @@ namespace Schema.Odpt.Package {
             return __ret;
         } // GetRowsTypedOut
 
-        public Int64? GetRowsTypedOut2<T_TTableBig, T_TTableBigChar>(out List<T_TTableBig> pRefCursor, out List<T_TTableBigChar> pRefCursor2, 
+        public Int64? GetRowsTypedOut2<T_TTableBig, T_TTableBigChar>(out ICollection<T_TTableBig> pRefCursor, out ICollection<T_TTableBigChar> pRefCursor2, 
                 bool mapColumnToObjectPropertyByPosition = false, bool allowUnmappedColumnsToBeExcluded = false, 
                 UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
                 where T_TTableBig : class, new()
@@ -3282,7 +3282,7 @@ namespace Schema.Odpt.Package {
             return __ret;
         } // GetRowsTypedOut2
 
-        public Int64? GetRowsTypedOut2<T_TTableBig, T_TTableBigChar>(out List<T_TTableBig> pRefCursor, out List<T_TTableBigChar> pRefCursor2, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
+        public Int64? GetRowsTypedOut2<T_TTableBig, T_TTableBigChar>(out ICollection<T_TTableBig> pRefCursor, out ICollection<T_TTableBigChar> pRefCursor2, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
                 where T_TTableBig : class, ITTableBig, new()
                 where T_TTableBigChar : class, ITTableBigChar, new() {
             Int64? __ret = null; pRefCursor = new List<T_TTableBig>(); pRefCursor2 = new List<T_TTableBigChar>(); 
@@ -3319,12 +3319,12 @@ namespace Schema.Odpt.Package {
             return __ret;
         } // GetRowsTypedOut2
 
-        public List<T_TTableBig> GetRowsTypedOut2Ret<T_TTableBig, T_TTableBigChar>(out List<T_TTableBig> pRefCursor, out List<T_TTableBigChar> pRefCursor2, 
+        public ICollection<T_TTableBig> GetRowsTypedOut2Ret<T_TTableBig, T_TTableBigChar>(out ICollection<T_TTableBig> pRefCursor, out ICollection<T_TTableBigChar> pRefCursor2, 
                 bool mapColumnToObjectPropertyByPosition = false, bool allowUnmappedColumnsToBeExcluded = false, 
                 UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
                 where T_TTableBig : class, new()
                 where T_TTableBigChar : class, new() {
-            List<T_TTableBig> __ret = new List<T_TTableBig>(); pRefCursor = new List<T_TTableBig>(); pRefCursor2 = new List<T_TTableBigChar>(); 
+            ICollection<T_TTableBig> __ret = new List<T_TTableBig>(); pRefCursor = new List<T_TTableBig>(); pRefCursor2 = new List<T_TTableBigChar>(); 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
             try {
                 using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_TABLE_BIG.GET_ROWS_TYPED_OUT2_RET", __conn)) {
@@ -3359,10 +3359,10 @@ namespace Schema.Odpt.Package {
             return __ret;
         } // GetRowsTypedOut2Ret
 
-        public List<T_TTableBig> GetRowsTypedOut2Ret<T_TTableBig, T_TTableBigChar>(out List<T_TTableBig> pRefCursor, out List<T_TTableBigChar> pRefCursor2, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
+        public ICollection<T_TTableBig> GetRowsTypedOut2Ret<T_TTableBig, T_TTableBigChar>(out ICollection<T_TTableBig> pRefCursor, out ICollection<T_TTableBigChar> pRefCursor2, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
                 where T_TTableBig : class, ITTableBig, new()
                 where T_TTableBigChar : class, ITTableBigChar, new() {
-            List<T_TTableBig> __ret = new List<T_TTableBig>(); pRefCursor = new List<T_TTableBig>(); pRefCursor2 = new List<T_TTableBigChar>(); 
+            ICollection<T_TTableBig> __ret = new List<T_TTableBig>(); pRefCursor = new List<T_TTableBig>(); pRefCursor2 = new List<T_TTableBigChar>(); 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
             try {
                 using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_TABLE_BIG.GET_ROWS_TYPED_OUT2_RET", __conn)) {
@@ -3397,11 +3397,11 @@ namespace Schema.Odpt.Package {
             return __ret;
         } // GetRowsTypedOut2Ret
 
-        public List<T_TTableBig> GetRowsTypedOutRet<T_TTableBig>(out List<T_TTableBig> pRefCursor, 
+        public ICollection<T_TTableBig> GetRowsTypedOutRet<T_TTableBig>(out ICollection<T_TTableBig> pRefCursor, 
                 bool mapColumnToObjectPropertyByPosition = false, bool allowUnmappedColumnsToBeExcluded = false, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, 
                 OracleConnection optionalPreexistingOpenConnection = null)
                 where T_TTableBig : class, new() {
-            List<T_TTableBig> __ret = new List<T_TTableBig>(); pRefCursor = new List<T_TTableBig>(); 
+            ICollection<T_TTableBig> __ret = new List<T_TTableBig>(); pRefCursor = new List<T_TTableBig>(); 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
             try {
                 using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_TABLE_BIG.GET_ROWS_TYPED_OUT_RET", __conn)) {
@@ -3431,9 +3431,9 @@ namespace Schema.Odpt.Package {
             return __ret;
         } // GetRowsTypedOutRet
 
-        public List<T_TTableBig> GetRowsTypedOutRet<T_TTableBig>(out List<T_TTableBig> pRefCursor, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
+        public ICollection<T_TTableBig> GetRowsTypedOutRet<T_TTableBig>(out ICollection<T_TTableBig> pRefCursor, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
                 where T_TTableBig : class, ITTableBig, new() {
-            List<T_TTableBig> __ret = new List<T_TTableBig>(); pRefCursor = new List<T_TTableBig>(); 
+            ICollection<T_TTableBig> __ret = new List<T_TTableBig>(); pRefCursor = new List<T_TTableBig>(); 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
             try {
                 using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_TABLE_BIG.GET_ROWS_TYPED_OUT_RET", __conn)) {
@@ -3463,10 +3463,10 @@ namespace Schema.Odpt.Package {
             return __ret;
         } // GetRowsTypedOutRet
 
-        public List<T_TTableBig> GetRowsTypedRet<T_TTableBig>(
+        public ICollection<T_TTableBig> GetRowsTypedRet<T_TTableBig>(
                 bool mapColumnToObjectPropertyByPosition = false, bool allowUnmappedColumnsToBeExcluded = false, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
                 where T_TTableBig : class, new() {
-            List<T_TTableBig> __ret = new List<T_TTableBig>(); 
+            ICollection<T_TTableBig> __ret = new List<T_TTableBig>(); 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
             try {
                 using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_TABLE_BIG.GET_ROWS_TYPED_RET", __conn)) {
@@ -3491,9 +3491,9 @@ namespace Schema.Odpt.Package {
             return __ret;
         } // GetRowsTypedRet
 
-        public List<T_TTableBig> GetRowsTypedRet<T_TTableBig>(UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
+        public ICollection<T_TTableBig> GetRowsTypedRet<T_TTableBig>(UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
                 where T_TTableBig : class, ITTableBig, new() {
-            List<T_TTableBig> __ret = new List<T_TTableBig>(); 
+            ICollection<T_TTableBig> __ret = new List<T_TTableBig>(); 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
             try {
                 using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_TABLE_BIG.GET_ROWS_TYPED_RET", __conn)) {
@@ -3518,13 +3518,13 @@ namespace Schema.Odpt.Package {
             return __ret;
         } // GetRowsTypedRet
 
-        public List<T_returnUntyped> GetRowsUntypedFilteredPkg<T_returnUntyped, T_pRefCursorUntyped, T_pRefCursor2Untyped>(out List<T_pRefCursorUntyped> pRefCursor, out List<T_pRefCursor2Untyped> pRefCursor2, 
+        public ICollection<T_returnUntyped> GetRowsUntypedFilteredPkg<T_returnUntyped, T_pRefCursorUntyped, T_pRefCursor2Untyped>(out ICollection<T_pRefCursorUntyped> pRefCursor, out ICollection<T_pRefCursor2Untyped> pRefCursor2, 
                 bool mapColumnToObjectPropertyByPosition = false, bool allowUnmappedColumnsToBeExcluded = false, 
                 UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
                 where T_returnUntyped : class, new()
                 where T_pRefCursorUntyped : class, new()
                 where T_pRefCursor2Untyped : class, new() {
-            List<T_returnUntyped> __ret = new List<T_returnUntyped>(); pRefCursor = new List<T_pRefCursorUntyped>(); pRefCursor2 = new List<T_pRefCursor2Untyped>(); 
+            ICollection<T_returnUntyped> __ret = new List<T_returnUntyped>(); pRefCursor = new List<T_pRefCursorUntyped>(); pRefCursor2 = new List<T_pRefCursor2Untyped>(); 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
             try {
                 using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_TABLE_BIG.GET_ROWS_UNTYPED_FILTERED_PKG", __conn)) {
@@ -3596,7 +3596,7 @@ namespace Schema.Odpt.Package {
             return __ret;
         } // GetRowsUntypedFilteredPkg
 
-        public Int64? GetRowsUntypedOut<T_pRefCursorUntyped>(out List<T_pRefCursorUntyped> pRefCursor, 
+        public Int64? GetRowsUntypedOut<T_pRefCursorUntyped>(out ICollection<T_pRefCursorUntyped> pRefCursor, 
                 bool mapColumnToObjectPropertyByPosition = false, bool allowUnmappedColumnsToBeExcluded = false, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, 
                 OracleConnection optionalPreexistingOpenConnection = null)
                 where T_pRefCursorUntyped : class, new() {
@@ -3659,7 +3659,7 @@ namespace Schema.Odpt.Package {
             return __ret;
         } // GetRowsUntypedOut
 
-        public Int64? GetRowsUntypedOut2<T_pRefCursorUntyped, T_pRefCursor2Untyped>(out List<T_pRefCursorUntyped> pRefCursor, out List<T_pRefCursor2Untyped> pRefCursor2, 
+        public Int64? GetRowsUntypedOut2<T_pRefCursorUntyped, T_pRefCursor2Untyped>(out ICollection<T_pRefCursorUntyped> pRefCursor, out ICollection<T_pRefCursor2Untyped> pRefCursor2, 
                 bool mapColumnToObjectPropertyByPosition = false, bool allowUnmappedColumnsToBeExcluded = false, 
                 UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
                 where T_pRefCursorUntyped : class, new()
@@ -3734,13 +3734,13 @@ namespace Schema.Odpt.Package {
             return __ret;
         } // GetRowsUntypedOut2
 
-        public List<T_returnUntyped> GetRowsUntypedOut2Ret<T_returnUntyped, T_pRefCursorUntyped, T_pRefCursor2Untyped>(out List<T_pRefCursorUntyped> pRefCursor, out List<T_pRefCursor2Untyped> pRefCursor2, 
+        public ICollection<T_returnUntyped> GetRowsUntypedOut2Ret<T_returnUntyped, T_pRefCursorUntyped, T_pRefCursor2Untyped>(out ICollection<T_pRefCursorUntyped> pRefCursor, out ICollection<T_pRefCursor2Untyped> pRefCursor2, 
                 bool mapColumnToObjectPropertyByPosition = false, bool allowUnmappedColumnsToBeExcluded = false, 
                 UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
                 where T_returnUntyped : class, new()
                 where T_pRefCursorUntyped : class, new()
                 where T_pRefCursor2Untyped : class, new() {
-            List<T_returnUntyped> __ret = new List<T_returnUntyped>(); pRefCursor = new List<T_pRefCursorUntyped>(); pRefCursor2 = new List<T_pRefCursor2Untyped>(); 
+            ICollection<T_returnUntyped> __ret = new List<T_returnUntyped>(); pRefCursor = new List<T_pRefCursorUntyped>(); pRefCursor2 = new List<T_pRefCursor2Untyped>(); 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
             try {
                 using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_TABLE_BIG.GET_ROWS_UNTYPED_OUT2_RET", __conn)) {
@@ -3812,12 +3812,12 @@ namespace Schema.Odpt.Package {
             return __ret;
         } // GetRowsUntypedOut2Ret
 
-        public List<T_returnUntyped> GetRowsUntypedOutRet<T_returnUntyped, T_pRefCursorUntyped>(out List<T_pRefCursorUntyped> pRefCursor, 
+        public ICollection<T_returnUntyped> GetRowsUntypedOutRet<T_returnUntyped, T_pRefCursorUntyped>(out ICollection<T_pRefCursorUntyped> pRefCursor, 
                 bool mapColumnToObjectPropertyByPosition = false, bool allowUnmappedColumnsToBeExcluded = false, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, 
                 OracleConnection optionalPreexistingOpenConnection = null)
                 where T_returnUntyped : class, new()
                 where T_pRefCursorUntyped : class, new() {
-            List<T_returnUntyped> __ret = new List<T_returnUntyped>(); pRefCursor = new List<T_pRefCursorUntyped>(); 
+            ICollection<T_returnUntyped> __ret = new List<T_returnUntyped>(); pRefCursor = new List<T_pRefCursorUntyped>(); 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
             try {
                 using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_TABLE_BIG.GET_ROWS_UNTYPED_OUT_RET", __conn)) {
@@ -3878,10 +3878,10 @@ namespace Schema.Odpt.Package {
             return __ret;
         } // GetRowsUntypedOutRet
 
-        public List<T_returnUntyped> GetRowsUntypedRet<T_returnUntyped>(
+        public ICollection<T_returnUntyped> GetRowsUntypedRet<T_returnUntyped>(
                 bool mapColumnToObjectPropertyByPosition = false, bool allowUnmappedColumnsToBeExcluded = false, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
                 where T_returnUntyped : class, new() {
-            List<T_returnUntyped> __ret = new List<T_returnUntyped>(); 
+            ICollection<T_returnUntyped> __ret = new List<T_returnUntyped>(); 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
             try {
                 using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_TABLE_BIG.GET_ROWS_UNTYPED_RET", __conn)) {
@@ -3991,10 +3991,10 @@ namespace Schema.Odpt.Package {
         // public Int64? InsertRow(InsertRowPRowRowType pRow, OracleConnection optionalPreexistingOpenConnection = null)
 
         // **PROC IGNORED** - .NET cannot send/receive a REF CURSOR
-        // public void ProcTypedCursorIn(List<T_TTableBig> pRefCursor, OracleConnection optionalPreexistingOpenConnection = null)
+        // public void ProcTypedCursorIn(ICollection<T_TTableBig> pRefCursor, OracleConnection optionalPreexistingOpenConnection = null)
 
         // **PROC IGNORED** - .NET cannot send/receive a REF CURSOR
-        // public void ProcTypedCursorInOut(ref List<T_TTableBig> pRefCursor, OracleConnection optionalPreexistingOpenConnection = null)
+        // public void ProcTypedCursorInOut(ref ICollection<T_TTableBig> pRefCursor, OracleConnection optionalPreexistingOpenConnection = null)
 
         public void TruncTable(OracleConnection optionalPreexistingOpenConnection = null) {
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
@@ -4247,7 +4247,7 @@ namespace Schema.Odpt.Package {
             }
         } // DeleteRow
 
-        public Int64? GetRowsTypedOut<T_TTableNumber>(out List<T_TTableNumber> pRefCursor, 
+        public Int64? GetRowsTypedOut<T_TTableNumber>(out ICollection<T_TTableNumber> pRefCursor, 
                 bool mapColumnToObjectPropertyByPosition = false, bool allowUnmappedColumnsToBeExcluded = false, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, 
                 OracleConnection optionalPreexistingOpenConnection = null)
                 where T_TTableNumber : class, new() {
@@ -4280,7 +4280,7 @@ namespace Schema.Odpt.Package {
             return __ret;
         } // GetRowsTypedOut
 
-        public Int64? GetRowsTypedOut<T_TTableNumber>(out List<T_TTableNumber> pRefCursor, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
+        public Int64? GetRowsTypedOut<T_TTableNumber>(out ICollection<T_TTableNumber> pRefCursor, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
                 where T_TTableNumber : class, ITTableNumber, new() {
             Int64? __ret = null; pRefCursor = new List<T_TTableNumber>(); 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
@@ -4311,7 +4311,7 @@ namespace Schema.Odpt.Package {
             return __ret;
         } // GetRowsTypedOut
 
-        public Int64? GetRowsTypedOut2<T_TTableNumber, T_TTableNumberDec>(out List<T_TTableNumber> pRefCursor, out List<T_TTableNumberDec> pRefCursor2, 
+        public Int64? GetRowsTypedOut2<T_TTableNumber, T_TTableNumberDec>(out ICollection<T_TTableNumber> pRefCursor, out ICollection<T_TTableNumberDec> pRefCursor2, 
                 bool mapColumnToObjectPropertyByPosition = false, bool allowUnmappedColumnsToBeExcluded = false, 
                 UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
                 where T_TTableNumber : class, new()
@@ -4350,7 +4350,7 @@ namespace Schema.Odpt.Package {
             return __ret;
         } // GetRowsTypedOut2
 
-        public Int64? GetRowsTypedOut2<T_TTableNumber, T_TTableNumberDec>(out List<T_TTableNumber> pRefCursor, out List<T_TTableNumberDec> pRefCursor2, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
+        public Int64? GetRowsTypedOut2<T_TTableNumber, T_TTableNumberDec>(out ICollection<T_TTableNumber> pRefCursor, out ICollection<T_TTableNumberDec> pRefCursor2, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
                 where T_TTableNumber : class, ITTableNumber, new()
                 where T_TTableNumberDec : class, ITTableNumberDec, new() {
             Int64? __ret = null; pRefCursor = new List<T_TTableNumber>(); pRefCursor2 = new List<T_TTableNumberDec>(); 
@@ -4387,12 +4387,12 @@ namespace Schema.Odpt.Package {
             return __ret;
         } // GetRowsTypedOut2
 
-        public List<T_TTableNumber> GetRowsTypedOut2Ret<T_TTableNumber, T_TTableNumberDec>(out List<T_TTableNumber> pRefCursor, out List<T_TTableNumberDec> pRefCursor2, 
+        public ICollection<T_TTableNumber> GetRowsTypedOut2Ret<T_TTableNumber, T_TTableNumberDec>(out ICollection<T_TTableNumber> pRefCursor, out ICollection<T_TTableNumberDec> pRefCursor2, 
                 bool mapColumnToObjectPropertyByPosition = false, bool allowUnmappedColumnsToBeExcluded = false, 
                 UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
                 where T_TTableNumber : class, new()
                 where T_TTableNumberDec : class, new() {
-            List<T_TTableNumber> __ret = new List<T_TTableNumber>(); pRefCursor = new List<T_TTableNumber>(); pRefCursor2 = new List<T_TTableNumberDec>(); 
+            ICollection<T_TTableNumber> __ret = new List<T_TTableNumber>(); pRefCursor = new List<T_TTableNumber>(); pRefCursor2 = new List<T_TTableNumberDec>(); 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
             try {
                 using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_TABLE_NUMBER.GET_ROWS_TYPED_OUT2_RET", __conn)) {
@@ -4427,10 +4427,10 @@ namespace Schema.Odpt.Package {
             return __ret;
         } // GetRowsTypedOut2Ret
 
-        public List<T_TTableNumber> GetRowsTypedOut2Ret<T_TTableNumber, T_TTableNumberDec>(out List<T_TTableNumber> pRefCursor, out List<T_TTableNumberDec> pRefCursor2, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
+        public ICollection<T_TTableNumber> GetRowsTypedOut2Ret<T_TTableNumber, T_TTableNumberDec>(out ICollection<T_TTableNumber> pRefCursor, out ICollection<T_TTableNumberDec> pRefCursor2, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
                 where T_TTableNumber : class, ITTableNumber, new()
                 where T_TTableNumberDec : class, ITTableNumberDec, new() {
-            List<T_TTableNumber> __ret = new List<T_TTableNumber>(); pRefCursor = new List<T_TTableNumber>(); pRefCursor2 = new List<T_TTableNumberDec>(); 
+            ICollection<T_TTableNumber> __ret = new List<T_TTableNumber>(); pRefCursor = new List<T_TTableNumber>(); pRefCursor2 = new List<T_TTableNumberDec>(); 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
             try {
                 using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_TABLE_NUMBER.GET_ROWS_TYPED_OUT2_RET", __conn)) {
@@ -4465,11 +4465,11 @@ namespace Schema.Odpt.Package {
             return __ret;
         } // GetRowsTypedOut2Ret
 
-        public List<T_TTableNumber> GetRowsTypedOutRet<T_TTableNumber>(out List<T_TTableNumber> pRefCursor, 
+        public ICollection<T_TTableNumber> GetRowsTypedOutRet<T_TTableNumber>(out ICollection<T_TTableNumber> pRefCursor, 
                 bool mapColumnToObjectPropertyByPosition = false, bool allowUnmappedColumnsToBeExcluded = false, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, 
                 OracleConnection optionalPreexistingOpenConnection = null)
                 where T_TTableNumber : class, new() {
-            List<T_TTableNumber> __ret = new List<T_TTableNumber>(); pRefCursor = new List<T_TTableNumber>(); 
+            ICollection<T_TTableNumber> __ret = new List<T_TTableNumber>(); pRefCursor = new List<T_TTableNumber>(); 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
             try {
                 using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_TABLE_NUMBER.GET_ROWS_TYPED_OUT_RET", __conn)) {
@@ -4499,9 +4499,9 @@ namespace Schema.Odpt.Package {
             return __ret;
         } // GetRowsTypedOutRet
 
-        public List<T_TTableNumber> GetRowsTypedOutRet<T_TTableNumber>(out List<T_TTableNumber> pRefCursor, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
+        public ICollection<T_TTableNumber> GetRowsTypedOutRet<T_TTableNumber>(out ICollection<T_TTableNumber> pRefCursor, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
                 where T_TTableNumber : class, ITTableNumber, new() {
-            List<T_TTableNumber> __ret = new List<T_TTableNumber>(); pRefCursor = new List<T_TTableNumber>(); 
+            ICollection<T_TTableNumber> __ret = new List<T_TTableNumber>(); pRefCursor = new List<T_TTableNumber>(); 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
             try {
                 using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_TABLE_NUMBER.GET_ROWS_TYPED_OUT_RET", __conn)) {
@@ -4531,10 +4531,10 @@ namespace Schema.Odpt.Package {
             return __ret;
         } // GetRowsTypedOutRet
 
-        public List<T_TTableNumber> GetRowsTypedRet<T_TTableNumber>(
+        public ICollection<T_TTableNumber> GetRowsTypedRet<T_TTableNumber>(
                 bool mapColumnToObjectPropertyByPosition = false, bool allowUnmappedColumnsToBeExcluded = false, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
                 where T_TTableNumber : class, new() {
-            List<T_TTableNumber> __ret = new List<T_TTableNumber>(); 
+            ICollection<T_TTableNumber> __ret = new List<T_TTableNumber>(); 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
             try {
                 using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_TABLE_NUMBER.GET_ROWS_TYPED_RET", __conn)) {
@@ -4559,9 +4559,9 @@ namespace Schema.Odpt.Package {
             return __ret;
         } // GetRowsTypedRet
 
-        public List<T_TTableNumber> GetRowsTypedRet<T_TTableNumber>(UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
+        public ICollection<T_TTableNumber> GetRowsTypedRet<T_TTableNumber>(UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
                 where T_TTableNumber : class, ITTableNumber, new() {
-            List<T_TTableNumber> __ret = new List<T_TTableNumber>(); 
+            ICollection<T_TTableNumber> __ret = new List<T_TTableNumber>(); 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
             try {
                 using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_TABLE_NUMBER.GET_ROWS_TYPED_RET", __conn)) {
@@ -4586,7 +4586,7 @@ namespace Schema.Odpt.Package {
             return __ret;
         } // GetRowsTypedRet
 
-        public Int64? GetRowsUntypedOut<T_pRefCursorUntyped>(out List<T_pRefCursorUntyped> pRefCursor, 
+        public Int64? GetRowsUntypedOut<T_pRefCursorUntyped>(out ICollection<T_pRefCursorUntyped> pRefCursor, 
                 bool mapColumnToObjectPropertyByPosition = false, bool allowUnmappedColumnsToBeExcluded = false, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, 
                 OracleConnection optionalPreexistingOpenConnection = null)
                 where T_pRefCursorUntyped : class, new() {
@@ -4649,7 +4649,7 @@ namespace Schema.Odpt.Package {
             return __ret;
         } // GetRowsUntypedOut
 
-        public Int64? GetRowsUntypedOut2<T_pRefCursorUntyped, T_pRefCursor2Untyped>(out List<T_pRefCursorUntyped> pRefCursor, out List<T_pRefCursor2Untyped> pRefCursor2, 
+        public Int64? GetRowsUntypedOut2<T_pRefCursorUntyped, T_pRefCursor2Untyped>(out ICollection<T_pRefCursorUntyped> pRefCursor, out ICollection<T_pRefCursor2Untyped> pRefCursor2, 
                 bool mapColumnToObjectPropertyByPosition = false, bool allowUnmappedColumnsToBeExcluded = false, 
                 UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
                 where T_pRefCursorUntyped : class, new()
@@ -4724,13 +4724,13 @@ namespace Schema.Odpt.Package {
             return __ret;
         } // GetRowsUntypedOut2
 
-        public List<T_returnUntyped> GetRowsUntypedOut2Ret<T_returnUntyped, T_pRefCursorUntyped, T_pRefCursor2Untyped>(out List<T_pRefCursorUntyped> pRefCursor, out List<T_pRefCursor2Untyped> pRefCursor2, 
+        public ICollection<T_returnUntyped> GetRowsUntypedOut2Ret<T_returnUntyped, T_pRefCursorUntyped, T_pRefCursor2Untyped>(out ICollection<T_pRefCursorUntyped> pRefCursor, out ICollection<T_pRefCursor2Untyped> pRefCursor2, 
                 bool mapColumnToObjectPropertyByPosition = false, bool allowUnmappedColumnsToBeExcluded = false, 
                 UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
                 where T_returnUntyped : class, new()
                 where T_pRefCursorUntyped : class, new()
                 where T_pRefCursor2Untyped : class, new() {
-            List<T_returnUntyped> __ret = new List<T_returnUntyped>(); pRefCursor = new List<T_pRefCursorUntyped>(); pRefCursor2 = new List<T_pRefCursor2Untyped>(); 
+            ICollection<T_returnUntyped> __ret = new List<T_returnUntyped>(); pRefCursor = new List<T_pRefCursorUntyped>(); pRefCursor2 = new List<T_pRefCursor2Untyped>(); 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
             try {
                 using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_TABLE_NUMBER.GET_ROWS_UNTYPED_OUT2_RET", __conn)) {
@@ -4802,12 +4802,12 @@ namespace Schema.Odpt.Package {
             return __ret;
         } // GetRowsUntypedOut2Ret
 
-        public List<T_returnUntyped> GetRowsUntypedOutRet<T_returnUntyped, T_pRefCursorUntyped>(out List<T_pRefCursorUntyped> pRefCursor, 
+        public ICollection<T_returnUntyped> GetRowsUntypedOutRet<T_returnUntyped, T_pRefCursorUntyped>(out ICollection<T_pRefCursorUntyped> pRefCursor, 
                 bool mapColumnToObjectPropertyByPosition = false, bool allowUnmappedColumnsToBeExcluded = false, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, 
                 OracleConnection optionalPreexistingOpenConnection = null)
                 where T_returnUntyped : class, new()
                 where T_pRefCursorUntyped : class, new() {
-            List<T_returnUntyped> __ret = new List<T_returnUntyped>(); pRefCursor = new List<T_pRefCursorUntyped>(); 
+            ICollection<T_returnUntyped> __ret = new List<T_returnUntyped>(); pRefCursor = new List<T_pRefCursorUntyped>(); 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
             try {
                 using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_TABLE_NUMBER.GET_ROWS_UNTYPED_OUT_RET", __conn)) {
@@ -4868,10 +4868,10 @@ namespace Schema.Odpt.Package {
             return __ret;
         } // GetRowsUntypedOutRet
 
-        public List<T_returnUntyped> GetRowsUntypedRet<T_returnUntyped>(
+        public ICollection<T_returnUntyped> GetRowsUntypedRet<T_returnUntyped>(
                 bool mapColumnToObjectPropertyByPosition = false, bool allowUnmappedColumnsToBeExcluded = false, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
                 where T_returnUntyped : class, new() {
-            List<T_returnUntyped> __ret = new List<T_returnUntyped>(); 
+            ICollection<T_returnUntyped> __ret = new List<T_returnUntyped>(); 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
             try {
                 using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_TABLE_NUMBER.GET_ROWS_UNTYPED_RET", __conn)) {
@@ -5057,10 +5057,10 @@ namespace Schema.Odpt.Package {
             return __ret;
         } // ReadResultITTableBigPartial
 
-        public List<T_TTableBigPartial> GetRowsTypedRet<T_TTableBigPartial>(Decimal? pInNumber, ref String pInOutVarchar2, ref List<Int64?> pInOutAssocarrayInteger, out DateTime? pOutDate, 
+        public ICollection<T_TTableBigPartial> GetRowsTypedRet<T_TTableBigPartial>(Decimal? pInNumber, ref String pInOutVarchar2, ref List<Int64?> pInOutAssocarrayInteger, out DateTime? pOutDate, 
                 bool mapColumnToObjectPropertyByPosition = false, bool allowUnmappedColumnsToBeExcluded = false, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
                 where T_TTableBigPartial : class, new() {
-            List<T_TTableBigPartial> __ret = new List<T_TTableBigPartial>(); pOutDate = null; 
+            ICollection<T_TTableBigPartial> __ret = new List<T_TTableBigPartial>(); pOutDate = null; 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
             try {
                 using (OracleCommand __cmd = new OracleCommand("ODPT.XMPL_PKG_EXAMPLE.GET_ROWS_TYPED_RET", __conn)) {
@@ -5105,10 +5105,10 @@ namespace Schema.Odpt.Package {
             return __ret;
         } // GetRowsTypedRet
 
-        public List<T_TTableBigPartial> GetRowsTypedRet<T_TTableBigPartial>(Decimal? pInNumber, ref String pInOutVarchar2, ref List<Int64?> pInOutAssocarrayInteger, out DateTime? pOutDate, 
+        public ICollection<T_TTableBigPartial> GetRowsTypedRet<T_TTableBigPartial>(Decimal? pInNumber, ref String pInOutVarchar2, ref List<Int64?> pInOutAssocarrayInteger, out DateTime? pOutDate, 
                 UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
                 where T_TTableBigPartial : class, ITTableBigPartial, new() {
-            List<T_TTableBigPartial> __ret = new List<T_TTableBigPartial>(); pOutDate = null; 
+            ICollection<T_TTableBigPartial> __ret = new List<T_TTableBigPartial>(); pOutDate = null; 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
             try {
                 using (OracleCommand __cmd = new OracleCommand("ODPT.XMPL_PKG_EXAMPLE.GET_ROWS_TYPED_RET", __conn)) {
@@ -5153,11 +5153,11 @@ namespace Schema.Odpt.Package {
             return __ret;
         } // GetRowsTypedRet
 
-        public List<T_returnUntyped> GetRowsUntypedRet<T_returnUntyped>(Int64? pInInteger, 
+        public ICollection<T_returnUntyped> GetRowsUntypedRet<T_returnUntyped>(Int64? pInInteger, 
                 bool mapColumnToObjectPropertyByPosition = false, bool allowUnmappedColumnsToBeExcluded = false, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, 
                 OracleConnection optionalPreexistingOpenConnection = null)
                 where T_returnUntyped : class, new() {
-            List<T_returnUntyped> __ret = new List<T_returnUntyped>(); 
+            ICollection<T_returnUntyped> __ret = new List<T_returnUntyped>(); 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
             try {
                 using (OracleCommand __cmd = new OracleCommand("ODPT.XMPL_PKG_EXAMPLE.GET_ROWS_UNTYPED_RET", __conn)) {

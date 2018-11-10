@@ -484,9 +484,9 @@ namespace Odapter.Tester {
             public void TestCursorFilteredPackageTableBig() {
                 uint? rowLimit = TABLE_BIG_ROWS_TO_RETRIEVE;
 #if ODPT_FILTER_PREFIX
-                List<OdptPkgTableBig.FilteredPkgTTableBigFiltered> retList, outList, outList2;
+                ICollection<OdptPkgTableBig.FilteredPkgTTableBigFiltered> retList, outList, outList2;
 #else
-                List<FilteredPkg.TTableBigFiltered> retList, outList, outList2;
+                ICollection<FilteredPkg.TTableBigFiltered> retList, outList, outList2;
 #endif
                 DataTable retDataTable, outDataTable, outDataTable2;
 
@@ -520,8 +520,8 @@ namespace Odapter.Tester {
 
             public void TestCursorTypedTableBig() {
                 uint? rowLimit = TABLE_BIG_ROWS_TO_RETRIEVE;
-                List<OdptPkgTableBig.TTableBig> retTableBigList, outTableBigList;
-                List<OdptPkgTableBig.TTableBigChar> outTableBigCharList;
+                ICollection<OdptPkgTableBig.TTableBig> retTableBigList, outTableBigList;
+                ICollection<OdptPkgTableBig.TTableBigChar> outTableBigCharList;
 
                 // static, no mapping
                 // ret
@@ -542,10 +542,10 @@ namespace Odapter.Tester {
 
 #if MAPPING_FOR_TYPED_CURSOR
                 // mapping
-                List<TTableBigMapByPositionAll> retTableBigMapByPositionAllList, outTableBigMapByPositionAllList;
-                List<TTableBigMapByPositionPartial> retTableBigMapByPositionPartialList, outTableBigMapByPositionPartialList;
-                List<TTableBigCharMapByPositionAll> outTableBigCharMapByPositionAllList;
-                List<TTableBigCharMapByPositionPartial> outTableBigCharMapByPositionPartialList;
+                ICollection<TTableBigMapByPositionAll> retTableBigMapByPositionAllList, outTableBigMapByPositionAllList;
+                ICollection<TTableBigMapByPositionPartial> retTableBigMapByPositionPartialList, outTableBigMapByPositionPartialList;
+                ICollection<TTableBigCharMapByPositionAll> outTableBigCharMapByPositionAllList;
+                ICollection<TTableBigCharMapByPositionPartial> outTableBigCharMapByPositionPartialList;
 
                 // list ret - mapping by name
                 retTableBigList = OdptPkgTableBig.Instance.GetRowsTypedRet<OdptPkgTableBig.TTableBig>(false, false, rowLimit, null);
@@ -585,8 +585,8 @@ namespace Odapter.Tester {
 
             public void TestCursorTypedTableNumber() {
                 uint? rowLimit = null;
-                List<OdptPkgTableNumber.TTableNumber> retTableNumberList, outTableNumberList;
-                List<OdptPkgTableNumber.TTableNumberDec> outTableNumberDecList;
+                ICollection<OdptPkgTableNumber.TTableNumber> retTableNumberList, outTableNumberList;
+                ICollection<OdptPkgTableNumber.TTableNumberDec> outTableNumberDecList;
 
                 // static, no mapping
                 // ret
@@ -607,10 +607,10 @@ namespace Odapter.Tester {
 
 #if MAPPING_FOR_TYPED_CURSOR
                 // mapping
-                List<TTableNumberMapByPositionAll> retTableNumberMapByPositionAllList, outTableNumberMapByPositionAllList;
-                List<TTableNumberMapByPositionPartial> retTableNumberMapByPositionPartialList, outTableNumberMapByPositionPartialList;
-                List<TTableNumberDecMapByPositionAll> outTableNumberDecMapByPositionAllList;
-                List<TTableNumberDecMapByPositionPartial> outTableNumberDecMapByPositionPartialList;
+                ICollection<TTableNumberMapByPositionAll> retTableNumberMapByPositionAllList, outTableNumberMapByPositionAllList;
+                ICollection<TTableNumberMapByPositionPartial> retTableNumberMapByPositionPartialList, outTableNumberMapByPositionPartialList;
+                ICollection<TTableNumberDecMapByPositionAll> outTableNumberDecMapByPositionAllList;
+                ICollection<TTableNumberDecMapByPositionPartial> outTableNumberDecMapByPositionPartialList;
 
                 // list ret - mapping by name
                 retTableNumberList = OdptPkgTableNumber.Instance.GetRowsTypedRet<OdptPkgTableNumber.TTableNumber>(false, false, rowLimit, null);
@@ -650,12 +650,12 @@ namespace Odapter.Tester {
 
             public void TestCursorUntypedTableBig() {
                 uint? rowLimit = TABLE_BIG_ROWS_TO_RETRIEVE;
-                List<OdptPkgTableBig.TTableBig> retTableBigList, outTableBigList;
-                List<TTableBigMapByPositionAll> retTableBigMapByPositionAllList, outTableBigMapByPositionAllList;
-                List<TTableBigMapByPositionPartial> retTableBigMapByPositionPartialList, outTableBigMapByPositionPartialList;
-                List<OdptPkgTableBig.TTableBigChar>      outTableBigCharList;
-                List<TTableBigCharMapByPositionAll>      outTableBigCharMapByPositionAllList;
-                List<TTableBigCharMapByPositionPartial>  outTableBigCharMapByPositionPartialList;
+                ICollection<OdptPkgTableBig.TTableBig> retTableBigList, outTableBigList;
+                ICollection<TTableBigMapByPositionAll> retTableBigMapByPositionAllList, outTableBigMapByPositionAllList;
+                ICollection<TTableBigMapByPositionPartial> retTableBigMapByPositionPartialList, outTableBigMapByPositionPartialList;
+                ICollection<OdptPkgTableBig.TTableBigChar>      outTableBigCharList;
+                ICollection<TTableBigCharMapByPositionAll>      outTableBigCharMapByPositionAllList;
+                ICollection<TTableBigCharMapByPositionPartial>  outTableBigCharMapByPositionPartialList;
                 DataTable retTableBigDataTable, outTableBigDataTable, outTableBigDataTable2;
 
                 // DataTable ret
@@ -701,12 +701,12 @@ namespace Odapter.Tester {
 
             public void TestCursorUntypedTableNumber() {
                 uint? rowLimit = null;
-                List<OdptPkgTableNumber.TTableNumber> retTableNumberList, outTableNumberList;
-                List<TTableNumberMapByPositionAll> retTableNumberMapByPositionAllList, outTableNumberMapByPositionAllList;
-                List<TTableNumberMapByPositionPartial> retTableNumberMapByPositionPartialList, outTableNumberMapByPositionPartialList;
-                List<OdptPkgTableNumber.TTableNumberDec>      outTableNumberDecList;
-                List<TTableNumberDecMapByPositionAll>      outTableNumberDecMapByPositionAllList;
-                List<TTableNumberDecMapByPositionPartial>  outTableNumberDecMapByPositionPartialList;
+                ICollection<OdptPkgTableNumber.TTableNumber> retTableNumberList, outTableNumberList;
+                ICollection<TTableNumberMapByPositionAll> retTableNumberMapByPositionAllList, outTableNumberMapByPositionAllList;
+                ICollection<TTableNumberMapByPositionPartial> retTableNumberMapByPositionPartialList, outTableNumberMapByPositionPartialList;
+                ICollection<OdptPkgTableNumber.TTableNumberDec>      outTableNumberDecList;
+                ICollection<TTableNumberDecMapByPositionAll>      outTableNumberDecMapByPositionAllList;
+                ICollection<TTableNumberDecMapByPositionPartial>  outTableNumberDecMapByPositionPartialList;
                 DataTable retTableNumberDataTable, outTableNumberDataTable, outTableNumberDataTable2;
 
                 // DataTable ret

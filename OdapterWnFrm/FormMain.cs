@@ -198,7 +198,7 @@ namespace OdapterWnFrm {
                 Parameter.Instance.LoadFromFile(cmbSettingsFile.Text);
                 SetFromParameters();
             } catch (Exception ex) {
-                DisplayMessage("Failed to load settings: " + ex.Message);
+                DisplayMessage("Failed to load all settings: " + ex.Message);
             }
         }
 
@@ -333,6 +333,7 @@ namespace OdapterWnFrm {
         private void BindOracleToCSharpTypes() {
             // map combobox to Oracle type
             IDictionary<ComboBox, String> comboBoxOracleTypes = new Dictionary<ComboBox, String>() {
+                { cmbCSharpTypeUsedForRefCursor,                    Orcl.REF_CURSOR},
                 { cmbCSharpTypeUsedForOracleInteger,                Orcl.INTEGER },
                 { cmbCSharpTypeUsedForOracleNumber,                 Orcl.NUMBER },
                 { cmbCSharpTypeUsedForOracleDate,                   Orcl.DATE },
@@ -434,6 +435,7 @@ namespace OdapterWnFrm {
             cbGenerateBaseAdapterClass.Checked = Parameter.Instance.IsGenerateBaseAdapter;
             cbGenerateBaseDtoClasses.Checked = Parameter.Instance.IsGenerateBaseEntities;
 
+            cmbCSharpTypeUsedForRefCursor.SelectedValue = Parameter.Instance.CSharpTypeUsedForOracleRefCursor;
             cmbCSharpTypeUsedForOracleInteger.SelectedValue = Parameter.Instance.CSharpTypeUsedForOracleInteger;
             cmbCSharpTypeUsedForOracleNumber.SelectedValue = Parameter.Instance.CSharpTypeUsedForOracleNumber;
             cmbCSharpTypeUsedForOracleDate.SelectedValue = Parameter.Instance.CSharpTypeUsedForOracleDate;
@@ -461,7 +463,7 @@ namespace OdapterWnFrm {
             Parameter.Instance.OutputPath = txtOutputPath.Text;
 
             Parameter.Instance.OutputPath = txtOutputPath.Text;
-            Parameter.Instance.CSharpVersion =cmbCSharpVersion.SelectedValue.ToString() == CSharpVersion.ThreeZero.ToString() ? CSharpVersion.ThreeZero: CSharpVersion.FourZero;
+            Parameter.Instance.CSharpVersion = cmbCSharpVersion.SelectedValue.ToString() == CSharpVersion.ThreeZero.ToString() ? CSharpVersion.ThreeZero: CSharpVersion.FourZero;
 
             Parameter.Instance.NamespaceBase = txtBaseNamespace.Text;
             Parameter.Instance.NamespacePackage = txtPackageNamespace.Text;
@@ -479,6 +481,8 @@ namespace OdapterWnFrm {
             Parameter.Instance.MaxAssocArraySize = Convert.ToInt16(txtMaxAssocArraySize.Text);
             Parameter.Instance.MaxReturnAndOutArgStringSize = Convert.ToInt16(txtMaxReturnArgStringSize.Text);
 
+            Parameter.Instance.CSharpTypeUsedForOracleRefCursor = cmbCSharpTypeUsedForRefCursor.SelectedValue.ToString();
+            //Parameter.Instance.CSharpTypeUsedForOracleAssociativeArray = cmbCSharpTypeUsedForAssociativeArray.ToString();
             Parameter.Instance.CSharpTypeUsedForOracleInteger = cmbCSharpTypeUsedForOracleInteger.SelectedValue.ToString();
             Parameter.Instance.CSharpTypeUsedForOracleNumber = cmbCSharpTypeUsedForOracleNumber.SelectedValue.ToString();
             Parameter.Instance.CSharpTypeUsedForOracleDate = cmbCSharpTypeUsedForOracleDate.SelectedValue.ToString();
