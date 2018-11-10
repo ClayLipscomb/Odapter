@@ -28,7 +28,7 @@
 
 #define ODPT_FILTER_PREFIX          // "ODPT" as filter prefix of schema
 #define MAPPING_FOR_TYPED_CURSOR    // optional overloads for typed cursors methods are generated for mapping
-#define SEED_TABLES                 // seed all tables with test data
+//#define SEED_TABLES                 // seed all tables with test data
 //#define CSHARP30                    // C# 3.0 (.NET 3.5)
 
 //#define LARGE_LOB_SIZE
@@ -38,6 +38,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Data;
 using System.Diagnostics;
+using System.Threading;
+using System.Threading.Tasks;
+
 #if CSHARP30
 using Oracle.DataAccess.Client;
 using Oracle.DataAccess.Types;
@@ -65,13 +68,13 @@ namespace Odapter.Tester {
             Tester test = new Tester();
             test.Run();
         }
-        
+
         public class Tester {
             private const uint TABLE_BIG_ROWS_TO_INSERT = 1000;
             private const uint TABLE_BIG_ROWS_TO_RETRIEVE = 100;
 
             // VARCHAR2, VARCHAR, NVARCHAR2, STRING
-            private const int MAX_STRING_SIZE_FOR_VARCHAR_ARG = 
+            private const int MAX_STRING_SIZE_FOR_VARCHAR_ARG =
 #if CSHARP30
                 5    // >= 4096 overflows against XE with managed
 #else
@@ -94,23 +97,23 @@ namespace Odapter.Tester {
 #if LARGE_LOB_SIZE
                 (100 * 1024 * 1024) - 1;    // out of memory occurs at 1GB, will test at 0.1 GB
 #else
-                ( 10 * 1024 * 1024) - 1;    // faster tests with 0.01 GB
+                (10 * 1024 * 1024) - 1;    // faster tests with 0.01 GB
 #endif
-            private const int MAX_BYTES_FOR_BLOB_COL           = LOB_SIZE;
-            private const int MAX_STRING_SIZE_FOR_CLOB_COL     = LOB_SIZE / 2;  // allow for 2 bytes per String character
-            private const int MAX_STRING_SIZE_FOR_NCLOB_COL    = LOB_SIZE / 2;  // allow for 2 bytes per String character
+            private const int MAX_BYTES_FOR_BLOB_COL = LOB_SIZE;
+            private const int MAX_STRING_SIZE_FOR_CLOB_COL = LOB_SIZE / 2;  // allow for 2 bytes per String character
+            private const int MAX_STRING_SIZE_FOR_NCLOB_COL = LOB_SIZE / 2;  // allow for 2 bytes per String character
 
             private const Double MIN_BINARY_DOUBLE = 2.2250738585072014e-130d;
             private const Double MAX_BINARY_DOUBLE = 1.7976931348623157e125d;
-            private const Decimal MAX_DECIMAL =  792281625142643375935439.5033M;
+            private const Decimal MAX_DECIMAL = 792281625142643375935439.5033M;
             private const Decimal MIN_DECIMAL = -792281625142643375935439.5033M;
-                                               //792281625142643375935439 50335
+            //792281625142643375935439 50335
             //private const Decimal MAX_ORACLE_DECIMAL = 792281625142643375935439.5033M;
             //private const Decimal MIN_ORACLE_DECIMAL = -792281625142643375935439.5033M;
             //private readonly OracleDecimal MAX_ORACLE_DECIMAL = new OracleDecimal("999999999999999999999999999999999999990000000000000000000000000000000000000000000000000000000000000000000000000000000000000000");
-                                                                                // 999999999999999999999999999999999999990000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+            // 999999999999999999999999999999999999990000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 
-            public void Run() {
+            internal void Run() {
                 Debug.Assert(Database.Instance.TestConnection());
 #if SEED_TABLES
                 SeedTableBig();
@@ -118,7 +121,7 @@ namespace Odapter.Tester {
 #endif
                 TestStringCalls();
                 TestStringLobCalls();
-                TestByteArrayLobCalls();  
+                TestByteArrayLobCalls();
 
                 TestInt32Calls();
                 TestInt64Calls();
@@ -142,14 +145,15 @@ namespace Odapter.Tester {
                 TestNoParamCalls();
                 TestOptionalParamCalls();
                 TestMiscCalls();
+                TestSingleton();
                 CompileTimeChecks();
 
                 //Console.WriteLine( "Complete." );
                 //Console.ReadLine();
             }
 
-#region Seeding Methods
-            public void SeedTableBig() {
+            #region Seeding Methods
+            private void SeedTableBig() {
                 OracleConnection conn =
 #if SAFETYPE_BLOB || SAFETYPE_CLOB
                 Database.Instance.GetConnection();  // connection required to instantiate LOB classes
@@ -220,7 +224,7 @@ namespace Odapter.Tester {
 #else
                     OracleDecimal.MinValue, OracleDecimal.MinValue, OracleDecimal.MinValue, 
 #endif
-                    Single.MinValue, MIN_BINARY_DOUBLE, 
+                    Single.MinValue, MIN_BINARY_DOUBLE,
                     "A", new string('?', MAX_STRING_SIZE_FOR_VARCHAR_COL), "B", new string('?', MAX_STRING_SIZE_FOR_VARCHAR_COL), "C", new string('?', MAX_STRING_SIZE_FOR_NVARCHAR_COL),
                     "D", new string('?', MAX_STRING_SIZE_FOR_CHAR_COL), "E", new string('?', MAX_STRING_SIZE_FOR_NCHAR_COL),
 #if !SAFETYPE_DATE
@@ -229,12 +233,12 @@ namespace Odapter.Tester {
                     OracleDate.MinValue, 
 #endif
 #if !SAFETYPE_TIMESTAMP
-                    DateTime.MinValue.AddMilliseconds(1), 
+                    DateTime.MinValue.AddMilliseconds(1),
 #else
                     OracleTimeStamp.MinValue.AddMilliseconds(1), 
 #endif
 #if !SAFETYPE_TIMESTAMP
-                    DateTime.MinValue.AddMilliseconds(1), 
+                    DateTime.MinValue.AddMilliseconds(1),
 #else
                     OracleTimeStamp.MinValue.AddMilliseconds(1), 
 #endif
@@ -244,7 +248,7 @@ namespace Odapter.Tester {
                     OracleTimeStamp.MinValue.AddMilliseconds(1),
 #endif
 #if !SAFETYPE_BLOB
-                    new Byte[] {0x00},
+                    new Byte[] { 0x00 },
 #else
                     oracleBlob,
 #endif
@@ -289,11 +293,11 @@ namespace Odapter.Tester {
 #else
                     OracleDecimal.MaxValue, OracleDecimal.MaxValue, OracleDecimal.MaxValue,
 #endif
-                    Single.MaxValue, MAX_BINARY_DOUBLE, 
+                    Single.MaxValue, MAX_BINARY_DOUBLE,
                     "A", new string('?', MAX_STRING_SIZE_FOR_VARCHAR_COL), "B", new string('?', MAX_STRING_SIZE_FOR_VARCHAR_COL), "C", new string('?', MAX_STRING_SIZE_FOR_NVARCHAR_COL),
                     "D", new string('?', MAX_STRING_SIZE_FOR_CHAR_COL), "E", new string('?', MAX_STRING_SIZE_FOR_NCHAR_COL),
 #if !SAFETYPE_DATE
-                    DateTime.MaxValue, 
+                    DateTime.MaxValue,
 #else
                     OracleDate.MaxValue, 
 #endif
@@ -347,17 +351,17 @@ namespace Odapter.Tester {
                         "A", new string('?', MAX_STRING_SIZE_FOR_VARCHAR_COL), "B", new string('?', MAX_STRING_SIZE_FOR_VARCHAR_COL), "C", new string('?', MAX_STRING_SIZE_FOR_NVARCHAR_COL),
                         "D", new string('?', MAX_STRING_SIZE_FOR_CHAR_COL), "E", new string('?', MAX_STRING_SIZE_FOR_NCHAR_COL),
 #if !SAFETYPE_DATE
-                        DateTime.Today.AddDays(i), 
+                        DateTime.Today.AddDays(i),
 #else
                         new OracleDate(OracleDate.GetSysDate().Value.AddDays(i)), 
 #endif
 #if !SAFETYPE_TIMESTAMP
-                        DateTime.Today.AddDays(i), 
+                        DateTime.Today.AddDays(i),
 #else
                         OracleTimeStamp.GetSysDate().AddDays(i), 
 #endif
 #if !SAFETYPE_TIMESTAMP
-                        DateTime.Today.AddDays(i), 
+                        DateTime.Today.AddDays(i),
 #else
                         OracleTimeStamp.GetSysDate().AddDays(i), 
 #endif
@@ -368,7 +372,7 @@ namespace Odapter.Tester {
 #endif
 
 #if !SAFETYPE_BLOB
-                        new Byte[] {0x00},
+                        new Byte[] { 0x00 },
 #else
                         oracleBlob,
 #endif
@@ -398,23 +402,23 @@ namespace Odapter.Tester {
                 }
             }
 
-            public void SeedTableNumber() {
+            private void SeedTableNumber() {
                 OdptPkgTableNumber.Instance.TruncTable(null);
 
                 // all explicitly zero values
-                OdptPkgTableNumber.Instance.InsertRow(  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, null);
+                OdptPkgTableNumber.Instance.InsertRow(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, null);
 
                 // all explictly null values
-                OdptPkgTableNumber.Instance.InsertRow(  null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 
+                OdptPkgTableNumber.Instance.InsertRow(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null,
                                                         null, null, null, null, null, null, null, null, null, null, null, null, null);
                 // min values 
-                OdptPkgTableNumber.Instance.InsertRow(  MIN_DECIMAL / 100000000,
+                OdptPkgTableNumber.Instance.InsertRow(MIN_DECIMAL / 100000000,
 #if CSHARP30
                                                         0, 0, // unmanaged bug treats OracleDbType.Byte as unsigned and throws on negative number
 #else
                                                         -9, -99,
 #endif
-                                                        -999, -9999, -99999, 
+                                                        -999, -9999, -99999,
                                                         -Convert.ToInt32(new string('9', 6)), -Convert.ToInt32(new string('9', 7)), -Convert.ToInt32(new string('9', 8)), -Convert.ToInt32(new string('9', 9)),
 
 #if SAFETYPE_INTEGER
@@ -442,11 +446,11 @@ namespace Odapter.Tester {
 #else
                                                         -Convert.ToInt64(new string('9', 10)), -Convert.ToInt64(new string('9', 18)), Int64.MinValue, Int64.MinValue, Int64.MinValue, Int64.MinValue,
 #endif
-                                                        -9.9M, -99.999M, -Convert.ToDecimal(new string('9', 4) + "." + new string('9', 11)), /* 15.11 */ -Convert.ToDecimal(new string('9', 10) + "." + new string('8', 21)), /* 31.21 */ 
+                                                        -9.9M, -99.999M, -Convert.ToDecimal(new string('9', 4) + "." + new string('9', 11)), /* 15.11 */ -Convert.ToDecimal(new string('9', 10) + "." + new string('8', 21)), /* 31.21 */
                                                         -Convert.ToDecimal(new string('9', 1) + "." + new string('8', 20)), /* 38.37 */ MIN_DECIMAL / 100000000, null);
 
                 // max values 
-                OdptPkgTableNumber.Instance.InsertRow( MAX_DECIMAL, 9, 99, 999, 9999, 99999,
+                OdptPkgTableNumber.Instance.InsertRow(MAX_DECIMAL, 9, 99, 999, 9999, 99999,
                                                         Convert.ToInt32(new string('9', 6)), Convert.ToInt32(new string('9', 7)), Convert.ToInt32(new string('9', 8)), Convert.ToInt32(new string('9', 9)),
 #if SAFETYPE_INTEGER
                                                         new OracleDecimal(new string('9', 10)), new OracleDecimal(new string('9', 18)), new OracleDecimal(new string('9', 19)), new OracleDecimal(new string('9', 38)),
@@ -467,12 +471,12 @@ namespace Odapter.Tester {
 #else
                                                         Convert.ToInt64(new string('9', 10)), Convert.ToInt64(new string('9', 18)), Int64.MaxValue, Int64.MaxValue, Int64.MaxValue, Int64.MaxValue,
 #endif
-                                                        9.9M, 99.999M, Convert.ToDecimal(new string('9', 4) + "." + new string('9', 11)), /* 15.11 */ Convert.ToDecimal(new string('9', 10) + "." + new string('8', 21)), /* 31.21 */ 
+                                                        9.9M, 99.999M, Convert.ToDecimal(new string('9', 4) + "." + new string('9', 11)), /* 15.11 */ Convert.ToDecimal(new string('9', 10) + "." + new string('8', 21)), /* 31.21 */
                                                         Convert.ToDecimal(new string('9', 1) + "." + new string('8', 20)), /* 38.37 */ MAX_DECIMAL, null);
             }
-#endregion Seeding
+            #endregion Seeding
 
-#region Cursors
+            #region Cursors
             //public List<T> TestCursorTypedStaticMappingRet<T>()
             //    where T : class, OdptPkgTableBig.ITTableBig, new() {
             //    uint? rowLimit = TABLE_BIG_ROWS_TO_RETRIEVE;
@@ -481,7 +485,7 @@ namespace Odapter.Tester {
             //    return retTableBigList;
             //}
 
-            public void TestCursorFilteredPackageTableBig() {
+            private void TestCursorFilteredPackageTableBig() {
                 uint? rowLimit = TABLE_BIG_ROWS_TO_RETRIEVE;
 #if ODPT_FILTER_PREFIX
                 ICollection<OdptPkgTableBig.FilteredPkgTTableBigFiltered> retList, outList, outList2;
@@ -518,7 +522,7 @@ namespace Odapter.Tester {
                 Debug.Assert(outDataTable2.Rows.Count == rowLimit);
             }
 
-            public void TestCursorTypedTableBig() {
+            private void TestCursorTypedTableBig() {
                 uint? rowLimit = TABLE_BIG_ROWS_TO_RETRIEVE;
                 ICollection<OdptPkgTableBig.TTableBig> retTableBigList, outTableBigList;
                 ICollection<OdptPkgTableBig.TTableBigChar> outTableBigCharList;
@@ -583,7 +587,7 @@ namespace Odapter.Tester {
 #endif
             }
 
-            public void TestCursorTypedTableNumber() {
+            private void TestCursorTypedTableNumber() {
                 uint? rowLimit = null;
                 ICollection<OdptPkgTableNumber.TTableNumber> retTableNumberList, outTableNumberList;
                 ICollection<OdptPkgTableNumber.TTableNumberDec> outTableNumberDecList;
@@ -648,14 +652,14 @@ namespace Odapter.Tester {
 #endif
             }
 
-            public void TestCursorUntypedTableBig() {
+            private void TestCursorUntypedTableBig() {
                 uint? rowLimit = TABLE_BIG_ROWS_TO_RETRIEVE;
                 ICollection<OdptPkgTableBig.TTableBig> retTableBigList, outTableBigList;
                 ICollection<TTableBigMapByPositionAll> retTableBigMapByPositionAllList, outTableBigMapByPositionAllList;
                 ICollection<TTableBigMapByPositionPartial> retTableBigMapByPositionPartialList, outTableBigMapByPositionPartialList;
-                ICollection<OdptPkgTableBig.TTableBigChar>      outTableBigCharList;
-                ICollection<TTableBigCharMapByPositionAll>      outTableBigCharMapByPositionAllList;
-                ICollection<TTableBigCharMapByPositionPartial>  outTableBigCharMapByPositionPartialList;
+                ICollection<OdptPkgTableBig.TTableBigChar> outTableBigCharList;
+                ICollection<TTableBigCharMapByPositionAll> outTableBigCharMapByPositionAllList;
+                ICollection<TTableBigCharMapByPositionPartial> outTableBigCharMapByPositionPartialList;
                 DataTable retTableBigDataTable, outTableBigDataTable, outTableBigDataTable2;
 
                 // DataTable ret
@@ -692,21 +696,21 @@ namespace Odapter.Tester {
                 outTableBigDataTable = null; outTableBigList = null; outTableBigMapByPositionAllList = null; outTableBigMapByPositionPartialList = null;
                 retTableBigDataTable = OdptPkgTableBig.Instance.GetRowsUntypedOut2Ret(out outTableBigDataTable, out outTableBigDataTable2, true, rowLimit, null);
                 retTableBigList = OdptPkgTableBig.Instance.GetRowsUntypedOut2Ret<OdptPkgTableBig.TTableBig, OdptPkgTableBig.TTableBig, OdptPkgTableBig.TTableBigChar>(out outTableBigList, out outTableBigCharList, false, false, rowLimit, null);
-                retTableBigMapByPositionAllList = OdptPkgTableBig.Instance.GetRowsUntypedOut2Ret<TTableBigMapByPositionAll, TTableBigMapByPositionAll, TTableBigCharMapByPositionAll> (out outTableBigMapByPositionAllList, out outTableBigCharMapByPositionAllList, true, false, rowLimit, null);
-                retTableBigMapByPositionPartialList = OdptPkgTableBig.Instance.GetRowsUntypedOut2Ret<TTableBigMapByPositionPartial, TTableBigMapByPositionPartial, TTableBigCharMapByPositionPartial> (out outTableBigMapByPositionPartialList, out outTableBigCharMapByPositionPartialList, true, true, rowLimit, null);
+                retTableBigMapByPositionAllList = OdptPkgTableBig.Instance.GetRowsUntypedOut2Ret<TTableBigMapByPositionAll, TTableBigMapByPositionAll, TTableBigCharMapByPositionAll>(out outTableBigMapByPositionAllList, out outTableBigCharMapByPositionAllList, true, false, rowLimit, null);
+                retTableBigMapByPositionPartialList = OdptPkgTableBig.Instance.GetRowsUntypedOut2Ret<TTableBigMapByPositionPartial, TTableBigMapByPositionPartial, TTableBigCharMapByPositionPartial>(out outTableBigMapByPositionPartialList, out outTableBigCharMapByPositionPartialList, true, true, rowLimit, null);
                 Debug.Assert(retTableBigDataTable.Rows.Count == rowLimit && retTableBigList.Count == rowLimit && retTableBigMapByPositionAllList.Count == rowLimit && retTableBigMapByPositionPartialList.Count == rowLimit);
                 Debug.Assert(outTableBigDataTable.Rows.Count == rowLimit && outTableBigList.Count == rowLimit && outTableBigMapByPositionAllList.Count == rowLimit && outTableBigMapByPositionPartialList.Count == rowLimit);
                 Debug.Assert(outTableBigDataTable2.Rows.Count == rowLimit && outTableBigCharList.Count == rowLimit && outTableBigCharMapByPositionAllList.Count == rowLimit && outTableBigCharMapByPositionPartialList.Count == rowLimit);
             }
 
-            public void TestCursorUntypedTableNumber() {
+            private void TestCursorUntypedTableNumber() {
                 uint? rowLimit = null;
                 ICollection<OdptPkgTableNumber.TTableNumber> retTableNumberList, outTableNumberList;
                 ICollection<TTableNumberMapByPositionAll> retTableNumberMapByPositionAllList, outTableNumberMapByPositionAllList;
                 ICollection<TTableNumberMapByPositionPartial> retTableNumberMapByPositionPartialList, outTableNumberMapByPositionPartialList;
-                ICollection<OdptPkgTableNumber.TTableNumberDec>      outTableNumberDecList;
-                ICollection<TTableNumberDecMapByPositionAll>      outTableNumberDecMapByPositionAllList;
-                ICollection<TTableNumberDecMapByPositionPartial>  outTableNumberDecMapByPositionPartialList;
+                ICollection<OdptPkgTableNumber.TTableNumberDec> outTableNumberDecList;
+                ICollection<TTableNumberDecMapByPositionAll> outTableNumberDecMapByPositionAllList;
+                ICollection<TTableNumberDecMapByPositionPartial> outTableNumberDecMapByPositionPartialList;
                 DataTable retTableNumberDataTable, outTableNumberDataTable, outTableNumberDataTable2;
 
                 // DataTable ret
@@ -743,19 +747,19 @@ namespace Odapter.Tester {
                 outTableNumberDataTable = null; outTableNumberList = null; outTableNumberMapByPositionAllList = null; outTableNumberMapByPositionPartialList = null;
                 retTableNumberDataTable = OdptPkgTableNumber.Instance.GetRowsUntypedOut2Ret(out outTableNumberDataTable, out outTableNumberDataTable2, true, rowLimit, null);
                 retTableNumberList = OdptPkgTableNumber.Instance.GetRowsUntypedOut2Ret<OdptPkgTableNumber.TTableNumber, OdptPkgTableNumber.TTableNumber, OdptPkgTableNumber.TTableNumberDec>(out outTableNumberList, out outTableNumberDecList, false, false, rowLimit, null);
-                retTableNumberMapByPositionAllList = OdptPkgTableNumber.Instance.GetRowsUntypedOut2Ret<TTableNumberMapByPositionAll, TTableNumberMapByPositionAll, TTableNumberDecMapByPositionAll> (out outTableNumberMapByPositionAllList, out outTableNumberDecMapByPositionAllList, true, false, rowLimit, null);
-                retTableNumberMapByPositionPartialList = OdptPkgTableNumber.Instance.GetRowsUntypedOut2Ret<TTableNumberMapByPositionPartial, TTableNumberMapByPositionPartial, TTableNumberDecMapByPositionPartial> (out outTableNumberMapByPositionPartialList, out outTableNumberDecMapByPositionPartialList, true, true, rowLimit, null);
+                retTableNumberMapByPositionAllList = OdptPkgTableNumber.Instance.GetRowsUntypedOut2Ret<TTableNumberMapByPositionAll, TTableNumberMapByPositionAll, TTableNumberDecMapByPositionAll>(out outTableNumberMapByPositionAllList, out outTableNumberDecMapByPositionAllList, true, false, rowLimit, null);
+                retTableNumberMapByPositionPartialList = OdptPkgTableNumber.Instance.GetRowsUntypedOut2Ret<TTableNumberMapByPositionPartial, TTableNumberMapByPositionPartial, TTableNumberDecMapByPositionPartial>(out outTableNumberMapByPositionPartialList, out outTableNumberDecMapByPositionPartialList, true, true, rowLimit, null);
                 Debug.Assert(retTableNumberDataTable.Rows.Count > 0 && retTableNumberList.Count > 0 && retTableNumberMapByPositionAllList.Count > 0 && retTableNumberMapByPositionPartialList.Count > 0);
                 Debug.Assert(outTableNumberDataTable.Rows.Count > 0 && outTableNumberList.Count > 0 && outTableNumberMapByPositionAllList.Count > 0 && outTableNumberMapByPositionPartialList.Count > 0);
                 Debug.Assert(outTableNumberDataTable2.Rows.Count > 0 && outTableNumberDecList.Count > 0 && outTableNumberDecMapByPositionAllList.Count > 0 && outTableNumberDecMapByPositionPartialList.Count > 0);
             }
-#endregion
+            #endregion
 
-#region Tests for isolated data types (built-ins, ODP.NET SafeTypes, etc.) and respective associative arrays
+            #region Tests for isolated data types (built-ins, ODP.NET SafeTypes, etc.) and respective associative arrays
             /// <summary>
             /// Test use of Int32
             /// </summary>
-            public void TestInt32Calls() {
+            private void TestInt32Calls() {
                 Int32? pInInt = 0, pInOutInt = 0, pOutInt, retInt;
                 List<Int32?> pInListInt = new List<Int32?>(), pInOutListInt = new List<Int32?>(), pOutListInt = new List<Int32?>();
                 List<Int32?> intTestValues = new List<Int32?>() { Int32.MaxValue, Int32.MinValue, 0, null };
@@ -784,7 +788,7 @@ namespace Odapter.Tester {
             /// <summary>
             /// Test use of Int64
             /// </summary>
-            public void TestInt64Calls() {
+            private void TestInt64Calls() {
 #if SAFETYPE_INTEGER
                 OracleDecimal? pIn, pInOut, pOut, ret;
                 List<OracleDecimal?> pInList = new List<OracleDecimal?>(), pInOutList = new List<OracleDecimal?>(), pOutList = new List<OracleDecimal?>(), retList;
@@ -806,7 +810,7 @@ namespace Odapter.Tester {
 
                 // INTEGER
                 // standard call
-                for (int i = 0; i < testValues.Count; i++){
+                for (int i = 0; i < testValues.Count; i++) {
                     pIn = testValues[i]; pInOut = null;
                     ret = OdptPkgMain.Instance.FuncInteger(pIn, ref pInOut, out pOut, null);
                     Debug.Assert(pIn.Equals(pInOut) && pIn.Equals(pOut) && pIn.Equals(ret));
@@ -829,7 +833,7 @@ namespace Odapter.Tester {
 
                 // INT
                 // stanard call
-                for (int i = 0; i < testValues.Count; i++){
+                for (int i = 0; i < testValues.Count; i++) {
                     pIn = testValues[i]; pInOut = null;
                     ret = OdptPkgMain.Instance.FuncInt(pIn, ref pInOut, out pOut, null);
                     Debug.Assert(pIn.Equals(pInOut) && pIn.Equals(pOut) && pIn.Equals(ret));
@@ -837,7 +841,7 @@ namespace Odapter.Tester {
 
                 // SMALLINT
                 // standard call
-                for (int i = 0; i < testValues.Count; i++){
+                for (int i = 0; i < testValues.Count; i++) {
                     pIn = testValues[i]; pInOut = null;
                     ret = OdptPkgMain.Instance.FuncSmallint(pIn, ref pInOut, out pOut, null);
                     Debug.Assert(pIn.Equals(pInOut) && pIn.Equals(pOut) && pIn.Equals(ret));
@@ -856,7 +860,7 @@ namespace Odapter.Tester {
             /// <summary>
             /// Test use of Decimal, OracleDecimal
             /// </summary>
-            public void TestDecimalCalls() {
+            private void TestDecimalCalls() {
 #if SAFETYPE_NUMBER
                 OracleDecimal? pInDecimal, pInOutDecimal, pOutDecimal, retDecimal;
                 List<OracleDecimal?> pInListDecimal, pInOutListDecimal, pOutListDecimal, retListDecimal;
@@ -871,7 +875,7 @@ namespace Odapter.Tester {
                 // NUMBER
                 // standard call
                 for (int i = 0; i < decimalTestValues.Count; i++) {
-                    pInDecimal = pInOutDecimal = decimalTestValues[i]; 
+                    pInDecimal = pInOutDecimal = decimalTestValues[i];
                     retDecimal = OdptPkgMain.Instance.FuncNumber(pInDecimal, ref pInOutDecimal, out pOutDecimal, null);
                     Debug.Assert(pInDecimal.Equals(pInOutDecimal) || pInDecimal.Equals(pOutDecimal) || pInDecimal.Equals(retDecimal));
                 }
@@ -886,7 +890,7 @@ namespace Odapter.Tester {
                 // FLOAT
                 // standard call
                 for (int i = 0; i < decimalTestValues.Count; i++) {
-                    pInDecimal = pInOutDecimal = decimalTestValues[i]; 
+                    pInDecimal = pInOutDecimal = decimalTestValues[i];
                     retDecimal = OdptPkgMain.Instance.FuncFloat(pInDecimal, ref pInOutDecimal, out pOutDecimal, null);
                     Debug.Assert(pInDecimal.Equals(pInOutDecimal) && pInDecimal.Equals(pOutDecimal) && pInDecimal.Equals(retDecimal));
                 }
@@ -917,7 +921,7 @@ namespace Odapter.Tester {
             /// <summary>
             /// Test use of Double
             /// </summary>
-            public void TestDoubleCalls() {
+            private void TestDoubleCalls() {
                 Double? pInDouble, pInOutDouble, pOutDouble, retDouble;
                 List<Double?> pInListDouble = new List<Double?>(), pInOutListDouble = new List<Double?>(), pOutListDouble = new List<Double?>(), retListDouble;
 
@@ -938,7 +942,7 @@ namespace Odapter.Tester {
                 // BINARY_DOUBLE
                 // standard call
                 foreach (Double? dt in doubleTestValues) {
-                    pInDouble = pInOutDouble = dt; 
+                    pInDouble = pInOutDouble = dt;
                     retDouble = OdptPkgMain.Instance.FuncBinaryDouble(pInDouble, ref pInOutDouble, out pOutDouble, null);
                     Debug.Assert(Util.IsEqual(pInDouble, pInOutDouble) && Util.IsEqual(pInDouble, pOutDouble) && Util.IsEqual(pInDouble, retDouble));
                 }
@@ -954,7 +958,7 @@ namespace Odapter.Tester {
             /// <summary>
             /// Test use of Single(float)
             /// </summary>
-            public void TestSingleCalls() {
+            private void TestSingleCalls() {
                 Single? pInSingle, pInOutSingle, pOutSingle, retSingle;
                 List<Single?> pInListSingle = new List<Single?>(), pInOutListSingle = new List<Single?>(), pOutListSingle = new List<Single?>(), retListSingle;
 
@@ -970,7 +974,7 @@ namespace Odapter.Tester {
 
                 // standard call
                 foreach (Single? st in singleTestValues) {
-                    pInSingle = pInOutSingle = st; 
+                    pInSingle = pInOutSingle = st;
                     retSingle = OdptPkgMain.Instance.FuncBinaryFloat(pInSingle, ref pInOutSingle, out pOutSingle, null);
                     Debug.Assert(Util.IsEqual(pInSingle, pInOutSingle) && Util.IsEqual(pInSingle, pOutSingle) && Util.IsEqual(pInSingle, retSingle));
                 }
@@ -986,19 +990,19 @@ namespace Odapter.Tester {
             /// <summary>
             /// Test use of String 
             /// </summary>
-            public void TestStringCalls() {
+            private void TestStringCalls() {
                 String pInString, pInOutString, pOutString, retString;
                 List<String> pInListString = new List<String>(), pInOutListString = new List<String>(), pOutListString, retListString;
 
                 // VARCHAR
                 // standard call
-                pInString = pInOutString = new string('?', MAX_STRING_SIZE_FOR_VARCHAR_ARG); 
+                pInString = pInOutString = new string('?', MAX_STRING_SIZE_FOR_VARCHAR_ARG);
                 retString = OdptPkgMain.Instance.FuncVarchar(pInString, ref pInOutString, out pOutString, null);
                 Debug.Assert(pInString.Equals(pInOutString) && pInString.Equals(pOutString) && pInString.Equals(retString));
 
                 // VARCHAR2
                 // standard call
-                pInString = pInOutString = new string('?', MAX_STRING_SIZE_FOR_VARCHAR_ARG); 
+                pInString = pInOutString = new string('?', MAX_STRING_SIZE_FOR_VARCHAR_ARG);
                 retString = OdptPkgMain.Instance.FuncVarchar2(pInString, ref pInOutString, out pOutString, null);
                 Debug.Assert(pInString.Equals(pInOutString) && pInString.Equals(pOutString) && pInString.Equals(retString));
 
@@ -1010,7 +1014,7 @@ namespace Odapter.Tester {
 
                 // NVARCHAR2
                 // standard call
-                pInString = pInOutString = new string('?', MAX_STRING_SIZE_FOR_VARCHAR_ARG); 
+                pInString = pInOutString = new string('?', MAX_STRING_SIZE_FOR_VARCHAR_ARG);
                 retString = OdptPkgMain.Instance.FuncNvarchar2(pInString, ref pInOutString, out pOutString, null);
                 Debug.Assert(pInString.Equals(pInOutString) && pInString.Equals(pOutString) && pInString.Equals(retString));
 
@@ -1034,7 +1038,7 @@ namespace Odapter.Tester {
 
                 // CHAR
                 // standard call
-                pInString = pInOutString = new string('?', MAX_STRING_SIZE_FOR_CHAR); 
+                pInString = pInOutString = new string('?', MAX_STRING_SIZE_FOR_CHAR);
                 retString = OdptPkgMain.Instance.FuncChar(pInString, ref pInOutString, out pOutString, null);
                 Debug.Assert(pInString.Equals(pInOutString) && pInString.Equals(pOutString) && pInString.Equals(retString));
 
@@ -1060,7 +1064,7 @@ namespace Odapter.Tester {
             /// <summary>
             /// Test use of String LOB
             /// </summary>
-            public void TestStringLobCalls() {
+            private void TestStringLobCalls() {
                 OracleConnection conn =
 #if SAFETYPE_CLOB
                     Database.Instance.GetConnection();  // connection required to instantiate LOB classes
@@ -1106,9 +1110,9 @@ namespace Odapter.Tester {
                 Debug.Assert(
 #if SAFETYPE_CLOB
                     (pInString.Value.Equals(pInOutString.Value))
-    #if !CSHARP30   // 3.0 is failing to hydrate the out and return; 'ORA-24806: LOB form mismatch'
+#if !CSHARP30   // 3.0 is failing to hydrate the out and return; 'ORA-24806: LOB form mismatch'
                         && (pInString.Value.Equals(pOutString.Value)) && (pInString.Value.Equals(retString.Value))
-    #endif
+#endif
 #else
                     pInString.Equals(pInOutString) && pInString.Equals(pOutString) && pInString.Equals(retString)
 #endif
@@ -1128,7 +1132,7 @@ namespace Odapter.Tester {
             /// <summary>
             /// Test use of Byte array LOB
             /// </summary>
-            public void TestByteArrayLobCalls() {
+            private void TestByteArrayLobCalls() {
                 OracleConnection conn =
 #if SAFETYPE_BLOB
                     Database.Instance.GetConnection();  // connection required to instantiate LOB classes
@@ -1178,7 +1182,7 @@ namespace Odapter.Tester {
             /// <summary>
             /// Test use of DateTime, OracleDate, OracleTimeStamp 
             /// </summary>
-            public void TestDateCalls() {
+            private void TestDateCalls() {
 #if !SAFETYPE_DATE
                 DateTime? pInDateTime, pInOutDateTime, pOutDateTime, retDateTime;
                 List<DateTime?> pInListDateTime, pInOutListDateTime, pOutListDateTime, retListDateTime;
@@ -1207,9 +1211,9 @@ namespace Odapter.Tester {
                     if (pInDateTime.Value.IsNull) {
                         Debug.Assert(pInOutDateTime.Value.IsNull && pOutDateTime.Value.IsNull && retDateTime.Value.IsNull);
                     } else {
-    #if !CSHARP30 // Unmanaged OracleDate.Equals() is always false, works fine with Managed
+#if !CSHARP30 // Unmanaged OracleDate.Equals() is always false, works fine with Managed
                         Debug.Assert(pInDateTime.Equals(pInOutDateTime) && pInDateTime.Equals(pOutDateTime) && pInDateTime.Equals(retDateTime));
-    #endif
+#endif
                     }
 #endif
                 }
@@ -1222,11 +1226,11 @@ namespace Odapter.Tester {
                 for (int i = 0; i < pInListDateTime.Count; i++) Debug.Assert(!(pInListDateTime[i] - pOutListDateTime[i] > TimeSpan.FromSeconds(1)));
                 for (int i = 0; i < pInListDateTime.Count; i++) Debug.Assert(!(pInListDateTime[i] - retListDateTime[i] > TimeSpan.FromSeconds(1)));
 #else
-    #if !CSHARP30 // Unmanaged OracleDate.Equals() is always false, works fine with Managed
+#if !CSHARP30 // Unmanaged OracleDate.Equals() is always false, works fine with Managed
                 for (int i = 0; i < pInListDateTime.Count; i++) Debug.Assert(pInListDateTime[i].Equals(pInOutListDateTime[i]));
                 for (int i = 0; i < pInListDateTime.Count; i++) Debug.Assert(pInListDateTime[i].Equals(pOutListDateTime[i]));
                 for (int i = 0; i < pInListDateTime.Count; i++) Debug.Assert(pInListDateTime[i].Equals(retListDateTime[i]));
-    #endif
+#endif
 #endif
 
 #if !SAFETYPE_TIMESTAMP
@@ -1269,12 +1273,12 @@ namespace Odapter.Tester {
                 //for (int i = 0; i < pInListTimeStamp.Count; i++) if (pInListTimeStamp[i] - pOutListTimeStamp[i] > TimeSpan.FromSeconds( 1 )) throw new Exception( "Error" );
                 //for (int i = 0; i < pInListTimeStamp.Count; i++) if (pInListTimeStamp[i] - retListTimeStamp[i] > TimeSpan.FromSeconds( 1 )) throw new Exception( "Error" );
             }
-            public void TestTimeSpanCalls() {
+            private void TestTimeSpanCalls() {
             }
-#endregion
+            #endregion
 
-#region Miscellaneous tests
-            public void CompileTimeChecks() {
+            #region Miscellaneous tests
+            private void CompileTimeChecks() {
                 OdptPkgEmpty pkgEmpty = OdptPkgEmpty.Instance;
                 OdptPkgSql pkgSql = OdptPkgSql.Instance;
                 OdptPkgLog pkgLog = OdptPkgLog.Instance;
@@ -1290,7 +1294,15 @@ namespace Odapter.Tester {
                 OdptPoVendorOt objectPoVendor = new OdptPoVendorOt();
             }
 
-            public void TestMiscCalls() {
+            private void TestSingleton() {
+#if !CSHARP30
+                OdptPkgMain first = null, second = null, third = null;
+                Parallel.Invoke(() => first = OdptPkgMain.Instance, () => second = OdptPkgMain.Instance, () => third = OdptPkgMain.Instance);
+                Debug.Assert(Object.ReferenceEquals(first, second) && Object.ReferenceEquals(first, third));
+#endif
+            }
+
+            private void TestMiscCalls() {
                 OdptPkgMain.Instance.ProcUnderscoreSuffix(null);
                 OdptPkgMain.Instance.ProcUnderscoreSuffixUnderscorechar(null);
 
@@ -1315,7 +1327,7 @@ namespace Odapter.Tester {
                 }
             }
 
-            public void TestDuplicateSignatureCalls() {
+            private void TestDuplicateSignatureCalls() {
 #if SAFETYPE_INTEGER
                 OracleDecimal?
 #else
@@ -1342,7 +1354,7 @@ namespace Odapter.Tester {
                 Debug.Assert(pInOut.Equals(pIn + 3) && pOut.Equals(pIn + 3) && ret.Equals(pIn + 3));
             }
 
-            public void TestNoParamCalls() {
+            private void TestNoParamCalls() {
                 OdptPkgMain.Instance.ProcNoParam(null);
 #if SAFETYPE_NUMBER
                 OracleDecimal? 
@@ -1352,7 +1364,7 @@ namespace Odapter.Tester {
                 ret = OdptPkgMain.Instance.FuncNoParam(null);
             }
 
-            public void TestOptionalParamCalls() {
+            private void TestOptionalParamCalls() {
 #if SAFETYPE_NUMBER
                 List<OracleDecimal?> decimalTestValues = new List<OracleDecimal?>() { OracleDecimal.Null, OracleDecimal.MinValue, 0.0M, OracleDecimal.MaxValue };
 #else
@@ -1996,14 +2008,14 @@ namespace Odapter.Tester {
 #endregion
 #endregion DTOs
 
-        public class Util {
+        private class Util {
             /// <summary>
             /// A make shift compare for two double values
             /// </summary>
             /// <param name="d1"></param>
             /// <param name="d2"></param>
             /// <returns></returns>
-            public static bool IsEqual(Double? v1, Double? v2) {
+            internal static bool IsEqual(Double? v1, Double? v2) {
                 if ((v1 == null && v2 == null) || (v1 == 0.0 && v2 == 0.0) || (v1.Equals(Double.NaN) && v2.Equals(Double.NaN)) || 
                     (v1.Equals(Double.PositiveInfinity) && v2.Equals(Double.PositiveInfinity)) || v1.Equals(Double.NegativeInfinity) && v2.Equals(Double.NegativeInfinity)) return true;
                 double allowedDelta = Math.Abs(v1.Value * 0.00001);
@@ -2011,7 +2023,7 @@ namespace Odapter.Tester {
                 return delta <= allowedDelta;
             }
 
-            public static bool IsEqual(Single? v1, Single? v2) {
+            internal static bool IsEqual(Single? v1, Single? v2) {
                 if ((v1 == null && v2 == null) || (v1 == 0.0 && v2 == 0.0) || (v1.Equals(Single.NaN) && v2.Equals(Single.NaN)) || 
                     (v1.Equals(Single.PositiveInfinity) && v2.Equals(Single.PositiveInfinity)) || v1.Equals(Single.NegativeInfinity) && v2.Equals(Single.NegativeInfinity)) return true;
                 double allowedDelta = Math.Abs(v1.Value * 0.00001);
@@ -2020,7 +2032,7 @@ namespace Odapter.Tester {
             }
         }
 
-        public class Database : OdptAdapter {
+        private class Database : OdptAdapter {
             private Database() { }
             private static Database _instance = new Database();
             public static Database Instance { get { return _instance; } }
