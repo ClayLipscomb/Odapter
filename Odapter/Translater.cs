@@ -85,9 +85,9 @@ namespace Odapter {
         }
 
         public static readonly IDictionary<String, List<CustomTranslatedCSharpType>> CustomTypeTranslationOptions = new Dictionary<String, List<CustomTranslatedCSharpType>>() {
-            {Orcl.REF_CURSOR, new List<CustomTranslatedCSharpType> {                new CustomTranslatedCSharpType(CSharp.ICOLLECTION, @""),
-                                                                                    new CustomTranslatedCSharpType(CSharp.ILIST, @""),
-                                                                                    new CustomTranslatedCSharpType(CSharp.LIST, @"") } },
+            {Orcl.REF_CURSOR, new List<CustomTranslatedCSharpType> {                new CustomTranslatedCSharpType(CSharp.ILIST, @""),
+                                                                                    new CustomTranslatedCSharpType(CSharp.ICOLLECTION, @""),
+                                                                                    new CustomTranslatedCSharpType(CSharp.LIST, @"concrete, not recommended") } },
             {Orcl.ASSOCIATITVE_ARRAY, new List<CustomTranslatedCSharpType> {        new CustomTranslatedCSharpType(CSharp.LIST, @""), 
                                                                                     new CustomTranslatedCSharpType(CSharp.ILIST, @""),
                                                                                     new CustomTranslatedCSharpType(CSharp.ICOLLECTION, @"") } }, 

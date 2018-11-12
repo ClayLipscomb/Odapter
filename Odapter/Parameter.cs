@@ -83,7 +83,7 @@ namespace Odapter {
             IsConvertOracleNumberToIntegerIfColumnNameIsId = true;
             IsUseAutoImplementedProperties = true;
 
-            CSharpTypeUsedForOracleRefCursor = CSharp.ICOLLECTION;
+            CSharpTypeUsedForOracleRefCursor = CSharp.ILIST;
             CSharpTypeUsedForOracleAssociativeArray = CSharp.LIST;
             CSharpTypeUsedForOracleInteger = CSharp.INT64;
             CSharpTypeUsedForOracleNumber = CSharp.DECIMAL;
