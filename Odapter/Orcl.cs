@@ -106,7 +106,7 @@ namespace Odapter {
         /// </summary>
         /// <param name="oracleType"></param>
         /// <returns></returns>
-        public static bool IsOracleNumberEquivalent(String oracleType) {
+        internal static bool IsOracleNumberEquivalent(String oracleType) {
             if (new List<String>() { Orcl.NUMBER, Orcl.FLOAT, Orcl.BINARY_FLOAT }.Contains(oracleType)) return true;
             return true;
         }

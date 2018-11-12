@@ -22,10 +22,10 @@ using System.Linq;
 
 namespace Odapter {
     #region Oracle objects (package, proc, etc.)
-    public class Package  {
-        public string PackageName { get { return objectName; } set { objectName = value; } } private string objectName { get; set; }
-        public string Owner { get; set; }
-        public List<Procedure> Procedures { get; set; }
+    internal class Package  {
+        internal string PackageName { get { return objectName; } set { objectName = value; } } private string objectName { get; set; }
+        internal string Owner { get; set; }
+        internal List<Procedure> Procedures { get; set; }
 
         /// <summary>
         /// Determine if proc has a duplicate signature of another proc in the package. Signatures are duplicate if the procs
@@ -35,7 +35,7 @@ namespace Odapter {
         /// </summary>
         /// <param name="proc"></param>
         /// <returns></returns>
-        public Boolean HasDuplicateSignature(Procedure proc) {
+        internal Boolean HasDuplicateSignature(Procedure proc) {
             return Procedures.Exists(p =>
                 p.ProcedureName.Equals(proc.ProcedureName)  // same proc name
                 && !(p.Overload ?? String.Empty).Equals(proc.Overload ?? String.Empty)  // different overload
@@ -47,16 +47,16 @@ namespace Odapter {
     }
 
     // a proc/function (packaged or not)
-    public class Procedure {
-        public string PackageName { get { return objectName; } set { objectName = value; } } private string objectName { get; set; }
-        public string ProcedureName { get; set; }
-        public string Overload { get; set; }
-        public List<Argument> Arguments { get; set; }
+    internal class Procedure {
+        internal string PackageName { get { return objectName; } set { objectName = value; } } private string objectName { get; set; }
+        internal string ProcedureName { get; set; }
+        internal string Overload { get; set; }
+        internal List<Argument> Arguments { get; set; }
 
         /// <summary>
         /// if a function, gets the return Oracle type
         /// </summary>
-        public string ReturnOracleDataType {
+        internal string ReturnOracleDataType {
             get { return (Arguments.Count == 0 || Arguments[0].DataLevel != 0 || Arguments[0].Position != 0 ? null : Arguments[0].DataType); }
         }
 
@@ -64,7 +64,7 @@ namespace Odapter {
         /// Returns whether this stored proc is a function
         /// </summary>
         /// <returns>boolean</returns>
-        public bool IsFunction() {
+        internal bool IsFunction() {
             return (Arguments.Count == 0 ? false : (Arguments[0].DataLevel == 0 && Arguments[0].Position == 0 && Arguments[0].InOut == Orcl.OUT));
         }
 
@@ -72,12 +72,12 @@ namespace Odapter {
         /// Returns whether procedure has at least one OUT (not IN OUT) param, excluding the return 
         /// </summary>
         /// <returns></returns>
-        public Boolean HasOutArgument() {
+        internal Boolean HasOutArgument() {
             foreach (Argument arg in Arguments) if ((arg.DataLevel != 0 || arg.Position != 0) && arg.InOut.Equals(Orcl.OUT)) return true; // explicit OUT
             return false;
         }
 
-        public Boolean IsIgnoredDueToOracleArgumentTypes(out String reasonMsg) {
+        internal Boolean IsIgnoredDueToOracleArgumentTypes(out String reasonMsg) {
             reasonMsg = "";
             String unimplemntedType = "";
 
@@ -118,7 +118,7 @@ namespace Odapter {
         /// </summary>
         /// <param name="oracleType"></param>
         /// <returns></returns>
-        public Boolean HasArgumentOfOracleType(String oracleType) {
+        internal Boolean HasArgumentOfOracleType(String oracleType) {
             return UsesOracleType(oracleType, false);
         }
 
@@ -126,7 +126,7 @@ namespace Odapter {
         /// Does procedure have at least one weakly typed cursor as return or argument?
         /// </summary>
         /// <returns></returns>
-        public Boolean UsesWeaklyTypedCursor() {
+        internal Boolean UsesWeaklyTypedCursor() {
             foreach (Argument arg in Arguments) {
                 // when we reach last arg, we must return here with a simple check: a cursor at the end is weakly typed
                 if (Arguments.IndexOf(arg) == Arguments.Count - 1) return (arg.DataType == Orcl.REF_CURSOR ? true : false); 
@@ -141,7 +141,7 @@ namespace Odapter {
         /// Does procedure have at least one associative array of an unimplemented type as return or argument?
         /// </summary>
         /// <returns></returns>
-        public Boolean HasArgumentOfOracleTypeAssocArrayOfUnimplementedType(out String unimplementedType) {
+        internal Boolean HasArgumentOfOracleTypeAssocArrayOfUnimplementedType(out String unimplementedType) {
             unimplementedType = null;
             foreach (Argument arg in Arguments) {
                 if (Arguments.IndexOf(arg) == Arguments.Count - 1) return false; // reached end of arg list since assoc array uses "2 args"
@@ -155,7 +155,7 @@ namespace Odapter {
             return false;
         }
 
-        public Boolean HasInArgumentOfOracleTypeRefCursor() {
+        internal Boolean HasInArgumentOfOracleTypeRefCursor() {
             //reasonMsg = "";
             foreach (Argument arg in Arguments) if (arg.DataType.Equals(Orcl.REF_CURSOR) && arg.InOut.StartsWith(Orcl.IN)) return true; // IN or IN OUT
             return false;
@@ -163,35 +163,35 @@ namespace Odapter {
     }
 
     // an argument to a funtion/proc
-    public class Argument {
-        public Argument NextArgument { get; set; }
-        public string Owner { get; set; }
-        public string PackageName { get; set; }
-        public string ProcedureName { get { return objectName; } set { objectName = value; } } private string objectName { get; set; }
-        public string Overload { get; set; }
-        public int DataLevel { get; set; }
-        public string ArgumentName { get; set; }
-        public int Position { get; set; }
-        public int Sequence { get; set; }
-        public string DataType { get; set; }
-        public string InOut { get; set; }
-        public int? DataLength { get; set; }
-        public int? DataPrecision { get; set; }
-        public int? DataScale { get; set; }
-        public string PlsType { get; set; }
-        public string TypeOwner { get; set; }
-        public string TypeName { get; set; }
-        public string TypeSubname { get; set; }
-        public string TypeLink { get; set; }
-        public int? CharLength { get; set; }
-        public bool Defaulted { get { return (defaulted == "Y" ? true : false); } } private string defaulted { get; set; }
-        public bool IsReturnArgument { get { return (Position == 0 && DataLevel == 0 && ArgumentName == null && InOut == Orcl.OUT); } }
+    internal class Argument {
+        internal Argument NextArgument { get; set; }
+        internal string Owner { get; set; }
+        internal string PackageName { get; set; }
+        internal string ProcedureName { get { return objectName; } set { objectName = value; } } private string objectName { get; set; }
+        internal string Overload { get; set; }
+        internal int DataLevel { get; set; }
+        internal string ArgumentName { get; set; }
+        internal int Position { get; set; }
+        internal int Sequence { get; set; }
+        internal string DataType { get; set; }
+        internal string InOut { get; set; }
+        internal int? DataLength { get; set; }
+        internal int? DataPrecision { get; set; }
+        internal int? DataScale { get; set; }
+        internal string PlsType { get; set; }
+        internal string TypeOwner { get; set; }
+        internal string TypeName { get; set; }
+        internal string TypeSubname { get; set; }
+        internal string TypeLink { get; set; }
+        internal int? CharLength { get; set; }
+        internal bool Defaulted { get { return (defaulted == "Y" ? true : false); } } private string defaulted { get; set; }
+        internal bool IsReturnArgument { get { return (Position == 0 && DataLevel == 0 && ArgumentName == null && InOut == Orcl.OUT); } }
     }
 
     /// <summary>
     /// Interface of an entity attribute. Should be implemented mapping to underlying sys view column if naming is different.
     /// </summary>
-    public interface IEntityAttribute {
+    internal interface IEntityAttribute {
         string EntityName { get; set; }
         string AttrName { get; set; }
         string AttrType { get; set; }
@@ -209,13 +209,13 @@ namespace Odapter {
     /// <summary>
     /// Attribute for an object type
     /// </summary>
-    public class ObjectTypeAttribute : IEntityAttribute {
+    internal class ObjectTypeAttribute : IEntityAttribute {
         // standard attribute properties
         public string EntityName { get { return typeName; } set { typeName = value; } } private string typeName { get; set; }
         public string AttrName { get; set; }
         public string AttrType { get { return attrTypeName; } set { attrTypeName = value; } } private string attrTypeName { get; set; }
-        public string AttrTypeOwner { get; set; } 
-        public string AttrTypeMod { get; set; } 
+        public string AttrTypeOwner { get; set; }
+        public string AttrTypeMod { get; set; }
         public int? Length { get; set; }
         public int? Precision { get; set; }
         public int? Scale { get; set; }
@@ -228,7 +228,7 @@ namespace Odapter {
     /// <summary>
     /// Column for a table or view
     /// </summary>
-    public class Column : IEntityAttribute {
+    internal class Column : IEntityAttribute {
         // standard attribute properties
         public string EntityName { get { return tableName; } set { tableName = value; } } private string tableName { get; set; }
         public string AttrName { get { return columnName; } set { columnName = value; } } private string columnName { get; set; }
@@ -250,7 +250,7 @@ namespace Odapter {
     /// <summary>
     ///  Field for package record type
     /// </summary>
-    public class Field : IComparable<Field>, IEntityAttribute {
+    internal class Field : IComparable<Field>, IEntityAttribute {
         // standard entity properties
         public string EntityName { get { return Name; } set { Name = value; } }
         public string AttrName { get { return Name; } set { Name = value; } }
@@ -279,7 +279,7 @@ namespace Odapter {
     /// <summary>
     /// Interface of an entity. Should be implemented mapping to underlying sys view column if naming is different.
     /// </summary>
-    public interface IEntity {
+    internal interface IEntity {
         string EntityName { get; set; }
         string Owner { get; set; }
         List<IEntityAttribute> Attributes { get; set; }
@@ -291,7 +291,7 @@ namespace Odapter {
     /// <summary>
     /// Base abstract class Entity with list of attribute
     /// </summary>
-    public abstract class Entity {
+    internal abstract class Entity {
         public List<IEntityAttribute> Attributes { get; set; }
 
         /// <summary>
@@ -299,12 +299,12 @@ namespace Odapter {
         /// </summary>
         /// <param name="oracleType"></param>
         /// <returns></returns>
-        public Boolean UsesOracleType(String oracleType) {
+        private Boolean UsesOracleType(String oracleType) {
             if (Attributes == null) return false;
             return Attributes.FindIndex(a => a.AttrType.Equals(oracleType)) != -1;
         }
 
-        public Boolean IsIgnoredDueToOracleTypes(out String reasonMsg) {
+        internal Boolean IsIgnoredDueToOracleTypes(out String reasonMsg) {
             reasonMsg = "";
 
             foreach (String oraType in Translater.OracleTypesIgnored)
@@ -320,7 +320,7 @@ namespace Odapter {
     /// <summary>
     /// Object Type as type of Entity
     /// </summary>
-    public class ObjectType : Entity, IEntity {
+    internal class ObjectType : Entity, IEntity {
         public string Owner { get; set; }
         public string EntityName { get { return typeName; } set { typeName = value; } } private string typeName { get; set; }
         public string AncestorTypeName { get { return supertypeName; } set { supertypeName = value; } } private string supertypeName { get; set; }
@@ -331,7 +331,7 @@ namespace Odapter {
     /// <summary>
     /// Table as type of Entity
     /// </summary>
-    public class Table : Entity, IEntity {
+    internal class Table : Entity, IEntity {
         public string Owner { get; set; }
         public string EntityName { get { return tableName; } set { tableName = value; } } private string tableName { get; set; }
         public string AncestorTypeName { get; set; }
@@ -342,7 +342,7 @@ namespace Odapter {
     /// <summary>
     /// View as type of Entity
     /// </summary>
-    public class View : Entity, IEntity {
+    internal class View : Entity, IEntity {
         public string Owner { get; set; }
         public string EntityName { get { return viewName; } set { viewName = value; } } private string viewName { get; set; }
         public string AncestorTypeName { get; set; }
@@ -353,7 +353,7 @@ namespace Odapter {
     /// <summary>
     /// Package record type as type of Entity
     /// </summary>
-    public class PackageRecord : Entity, IEntity, IComparable<PackageRecord> {
+    internal class PackageRecord : Entity, IEntity, IComparable<PackageRecord> {
         // standard entity properties
         public string EntityName { get { return CSharpType; } set { CSharpType = value; } }
         public string AncestorTypeName { get; set; }
@@ -382,7 +382,6 @@ namespace Odapter {
         /// </summary>
         public String Owner { get; set; }
 
-        //public List<IEntityAttribute> Fields { get { return Attributes; } } // alias for Attributes
         public int CompareTo(PackageRecord r) { return CSharpType.CompareTo(r.CSharpType); }
     }
     #endregion

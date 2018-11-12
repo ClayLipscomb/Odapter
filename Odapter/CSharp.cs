@@ -28,7 +28,7 @@ namespace Odapter {
     /// <summary>
     /// C# specific types and logic
     /// </summary>
-    public class CSharp {
+    internal class CSharp {
         #region C# Types
         public const string SBYTE = "SByte";
         public const string BYTE = "Byte";

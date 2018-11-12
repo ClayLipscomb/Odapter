@@ -33,10 +33,10 @@ namespace Odapter {
     /// Contains all parameter data sent to code generator
     /// </summary>
     [Serializable]
-    public class Parameter : INotifyPropertyChanged {
+    public sealed class Parameter : INotifyPropertyChanged {
         private Parameter() { RestoreDefaults(); }
         private static Parameter _instance = new Parameter();
-        public static Parameter Instance { get { return _instance; } set { _instance = value; } }
+        public static Parameter Instance { get { return _instance; } }
 
         #region INotifyPropertyChanged Interface
         /// <summary>
@@ -265,7 +265,7 @@ namespace Odapter {
             StreamReader reader = new StreamReader(GetExecutablePath() + @"\" + fileName);
             try {
                 System.Xml.Serialization.XmlSerializer xs = new System.Xml.Serialization.XmlSerializer(typeof(Parameter));
-                Parameter.Instance = (Parameter)xs.Deserialize(reader);
+                _instance = (Parameter)xs.Deserialize(reader);
             } catch {
                 throw;
             } finally {

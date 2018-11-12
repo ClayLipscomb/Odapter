@@ -24,7 +24,7 @@ using Oracle.ManagedDataAccess.Client;
 using Dapper;
 
 namespace Odapter {
-    public class Loader {
+    internal class Loader {
         #region Member variables
         private string 
             _dataSource = Parameter.Instance.DatabaseInstance,
@@ -44,13 +44,13 @@ namespace Odapter {
         #endregion
 
         #region Properties
-        public List<Package> Packages { get { return packages; } }
-        public List<PackageRecord> PacakgeRecordTypes { get { return packageRecordTypes; } }
-        private List<Argument> ArgumentsPackaged { get; set; }
-        public List<ObjectType> ObjectTypes { get { return objectTypes; } }
-        public List<Table> Tables { get { return tables; } }
-        public List<View> Views { get { return views; } }
-        public String Schema { get { return _schema; } }
+        internal List<Package> Packages { get { return packages; } }
+        internal List<PackageRecord> PacakgeRecordTypes { get { return packageRecordTypes; } }
+        internal List<Argument> ArgumentsPackaged { get; set; }
+        internal List<ObjectType> ObjectTypes { get { return objectTypes; } }
+        internal List<Table> Tables { get { return tables; } }
+        internal List<View> Views { get { return views; } }
+        internal String Schema { get { return _schema; } }
         #endregion
 
         #region Enums
@@ -61,7 +61,7 @@ namespace Odapter {
         #endregion
 
         #region Constructors
-        public Loader(Action<string> messageMethod) {
+        internal Loader(Action<string> messageMethod) {
             _displayMessageMethod = messageMethod;
         }
         #endregion
@@ -73,13 +73,11 @@ namespace Odapter {
         private void DisplayMessage(String msg) { _displayMessageMethod(msg); }
 
         #region Database
-        public string GetConnectionString() {
-            //return "data source=" + _dataSource + ";user id=" + _login + ";password=" + _password + ";enlist=false";
+        private string GetConnectionString() {
             return "data source=" + _dataSource + ";user id=" + _login + ";password=" + _password;
-            //return "data source=localhost:1521/" + _dataSource + ";user id=" + _login + ";password=" + _password;
         }
 
-        public OracleConnection GetConnection() {
+        private OracleConnection GetConnection() {
             OracleConnection connection = new OracleConnection(GetConnectionString());
             connection.Open();
             return connection;
@@ -268,7 +266,7 @@ namespace Odapter {
         /// load all packages with respective proc and arguments into memory
         /// </summary>
         /// <param name="connection"></param>
-        public void LoadPackages(OracleConnection connection) {
+        internal void LoadPackages(OracleConnection connection) {
             // read package, procs and arguments from schema
             try {
                 // get list of packages
@@ -421,7 +419,7 @@ namespace Odapter {
             return;
         }
 
-        public void LoadTypes(OracleConnection connection) {
+        internal void LoadTypes(OracleConnection connection) {
             LoadEntities<ObjectType, ObjectTypeAttribute>(connection, ref objectTypes, ref objectTypeAttributes);
         }
 
@@ -429,7 +427,7 @@ namespace Odapter {
         /// load all tables into memory
         /// </summary>
         /// <param name="connection"></param>
-        public void LoadTables(OracleConnection connection) {
+        internal void LoadTables(OracleConnection connection) {
             LoadEntities<Table, Column>(connection, ref tables, ref columns);
         }
 
@@ -437,7 +435,7 @@ namespace Odapter {
         /// load all views into memory
         /// </summary>
         /// <param name="connection"></param>
-        public void LoadViews(OracleConnection connection) {
+        internal void LoadViews(OracleConnection connection) {
             LoadEntities<View, Column>(connection, ref views, ref columns);
         }
         #endregion
