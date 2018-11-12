@@ -46,6 +46,7 @@ namespace OdapterWnFrm {
             }
 
             SetEnabledDisabled();
+            AcceptButton = this.BtnStart;
         }
 
 #region Messaging
