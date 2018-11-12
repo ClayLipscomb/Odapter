@@ -1140,6 +1140,12 @@ namespace Schema.Odpt.Odpt.Package {
             return __ret;
         } // FuncAaIntegerV
 
+        // **PROC IGNORED** - .NET cannot send/receive an associative array of a BINARY_INTEGER
+        // public List<Int32?> FuncAaNatural(List<Int32?> pIn, ref List<Int32?> pInOut, out List<Int32?> pOut, OracleConnection optionalPreexistingOpenConnection = null)
+
+        // **PROC IGNORED** - .NET cannot send/receive an associative array of a BINARY_INTEGER
+        // public List<Int32?> FuncAaNaturaln(List<Int32?> pIn, ref List<Int32?> pInOut, out List<Int32?> pOut, OracleConnection optionalPreexistingOpenConnection = null)
+
         public List<String> FuncAaNchar(List<String> pIn, ref List<String> pInOut, out List<String> pOut, OracleConnection optionalPreexistingOpenConnection = null) {
             List<String> __ret = new List<String>(); pOut = new List<String>(); 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
@@ -1320,6 +1326,12 @@ namespace Schema.Odpt.Odpt.Package {
 
         // **PROC IGNORED** - .NET cannot send/receive an associative array of a BINARY_INTEGER
         // public List<Int32?> FuncAaPlsInteger(List<Int32?> pIn, ref List<Int32?> pInOut, out List<Int32?> pOut, OracleConnection optionalPreexistingOpenConnection = null)
+
+        // **PROC IGNORED** - .NET cannot send/receive an associative array of a BINARY_INTEGER
+        // public List<Int32?> FuncAaPositive(List<Int32?> pIn, ref List<Int32?> pInOut, out List<Int32?> pOut, OracleConnection optionalPreexistingOpenConnection = null)
+
+        // **PROC IGNORED** - .NET cannot send/receive an associative array of a BINARY_INTEGER
+        // public List<Int32?> FuncAaPositiven(List<Int32?> pIn, ref List<Int32?> pInOut, out List<Int32?> pOut, OracleConnection optionalPreexistingOpenConnection = null)
 
         public List<Int64?> FuncAaSmallint(List<Int64?> pIn, ref List<Int64?> pInOut, out List<Int64?> pOut, OracleConnection optionalPreexistingOpenConnection = null) {
             List<Int64?> __ret = new List<Int64?>(); pOut = new List<Int64?>(); 
@@ -1938,6 +1950,74 @@ namespace Schema.Odpt.Odpt.Package {
         // **PROC IGNORED** - Code generation for LONG RAW will not be implemented due to Oracle deprecation 
         // public Byte[] FuncLongRaw(Byte[] pIn, ref Byte[] pInOut, out Byte[] pOut, OracleConnection optionalPreexistingOpenConnection = null)
 
+        public Int32? FuncNatural(Int32? pIn, ref Int32? pInOut, out Int32? pOut, OracleConnection optionalPreexistingOpenConnection = null) {
+            Int32? __ret = null; pOut = null; 
+            OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
+            try {
+                using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_MAIN.FUNC_NATURAL", __conn)) {
+                    __cmd.CommandType = CommandType.StoredProcedure;
+                    __cmd.BindByName = true;
+                    __cmd.Parameters.Add(new OracleParameter("!RETURN", OracleDbType.Int32, null, ParameterDirection.ReturnValue));
+                    __cmd.Parameters.Add(new OracleParameter("P_IN", OracleDbType.Int32, pIn, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("P_IN_OUT", OracleDbType.Int32, pInOut, ParameterDirection.InputOutput));
+                    __cmd.Parameters.Add(new OracleParameter("P_OUT", OracleDbType.Int32, null, ParameterDirection.Output));
+
+                    OracleCommandTrace __cmdTrace = IsTracing(__cmd) ? new OracleCommandTrace(__cmd) : null;
+                    int __rowsAffected = __cmd.ExecuteNonQuery();
+                    __ret = __cmd.Parameters["!RETURN"].Status == OracleParameterStatus.NullFetched
+                        ? (Int32?)null
+                        : Convert.ToInt32(__cmd.Parameters["!RETURN"].Value.ToString());
+                    pInOut = __cmd.Parameters["P_IN_OUT"].Status == OracleParameterStatus.NullFetched
+                        ? (Int32?)null
+                        : Convert.ToInt32(__cmd.Parameters["P_IN_OUT"].Value.ToString());
+                    pOut = __cmd.Parameters["P_OUT"].Status == OracleParameterStatus.NullFetched
+                        ? (Int32?)null
+                        : Convert.ToInt32(__cmd.Parameters["P_OUT"].Value.ToString());
+                    if (__cmdTrace != null) TraceCompletion(__cmdTrace);
+                } // using OracleCommand
+            } finally {
+                if (optionalPreexistingOpenConnection == null) {
+                    __conn.Close();
+                    __conn.Dispose();
+                }
+            }
+            return __ret;
+        } // FuncNatural
+
+        public Int32? FuncNaturaln(Int32? pIn, ref Int32? pInOut, out Int32? pOut, OracleConnection optionalPreexistingOpenConnection = null) {
+            Int32? __ret = null; pOut = null; 
+            OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
+            try {
+                using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_MAIN.FUNC_NATURALN", __conn)) {
+                    __cmd.CommandType = CommandType.StoredProcedure;
+                    __cmd.BindByName = true;
+                    __cmd.Parameters.Add(new OracleParameter("!RETURN", OracleDbType.Int32, null, ParameterDirection.ReturnValue));
+                    __cmd.Parameters.Add(new OracleParameter("P_IN", OracleDbType.Int32, pIn, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("P_IN_OUT", OracleDbType.Int32, pInOut, ParameterDirection.InputOutput));
+                    __cmd.Parameters.Add(new OracleParameter("P_OUT", OracleDbType.Int32, null, ParameterDirection.Output));
+
+                    OracleCommandTrace __cmdTrace = IsTracing(__cmd) ? new OracleCommandTrace(__cmd) : null;
+                    int __rowsAffected = __cmd.ExecuteNonQuery();
+                    __ret = __cmd.Parameters["!RETURN"].Status == OracleParameterStatus.NullFetched
+                        ? (Int32?)null
+                        : Convert.ToInt32(__cmd.Parameters["!RETURN"].Value.ToString());
+                    pInOut = __cmd.Parameters["P_IN_OUT"].Status == OracleParameterStatus.NullFetched
+                        ? (Int32?)null
+                        : Convert.ToInt32(__cmd.Parameters["P_IN_OUT"].Value.ToString());
+                    pOut = __cmd.Parameters["P_OUT"].Status == OracleParameterStatus.NullFetched
+                        ? (Int32?)null
+                        : Convert.ToInt32(__cmd.Parameters["P_OUT"].Value.ToString());
+                    if (__cmdTrace != null) TraceCompletion(__cmdTrace);
+                } // using OracleCommand
+            } finally {
+                if (optionalPreexistingOpenConnection == null) {
+                    __conn.Close();
+                    __conn.Dispose();
+                }
+            }
+            return __ret;
+        } // FuncNaturaln
+
         public String FuncNchar(String pIn, ref String pInOut, out String pOut, OracleConnection optionalPreexistingOpenConnection = null) {
             String __ret = null; pOut = null; 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
@@ -2202,6 +2282,74 @@ namespace Schema.Odpt.Odpt.Package {
             }
             return __ret;
         } // FuncPlsInteger
+
+        public Int32? FuncPositive(Int32? pIn, ref Int32? pInOut, out Int32? pOut, OracleConnection optionalPreexistingOpenConnection = null) {
+            Int32? __ret = null; pOut = null; 
+            OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
+            try {
+                using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_MAIN.FUNC_POSITIVE", __conn)) {
+                    __cmd.CommandType = CommandType.StoredProcedure;
+                    __cmd.BindByName = true;
+                    __cmd.Parameters.Add(new OracleParameter("!RETURN", OracleDbType.Int32, null, ParameterDirection.ReturnValue));
+                    __cmd.Parameters.Add(new OracleParameter("P_IN", OracleDbType.Int32, pIn, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("P_IN_OUT", OracleDbType.Int32, pInOut, ParameterDirection.InputOutput));
+                    __cmd.Parameters.Add(new OracleParameter("P_OUT", OracleDbType.Int32, null, ParameterDirection.Output));
+
+                    OracleCommandTrace __cmdTrace = IsTracing(__cmd) ? new OracleCommandTrace(__cmd) : null;
+                    int __rowsAffected = __cmd.ExecuteNonQuery();
+                    __ret = __cmd.Parameters["!RETURN"].Status == OracleParameterStatus.NullFetched
+                        ? (Int32?)null
+                        : Convert.ToInt32(__cmd.Parameters["!RETURN"].Value.ToString());
+                    pInOut = __cmd.Parameters["P_IN_OUT"].Status == OracleParameterStatus.NullFetched
+                        ? (Int32?)null
+                        : Convert.ToInt32(__cmd.Parameters["P_IN_OUT"].Value.ToString());
+                    pOut = __cmd.Parameters["P_OUT"].Status == OracleParameterStatus.NullFetched
+                        ? (Int32?)null
+                        : Convert.ToInt32(__cmd.Parameters["P_OUT"].Value.ToString());
+                    if (__cmdTrace != null) TraceCompletion(__cmdTrace);
+                } // using OracleCommand
+            } finally {
+                if (optionalPreexistingOpenConnection == null) {
+                    __conn.Close();
+                    __conn.Dispose();
+                }
+            }
+            return __ret;
+        } // FuncPositive
+
+        public Int32? FuncPositiven(Int32? pIn, ref Int32? pInOut, out Int32? pOut, OracleConnection optionalPreexistingOpenConnection = null) {
+            Int32? __ret = null; pOut = null; 
+            OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
+            try {
+                using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_MAIN.FUNC_POSITIVEN", __conn)) {
+                    __cmd.CommandType = CommandType.StoredProcedure;
+                    __cmd.BindByName = true;
+                    __cmd.Parameters.Add(new OracleParameter("!RETURN", OracleDbType.Int32, null, ParameterDirection.ReturnValue));
+                    __cmd.Parameters.Add(new OracleParameter("P_IN", OracleDbType.Int32, pIn, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("P_IN_OUT", OracleDbType.Int32, pInOut, ParameterDirection.InputOutput));
+                    __cmd.Parameters.Add(new OracleParameter("P_OUT", OracleDbType.Int32, null, ParameterDirection.Output));
+
+                    OracleCommandTrace __cmdTrace = IsTracing(__cmd) ? new OracleCommandTrace(__cmd) : null;
+                    int __rowsAffected = __cmd.ExecuteNonQuery();
+                    __ret = __cmd.Parameters["!RETURN"].Status == OracleParameterStatus.NullFetched
+                        ? (Int32?)null
+                        : Convert.ToInt32(__cmd.Parameters["!RETURN"].Value.ToString());
+                    pInOut = __cmd.Parameters["P_IN_OUT"].Status == OracleParameterStatus.NullFetched
+                        ? (Int32?)null
+                        : Convert.ToInt32(__cmd.Parameters["P_IN_OUT"].Value.ToString());
+                    pOut = __cmd.Parameters["P_OUT"].Status == OracleParameterStatus.NullFetched
+                        ? (Int32?)null
+                        : Convert.ToInt32(__cmd.Parameters["P_OUT"].Value.ToString());
+                    if (__cmdTrace != null) TraceCompletion(__cmdTrace);
+                } // using OracleCommand
+            } finally {
+                if (optionalPreexistingOpenConnection == null) {
+                    __conn.Close();
+                    __conn.Dispose();
+                }
+            }
+            return __ret;
+        } // FuncPositiven
 
         // **PROC IGNORED** - Code generation for RAW will not be implemented due to Oracle deprecation 
         // public Byte[] FuncRaw(Byte[] pIn, ref Byte[] pInOut, out Byte[] pOut, OracleConnection optionalPreexistingOpenConnection = null)

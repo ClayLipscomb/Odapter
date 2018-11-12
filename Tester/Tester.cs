@@ -28,7 +28,7 @@
 
 #define ODPT_FILTER_PREFIX          // "ODPT" as filter prefix of schema
 #define MAPPING_FOR_TYPED_CURSOR    // optional overloads for typed cursors methods are generated for mapping
-//#define SEED_TABLES                 // seed all tables with test data
+#define SEED_TABLES                 // seed all tables with test data
 //#define CSHARP30                    // C# 3.0 (.NET 3.5)
 
 //#define LARGE_LOB_SIZE
@@ -782,7 +782,33 @@ namespace Odapter.Tester {
                     Debug.Assert(pInInt.Equals(pInOutInt) && pInInt.Equals(pOutInt) && pInInt.Equals(retInt));
                 }
 
-                // binding an associative array of BINARY_INTEGER and PLS_INTEGER is not suported by ODP.NET
+                // NATURAL, POSITIVE
+                foreach (Int32? it in new List<Int32?>() { Int32.MaxValue, 0, null }) { // exclude negative values for test
+                    pInInt = pInOutInt = it;
+                    retInt = OdptPkgMain.Instance.FuncNatural(pInInt, ref pInOutInt, out pOutInt, null);
+                    Debug.Assert(pInInt.Equals(pInOutInt) && pInInt.Equals(pOutInt) && pInInt.Equals(retInt));
+                }
+
+                foreach (Int32? it in new List<Int32?>() { Int32.MaxValue, null }) { // exclude non-positive values for test
+                    pInInt = pInOutInt = it;
+                    retInt = OdptPkgMain.Instance.FuncPositive(pInInt, ref pInOutInt, out pOutInt, null);
+                    Debug.Assert(pInInt.Equals(pInOutInt) && pInInt.Equals(pOutInt) && pInInt.Equals(retInt));
+                }
+
+                // NATURALN, POSITIVEN - functions are failing in package regardless of value
+                foreach (Int32? it in new List<Int32?>() { Int32.MaxValue, 0 }) { // exclude negative and null values for test
+                    pInInt = pInOutInt = it;
+                    //retInt = OdptPkgMain.Instance.FuncNaturaln(pInInt, ref pInOutInt, out pOutInt, null);
+                    //Debug.Assert(pInInt.Equals(pInOutInt) && pInInt.Equals(pOutInt) && pInInt.Equals(retInt));
+                }
+
+                foreach (Int32? it in new List<Int32?>() { Int32.MaxValue }) { // exclude non-positive and null values for test
+                    pInInt = pInOutInt = it;
+                    //retInt = OdptPkgMain.Instance.FuncPositiven(pInInt, ref pInOutInt, out pOutInt, null);
+                    //Debug.Assert(pInInt.Equals(pInOutInt) && pInInt.Equals(pOutInt) && pInInt.Equals(retInt));
+                }
+
+                // binding an associative array of BINARY_INTEGER and PLS_INTEGER or their subtypes is not suported by ODP.NET
             }
 
             /// <summary>

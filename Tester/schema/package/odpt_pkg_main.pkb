@@ -192,6 +192,34 @@ CREATE OR REPLACE PACKAGE BODY ODPT.odpt_pkg_main AS
 		RETURN p_in;
 	END;
 
+	FUNCTION func_natural(p_in IN NATURAL, p_in_out IN OUT NATURAL, p_out OUT NATURAL) RETURN NATURAL IS
+	BEGIN
+		p_in_out := p_in;
+		p_out := p_in;
+		RETURN p_in;
+	END;
+
+	FUNCTION func_naturaln(p_in IN NATURALN, p_in_out IN OUT NATURALN, p_out OUT NATURALN) RETURN NATURALN IS
+	BEGIN
+		p_in_out := p_in;
+		p_out := p_in;
+		RETURN p_in;
+	END;
+
+	FUNCTION func_positive(p_in IN POSITIVE, p_in_out IN OUT POSITIVE, p_out OUT POSITIVE) RETURN POSITIVE IS
+	BEGIN
+		p_in_out := p_in;
+		p_out := p_in;
+		RETURN p_in;
+	END;
+
+	FUNCTION func_positiven(p_in IN POSITIVEN, p_in_out IN OUT POSITIVEN, p_out OUT POSITIVEN) RETURN POSITIVEN IS
+	BEGIN
+		p_in_out := p_in;
+		p_out := p_in;
+		RETURN p_in;
+	END;
+
     FUNCTION func_float(p_in IN FLOAT, p_in_out IN OUT FLOAT, p_out OUT FLOAT) RETURN FLOAT IS
 	BEGIN
 		p_in_out := p_in;
@@ -432,6 +460,34 @@ CREATE OR REPLACE PACKAGE BODY ODPT.odpt_pkg_main AS
 	END;
 
     FUNCTION func_aa_pls_integer (p_in IN t_assocarray_pls_integer, p_in_out IN OUT t_assocarray_pls_integer, p_out OUT t_assocarray_pls_integer) RETURN t_assocarray_pls_integer IS
+    BEGIN
+		p_in_out := p_in;
+		p_out := p_in;
+		RETURN p_in;
+	END;
+
+    FUNCTION func_aa_natural (p_in IN t_assocarray_natural, p_in_out IN OUT t_assocarray_natural, p_out OUT t_assocarray_natural) RETURN t_assocarray_natural IS
+    BEGIN
+		p_in_out := p_in;
+		p_out := p_in;
+		RETURN p_in;
+	END;
+
+    FUNCTION func_aa_naturaln (p_in IN t_assocarray_naturaln, p_in_out IN OUT t_assocarray_naturaln, p_out OUT t_assocarray_naturaln) RETURN t_assocarray_naturaln IS
+    BEGIN
+		p_in_out := p_in;
+		p_out := p_in;
+		RETURN p_in;
+	END;
+
+    FUNCTION func_aa_positive (p_in IN t_assocarray_positive, p_in_out IN OUT t_assocarray_positive, p_out OUT t_assocarray_positive) RETURN t_assocarray_positive IS
+    BEGIN
+		p_in_out := p_in;
+		p_out := p_in;
+		RETURN p_in;
+	END;
+
+    FUNCTION func_aa_positiven (p_in IN t_assocarray_positiven, p_in_out IN OUT t_assocarray_positiven, p_out OUT t_assocarray_positiven) RETURN t_assocarray_positiven IS
     BEGIN
 		p_in_out := p_in;
 		p_out := p_in;

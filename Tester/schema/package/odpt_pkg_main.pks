@@ -5,6 +5,11 @@ CREATE OR REPLACE PACKAGE ODPT.odpt_pkg_main AS
 	TYPE t_assocarray_binary_integer IS TABLE OF BINARY_INTEGER INDEX BY PLS_INTEGER;  
 	TYPE t_assocarray_pls_integer IS TABLE OF PLS_INTEGER INDEX BY PLS_INTEGER;  
 	TYPE t_assocarray_smallint IS TABLE OF odpt_table_big.col_smallint%TYPE INDEX BY PLS_INTEGER;  
+
+	TYPE t_assocarray_natural IS TABLE OF NATURAL INDEX BY PLS_INTEGER;  
+	TYPE t_assocarray_naturaln IS TABLE OF NATURALN INDEX BY PLS_INTEGER;  
+	TYPE t_assocarray_positive IS TABLE OF POSITIVE INDEX BY PLS_INTEGER;  
+	TYPE t_assocarray_positiven IS TABLE OF POSITIVEN INDEX BY PLS_INTEGER;  
   
 	TYPE t_assocarray_number IS TABLE OF odpt_table_big.col_number%TYPE INDEX BY PLS_INTEGER;  
 	TYPE t_assocarray_binary_double IS TABLE OF odpt_table_big.col_binary_double%TYPE INDEX BY PLS_INTEGER;  
@@ -84,6 +89,11 @@ CREATE OR REPLACE PACKAGE ODPT.odpt_pkg_main AS
 
 	FUNCTION func_binary_integer(p_in IN BINARY_INTEGER, p_in_out IN OUT BINARY_INTEGER, p_out OUT BINARY_INTEGER) RETURN BINARY_INTEGER;
 	FUNCTION func_pls_integer(p_in IN PLS_INTEGER, p_in_out IN OUT PLS_INTEGER, p_out OUT PLS_INTEGER) RETURN PLS_INTEGER;
+		
+	FUNCTION func_natural(p_in IN NATURAL, p_in_out IN OUT NATURAL, p_out OUT NATURAL) RETURN NATURAL;
+	FUNCTION func_naturaln(p_in IN NATURALN, p_in_out IN OUT NATURALN, p_out OUT NATURALN) RETURN NATURALN;
+	FUNCTION func_positive(p_in IN POSITIVE, p_in_out IN OUT POSITIVE, p_out OUT POSITIVE) RETURN POSITIVE;
+	FUNCTION func_positiven(p_in IN POSITIVEN, p_in_out IN OUT POSITIVEN, p_out OUT POSITIVEN) RETURN POSITIVEN;
 
 	FUNCTION func_number(p_in IN NUMBER, p_in_out IN OUT NUMBER, p_out OUT NUMBER) RETURN NUMBER;
 	FUNCTION func_float(p_in IN FLOAT, p_in_out IN OUT FLOAT, p_out OUT FLOAT) RETURN FLOAT;
@@ -112,6 +122,12 @@ CREATE OR REPLACE PACKAGE ODPT.odpt_pkg_main AS
 
 	FUNCTION func_aa_integer (p_in IN t_assocarray_integer, p_in_out IN OUT t_assocarray_integer, p_out OUT t_assocarray_integer) RETURN t_assocarray_integer;
 	FUNCTION func_aa_smallint (p_in IN t_assocarray_smallint, p_in_out IN OUT t_assocarray_smallint, p_out OUT t_assocarray_smallint) RETURN t_assocarray_smallint;
+
+    FUNCTION func_aa_natural (p_in IN t_assocarray_natural, p_in_out IN OUT t_assocarray_natural, p_out OUT t_assocarray_natural) RETURN t_assocarray_natural;
+    FUNCTION func_aa_naturaln (p_in IN t_assocarray_naturaln, p_in_out IN OUT t_assocarray_naturaln, p_out OUT t_assocarray_naturaln) RETURN t_assocarray_naturaln;
+    FUNCTION func_aa_positive (p_in IN t_assocarray_positive, p_in_out IN OUT t_assocarray_positive, p_out OUT t_assocarray_positive) RETURN t_assocarray_positive;
+    FUNCTION func_aa_positiven (p_in IN t_assocarray_positiven, p_in_out IN OUT t_assocarray_positiven, p_out OUT t_assocarray_positiven) RETURN t_assocarray_positiven;
+
 	FUNCTION func_aa_number (p_in IN t_assocarray_number, p_in_out IN OUT t_assocarray_number, p_out OUT t_assocarray_number) RETURN t_assocarray_number;
 	FUNCTION func_aa_binary_double (p_in IN t_assocarray_binary_double, p_in_out IN OUT t_assocarray_binary_double, p_out OUT t_assocarray_binary_double) RETURN t_assocarray_binary_double;
 	FUNCTION func_aa_binary_float (p_in IN t_assocarray_binary_float, p_in_out IN OUT t_assocarray_binary_float, p_out OUT t_assocarray_binary_float) RETURN t_assocarray_binary_float;
