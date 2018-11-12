@@ -89,7 +89,19 @@
   <ItemGroup>
     <Compile Include="deploy\CaseConversion.cs" />
     <Compile Include="CSharp.cs" />
-    <Compile Include="LoaderObject.cs" />
+    <Compile Include="DTO\Argument.cs" />
+    <Compile Include="DTO\Column.cs" />
+    <Compile Include="DTO\Entity.cs" />
+    <Compile Include="DTO\Field.cs" />
+    <Compile Include="DTO\IEntity.cs" />
+    <Compile Include="DTO\IEntityAttribute.cs" />
+    <Compile Include="DTO\ObjectType.cs" />
+    <Compile Include="DTO\ObjectTypeAttribute.cs" />
+    <Compile Include="DTO\Package.cs" />
+    <Compile Include="DTO\PackageRecord.cs" />
+    <Compile Include="DTO\Procedure.cs" />
+    <Compile Include="DTO\Table.cs" />
+    <Compile Include="DTO\View.cs" />
     <Compile Include="Orcl.cs" />
     <Compile Include="Parameter.cs" />
     <Compile Include="Dapper\SqlMapperOrcl.cs" />
