@@ -54,10 +54,13 @@ namespace Odapter {
         public const string OBJECT = "Object";
         public const string XML_DOCUMENT = "XmlDocument";
         public const string DATATABLE = "DataTable";
-        public const string LIST = "List";
-        public const string ILIST = "IList";
-        public const string ICOLLECTION = "ICollection";
-        public const string OF_T = "<T>";
+        private const string OF_T = "<T>";
+        private const string LIST = "List";
+        private const string ILIST = "IList";
+        private const string ICOLLECTION = "ICollection";
+        public const string LIST_OF_T = LIST + OF_T;
+        public const string ILIST_OF_T = ILIST + OF_T;
+        public const string ICOLLECTION_OF_T = ICOLLECTION + OF_T;
         public static readonly List<String> GENERIC_COLLECTION_BASE_TYPES = new List<String>() { LIST, ILIST, ICOLLECTION };  // implemented to date
         public const string VOID = "void";
         public const string GENERIC_TYPE_PREFIX = "T_";
@@ -195,8 +198,14 @@ namespace Odapter {
             return false;
         }
 
+        /// <summary>
+        /// Create complete generic colection type from base and sub type 
+        /// </summary>
+        /// <param name="genCollectionBaseType">Base type of generic collection</param>
+        /// <param name="subType">Subtype; the T type</param>
+        /// <returns></returns>
         internal static string GenericCollectionOf(String genCollectionBaseType, string subType) {
-            return genCollectionBaseType + "<" + subType + ">";
+            return genCollectionBaseType.Replace(OF_T, "") + "<" + subType + ">";
         }
 
         /// <summary>

@@ -85,12 +85,12 @@ namespace Odapter {
         }
 
         public static readonly IDictionary<String, List<CustomTranslatedCSharpType>> CustomTypeTranslationOptions = new Dictionary<String, List<CustomTranslatedCSharpType>>() {
-            {Orcl.REF_CURSOR, new List<CustomTranslatedCSharpType> {                new CustomTranslatedCSharpType(CSharp.ILIST, @""),
-                                                                                    new CustomTranslatedCSharpType(CSharp.ICOLLECTION, @""),
-                                                                                    new CustomTranslatedCSharpType(CSharp.LIST, @"concrete, not recommended") } },
-            {Orcl.ASSOCIATITVE_ARRAY, new List<CustomTranslatedCSharpType> {        new CustomTranslatedCSharpType(CSharp.LIST, @""), 
-                                                                                    new CustomTranslatedCSharpType(CSharp.ILIST, @""),
-                                                                                    new CustomTranslatedCSharpType(CSharp.ICOLLECTION, @"") } }, 
+            {Orcl.REF_CURSOR, new List<CustomTranslatedCSharpType> {                new CustomTranslatedCSharpType(CSharp.ILIST_OF_T, @""),
+                                                                                    new CustomTranslatedCSharpType(CSharp.ICOLLECTION_OF_T, @""),
+                                                                                    new CustomTranslatedCSharpType(CSharp.LIST_OF_T, @"concrete, not recommended") } },
+            {Orcl.ASSOCIATITVE_ARRAY, new List<CustomTranslatedCSharpType> {        new CustomTranslatedCSharpType(CSharp.LIST_OF_T, @""), 
+                                                                                    new CustomTranslatedCSharpType(CSharp.ILIST_OF_T, @""),
+                                                                                    new CustomTranslatedCSharpType(CSharp.ICOLLECTION_OF_T, @"") } }, 
             {Orcl.INTEGER, new List<CustomTranslatedCSharpType> {                   new CustomTranslatedCSharpType(CSharp.INT32, @"9 digit limit, not recommended"),
                                                                                     new CustomTranslatedCSharpType(CSharp.INT64, @"18 digit limit, usually safe"),
                                                                                     new CustomTranslatedCSharpType(CSharp.DECIMAL, @"28 digit limit"),
@@ -110,8 +110,8 @@ namespace Odapter {
         };
 
         #region Properties
-        public static string CSharpTypeUsedForOracleRefCursor { get; set; } = CSharp.ICOLLECTION;
-        public static string CSharpTypeUsedForOracleAssocArray { get; set; } = CSharp.LIST;
+        public static string CSharpTypeUsedForOracleRefCursor { get; set; } = CSharp.ICOLLECTION_OF_T;
+        public static string CSharpTypeUsedForOracleAssocArray { get; set; } = CSharp.LIST_OF_T;
 
         private static string _cSharpTypeUsedForOracleInteger = CSharp.DECIMAL;
         public static string CSharpTypeUsedForOracleInteger {
@@ -507,11 +507,11 @@ namespace Odapter {
                 string arrayType = (oracleArg.NextArgument.DataType == Orcl.RECORD 
                     ? ConvertOracleRecordNameToCSharpName(oracleArg)
                     : ConvertOracleArgTypeToCSharpType(oracleArg.NextArgument, false));
-                return CSharp.GenericCollectionOf(CSharp.LIST, arrayType);
+                return CSharp.GenericCollectionOf(CSharp.LIST_OF_T, arrayType);
             }
 
             // a nested table to a List (even though we are not handling nested tables yet)
-            if (oracleArg.DataType == Orcl.NESTED_TABLE) return CSharp.GenericCollectionOf(CSharp.LIST, ConvertOracleArgTypeToCSharpType(oracleArg.NextArgument, true));
+            if (oracleArg.DataType == Orcl.NESTED_TABLE) return CSharp.GenericCollectionOf(CSharp.LIST_OF_T, ConvertOracleArgTypeToCSharpType(oracleArg.NextArgument, true));
 
             // a cursor translates to a List
             // a strongly typed cursor is a generic list, but based on record type
@@ -520,13 +520,13 @@ namespace Odapter {
                 return (oracleArg.NextArgument == null || oracleArg.NextArgument.DataLevel == oracleArg.DataLevel // is it weakly typed cursor?
                     ? (UseGenericListForCursor
                         // generic list; create informative subtype name that is unique among multilple untyped (cursor) args in proc
-                        ? CSharp.GenericCollectionOf((nonInterfaceType ? CSharp.LIST : CSharpTypeUsedForOracleRefCursor), CSharp.GENERIC_TYPE_PREFIX
+                        ? CSharp.GenericCollectionOf((nonInterfaceType ? CSharp.LIST_OF_T : CSharpTypeUsedForOracleRefCursor), CSharp.GENERIC_TYPE_PREFIX
                             + (ConvertOracleNameToCSharpName(oracleArg.ArgumentName, true) ?? "return") + "Untyped")
                         // otherwise, we are configured to use a Datatable
                         : CSharp.DATATABLE) 
                     : (UseGenericListForCursor
                         // generic list of a type based on, or extended from, the cursor's record type; include record type in name
-                        ? CSharp.GenericCollectionOf((nonInterfaceType ? CSharp.LIST : CSharpTypeUsedForOracleRefCursor), CSharp.GENERIC_TYPE_PREFIX 
+                        ? CSharp.GenericCollectionOf((nonInterfaceType ? CSharp.LIST_OF_T : CSharpTypeUsedForOracleRefCursor), CSharp.GENERIC_TYPE_PREFIX 
                             + ConvertOracleArgTypeToCSharpType(oracleArg.NextArgument, true))
                         // a databale for strongly typed cursor is not practical, but technically it could be used in the future
                         : CSharp.DATATABLE)  
