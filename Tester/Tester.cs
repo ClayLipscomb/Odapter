@@ -1318,6 +1318,11 @@ namespace Odapter.Tester {
 
                 OdptBigOt objectBig = new OdptBigOt();
                 OdptPoVendorOt objectPoVendor = new OdptPoVendorOt();
+
+                // package names with special characters
+                OdptPkgIncludeexclamationpointchar odptPkgIncludeexclamationpointchar = OdptPkgIncludeexclamationpointchar.Instance;
+                OdptPkgIncludepercentchar odptPkgIncludepercentchar = OdptPkgIncludepercentchar.Instance;
+                OdptPkgIncludeampersandchar odptPkgIncludeampersandchar = OdptPkgIncludeampersandchar.Instance;
             }
 
             private void TestSingleton() {

@@ -166,6 +166,24 @@ namespace Schema.Odpt.Package {
         public static OdptPkgEmpty Instance { get { return _instance; } }
     } // OdptPkgEmpty
 
+    public sealed partial class OdptPkgIncludeexclamationpointchar : Schema.Odpt.OdptAdapter {
+        private OdptPkgIncludeexclamationpointchar() { }
+        private static readonly OdptPkgIncludeexclamationpointchar _instance = new OdptPkgIncludeexclamationpointchar();
+        public static OdptPkgIncludeexclamationpointchar Instance { get { return _instance; } }
+    } // OdptPkgIncludeexclamationpointchar
+
+    public sealed partial class OdptPkgIncludepercentchar : Schema.Odpt.OdptAdapter {
+        private OdptPkgIncludepercentchar() { }
+        private static readonly OdptPkgIncludepercentchar _instance = new OdptPkgIncludepercentchar();
+        public static OdptPkgIncludepercentchar Instance { get { return _instance; } }
+    } // OdptPkgIncludepercentchar
+
+    public sealed partial class OdptPkgIncludeampersandchar : Schema.Odpt.OdptAdapter {
+        private OdptPkgIncludeampersandchar() { }
+        private static readonly OdptPkgIncludeampersandchar _instance = new OdptPkgIncludeampersandchar();
+        public static OdptPkgIncludeampersandchar Instance { get { return _instance; } }
+    } // OdptPkgIncludeampersandchar
+
     public sealed partial class OdptPkgLog : Schema.Odpt.OdptAdapter {
         private OdptPkgLog() { }
         private static readonly OdptPkgLog _instance = new OdptPkgLog();
