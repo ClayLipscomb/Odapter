@@ -20,13 +20,23 @@ using System;
 
 namespace Odapter {
     /// <summary>
-    /// Interface of an entity. Properties should be implemented with a private member if underlying sys view column naming is different from public property name.
+    /// Package record type as type of Entity
     /// </summary>
-    internal interface IEntity : IEntityBase {
+    internal interface IPackageRecord : IEntity, IComparable<IPackageRecord> {
 
         /// <summary>
-        /// Implemented property should wrap a camelcase private member that will map to the underlying underscore_delimited sys_view column.
+        /// Package containing argument from which record is derived
         /// </summary>
-        string EntityName { get; set; }
+        string PackageName { get; set; }
+
+        /// <summary>
+        /// Package name of record definition; could be different from package with argument using it
+        /// </summary>
+        String Name { get; set; }
+
+        /// <summary>
+        /// Name of record
+        /// </summary>
+        String SubName { get; set; }
     }
 }

@@ -23,29 +23,15 @@ namespace Odapter {
     /// <summary>
     /// Base abstract class Entity with list of attribute
     /// </summary>
-    internal abstract class Entity {
+    internal abstract class Entity  {
         public List<IEntityAttribute> Attributes { get; set; }
 
-        /// <summary>
-        /// Determine if a given Oracle type is found in any of the attributes
-        /// </summary>
-        /// <param name="oracleType"></param>
-        /// <returns></returns>
-        private Boolean UsesOracleType(String oracleType) {
-            if (Attributes == null) return false;
-            return Attributes.FindIndex(a => a.AttrType.Equals(oracleType)) != -1;
-        }
+        public string Owner { get; set; }
 
-        internal Boolean IsIgnoredDueToOracleTypes(out String reasonMsg) {
-            reasonMsg = "";
+        public String CSharpType { get; set; }
 
-            foreach (String oraType in Translater.OracleTypesIgnored)
-                if (UsesOracleType(oraType)) {
-                    Translater.IsOracleTypeIgnored(oraType, out reasonMsg, Attributes[0].GetType().Name.ToLower()); // get reason
-                    return true;
-                }
+        public virtual string AncestorTypeName { get; set; }
 
-            return false;
-        }
+        public virtual bool Instantiable { get { return true; } }
     }
 }

@@ -16,17 +16,9 @@
 //    along with this program.If not, see<http://www.gnu.org/licenses/>.
 //------------------------------------------------------------------------------
 
-using System;
-
 namespace Odapter {
-    /// <summary>
-    /// Interface of an entity. Properties should be implemented with a private member if underlying sys view column naming is different from public property name.
-    /// </summary>
-    internal interface IEntity : IEntityBase {
-
-        /// <summary>
-        /// Implemented property should wrap a camelcase private member that will map to the underlying underscore_delimited sys_view column.
-        /// </summary>
-        string EntityName { get; set; }
+    internal interface IObjectType {
+        string DbAncestorTypeName { get; set; }
+        bool Instantiable { get; }
     }
 }

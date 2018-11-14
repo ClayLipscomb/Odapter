@@ -204,6 +204,19 @@ namespace Odapter {
         #endregion
 
         #region Translation methods
+        internal static Boolean IsIgnoredDueToOracleTypes(IEntity entity, out String reasonMsg) {
+            reasonMsg = "";
+
+            foreach (String oraType in Translater.OracleTypesIgnored) {
+                if (entity.Attributes != null && entity.Attributes.FindIndex(a => a.AttrType.Equals(oraType)) != -1) {
+                    IsOracleTypeIgnored(oraType, out reasonMsg, entity.Attributes[0].GetType().Name.ToLower()); // get reason
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         internal static bool IsOracleTypeIgnored(String oracleType, out String reasonMsg, String reasonMsgAppend = "") {
             reasonMsg = "";
             if (String.IsNullOrWhiteSpace(oracleType) || !OracleTypesIgnored.Contains(oracleType)) return false;

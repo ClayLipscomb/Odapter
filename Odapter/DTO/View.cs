@@ -22,12 +22,7 @@ namespace Odapter {
     /// <summary>
     /// View as type of Entity
     /// </summary>
-    internal class View : Entity, IEntity {
-        public string Owner { get; set; }
-        public string EntityName { get { return viewName; } set { viewName = value; } }
-        private string viewName { get; set; }
-        public string AncestorTypeName { get; set; }
-        public bool Instantiable { get { return true; } }
-        public String CSharpType { get; set; }
+    internal class View : EntityBase, IEntity {
+        public string EntityName { get { return viewName; } set { viewName = value; } } private string viewName { get; set; }  // view_name is underlying sy view column
     }
 }

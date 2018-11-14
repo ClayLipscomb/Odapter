@@ -22,35 +22,14 @@ namespace Odapter {
     /// <summary>
     /// Package record type as type of Entity
     /// </summary>
-    internal class PackageRecord : Entity, IEntity, IComparable<PackageRecord> {
-        // standard entity properties
-        public string EntityName { get { return CSharpType; } set { CSharpType = value; } }
-        public string AncestorTypeName { get; set; }
-        public bool Instantiable { get { return true; } }
-        public String CSharpType { get; set; }
+    internal class PackageRecord : EntityBase, IPackageRecord {
 
-        // record specific
+        public string EntityName { get { return SubName; } set { SubName = value; } }   // sub_name is underlying sys view column
 
-        /// <summary>
-        /// Package containing argument from which record is derived
-        /// </summary>
+        // IPackageRecord specific
         public string PackageName { get; set; }
-
-        /// <summary>
-        /// Package name of record definition; could be different from package with argument using it
-        /// </summary>
         public String Name { get; set; }
-
-        /// <summary>
-        /// Name of record
-        /// </summary>
         public String SubName { get; set; }
-
-        /// <summary>
-        /// Schema of record defintion; could be different from schema with argument using it
-        /// </summary>
-        public String Owner { get; set; }
-
-        public int CompareTo(PackageRecord r) { return CSharpType.CompareTo(r.CSharpType); }
+        public int CompareTo(IPackageRecord r) { return CSharpType.CompareTo(r.CSharpType); }
     }
 }

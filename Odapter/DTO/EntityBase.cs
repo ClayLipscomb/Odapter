@@ -17,16 +17,12 @@
 //------------------------------------------------------------------------------
 
 using System;
+using System.Collections.Generic;
 
 namespace Odapter {
-    /// <summary>
-    /// Interface of an entity. Properties should be implemented with a private member if underlying sys view column naming is different from public property name.
-    /// </summary>
-    internal interface IEntity : IEntityBase {
-
-        /// <summary>
-        /// Implemented property should wrap a camelcase private member that will map to the underlying underscore_delimited sys_view column.
-        /// </summary>
-        string EntityName { get; set; }
+    internal abstract class EntityBase : IEntityBase {
+        public List<IEntityAttribute> Attributes { get; set; }
+        public string Owner { get; set; }
+        public String CSharpType { get; set; }
     }
 }

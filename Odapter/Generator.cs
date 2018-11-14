@@ -1014,7 +1014,7 @@ namespace Odapter {
                         }
 
                         String reasonMsg;
-                        if (!rec.IsIgnoredDueToOracleTypes(out reasonMsg)) {
+                        if (!Translater.IsIgnoredDueToOracleTypes(rec, out reasonMsg)) {
                             // create interface for record class
                             classText.AppendLine();
                             classText.Append(GenerateEntityInterface(rec, 1));
@@ -1026,7 +1026,7 @@ namespace Odapter {
                             Parameter.Instance.IsSerializablePackageRecord, Parameter.Instance.IsPartialPackage,
                             Parameter.Instance.IsDataContractPackageRecord, Parameter.Instance.IsXmlElementPackageRecord, 2));
 
-                        if (!rec.IsIgnoredDueToOracleTypes(out reasonMsg)) {
+                        if (!Translater.IsIgnoredDueToOracleTypes(rec, out reasonMsg)) {
                             // create custom reader
                             classText.AppendLine();
                             classText.Append(GenerateRecordTypeReadResultMethod(rec));
@@ -1071,9 +1071,16 @@ namespace Odapter {
             bool isPackageRecord = entity is PackageRecord;
             StringBuilder classText = new StringBuilder("");
 
-            String classFirstLine = "public" + (entity.Instantiable ? "" : " abstract") + (isPartial ? " partial" : "") + " class " + className
-                + (!String.IsNullOrEmpty(entity.AncestorTypeName)
-                        ? " : " + Translater.ConvertOracleNameToCSharpName(entity.AncestorTypeName, false) // Oracle ancestor gets precedence
+            bool isInstantiable = true;         // only object type can be non-instantiable
+            string dbAncestorTypeName = null;   // only object type can have a database ancestor
+            if (entity is IObjectType) {
+                isInstantiable = ((IObjectType)entity).Instantiable;
+                dbAncestorTypeName = ((IObjectType)entity).DbAncestorTypeName;
+            }
+
+            String classFirstLine = "public" + (isInstantiable ? "" : " abstract") + (isPartial ? " partial" : "") + " class " + className
+                + (!String.IsNullOrEmpty(dbAncestorTypeName)
+                        ? " : " + Translater.ConvertOracleNameToCSharpName(dbAncestorTypeName, false) // Oracle ancestor gets precedence
                         : (!String.IsNullOrEmpty(ancestorClassName)
                             ? " : " + Parameter.Instance.NamespaceSchema + "." + ancestorClassName + (isPackageRecord ? ", " + "I" + className : "")
                             : "")) // user defined ancestor
@@ -1082,7 +1089,7 @@ namespace Odapter {
             /////////////////////////////////////////////////////////////////////////////
             // bypass creation of package records that using unimplemented Oracle types
             String ignoreReason;
-            if (isPackageRecord && ((Entity)entity).IsIgnoredDueToOracleTypes(out ignoreReason)) {
+            if (isPackageRecord && Translater.IsIgnoredDueToOracleTypes(entity, out ignoreReason)) {
                 classText.AppendLine(Tab(2) + "// **RECORD IGNORED** - " + ignoreReason);
                 classText.AppendLine(Tab(2) + "// " + classFirstLine);
                 return classText.ToString();

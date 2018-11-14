@@ -22,14 +22,9 @@ namespace Odapter {
     /// <summary>
     /// Object Type as type of Entity
     /// </summary>
-    internal class ObjectType : Entity, IEntity {
-        public string Owner { get; set; }
-        public string EntityName { get { return typeName; } set { typeName = value; } }
-        private string typeName { get; set; }
-        public string AncestorTypeName { get { return supertypeName; } set { supertypeName = value; } }
-        private string supertypeName { get; set; }
-        public bool Instantiable { get { return (instantiable == Orcl.YES ? true : false); } }
-        private string instantiable { get; set; }
-        public String CSharpType { get; set; }
+    internal class ObjectType : EntityBase, IEntity, IObjectType {
+        public string EntityName { get { return typeName; } set { typeName = value; } } private string typeName { get; set; }  // type_name is underlying sys view column
+        public string DbAncestorTypeName { get { return supertypeName; } set { supertypeName = value; } } private string supertypeName { get; set; } // super_type_name is underlying sys view column
+        public bool Instantiable { get { return (instantiable == Orcl.YES ? true : false); } } private string instantiable { get; set; }   // sys view value is YES or NO
     }
 }
