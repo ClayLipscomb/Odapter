@@ -159,7 +159,7 @@ namespace OdapterWnFrm {
             // 
             this.BtnStart.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BtnStart.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.BtnStart.Location = new System.Drawing.Point(724, 13);
+            this.BtnStart.Location = new System.Drawing.Point(718, 13);
             this.BtnStart.Margin = new System.Windows.Forms.Padding(4);
             this.BtnStart.Name = "BtnStart";
             this.BtnStart.Size = new System.Drawing.Size(87, 43);
@@ -480,7 +480,7 @@ namespace OdapterWnFrm {
             this.txtDataContractNamespace.Location = new System.Drawing.Point(209, 250);
             this.txtDataContractNamespace.Margin = new System.Windows.Forms.Padding(4);
             this.txtDataContractNamespace.Name = "txtDataContractNamespace";
-            this.txtDataContractNamespace.Size = new System.Drawing.Size(261, 23);
+            this.txtDataContractNamespace.Size = new System.Drawing.Size(300, 23);
             this.txtDataContractNamespace.TabIndex = 39;
             // 
             // lblDataContractNamespace
@@ -672,7 +672,7 @@ namespace OdapterWnFrm {
             this.txtBaseNamespace.Location = new System.Drawing.Point(209, 224);
             this.txtBaseNamespace.Margin = new System.Windows.Forms.Padding(4);
             this.txtBaseNamespace.Name = "txtBaseNamespace";
-            this.txtBaseNamespace.Size = new System.Drawing.Size(261, 23);
+            this.txtBaseNamespace.Size = new System.Drawing.Size(300, 23);
             this.txtBaseNamespace.TabIndex = 37;
             this.txtBaseNamespace.TextChanged += new System.EventHandler(this.txtBaseNamespace_TextChanged);
             // 
@@ -726,7 +726,7 @@ namespace OdapterWnFrm {
             this.cbGenerateBaseDtoClasses.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.cbGenerateBaseDtoClasses.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbGenerateBaseDtoClasses.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.cbGenerateBaseDtoClasses.Location = new System.Drawing.Point(571, 227);
+            this.cbGenerateBaseDtoClasses.Location = new System.Drawing.Point(613, 227);
             this.cbGenerateBaseDtoClasses.Margin = new System.Windows.Forms.Padding(4);
             this.cbGenerateBaseDtoClasses.Name = "cbGenerateBaseDtoClasses";
             this.cbGenerateBaseDtoClasses.Size = new System.Drawing.Size(176, 21);
@@ -743,7 +743,7 @@ namespace OdapterWnFrm {
             this.cbGenerateBaseAdapterClass.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.cbGenerateBaseAdapterClass.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbGenerateBaseAdapterClass.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.cbGenerateBaseAdapterClass.Location = new System.Drawing.Point(555, 201);
+            this.cbGenerateBaseAdapterClass.Location = new System.Drawing.Point(597, 201);
             this.cbGenerateBaseAdapterClass.Margin = new System.Windows.Forms.Padding(4);
             this.cbGenerateBaseAdapterClass.Name = "cbGenerateBaseAdapterClass";
             this.cbGenerateBaseAdapterClass.Size = new System.Drawing.Size(192, 21);
@@ -943,7 +943,7 @@ namespace OdapterWnFrm {
             this.cbDeployResources.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cbDeployResources.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbDeployResources.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.cbDeployResources.Location = new System.Drawing.Point(493, 251);
+            this.cbDeployResources.Location = new System.Drawing.Point(536, 251);
             this.cbDeployResources.Margin = new System.Windows.Forms.Padding(4);
             this.cbDeployResources.Name = "cbDeployResources";
             this.cbDeployResources.RightToLeft = System.Windows.Forms.RightToLeft.No;
@@ -1100,7 +1100,7 @@ namespace OdapterWnFrm {
             // txtMaxReturnArgStringSize
             // 
             this.txtMaxReturnArgStringSize.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtMaxReturnArgStringSize.Location = new System.Drawing.Point(466, 172);
+            this.txtMaxReturnArgStringSize.Location = new System.Drawing.Point(466, 176);
             this.txtMaxReturnArgStringSize.Margin = new System.Windows.Forms.Padding(4);
             this.txtMaxReturnArgStringSize.Name = "txtMaxReturnArgStringSize";
             this.txtMaxReturnArgStringSize.Size = new System.Drawing.Size(67, 23);
@@ -1125,7 +1125,7 @@ namespace OdapterWnFrm {
             // txtMaxAssocArraySize
             // 
             this.txtMaxAssocArraySize.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtMaxAssocArraySize.Location = new System.Drawing.Point(466, 199);
+            this.txtMaxAssocArraySize.Location = new System.Drawing.Point(466, 203);
             this.txtMaxAssocArraySize.Margin = new System.Windows.Forms.Padding(4);
             this.txtMaxAssocArraySize.Name = "txtMaxAssocArraySize";
             this.txtMaxAssocArraySize.Size = new System.Drawing.Size(67, 23);
@@ -1365,7 +1365,7 @@ namespace OdapterWnFrm {
             // 
             this.btnSaveSettings.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSaveSettings.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.btnSaveSettings.Location = new System.Drawing.Point(393, 14);
+            this.btnSaveSettings.Location = new System.Drawing.Point(384, 14);
             this.btnSaveSettings.Margin = new System.Windows.Forms.Padding(4);
             this.btnSaveSettings.Name = "btnSaveSettings";
             this.btnSaveSettings.Size = new System.Drawing.Size(125, 28);
@@ -1419,10 +1419,10 @@ namespace OdapterWnFrm {
             // 
             this.lblLocalVariableNameSuffix.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblLocalVariableNameSuffix.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.lblLocalVariableNameSuffix.Location = new System.Drawing.Point(103, 151);
+            this.lblLocalVariableNameSuffix.Location = new System.Drawing.Point(103, 153);
             this.lblLocalVariableNameSuffix.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblLocalVariableNameSuffix.Name = "lblLocalVariableNameSuffix";
-            this.lblLocalVariableNameSuffix.Size = new System.Drawing.Size(357, 21);
+            this.lblLocalVariableNameSuffix.Size = new System.Drawing.Size(357, 17);
             this.lblLocalVariableNameSuffix.TabIndex = 6;
             this.lblLocalVariableNameSuffix.Text = "* Prefix For Generated Local Variable Names";
             this.lblLocalVariableNameSuffix.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -1432,7 +1432,7 @@ namespace OdapterWnFrm {
             // 
             this.lblSettingsFile.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblSettingsFile.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.lblSettingsFile.Location = new System.Drawing.Point(5, 16);
+            this.lblSettingsFile.Location = new System.Drawing.Point(11, 16);
             this.lblSettingsFile.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblSettingsFile.Name = "lblSettingsFile";
             this.lblSettingsFile.Size = new System.Drawing.Size(95, 21);
@@ -1494,7 +1494,7 @@ namespace OdapterWnFrm {
             this.gbSettings.Margin = new System.Windows.Forms.Padding(4);
             this.gbSettings.Name = "gbSettings";
             this.gbSettings.Padding = new System.Windows.Forms.Padding(4);
-            this.gbSettings.Size = new System.Drawing.Size(694, 52);
+            this.gbSettings.Size = new System.Drawing.Size(682, 52);
             this.gbSettings.TabIndex = 0;
             this.gbSettings.TabStop = false;
             this.gbSettings.Text = "Settings";
@@ -1504,10 +1504,10 @@ namespace OdapterWnFrm {
             this.cmbSettingsFile.BackColor = System.Drawing.SystemColors.Window;
             this.cmbSettingsFile.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbSettingsFile.FormattingEnabled = true;
-            this.cmbSettingsFile.Location = new System.Drawing.Point(108, 16);
+            this.cmbSettingsFile.Location = new System.Drawing.Point(111, 16);
             this.cmbSettingsFile.Margin = new System.Windows.Forms.Padding(4);
             this.cmbSettingsFile.Name = "cmbSettingsFile";
-            this.cmbSettingsFile.Size = new System.Drawing.Size(269, 25);
+            this.cmbSettingsFile.Size = new System.Drawing.Size(266, 25);
             this.cmbSettingsFile.TabIndex = 0;
             this.cmbSettingsFile.SelectedIndexChanged += new System.EventHandler(this.cmbSettingsFile_SelectedIndexChanged);
             // 
@@ -1515,7 +1515,7 @@ namespace OdapterWnFrm {
             // 
             this.btnRestoreDefaults.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnRestoreDefaults.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.btnRestoreDefaults.Location = new System.Drawing.Point(527, 14);
+            this.btnRestoreDefaults.Location = new System.Drawing.Point(514, 14);
             this.btnRestoreDefaults.Margin = new System.Windows.Forms.Padding(4);
             this.btnRestoreDefaults.Name = "btnRestoreDefaults";
             this.btnRestoreDefaults.Size = new System.Drawing.Size(153, 28);
@@ -1674,7 +1674,7 @@ namespace OdapterWnFrm {
             // txtLocalVariableNameSuffix
             // 
             this.txtLocalVariableNameSuffix.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtLocalVariableNameSuffix.Location = new System.Drawing.Point(466, 146);
+            this.txtLocalVariableNameSuffix.Location = new System.Drawing.Point(466, 150);
             this.txtLocalVariableNameSuffix.Margin = new System.Windows.Forms.Padding(4);
             this.txtLocalVariableNameSuffix.Name = "txtLocalVariableNameSuffix";
             this.txtLocalVariableNameSuffix.Size = new System.Drawing.Size(99, 23);
@@ -1684,7 +1684,7 @@ namespace OdapterWnFrm {
             // txtExcludeChars
             // 
             this.txtExcludeChars.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtExcludeChars.Location = new System.Drawing.Point(491, 71);
+            this.txtExcludeChars.Location = new System.Drawing.Point(491, 70);
             this.txtExcludeChars.Margin = new System.Windows.Forms.Padding(4);
             this.txtExcludeChars.Name = "txtExcludeChars";
             this.txtExcludeChars.Size = new System.Drawing.Size(72, 23);
