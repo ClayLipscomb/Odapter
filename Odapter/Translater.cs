@@ -247,17 +247,22 @@ namespace Odapter {
 
             String oracleNameAdjusted = oracleName;
 
-            // replace special characters with alphanumerics equivalent
+            // replace special characters with alphabetic equivalent
             oracleNameAdjusted = oracleNameAdjusted.Replace(@"!", "exclamationpoint" + CHARACTER_ABBREV);
-            oracleNameAdjusted = oracleNameAdjusted.Replace(@"@", "atsign" + CHARACTER_ABBREV);
-            oracleNameAdjusted = oracleNameAdjusted.Replace(@"#", "poundsign" + CHARACTER_ABBREV);
-            oracleNameAdjusted = oracleNameAdjusted.Replace(@"$", "dollarsign" + CHARACTER_ABBREV);
-            oracleNameAdjusted = oracleNameAdjusted.Replace(@"%", "percentsign" + CHARACTER_ABBREV);
+            oracleNameAdjusted = oracleNameAdjusted.Replace(@"@", "at" + CHARACTER_ABBREV);
+            oracleNameAdjusted = oracleNameAdjusted.Replace(@"#", "pound" + CHARACTER_ABBREV);
+            oracleNameAdjusted = oracleNameAdjusted.Replace(@"$", "dollar" + CHARACTER_ABBREV);
+            oracleNameAdjusted = oracleNameAdjusted.Replace(@"%", "percent" + CHARACTER_ABBREV);
             oracleNameAdjusted = oracleNameAdjusted.Replace(@"^", "caret" + CHARACTER_ABBREV);
             oracleNameAdjusted = oracleNameAdjusted.Replace(@"&", "ampersand" + CHARACTER_ABBREV);
             oracleNameAdjusted = oracleNameAdjusted.Replace(@"*", "asterisk" + CHARACTER_ABBREV);
+            oracleNameAdjusted = oracleNameAdjusted.Replace(@"-", "dash" + CHARACTER_ABBREV);
+            oracleNameAdjusted = oracleNameAdjusted.Replace(@"+", "plus" + CHARACTER_ABBREV);
+            oracleNameAdjusted = oracleNameAdjusted.Replace(@"=", "equals" + CHARACTER_ABBREV);
             oracleNameAdjusted = oracleNameAdjusted.Replace(@".", "period" + CHARACTER_ABBREV);
             oracleNameAdjusted = oracleNameAdjusted.Replace(@"?", "questionmark" + CHARACTER_ABBREV);
+            oracleNameAdjusted = oracleNameAdjusted.Replace(@":", "colon" + CHARACTER_ABBREV);
+            oracleNameAdjusted = oracleNameAdjusted.Replace(@";", "semicolon" + CHARACTER_ABBREV);
 
             String cSharpName = (useCamelCase
                 ? CaseConverter.ConvertUnderscoreDelimitedToCamelCase(oracleNameAdjusted)

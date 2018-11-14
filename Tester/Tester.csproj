@@ -109,6 +109,8 @@
     <None Include="packages.config" />
     <None Include="schema\package\filtered_pkg.pkb" />
     <None Include="schema\package\filtered_pkg.pks" />
+    <None Include="schema\package\odpt_pkg_include!.pks" />
+    <None Include="schema\package\odpt_pkg_include&amp;.pks" />
     <None Include="schema\package\odpt_pkg_log.pkb" />
     <None Include="schema\package\odpt_pkg_log.pks" />
     <None Include="schema\package\odpt_pkg_exclude#.pks" />

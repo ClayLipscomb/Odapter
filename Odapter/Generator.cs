@@ -975,7 +975,7 @@ namespace Odapter {
 
                 foreach (Package pack in packages) {
                     //DisplayMessage("Coding package " + pack.PackageName);
-                    String className = CaseConverter.ConvertUnderscoreDelimitedToPascalCase(pack.PackageName);
+                    String className = Translater.ConvertOracleNameToCSharpName(pack.PackageName, false);
                     StringBuilder classText = new StringBuilder("");
     
                     // class definition
