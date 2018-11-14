@@ -1478,8 +1478,7 @@ namespace OdapterWnFrm {
             this.lblCSharpTypeUsedForRefCursor.TabIndex = 65;
             this.lblCSharpTypeUsedForRefCursor.Text = "REF CURSOR";
             this.lblCSharpTypeUsedForRefCursor.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.toolTip1.SetToolTip(this.lblCSharpTypeUsedForRefCursor, "An Oracle INTEGER, INTEGER equivalent, or any NUMBER with a precision > 9 and no " +
-        "scale.");
+            this.toolTip1.SetToolTip(this.lblCSharpTypeUsedForRefCursor, "An Oracle REF CURSOR, typed or untyped.");
             // 
             // gbSettings
             // 
