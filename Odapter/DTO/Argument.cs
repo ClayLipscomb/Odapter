@@ -23,30 +23,30 @@ namespace Odapter {
     /// <summary>
     /// An argument to a funtion/proc
     /// </summary>
-    internal class Argument {
-        internal Argument NextArgument { get; set; }
-        internal string Owner { get; set; }
-        internal string PackageName { get; set; }
-        internal string ProcedureName { get { return objectName; } set { objectName = value; } }
+    internal class Argument : IArgument {
+        public Argument NextArgument { get; set; }
+        public string Owner { get; set; }
+        public string PackageName { get; set; }
+        public string ProcedureName { get { return objectName; } set { objectName = value; } }
         private string objectName { get; set; }
-        internal string Overload { get; set; }
-        internal int DataLevel { get; set; }
-        internal string ArgumentName { get; set; }
-        internal int Position { get; set; }
-        internal int Sequence { get; set; }
-        internal string DataType { get; set; }
-        internal string InOut { get; set; }
-        internal int? DataLength { get; set; }
-        internal int? DataPrecision { get; set; }
-        internal int? DataScale { get; set; }
-        internal string PlsType { get; set; }
-        internal string TypeOwner { get; set; }
-        internal string TypeName { get; set; }
-        internal string TypeSubname { get; set; }
-        internal string TypeLink { get; set; }
-        internal int? CharLength { get; set; }
-        internal bool Defaulted { get { return (defaulted == "Y" ? true : false); } }
+        public string Overload { get; set; }
+        public int DataLevel { get; set; }
+        public string ArgumentName { get; set; }
+        public int Position { get; set; }
+        public int Sequence { get; set; }
+        public string DataType { get; set; }
+        public string InOut { get; set; }
+        public int? DataLength { get; set; }
+        public int? DataPrecision { get; set; }
+        public int? DataScale { get; set; }
+        public string PlsType { get; set; }
+        public string TypeOwner { get; set; }
+        public string TypeName { get; set; }
+        public string TypeSubname { get; set; }
+        public string TypeLink { get; set; }
+        public int? CharLength { get; set; }
+        public bool Defaulted { get { return (defaulted == "Y" ? true : false); } }
         private string defaulted { get; set; }
-        internal bool IsReturnArgument { get { return (Position == 0 && DataLevel == 0 && ArgumentName == null && InOut == Orcl.OUT); } }
+        public bool IsReturnArgument { get { return (Position == 0 && DataLevel == 0 && ArgumentName == null && InOut == Orcl.OUT); } }
     }
 }

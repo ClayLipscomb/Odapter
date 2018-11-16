@@ -18,13 +18,17 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Odapter {
-    internal class Package : IPackage {
-        public string PackageName { get { return objectName; } set { objectName = value; } }  private string objectName { get; set; } // object_name is underlying sys view column
-        public string Owner { get; set; }
-        public List<Procedure> Procedures { get; set; }
+    internal interface IPackage {
+        /// <summary>
+        /// Implemented property should wrap a camelcase private member that will map to the underlying underscore_delimited sys_view column.
+        /// </summary>
+        string PackageName { get; set;  }
+
+        string Owner { get; set; }
+
+        List<Procedure> Procedures { get; set; }
 
         /// <summary>
         /// Determine if proc has a duplicate signature of another proc in the package. Signatures are duplicate if the procs
@@ -34,14 +38,6 @@ namespace Odapter {
         /// </summary>
         /// <param name="proc"></param>
         /// <returns></returns>
-        public Boolean HasDuplicateSignature(IProcedure proc) {
-            return Procedures.Exists(p =>
-                p.ProcedureName.Equals(proc.ProcedureName)  // same proc name
-                && !(p.Overload ?? String.Empty).Equals(proc.Overload ?? String.Empty)  // different overload
-                && ((p.Arguments.Where(a => !a.IsReturnArgument).OrderBy(a => a.Sequence).Select(a => a.InOut + a.DataType))
-                        .SequenceEqual  // params count, direction and type are exact match (excl. return arg)
-                    (proc.Arguments.Where(a => !a.IsReturnArgument).OrderBy(a => a.Sequence).Select(a => a.InOut + a.DataType)))
-                );
-        }
+        Boolean HasDuplicateSignature(IProcedure proc);
     }
 }

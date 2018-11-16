@@ -23,17 +23,17 @@ namespace Odapter {
     /// <summary>
     /// A procedure/function
     /// </summary>
-    internal class Procedure {
-        internal string PackageName { get { return objectName; } set { objectName = value; } }
+    internal class Procedure : IProcedure {
+        public string PackageName { get { return objectName; } set { objectName = value; } }
         private string objectName { get; set; }
-        internal string ProcedureName { get; set; }
-        internal string Overload { get; set; }
-        internal List<Argument> Arguments { get; set; }
+        public string ProcedureName { get; set; }
+        public string Overload { get; set; }
+        public List<Argument> Arguments { get; set; }
 
         /// <summary>
         /// if a function, gets the return Oracle type
         /// </summary>
-        internal string ReturnOracleDataType {
+        public string ReturnOracleDataType {
             get { return (Arguments.Count == 0 || Arguments[0].DataLevel != 0 || Arguments[0].Position != 0 ? null : Arguments[0].DataType); }
         }
 
@@ -41,7 +41,7 @@ namespace Odapter {
         /// Returns whether this stored proc is a function
         /// </summary>
         /// <returns>boolean</returns>
-        internal bool IsFunction() {
+        public bool IsFunction() {
             return (Arguments.Count == 0 ? false : (Arguments[0].DataLevel == 0 && Arguments[0].Position == 0 && Arguments[0].InOut == Orcl.OUT));
         }
 
@@ -49,12 +49,17 @@ namespace Odapter {
         /// Returns whether procedure has at least one OUT (not IN OUT) param, excluding the return 
         /// </summary>
         /// <returns></returns>
-        internal Boolean HasOutArgument() {
-            foreach (Argument arg in Arguments) if ((arg.DataLevel != 0 || arg.Position != 0) && arg.InOut.Equals(Orcl.OUT)) return true; // explicit OUT
+        public Boolean HasOutArgument() {
+            foreach (IArgument arg in Arguments) if ((arg.DataLevel != 0 || arg.Position != 0) && arg.InOut.Equals(Orcl.OUT)) return true; // explicit OUT
             return false;
         }
 
-        internal Boolean IsIgnoredDueToOracleArgumentTypes(out String reasonMsg) {
+        /// <summary>
+        /// Determine whether procedure should be ignored due to certain data types
+        /// </summary>
+        /// <param name="reasonMsg"></param>
+        /// <returns></returns>
+        public Boolean IsIgnoredDueToOracleArgumentTypes(out String reasonMsg) {
             reasonMsg = "";
             String unimplemntedType = "";
 
@@ -95,7 +100,7 @@ namespace Odapter {
         /// </summary>
         /// <param name="oracleType"></param>
         /// <returns></returns>
-        internal Boolean HasArgumentOfOracleType(String oracleType) {
+        public Boolean HasArgumentOfOracleType(String oracleType) {
             return UsesOracleType(oracleType, false);
         }
 
@@ -103,7 +108,7 @@ namespace Odapter {
         /// Does procedure have at least one weakly typed cursor as return or argument?
         /// </summary>
         /// <returns></returns>
-        internal Boolean UsesWeaklyTypedCursor() {
+        public Boolean UsesWeaklyTypedCursor() {
             foreach (Argument arg in Arguments) {
                 // when we reach last arg, we must return here with a simple check: a cursor at the end is weakly typed
                 if (Arguments.IndexOf(arg) == Arguments.Count - 1) return (arg.DataType == Orcl.REF_CURSOR ? true : false);
@@ -118,7 +123,7 @@ namespace Odapter {
         /// Does procedure have at least one associative array of an unimplemented type as return or argument?
         /// </summary>
         /// <returns></returns>
-        internal Boolean HasArgumentOfOracleTypeAssocArrayOfUnimplementedType(out String unimplementedType) {
+        public Boolean HasArgumentOfOracleTypeAssocArrayOfUnimplementedType(out String unimplementedType) {
             unimplementedType = null;
             foreach (Argument arg in Arguments) {
                 if (Arguments.IndexOf(arg) == Arguments.Count - 1) return false; // reached end of arg list since assoc array uses "2 args"
@@ -132,9 +137,8 @@ namespace Odapter {
             return false;
         }
 
-        internal Boolean HasInArgumentOfOracleTypeRefCursor() {
-            //reasonMsg = "";
-            foreach (Argument arg in Arguments) if (arg.DataType.Equals(Orcl.REF_CURSOR) && arg.InOut.StartsWith(Orcl.IN)) return true; // IN or IN OUT
+        public Boolean HasInArgumentOfOracleTypeRefCursor() {
+            foreach (IArgument arg in Arguments) if (arg.DataType.Equals(Orcl.REF_CURSOR) && arg.InOut.StartsWith(Orcl.IN)) return true; // IN or IN OUT
             return false;
         }
     }

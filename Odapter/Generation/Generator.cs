@@ -185,7 +185,7 @@ namespace Odapter {
         /// </summary>
         /// <param name="args">Oracle arguments of the proc</param>
         /// <returns></returns>
-        private static string GenerateMethodReturnType(Procedure proc) {
+        private static string GenerateMethodReturnType(IProcedure proc) {
             if (!proc.IsFunction()) return CSharp.VOID;
             return Translater.ConvertOracleArgTypeToCSharpType(proc.Arguments[0], false);//, proc.Arguments.Count > 1 ? proc.Arguments[1] : null);
         }
@@ -195,7 +195,7 @@ namespace Odapter {
         /// </summary>
         /// <param name="args"></param>
         /// <returns>list of types</returns>
-        private List<GenericType> GetMethodGenericTypes(Procedure proc) {
+        private List<GenericType> GetMethodGenericTypes(IProcedure proc) {
             List<GenericType> genericTypes = new List<GenericType>(); // created empty list
 
             string cSharpType, packageTypeName;
@@ -371,7 +371,7 @@ namespace Odapter {
         /// <param name="oracleArgName"></param>
         /// <param name="tabIndentCount"></param>
         /// <returns></returns>
-        private string GenerateAssocArrayOutArgumentRetrieveCode(String cSharpArgType,  String cSharpArgName, Argument oracleArg, int tabIndentCount) {
+        private string GenerateAssocArrayOutArgumentRetrieveCode(String cSharpArgType,  String cSharpArgName, IArgument oracleArg, int tabIndentCount) {
 
             StringBuilder sb = new StringBuilder("");
             sb.AppendLine(Tab(5) + cSharpArgName + " = new " + cSharpArgType + "();");
@@ -534,7 +534,7 @@ namespace Odapter {
         /// </summary>
         /// <param name="proc"></param>
         /// <returns></returns>
-        private string GenerateMethodCode(Procedure proc, Package pack, bool forceDynamicMapping) {
+        private string GenerateMethodCode(IProcedure proc, IPackage pack, bool forceDynamicMapping) {
             StringBuilder methodText = new StringBuilder("");
             String methodReturnType = GenerateMethodReturnType(proc);
             List<GenericType> genericTypesUsed = new List<GenericType>();
@@ -650,7 +650,7 @@ namespace Odapter {
         /// </summary>
         /// <param name="proc"></param>
         /// <param name="classText"></param>
-        private void GenerateAllMethodVersions(Procedure proc, Package pack, ref StringBuilder classText) {
+        private void GenerateAllMethodVersions(IProcedure proc, IPackage pack, ref StringBuilder classText) {
 
             // if method has at least one cursor, main version of method will use generics 
             if (proc.HasArgumentOfOracleType(Orcl.REF_CURSOR)) {
@@ -913,7 +913,7 @@ namespace Odapter {
                 // write namespace 
                 outFilePackage.WriteLine("namespace " + packageNamespace + " {");
 
-                foreach (Package pack in packages) {
+                foreach (IPackage pack in packages) {
                     //DisplayMessage("Coding package " + pack.PackageName);
                     String className = Translater.ConvertOracleNameToCSharpName(pack.PackageName, false);
                     StringBuilder classText = new StringBuilder("");

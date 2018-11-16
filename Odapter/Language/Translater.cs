@@ -278,7 +278,7 @@ namespace Odapter {
         /// </summary>
         /// <param name="proc"></param>
         /// <returns></returns>
-        internal static String ConvertOracleProcNameToMethodName(Procedure proc, Package package) {
+        internal static String ConvertOracleProcNameToMethodName(IProcedure proc, IPackage package) {
             String methodName = ConvertOracleNameToCSharpName(proc.ProcedureName, false);
 
             // prevent identical class name and method name - yes, I've seen this happen in Oracle
@@ -295,7 +295,7 @@ namespace Odapter {
         /// </summary>
         /// <param name="oracleArg"></param>
         /// <returns></returns>
-        private static string ConvertOracleRecordNameToCSharpName(Argument oracleArg) {
+        private static string ConvertOracleRecordNameToCSharpName(IArgument oracleArg) {
             // Type and subtype can be null (e.g., a bug in the view when a record type based on a table). In this case, 
             //      use proc name (which is what subtype usually is anyway) and some extra special text. We need a 
             //      better algorithm to guarantee uniqueness in the C# namespace.
@@ -388,7 +388,7 @@ namespace Odapter {
         /// <param name="oracleArg"></param>
         /// <param name="nextArg"></param>
         /// <returns></returns>
-        internal static string ConvertOracleArgTypeToCSharpOracleDbType(Argument oracleArg, Argument nextArgUnused) {
+        internal static string ConvertOracleArgTypeToCSharpOracleDbType(Argument oracleArg, IArgument nextArgUnused) {
             if (oracleArg.DataType == null) return null;
 
             // the DbType needed for an assoc array to work is simply the type of its subsequent nested arg
@@ -831,7 +831,7 @@ namespace Odapter {
         /// </summary>
         /// <param name="oracleArg"></param>
         /// <returns></returns>
-        internal static Int32? GetCharLength(Argument oracleArg) {
+        internal static Int32? GetCharLength(IArgument oracleArg) {
             // for an associative array we must look at subsequent arg for the value
             return (oracleArg.DataType == Orcl.ASSOCIATITVE_ARRAY ? oracleArg.NextArgument : oracleArg).CharLength;
         }

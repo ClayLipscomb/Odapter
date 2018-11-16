@@ -87,10 +87,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Message.cs" />
-    <Compile Include="Comment.cs" />
+    <Compile Include="DTO\IArgument.cs" />
+    <Compile Include="DTO\IPackage.cs" />
+    <Compile Include="DTO\IProcedure.cs" />
+    <Compile Include="Generation\Message.cs" />
+    <Compile Include="Generation\Comment.cs" />
     <Compile Include="deploy\CaseConversion.cs" />
-    <Compile Include="CSharp.cs" />
+    <Compile Include="Language\CSharp.cs" />
     <Compile Include="DTO\Argument.cs" />
     <Compile Include="DTO\Column.cs" />
     <Compile Include="DTO\EntityBase.cs" />
@@ -107,10 +110,10 @@
     <Compile Include="DTO\Procedure.cs" />
     <Compile Include="DTO\Table.cs" />
     <Compile Include="DTO\View.cs" />
-    <Compile Include="Orcl.cs" />
+    <Compile Include="Language\Orcl.cs" />
     <Compile Include="Parameter.cs" />
     <Compile Include="Dapper\SqlMapperOrcl.cs" />
-    <Compile Include="Generator.cs">
+    <Compile Include="Generation\Generator.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Loader.cs" />
@@ -121,7 +124,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="TnsNames.cs" />
-    <Compile Include="Translater.cs" />
+    <Compile Include="Language\Translater.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
