@@ -96,7 +96,7 @@ namespace OdapterExample {
             DateTime? pOutDate;
 
             // List used as argument for Oracle associative array
-            List<Int64?> pInOutListInt64, somePrimeNumbers = new List<Int64?> { 2, 3, 5, 7, 11, 13, 17, 19, 29, 31 };
+            IList<Int64?> pInOutListInt64, somePrimeNumbers = new List<Int64?> { 2, 3, 5, 7, 11, 13, 17, 19, 29, 31 };
 
             // DTO IList<T>s and a datatable to be hydrated from Oracle cursor
             IList<DtoInherited> dtoInheritedResultSet;

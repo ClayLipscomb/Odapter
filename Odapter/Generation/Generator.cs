@@ -374,7 +374,7 @@ namespace Odapter {
         private string GenerateAssocArrayOutArgumentRetrieveCode(String cSharpArgType,  String cSharpArgName, IArgument oracleArg, int tabIndentCount) {
 
             StringBuilder sb = new StringBuilder("");
-            sb.AppendLine(Tab(5) + cSharpArgName + " = new " + cSharpArgType + "();");
+            sb.AppendLine(Tab(5) + cSharpArgName + " = new " + cSharpArgType.TrimStart('I') + "();");   // instantiate non-interface type
             String oracleArrayCode = "(" + LOCAL_VAR_NAME_COMMAND_PARAMS + "[\"" + (oracleArg.ArgumentName ?? FUNC_RETURN_PARAM_NAME) + "\"].Value as "
                 + Translater.ConvertOracleTypeToOdpNetType(oracleArg.NextArgument.DataType)  + "[])";
             sb.AppendLine(Tab(5) + "for (int _i = 0; _i < " + oracleArrayCode + ".Length; _i++)");
@@ -480,8 +480,9 @@ namespace Odapter {
                     if (isAssocArray) {
                         sb.AppendLine(Tab(5) + LOCAL_VAR_NAME_COMMAND_PARAMS + "[\"" + FUNC_RETURN_PARAM_NAME + "\"].CollectionType = OracleCollectionType.PLSQLAssociativeArray;");
                         // for assoc array of variable length types, set the ArrayBindSize with the maximum length of the type
-                        if (cSharpArgType.Equals(CSharp.LIST_OF_STRING)) {
-                            sb.AppendLine(Tab(5) + LOCAL_VAR_NAME_COMMAND_PARAMS + "[\"" + FUNC_RETURN_PARAM_NAME + "\"].ArrayBindSize = new int[" + Parameter.Instance.MaxAssocArraySize.ToString() + "];");
+//                        if (cSharpArgType.Equals(CSharp.LIST_OF_STRING)) {
+                        if (CSharp.ExtractSubtypeFromGenericCollectionType(cSharpArgType, true).Equals(CSharp.STRING)) {
+                                sb.AppendLine(Tab(5) + LOCAL_VAR_NAME_COMMAND_PARAMS + "[\"" + FUNC_RETURN_PARAM_NAME + "\"].ArrayBindSize = new int[" + Parameter.Instance.MaxAssocArraySize.ToString() + "];");
                             sb.AppendLine(Tab(5) 
                                 + "for (int _i = 0; _i < " + Parameter.Instance.MaxAssocArraySize.ToString() + "; _i++) { " + LOCAL_VAR_NAME_COMMAND_PARAMS + "[\"" + FUNC_RETURN_PARAM_NAME + "\"].ArrayBindSize[_i] = "
                                 + Translater.GetCharLength(arg) + "; }");
@@ -514,8 +515,9 @@ namespace Odapter {
                                 + cSharpArgName + ".ToArray()" + ");");
                         sb.AppendLine(Tab(5) + (isCSharpParamOptional ? "\t" : "") + LOCAL_VAR_NAME_COMMAND_PARAMS + "[\"" + arg.ArgumentName + "\"].CollectionType = OracleCollectionType.PLSQLAssociativeArray;");
                         // for assoc array of variable length types, set the ArrayBindSize with the maximum length of the type
-                        if (cSharpArgType.Equals(CSharp.LIST_OF_STRING)) {
-                            sb.AppendLine(Tab(5) + (isCSharpParamOptional ? "\t" : "") + LOCAL_VAR_NAME_COMMAND_PARAMS + "[\"" + arg.ArgumentName + "\"].ArrayBindSize = new int[" + Parameter.Instance.MaxAssocArraySize.ToString() + "];");
+//                        if (cSharpArgType.Equals(CSharp.LIST_OF_STRING)) {
+                        if (CSharp.ExtractSubtypeFromGenericCollectionType(cSharpArgType, true).Equals(CSharp.STRING)) {
+                                sb.AppendLine(Tab(5) + (isCSharpParamOptional ? "\t" : "") + LOCAL_VAR_NAME_COMMAND_PARAMS + "[\"" + arg.ArgumentName + "\"].ArrayBindSize = new int[" + Parameter.Instance.MaxAssocArraySize.ToString() + "];");
                             sb.AppendLine(Tab(5) + (isCSharpParamOptional ? "\t" : "")
                                 + "for (int _i = 0; _i < " + Parameter.Instance.MaxAssocArraySize.ToString() + "; _i++) { " + LOCAL_VAR_NAME_COMMAND_PARAMS + "[\"" + arg.ArgumentName + "\"].ArrayBindSize[_i] = "
                                 + Translater.GetCharLength(arg) + "; }");
@@ -579,7 +581,9 @@ namespace Odapter {
                         String cSharpName = arg.IsReturnArgument ? LOCAL_VAR_NAME_RETURN : Translater.ConvertOracleNameToCSharpName(arg.ArgumentName, true);
                         methodText.Append((arg.IsReturnArgument ? cSharpType + " " : "") + cSharpName +
                              (CSharp.IsValidGenericCollectionType(cSharpType) 
-                                ? " = new " + (arg.DataType.Equals(Orcl.REF_CURSOR) ? Translater.ConvertOracleArgTypeToCSharpType(arg, !arg.IsReturnArgument, true) : cSharpType) + "()" 
+                                ? " = new " + (Translater.CanBeCSharpInterface(arg.DataType)
+                                    ? Translater.ConvertOracleArgTypeToCSharpType(arg, !arg.IsReturnArgument, true) 
+                                    : cSharpType) + "()" 
                                 : " = null") + "; ");
                     }
                 methodText.AppendLine();
@@ -1167,6 +1171,7 @@ namespace Odapter {
 
                 // Set these options first since Loader does some translation. In the future, we need to modify Loader to do no translation (if possible).
                 Translater.CSharpTypeUsedForOracleRefCursor = Parameter.Instance.CSharpTypeUsedForOracleRefCursor;
+                Translater.CSharpTypeUsedForOracleAssociativeArray = Parameter.Instance.CSharpTypeUsedForOracleAssociativeArray;
                 Translater.CSharpTypeUsedForOracleInteger = Parameter.Instance.CSharpTypeUsedForOracleInteger;
                 Translater.CSharpTypeUsedForOracleNumber = Parameter.Instance.CSharpTypeUsedForOracleNumber;
                 Translater.CSharpTypeUsedForOracleDate = Parameter.Instance.CSharpTypeUsedForOracleDate;

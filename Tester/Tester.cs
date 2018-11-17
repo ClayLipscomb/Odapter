@@ -761,8 +761,8 @@ namespace Odapter.Tester {
             /// </summary>
             private void TestInt32Calls() {
                 Int32? pInInt = 0, pInOutInt = 0, pOutInt, retInt;
-                List<Int32?> pInListInt = new List<Int32?>(), pInOutListInt = new List<Int32?>(), pOutListInt = new List<Int32?>();
-                List<Int32?> intTestValues = new List<Int32?>() { Int32.MaxValue, Int32.MinValue, 0, null };
+                IList<Int32?> pInListInt = new List<Int32?>(), pInOutListInt = new List<Int32?>(), pOutListInt = new List<Int32?>();
+                IList<Int32?> intTestValues = new List<Int32?>() { Int32.MaxValue, Int32.MinValue, 0, null };
 
                 // BINARY_INTEGER and equivalents
 
@@ -817,20 +817,20 @@ namespace Odapter.Tester {
             private void TestInt64Calls() {
 #if SAFETYPE_INTEGER
                 OracleDecimal? pIn, pInOut, pOut, ret;
-                List<OracleDecimal?> pInList = new List<OracleDecimal?>(), pInOutList = new List<OracleDecimal?>(), pOutList = new List<OracleDecimal?>(), retList;
-                List<OracleDecimal?> testValues = new List<OracleDecimal?>() { OracleDecimal.Truncate(OracleDecimal.MaxValue, 0), OracleDecimal.Truncate(OracleDecimal.MinValue, 0), 0, OracleDecimal.Null };
+                IList<OracleDecimal?> pInList = new List<OracleDecimal?>(), pInOutList = new List<OracleDecimal?>(), pOutList = new List<OracleDecimal?>(), retList;
+                IList<OracleDecimal?> testValues = new List<OracleDecimal?>() { OracleDecimal.Truncate(OracleDecimal.MaxValue, 0), OracleDecimal.Truncate(OracleDecimal.MinValue, 0), 0, OracleDecimal.Null };
 #elif DECIMAL_INTEGER
                 Decimal? pIn, pInOut, pOut, ret;
-                List<Decimal?> pInList = new List<Decimal?>(), pInOutList = new List<Decimal?>(), pOutList = new List<Decimal?>(), retList;
-                List<Decimal?> testValues = new List<Decimal?>() { MAX_DECIMAL, MIN_DECIMAL, 0, null };
+                IList<Decimal?> pInList = new List<Decimal?>(), pInOutList = new List<Decimal?>(), pOutList = new List<Decimal?>(), retList;
+                IList<Decimal?> testValues = new List<Decimal?>() { MAX_DECIMAL, MIN_DECIMAL, 0, null };
 #elif SHORT_INTEGER
                 Int32? pIn, pInOut, pOut, ret;
-                List<Int32?> pInList = new List<Int32?>(), pInOutList = new List<Int32?>(), pOutList = new List<Int32?>(), retList;
-                List<Int32?> testValues = new List<Int32?>() { Int32.MaxValue, Int32.MinValue, 0, null };
+                IList<Int32?> pInList = new List<Int32?>(), pInOutList = new List<Int32?>(), pOutList = new List<Int32?>(), retList;
+                IList<Int32?> testValues = new List<Int32?>() { Int32.MaxValue, Int32.MinValue, 0, null };
 #else
                 Int64? pIn, pInOut, pOut, ret;
-                List<Int64?> pInList = new List<Int64?>(), pInOutList = new List<Int64?>(), pOutList = new List<Int64?>(), retList;
-                List<Int64?> testValues = new List<Int64?>() { Int64.MaxValue, Int64.MinValue, 0, null };
+                IList<Int64?> pInList = new List<Int64?>(), pInOutList = new List<Int64?>(), pOutList = new List<Int64?>(), retList;
+                IList<Int64?> testValues = new List<Int64?>() { Int64.MaxValue, Int64.MinValue, 0, null };
 #endif
                 // INTEGER and equivalents
 
@@ -889,12 +889,12 @@ namespace Odapter.Tester {
             private void TestDecimalCalls() {
 #if SAFETYPE_NUMBER
                 OracleDecimal? pInDecimal, pInOutDecimal, pOutDecimal, retDecimal;
-                List<OracleDecimal?> pInListDecimal, pInOutListDecimal, pOutListDecimal, retListDecimal;
-                List<OracleDecimal?> decimalTestValues = new List<OracleDecimal?>() { OracleDecimal.Null, OracleDecimal.MinValue, 0.0M, OracleDecimal.MaxValue };
+                IList<OracleDecimal?> pInListDecimal, pInOutListDecimal, pOutListDecimal, retListDecimal;
+                IList<OracleDecimal?> decimalTestValues = new List<OracleDecimal?>() { OracleDecimal.Null, OracleDecimal.MinValue, 0.0M, OracleDecimal.MaxValue };
 #else
                 Decimal? pInDecimal, pInOutDecimal, pOutDecimal, retDecimal;
-                List<Decimal?> pInListDecimal, pInOutListDecimal, pOutListDecimal, retListDecimal;
-                List<Decimal?> decimalTestValues = new List<Decimal?>() { null, MIN_DECIMAL, 0.0M, MAX_DECIMAL };
+                IList<Decimal?> pInListDecimal, pInOutListDecimal, pOutListDecimal, retListDecimal;
+                IList<Decimal?> decimalTestValues = new List<Decimal?>() { null, MIN_DECIMAL, 0.0M, MAX_DECIMAL };
 #endif
                 // NUMBER and equivalents
 
@@ -949,7 +949,7 @@ namespace Odapter.Tester {
             /// </summary>
             private void TestDoubleCalls() {
                 Double? pInDouble, pInOutDouble, pOutDouble, retDouble;
-                List<Double?> pInListDouble = new List<Double?>(), pInOutListDouble = new List<Double?>(), pOutListDouble = new List<Double?>(), retListDouble;
+                IList<Double?> pInListDouble = new List<Double?>(), pInOutListDouble = new List<Double?>(), pOutListDouble = new List<Double?>(), retListDouble;
 
                 // BINARY_DOUBLE - underlying OracleDecimal has max scale of 127 which restricts the C# double range
 
@@ -959,7 +959,7 @@ namespace Odapter.Tester {
                 //pInDouble = 1.7976931348623157e308d; // BINARY_DOUBLE_MAX_NORMAL fails to return
                 //pInDouble = 2.2250738585072014e-308d; // BINARY_DOUBLE_MIN_NORMAL fails to return
 
-                List<Double?> doubleTestValues = new List<Double?>() { MAX_BINARY_DOUBLE, MIN_BINARY_DOUBLE, 0.0d, null
+                IList<Double?> doubleTestValues = new List<Double?>() { MAX_BINARY_DOUBLE, MIN_BINARY_DOUBLE, 0.0d, null
 #if !CSHARP30
                     , Double.NaN
 #endif
@@ -986,13 +986,13 @@ namespace Odapter.Tester {
             /// </summary>
             private void TestSingleCalls() {
                 Single? pInSingle, pInOutSingle, pOutSingle, retSingle;
-                List<Single?> pInListSingle = new List<Single?>(), pInOutListSingle = new List<Single?>(), pOutListSingle = new List<Single?>(), retListSingle;
+                IList<Single?> pInListSingle = new List<Single?>(), pInOutListSingle = new List<Single?>(), pOutListSingle = new List<Single?>(), retListSingle;
 
                 // BINARY_FLOAT
                 Single? binaryFloatMinNormal, binaryFloatMaxNormal;
                 OdptPkgMain.Instance.ProcBinaryFloatConst(out binaryFloatMinNormal, out binaryFloatMaxNormal, null);
 
-                List<Single?> singleTestValues = new List<Single?>() { binaryFloatMaxNormal, binaryFloatMinNormal, 0.0f, null
+                IList<Single?> singleTestValues = new List<Single?>() { binaryFloatMaxNormal, binaryFloatMinNormal, 0.0f, null
 #if !CSHARP30
                     , Single.NaN
 #endif
@@ -1018,7 +1018,7 @@ namespace Odapter.Tester {
             /// </summary>
             private void TestStringCalls() {
                 String pInString, pInOutString, pOutString, retString;
-                List<String> pInListString = new List<String>(), pInOutListString = new List<String>(), pOutListString, retListString;
+                IList<String> pInListString = new List<String>(), pInOutListString = new List<String>(), pOutListString, retListString;
 
                 // VARCHAR
                 // standard call
@@ -1211,16 +1211,16 @@ namespace Odapter.Tester {
             private void TestDateCalls() {
 #if !SAFETYPE_DATE
                 DateTime? pInDateTime, pInOutDateTime, pOutDateTime, retDateTime;
-                List<DateTime?> pInListDateTime, pInOutListDateTime, pOutListDateTime, retListDateTime;
-                List<DateTime?> dateTimeTestValues = new List<DateTime?>() { 
+                IList<DateTime?> pInListDateTime, pInOutListDateTime, pOutListDateTime, retListDateTime;
+                IList<DateTime?> dateTimeTestValues = new List<DateTime?>() { 
     #if !CSHARP30 // Unmanaged has issues with time portion, min value and max value
                     DateTime.Now, DateTime.MaxValue.AddMilliseconds(-1), DateTime.MinValue.AddMilliseconds(1),
     #endif
                     null };
 #else
                 OracleDate? pInDateTime, pInOutDateTime, pOutDateTime, retDateTime;
-                List<OracleDate?> pInListDateTime, pInOutListDateTime, pOutListDateTime, retListDateTime;
-                List<OracleDate?> dateTimeTestValues = new List<OracleDate?>() { OracleDate.GetSysDate(), OracleDate.MaxValue, OracleDate.MinValue, OracleDate.Null };
+                IList<OracleDate?> pInListDateTime, pInOutListDateTime, pOutListDateTime, retListDateTime;
+                IList<OracleDate?> dateTimeTestValues = new List<OracleDate?>() { OracleDate.GetSysDate(), OracleDate.MaxValue, OracleDate.MinValue, OracleDate.Null };
 #endif
                 // DATE
                 // standard call
@@ -1262,7 +1262,7 @@ namespace Odapter.Tester {
 #if !SAFETYPE_TIMESTAMP
                 DateTime? pInTimeStamp, pInOutTimeStamp, pOutTimeStamp, retTimeStamp;
                 //List<DateTime?> pInListTimeStamp, pInOutListTimeStamp, pOutListTimeStamp, retListTimeStamp;
-                List<DateTime?> timeStampTestValues = new List<DateTime?>() {
+                IList<DateTime?> timeStampTestValues = new List<DateTime?>() {
 #if !CSHARP30   // Unmanaged has issues with non-null TIMESTAMP values
                     DateTime.Now, DateTime.MaxValue.AddMilliseconds(-1), DateTime.MinValue.AddMilliseconds(1),
 #endif
@@ -1270,7 +1270,7 @@ namespace Odapter.Tester {
 #else
                 OracleTimeStamp? pInTimeStamp, pInOutTimeStamp, pOutTimeStamp, retTimeStamp;
                 //List<OracleTimeStamp?> pInListTimeStamp, pInOutListTimeStamp, pOutListTimeStamp, retListTimeStamp;
-                List<OracleTimeStamp?> timeStampTestValues = new List<OracleTimeStamp?>() { OracleTimeStamp.GetSysDate(), OracleTimeStamp.MaxValue.AddMilliseconds(-1), OracleTimeStamp.MinValue.AddMilliseconds(1), OracleTimeStamp.Null };
+                IList<OracleTimeStamp?> timeStampTestValues = new List<OracleTimeStamp?>() { OracleTimeStamp.GetSysDate(), OracleTimeStamp.MaxValue.AddMilliseconds(-1), OracleTimeStamp.MinValue.AddMilliseconds(1), OracleTimeStamp.Null };
 #endif
                 // TIMESTAMP 
                 // standard call

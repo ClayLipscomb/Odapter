@@ -89,9 +89,8 @@ namespace Odapter {
             {Orcl.REF_CURSOR, new List<CustomTranslatedCSharpType> {                new CustomTranslatedCSharpType(CSharp.ILIST_OF_T, @""),
                                                                                     new CustomTranslatedCSharpType(CSharp.ICOLLECTION_OF_T, @""),
                                                                                     new CustomTranslatedCSharpType(CSharp.LIST_OF_T, @"concrete, not recommended") } },
-            {Orcl.ASSOCIATITVE_ARRAY, new List<CustomTranslatedCSharpType> {        new CustomTranslatedCSharpType(CSharp.LIST_OF_T, @""), 
-                                                                                    new CustomTranslatedCSharpType(CSharp.ILIST_OF_T, @""),
-                                                                                    new CustomTranslatedCSharpType(CSharp.ICOLLECTION_OF_T, @"") } }, 
+            {Orcl.ASSOCIATITVE_ARRAY, new List<CustomTranslatedCSharpType> {        new CustomTranslatedCSharpType(CSharp.ILIST_OF_T, @""),
+                                                                                    new CustomTranslatedCSharpType(CSharp.LIST_OF_T, @"concrete, not recommended") } },
             {Orcl.INTEGER, new List<CustomTranslatedCSharpType> {                   new CustomTranslatedCSharpType(CSharp.INT32, @"9 digit limit, not recommended"),
                                                                                     new CustomTranslatedCSharpType(CSharp.INT64, @"18 digit limit, usually safe"),
                                                                                     new CustomTranslatedCSharpType(CSharp.DECIMAL, @"28 digit limit"),
@@ -111,8 +110,8 @@ namespace Odapter {
         };
 
         #region Properties
-        internal static string CSharpTypeUsedForOracleRefCursor { get; set; } = CSharp.ICOLLECTION_OF_T;
-        internal static string CSharpTypeUsedForOracleAssocArray { get; set; } = CSharp.LIST_OF_T;
+        internal static string CSharpTypeUsedForOracleRefCursor { get; set; }
+        internal static string CSharpTypeUsedForOracleAssociativeArray { get; set; }
 
         private static string _cSharpTypeUsedForOracleInteger = CSharp.DECIMAL;
         internal static string CSharpTypeUsedForOracleInteger {
@@ -526,7 +525,7 @@ namespace Odapter {
                 string arrayType = (oracleArg.NextArgument.DataType == Orcl.RECORD 
                     ? ConvertOracleRecordNameToCSharpName(oracleArg)
                     : ConvertOracleArgTypeToCSharpType(oracleArg.NextArgument, false));
-                return CSharp.GenericCollectionOf(CSharp.LIST_OF_T, arrayType);
+                return CSharp.GenericCollectionOf((nonInterfaceType ? CSharp.LIST_OF_T : CSharpTypeUsedForOracleAssociativeArray), arrayType);
             }
 
             // a nested table to a List (even though we are not handling nested tables yet)
@@ -800,6 +799,11 @@ namespace Odapter {
 
             // If we get to here, assume it is custom type. Else, let the compiler deal with it.
             return ConvertOracleNameToCSharpName(oracleType, false);
+        }
+
+        internal static Boolean CanBeCSharpInterface(string argumentDataType) {
+            if (String.IsNullOrWhiteSpace(argumentDataType)) return false;
+            return argumentDataType.Equals(Orcl.REF_CURSOR) || argumentDataType.Equals(Orcl.ASSOCIATITVE_ARRAY);
         }
         #endregion
 

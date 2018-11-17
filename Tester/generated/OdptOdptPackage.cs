@@ -71,7 +71,7 @@ namespace Schema.Odpt.Odpt.Package {
             }
         } // DeleteLog
 
-        public void GetDistinctCriteria(out List<String> pSources, out List<String> pInterfaces, out List<String> pUserNames, Decimal? pMaxAgeInDays = null, 
+        public void GetDistinctCriteria(out IList<String> pSources, out IList<String> pInterfaces, out IList<String> pUserNames, Decimal? pMaxAgeInDays = null, 
                 OracleConnection optionalPreexistingOpenConnection = null) {
             pSources = new List<String>(); pInterfaces = new List<String>(); pUserNames = new List<String>(); 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
@@ -194,7 +194,7 @@ namespace Schema.Odpt.Odpt.Package {
             return __ret;
         } // GetLog
 
-        public void GetSeverity(out List<SByte?> pSeverities, out List<String> pSeverityDescriptions, OracleConnection optionalPreexistingOpenConnection = null) {
+        public void GetSeverity(out IList<SByte?> pSeverities, out IList<String> pSeverityDescriptions, OracleConnection optionalPreexistingOpenConnection = null) {
             pSeverities = new List<SByte?>(); pSeverityDescriptions = new List<String>(); 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
             try {
@@ -714,8 +714,8 @@ namespace Schema.Odpt.Odpt.Package {
             return __ret;
         } // DuplicateSignature6
 
-        public List<Double?> FuncAaBinaryDouble(List<Double?> pIn, ref List<Double?> pInOut, out List<Double?> pOut, OracleConnection optionalPreexistingOpenConnection = null) {
-            List<Double?> __ret = new List<Double?>(); pOut = new List<Double?>(); 
+        public IList<Double?> FuncAaBinaryDouble(IList<Double?> pIn, ref IList<Double?> pInOut, out IList<Double?> pOut, OracleConnection optionalPreexistingOpenConnection = null) {
+            IList<Double?> __ret = new List<Double?>(); pOut = new List<Double?>(); 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
             try {
                 using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_MAIN.FUNC_AA_BINARY_DOUBLE", __conn)) {
@@ -767,8 +767,8 @@ namespace Schema.Odpt.Odpt.Package {
             return __ret;
         } // FuncAaBinaryDouble
 
-        public List<Single?> FuncAaBinaryFloat(List<Single?> pIn, ref List<Single?> pInOut, out List<Single?> pOut, OracleConnection optionalPreexistingOpenConnection = null) {
-            List<Single?> __ret = new List<Single?>(); pOut = new List<Single?>(); 
+        public IList<Single?> FuncAaBinaryFloat(IList<Single?> pIn, ref IList<Single?> pInOut, out IList<Single?> pOut, OracleConnection optionalPreexistingOpenConnection = null) {
+            IList<Single?> __ret = new List<Single?>(); pOut = new List<Single?>(); 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
             try {
                 using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_MAIN.FUNC_AA_BINARY_FLOAT", __conn)) {
@@ -821,16 +821,16 @@ namespace Schema.Odpt.Odpt.Package {
         } // FuncAaBinaryFloat
 
         // **PROC IGNORED** - .NET cannot send/receive an associative array of a BINARY_INTEGER
-        // public List<Int32?> FuncAaBinaryInteger(List<Int32?> pIn, ref List<Int32?> pInOut, out List<Int32?> pOut, OracleConnection optionalPreexistingOpenConnection = null)
+        // public IList<Int32?> FuncAaBinaryInteger(IList<Int32?> pIn, ref IList<Int32?> pInOut, out IList<Int32?> pOut, OracleConnection optionalPreexistingOpenConnection = null)
 
         // **PROC IGNORED** - .NET cannot send/receive an associative array of a BLOB
-        // public List<Byte[]> FuncAaBlob(List<Byte[]> pIn, ref List<Byte[]> pInOut, out List<Byte[]> pOut, OracleConnection optionalPreexistingOpenConnection = null)
+        // public IList<Byte[]> FuncAaBlob(IList<Byte[]> pIn, ref IList<Byte[]> pInOut, out IList<Byte[]> pOut, OracleConnection optionalPreexistingOpenConnection = null)
 
         // **PROC IGNORED** - .NET cannot send/receive an associative array of a PL/SQL BOOLEAN
-        // public List<Boolean> FuncAaBoolean(List<Boolean> pIn, ref List<Boolean> pInOut, out List<Boolean> pOut, OracleConnection optionalPreexistingOpenConnection = null)
+        // public IList<Boolean> FuncAaBoolean(IList<Boolean> pIn, ref IList<Boolean> pInOut, out IList<Boolean> pOut, OracleConnection optionalPreexistingOpenConnection = null)
 
-        public List<String> FuncAaChar(List<String> pIn, ref List<String> pInOut, out List<String> pOut, OracleConnection optionalPreexistingOpenConnection = null) {
-            List<String> __ret = new List<String>(); pOut = new List<String>(); 
+        public IList<String> FuncAaChar(IList<String> pIn, ref IList<String> pInOut, out IList<String> pOut, OracleConnection optionalPreexistingOpenConnection = null) {
+            IList<String> __ret = new List<String>(); pOut = new List<String>(); 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
             try {
                 using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_MAIN.FUNC_AA_CHAR", __conn)) {
@@ -891,10 +891,10 @@ namespace Schema.Odpt.Odpt.Package {
         } // FuncAaChar
 
         // **PROC IGNORED** - .NET cannot send/receive an associative array of a CLOB
-        // public List<String> FuncAaClob(List<String> pIn, ref List<String> pInOut, out List<String> pOut, OracleConnection optionalPreexistingOpenConnection = null)
+        // public IList<String> FuncAaClob(IList<String> pIn, ref IList<String> pInOut, out IList<String> pOut, OracleConnection optionalPreexistingOpenConnection = null)
 
-        public List<DateTime?> FuncAaDate(List<DateTime?> pIn, ref List<DateTime?> pInOut, out List<DateTime?> pOut, OracleConnection optionalPreexistingOpenConnection = null) {
-            List<DateTime?> __ret = new List<DateTime?>(); pOut = new List<DateTime?>(); 
+        public IList<DateTime?> FuncAaDate(IList<DateTime?> pIn, ref IList<DateTime?> pInOut, out IList<DateTime?> pOut, OracleConnection optionalPreexistingOpenConnection = null) {
+            IList<DateTime?> __ret = new List<DateTime?>(); pOut = new List<DateTime?>(); 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
             try {
                 using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_MAIN.FUNC_AA_DATE", __conn)) {
@@ -946,8 +946,8 @@ namespace Schema.Odpt.Odpt.Package {
             return __ret;
         } // FuncAaDate
 
-        public List<Decimal?> FuncAaDoublePrecision(List<Decimal?> pIn, ref List<Decimal?> pInOut, out List<Decimal?> pOut, OracleConnection optionalPreexistingOpenConnection = null) {
-            List<Decimal?> __ret = new List<Decimal?>(); pOut = new List<Decimal?>(); 
+        public IList<Decimal?> FuncAaDoublePrecision(IList<Decimal?> pIn, ref IList<Decimal?> pInOut, out IList<Decimal?> pOut, OracleConnection optionalPreexistingOpenConnection = null) {
+            IList<Decimal?> __ret = new List<Decimal?>(); pOut = new List<Decimal?>(); 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
             try {
                 using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_MAIN.FUNC_AA_DOUBLE_PRECISION", __conn)) {
@@ -999,8 +999,8 @@ namespace Schema.Odpt.Odpt.Package {
             return __ret;
         } // FuncAaDoublePrecision
 
-        public List<Decimal?> FuncAaFloat(List<Decimal?> pIn, ref List<Decimal?> pInOut, out List<Decimal?> pOut, OracleConnection optionalPreexistingOpenConnection = null) {
-            List<Decimal?> __ret = new List<Decimal?>(); pOut = new List<Decimal?>(); 
+        public IList<Decimal?> FuncAaFloat(IList<Decimal?> pIn, ref IList<Decimal?> pInOut, out IList<Decimal?> pOut, OracleConnection optionalPreexistingOpenConnection = null) {
+            IList<Decimal?> __ret = new List<Decimal?>(); pOut = new List<Decimal?>(); 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
             try {
                 using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_MAIN.FUNC_AA_FLOAT", __conn)) {
@@ -1052,8 +1052,8 @@ namespace Schema.Odpt.Odpt.Package {
             return __ret;
         } // FuncAaFloat
 
-        public List<Int64?> FuncAaInteger(List<Int64?> pIn, ref List<Int64?> pInOut, out List<Int64?> pOut, OracleConnection optionalPreexistingOpenConnection = null) {
-            List<Int64?> __ret = new List<Int64?>(); pOut = new List<Int64?>(); 
+        public IList<Int64?> FuncAaInteger(IList<Int64?> pIn, ref IList<Int64?> pInOut, out IList<Int64?> pOut, OracleConnection optionalPreexistingOpenConnection = null) {
+            IList<Int64?> __ret = new List<Int64?>(); pOut = new List<Int64?>(); 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
             try {
                 using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_MAIN.FUNC_AA_INTEGER", __conn)) {
@@ -1105,8 +1105,8 @@ namespace Schema.Odpt.Odpt.Package {
             return __ret;
         } // FuncAaInteger
 
-        public List<Int64?> FuncAaIntegerV(List<Int64?> pIn, ref List<Int64?> pInOut, out List<Int64?> pOut, OracleConnection optionalPreexistingOpenConnection = null) {
-            List<Int64?> __ret = new List<Int64?>(); pOut = new List<Int64?>(); 
+        public IList<Int64?> FuncAaIntegerV(IList<Int64?> pIn, ref IList<Int64?> pInOut, out IList<Int64?> pOut, OracleConnection optionalPreexistingOpenConnection = null) {
+            IList<Int64?> __ret = new List<Int64?>(); pOut = new List<Int64?>(); 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
             try {
                 using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_MAIN.FUNC_AA_INTEGER_V", __conn)) {
@@ -1159,13 +1159,13 @@ namespace Schema.Odpt.Odpt.Package {
         } // FuncAaIntegerV
 
         // **PROC IGNORED** - .NET cannot send/receive an associative array of a BINARY_INTEGER
-        // public List<Int32?> FuncAaNatural(List<Int32?> pIn, ref List<Int32?> pInOut, out List<Int32?> pOut, OracleConnection optionalPreexistingOpenConnection = null)
+        // public IList<Int32?> FuncAaNatural(IList<Int32?> pIn, ref IList<Int32?> pInOut, out IList<Int32?> pOut, OracleConnection optionalPreexistingOpenConnection = null)
 
         // **PROC IGNORED** - .NET cannot send/receive an associative array of a BINARY_INTEGER
-        // public List<Int32?> FuncAaNaturaln(List<Int32?> pIn, ref List<Int32?> pInOut, out List<Int32?> pOut, OracleConnection optionalPreexistingOpenConnection = null)
+        // public IList<Int32?> FuncAaNaturaln(IList<Int32?> pIn, ref IList<Int32?> pInOut, out IList<Int32?> pOut, OracleConnection optionalPreexistingOpenConnection = null)
 
-        public List<String> FuncAaNchar(List<String> pIn, ref List<String> pInOut, out List<String> pOut, OracleConnection optionalPreexistingOpenConnection = null) {
-            List<String> __ret = new List<String>(); pOut = new List<String>(); 
+        public IList<String> FuncAaNchar(IList<String> pIn, ref IList<String> pInOut, out IList<String> pOut, OracleConnection optionalPreexistingOpenConnection = null) {
+            IList<String> __ret = new List<String>(); pOut = new List<String>(); 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
             try {
                 using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_MAIN.FUNC_AA_NCHAR", __conn)) {
@@ -1226,10 +1226,10 @@ namespace Schema.Odpt.Odpt.Package {
         } // FuncAaNchar
 
         // **PROC IGNORED** - .NET cannot send/receive an associative array of a NCLOB
-        // public List<String> FuncAaNclob(List<String> pIn, ref List<String> pInOut, out List<String> pOut, OracleConnection optionalPreexistingOpenConnection = null)
+        // public IList<String> FuncAaNclob(IList<String> pIn, ref IList<String> pInOut, out IList<String> pOut, OracleConnection optionalPreexistingOpenConnection = null)
 
-        public List<Decimal?> FuncAaNumber(List<Decimal?> pIn, ref List<Decimal?> pInOut, out List<Decimal?> pOut, OracleConnection optionalPreexistingOpenConnection = null) {
-            List<Decimal?> __ret = new List<Decimal?>(); pOut = new List<Decimal?>(); 
+        public IList<Decimal?> FuncAaNumber(IList<Decimal?> pIn, ref IList<Decimal?> pInOut, out IList<Decimal?> pOut, OracleConnection optionalPreexistingOpenConnection = null) {
+            IList<Decimal?> __ret = new List<Decimal?>(); pOut = new List<Decimal?>(); 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
             try {
                 using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_MAIN.FUNC_AA_NUMBER", __conn)) {
@@ -1281,8 +1281,8 @@ namespace Schema.Odpt.Odpt.Package {
             return __ret;
         } // FuncAaNumber
 
-        public List<String> FuncAaNvarchar2(List<String> pIn, ref List<String> pInOut, out List<String> pOut, OracleConnection optionalPreexistingOpenConnection = null) {
-            List<String> __ret = new List<String>(); pOut = new List<String>(); 
+        public IList<String> FuncAaNvarchar2(IList<String> pIn, ref IList<String> pInOut, out IList<String> pOut, OracleConnection optionalPreexistingOpenConnection = null) {
+            IList<String> __ret = new List<String>(); pOut = new List<String>(); 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
             try {
                 using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_MAIN.FUNC_AA_NVARCHAR2", __conn)) {
@@ -1343,16 +1343,16 @@ namespace Schema.Odpt.Odpt.Package {
         } // FuncAaNvarchar2
 
         // **PROC IGNORED** - .NET cannot send/receive an associative array of a BINARY_INTEGER
-        // public List<Int32?> FuncAaPlsInteger(List<Int32?> pIn, ref List<Int32?> pInOut, out List<Int32?> pOut, OracleConnection optionalPreexistingOpenConnection = null)
+        // public IList<Int32?> FuncAaPlsInteger(IList<Int32?> pIn, ref IList<Int32?> pInOut, out IList<Int32?> pOut, OracleConnection optionalPreexistingOpenConnection = null)
 
         // **PROC IGNORED** - .NET cannot send/receive an associative array of a BINARY_INTEGER
-        // public List<Int32?> FuncAaPositive(List<Int32?> pIn, ref List<Int32?> pInOut, out List<Int32?> pOut, OracleConnection optionalPreexistingOpenConnection = null)
+        // public IList<Int32?> FuncAaPositive(IList<Int32?> pIn, ref IList<Int32?> pInOut, out IList<Int32?> pOut, OracleConnection optionalPreexistingOpenConnection = null)
 
         // **PROC IGNORED** - .NET cannot send/receive an associative array of a BINARY_INTEGER
-        // public List<Int32?> FuncAaPositiven(List<Int32?> pIn, ref List<Int32?> pInOut, out List<Int32?> pOut, OracleConnection optionalPreexistingOpenConnection = null)
+        // public IList<Int32?> FuncAaPositiven(IList<Int32?> pIn, ref IList<Int32?> pInOut, out IList<Int32?> pOut, OracleConnection optionalPreexistingOpenConnection = null)
 
-        public List<Int64?> FuncAaSmallint(List<Int64?> pIn, ref List<Int64?> pInOut, out List<Int64?> pOut, OracleConnection optionalPreexistingOpenConnection = null) {
-            List<Int64?> __ret = new List<Int64?>(); pOut = new List<Int64?>(); 
+        public IList<Int64?> FuncAaSmallint(IList<Int64?> pIn, ref IList<Int64?> pInOut, out IList<Int64?> pOut, OracleConnection optionalPreexistingOpenConnection = null) {
+            IList<Int64?> __ret = new List<Int64?>(); pOut = new List<Int64?>(); 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
             try {
                 using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_MAIN.FUNC_AA_SMALLINT", __conn)) {
@@ -1404,8 +1404,8 @@ namespace Schema.Odpt.Odpt.Package {
             return __ret;
         } // FuncAaSmallint
 
-        public List<String> FuncAaString(List<String> pIn, ref List<String> pInOut, out List<String> pOut, OracleConnection optionalPreexistingOpenConnection = null) {
-            List<String> __ret = new List<String>(); pOut = new List<String>(); 
+        public IList<String> FuncAaString(IList<String> pIn, ref IList<String> pInOut, out IList<String> pOut, OracleConnection optionalPreexistingOpenConnection = null) {
+            IList<String> __ret = new List<String>(); pOut = new List<String>(); 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
             try {
                 using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_MAIN.FUNC_AA_STRING", __conn)) {
@@ -1466,16 +1466,16 @@ namespace Schema.Odpt.Odpt.Package {
         } // FuncAaString
 
         // **PROC IGNORED** - .NET cannot send/receive an associative array of a TIMESTAMP
-        // public List<DateTime?> FuncAaTimestamp(List<DateTime?> pIn, ref List<DateTime?> pInOut, out List<DateTime?> pOut, OracleConnection optionalPreexistingOpenConnection = null)
+        // public IList<DateTime?> FuncAaTimestamp(IList<DateTime?> pIn, ref IList<DateTime?> pInOut, out IList<DateTime?> pOut, OracleConnection optionalPreexistingOpenConnection = null)
 
         // **PROC IGNORED** - .NET cannot send/receive an associative array of a TIMESTAMP
-        // public List<DateTime?> FuncAaTimestampPrec0(List<DateTime?> pIn, ref List<DateTime?> pInOut, out List<DateTime?> pOut, OracleConnection optionalPreexistingOpenConnection = null)
+        // public IList<DateTime?> FuncAaTimestampPrec0(IList<DateTime?> pIn, ref IList<DateTime?> pInOut, out IList<DateTime?> pOut, OracleConnection optionalPreexistingOpenConnection = null)
 
         // **PROC IGNORED** - .NET cannot send/receive an associative array of a TIMESTAMP
-        // public List<DateTime?> FuncAaTimestampPrec9(List<DateTime?> pIn, ref List<DateTime?> pInOut, out List<DateTime?> pOut, OracleConnection optionalPreexistingOpenConnection = null)
+        // public IList<DateTime?> FuncAaTimestampPrec9(IList<DateTime?> pIn, ref IList<DateTime?> pInOut, out IList<DateTime?> pOut, OracleConnection optionalPreexistingOpenConnection = null)
 
-        public List<String> FuncAaVarchar2(List<String> pIn, ref List<String> pInOut, out List<String> pOut, OracleConnection optionalPreexistingOpenConnection = null) {
-            List<String> __ret = new List<String>(); pOut = new List<String>(); 
+        public IList<String> FuncAaVarchar2(IList<String> pIn, ref IList<String> pInOut, out IList<String> pOut, OracleConnection optionalPreexistingOpenConnection = null) {
+            IList<String> __ret = new List<String>(); pOut = new List<String>(); 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
             try {
                 using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_MAIN.FUNC_AA_VARCHAR2", __conn)) {

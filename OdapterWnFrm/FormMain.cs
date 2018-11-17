@@ -334,7 +334,8 @@ namespace OdapterWnFrm {
         private void BindOracleToCSharpTypes() {
             // map combobox to Oracle type
             IDictionary<ComboBox, String> comboBoxOracleTypes = new Dictionary<ComboBox, String>() {
-                { cmbCSharpTypeUsedForRefCursor,                    Orcl.REF_CURSOR},
+                { cmbCSharpTypeUsedForOracleRefCursor,              Orcl.REF_CURSOR },
+                { cmbCSharpTypeUsedForOracleAssociativeArray,       Orcl.ASSOCIATITVE_ARRAY },
                 { cmbCSharpTypeUsedForOracleInteger,                Orcl.INTEGER },
                 { cmbCSharpTypeUsedForOracleNumber,                 Orcl.NUMBER },
                 { cmbCSharpTypeUsedForOracleDate,                   Orcl.DATE },
@@ -436,7 +437,8 @@ namespace OdapterWnFrm {
             cbGenerateBaseAdapterClass.Checked = Parameter.Instance.IsGenerateBaseAdapter;
             cbGenerateBaseDtoClasses.Checked = Parameter.Instance.IsGenerateBaseEntities;
 
-            cmbCSharpTypeUsedForRefCursor.SelectedValue = Parameter.Instance.CSharpTypeUsedForOracleRefCursor;
+            cmbCSharpTypeUsedForOracleRefCursor.SelectedValue = Parameter.Instance.CSharpTypeUsedForOracleRefCursor;
+            cmbCSharpTypeUsedForOracleAssociativeArray.SelectedValue = Parameter.Instance.CSharpTypeUsedForOracleAssociativeArray;
             cmbCSharpTypeUsedForOracleInteger.SelectedValue = Parameter.Instance.CSharpTypeUsedForOracleInteger;
             cmbCSharpTypeUsedForOracleNumber.SelectedValue = Parameter.Instance.CSharpTypeUsedForOracleNumber;
             cmbCSharpTypeUsedForOracleDate.SelectedValue = Parameter.Instance.CSharpTypeUsedForOracleDate;
@@ -482,8 +484,8 @@ namespace OdapterWnFrm {
             Parameter.Instance.MaxAssocArraySize = Convert.ToInt16(txtMaxAssocArraySize.Text);
             Parameter.Instance.MaxReturnAndOutArgStringSize = Convert.ToInt16(txtMaxReturnArgStringSize.Text);
 
-            Parameter.Instance.CSharpTypeUsedForOracleRefCursor = cmbCSharpTypeUsedForRefCursor.SelectedValue.ToString();
-            //Parameter.Instance.CSharpTypeUsedForOracleAssociativeArray = cmbCSharpTypeUsedForAssociativeArray.ToString();
+            Parameter.Instance.CSharpTypeUsedForOracleRefCursor = cmbCSharpTypeUsedForOracleRefCursor.SelectedValue.ToString();
+            Parameter.Instance.CSharpTypeUsedForOracleAssociativeArray = cmbCSharpTypeUsedForOracleAssociativeArray.SelectedValue.ToString();
             Parameter.Instance.CSharpTypeUsedForOracleInteger = cmbCSharpTypeUsedForOracleInteger.SelectedValue.ToString();
             Parameter.Instance.CSharpTypeUsedForOracleNumber = cmbCSharpTypeUsedForOracleNumber.SelectedValue.ToString();
             Parameter.Instance.CSharpTypeUsedForOracleDate = cmbCSharpTypeUsedForOracleDate.SelectedValue.ToString();
