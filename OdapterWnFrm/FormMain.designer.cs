@@ -138,6 +138,7 @@ namespace OdapterWnFrm {
             this.gbAdvancedProcOptions = new System.Windows.Forms.GroupBox();
             this.txtLocalVariableNameSuffix = new System.Windows.Forms.TextBox();
             this.txtExcludeChars = new System.Windows.Forms.TextBox();
+            this.cbIsSavePassword = new System.Windows.Forms.CheckBox();
             this.gbCodeToGenerate.SuspendLayout();
             this.gbDatabase.SuspendLayout();
             this.gbSettings.SuspendLayout();
@@ -265,7 +266,7 @@ namespace OdapterWnFrm {
             this.txtPassword.Margin = new System.Windows.Forms.Padding(4);
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.PasswordChar = '*';
-            this.txtPassword.Size = new System.Drawing.Size(283, 23);
+            this.txtPassword.Size = new System.Drawing.Size(203, 23);
             this.txtPassword.TabIndex = 6;
             this.txtPassword.TextChanged += new System.EventHandler(this.txtPassword_TextChanged);
             // 
@@ -1192,6 +1193,7 @@ namespace OdapterWnFrm {
             // gbDatabase
             // 
             this.gbDatabase.BackColor = System.Drawing.Color.Transparent;
+            this.gbDatabase.Controls.Add(this.cbIsSavePassword);
             this.gbDatabase.Controls.Add(this.cmbDBInstance);
             this.gbDatabase.Controls.Add(this.cmbClientHome);
             this.gbDatabase.Controls.Add(this.lblClientHome);
@@ -1717,6 +1719,20 @@ namespace OdapterWnFrm {
             this.txtExcludeChars.Size = new System.Drawing.Size(72, 23);
             this.txtExcludeChars.TabIndex = 3;
             // 
+            // cbIsSavePassword
+            // 
+            this.cbIsSavePassword.BackColor = System.Drawing.Color.Transparent;
+            this.cbIsSavePassword.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbIsSavePassword.ForeColor = System.Drawing.SystemColors.HotTrack;
+            this.cbIsSavePassword.Location = new System.Drawing.Point(711, 75);
+            this.cbIsSavePassword.Margin = new System.Windows.Forms.Padding(4);
+            this.cbIsSavePassword.Name = "cbIsSavePassword";
+            this.cbIsSavePassword.Size = new System.Drawing.Size(76, 21);
+            this.cbIsSavePassword.TabIndex = 68;
+            this.cbIsSavePassword.Text = "Save?";
+            this.toolTip1.SetToolTip(this.cbIsSavePassword, "Save password to settings file?");
+            this.cbIsSavePassword.UseVisualStyleBackColor = false;
+            // 
             // FormMain
             // 
             this.AcceptButton = this.BtnStart;
@@ -1864,6 +1880,7 @@ namespace OdapterWnFrm {
         private System.Windows.Forms.Label lblCSharpTypeUsedForOracleRefCursor;
         private System.Windows.Forms.ComboBox cmbCSharpTypeUsedForOracleAssociativeArray;
         private System.Windows.Forms.Label lblCSharpTypeUsedForOracleAssociativeArray;
+        private System.Windows.Forms.CheckBox cbIsSavePassword;
     }
 }
 

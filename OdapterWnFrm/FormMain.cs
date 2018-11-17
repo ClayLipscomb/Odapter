@@ -387,6 +387,7 @@ namespace OdapterWnFrm {
             txtFilter.Text = Parameter.Instance.Filter;
             txtLogin.Text = Parameter.Instance.UserLogin;
             txtPassword.Text = Parameter.Instance.Password;
+            cbIsSavePassword.Checked = Parameter.Instance.IsSavePassword;
 
             txtOutputPath.Text = Parameter.Instance.OutputPath;
             cmbCSharpVersion.SelectedValue = Parameter.Instance.CSharpVersion;
@@ -463,6 +464,7 @@ namespace OdapterWnFrm {
             Parameter.Instance.Filter = txtFilter.Text;
             Parameter.Instance.UserLogin = txtLogin.Text;
             Parameter.Instance.Password = txtPassword.Text;
+            Parameter.Instance.IsSavePassword = cbIsSavePassword.Checked;
             Parameter.Instance.OutputPath = txtOutputPath.Text;
 
             Parameter.Instance.OutputPath = txtOutputPath.Text;

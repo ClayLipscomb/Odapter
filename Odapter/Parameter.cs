@@ -57,6 +57,7 @@ namespace Odapter {
         public void RestoreDefaults() {
             OracleHome = DatabaseInstance = Filter = Schema = UserLogin = Password =  OutputPath = String.Empty;
 
+            IsSavePassword = false;
             IsGeneratePackage = true;
             IsGenerateObjectType = IsGenerateTable = IsGenerateView = false;
             IsPartialPackage = IsPartialObjectType = IsPartialTable = IsPartialView = false;
@@ -121,6 +122,7 @@ namespace Odapter {
 
         public String UserLogin { get; set; }
         public String Password { get; set; }
+        public Boolean IsSavePassword { get; set; }
 
         // .NET/C# version
         public CSharpVersion CSharpVersion { get; set; }
@@ -246,6 +248,11 @@ namespace Odapter {
         /// </summary>
         /// <param name="fileName"></param>
         public void SaveToFile(string fileName) {
+            String passwordHold = null;
+            if (!IsSavePassword) {
+                passwordHold = Password;
+                Password = null;
+            }
             System.Xml.Serialization.XmlSerializer xs = new System.Xml.Serialization.XmlSerializer(typeof(Parameter));
             Stream fs = new FileStream(GetExecutablePath() + @"\" + fileName, FileMode.Create);
             XmlTextWriter xtw = new XmlTextWriter(fs, Encoding.UTF8);
@@ -254,6 +261,7 @@ namespace Odapter {
             xs.Serialize(xtw, Parameter.Instance);
             xtw.Flush();
             xtw.Close();
+            if (!IsSavePassword) Password = passwordHold;
         }
 
         /// <summary>
