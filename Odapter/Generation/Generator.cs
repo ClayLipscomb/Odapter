@@ -199,7 +199,7 @@ namespace Odapter {
             List<GenericType> genericTypes = new List<GenericType>(); // created empty list
 
             string cSharpType, packageTypeName;
-            foreach (Argument arg in proc.Arguments) {
+            foreach (IArgument arg in proc.Arguments) {
                 if (arg.DataLevel != 0) continue; // all signature arguments are initially found at 0 data level
                 if (arg.DataType == Orcl.REF_CURSOR && arg.InOut.Equals(Orcl.OUT)) { // only out cursors can use generics
                     //Argument nextArg = arg.NextArgument;// (proc.Arguments.IndexOf(arg) + 1 < proc.Arguments.Count ? proc.Arguments[proc.Arguments.IndexOf(arg) + 1] : null);
@@ -224,7 +224,7 @@ namespace Odapter {
         /// </summary>
         /// <param name="args">Oracle argument list for function</param>
         /// <returns>A list of the Oracle param names that can be optional in C#</returns>
-        private List<String> GetOptionalCSharpParameters(List<Argument> args) {
+        private List<String> GetOptionalCSharpParameters(List<IArgument> args) {
             List<String> optionalParamNames = new List<String>();
             if (!IsCSharp30) {
                 for (int i = args.Count - 1; i >= 0; i--) { // loop in reverse - C# optinal params must be declared after req params
@@ -240,7 +240,7 @@ namespace Odapter {
         /// </summary>
         /// <param name="args"></param>
         /// <returns></returns>
-        private string GenerateMethodArgumentsCommaDelimited(List<Argument> args, bool methodHasGenerics, bool dynamicMapping,
+        private string GenerateMethodArgumentsCommaDelimited(List<IArgument> args, bool methodHasGenerics, bool dynamicMapping,
                                                             bool commentOutOnWrap, bool excludeTypes) {
 
             // based on Oracle params, determine all the C# optional params that can be implemented
@@ -250,7 +250,7 @@ namespace Odapter {
             List<string> argList = new List<string>();
             int argNum = 1; // start our arg numbering at 1 for the sake of the modulus check below
 
-            foreach (Argument arg in args) {
+            foreach (IArgument arg in args) {
                 if (arg.DataLevel != 0) continue; // all signature arguments are initially found at 0 data level
                 if (arg.IsReturnArgument) continue; // ignore return value, only doing true args at this point
 
@@ -403,11 +403,11 @@ namespace Odapter {
         /// <param name="args"></param>
         /// <param name="parametersVarName"></param>
         /// <returns></returns>
-        private string GenerateOutArgumentRetrieveCode(List<Argument> args, List<GenericType> genericTypesUsed, bool dynamicMapping = false) {
+        private string GenerateOutArgumentRetrieveCode(List<IArgument> args, List<GenericType> genericTypesUsed, bool dynamicMapping = false) {
             StringBuilder sb = new StringBuilder("");
             bool prevArgIsAssocArray = false, isAssocArray = false;
 
-            foreach (Argument arg in args) {
+            foreach (IArgument arg in args) {
                 String cSharpArgType = Translater.ConvertOracleArgTypeToCSharpType(arg, true);          // type defind as not nullable
                 String cSharpArgTypeNullable = Translater.ConvertOracleArgTypeToCSharpType(arg, false); 
                 String cSharpArgName = (arg.IsReturnArgument ? LOCAL_VAR_NAME_RETURN : Translater.ConvertOracleNameToCSharpName(arg.ArgumentName, true));
@@ -451,14 +451,14 @@ namespace Odapter {
         /// <param name="args"></param>
         /// <param name="parametersVarName"></param>
         /// <returns></returns>
-        private string GenerateArgumentBindCode(List<Argument> args) {
+        private string GenerateArgumentBindCode(List<IArgument> args) {
             StringBuilder sb = new StringBuilder("");
             bool prevArgIsAssocArray = false, isAssocArray = false;
 
             // determine all C# optional params based on Oracle params
             List<String> optionalParamNamesInCSharp = GetOptionalCSharpParameters(args);// new List<String>();
 
-            foreach (Argument arg in args) {
+            foreach (IArgument arg in args) {
                 string cSharpArgName = Translater.ConvertOracleNameToCSharpName(arg.ArgumentName, true);
                 string cSharpArgType = Translater.ConvertOracleArgTypeToCSharpType(arg, /*(args.IndexOf(arg) + 1 < args.Count ? args[args.IndexOf(arg) + 1] : null),*/ true);
                 string clientOracleDbType = Translater.ConvertOracleArgTypeToCSharpOracleDbType(arg, (args.IndexOf(arg) + 1 < args.Count ? args[args.IndexOf(arg) + 1] : null));
@@ -573,7 +573,7 @@ namespace Odapter {
             // create/default return variable and default OUT parameters
             if (proc.IsFunction() || proc.HasOutArgument()) {
                 methodText.Append(Tab(3));
-                foreach (Argument arg in proc.Arguments) 
+                foreach (IArgument arg in proc.Arguments) 
                     if (arg.IsReturnArgument || (arg.DataLevel == 0 && arg.InOut.Equals(Orcl.OUT))) {
                         String cSharpType = Translater.ConvertOracleArgTypeToCSharpType(arg, !arg.IsReturnArgument);
                         String cSharpName = arg.IsReturnArgument ? LOCAL_VAR_NAME_RETURN : Translater.ConvertOracleNameToCSharpName(arg.ArgumentName, true);
@@ -691,7 +691,7 @@ namespace Odapter {
         #endregion
 
         #region Package Record Type Generation
-        private string GenerateRecordTypeReadResultMethod(PackageRecord rec) {
+        private string GenerateRecordTypeReadResultMethod(IPackageRecord rec) {
             String cSharpType = rec.CSharpType;
             
             StringBuilder classText = new StringBuilder("");
@@ -711,7 +711,7 @@ namespace Odapter {
             classText.AppendLine(Tab(3) + "if (" + paramNameOracleReader + " != " + CSharp.NULL + " && " + paramNameOracleReader + ".HasRows) {");
             classText.AppendLine(Tab(4) + "while (" + paramNameOracleReader + ".Read()) {"); 
             classText.AppendLine(Tab(5) + genericType + " obj = new " + genericType + "();");
-            foreach (Field f in rec.Attributes) { // loop through all fields
+            foreach (IField f in rec.Attributes) { // loop through all fields
                 classText.Append(Tab(5) + "if (!" + paramNameOracleReader + ".IsDBNull(" + f.MapPosition + ")) "
                     + "obj." + Translater.ConvertOracleRecordFieldNameToCSharpPropertyName(f.Name, rec.Name, false) + " = ");
 
@@ -873,7 +873,7 @@ namespace Odapter {
             }
         }
 
-        private void WritePackageClasses(List<Package> packages, List<PackageRecord> records, 
+        private void WritePackageClasses(List<IPackage> packages, IList<IPackageRecord> records, 
             string packageNamespace, string ancestorAdapterClassName, bool partialPackage, string ancestorRecordTypeClassName) {
 
             if (packages.Count == 0) return;
@@ -929,7 +929,7 @@ namespace Odapter {
 
                     // for each record type in this package
                     int i = 0;
-                    foreach (PackageRecord rec in records
+                    foreach (IPackageRecord rec in records
                         .Where(r => (r.PackageName ?? "").Equals(pack.PackageName) || (r.Name ?? "").Equals(pack.PackageName))
                         .GroupBy(r => new { r.Name, r.CSharpType } )
                         .Select(g => g.First())
@@ -960,7 +960,7 @@ namespace Odapter {
 
                         // create DTO 
                         classText.AppendLine();
-                        classText.Append(GenerateEntityClass<Field>(rec, ancestorRecordTypeClassName, 
+                        classText.Append(GenerateEntityClass<IField>(rec, ancestorRecordTypeClassName, 
                             Parameter.Instance.IsSerializablePackageRecord, Parameter.Instance.IsPartialPackage,
                             Parameter.Instance.IsDataContractPackageRecord, Parameter.Instance.IsXmlElementPackageRecord, 2));
 
@@ -972,7 +972,7 @@ namespace Odapter {
                     }
 
                     // create method for each package proc
-                    foreach (Procedure proc in pack.Procedures) GenerateAllMethodVersions(proc, pack, ref classText);
+                    foreach (IProcedure proc in pack.Procedures) GenerateAllMethodVersions(proc, pack, ref classText);
                     classText.AppendLine(Tab() + "} // " + className);
 
                     // write entire class to file
@@ -1006,7 +1006,7 @@ namespace Odapter {
             bool isDataContract, bool isXmlElement, int tabIndentCount) {
 
             String className = entity.CSharpType ?? Translater.ConvertOracleNameToCSharpName(entity.EntityName, false);
-            bool isPackageRecord = entity is PackageRecord;
+            bool isPackageRecord = entity is IPackageRecord;
             StringBuilder classText = new StringBuilder("");
 
             bool isInstantiable = true;         // only object type can be non-instantiable
@@ -1201,7 +1201,7 @@ namespace Odapter {
                 //////////////////////////////////
                 // generate schema-derived classes
                 if (Parameter.Instance.IsGeneratePackage)
-                    generator.WritePackageClasses(loader.Packages, loader.PacakgeRecordTypes, Parameter.Instance.NamespacePackage, Parameter.Instance.AncestorClassNamePackage, 
+                    generator.WritePackageClasses(loader.Packages, loader.PackageRecordTypes, Parameter.Instance.NamespacePackage, Parameter.Instance.AncestorClassNamePackage, 
                         Parameter.Instance.IsPartialPackage, Parameter.Instance.AncestorClassNamePackageRecord);
                 if (Parameter.Instance.IsGenerateObjectType)
                     generator.WriteObjectTypeClasses(loader.ObjectTypes, Parameter.Instance.NamespaceObjectType, Generator.GenerateBaseObjectTypeClassName(Parameter.Instance.Schema));

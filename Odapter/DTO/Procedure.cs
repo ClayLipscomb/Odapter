@@ -28,7 +28,7 @@ namespace Odapter {
         private string objectName { get; set; }
         public string ProcedureName { get; set; }
         public string Overload { get; set; }
-        public List<Argument> Arguments { get; set; }
+        public List<IArgument> Arguments { get; set; }
 
         /// <summary>
         /// if a function, gets the return Oracle type
@@ -109,7 +109,7 @@ namespace Odapter {
         /// </summary>
         /// <returns></returns>
         public Boolean UsesWeaklyTypedCursor() {
-            foreach (Argument arg in Arguments) {
+            foreach (IArgument arg in Arguments) {
                 // when we reach last arg, we must return here with a simple check: a cursor at the end is weakly typed
                 if (Arguments.IndexOf(arg) == Arguments.Count - 1) return (arg.DataType == Orcl.REF_CURSOR ? true : false);
 
@@ -125,7 +125,7 @@ namespace Odapter {
         /// <returns></returns>
         public Boolean HasArgumentOfOracleTypeAssocArrayOfUnimplementedType(out String unimplementedType) {
             unimplementedType = null;
-            foreach (Argument arg in Arguments) {
+            foreach (IArgument arg in Arguments) {
                 if (Arguments.IndexOf(arg) == Arguments.Count - 1) return false; // reached end of arg list since assoc array uses "2 args"
                 // check type of argument and its subsequent argument
                 if (arg.DataType == Orcl.ASSOCIATITVE_ARRAY

@@ -88,6 +88,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DTO\IArgument.cs" />
+    <Compile Include="DTO\IField.cs" />
+    <Compile Include="DTO\IObjectTypeAttribute.cs" />
     <Compile Include="DTO\IPackage.cs" />
     <Compile Include="DTO\IProcedure.cs" />
     <Compile Include="Generation\Message.cs" />

@@ -18,7 +18,7 @@
 
 namespace Odapter {
     internal interface IArgument {
-        Argument NextArgument { get; set; }
+        IArgument NextArgument { get; set; }
         string Owner { get; set; }
         string PackageName { get; set; }
         string ProcedureName { get; set; } 

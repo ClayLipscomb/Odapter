@@ -28,7 +28,7 @@ namespace Odapter {
 
         string Owner { get; set; }
 
-        List<Procedure> Procedures { get; set; }
+        List<IProcedure> Procedures { get; set; }
 
         /// <summary>
         /// Determine if proc has a duplicate signature of another proc in the package. Signatures are duplicate if the procs

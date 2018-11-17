@@ -24,7 +24,7 @@ namespace Odapter {
     internal class Package : IPackage {
         public string PackageName { get { return objectName; } set { objectName = value; } }  private string objectName { get; set; } // object_name is underlying sys view column
         public string Owner { get; set; }
-        public List<Procedure> Procedures { get; set; }
+        public List<IProcedure> Procedures { get; set; }
 
         /// <summary>
         /// Determine if proc has a duplicate signature of another proc in the package. Signatures are duplicate if the procs

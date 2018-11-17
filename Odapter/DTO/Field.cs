@@ -22,7 +22,7 @@ namespace Odapter {
     /// <summary>
     ///  Field for package record type
     /// </summary>
-    internal class Field : IComparable<Field>, IEntityAttribute {
+    internal class Field : IField {
         // standard entity properties
         public string EntityName { get { return Name; } set { Name = value; } }
         public string AttrName { get { return Name; } set { Name = value; } }
@@ -40,7 +40,7 @@ namespace Odapter {
         // field specific
         public String Name { get; set; }
         public int MapPosition { get; set; }
-        public int CompareTo(Field f) { return Name.CompareTo(f.Name); }
+        public int CompareTo(IField f) { return Name.CompareTo(f.Name); }
         public String DataType { get; set; }
         public String TypeOwner { get; set; }
         public int? DataLength { get; set; }

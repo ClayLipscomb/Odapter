@@ -24,7 +24,7 @@ namespace Odapter {
         string PackageName { get; set; } 
         string ProcedureName { get; set; }
         string Overload { get; set; }
-        List<Argument> Arguments { get; set; }
+        List<IArgument> Arguments { get; set; }
 
         /// <summary>
         /// if a function, gets the return Oracle type

@@ -388,7 +388,7 @@ namespace Odapter {
         /// <param name="oracleArg"></param>
         /// <param name="nextArg"></param>
         /// <returns></returns>
-        internal static string ConvertOracleArgTypeToCSharpOracleDbType(Argument oracleArg, IArgument nextArgUnused) {
+        internal static string ConvertOracleArgTypeToCSharpOracleDbType(IArgument oracleArg, IArgument nextArgUnused) {
             if (oracleArg.DataType == null) return null;
 
             // the DbType needed for an assoc array to work is simply the type of its subsequent nested arg
@@ -512,7 +512,7 @@ namespace Odapter {
         /// <param name="typeNotNullable">Determines whether C# type can not be nullable, defaults to false. </param>
         /// <param name="nonInterfaceType">Do not convert to C# interface type.</param>
         /// <returns></returns>
-        internal static string ConvertOracleArgTypeToCSharpType(Argument oracleArg, bool typeNotNullable, bool nonInterfaceType = false) {
+        internal static string ConvertOracleArgTypeToCSharpType(IArgument oracleArg, bool typeNotNullable, bool nonInterfaceType = false) {
             if (oracleArg == null) return null;
 
             // a PL/SQL record will have a custom class built for it; here we only need to return that class name as the type

@@ -24,7 +24,7 @@ namespace Odapter {
     /// An argument to a funtion/proc
     /// </summary>
     internal class Argument : IArgument {
-        public Argument NextArgument { get; set; }
+        public IArgument NextArgument { get; set; }
         public string Owner { get; set; }
         public string PackageName { get; set; }
         public string ProcedureName { get { return objectName; } set { objectName = value; } }

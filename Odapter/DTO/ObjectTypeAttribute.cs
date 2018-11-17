@@ -19,7 +19,7 @@
 using System;
 
 namespace Odapter {
-    internal class ObjectTypeAttribute : IEntityAttribute {
+    internal class ObjectTypeAttribute : IObjectTypeAttribute {
         // standard attribute properties
         public string EntityName { get { return typeName; } set { typeName = value; } }
         private string typeName { get; set; }
