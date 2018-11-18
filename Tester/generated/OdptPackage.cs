@@ -118,9 +118,9 @@ namespace Schema.Odpt.Package {
             public virtual String ColLast { get; set; }
         } // TTableBigFiltered
 
-        public List<T_TTableBigFiltered> ReadResultITTableBigFiltered<T_TTableBigFiltered>(OracleDataReader rdr, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null)
+        public ICollection<T_TTableBigFiltered> ReadResultITTableBigFiltered<T_TTableBigFiltered>(OracleDataReader rdr, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null)
                 where T_TTableBigFiltered : class, ITTableBigFiltered, new()   {
-            List<T_TTableBigFiltered> __ret = new List<T_TTableBigFiltered>();
+            ICollection<T_TTableBigFiltered> __ret = new List<T_TTableBigFiltered>();
             if (rdr != null && rdr.HasRows) {
                 while (rdr.Read()) {
                     T_TTableBigFiltered obj = new T_TTableBigFiltered();
@@ -3139,9 +3139,9 @@ namespace Schema.Odpt.Package {
             public virtual String ColLast { get; set; }
         } // TTableBig
 
-        public List<T_TTableBig> ReadResultITTableBig<T_TTableBig>(OracleDataReader rdr, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null)
+        public ICollection<T_TTableBig> ReadResultITTableBig<T_TTableBig>(OracleDataReader rdr, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null)
                 where T_TTableBig : class, ITTableBig, new()   {
-            List<T_TTableBig> __ret = new List<T_TTableBig>();
+            ICollection<T_TTableBig> __ret = new List<T_TTableBig>();
             if (rdr != null && rdr.HasRows) {
                 while (rdr.Read()) {
                     T_TTableBig obj = new T_TTableBig();
@@ -3224,9 +3224,9 @@ namespace Schema.Odpt.Package {
             public virtual String ColLast { get; set; }
         } // TTableBigChar
 
-        public List<T_TTableBigChar> ReadResultITTableBigChar<T_TTableBigChar>(OracleDataReader rdr, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null)
+        public ICollection<T_TTableBigChar> ReadResultITTableBigChar<T_TTableBigChar>(OracleDataReader rdr, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null)
                 where T_TTableBigChar : class, ITTableBigChar, new()   {
-            List<T_TTableBigChar> __ret = new List<T_TTableBigChar>();
+            ICollection<T_TTableBigChar> __ret = new List<T_TTableBigChar>();
             if (rdr != null && rdr.HasRows) {
                 while (rdr.Read()) {
                     T_TTableBigChar obj = new T_TTableBigChar();
@@ -4294,9 +4294,9 @@ namespace Schema.Odpt.Package {
             public virtual Decimal? ColNumberLast { get; set; }
         } // TTableNumber
 
-        public List<T_TTableNumber> ReadResultITTableNumber<T_TTableNumber>(OracleDataReader rdr, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null)
+        public ICollection<T_TTableNumber> ReadResultITTableNumber<T_TTableNumber>(OracleDataReader rdr, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null)
                 where T_TTableNumber : class, ITTableNumber, new()   {
-            List<T_TTableNumber> __ret = new List<T_TTableNumber>();
+            ICollection<T_TTableNumber> __ret = new List<T_TTableNumber>();
             if (rdr != null && rdr.HasRows) {
                 while (rdr.Read()) {
                     T_TTableNumber obj = new T_TTableNumber();
@@ -4372,9 +4372,9 @@ namespace Schema.Odpt.Package {
             public virtual Decimal? ColNumberLast { get; set; }
         } // TTableNumberDec
 
-        public List<T_TTableNumberDec> ReadResultITTableNumberDec<T_TTableNumberDec>(OracleDataReader rdr, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null)
+        public ICollection<T_TTableNumberDec> ReadResultITTableNumberDec<T_TTableNumberDec>(OracleDataReader rdr, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null)
                 where T_TTableNumberDec : class, ITTableNumberDec, new()   {
-            List<T_TTableNumberDec> __ret = new List<T_TTableNumberDec>();
+            ICollection<T_TTableNumberDec> __ret = new List<T_TTableNumberDec>();
             if (rdr != null && rdr.HasRows) {
                 while (rdr.Read()) {
                     T_TTableNumberDec obj = new T_TTableNumberDec();
@@ -5204,9 +5204,9 @@ namespace Schema.Odpt.Package {
             public virtual DateTime? ColTimestamp { get; set; }
         } // TTableBigPartial
 
-        public List<T_TTableBigPartial> ReadResultITTableBigPartial<T_TTableBigPartial>(OracleDataReader rdr, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null)
+        public ICollection<T_TTableBigPartial> ReadResultITTableBigPartial<T_TTableBigPartial>(OracleDataReader rdr, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null)
                 where T_TTableBigPartial : class, ITTableBigPartial, new()   {
-            List<T_TTableBigPartial> __ret = new List<T_TTableBigPartial>();
+            ICollection<T_TTableBigPartial> __ret = new List<T_TTableBigPartial>();
             if (rdr != null && rdr.HasRows) {
                 while (rdr.Read()) {
                     T_TTableBigPartial obj = new T_TTableBigPartial();

@@ -701,20 +701,21 @@ namespace Odapter {
             StringBuilder classText = new StringBuilder("");
             String interfaceName = "I" + cSharpType;
             String methodName = CSharp.READ_RESULT + interfaceName;
-            String genericType = CSharp.GENERIC_TYPE_PREFIX + cSharpType;
+            String genericTypeParam = CSharp.GENERIC_TYPE_PREFIX + cSharpType;
             String paramNameOracleReader = "rdr"; // Oracle clash not possible
+            String returnType = CSharp.GenericCollectionOf(Translater.CSharpTypeUsedForOracleRefCursor, genericTypeParam);
 
             // signature
-            classText.AppendLine(Tab(2) + "public List<" + genericType + "> " + methodName + "<" + genericType + ">"
+            classText.AppendLine(Tab(2) + "public " + returnType + " " + methodName + "<" + genericTypeParam + ">"
                 + "(OracleDataReader " + paramNameOracleReader + "" 
                 + ", " + CSharp.UINT32 + "? " + PARAM_NAME_MAXIMUM_ROWS_CURSOR + (Parameter.Instance.IsCSharp30 ? "" : " = " + CSharp.NULL) + ")");
-            classText.AppendLine(Tab(4) + "where " + genericType + " : class, " + interfaceName + ", new()  " + " {");
+            classText.AppendLine(Tab(4) + "where " + genericTypeParam + " : class, " + interfaceName + ", new()  " + " {");
 
-            classText.AppendLine(Tab(3) + "List<" + genericType + "> " + LOCAL_VAR_NAME_RETURN + " = new List<" + genericType + ">();");
+            classText.AppendLine(Tab(3) + returnType + " " + LOCAL_VAR_NAME_RETURN + " = new " + CSharp.GenericCollectionOf(CSharp.LIST_OF_T, genericTypeParam) + "();");
 
             classText.AppendLine(Tab(3) + "if (" + paramNameOracleReader + " != " + CSharp.NULL + " && " + paramNameOracleReader + ".HasRows) {");
             classText.AppendLine(Tab(4) + "while (" + paramNameOracleReader + ".Read()) {"); 
-            classText.AppendLine(Tab(5) + genericType + " obj = new " + genericType + "();");
+            classText.AppendLine(Tab(5) + genericTypeParam + " obj = new " + genericTypeParam + "();");
             foreach (IField f in rec.Attributes) { // loop through all fields
                 classText.Append(Tab(5) + "if (!" + paramNameOracleReader + ".IsDBNull(" + f.MapPosition + ")) "
                     + "obj." + Translater.ConvertOracleRecordFieldNameToCSharpPropertyName(f.Name, rec.Name, false) + " = ");
@@ -731,7 +732,7 @@ namespace Odapter {
                 classText.AppendLine(";");
             }
             classText.AppendLine(Tab(5) + LOCAL_VAR_NAME_RETURN + ".Add(obj);");
-            classText.AppendLine(Tab(5) + "if (" + PARAM_NAME_MAXIMUM_ROWS_CURSOR + " != null && " + LOCAL_VAR_NAME_RETURN + ".Count >= " + PARAM_NAME_MAXIMUM_ROWS_CURSOR + ") break;");
+            classText.AppendLine(Tab(5) + "if (" + PARAM_NAME_MAXIMUM_ROWS_CURSOR + " != " + CSharp.NULL + " && " + LOCAL_VAR_NAME_RETURN + ".Count >= " + PARAM_NAME_MAXIMUM_ROWS_CURSOR + ") break;");
             classText.AppendLine(Tab(4) + "}");
             classText.AppendLine(Tab(3) + "}");
 
