@@ -32,13 +32,12 @@ Odapter is a [single executable](/OdapterWnFrm/bin/x64/Release) that generates C
 * Generates adapter class for each package with respective method for each procedure/function
 * Generates nested DTO class and interface for each record type
 * Translates all common Oracle data types to C#
-* Translates Oracle integer-indexed associative array type to C# List<T> of the value type
-* Configurable translation of Oracle REF CURSROR result set to C# IList<T>, ICollection<T>, or List<T>
+* Configurable translation of Oracle REF CURSROR (typed and untyped) to C# IList<T>, ICollection<T>, or List<T>
+* Configurable translation of Oracle integer-indexed associative array type to IList<T> or List<T> of value type
 * Configurable translation of Oracle INTEGER, NUMBER, DATE, TIMESTAMP types to C#, including options for ODP.NET safe types (OracleDecimal, OracleDate, OracleTimestamp)
 * Configurable translation of Oracle BLOB and CLOB/NCLOB types to C#, including options for ODP.NET safe types (OracleBlob, OracleClob)
 * Translates Oracle IN, OUT and IN OUT parameters to C#
 * Translates Oracle optional (defaulted) parameters to C# (4.0+)
-* Translates typed and untyped cursors (both as function return and OUT parameters) to C#
 * Generates standalone DTO class for each object type, table, and view
 * Configurable for either auto-implemented, or protected field wrapped, DTO properties
 * Generates ancestor adapter class and DTO classes for customization
@@ -53,7 +52,7 @@ Odapter is a [single executable](/OdapterWnFrm/bin/x64/Release) that generates C
 * Handles package referencing a record type defined in a different package (including filtered)
 * Easily adaptable to legacy .NET projects and Oracle schemas
 * Locates and parses local TNSNAMES.ORA for Oracle instances
-* Persists custom generation settings to config file for multiple projects or schemas
+* Persists generation settings to config file for multiple projects or schemas
 
 ### Run Time Features - Packages
 
