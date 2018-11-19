@@ -16,13 +16,11 @@
 //    along with this program.If not, see<http://www.gnu.org/licenses/>.
 //------------------------------------------------------------------------------
 
-using System;
-
 namespace Odapter {
     /// <summary>
     /// Table as type of Entity
     /// </summary>
-    internal class Table : EntityBase, IEntity {
+    internal class Table : EntityBase, ITable {
         public string EntityName { get { return tableName; } set { tableName = value; } } private string tableName { get; set; }   // table_name is underlying sys view column
     }
 }

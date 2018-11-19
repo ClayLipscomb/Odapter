@@ -17,7 +17,7 @@
 //------------------------------------------------------------------------------
 
 namespace Odapter {
-    internal interface IObjectType {
+    internal interface IObjectType : IEntity {
         string DbAncestorTypeName { get; set; }
         bool Instantiable { get; }
     }

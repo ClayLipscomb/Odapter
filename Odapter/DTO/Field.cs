@@ -16,8 +16,6 @@
 //    along with this program.If not, see<http://www.gnu.org/licenses/>.
 //------------------------------------------------------------------------------
 
-using System;
-
 namespace Odapter {
     /// <summary>
     ///  Field for package record type
@@ -33,16 +31,16 @@ namespace Odapter {
         public int? Precision { get { return DataPrecision; } set { DataPrecision = value; } }
         public int? Scale { get { return DataScale; } set { DataScale = value; } }
         public int Position { get { return MapPosition; } set { MapPosition = value; } }
-        public String CSharpType { get; set; }
+        public string CSharpType { get; set; }
         public bool Nullable { get { return true; } }
-        public String ContainerClassName { get; set; } // Container class if C# type is nested class
+        public string ContainerClassName { get; set; } // Container class if C# type is nested class
 
         // field specific
-        public String Name { get; set; }
+        public string Name { get; set; }
         public int MapPosition { get; set; }
         public int CompareTo(IField f) { return Name.CompareTo(f.Name); }
-        public String DataType { get; set; }
-        public String TypeOwner { get; set; }
+        public string DataType { get; set; }
+        public string TypeOwner { get; set; }
         public int? DataLength { get; set; }
         public int? DataPrecision { get; set; }
         public int? DataScale { get; set; }

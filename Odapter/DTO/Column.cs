@@ -16,13 +16,11 @@
 //    along with this program.If not, see<http://www.gnu.org/licenses/>.
 //------------------------------------------------------------------------------
 
-using System;
-
 namespace Odapter {
     /// <summary>
     /// Column for a table or view
     /// </summary>
-    internal class Column : IEntityAttribute {
+    internal class Column : IColumn {
         // standard attribute properties
         public string EntityName { get { return tableName; } set { tableName = value; } } private string tableName { get; set; }
         public string AttrName { get { return columnName; } set { columnName = value; } } private string columnName { get; set; }
@@ -35,7 +33,7 @@ namespace Odapter {
         public int Position { get { return columnId; } set { columnId = value; } } private int columnId { get; set; }
         public bool Nullable { get { return (nullable == "Y" ? true : false); } } private string nullable { get; set; }
         public string CSharpType { get; set; }
-        public String ContainerClassName { get; set; } // Container class if C# type is nested class
+        public string ContainerClassName { get; set; } // Container class if C# type is nested class
 
         // column specific properties
         public int CharLength { get; set; }

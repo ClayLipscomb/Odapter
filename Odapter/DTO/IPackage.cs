@@ -16,7 +16,6 @@
 //    along with this program.If not, see<http://www.gnu.org/licenses/>.
 //------------------------------------------------------------------------------
 
-using System;
 using System.Collections.Generic;
 
 namespace Odapter {
@@ -38,6 +37,6 @@ namespace Odapter {
         /// </summary>
         /// <param name="proc"></param>
         /// <returns></returns>
-        Boolean HasDuplicateSignature(IProcedure proc);
+        bool HasDuplicateSignature(IProcedure proc);
     }
 }

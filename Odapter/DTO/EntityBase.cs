@@ -16,13 +16,12 @@
 //    along with this program.If not, see<http://www.gnu.org/licenses/>.
 //------------------------------------------------------------------------------
 
-using System;
 using System.Collections.Generic;
 
 namespace Odapter {
     internal abstract class EntityBase : IEntityBase {
         public List<IEntityAttribute> Attributes { get; set; }
         public string Owner { get; set; }
-        public String CSharpType { get; set; }
+        public string CSharpType { get; set; }
     }
 }

@@ -16,8 +16,6 @@
 //    along with this program.If not, see<http://www.gnu.org/licenses/>.
 //------------------------------------------------------------------------------
 
-using System;
-
 namespace Odapter {
     /// <summary>
     /// Interface of an entity attribute. Should be implemented mapping to underlying sys view column if naming is different.
@@ -34,6 +32,6 @@ namespace Odapter {
         int Position { get; set; }
         bool Nullable { get; }
         string CSharpType { get; set; } // optionally set during load of data (e.g., package record type fields)
-        String ContainerClassName { get; set; } // Container class if C# type is nested class
+        string ContainerClassName { get; set; } // Container class if C# type is nested class
     }
 }

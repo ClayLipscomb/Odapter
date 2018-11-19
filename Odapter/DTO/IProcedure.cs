@@ -16,7 +16,6 @@
 //    along with this program.If not, see<http://www.gnu.org/licenses/>.
 //------------------------------------------------------------------------------
 
-using System;
 using System.Collections.Generic;
 
 namespace Odapter {
@@ -35,20 +34,20 @@ namespace Odapter {
         /// Returns whether this stored proc is a function
         /// </summary>
         /// <returns>boolean</returns>
-        Boolean IsFunction();
+        bool IsFunction();
 
         /// <summary>
         /// Returns whether procedure has at least one OUT (not IN OUT) param, excluding the return 
         /// </summary>
         /// <returns></returns>
-        Boolean HasOutArgument();
+        bool HasOutArgument();
 
         /// <summary>
         /// Determine whether procedure should be ignored due to certain data types
         /// </summary>
         /// <param name="reasonMsg"></param>
         /// <returns></returns>
-        Boolean IsIgnoredDueToOracleArgumentTypes(out String reasonMsg);
+        bool IsIgnoredDueToOracleArgumentTypes(out string reasonMsg);
 
         /// <summary>
         /// Determine if procedure has an argument/return of a given Oracle type. Nested levels of argument
@@ -56,21 +55,21 @@ namespace Odapter {
         /// </summary>
         /// <param name="oracleType"></param>
         /// <returns></returns>
-        Boolean HasArgumentOfOracleType(String oracleType);
+        bool HasArgumentOfOracleType(string oracleType);
 
         /// <summary>
         /// Does procedure have at least one weakly typed cursor as return or argument?
         /// </summary>
         /// <returns></returns>
-        Boolean UsesWeaklyTypedCursor();
+        bool UsesWeaklyTypedCursor();
 
 
         /// <summary>
         /// Does procedure have at least one associative array of an unimplemented type as return or argument?
         /// </summary>
         /// <returns></returns>
-        Boolean HasArgumentOfOracleTypeAssocArrayOfUnimplementedType(out String unimplementedType);
+        bool HasArgumentOfOracleTypeAssocArrayOfUnimplementedType(out string unimplementedType);
 
-        Boolean HasInArgumentOfOracleTypeRefCursor();
+        bool HasInArgumentOfOracleTypeRefCursor();
     }
 }

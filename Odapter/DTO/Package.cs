@@ -34,7 +34,7 @@ namespace Odapter {
         /// </summary>
         /// <param name="proc"></param>
         /// <returns></returns>
-        public Boolean HasDuplicateSignature(IProcedure proc) {
+        public bool HasDuplicateSignature(IProcedure proc) {
             return Procedures.Exists(p =>
                 p.ProcedureName.Equals(proc.ProcedureName)  // same proc name
                 && !(p.Overload ?? String.Empty).Equals(proc.Overload ?? String.Empty)  // different overload

@@ -88,10 +88,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DTO\IArgument.cs" />
+    <Compile Include="DTO\IColumn.cs" />
     <Compile Include="DTO\IField.cs" />
     <Compile Include="DTO\IObjectTypeAttribute.cs" />
     <Compile Include="DTO\IPackage.cs" />
     <Compile Include="DTO\IProcedure.cs" />
+    <Compile Include="DTO\ITable.cs" />
+    <Compile Include="DTO\IView.cs" />
     <Compile Include="Generation\Message.cs" />
     <Compile Include="Generation\Comment.cs" />
     <Compile Include="deploy\CaseConversion.cs" />

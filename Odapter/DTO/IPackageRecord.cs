@@ -32,11 +32,11 @@ namespace Odapter {
         /// <summary>
         /// Package name of record definition; could be different from package with argument using it
         /// </summary>
-        String Name { get; set; }
+        string Name { get; set; }
 
         /// <summary>
         /// Name of record
         /// </summary>
-        String SubName { get; set; }
+        string SubName { get; set; }
     }
 }

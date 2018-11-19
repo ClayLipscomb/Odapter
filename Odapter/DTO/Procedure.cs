@@ -16,7 +16,7 @@
 //    along with this program.If not, see<http://www.gnu.org/licenses/>.
 //------------------------------------------------------------------------------
 
-using System;
+//using System;
 using System.Collections.Generic;
 
 namespace Odapter {
@@ -49,7 +49,7 @@ namespace Odapter {
         /// Returns whether procedure has at least one OUT (not IN OUT) param, excluding the return 
         /// </summary>
         /// <returns></returns>
-        public Boolean HasOutArgument() {
+        public bool HasOutArgument() {
             foreach (IArgument arg in Arguments) if ((arg.DataLevel != 0 || arg.Position != 0) && arg.InOut.Equals(Orcl.OUT)) return true; // explicit OUT
             return false;
         }
@@ -59,9 +59,9 @@ namespace Odapter {
         /// </summary>
         /// <param name="reasonMsg"></param>
         /// <returns></returns>
-        public Boolean IsIgnoredDueToOracleArgumentTypes(out String reasonMsg) {
+        public bool IsIgnoredDueToOracleArgumentTypes(out string reasonMsg) {
             reasonMsg = "";
-            String unimplemntedType = "";
+            string unimplemntedType = "";
 
             if (HasArgumentOfOracleTypeAssocArrayOfUnimplementedType(out unimplemntedType)) {
                 reasonMsg = ".NET cannot send/receive an associative array of a " + unimplemntedType;
@@ -70,7 +70,7 @@ namespace Odapter {
                 reasonMsg = ".NET cannot send/receive a " + Orcl.REF_CURSOR;
                 return true;
             } else {
-                foreach (String oraType in Translater.OracleTypesIgnored)
+                foreach (string oraType in Translater.OracleTypesIgnored)
                     if (UsesOracleType(oraType, !oraType.Equals(Orcl.RECORD))) {
                         Translater.IsOracleTypeIgnored(oraType, out reasonMsg); // get reason
                         return true;
@@ -86,7 +86,7 @@ namespace Odapter {
         /// <param name="oracleType"></param>
         /// <param name="checkNestedArgs"></param>
         /// <returns></returns>
-        private Boolean UsesOracleType(String oracleType, bool checkNestedArgs) {
+        private bool UsesOracleType(string oracleType, bool checkNestedArgs) {
             if (Arguments == null) return false;
             // only search nested arguments if specified
             return Arguments.FindIndex(a => (a.DataType == oracleType || a.TypeName == oracleType
@@ -100,7 +100,7 @@ namespace Odapter {
         /// </summary>
         /// <param name="oracleType"></param>
         /// <returns></returns>
-        public Boolean HasArgumentOfOracleType(String oracleType) {
+        public bool HasArgumentOfOracleType(string oracleType) {
             return UsesOracleType(oracleType, false);
         }
 
@@ -108,7 +108,7 @@ namespace Odapter {
         /// Does procedure have at least one weakly typed cursor as return or argument?
         /// </summary>
         /// <returns></returns>
-        public Boolean UsesWeaklyTypedCursor() {
+        public bool UsesWeaklyTypedCursor() {
             foreach (IArgument arg in Arguments) {
                 // when we reach last arg, we must return here with a simple check: a cursor at the end is weakly typed
                 if (Arguments.IndexOf(arg) == Arguments.Count - 1) return (arg.DataType == Orcl.REF_CURSOR ? true : false);
@@ -123,7 +123,7 @@ namespace Odapter {
         /// Does procedure have at least one associative array of an unimplemented type as return or argument?
         /// </summary>
         /// <returns></returns>
-        public Boolean HasArgumentOfOracleTypeAssocArrayOfUnimplementedType(out String unimplementedType) {
+        public bool HasArgumentOfOracleTypeAssocArrayOfUnimplementedType(out string unimplementedType) {
             unimplementedType = null;
             foreach (IArgument arg in Arguments) {
                 if (Arguments.IndexOf(arg) == Arguments.Count - 1) return false; // reached end of arg list since assoc array uses "2 args"
@@ -137,7 +137,7 @@ namespace Odapter {
             return false;
         }
 
-        public Boolean HasInArgumentOfOracleTypeRefCursor() {
+        public bool HasInArgumentOfOracleTypeRefCursor() {
             foreach (IArgument arg in Arguments) if (arg.DataType.Equals(Orcl.REF_CURSOR) && arg.InOut.StartsWith(Orcl.IN)) return true; // IN or IN OUT
             return false;
         }

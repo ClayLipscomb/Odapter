@@ -16,7 +16,6 @@
 //    along with this program.If not, see<http://www.gnu.org/licenses/>.
 //------------------------------------------------------------------------------
 
-using System;
 
 namespace Odapter {
     internal class ObjectTypeAttribute : IObjectTypeAttribute {
@@ -35,6 +34,6 @@ namespace Odapter {
         private int attrNo { get; set; }
         public bool Nullable { get { return true; } }
         public string CSharpType { get; set; }
-        public String ContainerClassName { get; set; } // Container class if C# type is nested class
+        public string ContainerClassName { get; set; } // Container class if C# type is nested class
     }
 }

@@ -17,17 +17,6 @@
 //------------------------------------------------------------------------------
 
 namespace Odapter {
-    /// <summary>
-    /// Package record type as type of Entity
-    /// </summary>
-    internal class PackageRecord : EntityBase, IPackageRecord {
-
-        public string EntityName { get { return SubName; } set { SubName = value; } }   // sub_name is underlying sys view column
-
-        // IPackageRecord specific
-        public string PackageName { get; set; }
-        public string Name { get; set; }
-        public string SubName { get; set; }
-        public int CompareTo(IPackageRecord r) { return CSharpType.CompareTo(r.CSharpType); }
+    internal interface IView : IEntity {
     }
 }
