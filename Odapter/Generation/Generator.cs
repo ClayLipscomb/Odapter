@@ -21,7 +21,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
-using System.Globalization;
 using System.Reflection;
 
 namespace Odapter {
@@ -322,7 +321,7 @@ namespace Odapter {
                         ? "" 
                         : ", " 
                             + (gt.PackageTypeName == null ? "" : gt.PackageTypeName + ".")
-                            + "I" + gt.TypeName.Substring(CSharp.GENERIC_TYPE_PREFIX.Length))
+                            + CSharp.ToInterface(gt.TypeName.Substring(CSharp.GENERIC_TYPE_PREFIX.Length)))
                     + ", new()");
             }
             return sb.ToString();
@@ -353,7 +352,7 @@ namespace Odapter {
                     + ");");
             } else {
                 sb.AppendLine((returnListSubTypeFullyQualifiedPackageTypeName == null ? "" : returnListSubTypeFullyQualifiedPackageTypeName + ".Instance.")
-                    + CSharp.READ_RESULT + "I" + CSharp.ExtractSubtypeFromGenericCollectionType(cSharpArgType, false).Substring(2)
+                    + CSharp.READ_RESULT + CSharp.ToInterface(CSharp.ExtractSubtypeFromGenericCollectionType(cSharpArgType, false).Substring(2))
                     + "<" + CSharp.ExtractSubtypeFromGenericCollectionType(cSharpArgType, false) + ">"
                     + "(" + LOCAL_VAR_NAME_READER
                     + ", " + PARAM_NAME_MAXIMUM_ROWS_CURSOR // max rows to read
@@ -374,7 +373,7 @@ namespace Odapter {
         private string GenerateAssocArrayOutArgumentRetrieveCode(String cSharpArgType,  String cSharpArgName, IArgument oracleArg, int tabIndentCount) {
 
             StringBuilder sb = new StringBuilder("");
-            sb.AppendLine(Tab(5) + cSharpArgName + " = new " + cSharpArgType.TrimStart('I') + "();");   // instantiate non-interface type
+            sb.AppendLine(Tab(5) + cSharpArgName + " = new " + CSharp.DeInterface(cSharpArgType) + "();");   // instantiate non-interface type
             String oracleArrayCode = "(" + LOCAL_VAR_NAME_COMMAND_PARAMS + "[\"" + (oracleArg.ArgumentName ?? FUNC_RETURN_PARAM_NAME) + "\"].Value as "
                 + Translater.ConvertOracleTypeToOdpNetType(oracleArg.NextArgument.DataType)  + "[])";
             sb.AppendLine(Tab(5) + "for (int _i = 0; _i < " + oracleArrayCode + ".Length; _i++)");
@@ -699,7 +698,7 @@ namespace Odapter {
             String cSharpType = rec.CSharpType;
             
             StringBuilder classText = new StringBuilder("");
-            String interfaceName = "I" + cSharpType;
+            String interfaceName = CSharp.ToInterface(cSharpType);
             String methodName = CSharp.READ_RESULT + interfaceName;
             String genericTypeParam = CSharp.GENERIC_TYPE_PREFIX + cSharpType;
             String paramNameOracleReader = "rdr"; // Oracle clash not possible
@@ -965,7 +964,7 @@ namespace Odapter {
 
                         // create DTO 
                         classText.AppendLine();
-                        classText.Append(GenerateEntityClass<IField>(rec, ancestorRecordTypeClassName, 
+                        classText.Append(GenerateEntityClass(rec, ancestorRecordTypeClassName, 
                             Parameter.Instance.IsSerializablePackageRecord, Parameter.Instance.IsPartialPackage,
                             Parameter.Instance.IsDataContractPackageRecord, Parameter.Instance.IsXmlElementPackageRecord, 2));
 
@@ -1000,14 +999,13 @@ namespace Odapter {
         /// <summary>
         /// Generate the class for an Oracle entity 
         /// </summary>
-        /// <typeparam name="TEntityAttribute"></typeparam>
         /// <param name="entity"></param>
         /// <param name="ancestorClassName">Use as ancestor class if there is no ancestor class already defined in Oracle (e.g., object type)</param>
         /// <param name="isSerializable"></param>
         /// <param name="isPartial"></param>
         /// <param name="tabIndentCount"></param>
         /// <returns></returns>
-        private string GenerateEntityClass<TEntityAttribute>(IEntity entity, string ancestorClassName, bool isSerializable, bool isPartial, 
+        private string GenerateEntityClass(IEntity entity, string ancestorClassName, bool isSerializable, bool isPartial, 
             bool isDataContract, bool isXmlElement, int tabIndentCount) {
 
             String className = entity.CSharpType ?? Translater.ConvertOracleNameToCSharpName(entity.EntityName, false);
@@ -1025,7 +1023,7 @@ namespace Odapter {
                 + (!String.IsNullOrEmpty(dbAncestorTypeName)
                         ? " : " + Translater.ConvertOracleNameToCSharpName(dbAncestorTypeName, false) // Oracle ancestor gets precedence
                         : (!String.IsNullOrEmpty(ancestorClassName)
-                            ? " : " + Parameter.Instance.NamespaceSchema + "." + ancestorClassName + (isPackageRecord ? ", " + "I" + className : "")
+                            ? " : " + Parameter.Instance.NamespaceSchema + "." + ancestorClassName + (isPackageRecord ? ", " + CSharp.ToInterface(className) : "")
                             : "")) // user defined ancestor
                 + " {"; // start entity type class;
 
@@ -1101,15 +1099,14 @@ namespace Odapter {
             return classText.ToString();
         }
 
-        private void WriteUnpackagedEntityClasses<TEntity, TEntityAttribute>(List<TEntity> entities, string entityNamespace, string ancestorClassName, 
+        private void WriteNonPackagedEntityClasses<I_Entity>(List<IEntity> entities, string entityNamespace, string ancestorClassName, 
             bool isSerializable, bool isPartial, bool isDataMember, bool isXmlElement)
-            where TEntity : IEntity
-            where TEntityAttribute : IEntityAttribute {
+            where I_Entity : IEntity {
 
             string fileName = _outputPath + @"\" + CaseConverter.ConvertUnderscoreDelimitedToPascalCase(_schema)
-                + CaseConverter.ConvertUnderscoreDelimitedToPascalCase(GetFilterValueIfUsedInNaming()) + typeof(TEntity).Name + ".cs";
+                + CaseConverter.ConvertUnderscoreDelimitedToPascalCase(GetFilterValueIfUsedInNaming()) + CSharp.DeInterface(typeof(I_Entity).Name) + ".cs";
 
-            DisplayMessage("Coding " + typeof(TEntity).Name.ToLower() + "s (" + fileName.Substring(fileName.LastIndexOf('\\') + 1) + ")...");
+            DisplayMessage("Coding " + CSharp.DeInterface(typeof(I_Entity).Name).ToLower() + "s (" + fileName.Substring(fileName.LastIndexOf('\\') + 1) + ")...");
 
             try {
                 StreamWriter outFile = new StreamWriter(fileName);
@@ -1123,7 +1120,7 @@ namespace Odapter {
                 headerText.AppendLine("using System.Xml;");
                 headerText.AppendLine("using System.Xml.Serialization;");
                 headerText.AppendLine(USING_ORACLE_DATAACCESS_TYPES + ";");
-                if (typeof(TEntity).Equals(typeof(Table)) || typeof(TEntity).Equals(typeof(View)))
+                if (typeof(I_Entity).Equals(typeof(ITable)) || typeof(I_Entity).Equals(typeof(IView)))
                     headerText.AppendLine("using " + _objectTypeNamespace + ";"); // tables and views need access to object type in case column uses one as a type
                 outFile.Write(headerText);
                 outFile.WriteLine();
@@ -1131,9 +1128,9 @@ namespace Odapter {
                 // write namespace 
                 outFile.WriteLine("namespace " + entityNamespace + " {");
 
-                foreach (TEntity entity in entities) {
+                foreach (IEntity entity in entities) {
                     if (entities.IndexOf(entity) != 0) outFile.WriteLine();
-                    outFile.Write(GenerateEntityClass<TEntityAttribute>(entity, ancestorClassName, isSerializable, isPartial, isDataMember, isXmlElement, 1));
+                    outFile.Write(GenerateEntityClass(entity, ancestorClassName, isSerializable, isPartial, isDataMember, isXmlElement, 1));
                 }
 
                 // close class and namespace for package
@@ -1144,21 +1141,6 @@ namespace Odapter {
             } catch (Exception e) {
                 DisplayMessage("Error writing " + Path.GetFileName(fileName) + " - " + e.Message);
             }
-        }
-
-        private void WriteObjectTypeClasses(List<ObjectType> objectTypes, string entityNamespace, string ancestorClassName) {
-            WriteUnpackagedEntityClasses<ObjectType, ObjectTypeAttribute>(objectTypes, entityNamespace, ancestorClassName,
-                Parameter.Instance.IsSerializableObjectType, Parameter.Instance.IsPartialObjectType, Parameter.Instance.IsDataContractObjectType, Parameter.Instance.IsXmlElementObjectType);
-        }
-
-        private void WriteTableClasses(List<Table> tables, string entityNamespace, string ancestorClassName) {
-            WriteUnpackagedEntityClasses<Table, Column>(tables, entityNamespace, ancestorClassName,
-                Parameter.Instance.IsSerializableTable, Parameter.Instance.IsPartialTable, Parameter.Instance.IsDataContractTable, Parameter.Instance.IsXmlElementTable);
-        }
-
-        private void WriteViewClasses(List<View> views, string entityNamespace, string ancestorClassName) {
-            WriteUnpackagedEntityClasses<View, Column>(views, entityNamespace, ancestorClassName,
-                Parameter.Instance.IsSerializableView, Parameter.Instance.IsPartialView, Parameter.Instance.IsDataContractView, Parameter.Instance.IsXmlElementView);
         }
         #endregion
 
@@ -1210,11 +1192,17 @@ namespace Odapter {
                     generator.WritePackageClasses(loader.Packages, loader.PackageRecordTypes, Parameter.Instance.NamespacePackage, Parameter.Instance.AncestorClassNamePackage, 
                         Parameter.Instance.IsPartialPackage, Parameter.Instance.AncestorClassNamePackageRecord);
                 if (Parameter.Instance.IsGenerateObjectType)
-                    generator.WriteObjectTypeClasses(loader.ObjectTypes, Parameter.Instance.NamespaceObjectType, Generator.GenerateBaseObjectTypeClassName(Parameter.Instance.Schema));
+                    generator.WriteNonPackagedEntityClasses<IObjectType>(loader.ObjectTypes, Parameter.Instance.NamespaceObjectType, Generator.GenerateBaseObjectTypeClassName(Parameter.Instance.Schema),
+                        Parameter.Instance.IsSerializableObjectType, Parameter.Instance.IsPartialObjectType, Parameter.Instance.IsDataContractObjectType, Parameter.Instance.IsXmlElementObjectType);
+                    //generator.WriteObjectTypeClasses(loader.ObjectTypes, Parameter.Instance.NamespaceObjectType, Generator.GenerateBaseObjectTypeClassName(Parameter.Instance.Schema));
                 if (Parameter.Instance.IsGenerateTable)
-                    generator.WriteTableClasses(loader.Tables, Parameter.Instance.NamespaceTable, Generator.GenerateBaseTableClassName(Parameter.Instance.Schema));
+                    generator.WriteNonPackagedEntityClasses<ITable>(loader.Tables, Parameter.Instance.NamespaceTable, Generator.GenerateBaseTableClassName(Parameter.Instance.Schema),
+                        Parameter.Instance.IsSerializableTable, Parameter.Instance.IsPartialTable, Parameter.Instance.IsDataContractTable, Parameter.Instance.IsXmlElementTable);
+                    //generator.WriteTableClasses(loader.Tables, Parameter.Instance.NamespaceTable, Generator.GenerateBaseTableClassName(Parameter.Instance.Schema));
                 if (Parameter.Instance.IsGenerateView)
-                    generator.WriteViewClasses(loader.Views, Parameter.Instance.NamespaceView, Generator.GenerateBaseViewClassName(Parameter.Instance.Schema));
+                    generator.WriteNonPackagedEntityClasses<IView>(loader.Views, Parameter.Instance.NamespaceView, Generator.GenerateBaseViewClassName(Parameter.Instance.Schema),
+                        Parameter.Instance.IsSerializableView, Parameter.Instance.IsPartialView, Parameter.Instance.IsDataContractView, Parameter.Instance.IsXmlElementView);
+                    //generator.WriteViewClasses(loader.Views, Parameter.Instance.NamespaceView, Generator.GenerateBaseViewClassName(Parameter.Instance.Schema));
 
                 generator.DeployUtilityClasses(Parameter.Instance.IsDeployResources);
                 displayMessageMethod(Message.GENERATION_COMPLETE);

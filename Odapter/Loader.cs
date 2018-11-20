@@ -35,21 +35,21 @@ namespace Odapter {
 
         private Action<string> _displayMessageMethod;
 
-        private List<ObjectType> _objectTypes = new List<ObjectType>();
-        private List<Table> _tables = new List<Table>();
-        private List<View> _views = new List<View>();
-        private List<ObjectTypeAttribute> _objectTypeAttributes = new List<ObjectTypeAttribute>();
-        private List<Column> _columns = new List<Column>();
+        private List<IEntity> _objectTypes;
+        private List<IEntity> _tables;
+        private List<IEntity> _views;
+        private List<IEntityAttribute> _objectTypeAttributes; 
+        private List<IEntityAttribute> _columns;                // holds all columns for both tables and views
         #endregion
 
         #region Properties
         internal List<IPackage> Packages { get; private set; }
         internal List<IPackageRecord> PackageRecordTypes { get; private set; }
         private List<IArgument> ArgumentsPackaged { get; set; }
-        internal List<ObjectType> ObjectTypes { get { return _objectTypes; } }
+        internal List<IEntity> ObjectTypes { get { return _objectTypes; } }
         //private List<ObjectTypeAttribute> ObjectTypeAttributes { get; set; }
-        internal List<Table> Tables { get { return _tables; } }
-        internal List<View> Views { get { return _views; } }
+        internal List<IEntity> Tables { get { return _tables; } }
+        internal List<IEntity> Views { get { return _views; } }
         //private List<Column> Columns { get; set; } // contains all columns for both tables and views
         #endregion
 
@@ -67,7 +67,7 @@ namespace Odapter {
         /// proxy to to display message in UI
         /// </summary>
         /// <param name="msg"></param>
-        private void DisplayMessage(String msg) { _displayMessageMethod(msg); }
+        private void DisplayMessage(string msg) { _displayMessageMethod(msg); }
 
         #region Database
         private string GetConnectionString() {
@@ -92,17 +92,17 @@ namespace Odapter {
             where T_PackageRecord : class, IPackageRecord, new()
             where T_Field : class, IField, new()
             where T_Argument : class, IArgument, new()
-            where T_ObjectType : class, IEntity, IObjectType, new()
-            where T_ObjectTypeAttribute : class, IEntityAttribute, new()
-            where T_Table : class, IEntity, new()
-            where T_View : class, IEntity, new()
-            where T_Column : class, IEntityAttribute, new() {
+            where T_ObjectType : class, IObjectType, new()
+            where T_ObjectTypeAttribute : class, IObjectTypeAttribute, new()
+            where T_Table : class, ITable, new()
+            where T_View : class, IView, new()
+            where T_Column : class, IColumn, new() {
 
             using (OracleConnection connection = (OracleConnection)GetConnection()) {
                 if (Parameter.Instance.IsGeneratePackage) LoadPackages<T_Package, T_Procedure, T_PackageRecord, T_Field, T_Argument>(connection);
-                if (Parameter.Instance.IsGenerateObjectType) LoadTypes(connection);
-                if (Parameter.Instance.IsGenerateTable) LoadTables(connection);
-                if (Parameter.Instance.IsGenerateView) LoadViews(connection);
+                if (Parameter.Instance.IsGenerateObjectType) LoadNonPackagedEntities<T_ObjectType, T_ObjectTypeAttribute>(connection, ref _objectTypes, ref _objectTypeAttributes);
+                if (Parameter.Instance.IsGenerateTable) LoadNonPackagedEntities<T_Table, T_Column>(connection, ref _tables, ref _columns);
+                if (Parameter.Instance.IsGenerateView) LoadNonPackagedEntities<T_View, T_Column>(connection, ref _views, ref _columns);
             }
         }
 
@@ -128,7 +128,7 @@ namespace Odapter {
                         if (arguments[arguments.IndexOf(arg) + 1].DataType == Orcl.RECORD) {
                             // First get type of the associated array by converting to C#. This will be a list of a class. We need the class name
                             //  in order to to load into our Oracle record types.
-                            String assocArrayCSharpType = Translater.ConvertOracleArgTypeToCSharpType(arg, false);
+                            string assocArrayCSharpType = Translater.ConvertOracleArgTypeToCSharpType(arg, false);
 
                             // Send the arg following the assoc array arg since it holds the record, a list of all args following the record arg,
                             //  and the C# name of the record parsed out of the assoc array C# type.
@@ -149,7 +149,7 @@ namespace Odapter {
         /// </summary>
         /// <param name="recordArg">Argument with record</param>
         /// <param name="args">List of arguments following record argument</param>
-        private void LoadRecordType<T_PackageRecord, T_Field, T_Argument>(IArgument recordArg, List<IArgument> args, String cSharpType)
+        private void LoadRecordType<T_PackageRecord, T_Field, T_Argument>(IArgument recordArg, List<IArgument> args, string cSharpType)
             where T_PackageRecord : class, IPackageRecord, new() 
             where T_Field : class, IField, new() 
             where T_Argument : class, IArgument, new() {
@@ -195,13 +195,11 @@ namespace Odapter {
                         if (!Parameter.Instance.IsDuplicatePackageRecordOriginatingOutsideFilterAndSchema
                                 // owned by another schema or owned by package that was filtered out 
                             && (    !(arg.Owner ?? "").Equals(arg.TypeOwner) 
-//                                ||  !_packages.Exists(p => p.PackageName.Equals(arg.TypeName)) )   ) {
                                 || !Packages.Any(p => p.PackageName.Equals(arg.TypeName)) )   ) {
                                 f.ContainerClassName = Translater.ConvertOracleNameToCSharpName(arg.TypeName, false);
                         }
 
                         if (    !(arg.TypeName ?? "").Equals(arg.PackageName)
-//                                && _packages.Exists(p => p.PackageName.Equals(arg.TypeName)) // package of origin of record being created
                                 && Packages.Any(p => p.PackageName.Equals(arg.TypeName)) // package of origin of record being created
                                 && PackageRecordTypes.Exists(r => r.PackageName.Equals(arg.TypeName) && r.SubName.Equals(arg.TypeSubname))) {
                             f.ContainerClassName = Translater.ConvertOracleNameToCSharpName(arg.TypeName, false);
@@ -225,7 +223,6 @@ namespace Odapter {
                 if (arg.DataType == Orcl.RECORD) LoadRecordType<T_PackageRecord, T_Field, T_Argument>(arg, args.GetRange(args.IndexOf(arg) + 1, args.Count - args.IndexOf(arg) - 1), null);
             }
 
-//            newRec.Fields.Sort();
             PackageRecordTypes.Add(newRec);
             return;
         }
@@ -238,7 +235,7 @@ namespace Odapter {
         private void LoadArguments<T_Argument>(OracleConnection connection, bool packaged = true)
             where T_Argument : class, IArgument, new() {
 
-                String sql = " SELECT CAST(position as NUMBER(9,0)) position, overload, "
+                string sql = " SELECT CAST(position as NUMBER(9,0)) position, overload, "
                             + " CAST(data_level as NUMBER(9,0)) data_level, argument_name, "
                             + " CAST(sequence as NUMBER(9,0)) sequence, data_type, in_out, CAST(data_length as NUMBER(9,0)) data_length, "
                             + " CAST(data_precision as NUMBER(9,0)) data_precision, CAST(char_length as NUMBER(9,0)) char_length, "
@@ -260,7 +257,7 @@ namespace Odapter {
 
                 // set next argument
                 if (args.Count > 0) {
-                    IArgument nextArg = null;// args[args.Count - 1];
+                    IArgument nextArg = null;
                     for (int i = args.Count - 1; i >= 0; i--) {
                         if (i == args.Count - 1) {
                             nextArg = args[i];
@@ -289,6 +286,7 @@ namespace Odapter {
             where T_PackageRecord : class, IPackageRecord, new()
             where T_Field : class, IField, new()
             where T_Argument : class, IArgument, new() {
+
             // read package, procs and arguments from schema
             try {
                 // get list of packages
@@ -354,10 +352,10 @@ namespace Odapter {
         /// Load all attributes for both tables, views or object types into memory
         /// </summary>
         /// <param name="connection"></param>
-        private void LoadEntityAttributes<TEntityAttribute>(OracleConnection connection, ref List<TEntityAttribute> attributes)
-            where TEntityAttribute : IEntityAttribute {
+        private void LoadNonPackagedEntityAttributes<T_EntityAttribute>(OracleConnection connection, ref List<IEntityAttribute> attributes)
+            where T_EntityAttribute : class, IEntityAttribute, new() {
 
-                string sql = typeof(TEntityAttribute).Equals(typeof(ObjectTypeAttribute))
+                string sql = typeof(T_EntityAttribute).Equals(typeof(ObjectTypeAttribute))
                     ? " SELECT type_name, "
                             + " attr_name, "
                             + " CAST(attr_no as NUMBER(9,0)) attr_no, "
@@ -388,15 +386,14 @@ namespace Odapter {
                             + " AND UPPER(table_name) LIKE :objectNamePrefix || '%'"
                         + " ORDER BY table_name, column_id ";
 
-            string attribType = typeof(TEntityAttribute).Name.ToLower();
+            string attribType = typeof(T_EntityAttribute).Name.ToLower();
             DisplayMessage("Reading "
-                + (typeof(TEntityAttribute).Equals(typeof(ObjectTypeAttribute)) ? "" : "table or view ")
+                + (typeof(T_EntityAttribute).Equals(typeof(ObjectTypeAttribute)) ? "" : "table or view ")
                 + attribType + "s...");
-            attributes = connection.Query<TEntityAttribute>(sql,
-                        new { owner = _schema, objectNamePrefix = (String.IsNullOrEmpty(_filter) ? "" : _filter.ToUpper()) })
-                        .ToList();
+            attributes = connection.Query<T_EntityAttribute>(sql,
+                        new { owner = _schema, objectNamePrefix = (String.IsNullOrEmpty(_filter) ? "" : _filter.ToUpper()) }).ToList<IEntityAttribute>();
             DisplayMessage(attributes.Count.ToString() + " " 
-                + (typeof(TEntityAttribute).Equals(typeof(ObjectTypeAttribute)) ? "" : "table or view ")
+                + (typeof(T_EntityAttribute).Equals(typeof(ObjectTypeAttribute)) ? "" : "table or view ")
                 + attribType + "s read.");
         }
 
@@ -404,7 +401,7 @@ namespace Odapter {
         /// Load all tables, views or object types into memory
         /// </summary>
         /// <param name="connection"></param>
-        private void LoadEntities<T_Entity, T_EntityAttribute>(OracleConnection connection, ref List<T_Entity> entities, ref List<T_EntityAttribute> attributes)
+        private void LoadNonPackagedEntities<T_Entity, T_EntityAttribute>(OracleConnection connection, ref List<IEntity> entities, ref List<IEntityAttribute> attributes)
             where T_EntityAttribute : class, IEntityAttribute, new()
             where T_Entity : class, IEntity, new() {
 
@@ -425,12 +422,12 @@ namespace Odapter {
             // load views or tables accordingly
             DisplayMessage("Reading " + source + "s...");
             entities = connection.Query<T_Entity>(sql,
-                new { owner = _schema, objectNamePrefix = (String.IsNullOrEmpty(_filter) ? "" : _filter.ToUpper()) }).ToList();
+                new { owner = _schema, objectNamePrefix = (String.IsNullOrEmpty(_filter) ? "" : _filter.ToUpper()) }).ToList<IEntity>();
             if (Parameter.Instance.IsExcludeObjectsNamesWithSpecificChars) entities = entities.FindAll(e => e.EntityName.IndexOfAny(Parameter.Instance.ObjectNameCharsToExclude) == -1);
             DisplayMessage(entities.Count.ToString() + " " + source + "s read.");
 
             // if we have not loaded all columns for tables and views, do so
-            if (attributes == null || attributes.Count == 0) LoadEntityAttributes<T_EntityAttribute>(connection, ref attributes);
+            if (attributes == null || attributes.Count == 0) LoadNonPackagedEntityAttributes<T_EntityAttribute>(connection, ref attributes);
 
             if (attributes.Count > 0 && entities.Count > 0) {
                 // copy each attribute to respective entity
@@ -442,30 +439,6 @@ namespace Odapter {
                 }
             }
             return;
-        }
-
-        /// <summary>
-        /// Load all object types into memory
-        /// </summary>
-        /// <param name="connection"></param>
-        private void LoadTypes(OracleConnection connection) {
-            LoadEntities<ObjectType, ObjectTypeAttribute>(connection, ref _objectTypes, ref _objectTypeAttributes);
-        }
-
-        /// <summary>
-        /// load all tables into memory
-        /// </summary>
-        /// <param name="connection"></param>
-        private void LoadTables(OracleConnection connection) {
-            LoadEntities<Table, Column>(connection, ref _tables, ref _columns);
-        }
-
-        /// <summary>
-        /// load all views into memory
-        /// </summary>
-        /// <param name="connection"></param>
-        private void LoadViews(OracleConnection connection) {
-            LoadEntities<View, Column>(connection, ref _views, ref _columns);
         }
         #endregion
     }

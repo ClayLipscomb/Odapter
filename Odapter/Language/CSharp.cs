@@ -18,9 +18,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.Text;
 using System.Data;
+using System.Linq;
 
 namespace Odapter {
     public enum CSharpVersion { ThreeZero, FourZero }
@@ -55,9 +54,11 @@ namespace Odapter {
         public const string XML_DOCUMENT = "XmlDocument";
         public const string DATATABLE = "DataTable";
         private const string OF_T = "<T>";
+        private const string INTERFACE_PREFIX = "I";
         private const string LIST = "List";
-        private const string ILIST = "IList";
-        private const string ICOLLECTION = "ICollection";
+        private const string ILIST = INTERFACE_PREFIX + LIST;
+        private const string COLLECTION = "Collection";
+        private const string ICOLLECTION = INTERFACE_PREFIX + COLLECTION;
         public const string LIST_OF_T = LIST + OF_T;
         public const string ILIST_OF_T = ILIST + OF_T;
         public const string ICOLLECTION_OF_T = ICOLLECTION + OF_T;
@@ -206,6 +207,27 @@ namespace Odapter {
         /// <returns></returns>
         internal static string GenericCollectionOf(String genCollectionBaseType, string subType) {
             return genCollectionBaseType.Replace(OF_T, "") + "<" + subType + ">";
+        }
+
+        /// <summary>
+        /// For a valid interface name, return equivalent class name
+        /// </summary>
+        /// <param name="interfaceName"></param>
+        /// <returns></returns>
+        internal static string DeInterface(string interfaceName) {
+            if (!String.IsNullOrWhiteSpace(interfaceName) && interfaceName.StartsWith(INTERFACE_PREFIX) && interfaceName.Substring(0, 2).All(char.IsUpper) ) {
+                return interfaceName.TrimStart(INTERFACE_PREFIX.ToCharArray());
+            } else {
+                return interfaceName;   // not an interface, return argument as-is
+            }
+        }
+
+        internal static string ToInterface(string className) {
+            if (String.IsNullOrWhiteSpace(className)) {
+                return className;
+            } else {
+                return INTERFACE_PREFIX + className;   
+            }
         }
 
         /// <summary>
