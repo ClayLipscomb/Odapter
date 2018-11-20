@@ -62,7 +62,7 @@ namespace Odapter {
         public const string LIST_OF_T = LIST + OF_T;
         public const string ILIST_OF_T = ILIST + OF_T;
         public const string ICOLLECTION_OF_T = ICOLLECTION + OF_T;
-        public static readonly List<String> GENERIC_COLLECTION_BASE_TYPES = new List<String>() { LIST, ILIST, ICOLLECTION };  // implemented to date
+        public static readonly List<string> GENERIC_COLLECTION_BASE_TYPES = new List<string>() { LIST, ILIST, ICOLLECTION };  // implemented to date
         public const string VOID = "void";
         public const string GENERIC_TYPE_PREFIX = "T_";
         public const string NULLABLE_SUFFIX = @"?";
@@ -193,9 +193,9 @@ namespace Odapter {
         /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>
-        internal static bool IsValidGenericCollectionType(String type) {
+        internal static bool IsValidGenericCollectionType(string type) {
             if (!type.EndsWith(">")) return false;
-            foreach (String gcbt in CSharp.GENERIC_COLLECTION_BASE_TYPES) if (type.StartsWith(gcbt + "<")) return true;
+            foreach (string gcbt in CSharp.GENERIC_COLLECTION_BASE_TYPES) if (type.StartsWith(gcbt + "<")) return true;
             return false;
         }
 
@@ -205,7 +205,7 @@ namespace Odapter {
         /// <param name="genCollectionBaseType">Base type of generic collection</param>
         /// <param name="subType">Subtype; the T type</param>
         /// <returns></returns>
-        internal static string GenericCollectionOf(String genCollectionBaseType, string subType) {
+        internal static string GenericCollectionOf(string genCollectionBaseType, string subType) {
             return genCollectionBaseType.Replace(OF_T, "") + "<" + subType + ">";
         }
 

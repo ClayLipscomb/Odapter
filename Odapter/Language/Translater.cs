@@ -18,19 +18,14 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.Text;
 
 namespace Odapter {
     /// <summary>
     /// Handle translation from Oracle to C#
     /// </summary>
     public class Translater {
-        internal static Boolean UseGenericListForCursor = false;
-        internal static Boolean ConvertOracleNumberToIntegerIfColumnNameIsId = true;
-        public static String ObjectTypeNamespace = "";
 
-        internal static readonly List<String> OracleTypesIgnored = new List<String> {
+        internal static readonly List<string> OracleTypesIgnored = new List<string> {
             // types explicitly not implemented in ODP.NET managed: ARRAY (Varray, Nested Table), BOOLEAN, OBJECT, REF, XML_TYPE
             // https://docs.oracle.com/database/121/ODPNT/OracleDbTypeEnumerationType.htm#ODPNT2286
             Orcl.VARRAY, Orcl.NESTED_TABLE, Orcl.PLSQL_BOOLEAN, Orcl.BOOLEAN, Orcl.OBJECT_TYPE, Orcl.REF, Orcl.XML_TYPE,
@@ -43,7 +38,7 @@ namespace Odapter {
             Orcl.INTERVAL_YEAR_TO_MONTH, Orcl.INTERVAL_DAY_TO_SECOND, Orcl.UNDEFINED, Orcl.RECORD
         };
 
-        internal static readonly List<String> TypesImplementedForAssociativeArrays = new List<String> {
+        internal static readonly List<string> TypesImplementedForAssociativeArrays = new List<string> {
             Orcl.BINARY_FLOAT,
             Orcl.CHAR,
             Orcl.DATE,
@@ -60,10 +55,13 @@ namespace Odapter {
             // https://docs.oracle.com/cd/E85694_01/ODPNT/featOraCommand.htm#GUID-05A6D391-E77F-41AF-83A2-FE86A3D98872
         };
 
+        public static string ObjectTypeNamespace = "";
+
+        #region Data Sets for UI Binding
         public class CSharpVersionOption {
             public CSharpVersion Version { get; private set; }
-            public String DisplayDescription { get; private set; }
-            public CSharpVersionOption(CSharpVersion version, String displayDescription) {
+            public string DisplayDescription { get; private set; }
+            public CSharpVersionOption(CSharpVersion version, string displayDescription) {
                 Version = version;
                 DisplayDescription = displayDescription;
             }
@@ -75,17 +73,17 @@ namespace Odapter {
         };
 
         public class CustomTranslatedCSharpType {
-            public String CSharpType { get; private set; }
-            private String TranslationNote { get; set; }
-            public String DisplayDescription { get; private set; }
-            public CustomTranslatedCSharpType(String cSharpType, String translationNote) {
+            public string CSharpType { get; private set; }
+            private string TranslationNote { get; set; }
+            public string DisplayDescription { get; private set; }
+            public CustomTranslatedCSharpType(string cSharpType, string translationNote) {
                 CSharpType = cSharpType;
                 TranslationNote = translationNote;
-                DisplayDescription = cSharpType + (String.IsNullOrWhiteSpace(translationNote) ? "" : " (" + translationNote + ")");
+                DisplayDescription = cSharpType + (string.IsNullOrWhiteSpace(translationNote) ? "" : " (" + translationNote + ")");
             }
         }
 
-        public static readonly IDictionary<String, List<CustomTranslatedCSharpType>> CustomTypeTranslationOptions = new Dictionary<String, List<CustomTranslatedCSharpType>>() {
+        public static readonly IDictionary<string, List<CustomTranslatedCSharpType>> CustomTypeTranslationOptions = new Dictionary<string, List<CustomTranslatedCSharpType>>() {
             {Orcl.REF_CURSOR, new List<CustomTranslatedCSharpType> {                new CustomTranslatedCSharpType(CSharp.ILIST_OF_T, @""),
                                                                                     new CustomTranslatedCSharpType(CSharp.ICOLLECTION_OF_T, @""),
                                                                                     new CustomTranslatedCSharpType(CSharp.LIST_OF_T, @"concrete, not recommended") } },
@@ -108,94 +106,23 @@ namespace Odapter {
             {Orcl.CLOB, new List<CustomTranslatedCSharpType> {                      new CustomTranslatedCSharpType(CSharp.STRING, @""),
                                                                                     new CustomTranslatedCSharpType(CSharp.ORACLE_CLOB, @"ODP.NET safe type class") } }
         };
+        #endregion
 
-        #region Properties
+        #region Properties for Custom Type Translation
         internal static string CSharpTypeUsedForOracleRefCursor { get; set; }
         internal static string CSharpTypeUsedForOracleAssociativeArray { get; set; }
+        internal static string CSharpTypeUsedForOracleInteger { get; set; }
+        internal static string CSharpTypeUsedForOracleNumber { get; set; }
+        internal static bool ConvertOracleNumberToIntegerIfColumnNameIsId = true;
+        internal static string CSharpTypeUsedForOracleDate { get; set; }
+        internal static string CSharpTypeUsedForOracleTimeStamp { get; set; }
+        internal static string CSharpTypeUsedForOracleIntervalDayToSecond { get; set; }
+        internal static string CSharpTypeUsedForOracleBlob { get; set; }
+        internal static string CSharpTypeUsedForOracleClob { get; set; }
+        #endregion
 
-        private static string _cSharpTypeUsedForOracleInteger = CSharp.DECIMAL;
-        internal static string CSharpTypeUsedForOracleInteger {
-            set {
-                if (value != CSharp.INT32 && value != CSharp.INT64 && value != CSharp.DECIMAL  && value != CSharp.ORACLE_DECIMAL )
-                    throw new Exception("C# type " + value + " not allowed as translation for Oracle INTEGER.");
-                _cSharpTypeUsedForOracleInteger = value;
-            }
-            get {
-                return _cSharpTypeUsedForOracleInteger;
-            }
-        }
-
-        private static string _cSharpTypeUsedForOracleNumber;
-        internal static string CSharpTypeUsedForOracleNumber {
-            set {
-                if (value != CSharp.DECIMAL && value != CSharp.ORACLE_DECIMAL)
-                    throw new Exception("C# type " + value + " not allowed as translation for Oracle NUMBER.");
-                _cSharpTypeUsedForOracleNumber = value;
-            }
-            get {
-                return _cSharpTypeUsedForOracleNumber;
-            }
-        }
-
-        private static string _cSharpTypeUsedForOracleDate;
-        internal static string CSharpTypeUsedForOracleDate {
-            set {
-                if (value != CSharp.DATE_TIME && value != CSharp.ORACLE_DATE)
-                    throw new Exception("C# type " + value + " not allowed as translation for Oracle DATE.");
-                _cSharpTypeUsedForOracleDate = value;
-            }
-            get {
-                return _cSharpTypeUsedForOracleDate;
-            }
-        }
-
-        private static string _cSharpTypeUsedForOracleTimeStamp;
-        internal static string CSharpTypeUsedForOracleTimeStamp {
-            set {
-                if (value != CSharp.DATE_TIME && value != CSharp.ORACLE_TIMESTAMP)
-                    throw new Exception("C# type " + value + " not allowed as translation for Oracle TIMESTAMP.");
-                _cSharpTypeUsedForOracleTimeStamp = value;
-            }
-            get {
-                return _cSharpTypeUsedForOracleTimeStamp;
-            }
-        }
-
-        private static string _cSharpTypeUsedForOracleIntervalDayToSecond;
-        internal static string CSharpTypeUsedForOracleIntervalDayToSecond {
-            set {
-                if (value != CSharp.TIME_SPAN && value != CSharp.ORACLE_INTERVAL_DS)
-                    throw new Exception("C# type " + value + " not allowed as translation for Oracle INTERVAL DAY TO SECOND.");
-                _cSharpTypeUsedForOracleIntervalDayToSecond = value;
-            }
-            get {
-                return _cSharpTypeUsedForOracleIntervalDayToSecond;
-            }
-        }
-
-        private static string _cSharpTypeUsedForOracleBlob;
-        internal static string CSharpTypeUsedForOracleBlob {
-            set {
-                if (value != CSharp.BYTE_ARRAY && value != CSharp.ORACLE_BLOB)
-                    throw new Exception("C# type " + value + " not allowed as translation for Oracle BLOB.");
-                _cSharpTypeUsedForOracleBlob = value;
-            }
-            get {
-                return _cSharpTypeUsedForOracleBlob;
-            }
-        }
-
-        private static string _cSharpTypeUsedForOracleClob;
-        internal static string CSharpTypeUsedForOracleClob {
-            set {
-                if (value != CSharp.STRING && value != CSharp.ORACLE_CLOB)
-                    throw new Exception("C# type " + value + " not allowed as translation for Oracle CLOB and NCLOB.");
-                _cSharpTypeUsedForOracleClob = value;
-            }
-            get {
-                return _cSharpTypeUsedForOracleClob;
-            }
-        }
+        #region Properties for Advanced Options
+        internal static bool UseGenericListForCursor { get; set; }
         #endregion
 
         #region General Constants
@@ -204,10 +131,10 @@ namespace Odapter {
         #endregion
 
         #region Translation methods
-        internal static Boolean IsIgnoredDueToOracleTypes(IEntity entity, out String reasonMsg) {
+        internal static bool IsIgnoredDueToOracleTypes(IEntity entity, out string reasonMsg) {
             reasonMsg = "";
 
-            foreach (String oraType in Translater.OracleTypesIgnored) {
+            foreach (string oraType in OracleTypesIgnored) {
                 if (entity.Attributes != null && entity.Attributes.FindIndex(a => a.AttrType.Equals(oraType)) != -1) {
                     IsOracleTypeIgnored(oraType, out reasonMsg, entity.Attributes[0].GetType().Name.ToLower()); // get reason
                     return true;
@@ -217,11 +144,11 @@ namespace Odapter {
             return false;
         }
 
-        internal static bool IsOracleTypeIgnored(String oracleType, out String reasonMsg, String reasonMsgAppend = "") {
+        internal static bool IsOracleTypeIgnored(string oracleType, out string reasonMsg, string reasonMsgAppend = "") {
             reasonMsg = "";
             if (String.IsNullOrWhiteSpace(oracleType) || !OracleTypesIgnored.Contains(oracleType)) return false;
 
-            String oracleTypeFormatted = oracleType.Replace('_', ' ').Replace("PLSQL", "PL/SQL").Replace(Orcl.OBJECT_TYPE, "OBJECT TYPE") + (String.IsNullOrWhiteSpace(reasonMsgAppend) ? "" : " " + reasonMsgAppend);
+            string oracleTypeFormatted = oracleType.Replace('_', ' ').Replace("PLSQL", "PL/SQL").Replace(Orcl.OBJECT_TYPE, "OBJECT TYPE") + (String.IsNullOrWhiteSpace(reasonMsgAppend) ? "" : " " + reasonMsgAppend);
             if (oracleType.Equals(Orcl.PLSQL_BOOLEAN) || oracleType.Equals(Orcl.NESTED_TABLE))
                 reasonMsg = ".NET cannot send/receive a " + oracleTypeFormatted;
             else if (oracleType.Equals(Orcl.RECORD))
@@ -245,7 +172,7 @@ namespace Odapter {
         internal static string ConvertOracleNameToCSharpName(string oracleName, bool useCamelCase) {
             if (String.IsNullOrEmpty(oracleName)) return null; // this occurs with a return arg
 
-            String oracleNameAdjusted = oracleName;
+            string oracleNameAdjusted = oracleName;
 
             // replace special characters with alphabetic equivalent
             oracleNameAdjusted = oracleNameAdjusted.Replace(@"!", "exclamationpoint" + CHARACTER_ABBREV);
@@ -264,7 +191,7 @@ namespace Odapter {
             oracleNameAdjusted = oracleNameAdjusted.Replace(@":", "colon" + CHARACTER_ABBREV);
             oracleNameAdjusted = oracleNameAdjusted.Replace(@";", "semicolon" + CHARACTER_ABBREV);
 
-            String cSharpName = (useCamelCase
+            string cSharpName = (useCamelCase
                 ? CaseConverter.ConvertUnderscoreDelimitedToCamelCase(oracleNameAdjusted)
                 : CaseConverter.ConvertUnderscoreDelimitedToPascalCase(oracleNameAdjusted));
             if (Char.IsDigit(cSharpName, 0)) cSharpName =  (useCamelCase ? "t" : "T") + "he" + cSharpName; // a C# arg cannot start with number
@@ -277,8 +204,8 @@ namespace Odapter {
         /// </summary>
         /// <param name="proc"></param>
         /// <returns></returns>
-        internal static String ConvertOracleProcNameToMethodName(IProcedure proc, IPackage package) {
-            String methodName = ConvertOracleNameToCSharpName(proc.ProcedureName, false);
+        internal static string ConvertOracleProcNameToMethodName(IProcedure proc, IPackage package) {
+            string methodName = ConvertOracleNameToCSharpName(proc.ProcedureName, false);
 
             // prevent identical class name and method name - yes, I've seen this happen in Oracle
             if (proc.PackageName != null && proc.PackageName == proc.ProcedureName) methodName += "Proc";
@@ -315,11 +242,11 @@ namespace Odapter {
         /// <param name="recordName"></param>
         /// <param name="usePascalCase"></param>
         /// <returns></returns>
-        internal static String ConvertOracleRecordFieldNameToCSharpPropertyName(String fieldName, String recordName, bool usePascalCase) {
-            String propertyName = ConvertOracleNameToCSharpName(fieldName, usePascalCase);
+        internal static string ConvertOracleRecordFieldNameToCSharpPropertyName(string fieldName, string recordName, bool usePascalCase) {
+            string propertyName = ConvertOracleNameToCSharpName(fieldName, usePascalCase);
 
             // prevent identical class name and property name which is not allowed by C#
-            if (usePascalCase && recordName == fieldName) propertyName += "Field";
+            if (usePascalCase && recordName.Equals(fieldName)) propertyName += "Field";
             return propertyName;
         }
 
@@ -387,11 +314,11 @@ namespace Odapter {
         /// <param name="oracleArg"></param>
         /// <param name="nextArg"></param>
         /// <returns></returns>
-        internal static string ConvertOracleArgTypeToCSharpOracleDbType(IArgument oracleArg, IArgument nextArgUnused) {
-            if (oracleArg.DataType == null) return null;
+        internal static string ConvertOracleArgTypeToCSharpOracleDbType(IArgument oracleArg) {
+            if (oracleArg == null || oracleArg.DataType == null) return null;
 
             // the DbType needed for an assoc array to work is simply the type of its subsequent nested arg
-            if (oracleArg.DataType == Orcl.ASSOCIATITVE_ARRAY) return ConvertOracleArgTypeToCSharpOracleDbType(oracleArg.NextArgument, null);
+            if (oracleArg.DataType.Equals(Orcl.ASSOCIATITVE_ARRAY)) return ConvertOracleArgTypeToCSharpOracleDbType(oracleArg.NextArgument);
 
             // first handle the clear translations
             switch (oracleArg.DataType) {
@@ -456,7 +383,7 @@ namespace Odapter {
             }
 
             // The remaining cases should be a NUMBER or equivalent. We rely on first converting to C# type to determine this.
-            String cSharpType = ConvertOracleArgTypeToCSharpType(oracleArg, true);
+            string cSharpType = ConvertOracleArgTypeToCSharpType(oracleArg, true);
 
             if (cSharpType == null) return "Undetermined_OracleDbType";
 
@@ -481,30 +408,6 @@ namespace Odapter {
         }
 
         /// <summary>
-        /// Build an oracle type with any precision, length, etc. qualifiers included.
-        /// </summary>
-        /// <param name="attr"></param>
-        /// <returns></returns>
-        internal static string BuildAggregateOracleType(IEntityAttribute attr) {
-            if (String.IsNullOrEmpty(attr.AttrType)) return attr.AttrType;
-
-            string oracleType = attr.AttrType.Trim();
-
-            // handle Oracle aliaes
-            if (oracleType.Equals(Orcl.DECIMAL) || oracleType.Equals(Orcl.NUMERIC)) oracleType = Orcl.NUMBER;
-
-            if (oracleType == Orcl.NUMBER) { // add precisions and scale, if any, to NUMBER to create complete data type
-                if (attr.Precision != null || attr.Scale == 0) oracleType += "(" + (attr.Precision ?? 38).ToString();
-                if (attr.Precision != null || attr.Scale == 0) oracleType += "," + (attr.Scale ?? 0).ToString();
-                if (attr.Precision != null || attr.Scale == 0) oracleType += ")";
-            } else if (oracleType.Contains(Orcl.VARCHAR)) {
-                if (attr.Length >= 1) oracleType = oracleType + "(" + attr.Length + ")";
-            }
-
-            return oracleType;
-        }
-
-        /// <summary>
         /// Convert the type of an Oracle argument to its equivalent C# argument type
         /// </summary>
         /// <param name="oracleArg">Oracle argument to be converted</param>
@@ -515,13 +418,13 @@ namespace Odapter {
             if (oracleArg == null) return null;
 
             // a PL/SQL record will have a custom class built for it; here we only need to return that class name as the type
-            if (oracleArg.DataType == Orcl.RECORD) return ConvertOracleRecordNameToCSharpName(oracleArg);
+            if (oracleArg.DataType.Equals(Orcl.RECORD)) return ConvertOracleRecordNameToCSharpName(oracleArg);
 
             // A PL/SQL associative array is technically the equivalent of C# Dictionary. Although the Dicionary behavior can
             // be used within PL/SQL between functions, a Dictionary object cannot be pased from .NET. We can only pass the values
             // of using an array index instead of key. So we treat an associative array as a List of a type or class in C#. The type is in 
             // the subsequent Oracle arg.
-            if (oracleArg.DataType == Orcl.ASSOCIATITVE_ARRAY) {
+            if (oracleArg.DataType.Equals(Orcl.ASSOCIATITVE_ARRAY)) {
                 string arrayType = (oracleArg.NextArgument.DataType == Orcl.RECORD 
                     ? ConvertOracleRecordNameToCSharpName(oracleArg)
                     : ConvertOracleArgTypeToCSharpType(oracleArg.NextArgument, false));
@@ -529,12 +432,12 @@ namespace Odapter {
             }
 
             // a nested table to a List (even though we are not handling nested tables yet)
-            if (oracleArg.DataType == Orcl.NESTED_TABLE) return CSharp.GenericCollectionOf(CSharp.LIST_OF_T, ConvertOracleArgTypeToCSharpType(oracleArg.NextArgument, true));
+            if (oracleArg.DataType.Equals(Orcl.NESTED_TABLE)) return CSharp.GenericCollectionOf(CSharp.LIST_OF_T, ConvertOracleArgTypeToCSharpType(oracleArg.NextArgument, true));
 
             // a cursor translates to a List
             // a strongly typed cursor is a generic list, but based on record type
             // a weakly typed cursor is either a generic list or Datatable
-            if (oracleArg.DataType == Orcl.REF_CURSOR) {
+            if (oracleArg.DataType.Equals(Orcl.REF_CURSOR)) {
                 return (oracleArg.NextArgument == null || oracleArg.NextArgument.DataLevel == oracleArg.DataLevel // is it weakly typed cursor?
                     ? (UseGenericListForCursor
                         // generic list; create informative subtype name that is unique among multilple untyped (cursor) args in proc
@@ -602,23 +505,23 @@ namespace Odapter {
         /// <param name="typeNotNullable">make the C# type not nullable</param>
         /// <param name="oracleTypeName">required for Oracle "object" type</param>
         /// <returns></returns>
-        internal static string ConvertOracleTypeToCSharpType(String oracleType, String oracleName, bool typeNotNullable, String oracleTypeName) {
+        internal static string ConvertOracleTypeToCSharpType(string oracleType, string oracleName, bool typeNotNullable, string oracleTypeName) {
             
             // create all type names dependent on typeNotNullable argument
-            string cSharpTypeUsedForOracleInteger = _cSharpTypeUsedForOracleInteger + (typeNotNullable ? "" : "?");
+            string cSharpTypeUsedForOracleInteger = CSharpTypeUsedForOracleInteger + (typeNotNullable ? "" : "?");
             string sByteType = CSharp.SBYTE + (typeNotNullable ? "" : "?");
             string int16Type = CSharp.INT16 + (typeNotNullable ? "" : "?");
             string int32Type = CSharp.INT32 + (typeNotNullable ? "" : "?");
             string int64Type = CSharp.INT64 + (typeNotNullable ? "" : "?");
             string singleType = CSharp.SINGLE + (typeNotNullable ? "" : "?");
             string doubleType = CSharp.DOUBLE + (typeNotNullable ? "" : "?");
-            string cSharpTypeUsedForOracleDate  = Translater.CSharpTypeUsedForOracleDate + (typeNotNullable ? "" : "?");
-            string cSharpTypeUsedForOracleTimeStamp = Translater.CSharpTypeUsedForOracleTimeStamp + (typeNotNullable ? "" : "?");
-            string cSharpTypeUsedForOracleIntervalDayToSecond = Translater.CSharpTypeUsedForOracleIntervalDayToSecond + (typeNotNullable ? "" : "?");
-            string cSharpTypeUsedForOracleBlob = Translater.CSharpTypeUsedForOracleBlob; // no types require ?
-            string cSharpTypeUsedForOracleClob = Translater.CSharpTypeUsedForOracleClob; // no types require ?
+            string cSharpTypeUsedForOracleDate  = CSharpTypeUsedForOracleDate + (typeNotNullable ? "" : "?");
+            string cSharpTypeUsedForOracleTimeStamp = CSharpTypeUsedForOracleTimeStamp + (typeNotNullable ? "" : "?");
+            string cSharpTypeUsedForOracleIntervalDayToSecond = CSharpTypeUsedForOracleIntervalDayToSecond + (typeNotNullable ? "" : "?");
+            string cSharpTypeUsedForOracleBlob = CSharpTypeUsedForOracleBlob; // no types require ?
+            string cSharpTypeUsedForOracleClob = CSharpTypeUsedForOracleClob; // no types require ?
             //string timeSpanType = CSharp.TIME_SPAN + (typeNotNullable ? "" : "?");
-            string cSharpTypeUsedForOracleNumber = _cSharpTypeUsedForOracleNumber + (typeNotNullable ? "" : "?");
+            string cSharpTypeUsedForOracleNumber = CSharpTypeUsedForOracleNumber + (typeNotNullable ? "" : "?");
 
             // ******************************************************
             // Judgment call interpretations for NUMBER to INTEGER 
@@ -648,17 +551,7 @@ namespace Odapter {
                     // NUMBER(5) to NUMBER(9) is always int
                     else if (5 <= precision && precision <= 9)
                         return int32Type;
-                    // NUMBER(10) to NUMBER(18) should be long, unless int chosen by user
-                    //else if (10 <= precision && precision <= 18)
-                    //    return (_cSharpTypeUsedForOracleInteger == CSharp.INT32 ? int32Type : int64Type); // !!!!!!!!!
-                    // NUMBER(19) to NUMBER(28) should be the type mapped to NUMBER, unless int or long chosen by user
-                    //else if (19 <= precision && precision <= 28)
-                    //    return (_cSharpTypeUsedForOracleInteger == CSharp.INT32 // !!!!!!!!!
-                    //            ? int32Type
-                    //            : ( _cSharpTypeUsedForOracleInteger == CSharp.INT64  // !!!!!!!!!!!
-                    //                ? int64Type
-                    //                : cSharpTypeUsedForOracleInteger)); // !!!!!!!!!
-                    // NUMBER(29) and above should be type chosen by user
+                    // NUMBER(10) and above is type chosen by user
                     else
                         return cSharpTypeUsedForOracleInteger;
 
@@ -813,7 +706,7 @@ namespace Odapter {
         /// </summary>
         /// <param name="oracleType"></param>
         /// <returns></returns>
-        internal static Int32 GetStringArgBindSize (String oracleType) { 
+        internal static Int32 GetStringArgBindSize (string oracleType) { 
 
             switch (oracleType) {
                 case Orcl.CHAR:
@@ -828,16 +721,6 @@ namespace Odapter {
                 default:
                     return Parameter.Instance.MaxReturnAndOutArgStringSize; // custom defined value
             }
-        }
-
-        /// <summary>
-        /// Return the CharLength value of an Oracle argument. 
-        /// </summary>
-        /// <param name="oracleArg"></param>
-        /// <returns></returns>
-        internal static Int32? GetCharLength(IArgument oracleArg) {
-            // for an associative array we must look at subsequent arg for the value
-            return (oracleArg.DataType == Orcl.ASSOCIATITVE_ARRAY ? oracleArg.NextArgument : oracleArg).CharLength;
         }
         #endregion
     }

@@ -18,8 +18,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.Text;
 
 namespace Odapter {
     /// <summary>
@@ -29,69 +27,69 @@ namespace Odapter {
         #region PL/SQL Type Constants (as found in SYS.ALL_ARGUMENTS)
         // PL/SQL collection types
         public const string ASSOCIATITVE_ARRAY = "PL/SQL TABLE"; //
-        public const string NESTED_TABLE = "TABLE"; //
-        public const string VARRAY = "VARRAY"; //
+        internal const string NESTED_TABLE = "TABLE"; //
+        internal const string VARRAY = "VARRAY"; //
 
         // PL/SQL-specific scalar types
         public const string REF_CURSOR = "REF CURSOR"; //
-        public const string BINARY_INTEGER = "BINARY_INTEGER"; //
-        public const string PLS_INTEGER = "PLS_INTEGER"; // same as BINARY_INTEGER
-        public const string PLSQL_BOOLEAN = "PL/SQL BOOLEAN"; //
-        public const string BOOLEAN = "BOOLEAN"; // found in pls_type column
+        internal const string BINARY_INTEGER = "BINARY_INTEGER"; //
+        internal const string PLS_INTEGER = "PLS_INTEGER"; // same as BINARY_INTEGER
+        internal const string PLSQL_BOOLEAN = "PL/SQL BOOLEAN"; //
+        internal const string BOOLEAN = "BOOLEAN"; // found in pls_type column
 
         // SQL types, etc.
         public const string INTEGER = "INTEGER";
-        public const string INT = "INT";
-        public const string SMALLINT = "SMALLINT";
-        public const string UNSIGNED_INTEGER = "UNSIGNED INTEGER";
-        public const string STRING = "STRING";
-        public const string NCHAR = "NCHAR"; //
-        public const string VARCHAR = "VARCHAR";
-        public const string VARCHAR2 = "VARCHAR2"; //
-        public const string NVARCHAR2 = "NVARCHAR2";
-        public const string CHAR = "CHAR"; //
+        internal const string INT = "INT";
+        internal const string SMALLINT = "SMALLINT";
+        internal const string UNSIGNED_INTEGER = "UNSIGNED INTEGER";
+        internal const string STRING = "STRING";
+        internal const string NCHAR = "NCHAR"; //
+        internal const string VARCHAR = "VARCHAR";
+        internal const string VARCHAR2 = "VARCHAR2"; //
+        internal const string NVARCHAR2 = "NVARCHAR2";
+        internal const string CHAR = "CHAR"; //
         public const string BLOB = "BLOB"; //
         public const string CLOB = "CLOB"; //
-        public const string NCLOB = "NCLOB";
-        public const string LONG = "LONG"; //
-        public const string ROWID = "ROWID"; //
-        public const string UROWID = "UROWID"; //
-        public const string REF = "REF"; //
-        public const string XML_TYPE = "XMLTYPE";
+        internal const string NCLOB = "NCLOB";
+        internal const string LONG = "LONG"; //
+        internal const string ROWID = "ROWID"; //
+        internal const string UROWID = "UROWID"; //
+        internal const string REF = "REF"; //
+        internal const string XML_TYPE = "XMLTYPE";
         public const string NUMBER = "NUMBER"; //
-        public const string NUMERIC = "NUMERIC"; // ?
-        public const string FLOAT = "FLOAT"; //
-        public const string DECIMAL = "DECIMAL";
-        public const string DOUBLE_PRECISION = "DOUBLE PRECISION";
+        internal const string NUMERIC = "NUMERIC"; // ?
+        internal const string FLOAT = "FLOAT"; //
+        internal const string DECIMAL = "DECIMAL";
+        internal const string DOUBLE_PRECISION = "DOUBLE PRECISION";
         public const string DATE = "DATE"; //
-        public const string TIME_WITH_TIME_ZONE = "TIME WITH TIME ZONE"; // figure out
-        public const string RECORD = "PL/SQL RECORD"; //
-        public const string OBJECT_TYPE = "OBJECT"; //
-        public const string RAW = "RAW"; //
-        public const string LONG_RAW = "LONG RAW";  //
-        public const string BFILE = "BFILE"; //
-        public const string BINARY_DOUBLE = "BINARY_DOUBLE"; //
-        public const string BINARY_FLOAT = "BINARY_FLOAT"; //
+        internal const string TIME_WITH_TIME_ZONE = "TIME WITH TIME ZONE"; // figure out
+        internal const string RECORD = "PL/SQL RECORD"; //
+        internal const string OBJECT_TYPE = "OBJECT"; //
+        internal const string RAW = "RAW"; //
+        internal const string LONG_RAW = "LONG RAW";  //
+        internal const string BFILE = "BFILE"; //
+        internal const string BINARY_DOUBLE = "BINARY_DOUBLE"; //
+        internal const string BINARY_FLOAT = "BINARY_FLOAT"; //
         public const string TIMESTAMP = "TIMESTAMP"; //
-        public const string TIMESTAMP_WITH_LOCAL_TIME_ZONE = "TIMESTAMP WITH LOCAL TIME ZONE"; //
-        public const string TIMESTAMP_WITH_TIME_ZONE = "TIMESTAMP WITH TIME ZONE"; //
+        internal const string TIMESTAMP_WITH_LOCAL_TIME_ZONE = "TIMESTAMP WITH LOCAL TIME ZONE"; //
+        internal const string TIMESTAMP_WITH_TIME_ZONE = "TIMESTAMP WITH TIME ZONE"; //
         public const string INTERVAL_DAY_TO_SECOND = "INTERVAL DAY TO SECOND"; //
-        public const string INTERVAL_YEAR_TO_MONTH = "INTERVAL YEAR TO MONTH"; //
-        public const string MLSLABEL = "MLSLABEL"; // deprecated
-        public const string UNDEFINED = "UNDEFINED"; //
+        internal const string INTERVAL_YEAR_TO_MONTH = "INTERVAL YEAR TO MONTH"; //
+        internal const string MLSLABEL = "MLSLABEL"; // deprecated
+        internal const string UNDEFINED = "UNDEFINED"; //
         #endregion
 
         #region "Any" types
-        public const string ANYDATA = "ANYDATA";
-        public const string ANYTYPE = "ANYTYPE";
-        public const string ANYDATASET = "ANYDATASET";
+        internal const string ANYDATA = "ANYDATA";
+        internal const string ANYTYPE = "ANYTYPE";
+        internal const string ANYDATASET = "ANYDATASET";
         #endregion
 
         #region Miscellaneous
-        public const string IN = "IN";
-        public const string OUT = "OUT";
-        public const string INOUT = IN + "/" + OUT;
-        public const string YES = "YES";
+        internal const string IN = "IN";
+        internal const string OUT = "OUT";
+        internal const string INOUT = IN + "/" + OUT;
+        internal const string YES = "YES";
         #endregion
 
         private static readonly List<String> _oracleKeywords = new List<String>(){  "SELECT", "FROM", "WHERE", "ORDER BY", "GROUP BY", "HAVING",
@@ -110,7 +108,40 @@ namespace Odapter {
             if (new List<String>() { Orcl.NUMBER, Orcl.FLOAT, Orcl.BINARY_FLOAT }.Contains(oracleType)) return true;
             return true;
         }
-    }
 
+        /// <summary>
+        /// Build an oracle type with any precision, length, etc. qualifiers included.
+        /// </summary>
+        /// <param name="attr"></param>
+        /// <returns></returns>
+        internal static string BuildAggregateOracleType(IEntityAttribute attr) {
+            if (String.IsNullOrEmpty(attr.AttrType)) return attr.AttrType;
+
+            string oracleType = attr.AttrType.Trim();
+
+            // handle Oracle aliasing
+            if (oracleType.Equals(Orcl.DECIMAL) || oracleType.Equals(Orcl.NUMERIC)) oracleType = Orcl.NUMBER;
+
+            if (oracleType == Orcl.NUMBER) { // add precisions and scale, if any, to NUMBER to create complete data type
+                if (attr.Precision != null || attr.Scale == 0) oracleType += "(" + (attr.Precision ?? 38).ToString();
+                if (attr.Precision != null || attr.Scale == 0) oracleType += "," + (attr.Scale ?? 0).ToString();
+                if (attr.Precision != null || attr.Scale == 0) oracleType += ")";
+            } else if (oracleType.Contains(Orcl.VARCHAR)) {
+                if (attr.Length >= 1) oracleType = oracleType + "(" + attr.Length + ")";
+            }
+
+            return oracleType;
+        }
+
+        /// <summary>
+        /// Return the CharLength value of an Oracle argument. 
+        /// </summary>
+        /// <param name="oracleArg"></param>
+        /// <returns></returns>
+        internal static Int32? GetCharLength(IArgument oracleArg) {
+            // for an associative array we must look at subsequent arg for the value
+            return (oracleArg.DataType == Orcl.ASSOCIATITVE_ARRAY ? oracleArg.NextArgument : oracleArg).CharLength;
+        }
+    }
 }
 
