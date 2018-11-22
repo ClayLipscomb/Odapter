@@ -114,20 +114,20 @@ namespace Odapter {
         /// </summary>
         /// <param name="attr"></param>
         /// <returns></returns>
-        internal static string BuildAggregateOracleType(IEntityAttribute attr) {
-            if (String.IsNullOrEmpty(attr.AttrType)) return attr.AttrType;
+        internal static string BuildAggregateOracleType(IDatabaseDataType attr) {
+            if (String.IsNullOrEmpty(attr.DataType)) return attr.DataType;
 
-            string oracleType = attr.AttrType.Trim();
+            string oracleType = attr.DataType.Trim();
 
             // handle Oracle aliasing
             if (oracleType.Equals(Orcl.DECIMAL) || oracleType.Equals(Orcl.NUMERIC)) oracleType = Orcl.NUMBER;
 
-            if (oracleType == Orcl.NUMBER) { // add precisions and scale, if any, to NUMBER to create complete data type
-                if (attr.Precision != null || attr.Scale == 0) oracleType += "(" + (attr.Precision ?? 38).ToString();
-                if (attr.Precision != null || attr.Scale == 0) oracleType += "," + (attr.Scale ?? 0).ToString();
-                if (attr.Precision != null || attr.Scale == 0) oracleType += ")";
+            if (oracleType == Orcl.NUMBER && !(attr.PlsType == Orcl.DECIMAL && attr.DataScale == null)) { // add precision and scale, if any, to NUMBER to create complete data type
+                if (attr.DataPrecision != null || attr.DataScale == 0) oracleType += "(" + (attr.DataPrecision ?? 38).ToString();
+                if (attr.DataPrecision != null || attr.DataScale == 0) oracleType += "," + (attr.DataScale ?? 0).ToString();
+                if (attr.DataPrecision != null || attr.DataScale == 0) oracleType += ")";
             } else if (oracleType.Contains(Orcl.VARCHAR)) {
-                if (attr.Length >= 1) oracleType = oracleType + "(" + attr.Length + ")";
+                if (attr.DataLength >= 1) oracleType = oracleType + "(" + attr.DataLength + ")";
             }
 
             return oracleType;

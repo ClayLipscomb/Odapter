@@ -1,6 +1,6 @@
 ﻿//------------------------------------------------------------------------------
 //    Odapter - a C# code generator for Oracle packages
-//    Copyright(C) 2018 Clay Lipscomb
+//    Copyright(C) 2019 Clay Lipscomb
 //
 //    This program is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
@@ -24,12 +24,12 @@ namespace Odapter {
         // standard entity properties
         public string EntityName { get { return Name; } set { Name = value; } }
         public string AttrName { get { return Name; } set { Name = value; } }
-        public string AttrType { get { return DataType; } set { DataType = value; } }
+        public string DataType { get; set; }
         public string AttrTypeOwner { get { return TypeOwner; } set { TypeOwner = value; } }
         public string AttrTypeMod { get; set; }
-        public int? Length { get { return DataLength; } set { DataLength = value; } }
-        public int? Precision { get { return DataPrecision; } set { DataPrecision = value; } }
-        public int? Scale { get { return DataScale; } set { DataScale = value; } }
+        public int? DataLength { get; set; }
+        public int? DataPrecision { get; set; }
+        public int? DataScale { get; set; }
         public int Position { get { return MapPosition; } set { MapPosition = value; } }
         public string CSharpType { get; set; }
         public bool Nullable { get { return true; } }
@@ -39,10 +39,9 @@ namespace Odapter {
         public string Name { get; set; }
         public int MapPosition { get; set; }
         public int CompareTo(IField f) { return Name.CompareTo(f.Name); }
-        public string DataType { get; set; }
         public string TypeOwner { get; set; }
-        public int? DataLength { get; set; }
-        public int? DataPrecision { get; set; }
-        public int? DataScale { get; set; }
+
+        // IDatabaseDataType specifc
+        public string PlsType { get; set; }
     }
 }

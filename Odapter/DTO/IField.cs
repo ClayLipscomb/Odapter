@@ -1,6 +1,6 @@
 ﻿//------------------------------------------------------------------------------
 //    Odapter - a C# code generator for Oracle packages
-//    Copyright(C) 2018 Clay Lipscomb
+//    Copyright(C) 2019 Clay Lipscomb
 //
 //    This program is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
@@ -20,14 +20,8 @@ using System;
 
 namespace Odapter {
     internal interface IField : IComparable<IField>, IEntityAttribute {
-
-        // field specific
         string Name { get; set; }
         int MapPosition { get; set; }
-        string DataType { get; set; }
         string TypeOwner { get; set; }
-        int? DataLength { get; set; }
-        int? DataPrecision { get; set; }
-        int? DataScale { get; set; }
     }
 }

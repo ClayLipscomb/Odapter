@@ -1,6 +1,6 @@
 ﻿//------------------------------------------------------------------------------
 //    Odapter - a C# code generator for Oracle packages
-//    Copyright(C) 2018 Clay Lipscomb
+//    Copyright(C) 2019 Clay Lipscomb
 //
 //    This program is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
@@ -25,8 +25,7 @@ namespace Odapter {
         public IArgument NextArgument { get; set; }
         public string Owner { get; set; }
         public string PackageName { get; set; }
-        public string ProcedureName { get { return objectName; } set { objectName = value; } }
-        private string objectName { get; set; }
+        public string ProcedureName { get { return objectName; } set { objectName = value; } } private string objectName { get; set; }
         public string Overload { get; set; }
         public int DataLevel { get; set; }
         public string ArgumentName { get; set; }
@@ -43,8 +42,7 @@ namespace Odapter {
         public string TypeSubname { get; set; }
         public string TypeLink { get; set; }
         public int? CharLength { get; set; }
-        public bool Defaulted { get { return (defaulted == "Y" ? true : false); } }
-        private string defaulted { get; set; }
+        public bool Defaulted { get { return (defaulted.Equals("Y")); } } private string defaulted { get; set; }
         public bool IsReturnArgument { get { return (Position == 0 && DataLevel == 0 && ArgumentName == null && InOut == Orcl.OUT); } }
     }
 }

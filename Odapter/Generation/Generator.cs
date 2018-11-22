@@ -717,12 +717,12 @@ namespace Odapter {
                 classText.Append(Tab(5) + "if (!" + paramNameOracleReader + ".IsDBNull(" + f.MapPosition + ")) "
                     + "obj." + Translater.ConvertOracleRecordFieldNameToCSharpPropertyName(f.Name, rec.Name, false) + " = ");
 
-                if (f.CSharpType.TrimEnd('?').Equals(CSharp.DECIMAL) && Orcl.IsOracleNumberEquivalent(f.AttrType)) {
+                if (f.CSharpType.TrimEnd('?').Equals(CSharp.DECIMAL) && Orcl.IsOracleNumberEquivalent(f.DataType)) {
                     classText.Append("(Decimal?)OracleDecimal.SetPrecision(" + paramNameOracleReader + ".GetOracleDecimal(" + f.MapPosition.ToString() + "), 29)");
                 } else if (CSharp.IsOdpNetType(f.CSharpType)) {
                     classText.Append("(" + f.CSharpType + ")" + paramNameOracleReader + ".GetOracleValue(" + f.MapPosition.ToString() + ")"); // ODP.NET
-                } else if ((new List<string> { Orcl.BLOB, Orcl.CLOB, Orcl.NCLOB }).Contains(f.AttrType)) {
-                    classText.Append(paramNameOracleReader + "." + CSharp.GET_ORACLE + CaseConverter.ConvertToCapitalized(f.AttrType.Substring(f.AttrType.Length - 4, 4)) + "(" + f.MapPosition.ToString() + ").Value");
+                } else if ((new List<string> { Orcl.BLOB, Orcl.CLOB, Orcl.NCLOB }).Contains(f.DataType)) {
+                    classText.Append(paramNameOracleReader + "." + CSharp.GET_ORACLE + CaseConverter.ConvertToCapitalized(f.DataType.Substring(f.DataType.Length - 4, 4)) + "(" + f.MapPosition.ToString() + ").Value");
                 } else {
                     classText.Append("Convert.To" + f.CSharpType.TrimEnd('?') + "(" + paramNameOracleReader + ".GetValue(" + f.MapPosition.ToString() + "))"); // primitive
                 }
@@ -1088,7 +1088,7 @@ namespace Odapter {
             StringBuilder classText = new StringBuilder("");
             classText.AppendLine(Tab(tabIndentCount + 1) + "public" + " interface I" + interfaceName + " {"); // start record interface
             foreach (IEntityAttribute attr in entity.Attributes) { // loop through all fields
-                string cSharpType = attr.CSharpType ?? Translater.ConvertOracleTypeToCSharpType(attr.AttrType, attr.AttrName, false, null);
+                string cSharpType = attr.CSharpType ?? Translater.ConvertOracleTypeToCSharpType(attr.DataType, attr.AttrName, false, null);
                 classText.AppendLine(Tab(tabIndentCount + 2) + (attr.ContainerClassName == null ? "" : attr.ContainerClassName + ".") + cSharpType 
                     + " " + Translater.ConvertOracleNameToCSharpName(attr.AttrName, false)
                     + " { get; set; }");

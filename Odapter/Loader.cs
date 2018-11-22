@@ -206,10 +206,10 @@ namespace Odapter {
                         }
                     }
 
-                    f.AttrType = arg.DataType;
-                    f.Length = arg.DataLength;
-                    f.Precision = arg.DataPrecision;
-                    f.Scale = arg.DataScale;
+                    f.DataType = arg.DataType;
+                    f.DataLength = arg.DataLength;
+                    f.DataPrecision = arg.DataPrecision;
+                    f.DataScale = arg.DataScale;
 
                     f.MapPosition = columnPosition++;
                     newRec.Attributes.Add(f);

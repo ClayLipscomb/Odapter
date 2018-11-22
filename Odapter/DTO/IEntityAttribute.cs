@@ -1,6 +1,6 @@
 ﻿//------------------------------------------------------------------------------
 //    Odapter - a C# code generator for Oracle packages
-//    Copyright(C) 2018 Clay Lipscomb
+//    Copyright(C) 2019 Clay Lipscomb
 //
 //    This program is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
@@ -20,15 +20,11 @@ namespace Odapter {
     /// <summary>
     /// Interface of an entity attribute. Should be implemented mapping to underlying sys view column if naming is different.
     /// </summary>
-    internal interface IEntityAttribute {
+    internal interface IEntityAttribute : IDatabaseDataType {
         string EntityName { get; set; }
         string AttrName { get; set; }
-        string AttrType { get; set; }
         string AttrTypeOwner { get; set; }
         string AttrTypeMod { get; set; }
-        int? Length { get; set; }
-        int? Precision { get; set; }
-        int? Scale { get; set; }
         int Position { get; set; }
         bool Nullable { get; }
         string CSharpType { get; set; } // optionally set during load of data (e.g., package record type fields)

@@ -17,7 +17,11 @@
 //------------------------------------------------------------------------------
 
 namespace Odapter {
-    internal interface IColumn : IEntityAttribute {
-        int CharLength { get; set; }
+    interface IDatabaseDataType {
+        string DataType { get; set; }
+        int? DataLength { get; set; }
+        int? DataPrecision { get; set; }
+        int? DataScale { get; set; }
+        string PlsType { get; set; }
     }
 }

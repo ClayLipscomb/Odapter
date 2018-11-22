@@ -135,7 +135,7 @@ namespace Odapter {
             reasonMsg = "";
 
             foreach (string oraType in OracleTypesIgnored) {
-                if (entity.Attributes != null && entity.Attributes.FindIndex(a => a.AttrType.Equals(oraType)) != -1) {
+                if (entity.Attributes != null && entity.Attributes.FindIndex(a => a.DataType.Equals(oraType)) != -1) {
                     IsOracleTypeIgnored(oraType, out reasonMsg, entity.Attributes[0].GetType().Name.ToLower()); // get reason
                     return true;
                 }
@@ -481,17 +481,11 @@ namespace Odapter {
             // handle simple types
             string oracleType;
             if (oracleArg.DataType != null) {
-                oracleType = oracleArg.DataType.Trim();
-                if (oracleArg.DataType == Orcl.NUMBER && !(oracleArg.PlsType == Orcl.DECIMAL && oracleArg.DataScale == null)) { // add precisions and scale, if any, to NUMBER to create explicit Oracle type
-                    if (oracleArg.DataPrecision != null) oracleType += "(" + oracleArg.DataPrecision.ToString();
-                    if (oracleArg.DataScale != null) oracleType += "," + oracleArg.DataScale.ToString();
-                    if (oracleArg.DataPrecision != null) oracleType += ")";
-                }
-                // we are not adding data length since any VARCHAR2 will always be C# string
+                oracleType = Orcl.BuildAggregateOracleType(oracleArg);
             } else if (oracleArg.PlsType != null) {
                 oracleType = oracleArg.PlsType.Trim(); // never seen this case even on a large number of schemas including Oracle E-Business apps
             } else {
-                oracleType = ""; // this happens when there is a single "arg" row for a proc with no args
+                oracleType = String.Empty; // this happens when there is a single "arg" row for a proc with no args
             }
 
             return ConvertOracleTypeToCSharpType(oracleType, oracleArg.ArgumentName, typeNotNullable, oracleArg.TypeName);

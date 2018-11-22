@@ -89,6 +89,7 @@
   <ItemGroup>
     <Compile Include="DTO\IArgument.cs" />
     <Compile Include="DTO\IColumn.cs" />
+    <Compile Include="DTO\IDatabaseDataType.cs" />
     <Compile Include="DTO\IField.cs" />
     <Compile Include="DTO\IObjectTypeAttribute.cs" />
     <Compile Include="DTO\IPackage.cs" />
