@@ -1,6 +1,6 @@
 ﻿//------------------------------------------------------------------------------
 //    Odapter - a C# code generator for Oracle packages
-//    Copyright(C) 2018 Clay Lipscomb
+//    Copyright(C) 2019 Clay Lipscomb
 //
 //    This program is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
@@ -55,53 +55,16 @@ namespace Odapter {
         }
 
         /// <summary>
-        /// Determine whether procedure should be ignored due to certain data types
-        /// </summary>
-        /// <param name="reasonMsg"></param>
-        /// <returns></returns>
-        public bool IsIgnoredDueToOracleArgumentTypes(out string reasonMsg) {
-            reasonMsg = "";
-            string unimplemntedType = "";
-
-            if (HasArgumentOfOracleTypeAssocArrayOfUnimplementedType(out unimplemntedType)) {
-                reasonMsg = ".NET cannot send/receive an associative array of a " + unimplemntedType;
-                return true;
-            } else if (HasInArgumentOfOracleTypeRefCursor()) {
-                reasonMsg = ".NET cannot send/receive a " + Orcl.REF_CURSOR;
-                return true;
-            } else {
-                foreach (string oraType in Translater.OracleTypesIgnored)
-                    if (UsesOracleType(oraType, !oraType.Equals(Orcl.RECORD))) {
-                        Translater.IsOracleTypeIgnored(oraType, out reasonMsg); // get reason
-                        return true;
-                    }
-            }
-
-            return false;
-        }
-
-        /// <summary>
         /// Determine if a given Oracle type is found in any of the arguments/return
         /// </summary>
         /// <param name="oracleType"></param>
-        /// <param name="checkNestedArgs"></param>
+        /// <param name="checkNestedArgs">Whether nestted levels should be examined</param>
         /// <returns></returns>
-        private bool UsesOracleType(string oracleType, bool checkNestedArgs) {
+        public bool HasArgumentOfOracleType(string oracleType, bool checkNestedArgs = false) {
             if (Arguments == null) return false;
             // only search nested arguments if specified
-            return Arguments.FindIndex(a => (a.DataType == oracleType || a.TypeName == oracleType
-                //|| a.PlsType == oracleType
-                ) && (checkNestedArgs || a.DataLevel == 0)) != -1;
-        }
-
-        /// <summary>
-        /// Determine if procedure has an argument/return of a given Oracle type. Nested levels of argument
-        ///     are not considered, only the main argument type.
-        /// </summary>
-        /// <param name="oracleType"></param>
-        /// <returns></returns>
-        public bool HasArgumentOfOracleType(string oracleType) {
-            return UsesOracleType(oracleType, false);
+            return Arguments.FindIndex(a => (a.DataType == oracleType || a.TypeName == oracleType || a.PlsType == oracleType) 
+                                            && (checkNestedArgs || a.DataLevel == 0)) != -1;
         }
 
         /// <summary>
@@ -137,6 +100,10 @@ namespace Odapter {
             return false;
         }
 
+        /// <summary>
+        /// Determines if proc has a cursor IN parameter
+        /// </summary>
+        /// <returns></returns>
         public bool HasInArgumentOfOracleTypeRefCursor() {
             foreach (IArgument arg in Arguments) if (arg.DataType.Equals(Orcl.REF_CURSOR) && arg.InOut.StartsWith(Orcl.IN)) return true; // IN or IN OUT
             return false;

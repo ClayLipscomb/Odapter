@@ -1,6 +1,6 @@
 ﻿//------------------------------------------------------------------------------
 //    Odapter - a C# code generator for Oracle packages
-//    Copyright(C) 2018 Clay Lipscomb
+//    Copyright(C) 2010 Clay Lipscomb
 //
 //    This program is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
@@ -43,19 +43,12 @@ namespace Odapter {
         bool HasOutArgument();
 
         /// <summary>
-        /// Determine whether procedure should be ignored due to certain data types
-        /// </summary>
-        /// <param name="reasonMsg"></param>
-        /// <returns></returns>
-        bool IsIgnoredDueToOracleArgumentTypes(out string reasonMsg);
-
-        /// <summary>
         /// Determine if procedure has an argument/return of a given Oracle type. Nested levels of argument
         ///     are not considered, only the main argument type.
         /// </summary>
         /// <param name="oracleType"></param>
         /// <returns></returns>
-        bool HasArgumentOfOracleType(string oracleType);
+        bool HasArgumentOfOracleType(string oracleType, bool checkNestedArgs = false);
 
         /// <summary>
         /// Does procedure have at least one weakly typed cursor as return or argument?

@@ -544,7 +544,7 @@ namespace Odapter {
             /////////////////////////////////////////////////////////////////////////
             // bypass creation of methods that use certain types of arguments/returns
             string ignoreReason;
-            if (proc.IsIgnoredDueToOracleArgumentTypes(out ignoreReason)) {
+            if (Translater.IsIgnoredDueToOracleTypes(proc, out ignoreReason)) {
                 methodText.AppendLine();
                 methodText.AppendLine(Tab(2) + "// **PROC IGNORED** - " + ignoreReason);
                 methodText.Append(Tab(2) + "//" + " public " + methodReturnType + " " + Translater.ConvertOracleProcNameToMethodName(proc, pack));

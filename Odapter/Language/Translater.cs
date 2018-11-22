@@ -131,12 +131,18 @@ namespace Odapter {
         #endregion
 
         #region Translation methods
+        /// <summary>
+        /// Determine whether entity should be ignored due to certain data types
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <param name="reasonMsg"></param>
+        /// <returns></returns>
         internal static bool IsIgnoredDueToOracleTypes(IEntity entity, out string reasonMsg) {
             reasonMsg = "";
 
             foreach (string oraType in OracleTypesIgnored) {
                 if (entity.Attributes != null && entity.Attributes.FindIndex(a => a.DataType.Equals(oraType)) != -1) {
-                    IsOracleTypeIgnored(oraType, out reasonMsg, entity.Attributes[0].GetType().Name.ToLower()); // get reason
+                    reasonMsg = GetOracleTypeIgnoredReason(oraType, entity.Attributes[0].GetType().Name.ToLower()); // get reason
                     return true;
                 }
             }
@@ -144,23 +150,76 @@ namespace Odapter {
             return false;
         }
 
-        internal static bool IsOracleTypeIgnored(string oracleType, out string reasonMsg, string reasonMsgAppend = "") {
+        /// <summary>
+        /// Determine whether procedure should be ignored due to certain data types
+        /// </summary>
+        /// <param name="proc"></param>
+        /// <param name="reasonMsg"></param>
+        /// <returns></returns>
+        internal static bool IsIgnoredDueToOracleTypes(IProcedure proc, out string reasonMsg) {
             reasonMsg = "";
-            if (String.IsNullOrWhiteSpace(oracleType) || !OracleTypesIgnored.Contains(oracleType)) return false;
+            string unimplemntedType = "";
 
-            string oracleTypeFormatted = oracleType.Replace('_', ' ').Replace("PLSQL", "PL/SQL").Replace(Orcl.OBJECT_TYPE, "OBJECT TYPE") + (String.IsNullOrWhiteSpace(reasonMsgAppend) ? "" : " " + reasonMsgAppend);
-            if (oracleType.Equals(Orcl.PLSQL_BOOLEAN) || oracleType.Equals(Orcl.NESTED_TABLE))
-                reasonMsg = ".NET cannot send/receive a " + oracleTypeFormatted;
-            else if (oracleType.Equals(Orcl.RECORD))
-                reasonMsg = ".NET cannot send/receive a " + oracleTypeFormatted + " (apart from cursor) " ;
-            else if (oracleType.Equals(Orcl.UNDEFINED))
-                reasonMsg = "At least one Oracle type is undefined";
-            else if (oracleType.Equals(Orcl.LONG_RAW) || oracleType.Equals(Orcl.RAW))
-                reasonMsg = "Code generation for " + oracleTypeFormatted + " will not be implemented due to Oracle deprecation ";
-            else
-                reasonMsg = "Code generation for " + oracleTypeFormatted + " types has not been implemented ";
+            if (proc.HasArgumentOfOracleTypeAssocArrayOfUnimplementedType(out unimplemntedType)) {
+                reasonMsg = GetOracleTypeIgnoredReason(Orcl.ASSOCIATITVE_ARRAY, "of a " + unimplemntedType);
+                return true;
+            } else if (proc.HasInArgumentOfOracleTypeRefCursor()) {
+                reasonMsg = GetOracleTypeIgnoredReason(Orcl.REF_CURSOR);
+                return true;
+            } else {
+                foreach (string oraType in OracleTypesIgnored)
+                    if (proc.HasArgumentOfOracleType(oraType, !oraType.Equals(Orcl.RECORD))) {
+                        reasonMsg = GetOracleTypeIgnoredReason(oraType);
+                        return true;
+                    }
+            }
 
-            return true;
+            return false;
+        }
+
+        /// <summary>
+        /// Build reason message for why an Oracle type will be ignored during generation. Is is assumed that 
+        /// it has already been deteremined that the Oracle type will be ignored.
+        /// </summary>
+        /// <param name="oracleType"></param>
+        /// <param name="reasonMsgAppend"></param>
+        /// <returns></returns>
+        internal static string GetOracleTypeIgnoredReason(string oracleType, string reasonMsgAppend = "") {
+            string reasonMsg = "";
+            if (String.IsNullOrWhiteSpace(oracleType)) return reasonMsg;
+
+            // convert types to user friendly language
+            string oracleTypeFormatted = oracleType
+                .Replace('_', ' ').Replace("PLSQL", "PL/SQL").Replace(Orcl.OBJECT_TYPE, "OBJECT TYPE").Replace(Orcl.ASSOCIATITVE_ARRAY, "associative array")
+                + (String.IsNullOrWhiteSpace(reasonMsgAppend) ? "" : " " + reasonMsgAppend);
+
+            switch (oracleType) { 
+                case Orcl.PLSQL_BOOLEAN:
+                case Orcl.NESTED_TABLE:
+                    reasonMsg = $".NET cannot send/receive a { oracleTypeFormatted }"; // + oracleTypeFormatted;
+                    break;
+                case Orcl.RECORD:
+                    reasonMsg = $".NET cannot send/receive a { oracleTypeFormatted } (apart from cursor)";
+                    break;
+                case Orcl.REF_CURSOR:           // this case should only be for a cursor IN argument
+                    reasonMsg = $".NET cannot send a { oracleTypeFormatted }";
+                    break;
+                case Orcl.ASSOCIATITVE_ARRAY:   // this case should be for sub type not implemented for an assoc array
+                    reasonMsg = $".NET cannot send/receive an { oracleTypeFormatted }";
+                    break;
+                case Orcl.UNDEFINED:
+                    reasonMsg = "At least one Oracle type is undefined";
+                    break;
+                case Orcl.LONG_RAW:
+                case Orcl.RAW:
+                    reasonMsg = $"Code generation for { oracleTypeFormatted } will not be implemented due to Oracle deprecation";
+                    break;
+                default:
+                    reasonMsg = $"Code generation for { oracleTypeFormatted } types has not been implemented";
+                    break;
+            }
+
+            return reasonMsg;
         }
 
         /// <summary>
@@ -688,7 +747,7 @@ namespace Odapter {
             return ConvertOracleNameToCSharpName(oracleType, false);
         }
 
-        internal static Boolean CanBeCSharpInterface(string argumentDataType) {
+        internal static bool CanBeCSharpInterface(string argumentDataType) {
             if (String.IsNullOrWhiteSpace(argumentDataType)) return false;
             return argumentDataType.Equals(Orcl.REF_CURSOR) || argumentDataType.Equals(Orcl.ASSOCIATITVE_ARRAY);
         }
@@ -700,7 +759,7 @@ namespace Odapter {
         /// </summary>
         /// <param name="oracleType"></param>
         /// <returns></returns>
-        internal static Int32 GetStringArgBindSize (string oracleType) { 
+        internal static int GetStringArgBindSize (string oracleType) { 
 
             switch (oracleType) {
                 case Orcl.CHAR:

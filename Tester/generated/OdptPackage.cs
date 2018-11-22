@@ -1674,7 +1674,7 @@ namespace Schema.Odpt.Package {
             return __ret;
         } // FuncAaVarchar2
 
-        // **PROC IGNORED** - Code generation for BFILE types has not been implemented 
+        // **PROC IGNORED** - Code generation for BFILE types has not been implemented
         // public Byte[] FuncBfile(Byte[] pIn, ref Byte[] pInOut, out Byte[] pOut, OracleConnection optionalPreexistingOpenConnection = null)
 
         public Double? FuncBinaryDouble(Double? pIn, ref Double? pInOut, out Double? pOut, OracleConnection optionalPreexistingOpenConnection = null) {
@@ -1925,39 +1925,8 @@ namespace Schema.Odpt.Package {
             return __ret;
         } // FuncDate
 
-        public Decimal? FuncDecimal(Decimal? pIn, ref Decimal? pInOut, out Decimal? pOut, OracleConnection optionalPreexistingOpenConnection = null) {
-            Decimal? __ret = null; pOut = null; 
-            OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
-            try {
-                using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_MAIN.FUNC_DECIMAL", __conn)) {
-                    __cmd.CommandType = CommandType.StoredProcedure;
-                    __cmd.BindByName = true;
-                    __cmd.Parameters.Add(new OracleParameter("!RETURN", OracleDbType.Decimal, null, ParameterDirection.ReturnValue));
-                    __cmd.Parameters.Add(new OracleParameter("P_IN", OracleDbType.Decimal, pIn, ParameterDirection.Input));
-                    __cmd.Parameters.Add(new OracleParameter("P_IN_OUT", OracleDbType.Decimal, pInOut, ParameterDirection.InputOutput));
-                    __cmd.Parameters.Add(new OracleParameter("P_OUT", OracleDbType.Decimal, null, ParameterDirection.Output));
-
-                    OracleCommandTrace __cmdTrace = IsTracing(__cmd) ? new OracleCommandTrace(__cmd) : null;
-                    int __rowsAffected = __cmd.ExecuteNonQuery();
-                    __ret = __cmd.Parameters["!RETURN"].Status == OracleParameterStatus.NullFetched
-                        ? (Decimal?)null
-                        : Convert.ToDecimal(__cmd.Parameters["!RETURN"].Value.ToString());
-                    pInOut = __cmd.Parameters["P_IN_OUT"].Status == OracleParameterStatus.NullFetched
-                        ? (Decimal?)null
-                        : Convert.ToDecimal(__cmd.Parameters["P_IN_OUT"].Value.ToString());
-                    pOut = __cmd.Parameters["P_OUT"].Status == OracleParameterStatus.NullFetched
-                        ? (Decimal?)null
-                        : Convert.ToDecimal(__cmd.Parameters["P_OUT"].Value.ToString());
-                    if (__cmdTrace != null) TraceCompletion(__cmdTrace);
-                } // using OracleCommand
-            } finally {
-                if (optionalPreexistingOpenConnection == null) {
-                    __conn.Close();
-                    __conn.Dispose();
-                }
-            }
-            return __ret;
-        } // FuncDecimal
+        // **PROC IGNORED** - Code generation for DECIMAL types has not been implemented
+        // public Decimal? FuncDecimal(Decimal? pIn, ref Decimal? pInOut, out Decimal? pOut, OracleConnection optionalPreexistingOpenConnection = null)
 
         public Decimal? FuncDoublePrecision(Decimal? pIn, ref Decimal? pInOut, out Decimal? pOut, OracleConnection optionalPreexistingOpenConnection = null) {
             Decimal? __ret = null; pOut = null; 
@@ -2095,16 +2064,16 @@ namespace Schema.Odpt.Package {
             return __ret;
         } // FuncInteger
 
-        // **PROC IGNORED** - Code generation for INTERVAL DAY TO SECOND types has not been implemented 
+        // **PROC IGNORED** - Code generation for INTERVAL DAY TO SECOND types has not been implemented
         // public TimeSpan? FuncIntervalDayToSecond(TimeSpan? pIn, ref TimeSpan? pInOut, out TimeSpan? pOut, OracleConnection optionalPreexistingOpenConnection = null)
 
-        // **PROC IGNORED** - Code generation for INTERVAL YEAR TO MONTH types has not been implemented 
+        // **PROC IGNORED** - Code generation for INTERVAL YEAR TO MONTH types has not been implemented
         // public TimeSpan? FuncIntervalYearToMonth(TimeSpan? pIn, ref TimeSpan? pInOut, out TimeSpan? pOut, OracleConnection optionalPreexistingOpenConnection = null)
 
-        // **PROC IGNORED** - Code generation for LONG types has not been implemented 
+        // **PROC IGNORED** - Code generation for LONG types has not been implemented
         // public Byte[] FuncLong(Byte[] pIn, ref Byte[] pInOut, out Byte[] pOut, OracleConnection optionalPreexistingOpenConnection = null)
 
-        // **PROC IGNORED** - Code generation for LONG RAW will not be implemented due to Oracle deprecation 
+        // **PROC IGNORED** - Code generation for LONG RAW will not be implemented due to Oracle deprecation
         // public Byte[] FuncLongRaw(Byte[] pIn, ref Byte[] pInOut, out Byte[] pOut, OracleConnection optionalPreexistingOpenConnection = null)
 
         public Int32? FuncNatural(Int32? pIn, ref Int32? pInOut, out Int32? pOut, OracleConnection optionalPreexistingOpenConnection = null) {
@@ -2302,39 +2271,8 @@ namespace Schema.Odpt.Package {
             return __ret;
         } // FuncNumber
 
-        public Decimal? FuncNumeric(Decimal? pIn, ref Decimal? pInOut, out Decimal? pOut, OracleConnection optionalPreexistingOpenConnection = null) {
-            Decimal? __ret = null; pOut = null; 
-            OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
-            try {
-                using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_MAIN.FUNC_NUMERIC", __conn)) {
-                    __cmd.CommandType = CommandType.StoredProcedure;
-                    __cmd.BindByName = true;
-                    __cmd.Parameters.Add(new OracleParameter("!RETURN", OracleDbType.Decimal, null, ParameterDirection.ReturnValue));
-                    __cmd.Parameters.Add(new OracleParameter("P_IN", OracleDbType.Decimal, pIn, ParameterDirection.Input));
-                    __cmd.Parameters.Add(new OracleParameter("P_IN_OUT", OracleDbType.Decimal, pInOut, ParameterDirection.InputOutput));
-                    __cmd.Parameters.Add(new OracleParameter("P_OUT", OracleDbType.Decimal, null, ParameterDirection.Output));
-
-                    OracleCommandTrace __cmdTrace = IsTracing(__cmd) ? new OracleCommandTrace(__cmd) : null;
-                    int __rowsAffected = __cmd.ExecuteNonQuery();
-                    __ret = __cmd.Parameters["!RETURN"].Status == OracleParameterStatus.NullFetched
-                        ? (Decimal?)null
-                        : Convert.ToDecimal(__cmd.Parameters["!RETURN"].Value.ToString());
-                    pInOut = __cmd.Parameters["P_IN_OUT"].Status == OracleParameterStatus.NullFetched
-                        ? (Decimal?)null
-                        : Convert.ToDecimal(__cmd.Parameters["P_IN_OUT"].Value.ToString());
-                    pOut = __cmd.Parameters["P_OUT"].Status == OracleParameterStatus.NullFetched
-                        ? (Decimal?)null
-                        : Convert.ToDecimal(__cmd.Parameters["P_OUT"].Value.ToString());
-                    if (__cmdTrace != null) TraceCompletion(__cmdTrace);
-                } // using OracleCommand
-            } finally {
-                if (optionalPreexistingOpenConnection == null) {
-                    __conn.Close();
-                    __conn.Dispose();
-                }
-            }
-            return __ret;
-        } // FuncNumeric
+        // **PROC IGNORED** - Code generation for DECIMAL types has not been implemented
+        // public Decimal? FuncNumeric(Decimal? pIn, ref Decimal? pInOut, out Decimal? pOut, OracleConnection optionalPreexistingOpenConnection = null)
 
         public String FuncNvarchar2(String pIn, ref String pInOut, out String pOut, OracleConnection optionalPreexistingOpenConnection = null) {
             String __ret = null; pOut = null; 
@@ -2370,7 +2308,7 @@ namespace Schema.Odpt.Package {
             return __ret;
         } // FuncNvarchar2
 
-        // **PROC IGNORED** - Code generation for OBJECT TYPE types has not been implemented 
+        // **PROC IGNORED** - Code generation for OBJECT TYPE types has not been implemented
         // public Schema.Odpt.Type.Object.OdptBigOt FuncObjectType(Schema.Odpt.Type.Object.OdptBigOt pIn, ref Schema.Odpt.Type.Object.OdptBigOt pInOut, out Schema.Odpt.Type.Object.OdptBigOt pOut, OracleConnection optionalPreexistingOpenConnection = null)
 
         public Decimal? FuncOptionalParam(Decimal? pInNumberRequired, ref Decimal? pInOutNumberRequired, Decimal? pInNumberOptional = null, String pInVarchar2Optional = null, 
@@ -2508,16 +2446,16 @@ namespace Schema.Odpt.Package {
             return __ret;
         } // FuncPositiven
 
-        // **PROC IGNORED** - Code generation for RAW will not be implemented due to Oracle deprecation 
+        // **PROC IGNORED** - Code generation for RAW will not be implemented due to Oracle deprecation
         // public Byte[] FuncRaw(Byte[] pIn, ref Byte[] pInOut, out Byte[] pOut, OracleConnection optionalPreexistingOpenConnection = null)
 
-        // **PROC IGNORED** - .NET cannot send/receive a PL/SQL RECORD (apart from cursor) 
+        // **PROC IGNORED** - .NET cannot send/receive a PL/SQL RECORD (apart from cursor)
         // public TTableBig FuncRecord(TTableBig pIn, ref TTableBig pInOut, out TTableBig pOut, OracleConnection optionalPreexistingOpenConnection = null)
 
-        // **PROC IGNORED** - Code generation for REF types has not been implemented 
+        // **PROC IGNORED** - Code generation for REF types has not been implemented
         // public String FuncRef(String pIn, ref String pInOut, out String pOut, OracleConnection optionalPreexistingOpenConnection = null)
 
-        // **PROC IGNORED** - Code generation for ROWID types has not been implemented 
+        // **PROC IGNORED** - Code generation for ROWID types has not been implemented
         // public String FuncRowid(String pIn, ref String pInOut, out String pOut, OracleConnection optionalPreexistingOpenConnection = null)
 
         public Int64? FuncSmallint(Int64? pIn, ref Int64? pInOut, out Int64? pOut, OracleConnection optionalPreexistingOpenConnection = null) {
@@ -2622,13 +2560,13 @@ namespace Schema.Odpt.Package {
             return __ret;
         } // FuncTimestamp
 
-        // **PROC IGNORED** - Code generation for TIMESTAMP WITH LOCAL TIME ZONE types has not been implemented 
+        // **PROC IGNORED** - Code generation for TIMESTAMP WITH LOCAL TIME ZONE types has not been implemented
         // public DateTime? FuncTimestampWLTimeZone(DateTime? pIn, ref DateTime? pInOut, out DateTime? pOut, OracleConnection optionalPreexistingOpenConnection = null)
 
-        // **PROC IGNORED** - Code generation for TIMESTAMP WITH TIME ZONE types has not been implemented 
+        // **PROC IGNORED** - Code generation for TIMESTAMP WITH TIME ZONE types has not been implemented
         // public DateTime? FuncTimestampWTimeZone(DateTime? pIn, ref DateTime? pInOut, out DateTime? pOut, OracleConnection optionalPreexistingOpenConnection = null)
 
-        // **PROC IGNORED** - Code generation for UROWID types has not been implemented 
+        // **PROC IGNORED** - Code generation for UROWID types has not been implemented
         // public String FuncUrowid(String pIn, ref String pInOut, out String pOut, OracleConnection optionalPreexistingOpenConnection = null)
 
         public String FuncVarchar(String pIn, ref String pInOut, out String pOut, OracleConnection optionalPreexistingOpenConnection = null) {
@@ -2699,7 +2637,7 @@ namespace Schema.Odpt.Package {
             return __ret;
         } // FuncVarchar2
 
-        // **PROC IGNORED** - Code generation for XMLTYPE types has not been implemented 
+        // **PROC IGNORED** - Code generation for XMLTYPE types has not been implemented
         // public XmlDocument FuncXmltype(XmlDocument pIn, ref XmlDocument pInOut, out XmlDocument pOut, OracleConnection optionalPreexistingOpenConnection = null)
 
         public void ProcBinaryDoubleConst(out Double? pMinNormal, out Double? pMaxNormal, OracleConnection optionalPreexistingOpenConnection = null) {
@@ -4153,13 +4091,13 @@ namespace Schema.Odpt.Package {
             return __ret;
         } // InsertRow
 
-        // **PROC IGNORED** - .NET cannot send/receive a PL/SQL RECORD (apart from cursor) 
+        // **PROC IGNORED** - .NET cannot send/receive a PL/SQL RECORD (apart from cursor)
         // public Int64? InsertRow(InsertRowPRowRowType pRow, OracleConnection optionalPreexistingOpenConnection = null)
 
-        // **PROC IGNORED** - .NET cannot send/receive a REF CURSOR
+        // **PROC IGNORED** - .NET cannot send a REF CURSOR
         // public void ProcTypedCursorIn(ICollection<T_TTableBig> pRefCursor, OracleConnection optionalPreexistingOpenConnection = null)
 
-        // **PROC IGNORED** - .NET cannot send/receive a REF CURSOR
+        // **PROC IGNORED** - .NET cannot send a REF CURSOR
         // public void ProcTypedCursorInOut(ref ICollection<T_TTableBig> pRefCursor, OracleConnection optionalPreexistingOpenConnection = null)
 
         public void TruncTable(OracleConnection optionalPreexistingOpenConnection = null) {
@@ -5150,7 +5088,7 @@ namespace Schema.Odpt.Package {
             return __ret;
         } // InsertRow
 
-        // **PROC IGNORED** - .NET cannot send/receive a PL/SQL RECORD (apart from cursor) 
+        // **PROC IGNORED** - .NET cannot send/receive a PL/SQL RECORD (apart from cursor)
         // public Int64? InsertRow(InsertRowPRowRowType pRow, OracleConnection optionalPreexistingOpenConnection = null)
 
         public void TruncTable(OracleConnection optionalPreexistingOpenConnection = null) {
