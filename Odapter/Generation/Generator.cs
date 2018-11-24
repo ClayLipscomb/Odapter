@@ -337,8 +337,8 @@ namespace Odapter {
             }
 
             StringBuilder sb = new StringBuilder("");
-            sb.AppendLine(Tab(tabIndentCount) + "if (" + "!((" + CSharp.ORACLE_REF_CURSOR + ")" + LOCAL_VAR_NAME_COMMAND_PARAMS + "[\"" + oracleArgName + "\"].Value).IsNull" + ")");
-            sb.AppendLine(Tab(tabIndentCount + 1) + "using (OracleDataReader " + LOCAL_VAR_NAME_READER + " = ((" + CSharp.ORACLE_REF_CURSOR + ")" + LOCAL_VAR_NAME_COMMAND_PARAMS + "[\"" + oracleArgName + "\"].Value).GetDataReader()) {");
+            sb.AppendLine(Tab(tabIndentCount) + "if (" + "!((" + CSharp.ODP_NET_SAFE_TYPE_REF_CURSOR + ")" + LOCAL_VAR_NAME_COMMAND_PARAMS + "[\"" + oracleArgName + "\"].Value).IsNull" + ")");
+            sb.AppendLine(Tab(tabIndentCount + 1) + "using (OracleDataReader " + LOCAL_VAR_NAME_READER + " = ((" + CSharp.ODP_NET_SAFE_TYPE_REF_CURSOR + ")" + LOCAL_VAR_NAME_COMMAND_PARAMS + "[\"" + oracleArgName + "\"].Value).GetDataReader()) {");
             sb.Append(Tab(tabIndentCount + 2) + cSharpArgName + " = ");
             if (dynamicMapping) {
                 sb.AppendLine(ORCL_UTIL_CLASS + ".ReadResult"

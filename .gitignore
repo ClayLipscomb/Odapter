@@ -315,3 +315,5 @@ __pycache__/
 /Odapter/Parameter - Copy.cs
 /OdapterWnFrm/bin/x64/Debug/_SAVE-TEST.config
 /Odapter/Parameter2.cs
+/Odapter/Language/OracleVarchar2.cs
+/Odapter/Language/IOracleDataType.cs

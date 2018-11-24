@@ -70,22 +70,21 @@ namespace Odapter {
 
         // ODP.NET types (important for assoc array out/return args)
         private const string ODP_NET_TYPE_PREFIX = "Oracle";
-        public const string ORACLE_DECIMAL = ODP_NET_TYPE_PREFIX + "Decimal";
-        public const string ORACLE_DATE = ODP_NET_TYPE_PREFIX + "Date";
-        public const string ORACLE_TIMESTAMP = ODP_NET_TYPE_PREFIX + "TimeStamp";
-        public const string ORACLE_TIMESTAMP_LTZ = ODP_NET_TYPE_PREFIX + "TimeStampLTZ";
-        public const string ORACLE_TIMESTAMP_TZ = ODP_NET_TYPE_PREFIX + "TimeStampTZ";
-        public const string ORACLE_INTERVAL_DS = ODP_NET_TYPE_PREFIX + "IntervalDS";
-        public const string ORACLE_INTERVAL_YM = ODP_NET_TYPE_PREFIX + "IntervalYM";
-        public const string ORACLE_XLM_TYPE = ODP_NET_TYPE_PREFIX + "XmlType";
-        public const string ORACLE_STRING = ODP_NET_TYPE_PREFIX + "String";
-        public const string ORACLE_BFILE = ODP_NET_TYPE_PREFIX + "BFile";           // class
-        public const string ORACLE_BLOB = ODP_NET_TYPE_PREFIX + "Blob";             // class
-        public const string ORACLE_CLOB = ODP_NET_TYPE_PREFIX + "Clob";             // class
-        public const string ORACLE_BINARY = ODP_NET_TYPE_PREFIX + "Binary";
-        public const string ORACLE_REF = ODP_NET_TYPE_PREFIX + "Ref";
-        public const string ORACLE_REF_CURSOR = ODP_NET_TYPE_PREFIX + "RefCursor";  // class
-        public const string ORACLE_XML_TYPE = ODP_NET_TYPE_PREFIX + "XmlType";
+        public const string ODP_NET_SAFE_TYPE_DECIMAL       = ODP_NET_TYPE_PREFIX + "Decimal";
+        public const string ODP_NET_SAFE_TYPE_DATE          = ODP_NET_TYPE_PREFIX + "Date";
+        public const string ODP_NET_SAFE_TYPE_TIMESTAMP     = ODP_NET_TYPE_PREFIX + "TimeStamp";
+        public const string ODP_NET_SAFE_TYPE_TIMESTAMP_LTZ = ODP_NET_TYPE_PREFIX + "TimeStampLTZ";
+        public const string ODP_NET_SAFE_TYPE_TMESTAMP_TZ   = ODP_NET_TYPE_PREFIX + "TimeStampTZ";
+        public const string ODP_NET_SAFE_TYPE_INTERVAL_DS   = ODP_NET_TYPE_PREFIX + "IntervalDS";
+        public const string ODP_NET_SAFE_TYPE_INTERVAL_YM   = ODP_NET_TYPE_PREFIX + "IntervalYM";
+        public const string ODP_NET_SAFE_TYPE_STRING        = ODP_NET_TYPE_PREFIX + "String";
+        public const string ODP_NET_SAFE_TYPE_REF_CURSOR    = ODP_NET_TYPE_PREFIX + "RefCursor";    // class
+        public const string ODP_NET_SAFE_TYPE_BFILE         = ODP_NET_TYPE_PREFIX + "BFile";        // class
+        public const string ODP_NET_SAFE_TYPE_BLOB          = ODP_NET_TYPE_PREFIX + "Blob";         // class
+        public const string ODP_NET_SAFE_TYPE_CLOB          = ODP_NET_TYPE_PREFIX + "Clob";         // class
+        public const string ODP_NET_SAFE_TYPE_BINARY        = ODP_NET_TYPE_PREFIX + "Binary";
+        public const string ODP_NET_SAFE_TYPE_REF           = ODP_NET_TYPE_PREFIX + "Ref";
+        public const string ODP_NET_SAFE_TYPE_XML_TYPE      = ODP_NET_TYPE_PREFIX + "XmlType";
 
         public const string NULL = "null";
         #endregion

@@ -105,19 +105,19 @@ namespace Odapter {
             {Orcl.INTEGER, new List<CustomTranslatedCSharpType> {                   new CustomTranslatedCSharpType(CSharp.INT32, @"9 digit limit, not recommended"),
                                                                                     new CustomTranslatedCSharpType(CSharp.INT64, @"18 digit limit, usually safe"),
                                                                                     new CustomTranslatedCSharpType(CSharp.DECIMAL, @"28 digit limit"),
-                                                                                    new CustomTranslatedCSharpType(CSharp.ORACLE_DECIMAL, @"ODP.NET safe type struct") } },
+                                                                                    new CustomTranslatedCSharpType(CSharp.ODP_NET_SAFE_TYPE_DECIMAL, @"ODP.NET safe type struct") } },
             {Orcl.NUMBER, new List<CustomTranslatedCSharpType> {                    new CustomTranslatedCSharpType(CSharp.DECIMAL, @"28 dig limit, auto rounding"),
-                                                                                    new CustomTranslatedCSharpType(CSharp.ORACLE_DECIMAL, @"ODP.NET safe type struct") } },
+                                                                                    new CustomTranslatedCSharpType(CSharp.ODP_NET_SAFE_TYPE_DECIMAL, @"ODP.NET safe type struct") } },
             {Orcl.DATE, new List<CustomTranslatedCSharpType> {                      new CustomTranslatedCSharpType(CSharp.DATE_TIME, @"no BC"),
-                                                                                    new CustomTranslatedCSharpType(CSharp.ORACLE_DATE, @"ODP.NET safe type struct") } },
+                                                                                    new CustomTranslatedCSharpType(CSharp.ODP_NET_SAFE_TYPE_DATE, @"ODP.NET safe type struct") } },
             {Orcl.TIMESTAMP, new List<CustomTranslatedCSharpType> {                 new CustomTranslatedCSharpType(CSharp.DATE_TIME, @"e-7 max, no BC, no time zone"),
-                                                                                    new CustomTranslatedCSharpType(CSharp.ORACLE_TIMESTAMP, @"ODP.NET safe type struct") } },
+                                                                                    new CustomTranslatedCSharpType(CSharp.ODP_NET_SAFE_TYPE_TIMESTAMP, @"ODP.NET safe type struct") } },
             {Orcl.INTERVAL_DAY_TO_SECOND, new List<CustomTranslatedCSharpType> {    new CustomTranslatedCSharpType(CSharp.TIME_SPAN, @"e-7 max"),
-                                                                                    new CustomTranslatedCSharpType(CSharp.ORACLE_INTERVAL_DS, @"ODP.NET safe type struct") } },
+                                                                                    new CustomTranslatedCSharpType(CSharp.ODP_NET_SAFE_TYPE_INTERVAL_DS, @"ODP.NET safe type struct") } },
             {Orcl.BLOB, new List<CustomTranslatedCSharpType> {                      new CustomTranslatedCSharpType(CSharp.BYTE_ARRAY, @""),
-                                                                                    new CustomTranslatedCSharpType(CSharp.ORACLE_BLOB, @"ODP.NET safe type class") } },
+                                                                                    new CustomTranslatedCSharpType(CSharp.ODP_NET_SAFE_TYPE_BLOB, @"ODP.NET safe type class") } },
             {Orcl.CLOB, new List<CustomTranslatedCSharpType> {                      new CustomTranslatedCSharpType(CSharp.STRING, @""),
-                                                                                    new CustomTranslatedCSharpType(CSharp.ORACLE_CLOB, @"ODP.NET safe type class") } }
+                                                                                    new CustomTranslatedCSharpType(CSharp.ODP_NET_SAFE_TYPE_CLOB, @"ODP.NET safe type class") } }
         };
         #endregion
 
@@ -335,20 +335,20 @@ namespace Odapter {
 
             switch (oracleType) {
                 case Orcl.BFILE:
-                    return CSharp.ORACLE_BFILE;
+                    return CSharp.ODP_NET_SAFE_TYPE_BFILE;
                 case Orcl.NUMBER:
                 case Orcl.BINARY_INTEGER:
                 case Orcl.PLS_INTEGER:
                 case Orcl.FLOAT:
-                    return CSharp.ORACLE_DECIMAL;
+                    return CSharp.ODP_NET_SAFE_TYPE_DECIMAL;
                 case Orcl.BINARY_FLOAT:
                 case Orcl.BINARY_DOUBLE:
-                    return CSharp.ORACLE_DECIMAL;
+                    return CSharp.ODP_NET_SAFE_TYPE_DECIMAL;
                 case Orcl.BLOB:
-                    return CSharp.ORACLE_BLOB;
+                    return CSharp.ODP_NET_SAFE_TYPE_BLOB;
                 case Orcl.CLOB:
                 case Orcl.NCLOB:
-                    return CSharp.ORACLE_CLOB;
+                    return CSharp.ODP_NET_SAFE_TYPE_CLOB;
                 case Orcl.CHAR:
                 case Orcl.LONG:
                 case Orcl.NCHAR:
@@ -356,28 +356,28 @@ namespace Odapter {
                 case Orcl.ROWID:
                 case Orcl.UROWID:
                 case Orcl.VARCHAR2:
-                    return CSharp.ORACLE_STRING;
+                    return CSharp.ODP_NET_SAFE_TYPE_STRING;
                 case Orcl.DATE:
-                    return CSharp.ORACLE_DATE;
+                    return CSharp.ODP_NET_SAFE_TYPE_DATE;
                 case Orcl.INTERVAL_DAY_TO_SECOND:
-                    return CSharp.ORACLE_INTERVAL_DS;
+                    return CSharp.ODP_NET_SAFE_TYPE_INTERVAL_DS;
                 case Orcl.INTERVAL_YEAR_TO_MONTH:
-                    return CSharp.ORACLE_INTERVAL_YM;
+                    return CSharp.ODP_NET_SAFE_TYPE_INTERVAL_YM;
                 //case Orcl.LONG_RAW:
                 //case Orcl.RAW:
                 //    return CSharp.ORACLE_BINARY;
                 case Orcl.REF:
-                    return CSharp.ORACLE_REF;
+                    return CSharp.ODP_NET_SAFE_TYPE_REF;
                 case Orcl.REF_CURSOR:
-                    return CSharp.ORACLE_REF_CURSOR;
+                    return CSharp.ODP_NET_SAFE_TYPE_REF_CURSOR;
                 case Orcl.TIMESTAMP:
-                    return CSharp.ORACLE_TIMESTAMP;
+                    return CSharp.ODP_NET_SAFE_TYPE_TIMESTAMP;
                 case Orcl.TIMESTAMP_WITH_LOCAL_TIME_ZONE:
-                    return CSharp.ORACLE_TIMESTAMP_LTZ;
+                    return CSharp.ODP_NET_SAFE_TYPE_TIMESTAMP_LTZ;
                 case Orcl.TIMESTAMP_WITH_TIME_ZONE:
-                    return CSharp.ORACLE_TIMESTAMP_TZ;
+                    return CSharp.ODP_NET_SAFE_TYPE_TMESTAMP_TZ;
                 case Orcl.XML_TYPE:
-                    return CSharp.ORACLE_XML_TYPE;
+                    return CSharp.ODP_NET_SAFE_TYPE_XML_TYPE;
                 default:
                     return "Undetermined_OdpNet_Type";
             }
