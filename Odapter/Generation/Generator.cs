@@ -1149,51 +1149,49 @@ namespace Odapter {
         /// <param name="displayMessageMethod">Method used to display message in UI</param>
         public static void Run(Action<string> displayMessageMethod) {
 
-            if (Parameter.Instance.IsGeneratePackage || Parameter.Instance.IsGenerateObjectType || Parameter.Instance.IsGenerateTable || Parameter.Instance.IsGenerateView) {
-
-                // initialize Translater first since Loader does some translation. In the future, we need to modify Loader to do no translation (if possible).
-                Translater.Initialize(Parameter.Instance);
-
-                // instantiate generator
-                Generator generator = new Generator(Parameter.Instance.Schema, Parameter.Instance.OutputPath, displayMessageMethod, Parameter.Instance.DatabaseInstance,
-                    Parameter.Instance.UserLogin, Parameter.Instance.Password, Parameter.Instance.NamespaceBase, Parameter.Instance.NamespaceObjectType);
-
-                // retrieve necessary data from schema
-                Loader loader = new Loader(displayMessageMethod);
-                try {
-                    displayMessageMethod(Parameter.Instance.DatabaseInstance + " " + Parameter.Instance.Schema 
-                        + (String.IsNullOrEmpty(Parameter.Instance.Filter) ? String.Empty : " " + Parameter.Instance.Filter + "*") + " generation:");
-                    loader.Load();
-                } catch (Exception e) {
-                    displayMessageMethod(e.Message);
-                    return;
-                }
-
-                ////////////////////////
-                // generate base classes
-                if (Parameter.Instance.IsGenerateBaseAdapter) generator.WriteBasePackageClass(Parameter.Instance.AncestorClassNamePackage);
-                if (Parameter.Instance.IsGenerateBaseEntities) generator.WriteBaseEntityClasses(Parameter.Instance.AncestorClassNamePackageRecord);
-
-                //////////////////////////////////
-                // generate schema-derived classes
-                if (Parameter.Instance.IsGeneratePackage)
-                    generator.WritePackageClasses(loader.Packages, loader.PackageRecordTypes, Parameter.Instance.NamespacePackage, Parameter.Instance.AncestorClassNamePackage, 
-                        Parameter.Instance.IsPartialPackage, Parameter.Instance.AncestorClassNamePackageRecord);
-                if (Parameter.Instance.IsGenerateObjectType)
-                    generator.WriteNonPackagedEntityClasses<IObjectType>(loader.ObjectTypes, Parameter.Instance.NamespaceObjectType, Generator.GenerateBaseObjectTypeClassName(Parameter.Instance.Schema),
-                        Parameter.Instance.IsSerializableObjectType, Parameter.Instance.IsPartialObjectType, Parameter.Instance.IsDataContractObjectType, Parameter.Instance.IsXmlElementObjectType);
-                if (Parameter.Instance.IsGenerateTable)
-                    generator.WriteNonPackagedEntityClasses<ITable>(loader.Tables, Parameter.Instance.NamespaceTable, Generator.GenerateBaseTableClassName(Parameter.Instance.Schema),
-                        Parameter.Instance.IsSerializableTable, Parameter.Instance.IsPartialTable, Parameter.Instance.IsDataContractTable, Parameter.Instance.IsXmlElementTable);
-                if (Parameter.Instance.IsGenerateView)
-                    generator.WriteNonPackagedEntityClasses<IView>(loader.Views, Parameter.Instance.NamespaceView, Generator.GenerateBaseViewClassName(Parameter.Instance.Schema),
-                        Parameter.Instance.IsSerializableView, Parameter.Instance.IsPartialView, Parameter.Instance.IsDataContractView, Parameter.Instance.IsXmlElementView);
-
-                generator.DeployUtilityClasses(Parameter.Instance.IsDeployResources);
-                displayMessageMethod(Message.GENERATION_COMPLETE);
-            } else {
+            if (!(Parameter.Instance.IsGeneratePackage || Parameter.Instance.IsGenerateObjectType || Parameter.Instance.IsGenerateTable || Parameter.Instance.IsGenerateView)) {
                 displayMessageMethod(Message.NO_GENERATE_OPTIONS_SELECTED);
+                return;
             }
+
+            // initialize Translater first since Loader does some translation. In the future, we need to modify Loader to do no translation (if possible).
+            Translater.Initialize(Parameter.Instance);
+
+            // retrieve necessary data from schema
+            Loader loader = new Loader(Parameter.Instance, displayMessageMethod);
+            try {
+                loader.Load();
+            } catch (Exception e) {
+                displayMessageMethod(e.Message);
+                return;
+            }
+
+            // instantiate generator
+            Generator generator = new Generator(Parameter.Instance.Schema, Parameter.Instance.OutputPath, displayMessageMethod, Parameter.Instance.DatabaseInstance,
+                                                Parameter.Instance.UserLogin, Parameter.Instance.Password, Parameter.Instance.NamespaceBase, Parameter.Instance.NamespaceObjectType);
+
+            ////////////////////////
+            // generate base classes
+            if (Parameter.Instance.IsGenerateBaseAdapter) generator.WriteBasePackageClass(Parameter.Instance.AncestorClassNamePackage);
+            if (Parameter.Instance.IsGenerateBaseEntities) generator.WriteBaseEntityClasses(Parameter.Instance.AncestorClassNamePackageRecord);
+
+            //////////////////////////////////
+            // generate schema-derived classes
+            if (Parameter.Instance.IsGeneratePackage)
+                generator.WritePackageClasses(loader.Packages, loader.PackageRecordTypes, Parameter.Instance.NamespacePackage, Parameter.Instance.AncestorClassNamePackage, 
+                    Parameter.Instance.IsPartialPackage, Parameter.Instance.AncestorClassNamePackageRecord);
+            if (Parameter.Instance.IsGenerateObjectType)
+                generator.WriteNonPackagedEntityClasses<IObjectType>(loader.ObjectTypes, Parameter.Instance.NamespaceObjectType, Generator.GenerateBaseObjectTypeClassName(Parameter.Instance.Schema),
+                    Parameter.Instance.IsSerializableObjectType, Parameter.Instance.IsPartialObjectType, Parameter.Instance.IsDataContractObjectType, Parameter.Instance.IsXmlElementObjectType);
+            if (Parameter.Instance.IsGenerateTable)
+                generator.WriteNonPackagedEntityClasses<ITable>(loader.Tables, Parameter.Instance.NamespaceTable, Generator.GenerateBaseTableClassName(Parameter.Instance.Schema),
+                    Parameter.Instance.IsSerializableTable, Parameter.Instance.IsPartialTable, Parameter.Instance.IsDataContractTable, Parameter.Instance.IsXmlElementTable);
+            if (Parameter.Instance.IsGenerateView)
+                generator.WriteNonPackagedEntityClasses<IView>(loader.Views, Parameter.Instance.NamespaceView, Generator.GenerateBaseViewClassName(Parameter.Instance.Schema),
+                    Parameter.Instance.IsSerializableView, Parameter.Instance.IsPartialView, Parameter.Instance.IsDataContractView, Parameter.Instance.IsXmlElementView);
+
+            generator.DeployUtilityClasses(Parameter.Instance.IsDeployResources);
+            displayMessageMethod(Message.GENERATION_COMPLETE);
         }
 
         #region Miscellanous Methods

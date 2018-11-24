@@ -26,13 +26,7 @@ using Dapper;
 namespace Odapter {
     internal class Loader {
         #region Member variables
-        private string
-            _dataSource = Parameter.Instance.DatabaseInstance,
-            _schema = Parameter.Instance.Schema,
-            _filter = String.IsNullOrEmpty(Parameter.Instance.Filter) ? null : Parameter.Instance.Filter,
-            _login = Parameter.Instance.UserLogin,
-            _password = Parameter.Instance.Password;
-
+        private string _dataSource, _schema, _filter, _login, _password;
         private Action<string> _displayMessageMethod;
 
         private List<IEntity> _objectTypes;
@@ -58,7 +52,12 @@ namespace Odapter {
         #endregion
 
         #region Constructors
-        internal Loader(Action<string> messageMethod) {
+        internal Loader(IParameterDatabase param, Action<string> messageMethod) {
+            _dataSource = param.DatabaseInstance;
+            _schema = param.Schema;
+            _filter = String.IsNullOrEmpty(param.Filter) ? null : param.Filter;
+            _login = param.UserLogin;
+            _password = param.Password;
             _displayMessageMethod = messageMethod;
         }
         #endregion
@@ -97,6 +96,8 @@ namespace Odapter {
             where T_Table : class, ITable, new()
             where T_View : class, IView, new()
             where T_Column : class, IColumn, new() {
+
+            _displayMessageMethod(_dataSource + " " + _schema + (String.IsNullOrEmpty(_filter) ? String.Empty : " " + _filter + "*") + " generation:");
 
             using (OracleConnection connection = (OracleConnection)GetConnection()) {
                 if (Parameter.Instance.IsGeneratePackage) LoadPackages<T_Package, T_Procedure, T_PackageRecord, T_Field, T_Argument>(connection);

@@ -19,13 +19,19 @@
 using System.Collections.Generic;
 
 namespace Odapter {
-    public interface IParameter  {
+    public interface IParameter : IParameterDatabase {
+        IList<string> ConfigFileNames { get; }
+
+        string OutputPath { get; set; }
+
+        bool IsSavePassword { get; set; }
+
         string AncestorClassNameObjectType { get; set; }
         string AncestorClassNamePackage { get; set; }
         string AncestorClassNamePackageRecord { get; set; }
         string AncestorClassNameTable { get; set; }
         string AncestorClassNameView { get; set; }
-        IList<string> ConfigFileNames { get; }
+
         string CSharpTypeUsedForOracleAssociativeArray { get; set; }
         string CSharpTypeUsedForOracleBFile { get; set; }
         string CSharpTypeUsedForOracleBlob { get; set; }
@@ -34,46 +40,43 @@ namespace Odapter {
         string CSharpTypeUsedForOracleInteger { get; set; }
         string CSharpTypeUsedForOracleIntervalDayToSecond { get; set; }
         string CSharpTypeUsedForOracleNumber { get; set; }
+        bool IsConvertOracleNumberToIntegerIfColumnNameIsId { get; set; }
         string CSharpTypeUsedForOracleRefCursor { get; set; }
         string CSharpTypeUsedForOracleTimeStamp { get; set; }
+
         CSharpVersion CSharpVersion { get; set; }
-        string DatabaseInstance { get; set; }
-        string Filter { get; set; }
-        bool IsConvertOracleNumberToIntegerIfColumnNameIsId { get; set; }
         bool IsCSharp30 { get; }
         bool IsCSharp40 { get; }
-        bool IsDataContractObjectType { get; set; }
-        bool IsDataContractPackageRecord { get; set; }
-        bool IsDataContractTable { get; set; }
-        bool IsDataContractView { get; set; }
+
         bool IsDeployResources { get; set; }
-        bool IsDuplicatePackageRecordOriginatingOutsideFilterAndSchema { get; set; }
-        bool IsExcludeObjectsNamesWithSpecificChars { get; set; }
         bool IsGenerateBaseAdapter { get; set; }
         bool IsGenerateBaseEntities { get; set; }
-        bool IsGenerateDynamicMappingMethodForTypedCursor { get; set; }
+
         bool IsGenerateObjectType { get; set; }
         bool IsGeneratePackage { get; set; }
         bool IsGenerateTable { get; set; }
         bool IsGenerateView { get; set; }
-        bool IsIncludeFilterPrefixInNaming { get; set; }
+
+        bool IsDataContractObjectType { get; set; }
+        bool IsDataContractPackageRecord { get; set; }
+        bool IsDataContractTable { get; set; }
+        bool IsDataContractView { get; set; }
+
         bool IsPartialObjectType { get; set; }
         bool IsPartialPackage { get; set; }
         bool IsPartialTable { get; set; }
         bool IsPartialView { get; set; }
-        bool IsSavePassword { get; set; }
+
         bool IsSerializableObjectType { get; set; }
         bool IsSerializablePackageRecord { get; set; }
         bool IsSerializableTable { get; set; }
         bool IsSerializableView { get; set; }
-        bool IsUseAutoImplementedProperties { get; set; }
+
         bool IsXmlElementObjectType { get; set; }
         bool IsXmlElementPackageRecord { get; set; }
         bool IsXmlElementTable { get; set; }
         bool IsXmlElementView { get; set; }
-        string LocalVariableNameSuffix { get; set; }
-        short MaxAssocArraySize { get; set; }
-        short MaxReturnAndOutArgStringSize { get; set; }
+
         string NamespaceBase { get; set; }
         string NamespaceDataContract { get; set; }
         string NamespaceObjectType { get; set; }
@@ -81,12 +84,13 @@ namespace Odapter {
         string NamespaceSchema { get; set; }
         string NamespaceTable { get; set; }
         string NamespaceView { get; set; }
-        char[] ObjectNameCharsToExclude { get; set; }
-        string ObjectNameCharsToExcludeAsString { get; set; }
-        string OracleHome { get; set; }
-        string OutputPath { get; set; }
-        string Password { get; set; }
-        string Schema { get; set; }
-        string UserLogin { get; set; }
+
+        bool IsDuplicatePackageRecordOriginatingOutsideFilterAndSchema { get; set; }
+        bool IsGenerateDynamicMappingMethodForTypedCursor { get; set; }
+        bool IsIncludeFilterPrefixInNaming { get; set; }
+        bool IsUseAutoImplementedProperties { get; set; }
+        string LocalVariableNameSuffix { get; set; }
+        short MaxAssocArraySize { get; set; }
+        short MaxReturnAndOutArgStringSize { get; set; }
     }
 }
