@@ -140,7 +140,7 @@ namespace Odapter {
         }
 
         public static string GetFilterValueIfUsedInNaming() {
-            return (Parameter.Instance.IsIncludeFilterPrefixInNaming && !String.IsNullOrWhiteSpace(Parameter.Instance.Filter)) ? Parameter.Instance.Filter.Trim() : "";
+            return Parameter.Instance.IsIncludeFilterPrefixInNaming ? Parameter.Instance.Filter : String.Empty;
         }
         #endregion
 
@@ -204,7 +204,7 @@ namespace Odapter {
                     cSharpType = Translater.ConvertOracleArgTypeToCSharpType(arg, false);
                     packageTypeName = arg.NextArgument != null && !String.IsNullOrEmpty(arg.NextArgument.TypeName)
                             //&& (arg.NextArgument.TypeName.StartsWith(Parameter.Instance.Filter)) 
-                            && String.IsNullOrWhiteSpace(Parameter.Instance.Filter)
+                            && !Parameter.Instance.IsUsingSchemaFilter
                             && !arg.PackageName.Equals(arg.NextArgument.TypeName)
                         ? Translater.ConvertOracleNameToCSharpName(arg.NextArgument.TypeName, false)
                         : null;

@@ -17,21 +17,10 @@
 //------------------------------------------------------------------------------
 
 namespace Odapter {
-    public interface IParameterTranslation {
-        string CSharpTypeUsedForOracleAssociativeArray { get; set; }
-        string CSharpTypeUsedForOracleBFile { get; set; }
-        string CSharpTypeUsedForOracleBlob { get; set; }
-        string CSharpTypeUsedForOracleClob { get; set; }
-        string CSharpTypeUsedForOracleDate { get; set; }
-        string CSharpTypeUsedForOracleInteger { get; set; }
-        bool IsConvertOracleNumberToIntegerIfColumnNameIsId { get; set; }
-        string CSharpTypeUsedForOracleIntervalDayToSecond { get; set; }
-        string CSharpTypeUsedForOracleNumber { get; set; }
-        string CSharpTypeUsedForOracleRefCursor { get; set; }
-        string CSharpTypeUsedForOracleTimeStamp { get; set; }
-
-        bool IsUsingSchemaFilter { get; }
-
-        string NamespaceObjectType { get; set; }
+    public interface IParameterGenerateObject {
+        bool IsGeneratePackage { get; set; }
+        bool IsGenerateObjectType { get; set; }
+        bool IsGenerateTable { get; set; }
+        bool IsGenerateView { get; set; }
     }
 }

@@ -25,10 +25,23 @@ using Dapper;
 
 namespace Odapter {
     internal class Loader {
-        #region Member variables
-        private string _dataSource, _schema, _filter, _login, _password;
-        private Action<string> _displayMessageMethod;
+        #region Parameter properties
+        private string DatabaseInstance { get; set; }
+        private string Schema { get; set; }
+        private string Filter { get; set; }
+        private string UserLogin { get; set; }
+        private string Password { get; set; }
+        private bool IsExcludeObjectsNamesWithSpecificChars { get; set; }
+        private char[] ObjectNameCharsToExclude { get; set; }
 
+        private bool IsLoadPackage { get; set; }
+        private bool IsLoadObjectType { get; set; }
+        private bool IsLoadTable { get; set; }
+        private bool IsLoadView { get; set; }
+        private Action<string> DisplayMessageMethod { get; set; }
+        #endregion
+
+        #region Data set private fields
         private List<IEntity> _objectTypes;
         private List<IEntity> _tables;
         private List<IEntity> _views;
@@ -36,7 +49,7 @@ namespace Odapter {
         private List<IEntityAttribute> _columns;                // holds all columns for both tables and views
         #endregion
 
-        #region Properties
+        #region Data Set Properties
         internal List<IPackage> Packages { get; private set; }
         internal List<IPackageRecord> PackageRecordTypes { get; private set; }
         private List<IArgument> ArgumentsPackaged { get; set; }
@@ -52,13 +65,21 @@ namespace Odapter {
         #endregion
 
         #region Constructors
-        internal Loader(IParameterDatabase param, Action<string> messageMethod) {
-            _dataSource = param.DatabaseInstance;
-            _schema = param.Schema;
-            _filter = String.IsNullOrEmpty(param.Filter) ? null : param.Filter;
-            _login = param.UserLogin;
-            _password = param.Password;
-            _displayMessageMethod = messageMethod;
+        internal Loader(IParameterLoad param, Action<string> messageMethod) {
+            DatabaseInstance                        = param.DatabaseInstance;
+            Schema                                  = param.Schema;
+            Filter                                  = param.Filter;
+            UserLogin                               = param.UserLogin;
+            Password                                = param.Password;
+            IsExcludeObjectsNamesWithSpecificChars  = param.IsExcludeObjectsNamesWithSpecificChars;
+            ObjectNameCharsToExclude                = param.ObjectNameCharsToExclude;
+
+            IsLoadPackage       = param.IsGeneratePackage;
+            IsLoadObjectType    = param.IsGenerateObjectType;
+            IsLoadTable         = param.IsGenerateTable;
+            IsLoadView          = param.IsGenerateView;
+
+            DisplayMessageMethod = messageMethod;
         }
         #endregion
 
@@ -66,11 +87,11 @@ namespace Odapter {
         /// proxy to to display message in UI
         /// </summary>
         /// <param name="msg"></param>
-        private void DisplayMessage(string msg) { _displayMessageMethod(msg); }
+        private void DisplayMessage(string msg) { DisplayMessageMethod(msg); }
 
         #region Database
         private string GetConnectionString() {
-            return "data source=" + _dataSource + ";user id=" + _login + ";password=" + _password;
+            return "data source=" + DatabaseInstance + ";user id=" + UserLogin + ";password=" + Password;
         }
 
         private OracleConnection GetConnection() {
@@ -97,13 +118,13 @@ namespace Odapter {
             where T_View : class, IView, new()
             where T_Column : class, IColumn, new() {
 
-            _displayMessageMethod(_dataSource + " " + _schema + (String.IsNullOrEmpty(_filter) ? String.Empty : " " + _filter + "*") + " generation:");
+            DisplayMessageMethod(DatabaseInstance + " " + Schema + (String.IsNullOrWhiteSpace(Filter) ? String.Empty : " " + Filter + "*") + " generation:");
 
             using (OracleConnection connection = (OracleConnection)GetConnection()) {
-                if (Parameter.Instance.IsGeneratePackage) LoadPackages<T_Package, T_Procedure, T_PackageRecord, T_Field, T_Argument>(connection);
-                if (Parameter.Instance.IsGenerateObjectType) LoadNonPackagedEntities<T_ObjectType, T_ObjectTypeAttribute>(connection, ref _objectTypes, ref _objectTypeAttributes);
-                if (Parameter.Instance.IsGenerateTable) LoadNonPackagedEntities<T_Table, T_Column>(connection, ref _tables, ref _columns);
-                if (Parameter.Instance.IsGenerateView) LoadNonPackagedEntities<T_View, T_Column>(connection, ref _views, ref _columns);
+                if (IsLoadPackage) LoadPackages<T_Package, T_Procedure, T_PackageRecord, T_Field, T_Argument>(connection);
+                if (IsLoadObjectType) LoadNonPackagedEntities<T_ObjectType, T_ObjectTypeAttribute>(connection, ref _objectTypes, ref _objectTypeAttributes);
+                if (IsLoadTable) LoadNonPackagedEntities<T_Table, T_Column>(connection, ref _tables, ref _columns);
+                if (IsLoadView) LoadNonPackagedEntities<T_View, T_Column>(connection, ref _views, ref _columns);
             }
         }
 
@@ -252,8 +273,8 @@ namespace Odapter {
             if (ArgumentsPackaged == null) {
                 DisplayMessage("Reading package arguments...");
                 List<IArgument> args = connection.Query<T_Argument>(sql, 
-                    new { owner = _schema, packageNamePrefix = (String.IsNullOrEmpty(_filter) ? "" : _filter.ToUpper()) }).ToList<IArgument>();
-                if (Parameter.Instance.IsExcludeObjectsNamesWithSpecificChars) args = args.FindAll(a => a.PackageName.IndexOfAny(Parameter.Instance.ObjectNameCharsToExclude) == -1);
+                    new { owner = Schema, packageNamePrefix = Filter.ToUpper() }).ToList<IArgument>();
+                if (IsExcludeObjectsNamesWithSpecificChars) args = args.FindAll(a => a.PackageName.IndexOfAny(ObjectNameCharsToExclude) == -1);
                 DisplayMessage(args.Count.ToString() + " arguments read.");
 
                 // set next argument
@@ -299,11 +320,11 @@ namespace Odapter {
                             + " AND UPPER(object_name) LIKE :objectNamePrefix || '%' "
                             + " ORDER BY object_name";
                 Packages = connection.Query<T_Package>(sql,
-                    new { owner = _schema, 
+                    new { owner = Schema, 
                         objectType = SytemTableObjectType.PACKAGE.ToString(), 
-                        objectNamePrefix = (String.IsNullOrEmpty(_filter) ? "" : _filter.ToUpper()) }).ToList<IPackage>();
+                        objectNamePrefix = Filter.ToUpper() }).ToList<IPackage>();
 
-                if (Parameter.Instance.IsExcludeObjectsNamesWithSpecificChars) Packages = Packages.Where<IPackage>(p => p.PackageName.IndexOfAny(Parameter.Instance.ObjectNameCharsToExclude) == -1).ToList();
+                if (IsExcludeObjectsNamesWithSpecificChars) Packages = Packages.Where<IPackage>(p => p.PackageName.IndexOfAny(ObjectNameCharsToExclude) == -1).ToList();
                 DisplayMessage(Packages.Count.ToString() + " packages read.");
 
                 // load all arguments for packaged procs/funcs
@@ -319,9 +340,9 @@ namespace Odapter {
                     + " AND procedure_name IS NOT NULL "
                     + " ORDER BY object_name, procedure_name, overload "; // !!!!
                 List<IProcedure> allProcedures = connection.Query<T_Procedure>(sql,
-                    new { owner = _schema, 
+                    new { owner = Schema, 
                         objectType = SytemTableObjectType.PACKAGE.ToString(),
-                        objectNamePrefix = (String.IsNullOrEmpty(_filter) ? "" : _filter.ToUpper())}).ToList<IProcedure>();
+                        objectNamePrefix = Filter.ToUpper()}).ToList<IProcedure>();
 
                 PackageRecordTypes = new List<IPackageRecord>();
 
@@ -392,7 +413,7 @@ namespace Odapter {
                 + (typeof(T_EntityAttribute).Equals(typeof(ObjectTypeAttribute)) ? "" : "table or view ")
                 + attribType + "s...");
             attributes = connection.Query<T_EntityAttribute>(sql,
-                        new { owner = _schema, objectNamePrefix = (String.IsNullOrEmpty(_filter) ? "" : _filter.ToUpper()) }).ToList<IEntityAttribute>();
+                        new { owner = Schema, objectNamePrefix = Filter.ToUpper() }).ToList<IEntityAttribute>();
             DisplayMessage(attributes.Count.ToString() + " " 
                 + (typeof(T_EntityAttribute).Equals(typeof(ObjectTypeAttribute)) ? "" : "table or view ")
                 + attribType + "s read.");
@@ -423,8 +444,8 @@ namespace Odapter {
             // load views or tables accordingly
             DisplayMessage("Reading " + source + "s...");
             entities = connection.Query<T_Entity>(sql,
-                new { owner = _schema, objectNamePrefix = (String.IsNullOrEmpty(_filter) ? "" : _filter.ToUpper()) }).ToList<IEntity>();
-            if (Parameter.Instance.IsExcludeObjectsNamesWithSpecificChars) entities = entities.FindAll(e => e.EntityName.IndexOfAny(Parameter.Instance.ObjectNameCharsToExclude) == -1);
+                new { owner = Schema, objectNamePrefix = Filter.ToUpper() }).ToList<IEntity>();
+            if (IsExcludeObjectsNamesWithSpecificChars) entities = entities.FindAll(e => e.EntityName.IndexOfAny(ObjectNameCharsToExclude) == -1);
             DisplayMessage(entities.Count.ToString() + " " + source + "s read.");
 
             // if we have not loaded all columns for tables and views, do so

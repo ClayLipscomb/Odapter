@@ -19,7 +19,7 @@
 using System.Collections.Generic;
 
 namespace Odapter {
-    public interface IParameter : IParameterDatabase {
+    public interface IParameter : IParameterLoad, IParameterTranslation {
         IList<string> ConfigFileNames { get; }
 
         string OutputPath { get; set; }
@@ -49,13 +49,6 @@ namespace Odapter {
         bool IsCSharp40 { get; }
 
         bool IsDeployResources { get; set; }
-        bool IsGenerateBaseAdapter { get; set; }
-        bool IsGenerateBaseEntities { get; set; }
-
-        bool IsGenerateObjectType { get; set; }
-        bool IsGeneratePackage { get; set; }
-        bool IsGenerateTable { get; set; }
-        bool IsGenerateView { get; set; }
 
         bool IsDataContractObjectType { get; set; }
         bool IsDataContractPackageRecord { get; set; }

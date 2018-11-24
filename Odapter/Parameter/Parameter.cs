@@ -116,7 +116,7 @@ namespace Odapter {
         private string _filter;
         public string Filter {
             get => _filter;
-            set { if (value != _filter) { _filter = value; RaisePropertyChanged("Filter"); } }
+            set { if (value != _filter) { _filter = (value ?? String.Empty).Trim().ToUpper(); RaisePropertyChanged("Filter"); } }
         }
 
         public string UserLogin { get; set; }
