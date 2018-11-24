@@ -32,18 +32,6 @@ namespace Odapter {
         string AncestorClassNameTable { get; set; }
         string AncestorClassNameView { get; set; }
 
-        string CSharpTypeUsedForOracleAssociativeArray { get; set; }
-        string CSharpTypeUsedForOracleBFile { get; set; }
-        string CSharpTypeUsedForOracleBlob { get; set; }
-        string CSharpTypeUsedForOracleClob { get; set; }
-        string CSharpTypeUsedForOracleDate { get; set; }
-        string CSharpTypeUsedForOracleInteger { get; set; }
-        string CSharpTypeUsedForOracleIntervalDayToSecond { get; set; }
-        string CSharpTypeUsedForOracleNumber { get; set; }
-        bool IsConvertOracleNumberToIntegerIfColumnNameIsId { get; set; }
-        string CSharpTypeUsedForOracleRefCursor { get; set; }
-        string CSharpTypeUsedForOracleTimeStamp { get; set; }
-
         CSharpVersion CSharpVersion { get; set; }
         bool IsCSharp30 { get; }
         bool IsCSharp40 { get; }
@@ -72,7 +60,7 @@ namespace Odapter {
 
         string NamespaceBase { get; set; }
         string NamespaceDataContract { get; set; }
-        string NamespaceObjectType { get; set; }
+        //string NamespaceObjectType { get; set; }
         string NamespacePackage { get; set; }
         string NamespaceSchema { get; set; }
         string NamespaceTable { get; set; }
