@@ -193,7 +193,7 @@ namespace Odapter {
         public short MaxAssocArraySize { get; set; }
         public short MaxReturnAndOutArgStringSize { get; set; }
 
-        // type mapping
+        // type translation - IParameterTranslation
         public string CSharpTypeUsedForOracleRefCursor { get; set; }
         public string CSharpTypeUsedForOracleAssociativeArray { get; set; }
         public string CSharpTypeUsedForOracleInteger { get; set; }
@@ -205,6 +205,7 @@ namespace Odapter {
         public string CSharpTypeUsedForOracleClob { get; set; }
         public string CSharpTypeUsedForOracleBFile { get; set; }    // pending implementation
         public bool IsConvertOracleNumberToIntegerIfColumnNameIsId { get; set; }
+        public bool IsUsingSchemaFilter { get => !String.IsNullOrWhiteSpace(Filter); }
 
         // advanced options
         public bool IsDuplicatePackageRecordOriginatingOutsideFilterAndSchema { get; set; }

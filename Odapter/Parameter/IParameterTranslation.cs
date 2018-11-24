@@ -30,7 +30,7 @@ namespace Odapter {
         string CSharpTypeUsedForOracleRefCursor { get; set; }
         string CSharpTypeUsedForOracleTimeStamp { get; set; }
 
-        string Filter { get; set; }
+        bool IsUsingSchemaFilter { get; }
 
         string NamespaceObjectType { get; set; }
     }

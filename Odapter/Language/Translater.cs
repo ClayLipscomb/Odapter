@@ -66,8 +66,8 @@ namespace Odapter {
             CSharpTypeUsedForOracleIntervalDayToSecond      = param.CSharpTypeUsedForOracleIntervalDayToSecond;
             CSharpTypeUsedForOracleBlob                     = param.CSharpTypeUsedForOracleBlob;
             CSharpTypeUsedForOracleClob                     = param.CSharpTypeUsedForOracleClob;
+            IsUsingSchemaFilter                             = param.IsUsingSchemaFilter;
             NamespaceObjectType                             = param.NamespaceObjectType;
-            SchemaFilter                                    = param.Filter;
         }
 
         #region Data Sets for UI Binding
@@ -132,8 +132,8 @@ namespace Odapter {
         private static string CSharpTypeUsedForOracleIntervalDayToSecond { get; set; }
         private static string CSharpTypeUsedForOracleBlob { get; set; }
         private static string CSharpTypeUsedForOracleClob { get; set; }
+        private static bool IsUsingSchemaFilter { get; set; }
         private static string NamespaceObjectType { get; set; }
-        private static string SchemaFilter { get; set; }
         #endregion
 
         #region Properties for Advanced Options
@@ -302,7 +302,7 @@ namespace Odapter {
             if (String.IsNullOrEmpty(oracleArg.TypeSubname)) {
                 return ConvertOracleNameToCSharpName(oracleArg.ProcedureName + UNDERSCORE + (oracleArg.ArgumentName ?? "RETURN") + UNDERSCORE + "ROW_TYPE", false);
                 // if the argument's record is defined in another package and there is a filter, the C# name must be prefixed with the source package name to prevent naming conflict
-            } else if (!String.IsNullOrWhiteSpace(SchemaFilter) && !oracleArg.PackageName.Equals(oracleArg.TypeName)) {
+            } else if (IsUsingSchemaFilter && !oracleArg.PackageName.Equals(oracleArg.TypeName)) {
                 return ConvertOracleNameToCSharpName(oracleArg.TypeName, false) + ConvertOracleNameToCSharpName(oracleArg.TypeSubname, false);
                 // normal record type
             } else {
