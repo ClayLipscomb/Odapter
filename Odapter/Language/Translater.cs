@@ -1,6 +1,6 @@
 ﻿//------------------------------------------------------------------------------
 //    Odapter - a C# code generator for Oracle packages
-//    Copyright(C) 2018 Clay Lipscomb
+//    Copyright(C) 2019 Clay Lipscomb
 //
 //    This program is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@ namespace Odapter {
     /// </summary>
     public class Translater {
 
-        internal static readonly List<string> OracleTypesIgnored = new List<string> {
+        internal static readonly IList<string> OracleTypesIgnored = new List<string> {
             // types explicitly not implemented in ODP.NET managed: ARRAY (Varray, Nested Table), BOOLEAN, OBJECT, REF, XML_TYPE
             // https://docs.oracle.com/database/121/ODPNT/OracleDbTypeEnumerationType.htm#ODPNT2286
             Orcl.VARRAY, Orcl.NESTED_TABLE, Orcl.PLSQL_BOOLEAN, Orcl.BOOLEAN, Orcl.OBJECT_TYPE, Orcl.REF, Orcl.XML_TYPE,
@@ -38,7 +38,7 @@ namespace Odapter {
             Orcl.INTERVAL_YEAR_TO_MONTH, Orcl.INTERVAL_DAY_TO_SECOND, Orcl.UNDEFINED, Orcl.RECORD
         };
 
-        internal static readonly List<string> TypesImplementedForAssociativeArrays = new List<string> {
+        internal static readonly IList<string> TypesImplementedForAssociativeArrays = new List<string> {
             Orcl.BINARY_FLOAT,
             Orcl.CHAR,
             Orcl.DATE,
@@ -55,7 +55,20 @@ namespace Odapter {
             // https://docs.oracle.com/cd/E85694_01/ODPNT/featOraCommand.htm#GUID-05A6D391-E77F-41AF-83A2-FE86A3D98872
         };
 
-        public static string ObjectTypeNamespace = "";
+        internal static void Initialize(IParameterTranslation param) {
+            CSharpTypeUsedForOracleRefCursor                = param.CSharpTypeUsedForOracleRefCursor;
+            CSharpTypeUsedForOracleAssociativeArray         = param.CSharpTypeUsedForOracleAssociativeArray;
+            CSharpTypeUsedForOracleInteger                  = param.CSharpTypeUsedForOracleInteger;
+            CSharpTypeUsedForOracleNumber                   = param.CSharpTypeUsedForOracleNumber;
+            IsConvertOracleNumberToIntegerIfColumnNameIsId  = param.IsConvertOracleNumberToIntegerIfColumnNameIsId;
+            CSharpTypeUsedForOracleDate                     = param.CSharpTypeUsedForOracleDate;
+            CSharpTypeUsedForOracleTimeStamp                = param.CSharpTypeUsedForOracleTimeStamp;
+            CSharpTypeUsedForOracleIntervalDayToSecond      = param.CSharpTypeUsedForOracleIntervalDayToSecond;
+            CSharpTypeUsedForOracleBlob                     = param.CSharpTypeUsedForOracleBlob;
+            CSharpTypeUsedForOracleClob                     = param.CSharpTypeUsedForOracleClob;
+            NamespaceObjectType                             = param.NamespaceObjectType;
+            SchemaFilter                                    = param.Filter;
+        }
 
         #region Data Sets for UI Binding
         public class CSharpVersionOption {
@@ -67,7 +80,7 @@ namespace Odapter {
             }
         }
 
-        public static readonly List<CSharpVersionOption> CSharpOptions = new List<CSharpVersionOption> {
+        public static readonly IList<CSharpVersionOption> CSharpOptions = new List<CSharpVersionOption> {
             new CSharpVersionOption(CSharpVersion.ThreeZero, @"3.0 (.NET 3.5, unmanaged ODP.NET)"),
             new CSharpVersionOption(CSharpVersion.FourZero , @"4.0 (.NET 4.0 minimum, managed ODP.NET)")
         };
@@ -109,16 +122,18 @@ namespace Odapter {
         #endregion
 
         #region Properties for Custom Type Translation
-        internal static string CSharpTypeUsedForOracleRefCursor { get; set; }
-        internal static string CSharpTypeUsedForOracleAssociativeArray { get; set; }
-        internal static string CSharpTypeUsedForOracleInteger { get; set; }
-        internal static string CSharpTypeUsedForOracleNumber { get; set; }
-        internal static bool ConvertOracleNumberToIntegerIfColumnNameIsId = true;
-        internal static string CSharpTypeUsedForOracleDate { get; set; }
-        internal static string CSharpTypeUsedForOracleTimeStamp { get; set; }
-        internal static string CSharpTypeUsedForOracleIntervalDayToSecond { get; set; }
-        internal static string CSharpTypeUsedForOracleBlob { get; set; }
-        internal static string CSharpTypeUsedForOracleClob { get; set; }
+        private static string CSharpTypeUsedForOracleRefCursor { get;  set; }
+        private static string CSharpTypeUsedForOracleAssociativeArray { get;  set; }
+        private static string CSharpTypeUsedForOracleInteger { get; set; }
+        private static string CSharpTypeUsedForOracleNumber { get; set; }
+        private static bool IsConvertOracleNumberToIntegerIfColumnNameIsId = true;
+        private static string CSharpTypeUsedForOracleDate { get; set; }
+        private static string CSharpTypeUsedForOracleTimeStamp { get; set; }
+        private static string CSharpTypeUsedForOracleIntervalDayToSecond { get; set; }
+        private static string CSharpTypeUsedForOracleBlob { get; set; }
+        private static string CSharpTypeUsedForOracleClob { get; set; }
+        private static string NamespaceObjectType { get; set; }
+        private static string SchemaFilter { get; set; }
         #endregion
 
         #region Properties for Advanced Options
@@ -190,7 +205,7 @@ namespace Odapter {
 
             // convert types to user friendly language
             string oracleTypeFormatted = oracleType
-                .Replace('_', ' ').Replace("PLSQL", "PL/SQL").Replace(Orcl.OBJECT_TYPE, "OBJECT TYPE").Replace(Orcl.ASSOCIATITVE_ARRAY, "associative array")
+                .Replace('_', ' ').Replace("PLSQL", @"PL/SQL").Replace(Orcl.OBJECT_TYPE, "OBJECT TYPE").Replace(Orcl.ASSOCIATITVE_ARRAY, "associative array")
                 + (String.IsNullOrWhiteSpace(reasonMsgAppend) ? "" : " " + reasonMsgAppend);
 
             switch (oracleType) { 
@@ -284,14 +299,15 @@ namespace Odapter {
             // Type and subtype can be null (e.g., a bug in the view when a record type based on a table). In this case, 
             //      use proc name (which is what subtype usually is anyway) and some extra special text. We need a 
             //      better algorithm to guarantee uniqueness in the C# namespace.
-            if (String.IsNullOrEmpty(oracleArg.TypeSubname)) 
+            if (String.IsNullOrEmpty(oracleArg.TypeSubname)) {
                 return ConvertOracleNameToCSharpName(oracleArg.ProcedureName + UNDERSCORE + (oracleArg.ArgumentName ?? "RETURN") + UNDERSCORE + "ROW_TYPE", false);
-            // if the argument's record is defined in another package and there is a filter, the C# name must be prefixed with the source package name to prevent naming conflict
-            else if (!String.IsNullOrWhiteSpace(Parameter.Instance.Filter) && !oracleArg.PackageName.Equals(oracleArg.TypeName)) 
+                // if the argument's record is defined in another package and there is a filter, the C# name must be prefixed with the source package name to prevent naming conflict
+            } else if (!String.IsNullOrWhiteSpace(SchemaFilter) && !oracleArg.PackageName.Equals(oracleArg.TypeName)) {
                 return ConvertOracleNameToCSharpName(oracleArg.TypeName, false) + ConvertOracleNameToCSharpName(oracleArg.TypeSubname, false);
-            // normal record type
-            else 
+                // normal record type
+            } else {
                 return ConvertOracleNameToCSharpName(oracleArg.TypeSubname, false);
+            }
         }
 
         /// <summary>
@@ -347,9 +363,9 @@ namespace Odapter {
                     return CSharp.ORACLE_INTERVAL_DS;
                 case Orcl.INTERVAL_YEAR_TO_MONTH:
                     return CSharp.ORACLE_INTERVAL_YM;
-                case Orcl.LONG_RAW:
-                case Orcl.RAW:
-                    return CSharp.ORACLE_BINARY;
+                //case Orcl.LONG_RAW:
+                //case Orcl.RAW:
+                //    return CSharp.ORACLE_BINARY;
                 case Orcl.REF:
                     return CSharp.ORACLE_REF;
                 case Orcl.REF_CURSOR:
@@ -417,8 +433,8 @@ namespace Odapter {
                     return CSharp.ORACLEDBTYPE_OBJECT;
                 case Orcl.REF_CURSOR:
                     return CSharp.ORACLEDBTYPE_CURSOR;
-                case Orcl.LONG_RAW:
-                    return CSharp.ORACLEDBTYPE_LONGRAW;
+                //case Orcl.LONG_RAW:
+                //    return CSharp.ORACLEDBTYPE_LONGRAW;
                 case Orcl.TIMESTAMP:
                     return CSharp.ORACLEDBTYPE_TIMESTAMP;
                 case Orcl.TIMESTAMP_WITH_TIME_ZONE:
@@ -580,7 +596,7 @@ namespace Odapter {
             // Judgment call interpretations for NUMBER to INTEGER 
             //  1. name a) is "id" or b) ends in "_id" 
             if ((oracleType == Orcl.NUMBER)
-                    && ConvertOracleNumberToIntegerIfColumnNameIsId
+                    && IsConvertOracleNumberToIntegerIfColumnNameIsId
                     && !String.IsNullOrEmpty(oracleName)
                     && (oracleName.ToLower().EndsWith("_id") || oracleName.ToLower().Equals("id"))
                 ) 
@@ -688,7 +704,7 @@ namespace Odapter {
                     return CSharp.OBJECT;
 
                 case Orcl.OBJECT_TYPE:
-                    return Translater.ObjectTypeNamespace + "." + ConvertOracleNameToCSharpName(oracleTypeName, false);
+                    return NamespaceObjectType + "." + ConvertOracleNameToCSharpName(oracleTypeName, false);
             }
 
             // SELECT distinct data_type, pls_type
@@ -752,30 +768,5 @@ namespace Odapter {
             return argumentDataType.Equals(Orcl.REF_CURSOR) || argumentDataType.Equals(Orcl.ASSOCIATITVE_ARRAY);
         }
         #endregion
-
-        #region Miscellaneous
-        /// <summary>
-        /// Determine the size(length) for an OracleParameter bound to a C# String
-        /// </summary>
-        /// <param name="oracleType"></param>
-        /// <returns></returns>
-        internal static int GetStringArgBindSize (string oracleType) { 
-
-            switch (oracleType) {
-                case Orcl.CHAR:
-                case Orcl.NCHAR:
-                    return 2000; // fixed length of 2000
-
-                case Orcl.NCLOB:
-                case Orcl.CLOB:
-                    return Int32.MaxValue; // max value allowed for OracleParameter size param
-
-                // VARCHAR2, VARCHAR, NVARCHAR2 or equivalents
-                default:
-                    return Parameter.Instance.MaxReturnAndOutArgStringSize; // custom defined value
-            }
-        }
-        #endregion
     }
 }
-

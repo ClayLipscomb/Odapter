@@ -117,7 +117,9 @@
     <Compile Include="DTO\Table.cs" />
     <Compile Include="DTO\View.cs" />
     <Compile Include="Language\Orcl.cs" />
-    <Compile Include="Parameter.cs" />
+    <Compile Include="Parameter\IParameter.cs" />
+    <Compile Include="Parameter\IParameterTranslation.cs" />
+    <Compile Include="Parameter\Parameter.cs" />
     <Compile Include="Dapper\SqlMapperOrcl.cs" />
     <Compile Include="Generation\Generator.cs">
       <SubType>Code</SubType>

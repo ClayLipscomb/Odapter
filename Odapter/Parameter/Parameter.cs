@@ -1,6 +1,6 @@
 ﻿//------------------------------------------------------------------------------
 //    Odapter - a C# code generator for Oracle packages
-//    Copyright(C) 2018 Clay Lipscomb
+//    Copyright(C) 2019 Clay Lipscomb
 //
 //    This program is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
@@ -26,14 +26,13 @@ using System.Xml.Serialization;
 using System.Xml;
 using System.Reflection;
 using System.ComponentModel;
-using System.Diagnostics;
 
 namespace Odapter {
     /// <summary>
     /// Contains all parameter data sent to code generator
     /// </summary>
     [Serializable]
-    public sealed class Parameter : INotifyPropertyChanged {
+    public sealed class Parameter : INotifyPropertyChanged, IParameter, IParameterTranslation {
         private Parameter() { RestoreDefaults(); }
         private static Parameter _instance = new Parameter();
         public static Parameter Instance { get { return _instance; } }
@@ -100,50 +99,50 @@ namespace Odapter {
 
         #region Properties
         // schema and connection
-        public String OracleHome { get; set; }
+        public string OracleHome { get; set; }
 
-        private String _databaseInstance;
-        public String DatabaseInstance {
+        private string _databaseInstance;
+        public string DatabaseInstance {
             get => _databaseInstance;
             set { if (value != _databaseInstance) { _databaseInstance = value; RaisePropertyChanged("DatabaseInstance"); } }
         }
 
-        private String _schema;
-        public String Schema {
+        private string _schema;
+        public string Schema {
             get => _schema;
             set { if (value != _schema) { _schema = value; RaisePropertyChanged("Schema"); } }
         }
 
-        private String _filter;
-        public String Filter {
+        private string _filter;
+        public string Filter {
             get => _filter;
             set { if (value != _filter) { _filter = value; RaisePropertyChanged("Filter"); } }
         }
 
-        public String UserLogin { get; set; }
-        public String Password { get; set; }
-        public Boolean IsSavePassword { get; set; }
+        public string UserLogin { get; set; }
+        public string Password { get; set; }
+        public bool IsSavePassword { get; set; }
 
         // .NET/C# version
         public CSharpVersion CSharpVersion { get; set; }
         [XmlIgnore]
-        public Boolean IsCSharp30 { get { return CSharpVersion == CSharpVersion.ThreeZero; } }
+        public bool IsCSharp30 { get { return CSharpVersion == CSharpVersion.ThreeZero; } }
         [XmlIgnore]
-        public Boolean IsCSharp40 { get { return CSharpVersion == CSharpVersion.FourZero; } }
+        public bool IsCSharp40 { get { return CSharpVersion == CSharpVersion.FourZero; } }
 
         // namespaces
-        private String _namespaceBase;
-        public String NamespaceBase {
+        private string _namespaceBase;
+        public string NamespaceBase {
             get => _namespaceBase;
             set { if (value != _namespaceBase) { _namespaceBase = value; RaisePropertyChanged("NamespaceBase"); } }
         }
 
-        public String NamespacePackage { get; set; }
-        public String NamespaceObjectType { get; set; } // must have internally in order to generate "using" for other entity types
-        public String NamespaceTable { get; set; }
-        public String NamespaceView { get; set; }
-        public String NamespaceDataContract { get; set; }
-        public String NamespaceSchema { get; set; } // de facto full namespace for schema (includes filter, if any)
+        public string NamespacePackage { get; set; }
+        public string NamespaceObjectType { get; set; } // must have internally in order to generate "using" for other entity types
+        public string NamespaceTable { get; set; }
+        public string NamespaceView { get; set; }
+        public string NamespaceDataContract { get; set; }
+        public string NamespaceSchema { get; set; } // de facto full namespace for schema (includes filter, if any)
 
         // ancestor class names
         public string AncestorClassNamePackage { get; set; }
@@ -153,89 +152,89 @@ namespace Odapter {
         public string AncestorClassNameView { get; set; }
 
         // code to generate
-        private String _outputPath;
-        public String OutputPath {
+        private string _outputPath;
+        public string OutputPath {
             get => _outputPath;
             set { if (value != _outputPath) { _outputPath = value; RaisePropertyChanged("OutputPath"); }  } 
         }
 
-        public Boolean IsGeneratePackage { get; set; }
-        public Boolean IsGenerateObjectType { get; set; }
-        public Boolean IsGenerateTable { get; set; }
-        public Boolean IsGenerateView { get; set; }
+        public bool IsGeneratePackage { get; set; }
+        public bool IsGenerateObjectType { get; set; }
+        public bool IsGenerateTable { get; set; }
+        public bool IsGenerateView { get; set; }
 
-        public Boolean IsDataContractPackageRecord { get; set; }
-        public Boolean IsDataContractObjectType { get; set; }
-        public Boolean IsDataContractTable { get; set; }
-        public Boolean IsDataContractView { get; set; }
+        public bool IsDataContractPackageRecord { get; set; }
+        public bool IsDataContractObjectType { get; set; }
+        public bool IsDataContractTable { get; set; }
+        public bool IsDataContractView { get; set; }
 
-        public Boolean IsXmlElementPackageRecord { get; set; }
-        public Boolean IsXmlElementObjectType { get; set; }
-        public Boolean IsXmlElementTable { get; set; }
-        public Boolean IsXmlElementView { get; set; }
+        public bool IsXmlElementPackageRecord { get; set; }
+        public bool IsXmlElementObjectType { get; set; }
+        public bool IsXmlElementTable { get; set; }
+        public bool IsXmlElementView { get; set; }
 
-        public Boolean IsSerializablePackageRecord { get; set; }
-        public Boolean IsSerializableObjectType { get; set; }
-        public Boolean IsSerializableTable { get; set; }
-        public Boolean IsSerializableView { get; set; }
+        public bool IsSerializablePackageRecord { get; set; }
+        public bool IsSerializableObjectType { get; set; }
+        public bool IsSerializableTable { get; set; }
+        public bool IsSerializableView { get; set; }
 
-        public Boolean IsPartialPackage { get; set; }
-        public Boolean IsPartialObjectType { get; set; }
-        public Boolean IsPartialTable { get; set; }
-        public Boolean IsPartialView { get; set; }
+        public bool IsPartialPackage { get; set; }
+        public bool IsPartialObjectType { get; set; }
+        public bool IsPartialTable { get; set; }
+        public bool IsPartialView { get; set; }
 
-        private Boolean _isIncludeFilterPrefixInNaming;
-        public Boolean IsIncludeFilterPrefixInNaming {
+        private bool _isIncludeFilterPrefixInNaming;
+        public bool IsIncludeFilterPrefixInNaming {
             get => _isIncludeFilterPrefixInNaming;
             set { _isIncludeFilterPrefixInNaming = value; RaisePropertyChanged("IsIncludeFilterPrefixInNaming"); }
         }
 
         // sizing
-        public Int16 MaxAssocArraySize { get; set; }
-        public Int16 MaxReturnAndOutArgStringSize { get; set; }
+        public short MaxAssocArraySize { get; set; }
+        public short MaxReturnAndOutArgStringSize { get; set; }
 
         // type mapping
-        public String CSharpTypeUsedForOracleRefCursor { get; set; }
-        public String CSharpTypeUsedForOracleAssociativeArray { get; set; }
-        public String CSharpTypeUsedForOracleInteger { get; set; }
-        public String CSharpTypeUsedForOracleNumber { get; set; }
-        public String CSharpTypeUsedForOracleDate { get; set; }
-        public String CSharpTypeUsedForOracleTimeStamp { get; set; }
-        public String CSharpTypeUsedForOracleIntervalDayToSecond { get; set; }
-        public String CSharpTypeUsedForOracleBlob { get; set; }
-        public String CSharpTypeUsedForOracleClob { get; set; }
-        public String CSharpTypeUsedForOracleBFile { get; set; }    // pending implementation
-        public Boolean IsConvertOracleNumberToIntegerIfColumnNameIsId { get; set; }
+        public string CSharpTypeUsedForOracleRefCursor { get; set; }
+        public string CSharpTypeUsedForOracleAssociativeArray { get; set; }
+        public string CSharpTypeUsedForOracleInteger { get; set; }
+        public string CSharpTypeUsedForOracleNumber { get; set; }
+        public string CSharpTypeUsedForOracleDate { get; set; }
+        public string CSharpTypeUsedForOracleTimeStamp { get; set; }
+        public string CSharpTypeUsedForOracleIntervalDayToSecond { get; set; }
+        public string CSharpTypeUsedForOracleBlob { get; set; }
+        public string CSharpTypeUsedForOracleClob { get; set; }
+        public string CSharpTypeUsedForOracleBFile { get; set; }    // pending implementation
+        public bool IsConvertOracleNumberToIntegerIfColumnNameIsId { get; set; }
 
         // advanced options
-        public Boolean IsDuplicatePackageRecordOriginatingOutsideFilterAndSchema { get; set; }
-        public Boolean IsExcludeObjectsNamesWithSpecificChars { get; set; }
+        public bool IsDuplicatePackageRecordOriginatingOutsideFilterAndSchema { get; set; }
+        public bool IsExcludeObjectsNamesWithSpecificChars { get; set; }
         public char[] ObjectNameCharsToExclude { get; set; }
-        public Boolean IsGenerateDynamicMappingMethodForTypedCursor { get; set; }
-        public Boolean IsUseAutoImplementedProperties { get; set; }
-        public String LocalVariableNameSuffix { get; set; }
+        public bool IsGenerateDynamicMappingMethodForTypedCursor { get; set; }
+        public bool IsUseAutoImplementedProperties { get; set; }
+        public string LocalVariableNameSuffix { get; set; }
 
         // miscellaneous
-        public Boolean IsDeployResources { get; set; }  // will overwrite existing file
-        public Boolean IsGenerateBaseAdapter { get; set; }  // will not overwrite existing file
-        public Boolean IsGenerateBaseEntities { get; set; } // will not overwrite existing file
+        public bool IsDeployResources { get; set; }  // will overwrite existing file
+        public bool IsGenerateBaseAdapter { get; set; }  // will not overwrite existing file
+        public bool IsGenerateBaseEntities { get; set; } // will not overwrite existing file
         [XmlIgnore]
-        public List<String> ConfigFileNames { get { return GetLocalConfigFileNames(); }  }
+        public IList<string> ConfigFileNames { get { return GetLocalConfigFileNames(); }  }
 
         [XmlIgnore]
-        public String ObjectNameCharsToExcludeAsString {
-            get => String.Join<Char>("", this.ObjectNameCharsToExclude); 
+        public string ObjectNameCharsToExcludeAsString {
+            get => string.Join<Char>("", this.ObjectNameCharsToExclude); 
             set { this.ObjectNameCharsToExclude = value.Trim().Replace(" ", "").ToCharArray(); }
         }
         #endregion Properties
 
         #region File Methods
-        private String GetExecutablePath() {
+        private string GetExecutablePath() {
             return Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
         }
 
-        private List<String> GetLocalConfigFileNames() {
-            List<String> files = (new DirectoryInfo(GetExecutablePath()))
+        private IList<string> GetLocalConfigFileNames() {
+            List<string> files = (new DirectoryInfo(GetExecutablePath()))
                 .GetFiles(@"*.config", SearchOption.TopDirectoryOnly)
                 .Where(n => !n.Name.EndsWith(@"exe.config", true, CultureInfo.CurrentCulture))
                 .OrderBy(f => f.Name)
@@ -248,7 +247,7 @@ namespace Odapter {
         /// </summary>
         /// <param name="fileName"></param>
         public void SaveToFile(string fileName) {
-            String passwordHold = null;
+            string passwordHold = null;
             if (!IsSavePassword) {
                 passwordHold = Password;
                 Password = null;

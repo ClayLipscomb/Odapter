@@ -22,6 +22,7 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using System.Reflection;
+using CS = Odapter.CSharp;
 
 namespace Odapter {
     public class Generator {
@@ -469,7 +470,7 @@ namespace Odapter {
                         + "\"" + FUNC_RETURN_PARAM_NAME + "\""
                         + ", " + clientOracleDbType
                         + (isAssocArray ? ", " + Parameter.Instance.MaxAssocArraySize.ToString() : "")
-                        + (cSharpArgType == CSharp.STRING ? ", " + Translater.GetStringArgBindSize(arg.DataType).ToString() : "") // returning String requires size
+                        + (cSharpArgType == CSharp.STRING ? ", " + GetStringArgBindSize(arg.DataType).ToString() : "") // returning String requires size
                         + ", null"
                         + ", ParameterDirection.ReturnValue));");
 
@@ -496,7 +497,7 @@ namespace Odapter {
                         + "\"" + arg.ArgumentName + "\""
                         + ", " + clientOracleDbType
                         + (isAssocArray ? ", " + (arg.InOut.EndsWith(Orcl.OUT.ToString()) ? Parameter.Instance.MaxAssocArraySize.ToString() : "(" + cSharpArgName + " == null ? 0 : " + cSharpArgName + ".Count)") : "")
-                        + (arg.InOut.EndsWith(Orcl.OUT.ToString()) && cSharpArgType == CSharp.STRING ? ", " + Translater.GetStringArgBindSize(arg.DataType).ToString() : "") // returning String requires size
+                        + (arg.InOut.EndsWith(Orcl.OUT.ToString()) && cSharpArgType == CSharp.STRING ? ", " + GetStringArgBindSize(arg.DataType).ToString() : "") // returning String requires size
                         + ", " + (arg.InOut.Equals(Orcl.OUT.ToString()) || isAssocArray ? "null" : cSharpArgName)
                         + ", ParameterDirection." + (arg.InOut.StartsWith(Orcl.IN.ToString()) ? "Input" : "") + (arg.InOut.EndsWith(Orcl.OUT.ToString()) ? "Output" : "") + ")"
                         + ");");
@@ -700,7 +701,7 @@ namespace Odapter {
             string methodName = CSharp.READ_RESULT + interfaceName;
             string genericTypeParam = CSharp.GENERIC_TYPE_PREFIX + cSharpType;
             string paramNameOracleReader = "rdr"; // Oracle clash not possible
-            string returnType = CSharp.GenericCollectionOf(Translater.CSharpTypeUsedForOracleRefCursor, genericTypeParam);
+            string returnType = CSharp.GenericCollectionOf(Parameter.Instance.CSharpTypeUsedForOracleRefCursor, genericTypeParam);
 
             // signature
             classText.AppendLine(Tab(2) + "public " + returnType + " " + methodName + "<" + genericTypeParam + ">"
@@ -1150,26 +1151,15 @@ namespace Odapter {
 
             if (Parameter.Instance.IsGeneratePackage || Parameter.Instance.IsGenerateObjectType || Parameter.Instance.IsGenerateTable || Parameter.Instance.IsGenerateView) {
 
-                // Set these options first since Loader does some translation. In the future, we need to modify Loader to do no translation (if possible).
-                Translater.CSharpTypeUsedForOracleRefCursor = Parameter.Instance.CSharpTypeUsedForOracleRefCursor;
-                Translater.CSharpTypeUsedForOracleAssociativeArray = Parameter.Instance.CSharpTypeUsedForOracleAssociativeArray;
-                Translater.CSharpTypeUsedForOracleInteger = Parameter.Instance.CSharpTypeUsedForOracleInteger;
-                Translater.CSharpTypeUsedForOracleNumber = Parameter.Instance.CSharpTypeUsedForOracleNumber;
-                Translater.CSharpTypeUsedForOracleDate = Parameter.Instance.CSharpTypeUsedForOracleDate;
-                Translater.CSharpTypeUsedForOracleTimeStamp = Parameter.Instance.CSharpTypeUsedForOracleTimeStamp;
-                Translater.CSharpTypeUsedForOracleIntervalDayToSecond = Parameter.Instance.CSharpTypeUsedForOracleIntervalDayToSecond;
-                Translater.CSharpTypeUsedForOracleBlob = Parameter.Instance.CSharpTypeUsedForOracleBlob;
-                Translater.CSharpTypeUsedForOracleClob = Parameter.Instance.CSharpTypeUsedForOracleClob;
-                //Translater.CSharpTypeUsedForOracleBFile = Parameter.Instance.CSharpTypeUsedForOracleBFile;
-                Translater.ConvertOracleNumberToIntegerIfColumnNameIsId = Parameter.Instance.IsConvertOracleNumberToIntegerIfColumnNameIsId;
-                Translater.ObjectTypeNamespace = Parameter.Instance.NamespaceObjectType;
+                // initialize Translater first since Loader does some translation. In the future, we need to modify Loader to do no translation (if possible).
+                Translater.Initialize(Parameter.Instance);
 
                 // instantiate generator
                 Generator generator = new Generator(Parameter.Instance.Schema, Parameter.Instance.OutputPath, displayMessageMethod, Parameter.Instance.DatabaseInstance,
                     Parameter.Instance.UserLogin, Parameter.Instance.Password, Parameter.Instance.NamespaceBase, Parameter.Instance.NamespaceObjectType);
 
-                    // retrieve necessary data from schema
-                    Loader loader = new Loader(displayMessageMethod);
+                // retrieve necessary data from schema
+                Loader loader = new Loader(displayMessageMethod);
                 try {
                     displayMessageMethod(Parameter.Instance.DatabaseInstance + " " + Parameter.Instance.Schema 
                         + (String.IsNullOrEmpty(Parameter.Instance.Filter) ? String.Empty : " " + Parameter.Instance.Filter + "*") + " generation:");
@@ -1177,7 +1167,7 @@ namespace Odapter {
                 } catch (Exception e) {
                     displayMessageMethod(e.Message);
                     return;
-                } 
+                }
 
                 ////////////////////////
                 // generate base classes
@@ -1192,15 +1182,12 @@ namespace Odapter {
                 if (Parameter.Instance.IsGenerateObjectType)
                     generator.WriteNonPackagedEntityClasses<IObjectType>(loader.ObjectTypes, Parameter.Instance.NamespaceObjectType, Generator.GenerateBaseObjectTypeClassName(Parameter.Instance.Schema),
                         Parameter.Instance.IsSerializableObjectType, Parameter.Instance.IsPartialObjectType, Parameter.Instance.IsDataContractObjectType, Parameter.Instance.IsXmlElementObjectType);
-                    //generator.WriteObjectTypeClasses(loader.ObjectTypes, Parameter.Instance.NamespaceObjectType, Generator.GenerateBaseObjectTypeClassName(Parameter.Instance.Schema));
                 if (Parameter.Instance.IsGenerateTable)
                     generator.WriteNonPackagedEntityClasses<ITable>(loader.Tables, Parameter.Instance.NamespaceTable, Generator.GenerateBaseTableClassName(Parameter.Instance.Schema),
                         Parameter.Instance.IsSerializableTable, Parameter.Instance.IsPartialTable, Parameter.Instance.IsDataContractTable, Parameter.Instance.IsXmlElementTable);
-                    //generator.WriteTableClasses(loader.Tables, Parameter.Instance.NamespaceTable, Generator.GenerateBaseTableClassName(Parameter.Instance.Schema));
                 if (Parameter.Instance.IsGenerateView)
                     generator.WriteNonPackagedEntityClasses<IView>(loader.Views, Parameter.Instance.NamespaceView, Generator.GenerateBaseViewClassName(Parameter.Instance.Schema),
                         Parameter.Instance.IsSerializableView, Parameter.Instance.IsPartialView, Parameter.Instance.IsDataContractView, Parameter.Instance.IsXmlElementView);
-                    //generator.WriteViewClasses(loader.Views, Parameter.Instance.NamespaceView, Generator.GenerateBaseViewClassName(Parameter.Instance.Schema));
 
                 generator.DeployUtilityClasses(Parameter.Instance.IsDeployResources);
                 displayMessageMethod(Message.GENERATION_COMPLETE);
@@ -1277,6 +1264,28 @@ namespace Odapter {
             string tabs = "";
             for (int i = 0; i < count; i++) tabs += new String(' ', 4); // tab is 4 spaces
             return tabs;
+        }
+
+        /// <summary>
+        /// Determine the size(length) for an OracleParameter bound to a C# String
+        /// </summary>
+        /// <param name="oracleType"></param>
+        /// <returns></returns>
+        private static int GetStringArgBindSize(string oracleType) {
+
+            switch (oracleType) {
+                case Orcl.CHAR:
+                case Orcl.NCHAR:
+                    return 2000; // fixed length of 2000
+
+                case Orcl.NCLOB:
+                case Orcl.CLOB:
+                    return Int32.MaxValue; // max value allowed for OracleParameter size param
+
+                // VARCHAR2, VARCHAR, NVARCHAR2 or equivalents
+                default:
+                    return Parameter.Instance.MaxReturnAndOutArgStringSize; // custom defined value
+            }
         }
 
         private string GenerateDataContractAttribute() {
