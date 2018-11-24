@@ -233,7 +233,7 @@ namespace Odapter {
         /// </summary>
         /// <param name="connection"></param>
         /// <param name="packaged">If true load only packaged arguments, else load non-packaged.</param>
-        private void LoadArguments<T_Argument>(OracleConnection connection, bool packaged = true)
+        private void LoadArguments<T_Argument>(OracleConnection connection)
             where T_Argument : class, IArgument, new() {
 
                 string sql = " SELECT CAST(position as NUMBER(9,0)) position, overload, "
@@ -245,12 +245,12 @@ namespace Odapter {
                             + " object_name, package_name, defaulted, owner, type_link "
                         + " FROM sys.all_arguments "
                         + " WHERE owner = :owner "
-                        + " AND package_name IS " + (packaged ? "NOT" : "") + " NULL "
+                        + " AND package_name IS NOT NULL "
                         + " AND UPPER(package_name) LIKE :packageNamePrefix || '%' "
                         + " ORDER BY package_name, object_name, overload, sequence ";
 
-            if ((packaged && ArgumentsPackaged == null) || (!packaged)) {
-                DisplayMessage("Reading" + (packaged ? " packaged" : " non-packaged") + " arguments...");
+            if (ArgumentsPackaged == null) {
+                DisplayMessage("Reading package arguments...");
                 List<IArgument> args = connection.Query<T_Argument>(sql, 
                     new { owner = _schema, packageNamePrefix = (String.IsNullOrEmpty(_filter) ? "" : _filter.ToUpper()) }).ToList<IArgument>();
                 if (Parameter.Instance.IsExcludeObjectsNamesWithSpecificChars) args = args.FindAll(a => a.PackageName.IndexOfAny(Parameter.Instance.ObjectNameCharsToExclude) == -1);
