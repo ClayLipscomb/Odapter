@@ -1,6 +1,6 @@
 ﻿//------------------------------------------------------------------------------
 //    Odapter - a C# code generator for Oracle packages
-//    Copyright(C) 2018 Clay Lipscomb
+//    Copyright(C) 2019 Clay Lipscomb
 //
 //    This program is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
@@ -18,7 +18,6 @@
 
 namespace Odapter {
     internal interface IObjectType : IEntity {
-        string DbAncestorTypeName { get; set; }
-        bool Instantiable { get; }
+        string DbAncestorTypeName { get; set; } // ancestor object defined in database
     }
 }

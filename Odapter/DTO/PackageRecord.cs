@@ -1,6 +1,6 @@
 ﻿//------------------------------------------------------------------------------
 //    Odapter - a C# code generator for Oracle packages
-//    Copyright(C) 2018 Clay Lipscomb
+//    Copyright(C) 2019 Clay Lipscomb
 //
 //    This program is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
@@ -23,6 +23,7 @@ namespace Odapter {
     internal class PackageRecord : EntityBase, IPackageRecord {
 
         public string EntityName { get { return SubName; } set { SubName = value; } }   // sub_name is underlying sys view column
+        public bool IsInstantiable { get => false; }  // a translated package record should not be instantiable
 
         // IPackageRecord specific
         public string PackageName { get; set; }

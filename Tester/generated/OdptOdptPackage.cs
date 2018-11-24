@@ -523,7 +523,7 @@ namespace Schema.Odpt.Odpt.Package {
         public static OdptPkgMain Instance { get { return _instance; } }
 
         // **RECORD IGNORED** - .NET cannot send/receive a PL/SQL BOOLEAN field
-        // public partial class TRecordTypeIgnored : Schema.Odpt.Odpt.OdptPackageRecord, ITRecordTypeIgnored {
+        // public abstract partial class TRecordTypeIgnored : Schema.Odpt.Odpt.OdptPackageRecord, ITRecordTypeIgnored {
 
         public void DuplicateSignature1(Int64? pParamIn1, ref Int64? pParamInOut1, out Int64? pParamOut1, OracleConnection optionalPreexistingOpenConnection = null) {
             pParamOut1 = null; 
@@ -2878,7 +2878,7 @@ namespace Schema.Odpt.Odpt.Package {
         } // IFilteredPkgTTableBigFiltered
 
         [DataContract(Namespace="http://odpt.business.com")][Serializable()]
-        public partial class FilteredPkgTTableBigFiltered : Schema.Odpt.Odpt.OdptPackageRecord, IFilteredPkgTTableBigFiltered {
+        public abstract partial class FilteredPkgTTableBigFiltered : Schema.Odpt.Odpt.OdptPackageRecord, IFilteredPkgTTableBigFiltered {
             private Byte propertyToEnsuresPartialClassNamesAreUniqueAtCompileTime { get; set; }
             [DataMember(Order=0, IsRequired=false)][XmlElement(Order=0, IsNullable=true)]
             public virtual Int64? Id { get; set; }
@@ -3011,7 +3011,7 @@ namespace Schema.Odpt.Odpt.Package {
         } // ITTableBig
 
         [DataContract(Namespace="http://odpt.business.com")][Serializable()]
-        public partial class TTableBig : Schema.Odpt.Odpt.OdptPackageRecord, ITTableBig {
+        public abstract partial class TTableBig : Schema.Odpt.Odpt.OdptPackageRecord, ITTableBig {
             private Byte propertyToEnsuresPartialClassNamesAreUniqueAtCompileTime { get; set; }
             [DataMember(Order=0, IsRequired=false)][XmlElement(Order=0, IsNullable=true)]
             public virtual Int64? Id { get; set; }
@@ -3128,7 +3128,7 @@ namespace Schema.Odpt.Odpt.Package {
         } // ITTableBigChar
 
         [DataContract(Namespace="http://odpt.business.com")][Serializable()]
-        public partial class TTableBigChar : Schema.Odpt.Odpt.OdptPackageRecord, ITTableBigChar {
+        public abstract partial class TTableBigChar : Schema.Odpt.Odpt.OdptPackageRecord, ITTableBigChar {
             private Byte propertyToEnsuresPartialClassNamesAreUniqueAtCompileTime { get; set; }
             [DataMember(Order=0, IsRequired=false)][XmlElement(Order=0, IsNullable=true)]
             public virtual Int64? Id { get; set; }
@@ -4156,7 +4156,7 @@ namespace Schema.Odpt.Odpt.Package {
         } // ITTableNumber
 
         [DataContract(Namespace="http://odpt.business.com")][Serializable()]
-        public partial class TTableNumber : Schema.Odpt.Odpt.OdptPackageRecord, ITTableNumber {
+        public abstract partial class TTableNumber : Schema.Odpt.Odpt.OdptPackageRecord, ITTableNumber {
             private Byte propertyToEnsuresPartialClassNamesAreUniqueAtCompileTime { get; set; }
             [DataMember(Order=0, IsRequired=false)][XmlElement(Order=0, IsNullable=true)]
             public virtual Int64? Id { get; set; }
@@ -4284,7 +4284,7 @@ namespace Schema.Odpt.Odpt.Package {
         } // ITTableNumberDec
 
         [DataContract(Namespace="http://odpt.business.com")][Serializable()]
-        public partial class TTableNumberDec : Schema.Odpt.Odpt.OdptPackageRecord, ITTableNumberDec {
+        public abstract partial class TTableNumberDec : Schema.Odpt.Odpt.OdptPackageRecord, ITTableNumberDec {
             private Byte propertyToEnsuresPartialClassNamesAreUniqueAtCompileTime { get; set; }
             [DataMember(Order=0, IsRequired=false)][XmlElement(Order=0, IsNullable=true)]
             public virtual Int64? Id { get; set; }

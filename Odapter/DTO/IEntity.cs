@@ -1,6 +1,6 @@
 ﻿//------------------------------------------------------------------------------
 //    Odapter - a C# code generator for Oracle packages
-//    Copyright(C) 2018 Clay Lipscomb
+//    Copyright(C) 2019 Clay Lipscomb
 //
 //    This program is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
@@ -22,8 +22,13 @@ namespace Odapter {
     /// </summary>
     internal interface IEntity : IEntityBase {
         /// <summary>
-        /// Implemented property should wrap a camelcase private member that will map to the underlying underscore_delimited sys_view column.
+        /// Property should wrap a camelcase private member that will map to the underlying underscore_delimited sys_view column.
         /// </summary>
         string EntityName { get; set; }
+
+        /// <summary>
+        /// Property can either get hardcoded value, or map to an underlying underscore_delimited sys_view column.
+        /// </summary>
+        bool IsInstantiable { get; }
     }
 }

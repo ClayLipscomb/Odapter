@@ -1011,14 +1011,10 @@ namespace Odapter {
             bool isPackageRecord = entity is IPackageRecord;
             StringBuilder classText = new StringBuilder("");
 
-            bool isInstantiable = true;         // only object type can be non-instantiable
             string dbAncestorTypeName = null;   // only object type can have a database ancestor
-            if (entity is IObjectType) {
-                isInstantiable = ((IObjectType)entity).Instantiable;
-                dbAncestorTypeName = ((IObjectType)entity).DbAncestorTypeName;
-            }
+            if (entity is IObjectType) dbAncestorTypeName = ((IObjectType)entity).DbAncestorTypeName;
 
-            string classFirstLine = "public" + (isInstantiable ? "" : " abstract") + (isPartial ? " partial" : "") + " class " + className
+            string classFirstLine = "public" + (entity.IsInstantiable ? "" : " abstract") + (isPartial ? " partial" : "") + " class " + className
                 + (!String.IsNullOrEmpty(dbAncestorTypeName)
                         ? " : " + Translater.ConvertOracleNameToCSharpName(dbAncestorTypeName, false) // Oracle ancestor gets precedence
                         : (!String.IsNullOrEmpty(ancestorClassName)

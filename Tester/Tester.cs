@@ -1,6 +1,6 @@
 ﻿//------------------------------------------------------------------------------
 //    Odapter - a C# code generator for Oracle packages
-//    Copyright(C) 2018 Clay Lipscomb
+//    Copyright(C) 2019 Clay Lipscomb
 //
 //    This program is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
@@ -488,17 +488,17 @@ namespace Odapter.Tester {
             private void TestCursorFilteredPackageTableBig() {
                 uint? rowLimit = TABLE_BIG_ROWS_TO_RETRIEVE;
 #if ODPT_FILTER_PREFIX
-                ICollection<OdptPkgTableBig.FilteredPkgTTableBigFiltered> retList, outList, outList2;
+                ICollection<FilteredPkgTTableBigFiltered> retList, outList, outList2;
 #else
-                ICollection<FilteredPkg.TTableBigFiltered> retList, outList, outList2;
+                ICollection<TTableBigFiltered> retList, outList, outList2;
 #endif
                 DataTable retDataTable, outDataTable, outDataTable2;
 
                 retList = OdptPkgTableBig.Instance.GetRowsTypedFilteredPkg<
 #if ODPT_FILTER_PREFIX
-                    OdptPkgTableBig.FilteredPkgTTableBigFiltered
+                    FilteredPkgTTableBigFiltered
 #else
-                    FilteredPkg.TTableBigFiltered
+                    TTableBigFiltered
 #endif
                         >(out outList, out outList2, rowLimit, null);
                 Debug.Assert(retList.Count == rowLimit);
@@ -507,9 +507,9 @@ namespace Odapter.Tester {
 
                 retList = OdptPkgTableBig.Instance.GetRowsUntypedFilteredPkg<
 #if ODPT_FILTER_PREFIX
-                    OdptPkgTableBig.FilteredPkgTTableBigFiltered, OdptPkgTableBig.FilteredPkgTTableBigFiltered, OdptPkgTableBig.FilteredPkgTTableBigFiltered
+                    FilteredPkgTTableBigFiltered, FilteredPkgTTableBigFiltered, FilteredPkgTTableBigFiltered
 #else
-                    FilteredPkg.TTableBigFiltered, FilteredPkg.TTableBigFiltered, FilteredPkg.TTableBigFiltered
+                    TTableBigFiltered, TTableBigFiltered, TTableBigFiltered
 #endif
                         >(out outList, out outList2, false, false, rowLimit, null);
                 Debug.Assert(retList.Count == rowLimit);
@@ -524,24 +524,24 @@ namespace Odapter.Tester {
 
             private void TestCursorTypedTableBig() {
                 uint? rowLimit = TABLE_BIG_ROWS_TO_RETRIEVE;
-                ICollection<OdptPkgTableBig.TTableBig> retTableBigList, outTableBigList;
-                ICollection<OdptPkgTableBig.TTableBigChar> outTableBigCharList;
+                ICollection<TTableBig> retTableBigList, outTableBigList;
+                ICollection<TTableBigChar> outTableBigCharList;
 
                 // static, no mapping
                 // ret
-                retTableBigList = OdptPkgTableBig.Instance.GetRowsTypedRet<OdptPkgTableBig.TTableBig>(rowLimit, null);
+                retTableBigList = OdptPkgTableBig.Instance.GetRowsTypedRet<TTableBig>(rowLimit, null);
                 Debug.Assert(retTableBigList.Count == rowLimit);
 
                 // 1 out
-                OdptPkgTableBig.Instance.GetRowsTypedOut<OdptPkgTableBig.TTableBig>(out outTableBigList, rowLimit, null);
+                OdptPkgTableBig.Instance.GetRowsTypedOut<TTableBig>(out outTableBigList, rowLimit, null);
                 Debug.Assert(outTableBigList.Count == rowLimit);
 
                 // ret and 1 out
-                retTableBigList = OdptPkgTableBig.Instance.GetRowsTypedOutRet<OdptPkgTableBig.TTableBig>(out outTableBigList, rowLimit, null);
+                retTableBigList = OdptPkgTableBig.Instance.GetRowsTypedOutRet<TTableBig>(out outTableBigList, rowLimit, null);
                 Debug.Assert(retTableBigList.Count == rowLimit && outTableBigList.Count == rowLimit);
 
                 // ret and 2 out
-                retTableBigList = OdptPkgTableBig.Instance.GetRowsTypedOut2Ret<OdptPkgTableBig.TTableBig, OdptPkgTableBig.TTableBigChar>(out outTableBigList, out outTableBigCharList, rowLimit, null);
+                retTableBigList = OdptPkgTableBig.Instance.GetRowsTypedOut2Ret<TTableBig, TTableBigChar>(out outTableBigList, out outTableBigCharList, rowLimit, null);
                 Debug.Assert(retTableBigList.Count == rowLimit && outTableBigList.Count == rowLimit && outTableBigCharList.Count == rowLimit);
 
 #if MAPPING_FOR_TYPED_CURSOR
@@ -552,7 +552,7 @@ namespace Odapter.Tester {
                 ICollection<TTableBigCharMapByPositionPartial> outTableBigCharMapByPositionPartialList;
 
                 // list ret - mapping by name
-                retTableBigList = OdptPkgTableBig.Instance.GetRowsTypedRet<OdptPkgTableBig.TTableBig>(false, false, rowLimit, null);
+                retTableBigList = OdptPkgTableBig.Instance.GetRowsTypedRet<TTableBig>(false, false, rowLimit, null);
 
                 // list ret - mapping by position, NOT allowing unmapped columns
                 retTableBigMapByPositionAllList = OdptPkgTableBig.Instance.GetRowsTypedRet<TTableBigMapByPositionAll>(true, false, rowLimit, null);
@@ -563,14 +563,14 @@ namespace Odapter.Tester {
 
                 // all above cases using 1 out
                 outTableBigList = null; outTableBigMapByPositionAllList = null; outTableBigMapByPositionPartialList = null;
-                OdptPkgTableBig.Instance.GetRowsTypedOut<OdptPkgTableBig.TTableBig>(out outTableBigList, false, false, rowLimit, null);
+                OdptPkgTableBig.Instance.GetRowsTypedOut<TTableBig>(out outTableBigList, false, false, rowLimit, null);
                 OdptPkgTableBig.Instance.GetRowsTypedOut<TTableBigMapByPositionAll>(out outTableBigMapByPositionAllList, true, false, rowLimit, null);
                 OdptPkgTableBig.Instance.GetRowsTypedOut<TTableBigMapByPositionPartial>(out outTableBigMapByPositionPartialList, true, true, rowLimit, null);
                 Debug.Assert(outTableBigList.Count == rowLimit && outTableBigMapByPositionAllList.Count == rowLimit && outTableBigMapByPositionPartialList.Count == rowLimit);
 
                 // all above cases using ret and 1 out arg
                 outTableBigList = null; outTableBigMapByPositionAllList = null; outTableBigMapByPositionPartialList = null;
-                retTableBigList = OdptPkgTableBig.Instance.GetRowsTypedOutRet<OdptPkgTableBig.TTableBig>(out outTableBigList, false, false, rowLimit, null);
+                retTableBigList = OdptPkgTableBig.Instance.GetRowsTypedOutRet<TTableBig>(out outTableBigList, false, false, rowLimit, null);
                 retTableBigMapByPositionAllList = OdptPkgTableBig.Instance.GetRowsTypedOutRet<TTableBigMapByPositionAll>(out outTableBigMapByPositionAllList, true, false, rowLimit, null);
                 retTableBigMapByPositionPartialList = OdptPkgTableBig.Instance.GetRowsTypedOutRet<TTableBigMapByPositionPartial>(out outTableBigMapByPositionPartialList, true, true, rowLimit, null);
                 Debug.Assert(retTableBigList.Count == rowLimit && retTableBigMapByPositionAllList.Count == rowLimit && retTableBigMapByPositionPartialList.Count == rowLimit);
@@ -578,7 +578,7 @@ namespace Odapter.Tester {
 
                 // all above cases using ret and 2 out args 
                 outTableBigList = null; outTableBigMapByPositionAllList = null; outTableBigMapByPositionPartialList = null;
-                retTableBigList = OdptPkgTableBig.Instance.GetRowsTypedOut2Ret<OdptPkgTableBig.TTableBig, OdptPkgTableBig.TTableBigChar>(out outTableBigList, out outTableBigCharList, false, false, rowLimit, null);
+                retTableBigList = OdptPkgTableBig.Instance.GetRowsTypedOut2Ret<TTableBig, TTableBigChar>(out outTableBigList, out outTableBigCharList, false, false, rowLimit, null);
                 retTableBigMapByPositionAllList = OdptPkgTableBig.Instance.GetRowsTypedOut2Ret<TTableBigMapByPositionAll, TTableBigCharMapByPositionAll>(out outTableBigMapByPositionAllList, out outTableBigCharMapByPositionAllList, true, false, rowLimit, null);
                 retTableBigMapByPositionPartialList = OdptPkgTableBig.Instance.GetRowsTypedOut2Ret<TTableBigMapByPositionPartial, TTableBigCharMapByPositionPartial>(out outTableBigMapByPositionPartialList, out outTableBigCharMapByPositionPartialList, true, true, rowLimit, null);
                 Debug.Assert(retTableBigList.Count == rowLimit && retTableBigMapByPositionAllList.Count == rowLimit && retTableBigMapByPositionPartialList.Count == rowLimit);
@@ -589,24 +589,24 @@ namespace Odapter.Tester {
 
             private void TestCursorTypedTableNumber() {
                 uint? rowLimit = null;
-                ICollection<OdptPkgTableNumber.TTableNumber> retTableNumberList, outTableNumberList;
-                ICollection<OdptPkgTableNumber.TTableNumberDec> outTableNumberDecList;
+                ICollection<TTableNumber> retTableNumberList, outTableNumberList;
+                ICollection<TTableNumberDec> outTableNumberDecList;
 
                 // static, no mapping
                 // ret
-                retTableNumberList = OdptPkgTableNumber.Instance.GetRowsTypedRet<OdptPkgTableNumber.TTableNumber>(rowLimit, null);
+                retTableNumberList = OdptPkgTableNumber.Instance.GetRowsTypedRet<TTableNumber>(rowLimit, null);
                 Debug.Assert(retTableNumberList.Count > 0);
 
                 // 1 out
-                OdptPkgTableNumber.Instance.GetRowsTypedOut<OdptPkgTableNumber.TTableNumber>(out outTableNumberList, rowLimit, null);
+                OdptPkgTableNumber.Instance.GetRowsTypedOut<TTableNumber>(out outTableNumberList, rowLimit, null);
                 Debug.Assert(outTableNumberList.Count > 0);
 
                 // ret and 1 out
-                retTableNumberList = OdptPkgTableNumber.Instance.GetRowsTypedOutRet<OdptPkgTableNumber.TTableNumber>(out outTableNumberList, rowLimit, null);
+                retTableNumberList = OdptPkgTableNumber.Instance.GetRowsTypedOutRet<TTableNumber>(out outTableNumberList, rowLimit, null);
                 Debug.Assert(retTableNumberList.Count > 0 && outTableNumberList.Count > 0);
 
                 // ret and 2 out
-                retTableNumberList = OdptPkgTableNumber.Instance.GetRowsTypedOut2Ret<OdptPkgTableNumber.TTableNumber, OdptPkgTableNumber.TTableNumberDec>(out outTableNumberList, out outTableNumberDecList, rowLimit, null);
+                retTableNumberList = OdptPkgTableNumber.Instance.GetRowsTypedOut2Ret<TTableNumber, TTableNumberDec>(out outTableNumberList, out outTableNumberDecList, rowLimit, null);
                 Debug.Assert(retTableNumberList.Count > 0 && outTableNumberList.Count > 0 && outTableNumberDecList.Count > 0);
 
 #if MAPPING_FOR_TYPED_CURSOR
@@ -617,7 +617,7 @@ namespace Odapter.Tester {
                 ICollection<TTableNumberDecMapByPositionPartial> outTableNumberDecMapByPositionPartialList;
 
                 // list ret - mapping by name
-                retTableNumberList = OdptPkgTableNumber.Instance.GetRowsTypedRet<OdptPkgTableNumber.TTableNumber>(false, false, rowLimit, null);
+                retTableNumberList = OdptPkgTableNumber.Instance.GetRowsTypedRet<TTableNumber>(false, false, rowLimit, null);
 
                 // list ret - mapping by position, NOT allowing unmapped columns
                 retTableNumberMapByPositionAllList = OdptPkgTableNumber.Instance.GetRowsTypedRet<TTableNumberMapByPositionAll>(true, false, rowLimit, null);
@@ -628,14 +628,14 @@ namespace Odapter.Tester {
 
                 // all above cases using 1 out
                 outTableNumberList = null; outTableNumberMapByPositionAllList = null; outTableNumberMapByPositionPartialList = null;
-                OdptPkgTableNumber.Instance.GetRowsTypedOut<OdptPkgTableNumber.TTableNumber>(out outTableNumberList, false, false, rowLimit, null);
+                OdptPkgTableNumber.Instance.GetRowsTypedOut<TTableNumber>(out outTableNumberList, false, false, rowLimit, null);
                 OdptPkgTableNumber.Instance.GetRowsTypedOut<TTableNumberMapByPositionAll>(out outTableNumberMapByPositionAllList, true, false, rowLimit, null);
                 OdptPkgTableNumber.Instance.GetRowsTypedOut<TTableNumberMapByPositionPartial>(out outTableNumberMapByPositionPartialList, true, true, rowLimit, null);
                 Debug.Assert(outTableNumberList.Count > 0 && outTableNumberMapByPositionAllList.Count > 0 && outTableNumberMapByPositionPartialList.Count > 0);
 
                 // all above cases using ret and 1 out arg
                 outTableNumberList = null; outTableNumberMapByPositionAllList = null; outTableNumberMapByPositionPartialList = null;
-                retTableNumberList = OdptPkgTableNumber.Instance.GetRowsTypedOutRet<OdptPkgTableNumber.TTableNumber>(out outTableNumberList, false, false, rowLimit, null);
+                retTableNumberList = OdptPkgTableNumber.Instance.GetRowsTypedOutRet<TTableNumber>(out outTableNumberList, false, false, rowLimit, null);
                 retTableNumberMapByPositionAllList = OdptPkgTableNumber.Instance.GetRowsTypedOutRet<TTableNumberMapByPositionAll>(out outTableNumberMapByPositionAllList, true, false, rowLimit, null);
                 retTableNumberMapByPositionPartialList = OdptPkgTableNumber.Instance.GetRowsTypedOutRet<TTableNumberMapByPositionPartial>(out outTableNumberMapByPositionPartialList, true, true, rowLimit, null);
                 Debug.Assert(retTableNumberList.Count > 0 && retTableNumberMapByPositionAllList.Count > 0 && retTableNumberMapByPositionPartialList.Count > 0);
@@ -643,7 +643,7 @@ namespace Odapter.Tester {
 
                 // all above cases using ret and 2 out args 
                 outTableNumberList = null; outTableNumberMapByPositionAllList = null; outTableNumberMapByPositionPartialList = null;
-                retTableNumberList = OdptPkgTableNumber.Instance.GetRowsTypedOut2Ret<OdptPkgTableNumber.TTableNumber, OdptPkgTableNumber.TTableNumberDec>(out outTableNumberList, out outTableNumberDecList, false, false, rowLimit, null);
+                retTableNumberList = OdptPkgTableNumber.Instance.GetRowsTypedOut2Ret<TTableNumber, TTableNumberDec>(out outTableNumberList, out outTableNumberDecList, false, false, rowLimit, null);
                 retTableNumberMapByPositionAllList = OdptPkgTableNumber.Instance.GetRowsTypedOut2Ret<TTableNumberMapByPositionAll, TTableNumberDecMapByPositionAll>(out outTableNumberMapByPositionAllList, out outTableNumberDecMapByPositionAllList, true, false, rowLimit, null);
                 retTableNumberMapByPositionPartialList = OdptPkgTableNumber.Instance.GetRowsTypedOut2Ret<TTableNumberMapByPositionPartial, TTableNumberDecMapByPositionPartial>(out outTableNumberMapByPositionPartialList, out outTableNumberDecMapByPositionPartialList, true, true, rowLimit, null);
                 Debug.Assert(retTableNumberList.Count > 0 && retTableNumberMapByPositionAllList.Count > 0 && retTableNumberMapByPositionPartialList.Count > 0);
@@ -654,10 +654,10 @@ namespace Odapter.Tester {
 
             private void TestCursorUntypedTableBig() {
                 uint? rowLimit = TABLE_BIG_ROWS_TO_RETRIEVE;
-                ICollection<OdptPkgTableBig.TTableBig> retTableBigList, outTableBigList;
+                ICollection<TTableBig> retTableBigList, outTableBigList;
                 ICollection<TTableBigMapByPositionAll> retTableBigMapByPositionAllList, outTableBigMapByPositionAllList;
                 ICollection<TTableBigMapByPositionPartial> retTableBigMapByPositionPartialList, outTableBigMapByPositionPartialList;
-                ICollection<OdptPkgTableBig.TTableBigChar> outTableBigCharList;
+                ICollection<TTableBigChar> outTableBigCharList;
                 ICollection<TTableBigCharMapByPositionAll> outTableBigCharMapByPositionAllList;
                 ICollection<TTableBigCharMapByPositionPartial> outTableBigCharMapByPositionPartialList;
                 DataTable retTableBigDataTable, outTableBigDataTable, outTableBigDataTable2;
@@ -666,7 +666,7 @@ namespace Odapter.Tester {
                 retTableBigDataTable = OdptPkgTableBig.Instance.GetRowsUntypedRet(true, rowLimit, null);
 
                 // list ret - mapping by name
-                retTableBigList = OdptPkgTableBig.Instance.GetRowsUntypedRet<OdptPkgTableBig.TTableBig>(false, false, rowLimit, null);
+                retTableBigList = OdptPkgTableBig.Instance.GetRowsUntypedRet<TTableBig>(false, false, rowLimit, null);
 
                 // list ret - mapping by position, NOT allowing unmapped columns
                 retTableBigMapByPositionAllList = OdptPkgTableBig.Instance.GetRowsUntypedRet<TTableBigMapByPositionAll>(true, false, rowLimit, null);
@@ -678,7 +678,7 @@ namespace Odapter.Tester {
                 // all above cases using 1 out
                 outTableBigDataTable = null; outTableBigList = null; outTableBigMapByPositionAllList = null; outTableBigMapByPositionPartialList = null;
                 OdptPkgTableBig.Instance.GetRowsUntypedOut(out outTableBigDataTable, true, rowLimit, null);
-                OdptPkgTableBig.Instance.GetRowsUntypedOut<OdptPkgTableBig.TTableBig>(out outTableBigList, false, false, rowLimit, null);
+                OdptPkgTableBig.Instance.GetRowsUntypedOut<TTableBig>(out outTableBigList, false, false, rowLimit, null);
                 OdptPkgTableBig.Instance.GetRowsUntypedOut<TTableBigMapByPositionAll>(out outTableBigMapByPositionAllList, true, false, rowLimit, null);
                 OdptPkgTableBig.Instance.GetRowsUntypedOut<TTableBigMapByPositionPartial>(out outTableBigMapByPositionPartialList, true, true, rowLimit, null);
                 Debug.Assert(outTableBigDataTable.Rows.Count == rowLimit && outTableBigList.Count == rowLimit && outTableBigMapByPositionAllList.Count == rowLimit && outTableBigMapByPositionPartialList.Count == rowLimit);
@@ -686,7 +686,7 @@ namespace Odapter.Tester {
                 // all above cases using ret and 1 out arg
                 outTableBigDataTable = null; outTableBigList = null; outTableBigMapByPositionAllList = null; outTableBigMapByPositionPartialList = null;
                 retTableBigDataTable = OdptPkgTableBig.Instance.GetRowsUntypedOutRet(out outTableBigDataTable, true, rowLimit, null);
-                retTableBigList = OdptPkgTableBig.Instance.GetRowsUntypedOutRet<OdptPkgTableBig.TTableBig, OdptPkgTableBig.TTableBig>(out outTableBigList, false, false, rowLimit, null);
+                retTableBigList = OdptPkgTableBig.Instance.GetRowsUntypedOutRet<TTableBig, TTableBig>(out outTableBigList, false, false, rowLimit, null);
                 retTableBigMapByPositionAllList = OdptPkgTableBig.Instance.GetRowsUntypedOutRet<TTableBigMapByPositionAll, TTableBigMapByPositionAll>(out outTableBigMapByPositionAllList, true, false, rowLimit, null);
                 retTableBigMapByPositionPartialList = OdptPkgTableBig.Instance.GetRowsUntypedOutRet<TTableBigMapByPositionPartial, TTableBigMapByPositionPartial>(out outTableBigMapByPositionPartialList, true, true, rowLimit, null);
                 Debug.Assert(retTableBigDataTable.Rows.Count == rowLimit && retTableBigList.Count == rowLimit && retTableBigMapByPositionAllList.Count == rowLimit && retTableBigMapByPositionPartialList.Count == rowLimit);
@@ -695,7 +695,7 @@ namespace Odapter.Tester {
                 // all above cases using ret and 2 out args 
                 outTableBigDataTable = null; outTableBigList = null; outTableBigMapByPositionAllList = null; outTableBigMapByPositionPartialList = null;
                 retTableBigDataTable = OdptPkgTableBig.Instance.GetRowsUntypedOut2Ret(out outTableBigDataTable, out outTableBigDataTable2, true, rowLimit, null);
-                retTableBigList = OdptPkgTableBig.Instance.GetRowsUntypedOut2Ret<OdptPkgTableBig.TTableBig, OdptPkgTableBig.TTableBig, OdptPkgTableBig.TTableBigChar>(out outTableBigList, out outTableBigCharList, false, false, rowLimit, null);
+                retTableBigList = OdptPkgTableBig.Instance.GetRowsUntypedOut2Ret<TTableBig, TTableBig, TTableBigChar>(out outTableBigList, out outTableBigCharList, false, false, rowLimit, null);
                 retTableBigMapByPositionAllList = OdptPkgTableBig.Instance.GetRowsUntypedOut2Ret<TTableBigMapByPositionAll, TTableBigMapByPositionAll, TTableBigCharMapByPositionAll>(out outTableBigMapByPositionAllList, out outTableBigCharMapByPositionAllList, true, false, rowLimit, null);
                 retTableBigMapByPositionPartialList = OdptPkgTableBig.Instance.GetRowsUntypedOut2Ret<TTableBigMapByPositionPartial, TTableBigMapByPositionPartial, TTableBigCharMapByPositionPartial>(out outTableBigMapByPositionPartialList, out outTableBigCharMapByPositionPartialList, true, true, rowLimit, null);
                 Debug.Assert(retTableBigDataTable.Rows.Count == rowLimit && retTableBigList.Count == rowLimit && retTableBigMapByPositionAllList.Count == rowLimit && retTableBigMapByPositionPartialList.Count == rowLimit);
@@ -705,10 +705,10 @@ namespace Odapter.Tester {
 
             private void TestCursorUntypedTableNumber() {
                 uint? rowLimit = null;
-                ICollection<OdptPkgTableNumber.TTableNumber> retTableNumberList, outTableNumberList;
+                ICollection<TTableNumber> retTableNumberList, outTableNumberList;
                 ICollection<TTableNumberMapByPositionAll> retTableNumberMapByPositionAllList, outTableNumberMapByPositionAllList;
                 ICollection<TTableNumberMapByPositionPartial> retTableNumberMapByPositionPartialList, outTableNumberMapByPositionPartialList;
-                ICollection<OdptPkgTableNumber.TTableNumberDec> outTableNumberDecList;
+                ICollection<TTableNumberDec> outTableNumberDecList;
                 ICollection<TTableNumberDecMapByPositionAll> outTableNumberDecMapByPositionAllList;
                 ICollection<TTableNumberDecMapByPositionPartial> outTableNumberDecMapByPositionPartialList;
                 DataTable retTableNumberDataTable, outTableNumberDataTable, outTableNumberDataTable2;
@@ -717,7 +717,7 @@ namespace Odapter.Tester {
                 retTableNumberDataTable = OdptPkgTableNumber.Instance.GetRowsUntypedRet(true, rowLimit, null);
 
                 // list ret - mapping by name
-                retTableNumberList = OdptPkgTableNumber.Instance.GetRowsUntypedRet<OdptPkgTableNumber.TTableNumber>(false, false, rowLimit, null);
+                retTableNumberList = OdptPkgTableNumber.Instance.GetRowsUntypedRet<TTableNumber>(false, false, rowLimit, null);
 
                 // list ret - mapping by position, NOT allowing unmapped columns
                 retTableNumberMapByPositionAllList = OdptPkgTableNumber.Instance.GetRowsUntypedRet<TTableNumberMapByPositionAll>(true, false, rowLimit, null);
@@ -729,7 +729,7 @@ namespace Odapter.Tester {
                 // all above cases using 1 out
                 outTableNumberDataTable = null; outTableNumberList = null; outTableNumberMapByPositionAllList = null; outTableNumberMapByPositionPartialList = null;
                 OdptPkgTableNumber.Instance.GetRowsUntypedOut(out outTableNumberDataTable, true, rowLimit, null);
-                OdptPkgTableNumber.Instance.GetRowsUntypedOut<OdptPkgTableNumber.TTableNumber>(out outTableNumberList, false, false, rowLimit, null);
+                OdptPkgTableNumber.Instance.GetRowsUntypedOut<TTableNumber>(out outTableNumberList, false, false, rowLimit, null);
                 OdptPkgTableNumber.Instance.GetRowsUntypedOut<TTableNumberMapByPositionAll>(out outTableNumberMapByPositionAllList, true, false, rowLimit, null);
                 OdptPkgTableNumber.Instance.GetRowsUntypedOut<TTableNumberMapByPositionPartial>(out outTableNumberMapByPositionPartialList, true, true, rowLimit, null);
                 Debug.Assert(outTableNumberDataTable.Rows.Count > 0 && outTableNumberList.Count > 0 && outTableNumberMapByPositionAllList.Count > 0 && outTableNumberMapByPositionPartialList.Count > 0);
@@ -737,7 +737,7 @@ namespace Odapter.Tester {
                 // all above cases using ret and 1 out arg
                 outTableNumberDataTable = null; outTableNumberList = null; outTableNumberMapByPositionAllList = null; outTableNumberMapByPositionPartialList = null;
                 retTableNumberDataTable = OdptPkgTableNumber.Instance.GetRowsUntypedOutRet(out outTableNumberDataTable, true, rowLimit, null);
-                retTableNumberList = OdptPkgTableNumber.Instance.GetRowsUntypedOutRet<OdptPkgTableNumber.TTableNumber, OdptPkgTableNumber.TTableNumber>(out outTableNumberList, false, false, rowLimit, null);
+                retTableNumberList = OdptPkgTableNumber.Instance.GetRowsUntypedOutRet<TTableNumber, TTableNumber>(out outTableNumberList, false, false, rowLimit, null);
                 retTableNumberMapByPositionAllList = OdptPkgTableNumber.Instance.GetRowsUntypedOutRet<TTableNumberMapByPositionAll, TTableNumberMapByPositionAll>(out outTableNumberMapByPositionAllList, true, false, rowLimit, null);
                 retTableNumberMapByPositionPartialList = OdptPkgTableNumber.Instance.GetRowsUntypedOutRet<TTableNumberMapByPositionPartial, TTableNumberMapByPositionPartial>(out outTableNumberMapByPositionPartialList, true, true, rowLimit, null);
                 Debug.Assert(retTableNumberDataTable.Rows.Count > 0 && retTableNumberList.Count > 0 && retTableNumberMapByPositionAllList.Count > 0 && retTableNumberMapByPositionPartialList.Count > 0);
@@ -746,7 +746,7 @@ namespace Odapter.Tester {
                 // all above cases using ret and 2 out args 
                 outTableNumberDataTable = null; outTableNumberList = null; outTableNumberMapByPositionAllList = null; outTableNumberMapByPositionPartialList = null;
                 retTableNumberDataTable = OdptPkgTableNumber.Instance.GetRowsUntypedOut2Ret(out outTableNumberDataTable, out outTableNumberDataTable2, true, rowLimit, null);
-                retTableNumberList = OdptPkgTableNumber.Instance.GetRowsUntypedOut2Ret<OdptPkgTableNumber.TTableNumber, OdptPkgTableNumber.TTableNumber, OdptPkgTableNumber.TTableNumberDec>(out outTableNumberList, out outTableNumberDecList, false, false, rowLimit, null);
+                retTableNumberList = OdptPkgTableNumber.Instance.GetRowsUntypedOut2Ret<TTableNumber, TTableNumber, TTableNumberDec>(out outTableNumberList, out outTableNumberDecList, false, false, rowLimit, null);
                 retTableNumberMapByPositionAllList = OdptPkgTableNumber.Instance.GetRowsUntypedOut2Ret<TTableNumberMapByPositionAll, TTableNumberMapByPositionAll, TTableNumberDecMapByPositionAll>(out outTableNumberMapByPositionAllList, out outTableNumberDecMapByPositionAllList, true, false, rowLimit, null);
                 retTableNumberMapByPositionPartialList = OdptPkgTableNumber.Instance.GetRowsUntypedOut2Ret<TTableNumberMapByPositionPartial, TTableNumberMapByPositionPartial, TTableNumberDecMapByPositionPartial>(out outTableNumberMapByPositionPartialList, out outTableNumberDecMapByPositionPartialList, true, true, rowLimit, null);
                 Debug.Assert(retTableNumberDataTable.Rows.Count > 0 && retTableNumberList.Count > 0 && retTableNumberMapByPositionAllList.Count > 0 && retTableNumberMapByPositionPartialList.Count > 0);
@@ -1445,8 +1445,13 @@ namespace Odapter.Tester {
 #endregion
         }
 
-#region DTOs
-#region Table Big
+        #region DTOs
+        
+        #region Table Big
+        public class TTableBig : OdptPkgTableBig.TTableBig { }
+
+        public class TTableBigChar : OdptPkgTableBig.TTableBigChar { }
+
         public class TTableBigMapByPositionAll : OdptPkgTableBig.ITTableBig {
             [HydratorMapAttribute(Position = 0)]
             public virtual
@@ -1676,8 +1681,19 @@ namespace Odapter.Tester {
         public class TTableBigCharMapByPositionPartial : TTableBigCharMapByPositionAll {
             public override String ColLast { get; set; }
         }
-#endregion
-#region Table Number
+        #endregion
+        #region Table Big filtered
+#if ODPT_FILTER_PREFIX
+        public class FilteredPkgTTableBigFiltered : OdptPkgTableBig.FilteredPkgTTableBigFiltered { }
+#else
+        public class TTableBigFiltered : FilteredPkg.TTableBigFiltered { }
+#endif
+        #endregion
+        #region Table Number
+        public class TTableNumber : OdptPkgTableNumber.TTableNumber { }
+
+        public class TTableNumberDec : OdptPkgTableNumber.TTableNumberDec { }
+              
         public class TTableNumberMapByPositionAll : OdptPkgTableNumber.ITTableNumber {
             [HydratorMapAttribute(Position = 0)]
             public virtual

@@ -1,6 +1,6 @@
 ﻿//------------------------------------------------------------------------------
 //    Odapter - a C# code generator for Oracle packages
-//    Copyright(C) 2018 Clay Lipscomb
+//    Copyright(C) 2019 Clay Lipscomb
 //
 //    This program is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
@@ -22,5 +22,6 @@ namespace Odapter {
     /// </summary>
     internal class View : EntityBase, IView {
         public string EntityName { get { return viewName; } set { viewName = value; } } private string viewName { get; set; }  // view_name is underlying sy view column
+        public bool IsInstantiable { get => true; }  // a translated view is always instantiable
     }
 }
