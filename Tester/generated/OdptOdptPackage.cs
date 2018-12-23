@@ -1931,7 +1931,7 @@ namespace Schema.Odpt.Odpt.Package {
         // **PROC IGNORED** - Code generation for INTERVAL YEAR TO MONTH types has not been implemented
         // public TimeSpan? FuncIntervalYearToMonth(TimeSpan? pIn, ref TimeSpan? pInOut, out TimeSpan? pOut, OracleConnection optionalPreexistingOpenConnection = null)
 
-        // **PROC IGNORED** - Code generation for LONG types has not been implemented
+        // **PROC IGNORED** - Code generation for LONG will not be implemented due to Oracle deprecation
         // public Byte[] FuncLong(Byte[] pIn, ref Byte[] pInOut, out Byte[] pOut, OracleConnection optionalPreexistingOpenConnection = null)
 
         // **PROC IGNORED** - Code generation for LONG RAW will not be implemented due to Oracle deprecation
@@ -2169,7 +2169,7 @@ namespace Schema.Odpt.Odpt.Package {
             return __ret;
         } // FuncNvarchar2
 
-        // **PROC IGNORED** - Code generation for OBJECT TYPE types has not been implemented
+        // **PROC IGNORED** - OBJECT TYPE types are not available in ODP.NET managed
         // public OdptBigOt FuncObjectType(OdptBigOt pIn, ref OdptBigOt pInOut, out OdptBigOt pOut, OracleConnection optionalPreexistingOpenConnection = null)
 
         public Decimal? FuncOptionalParam(Decimal? pInNumberRequired, ref Decimal? pInOutNumberRequired, Decimal? pInNumberOptional = null, String pInVarchar2Optional = null, 
@@ -2307,13 +2307,13 @@ namespace Schema.Odpt.Odpt.Package {
             return __ret;
         } // FuncPositiven
 
-        // **PROC IGNORED** - Code generation for RAW will not be implemented due to Oracle deprecation
+        // **PROC IGNORED** - Code generation for RAW types has not been implemented
         // public Byte[] FuncRaw(Byte[] pIn, ref Byte[] pInOut, out Byte[] pOut, OracleConnection optionalPreexistingOpenConnection = null)
 
         // **PROC IGNORED** - .NET cannot send/receive a PL/SQL RECORD (apart from cursor)
         // public OdptPkgTableBigTTableBig FuncRecord(OdptPkgTableBigTTableBig pIn, ref OdptPkgTableBigTTableBig pInOut, out OdptPkgTableBigTTableBig pOut, OracleConnection optionalPreexistingOpenConnection = null)
 
-        // **PROC IGNORED** - Code generation for REF types has not been implemented
+        // **PROC IGNORED** - REF types are not available in ODP.NET managed
         // public String FuncRef(String pIn, ref String pInOut, out String pOut, OracleConnection optionalPreexistingOpenConnection = null)
 
         // **PROC IGNORED** - Code generation for ROWID types has not been implemented
@@ -2498,7 +2498,7 @@ namespace Schema.Odpt.Odpt.Package {
             return __ret;
         } // FuncVarchar2
 
-        // **PROC IGNORED** - Code generation for XMLTYPE types has not been implemented
+        // **PROC IGNORED** - XMLTYPE types are not available in ODP.NET managed
         // public XmlDocument FuncXmltype(XmlDocument pIn, ref XmlDocument pInOut, out XmlDocument pOut, OracleConnection optionalPreexistingOpenConnection = null)
 
         public void ProcBinaryDoubleConst(out Double? pMinNormal, out Double? pMaxNormal, OracleConnection optionalPreexistingOpenConnection = null) {
