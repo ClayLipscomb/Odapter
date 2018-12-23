@@ -13,21 +13,23 @@
 //    GNU General Public License for more details.
 //
 //    You should have received a copy of the GNU General Public License
-//    along with this program.If not, see<http://www.gnu.org/licenses/>.
+//    along with this program. If not, see<http://www.gnu.org/licenses/>.
 //------------------------------------------------------------------------------
 
 namespace Odapter {
-    public interface IParameterTranslation {
-        string CSharpTypeUsedForOracleAssociativeArray { get; set; }
-        string CSharpTypeUsedForOracleBFile { get; set; }
-        string CSharpTypeUsedForOracleBlob { get; set; }
-        string CSharpTypeUsedForOracleClob { get; set; }
-        string CSharpTypeUsedForOracleDate { get; set; }
-        string CSharpTypeUsedForOracleInteger { get; set; }
-        bool IsConvertOracleNumberToIntegerIfColumnNameIsId { get; set; }
-        string CSharpTypeUsedForOracleIntervalDayToSecond { get; set; }
-        string CSharpTypeUsedForOracleNumber { get; set; }
-        string CSharpTypeUsedForOracleRefCursor { get; set; }
-        string CSharpTypeUsedForOracleTimeStamp { get; set; }
+    internal interface ITranslaterEntity  {
+        /// <summary>
+        /// The fully qualified effective data type that is unique to instance of any translater.
+        /// </summary>
+        string DataTypeFull { get; }
+
+        /// <summary>
+        /// The base Oracle data type. Any attributes such as precision or subtype are excluded.
+        /// </summary>
+        IOrclType OrclType { get; }
+
+        string CSharpScope { get; }
+        string CSharpName { get; }
+        string CSharpType { get; }
     }
 }

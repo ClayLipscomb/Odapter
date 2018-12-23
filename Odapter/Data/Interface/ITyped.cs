@@ -17,17 +17,19 @@
 //------------------------------------------------------------------------------
 
 namespace Odapter {
-    public interface IParameterTranslation {
-        string CSharpTypeUsedForOracleAssociativeArray { get; set; }
-        string CSharpTypeUsedForOracleBFile { get; set; }
-        string CSharpTypeUsedForOracleBlob { get; set; }
-        string CSharpTypeUsedForOracleClob { get; set; }
-        string CSharpTypeUsedForOracleDate { get; set; }
-        string CSharpTypeUsedForOracleInteger { get; set; }
-        bool IsConvertOracleNumberToIntegerIfColumnNameIsId { get; set; }
-        string CSharpTypeUsedForOracleIntervalDayToSecond { get; set; }
-        string CSharpTypeUsedForOracleNumber { get; set; }
-        string CSharpTypeUsedForOracleRefCursor { get; set; }
-        string CSharpTypeUsedForOracleTimeStamp { get; set; }
+    internal interface ITyped : ITypeNameable {
+        IOrclType OrclType { get; set; }
+        string DataType { get; set; }
+
+        int? DataPrecision { get; set; }
+        int? DataScale { get; set; }
+        int? CharLength { get; set; }
+        string PreNormalizedValues { get; set; }
+        string Aggregated { get; }
+
+        string PlsType { get; set; }
+
+        ITyped SubType { get; }
+        ITranslaterType Translater { get; set; }
     }
 }

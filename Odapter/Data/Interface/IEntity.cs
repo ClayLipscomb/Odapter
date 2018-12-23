@@ -17,17 +17,23 @@
 //------------------------------------------------------------------------------
 
 namespace Odapter {
-    public interface IParameterTranslation {
-        string CSharpTypeUsedForOracleAssociativeArray { get; set; }
-        string CSharpTypeUsedForOracleBFile { get; set; }
-        string CSharpTypeUsedForOracleBlob { get; set; }
-        string CSharpTypeUsedForOracleClob { get; set; }
-        string CSharpTypeUsedForOracleDate { get; set; }
-        string CSharpTypeUsedForOracleInteger { get; set; }
-        bool IsConvertOracleNumberToIntegerIfColumnNameIsId { get; set; }
-        string CSharpTypeUsedForOracleIntervalDayToSecond { get; set; }
-        string CSharpTypeUsedForOracleNumber { get; set; }
-        string CSharpTypeUsedForOracleRefCursor { get; set; }
-        string CSharpTypeUsedForOracleTimeStamp { get; set; }
+    /// <summary>
+    /// Interface of an entity. Properties should be implemented with a private member if underlying sys view column naming is different from public property name.
+    /// </summary>
+    internal interface IEntity : IEntityBase, IEntityNameable {
+        IOrclEntity OrclEntity { get; }
+        string EntityType { get; }
+
+        /// <summary>
+        /// Property should wrap a camelcase private member that will map to the underlying underscore_delimited sys_view column.
+        /// </summary>
+        //string EntityName { get; set; }
+
+        /// <summary>
+        /// Property can either get hardcoded value, or map to an underlying underscore_delimited sys_view column.
+        /// </summary>
+        bool IsInstantiable { get; }
+
+        ITranslaterEntity Translater { get; set; }
     }
 }

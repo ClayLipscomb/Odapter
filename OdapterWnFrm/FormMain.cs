@@ -320,7 +320,7 @@ namespace OdapterWnFrm {
         private void BindCSharpVersion() {
             cmbCSharpVersion.DisplayMember = "DisplayDescription";
             cmbCSharpVersion.ValueMember = "Version";
-            cmbCSharpVersion.DataSource = Translater.CSharpOptions;
+            cmbCSharpVersion.DataSource = TranslaterReferenceData.CSharpOptions;
         }
 
         private void BindSettingsFiles() {
@@ -349,7 +349,7 @@ namespace OdapterWnFrm {
             foreach (var cmbBoxOracleType in comboBoxOracleTypes) {
                 cmbBoxOracleType.Key.ValueMember = @"CSharpType";
                 cmbBoxOracleType.Key.DisplayMember = @"DisplayDescription";
-                cmbBoxOracleType.Key.DataSource = Translater.CustomTypeTranslationOptions[cmbBoxOracleType.Value];
+                cmbBoxOracleType.Key.DataSource = TranslaterReferenceData.CustomTypeTranslationOptions[cmbBoxOracleType.Value];
             };
         }
 

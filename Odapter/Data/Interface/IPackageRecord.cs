@@ -1,6 +1,6 @@
 ﻿//------------------------------------------------------------------------------
 //    Odapter - a C# code generator for Oracle packages
-//    Copyright(C) 2019 Clay Lipscomb
+//    Copyright(C) 2018 Clay Lipscomb
 //
 //    This program is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
@@ -16,18 +16,28 @@
 //    along with this program.If not, see<http://www.gnu.org/licenses/>.
 //------------------------------------------------------------------------------
 
+using System;
+
 namespace Odapter {
-    public interface IParameterTranslation {
-        string CSharpTypeUsedForOracleAssociativeArray { get; set; }
-        string CSharpTypeUsedForOracleBFile { get; set; }
-        string CSharpTypeUsedForOracleBlob { get; set; }
-        string CSharpTypeUsedForOracleClob { get; set; }
-        string CSharpTypeUsedForOracleDate { get; set; }
-        string CSharpTypeUsedForOracleInteger { get; set; }
-        bool IsConvertOracleNumberToIntegerIfColumnNameIsId { get; set; }
-        string CSharpTypeUsedForOracleIntervalDayToSecond { get; set; }
-        string CSharpTypeUsedForOracleNumber { get; set; }
-        string CSharpTypeUsedForOracleRefCursor { get; set; }
-        string CSharpTypeUsedForOracleTimeStamp { get; set; }
+    /// <summary>
+    /// Package record type as type of Entity
+    /// </summary>
+    internal interface IPackageRecord : IEntity, IComparable<IPackageRecord>  {
+        /// <summary>
+        /// Package containing argument from which record is derived
+        /// </summary>
+        string PackageName { get; set; }
+
+        /// <summary>
+        /// Package name of record definition; could be different from package with argument using it
+        /// </summary>
+        string TypeName { get; set; }
+
+        /// <summary>
+        /// Name of record
+        /// </summary>
+        string TypeSubName { get; set; }
+
+        IArgument RecordArgument { get; set; }
     }
 }

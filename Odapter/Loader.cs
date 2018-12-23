@@ -24,7 +24,7 @@ using Oracle.ManagedDataAccess.Client;
 using Dapper;
 
 namespace Odapter {
-    internal class Loader {
+    internal sealed class Loader {
         #region Parameter properties
         private string DatabaseInstance { get; set; }
         private string Schema { get; set; }
@@ -52,7 +52,7 @@ namespace Odapter {
         #region Data Set Properties
         internal List<IPackage> Packages { get; private set; }
         internal List<IPackageRecord> PackageRecordTypes { get; private set; }
-        private List<IArgument> ArgumentsPackaged { get; set; }
+        internal List<IArgument> ArgumentsPackaged { get; set; }
         internal List<IEntity> ObjectTypes { get { return _objectTypes; } }
         //private List<ObjectTypeAttribute> ObjectTypeAttributes { get; set; }
         internal List<IEntity> Tables { get { return _tables; } }
@@ -120,6 +120,13 @@ namespace Odapter {
 
             DisplayMessageMethod(DatabaseInstance + " " + Schema + (String.IsNullOrWhiteSpace(Filter) ? String.Empty : " " + Filter + "*") + " generation:");
 
+            Packages            = new List<IPackage>();
+            PackageRecordTypes  = new List<IPackageRecord>();
+            ArgumentsPackaged   = new List<IArgument>();
+            _objectTypes        = new List<IEntity>();
+            _tables             = new List<IEntity>();
+            _views              = new List<IEntity>();
+
             using (OracleConnection connection = (OracleConnection)GetConnection()) {
                 if (IsLoadPackage) LoadPackages<T_Package, T_Procedure, T_PackageRecord, T_Field, T_Argument>(connection);
                 if (IsLoadObjectType) LoadNonPackagedEntities<T_ObjectType, T_ObjectTypeAttribute>(connection, ref _objectTypes, ref _objectTypeAttributes);
@@ -143,21 +150,7 @@ namespace Odapter {
                         if (arg.DataLevel == 0) continue; // ignore straight record type (without cursor)
 
                         // send the record argument and a list of all subsequent arguments
-                        LoadRecordType<T_PackageRecord, T_Field, T_Argument>(arg, arguments.GetRange(arguments.IndexOf(arg) + 1, arguments.Count - arguments.IndexOf(arg) - 1), null);
-                        continue;
-                    case Orcl.ASSOCIATITVE_ARRAY:
-                        // For an associative array of a record, we will need to create a class for the record.
-                        if (arguments[arguments.IndexOf(arg) + 1].DataType == Orcl.RECORD) {
-                            // First get type of the associated array by converting to C#. This will be a list of a class. We need the class name
-                            //  in order to to load into our Oracle record types.
-                            string assocArrayCSharpType = Translater.ConvertOracleArgTypeToCSharpType(arg, false);
-
-                            // Send the arg following the assoc array arg since it holds the record, a list of all args following the record arg,
-                            //  and the C# name of the record parsed out of the assoc array C# type.
-                            LoadRecordType<T_PackageRecord, T_Field, T_Argument>(arguments[arguments.IndexOf(arg) + 1],
-                                            arguments.GetRange(arguments.IndexOf(arg) + 2, arguments.Count - arguments.IndexOf(arg) - 2),
-                                            CSharp.ExtractSubtypeFromGenericCollectionType(assocArrayCSharpType, false));
-                        }
+                        LoadRecordType<T_PackageRecord, T_Field, T_Argument>(arg, arguments.GetRange(arguments.IndexOf(arg) + 1, arguments.Count - arguments.IndexOf(arg) - 1));
                         continue;
                     default:
                         continue;
@@ -171,7 +164,7 @@ namespace Odapter {
         /// </summary>
         /// <param name="recordArg">Argument with record</param>
         /// <param name="args">List of arguments following record argument</param>
-        private void LoadRecordType<T_PackageRecord, T_Field, T_Argument>(IArgument recordArg, List<IArgument> args, string cSharpType)
+        private void LoadRecordType<T_PackageRecord, T_Field, T_Argument>(IArgument recordArg, List<IArgument> args)
             where T_PackageRecord : class, IPackageRecord, new() 
             where T_Field : class, IField, new() 
             where T_Argument : class, IArgument, new() {
@@ -180,24 +173,23 @@ namespace Odapter {
             // happens for type OBJECT, TABLE, VARRAY or UNDEFINED
             if ((recordArg.TypeName == null && recordArg.TypeSubname != null) || (recordArg.TypeName != null && recordArg.TypeSubname == null)) return;
 
-            if (cSharpType == null) cSharpType = Translater.ConvertOracleArgTypeToCSharpType(recordArg, false);
-
             // if the record type has already been stored, do not proceeed
-            if (PackageRecordTypes.Any(r => (r.SubName ?? "") == (recordArg.TypeSubname ?? "")
-                                            && (r.Name ?? "") == (recordArg.TypeName ?? "")
+            if (PackageRecordTypes.Any(r => (r.TypeSubName ?? "") == (recordArg.TypeSubname ?? "")
+                                            && (r.TypeName ?? "") == (recordArg.TypeName ?? "")
                                             && (r.Owner  ?? "") == (recordArg.TypeOwner ?? "") 
                                             && (r.PackageName ?? "" ) == (recordArg.PackageName ?? "") ) ) {
                 return;
             }
 
             // begin creation of record type
-            IPackageRecord newRec = new T_PackageRecord();
-            newRec.PackageName = recordArg.PackageName; // package containing argument
-            newRec.Name = recordArg.TypeName;           // package containing *record type*
-            newRec.SubName = recordArg.TypeSubname;     // name of record type if outside argument's package
-            newRec.CSharpType = cSharpType;
-            newRec.Owner = recordArg.TypeOwner;
-            newRec.Attributes = new List<IEntityAttribute>();
+            IPackageRecord newRec = new T_PackageRecord {
+                PackageName = recordArg.PackageName,    // package containing argument
+                TypeName = recordArg.TypeName,          // package containing *record type*
+                TypeSubName = recordArg.TypeSubname,    // name of record type 
+                Owner = recordArg.TypeOwner,
+                RecordArgument = recordArg,
+                Attributes = new List<IEntityAttribute>()
+            };
 
             int recordDataLevel = recordArg.DataLevel;
 
@@ -206,11 +198,10 @@ namespace Odapter {
             foreach (IArgument arg in args) {
                 if (arg.DataLevel == recordDataLevel + 1) { // found a record field
                     // each of these fields are to be added to the record
-                    IField f = new T_Field();
-                    f.Name = arg.ArgumentName;
-
-                    // convert to C# now - this should to be adjusted so it's done later
-                    f.CSharpType = Translater.ConvertOracleArgTypeToCSharpType(arg, false);
+                    IField f = new T_Field { Name = arg.ArgumentName, EntityName = recordArg.TypeSubname, DataType = arg.DataType,
+                        DataPrecision = arg.DataPrecision, DataScale = arg.DataScale, CharLength = arg.CharLength,
+                        OrclType = arg.OrclType, MapPosition = columnPosition++
+                    };
 
                     // set the containing class from the package name
                     if (!String.IsNullOrEmpty(arg.TypeName) && !arg.TypeName.Equals(arg.PackageName)) {
@@ -218,22 +209,16 @@ namespace Odapter {
                                 // owned by another schema or owned by package that was filtered out 
                             && (    !(arg.Owner ?? "").Equals(arg.TypeOwner) 
                                 || !Packages.Any(p => p.PackageName.Equals(arg.TypeName)) )   ) {
-                                f.ContainerClassName = Translater.ConvertOracleNameToCSharpName(arg.TypeName, false);
+                            f.ContainerClassName = TranslaterName.ConvertToPascal(arg.TypeName);
                         }
 
                         if (    !(arg.TypeName ?? "").Equals(arg.PackageName)
                                 && Packages.Any(p => p.PackageName.Equals(arg.TypeName)) // package of origin of record being created
-                                && PackageRecordTypes.Exists(r => r.PackageName.Equals(arg.TypeName) && r.SubName.Equals(arg.TypeSubname))) {
-                            f.ContainerClassName = Translater.ConvertOracleNameToCSharpName(arg.TypeName, false);
+                                && PackageRecordTypes.Exists(r => r.PackageName.Equals(arg.TypeName) && r.TypeSubName.Equals(arg.TypeSubname))) {
+                            f.ContainerClassName = TranslaterName.ConvertToPascal(arg.TypeName);
                         }
                     }
 
-                    f.DataType = arg.DataType;
-                    f.DataLength = arg.DataLength;
-                    f.DataPrecision = arg.DataPrecision;
-                    f.DataScale = arg.DataScale;
-
-                    f.MapPosition = columnPosition++;
                     newRec.Attributes.Add(f);
                 } else if (arg.DataLevel == recordDataLevel + 2) { // found a lower level field, so skip
                     continue;
@@ -242,7 +227,7 @@ namespace Odapter {
                 }
 
                 // if field is nested record, recurse into it
-                if (arg.DataType == Orcl.RECORD) LoadRecordType<T_PackageRecord, T_Field, T_Argument>(arg, args.GetRange(args.IndexOf(arg) + 1, args.Count - args.IndexOf(arg) - 1), null);
+                if (arg.DataType == Orcl.RECORD) LoadRecordType<T_PackageRecord, T_Field, T_Argument>(arg, args.GetRange(args.IndexOf(arg) + 1, args.Count - args.IndexOf(arg) - 1));
             }
 
             PackageRecordTypes.Add(newRec);
@@ -257,45 +242,46 @@ namespace Odapter {
         private void LoadArguments<T_Argument>(OracleConnection connection)
             where T_Argument : class, IArgument, new() {
 
-                string sql = " SELECT CAST(position as NUMBER(9,0)) position, overload, "
-                            + " CAST(data_level as NUMBER(9,0)) data_level, argument_name, "
-                            + " CAST(sequence as NUMBER(9,0)) sequence, data_type, in_out, CAST(data_length as NUMBER(9,0)) data_length, "
-                            + " CAST(data_precision as NUMBER(9,0)) data_precision, CAST(char_length as NUMBER(9,0)) char_length, "
-                            + " CAST(data_scale as NUMBER(9,0)) data_scale, "
-                            + " type_owner, type_name, type_subname, pls_type, "
-                            + " object_name, package_name, defaulted, owner, type_link "
-                        + " FROM sys.all_arguments "
-                        + " WHERE owner = :owner "
-                        + " AND package_name IS NOT NULL "
-                        + " AND UPPER(package_name) LIKE :packageNamePrefix || '%' "
-                        + " ORDER BY package_name, object_name, overload, sequence ";
+            string sql = " SELECT CAST(a.position as NUMBER(9,0)) position, a.overload, "
+                            + " CAST(a.data_level as NUMBER(9,0)) data_level, a.argument_name, "
+                            + " CAST(a.sequence as NUMBER(9,0)) sequence, a.data_type, a.in_out, CAST(a.data_length as NUMBER(9,0)) data_length, "
+                            + " CAST(a.data_precision as NUMBER(9,0)) data_precision, CAST(a.char_length as NUMBER(9,0)) char_length, "
+                            + " CAST(a.data_scale as NUMBER(9,0)) data_scale, "
+                            + " a.type_owner, a.type_name, a.type_subname, a.pls_type, "
+                            + " a.object_name, a.package_name, a.defaulted, a.owner, a.type_link "
+                        + " FROM sys.all_arguments a, sys.all_objects o "
+                        + " WHERE a.owner = :owner "
+                        + " AND a.package_name = o.object_name "
+                        + " AND UPPER(o.object_type) = :objectType "
+                        + " AND UPPER(a.package_name) LIKE :packageNamePrefix || '%' "
+                        + " ORDER BY a.package_name, a.object_name, a.overload, a.sequence ";
 
-            if (ArgumentsPackaged == null) {
-                DisplayMessage("Reading package arguments...");
-                List<IArgument> args = connection.Query<T_Argument>(sql, 
-                    new { owner = Schema, packageNamePrefix = Filter.ToUpper() }).ToList<IArgument>();
-                if (IsExcludeObjectsNamesWithSpecificChars) args = args.FindAll(a => a.PackageName.IndexOfAny(ObjectNameCharsToExclude) == -1);
-                DisplayMessage(args.Count.ToString() + " arguments read.");
+            DisplayMessage("Reading package arguments...");
+            List<IArgument> args = connection.Query<T_Argument>(sql, 
+                new { owner = Schema, objectType = SytemTableObjectType.PACKAGE.ToString(), packageNamePrefix = Filter.ToUpper() }).ToList<IArgument>();
+            if (IsExcludeObjectsNamesWithSpecificChars) args = args.FindAll(a => a.PackageName.IndexOfAny(ObjectNameCharsToExclude) == -1);
+            DisplayMessage(args.Count.ToString() + " arguments read.");
 
-                // set next argument
-                if (args.Count > 0) {
-                    IArgument nextArg = null;
-                    for (int i = args.Count - 1; i >= 0; i--) {
-                        if (i == args.Count - 1) {
-                            nextArg = args[i];
-                            continue;
-                        }
-
-                        if ((args[i].PackageName ?? "") == (nextArg.PackageName ?? "")
-                            && args[i].ProcedureName == nextArg.ProcedureName) {
-                            args[i].NextArgument = nextArg;
-                        }
+           // set next argument
+            if (args.Count > 0) {
+                IArgument nextArg = null;
+                for (int i = args.Count - 1; i >= 0; i--) {
+                    if (i == args.Count - 1) {
                         nextArg = args[i];
+                        continue;
                     }
-                }
 
-                ArgumentsPackaged = args;
+                    if ((args[i].PackageName ?? "") == (nextArg.PackageName ?? "")
+                        && args[i].ProcedureName == nextArg.ProcedureName) {
+                        args[i].NextArgument = nextArg;
+                    }
+                    nextArg = args[i];
+                }
             }
+
+            foreach (IArgument arg in args) OrclUtil.Normalize(arg);
+
+            ArgumentsPackaged = args;
         }
 
         /// <summary>
@@ -414,6 +400,9 @@ namespace Odapter {
                 + attribType + "s...");
             attributes = connection.Query<T_EntityAttribute>(sql,
                         new { owner = Schema, objectNamePrefix = Filter.ToUpper() }).ToList<IEntityAttribute>();
+
+            foreach (IEntityAttribute attrib in attributes) OrclUtil.Normalize(attrib);
+
             DisplayMessage(attributes.Count.ToString() + " " 
                 + (typeof(T_EntityAttribute).Equals(typeof(ObjectTypeAttribute)) ? "" : "table or view ")
                 + attribType + "s read.");
@@ -429,13 +418,13 @@ namespace Odapter {
 
             string source = typeof(T_Entity).Name.ToLower();
             string sql = typeof(T_Entity).Equals(typeof(ObjectType))
-                ?   " SELECT owner, type_name, supertype_name, instantiable "
+                ? " SELECT owner, type_name, supertype_name, instantiable "
                     + " FROM all_types "
-                    + " WHERE UPPER(typecode) = 'OBJECT' "
+                    + " WHERE UPPER(typecode) = '" + SytemTableObjectType.OBJECT.ToString() + "'"
                         + " AND UPPER(owner) = :owner "
                         + " AND UPPER(type_name) LIKE :objectNamePrefix || '%'"
                     + " ORDER BY type_name "
-                :   " SELECT owner, " + source + "_name "
+                : " SELECT owner, " + source + "_name "
                     + " FROM sys.all_" + source + "s "
                     + " WHERE UPPER(owner) = :owner "
                         + " AND UPPER(" + source + "_name" + ") LIKE :objectNamePrefix || '%'"
@@ -460,6 +449,7 @@ namespace Odapter {
                     }
                 }
             }
+
             return;
         }
         #endregion

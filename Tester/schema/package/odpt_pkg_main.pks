@@ -41,6 +41,7 @@ CREATE OR REPLACE PACKAGE ODPT.odpt_pkg_main AS
 	
 	-- data types ignored (not implemented) in code generation
 	TYPE t_record_type_ignored IS RECORD (
+		f_boolean							BOOLEAN,	 -- .NET cannot handle PL/SQL BOOLEAN
 		f_numeric							NUMERIC, -- implementation to be determined
 		f_decimal							DECIMAL, -- implementation to be determined
 		f_rowid								ROWID,
@@ -50,7 +51,6 @@ CREATE OR REPLACE PACKAGE ODPT.odpt_pkg_main AS
 		f_raw								RAW(1),
 		f_bfile								BFILE,
 		f_blob								BLOB,
-		f_boolean							BOOLEAN,	 -- .NET cannot handle PL/SQL BOOLEAN
 		f_clob								CLOB,
 		f_nclob								NCLOB,
 		f_xmltype							XMLTYPE,

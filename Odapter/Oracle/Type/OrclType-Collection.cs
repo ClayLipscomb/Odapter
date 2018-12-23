@@ -13,21 +13,23 @@
 //    GNU General Public License for more details.
 //
 //    You should have received a copy of the GNU General Public License
-//    along with this program.If not, see<http://www.gnu.org/licenses/>.
+//    along with this program. If not, see<http://www.gnu.org/licenses/>.
 //------------------------------------------------------------------------------
 
+using System;
+
 namespace Odapter {
-    public interface IParameterTranslation {
-        string CSharpTypeUsedForOracleAssociativeArray { get; set; }
-        string CSharpTypeUsedForOracleBFile { get; set; }
-        string CSharpTypeUsedForOracleBlob { get; set; }
-        string CSharpTypeUsedForOracleClob { get; set; }
-        string CSharpTypeUsedForOracleDate { get; set; }
-        string CSharpTypeUsedForOracleInteger { get; set; }
-        bool IsConvertOracleNumberToIntegerIfColumnNameIsId { get; set; }
-        string CSharpTypeUsedForOracleIntervalDayToSecond { get; set; }
-        string CSharpTypeUsedForOracleNumber { get; set; }
-        string CSharpTypeUsedForOracleRefCursor { get; set; }
-        string CSharpTypeUsedForOracleTimeStamp { get; set; }
+    internal sealed class OrclAssociativeArray : OrclTypeBase, IOrclType {
+        public string DataType { get => Orcl.ASSOCIATITVE_ARRAY; }
+        public bool IsImplementedForAssociativeArray { get => false; }
+
+        public override string BuildDataTypeFullName(ITyped dbDataType) {
+            return String.Join(" ", new string[] { Orcl.ASSOCIATITVE_ARRAY, Orcl.OF, dbDataType.SubType.Aggregated });
+        }
+    }
+
+    internal sealed class OrclVarray : OrclTypeBase, IOrclType {
+        public string DataType { get => Orcl.VARRAY; }
+        public bool IsImplementedForAssociativeArray { get => false; }
     }
 }

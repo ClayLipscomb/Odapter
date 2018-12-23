@@ -1347,6 +1347,10 @@ namespace Odapter.Tester {
                 // NOCOPY test
 #if SAFETYPE_NUMBER
                 OracleDecimal? 
+#elif DECIMAL_INTEGER
+                Decimal?
+#elif SHORT_INTEGER
+                Int32?
 #else
                 Int64?
 #endif
@@ -1361,10 +1365,14 @@ namespace Odapter.Tester {
             private void TestDuplicateSignatureCalls() {
 #if SAFETYPE_INTEGER
                 OracleDecimal?
+#elif DECIMAL_INTEGER
+                Decimal?
+#elif SHORT_INTEGER
+                Int32?
 #else
                 Int64?
 #endif
-                    pIn = 1, pInOut = -1, pOut, ret;
+                pIn = 1, pInOut = -1, pOut, ret;
 
                 OdptPkgMain.Instance.DuplicateSignature1(pIn, ref pInOut, out pOut, null);
                 Debug.Assert(pInOut.Equals(pIn + 1) && pOut.Equals(pIn + 1));

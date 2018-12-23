@@ -13,21 +13,22 @@
 //    GNU General Public License for more details.
 //
 //    You should have received a copy of the GNU General Public License
-//    along with this program.If not, see<http://www.gnu.org/licenses/>.
+//    along with this program. If not, see<http://www.gnu.org/licenses/>.
 //------------------------------------------------------------------------------
 
 namespace Odapter {
-    public interface IParameterTranslation {
-        string CSharpTypeUsedForOracleAssociativeArray { get; set; }
-        string CSharpTypeUsedForOracleBFile { get; set; }
-        string CSharpTypeUsedForOracleBlob { get; set; }
-        string CSharpTypeUsedForOracleClob { get; set; }
-        string CSharpTypeUsedForOracleDate { get; set; }
-        string CSharpTypeUsedForOracleInteger { get; set; }
-        bool IsConvertOracleNumberToIntegerIfColumnNameIsId { get; set; }
-        string CSharpTypeUsedForOracleIntervalDayToSecond { get; set; }
-        string CSharpTypeUsedForOracleNumber { get; set; }
-        string CSharpTypeUsedForOracleRefCursor { get; set; }
-        string CSharpTypeUsedForOracleTimeStamp { get; set; }
+    internal class NormalizableTimestamp : INormalizable {
+        public void NormalizePrecisionScale(ITyped dbDataType, out int? precision, out int? scale) {
+            scale = null;
+            if (dbDataType.DataPrecision != null) {
+                precision = dbDataType.DataPrecision;
+            } else {
+                precision = (dbDataType.DataScale == null || dbDataType.DataScale.Equals(0)) ? 6 : dbDataType.DataScale; // attr/col views store precision in "scale" column
+            }
+        }
+
+        public int? NormalizeCharLength(ITyped dbDataType) {
+            return null;
+        }
     }
 }

@@ -17,17 +17,16 @@
 //------------------------------------------------------------------------------
 
 namespace Odapter {
-    public interface IParameterTranslation {
-        string CSharpTypeUsedForOracleAssociativeArray { get; set; }
-        string CSharpTypeUsedForOracleBFile { get; set; }
-        string CSharpTypeUsedForOracleBlob { get; set; }
-        string CSharpTypeUsedForOracleClob { get; set; }
-        string CSharpTypeUsedForOracleDate { get; set; }
-        string CSharpTypeUsedForOracleInteger { get; set; }
-        bool IsConvertOracleNumberToIntegerIfColumnNameIsId { get; set; }
-        string CSharpTypeUsedForOracleIntervalDayToSecond { get; set; }
-        string CSharpTypeUsedForOracleNumber { get; set; }
-        string CSharpTypeUsedForOracleRefCursor { get; set; }
-        string CSharpTypeUsedForOracleTimeStamp { get; set; }
+    /// <summary>
+    /// Interface of an entity attribute. Should be implemented mapping to underlying sys view column if naming is different.
+    /// </summary>
+    internal interface IEntityAttribute : ITyped {
+        string EntityName { get; set; }
+        string AttrName { get; set; }
+        string AttrTypeOwner { get; set; }
+        string AttrTypeMod { get; set; }
+        int Position { get; set; }
+        bool Nullable { get; }
+        string ContainerClassName { get; set; } // Container class if C# type is nested class
     }
 }

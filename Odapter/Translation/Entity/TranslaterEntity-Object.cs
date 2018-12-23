@@ -13,21 +13,24 @@
 //    GNU General Public License for more details.
 //
 //    You should have received a copy of the GNU General Public License
-//    along with this program.If not, see<http://www.gnu.org/licenses/>.
+//    along with this program. If not, see<http://www.gnu.org/licenses/>.
 //------------------------------------------------------------------------------
 
+using System;
+
 namespace Odapter {
-    public interface IParameterTranslation {
-        string CSharpTypeUsedForOracleAssociativeArray { get; set; }
-        string CSharpTypeUsedForOracleBFile { get; set; }
-        string CSharpTypeUsedForOracleBlob { get; set; }
-        string CSharpTypeUsedForOracleClob { get; set; }
-        string CSharpTypeUsedForOracleDate { get; set; }
-        string CSharpTypeUsedForOracleInteger { get; set; }
-        bool IsConvertOracleNumberToIntegerIfColumnNameIsId { get; set; }
-        string CSharpTypeUsedForOracleIntervalDayToSecond { get; set; }
-        string CSharpTypeUsedForOracleNumber { get; set; }
-        string CSharpTypeUsedForOracleRefCursor { get; set; }
-        string CSharpTypeUsedForOracleTimeStamp { get; set; }
+    internal sealed class TranslaterObjectEntity : ITranslaterEntity {
+        public string DataTypeFull { get; private set; }
+        public IOrclType OrclType { get => OrclUtil.GetType(Orcl.OBJECT_TYPE); }
+
+        internal TranslaterObjectEntity(string dataTypeFull) {
+            DataTypeFull = dataTypeFull;
+        }
+
+        public string CSharpScope { get => CSharp.PUBLIC; }
+        public string CSharpName { get => TranslaterName.ConvertToPascal(DataTypeFull); }
+        public string CSharpType { get => CSharp.CLASS; }
+
+        public override string ToString() { return DataTypeFull; }
     }
 }

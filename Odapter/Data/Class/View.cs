@@ -16,18 +16,24 @@
 //    along with this program.If not, see<http://www.gnu.org/licenses/>.
 //------------------------------------------------------------------------------
 
+using System;
+
 namespace Odapter {
-    public interface IParameterTranslation {
-        string CSharpTypeUsedForOracleAssociativeArray { get; set; }
-        string CSharpTypeUsedForOracleBFile { get; set; }
-        string CSharpTypeUsedForOracleBlob { get; set; }
-        string CSharpTypeUsedForOracleClob { get; set; }
-        string CSharpTypeUsedForOracleDate { get; set; }
-        string CSharpTypeUsedForOracleInteger { get; set; }
-        bool IsConvertOracleNumberToIntegerIfColumnNameIsId { get; set; }
-        string CSharpTypeUsedForOracleIntervalDayToSecond { get; set; }
-        string CSharpTypeUsedForOracleNumber { get; set; }
-        string CSharpTypeUsedForOracleRefCursor { get; set; }
-        string CSharpTypeUsedForOracleTimeStamp { get; set; }
+    /// <summary>
+    /// View as type of Entity
+    /// </summary>
+    internal sealed class View : EntityBase, IView {
+        public IOrclEntity OrclEntity { get => new OrclView(); }
+        public string EntityType { get => OrclEntity.EntityType; }
+        public bool IsInstantiable { get => true; }  // a translated view is always instantiable
+        public ITranslaterEntity Translater { get; set; }
+
+        public string EntityName { get { return viewName; } set { viewName = value; } } private string viewName { get; set; }  // view_name is underlying sy view column
+
+        // IEntityNameable specific
+        public string ContainerType { get => String.Empty; }
+        public bool IsDefinedExternally { get => false; }
+
+        public override string ToString() { return EntityName; }
     }
 }

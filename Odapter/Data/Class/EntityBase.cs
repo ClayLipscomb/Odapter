@@ -17,11 +17,27 @@
 //------------------------------------------------------------------------------
 
 using System;
+using System.Collections.Generic;
 
 namespace Odapter {
-    internal sealed class Message {
-        internal static String BASE_PERMISSION_ERROR_MSG = @"Permission error writing ";
-        internal static String GENERATION_COMPLETE = @"Generation completed.";
-        internal static String NO_GENERATE_OPTIONS_SELECTED = @"No 'Code To Generate' options were selected.";
+    internal abstract class EntityBase : IEntityBase {
+        public List<IEntityAttribute> Attributes { get; set; }
+        public string Owner { get; set; }
+
+        /// <summary>
+        /// Determine whether entity should be ignored due to certain data types
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <param name="reasonMsg"></param>
+        /// <returns></returns>
+        public bool IsIgnoredDueToOracleTypes(out string reasonMsg) {
+            reasonMsg = "";
+            IEntityAttribute attr = this.Attributes.Find(a => a.Translater.IsIgnoredAsParameter);
+            if (attr != null) {
+                reasonMsg = TranslaterMessage.FormatMsg(attr.Translater.IgnoredReason) + " " + attr.GetType().Name.ToLower();
+                return true;
+            }
+            return false;
+        }
     }
 }

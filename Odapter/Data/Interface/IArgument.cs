@@ -17,17 +17,23 @@
 //------------------------------------------------------------------------------
 
 namespace Odapter {
-    public interface IParameterTranslation {
-        string CSharpTypeUsedForOracleAssociativeArray { get; set; }
-        string CSharpTypeUsedForOracleBFile { get; set; }
-        string CSharpTypeUsedForOracleBlob { get; set; }
-        string CSharpTypeUsedForOracleClob { get; set; }
-        string CSharpTypeUsedForOracleDate { get; set; }
-        string CSharpTypeUsedForOracleInteger { get; set; }
-        bool IsConvertOracleNumberToIntegerIfColumnNameIsId { get; set; }
-        string CSharpTypeUsedForOracleIntervalDayToSecond { get; set; }
-        string CSharpTypeUsedForOracleNumber { get; set; }
-        string CSharpTypeUsedForOracleRefCursor { get; set; }
-        string CSharpTypeUsedForOracleTimeStamp { get; set; }
+    internal interface IArgument : ITyped {
+        IArgument NextArgument { get; set; }
+        string Owner { get; set; }
+        string PackageName { get; set; }        // package containing argument
+        string ProcedureName { get; set; } 
+        string Overload { get; set; }
+        int DataLevel { get; set; }
+        string ArgumentName { get; set; }
+        int Position { get; set; }
+        int Sequence { get; set; }
+        string InOut { get; set; }
+        string TypeOwner { get; set; }          // schema containing of TypeSubName definition
+        string TypeName { get; set; }           // 1) package containing TypeSubName defintion or 2) proper name of object type
+        string TypeSubname { get; set; }        // proper name of DataType (e.g., record name)
+        string TypeLink { get; set; }
+        bool Defaulted { get; } 
+        bool IsReturnArgument { get; }
+        bool IsUntypedCursor { get; }
     }
 }

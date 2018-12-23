@@ -13,21 +13,32 @@
 //    GNU General Public License for more details.
 //
 //    You should have received a copy of the GNU General Public License
-//    along with this program.If not, see<http://www.gnu.org/licenses/>.
+//    along with this program. If not, see<http://www.gnu.org/licenses/>.
 //------------------------------------------------------------------------------
 
+using System;
+
 namespace Odapter {
-    public interface IParameterTranslation {
-        string CSharpTypeUsedForOracleAssociativeArray { get; set; }
-        string CSharpTypeUsedForOracleBFile { get; set; }
-        string CSharpTypeUsedForOracleBlob { get; set; }
-        string CSharpTypeUsedForOracleClob { get; set; }
-        string CSharpTypeUsedForOracleDate { get; set; }
-        string CSharpTypeUsedForOracleInteger { get; set; }
-        bool IsConvertOracleNumberToIntegerIfColumnNameIsId { get; set; }
-        string CSharpTypeUsedForOracleIntervalDayToSecond { get; set; }
-        string CSharpTypeUsedForOracleNumber { get; set; }
-        string CSharpTypeUsedForOracleRefCursor { get; set; }
-        string CSharpTypeUsedForOracleTimeStamp { get; set; }
+    internal abstract class OrclTypeBase {
+
+        private readonly INormalizable _normalizer;
+
+        public virtual string BuildDataTypeFullName(ITyped dbDataType) {
+            return dbDataType.OrclType.DataType;
+        }
+
+        public void NormalizePrecisionScale(ITyped dbDataType, out int? precision, out int? scale) {
+            _normalizer.NormalizePrecisionScale(dbDataType, out precision, out scale);
+        }
+
+        public int? NormalizeCharLength(ITyped dbDataType) {
+            return _normalizer.NormalizeCharLength(dbDataType);
+        }
+
+        protected OrclTypeBase() : this(new NormalizableDefault()) {  }
+
+        protected OrclTypeBase(INormalizable normalizer) {
+            _normalizer = normalizer;
+        }
     }
 }
