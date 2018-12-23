@@ -28,7 +28,6 @@ namespace Odapter {
         public string CSharpOracleDbType { get => CSharp.ORACLEDBTYPE_XMLTYPE; }
         public string CSharpOdpNetType { get => CSharp.ODP_NET_SAFE_TYPE_XML_TYPE; }
         public bool IsIgnoredAsParameter { get => true; }
-        //public string IgnoredReason { get => TranslaterMessage.IgnoreNotAvailableOdpNetMananged(DataType); }
-        public string IgnoredReason { get => TranslaterMessage.IgnoreNotImplemented(OrclType); }
+        public string IgnoredReason { get => TranslaterMessage.IgnoreNotAvailableOdpNetMananged(OrclType); }
     }
 }

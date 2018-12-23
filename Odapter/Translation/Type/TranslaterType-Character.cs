@@ -44,8 +44,7 @@ namespace Odapter {
         public string CSharpOracleDbType { get => CSharp.ORACLEDBTYPE_LONG; }
         public string CSharpOdpNetType { get => CSharp.ODP_NET_SAFE_TYPE_STRING; }
         public bool IsIgnoredAsParameter { get => true; }
-        //public string IgnoredReason { get => $"Code generation for %1 will not be implemented due to Oracle deprecation"; }
-        public string IgnoredReason { get => TranslaterMessage.IgnoreNotImplemented(OrclType); }
+        public string IgnoredReason { get => TranslaterMessage.IgnoreOracleDeprecation(OrclType); }
     }
 
     internal class TranslaterNchar : ITranslaterType {
