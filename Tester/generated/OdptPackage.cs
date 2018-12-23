@@ -2309,7 +2309,7 @@ namespace Schema.Odpt.Package {
         } // FuncNvarchar2
 
         // **PROC IGNORED** - Code generation for OBJECT TYPE types has not been implemented
-        // public Schema.Odpt.Type.Object.OdptBigOt FuncObjectType(Schema.Odpt.Type.Object.OdptBigOt pIn, ref Schema.Odpt.Type.Object.OdptBigOt pInOut, out Schema.Odpt.Type.Object.OdptBigOt pOut, OracleConnection optionalPreexistingOpenConnection = null)
+        // public OdptBigOt FuncObjectType(OdptBigOt pIn, ref OdptBigOt pInOut, out OdptBigOt pOut, OracleConnection optionalPreexistingOpenConnection = null)
 
         public Decimal? FuncOptionalParam(Decimal? pInNumberRequired, ref Decimal? pInOutNumberRequired, Decimal? pInNumberOptional = null, String pInVarchar2Optional = null, 
                 OracleConnection optionalPreexistingOpenConnection = null) {

@@ -170,9 +170,9 @@ namespace Schema.Odpt.Odpt.Table {
         [DataMember(Order=1, IsRequired=true)][XmlElement(Order=1, IsNullable=true)]
         public virtual Int64? Id { get; set; }
         [DataMember(Order=2, IsRequired=false)][XmlElement(Order=2, IsNullable=true)]
-        public virtual Schema.Odpt.Odpt.Type.Object.OdptBigOt ColObject { get; set; }
+        public virtual OdptBigOt ColObject { get; set; }
         [DataMember(Order=3, IsRequired=false)][XmlElement(Order=3, IsNullable=true)]
-        public virtual Schema.Odpt.Odpt.Type.Object.OdptBigOt ColRefObject { get; set; }
+        public virtual OdptBigOt ColRefObject { get; set; }
         [DataMember(Order=4, IsRequired=false)][XmlElement(Order=4, IsNullable=true)]
         public virtual Int64? ColLast { get; set; }
     } // OdptTableObject

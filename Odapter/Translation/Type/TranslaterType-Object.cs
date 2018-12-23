@@ -24,11 +24,7 @@ namespace Odapter {
         public IOrclType OrclType { get => OrclUtil.GetType(Orcl.OBJECT_TYPE); }
 
         // translation to C#
-        public string GetCSharpType(bool typeNotNullable = false, bool nonInterfaceType = false) {
-            return 
-                Parameter.Instance.NamespaceObjectType + "." + 
-                CSharpType;
-        }
+        public string GetCSharpType(bool typeNotNullable = false, bool nonInterfaceType = false) { return CSharpType; }
         private string CSharpType { get; set; }
         public bool IsValid(ITyped dataType) { return dataType.OrclType.BuildDataTypeFullName(dataType).Equals(DataTypeFull); }
         public string CSharpOracleDbType { get => CSharp.ORACLEDBTYPE_OBJECT; }
