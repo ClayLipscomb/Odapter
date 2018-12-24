@@ -20,7 +20,7 @@ using System;
 
 namespace Odapter {
     internal sealed class OrclObjectType : OrclTypeBase, IOrclType {
-        public string DataType { get => Orcl.OBJECT_TYPE; }
+        public string DataType { get => Orcl.OBJECT; }
         public bool IsImplementedForAssociativeArray { get => false; }
 
         public override string BuildDataTypeFullName(ITyped dbDataType) {

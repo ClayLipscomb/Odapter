@@ -30,7 +30,7 @@ namespace Odapter {
         private static readonly string IGNORE_NO_SEND_ASSOC_ARRAY_UNIMPLEMENTED  = $".NET cannot send/receive an {Orcl.ASSOCIATITVE_ARRAY}" + " of a {0}";
 
         private static string FormatOracleTypes(string txt) {
-            return txt.Replace("PLSQL", @"PL/SQL").Replace(Orcl.OBJECT_TYPE, "OBJECT TYPE").Replace(Orcl.ASSOCIATITVE_ARRAY, "associative array");
+            return txt.Replace("PLSQL", @"PL/SQL").Replace(Orcl.OBJECT, "OBJECT TYPE").Replace(Orcl.ASSOCIATITVE_ARRAY, "associative array");
         }
 
         internal static string FormatMsg(string msg, string insert1 = "") {

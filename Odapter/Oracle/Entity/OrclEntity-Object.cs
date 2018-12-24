@@ -20,7 +20,7 @@ using System;
 
 namespace Odapter {
     internal sealed class OrclObjectEntity : IOrclEntity {
-        public string EntityType { get => Orcl.OBJECT_TYPE; }
+        public string EntityType { get => Orcl.OBJECT; }
         public string BuildEntityTypeFullName(IEntityNameable entity) {
             return entity.EntityName;
         }

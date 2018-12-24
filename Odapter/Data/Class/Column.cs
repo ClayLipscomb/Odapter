@@ -47,7 +47,7 @@ namespace Odapter {
         public string DataTypeLabel { get => AttrName; }
         public string DataTypeProperName { get => OrclUtil.IsExistsType(DataType) ? String.Empty : DataType; }
         public string ContainerType { get => String.Empty; }
-        public bool IsDefinedExternally { get => DataType.Equals(Orcl.OBJECT_TYPE); }
+        public bool IsDefinedExternally { get => DataType.Equals(Orcl.OBJECT); }
         public string NamingHelpValue { get; }
 
         public ITyped SubType { get; }

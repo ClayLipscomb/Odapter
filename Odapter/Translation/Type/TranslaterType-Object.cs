@@ -21,7 +21,7 @@ using System;
 namespace Odapter {
     internal sealed class TranslaterObjectType : ITranslaterType {
         public string DataTypeFull { get; private set; }
-        public IOrclType OrclType { get => OrclUtil.GetType(Orcl.OBJECT_TYPE); }
+        public IOrclType OrclType { get => OrclUtil.GetType(Orcl.OBJECT); }
 
         // translation to C#
         public string GetCSharpType(bool typeNotNullable = false, bool nonInterfaceType = false) { return CSharpType; }

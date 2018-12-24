@@ -140,7 +140,7 @@ namespace Odapter {
                         else
                             OracleTypeTranslaters.Add(new TranslaterRefCursorTyped(dataTypeFull, CSharpTypeUsedForOracleRefCursor, dataType));
                         break;
-                    case Orcl.OBJECT_TYPE:
+                    case Orcl.OBJECT:
                         OracleTypeTranslaters.Add(new TranslaterObjectType(dataTypeFull));
                         break;
                     case Orcl.RECORD:

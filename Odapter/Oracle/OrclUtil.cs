@@ -25,7 +25,7 @@ namespace Odapter {
     /// Oracle specific types and logic
     /// </summary>
     public static class OrclUtil {
-        private static readonly List<string> _complexDataTypes = new List<string> { Orcl.ASSOCIATITVE_ARRAY, Orcl.OBJECT_TYPE, Orcl.RECORD, Orcl.REF_CURSOR, Orcl.VARRAY, Orcl.XMLTYPE };
+        private static readonly List<string> _complexDataTypes = new List<string> { Orcl.ASSOCIATITVE_ARRAY, Orcl.OBJECT, Orcl.RECORD, Orcl.REF_CURSOR, Orcl.VARRAY, Orcl.XMLTYPE };
 
         private static IList<IOrclType> OracleTypes = new List<IOrclType> {
                 new OrclAssociativeArray(),
@@ -130,7 +130,7 @@ namespace Odapter {
                 dataType.DataType, dataType.DataPrecision.HasValue ? dataType.DataPrecision.ToString() : "null", dataType.DataScale.HasValue ? dataType.DataScale.ToString() : "null", dataType.CharLength.HasValue ? dataType.CharLength.ToString() : "null");
 
             var dataTypeSearch = NormalizeDataType(dataType);
-            if (!OrclUtil.IsExistsType(dataTypeSearch)) dataTypeSearch = Orcl.OBJECT_TYPE;
+            if (!OrclUtil.IsExistsType(dataTypeSearch)) dataTypeSearch = Orcl.OBJECT;
             dataType.OrclType = OrclUtil.GetType(dataTypeSearch);
             if ( !dataType.OrclType.GetType().Equals(typeof(OrclUndefinedType)) && !dataType.OrclType.GetType().Equals(typeof(OrclObjectType)) ) dataType.DataType = dataType.OrclType.DataType;
 

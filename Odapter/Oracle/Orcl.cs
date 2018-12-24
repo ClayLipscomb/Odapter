@@ -46,7 +46,7 @@ namespace Odapter {
         // PL/SQL and SQL "entity" types
         internal const string TABLE = "TABLE";
         internal const string VIEW = "VIEW";
-        internal const string OBJECT_TYPE = "OBJECT"; 
+        internal const string OBJECT = "OBJECT"; 
         internal const string RECORD = "PL/SQL RECORD"; 
 
         // SQL types, etc.

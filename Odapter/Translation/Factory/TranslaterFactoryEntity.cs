@@ -40,7 +40,7 @@ namespace Odapter {
                     case Orcl.VIEW:
                         OracleEntityTranslaters.Add(new TranslaterView(dataTypeFull));
                         break;
-                    case Orcl.OBJECT_TYPE:
+                    case Orcl.OBJECT:
                         OracleEntityTranslaters.Add(new TranslaterObjectEntity(dataTypeFull));
                         break;
                     case Orcl.RECORD:

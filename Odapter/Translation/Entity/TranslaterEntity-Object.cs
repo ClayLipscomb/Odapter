@@ -21,7 +21,7 @@ using System;
 namespace Odapter {
     internal sealed class TranslaterObjectEntity : ITranslaterEntity {
         public string DataTypeFull { get; private set; }
-        public IOrclType OrclType { get => OrclUtil.GetType(Orcl.OBJECT_TYPE); }
+        public IOrclType OrclType { get => OrclUtil.GetType(Orcl.OBJECT); }
 
         internal TranslaterObjectEntity(string dataTypeFull) {
             DataTypeFull = dataTypeFull;
