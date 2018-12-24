@@ -83,48 +83,56 @@ namespace Schema.Odpt.Type.Object {
         [DataMember(Order=6, IsRequired=false)][XmlElement(Order=6, IsNullable=true)]
         public virtual Decimal? AttrNumber { get; set; }
         [DataMember(Order=7, IsRequired=false)][XmlElement(Order=7, IsNullable=true)]
-        public virtual Decimal? AttrFloat { get; set; }
+        public virtual Int64? AttrNumeric { get; set; }
         [DataMember(Order=8, IsRequired=false)][XmlElement(Order=8, IsNullable=true)]
-        public virtual Decimal? AttrDoublePrecision { get; set; }
+        public virtual Decimal? AttrNumeric31Scale21 { get; set; }
         [DataMember(Order=9, IsRequired=false)][XmlElement(Order=9, IsNullable=true)]
-        public virtual Single? AttrBinaryFloat { get; set; }
+        public virtual Int64? AttrDecimal { get; set; }
         [DataMember(Order=10, IsRequired=false)][XmlElement(Order=10, IsNullable=true)]
-        public virtual Double? AttrBinaryDouble { get; set; }
+        public virtual Decimal? AttrDecima38Scale37 { get; set; }
         [DataMember(Order=11, IsRequired=false)][XmlElement(Order=11, IsNullable=true)]
-        public virtual String AttrVarchar { get; set; }
+        public virtual Decimal? AttrFloat { get; set; }
         [DataMember(Order=12, IsRequired=false)][XmlElement(Order=12, IsNullable=true)]
-        public virtual String AttrVarcharMax { get; set; }
+        public virtual Decimal? AttrDoublePrecision { get; set; }
         [DataMember(Order=13, IsRequired=false)][XmlElement(Order=13, IsNullable=true)]
-        public virtual String AttrVarchar2 { get; set; }
+        public virtual Single? AttrBinaryFloat { get; set; }
         [DataMember(Order=14, IsRequired=false)][XmlElement(Order=14, IsNullable=true)]
-        public virtual String AttrVarchar2Max { get; set; }
+        public virtual Double? AttrBinaryDouble { get; set; }
         [DataMember(Order=15, IsRequired=false)][XmlElement(Order=15, IsNullable=true)]
-        public virtual String AttrNvarchar2 { get; set; }
+        public virtual String AttrVarchar { get; set; }
         [DataMember(Order=16, IsRequired=false)][XmlElement(Order=16, IsNullable=true)]
-        public virtual String AttrNvarchar2Max { get; set; }
+        public virtual String AttrVarcharMax { get; set; }
         [DataMember(Order=17, IsRequired=false)][XmlElement(Order=17, IsNullable=true)]
-        public virtual String AttrChar { get; set; }
+        public virtual String AttrVarchar2 { get; set; }
         [DataMember(Order=18, IsRequired=false)][XmlElement(Order=18, IsNullable=true)]
-        public virtual String AttrCharMax { get; set; }
+        public virtual String AttrVarchar2Max { get; set; }
         [DataMember(Order=19, IsRequired=false)][XmlElement(Order=19, IsNullable=true)]
-        public virtual String AttrNchar { get; set; }
+        public virtual String AttrNvarchar2 { get; set; }
         [DataMember(Order=20, IsRequired=false)][XmlElement(Order=20, IsNullable=true)]
-        public virtual String AttrNcharMax { get; set; }
+        public virtual String AttrNvarchar2Max { get; set; }
         [DataMember(Order=21, IsRequired=false)][XmlElement(Order=21, IsNullable=true)]
-        public virtual DateTime? AttrDate { get; set; }
+        public virtual String AttrChar { get; set; }
         [DataMember(Order=22, IsRequired=false)][XmlElement(Order=22, IsNullable=true)]
-        public virtual DateTime? AttrTimestamp { get; set; }
+        public virtual String AttrCharMax { get; set; }
         [DataMember(Order=23, IsRequired=false)][XmlElement(Order=23, IsNullable=true)]
-        public virtual DateTime? AttrTimestampWLTimeZone { get; set; }
+        public virtual String AttrNchar { get; set; }
         [DataMember(Order=24, IsRequired=false)][XmlElement(Order=24, IsNullable=true)]
-        public virtual DateTime? AttrTimestampWTimeZone { get; set; }
+        public virtual String AttrNcharMax { get; set; }
         [DataMember(Order=25, IsRequired=false)][XmlElement(Order=25, IsNullable=true)]
-        public virtual Byte[] AttrBlob { get; set; }
+        public virtual DateTime? AttrDate { get; set; }
         [DataMember(Order=26, IsRequired=false)][XmlElement(Order=26, IsNullable=true)]
-        public virtual String AttrClob { get; set; }
+        public virtual DateTime? AttrTimestamp { get; set; }
         [DataMember(Order=27, IsRequired=false)][XmlElement(Order=27, IsNullable=true)]
-        public virtual String AttrNclob { get; set; }
+        public virtual DateTime? AttrTimestampWLTimeZone { get; set; }
         [DataMember(Order=28, IsRequired=false)][XmlElement(Order=28, IsNullable=true)]
+        public virtual DateTime? AttrTimestampWTimeZone { get; set; }
+        [DataMember(Order=29, IsRequired=false)][XmlElement(Order=29, IsNullable=true)]
+        public virtual Byte[] AttrBlob { get; set; }
+        [DataMember(Order=30, IsRequired=false)][XmlElement(Order=30, IsNullable=true)]
+        public virtual String AttrClob { get; set; }
+        [DataMember(Order=31, IsRequired=false)][XmlElement(Order=31, IsNullable=true)]
+        public virtual String AttrNclob { get; set; }
+        [DataMember(Order=32, IsRequired=false)][XmlElement(Order=32, IsNullable=true)]
         public virtual Int64? AttrLast { get; set; }
     } // OdptBigOt
 
