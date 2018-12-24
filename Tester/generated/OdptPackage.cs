@@ -32,10 +32,10 @@ namespace Schema.Odpt.Package {
             Int64? ColInteger { get; set; }
             Int64? ColInt { get; set; }
             Int64? ColSmallint { get; set; }
-            Decimal? ColNumber { get; set; }
-            Decimal? ColDoublePrecision { get; set; }
             Int64? ColNumeric { get; set; }
             Int64? ColDecimal { get; set; }
+            Decimal? ColNumber { get; set; }
+            Decimal? ColDoublePrecision { get; set; }
             Decimal? ColFloat { get; set; }
             Single? ColBinaryFloat { get; set; }
             Double? ColBinaryDouble { get; set; }
@@ -73,13 +73,13 @@ namespace Schema.Odpt.Package {
             [DataMember(Order=4, IsRequired=false)][XmlElement(Order=4, IsNullable=true)]
             public virtual Int64? ColSmallint { get; set; }
             [DataMember(Order=5, IsRequired=false)][XmlElement(Order=5, IsNullable=true)]
-            public virtual Decimal? ColNumber { get; set; }
-            [DataMember(Order=6, IsRequired=false)][XmlElement(Order=6, IsNullable=true)]
-            public virtual Decimal? ColDoublePrecision { get; set; }
-            [DataMember(Order=7, IsRequired=false)][XmlElement(Order=7, IsNullable=true)]
             public virtual Int64? ColNumeric { get; set; }
-            [DataMember(Order=8, IsRequired=false)][XmlElement(Order=8, IsNullable=true)]
+            [DataMember(Order=6, IsRequired=false)][XmlElement(Order=6, IsNullable=true)]
             public virtual Int64? ColDecimal { get; set; }
+            [DataMember(Order=7, IsRequired=false)][XmlElement(Order=7, IsNullable=true)]
+            public virtual Decimal? ColNumber { get; set; }
+            [DataMember(Order=8, IsRequired=false)][XmlElement(Order=8, IsNullable=true)]
+            public virtual Decimal? ColDoublePrecision { get; set; }
             [DataMember(Order=9, IsRequired=false)][XmlElement(Order=9, IsNullable=true)]
             public virtual Decimal? ColFloat { get; set; }
             [DataMember(Order=10, IsRequired=false)][XmlElement(Order=10, IsNullable=true)]
@@ -135,10 +135,10 @@ namespace Schema.Odpt.Package {
                     if (!rdr.IsDBNull(2)) obj.ColInteger = Convert.ToInt64(rdr.GetValue(2));
                     if (!rdr.IsDBNull(3)) obj.ColInt = Convert.ToInt64(rdr.GetValue(3));
                     if (!rdr.IsDBNull(4)) obj.ColSmallint = Convert.ToInt64(rdr.GetValue(4));
-                    if (!rdr.IsDBNull(5)) obj.ColNumber = (Decimal?)OracleDecimal.SetPrecision(rdr.GetOracleDecimal(5), 29);
-                    if (!rdr.IsDBNull(6)) obj.ColDoublePrecision = (Decimal?)OracleDecimal.SetPrecision(rdr.GetOracleDecimal(6), 29);
-                    if (!rdr.IsDBNull(7)) obj.ColNumeric = Convert.ToInt64(rdr.GetValue(7));
-                    if (!rdr.IsDBNull(8)) obj.ColDecimal = Convert.ToInt64(rdr.GetValue(8));
+                    if (!rdr.IsDBNull(5)) obj.ColNumeric = Convert.ToInt64(rdr.GetValue(5));
+                    if (!rdr.IsDBNull(6)) obj.ColDecimal = Convert.ToInt64(rdr.GetValue(6));
+                    if (!rdr.IsDBNull(7)) obj.ColNumber = (Decimal?)OracleDecimal.SetPrecision(rdr.GetOracleDecimal(7), 29);
+                    if (!rdr.IsDBNull(8)) obj.ColDoublePrecision = (Decimal?)OracleDecimal.SetPrecision(rdr.GetOracleDecimal(8), 29);
                     if (!rdr.IsDBNull(9)) obj.ColFloat = (Decimal?)OracleDecimal.SetPrecision(rdr.GetOracleDecimal(9), 29);
                     if (!rdr.IsDBNull(10)) obj.ColBinaryFloat = Convert.ToSingle(rdr.GetValue(10));
                     if (!rdr.IsDBNull(11)) obj.ColBinaryDouble = Convert.ToDouble(rdr.GetValue(11));
@@ -3167,10 +3167,10 @@ namespace Schema.Odpt.Package {
             Int64? ColInteger { get; set; }
             Int64? ColInt { get; set; }
             Int64? ColSmallint { get; set; }
-            Decimal? ColNumber { get; set; }
-            Decimal? ColDoublePrecision { get; set; }
             Int64? ColNumeric { get; set; }
             Int64? ColDecimal { get; set; }
+            Decimal? ColNumber { get; set; }
+            Decimal? ColDoublePrecision { get; set; }
             Decimal? ColFloat { get; set; }
             Single? ColBinaryFloat { get; set; }
             Double? ColBinaryDouble { get; set; }
@@ -3208,13 +3208,13 @@ namespace Schema.Odpt.Package {
             [DataMember(Order=4, IsRequired=false)][XmlElement(Order=4, IsNullable=true)]
             public virtual Int64? ColSmallint { get; set; }
             [DataMember(Order=5, IsRequired=false)][XmlElement(Order=5, IsNullable=true)]
-            public virtual Decimal? ColNumber { get; set; }
-            [DataMember(Order=6, IsRequired=false)][XmlElement(Order=6, IsNullable=true)]
-            public virtual Decimal? ColDoublePrecision { get; set; }
-            [DataMember(Order=7, IsRequired=false)][XmlElement(Order=7, IsNullable=true)]
             public virtual Int64? ColNumeric { get; set; }
-            [DataMember(Order=8, IsRequired=false)][XmlElement(Order=8, IsNullable=true)]
+            [DataMember(Order=6, IsRequired=false)][XmlElement(Order=6, IsNullable=true)]
             public virtual Int64? ColDecimal { get; set; }
+            [DataMember(Order=7, IsRequired=false)][XmlElement(Order=7, IsNullable=true)]
+            public virtual Decimal? ColNumber { get; set; }
+            [DataMember(Order=8, IsRequired=false)][XmlElement(Order=8, IsNullable=true)]
+            public virtual Decimal? ColDoublePrecision { get; set; }
             [DataMember(Order=9, IsRequired=false)][XmlElement(Order=9, IsNullable=true)]
             public virtual Decimal? ColFloat { get; set; }
             [DataMember(Order=10, IsRequired=false)][XmlElement(Order=10, IsNullable=true)]
@@ -3270,10 +3270,10 @@ namespace Schema.Odpt.Package {
                     if (!rdr.IsDBNull(2)) obj.ColInteger = Convert.ToInt64(rdr.GetValue(2));
                     if (!rdr.IsDBNull(3)) obj.ColInt = Convert.ToInt64(rdr.GetValue(3));
                     if (!rdr.IsDBNull(4)) obj.ColSmallint = Convert.ToInt64(rdr.GetValue(4));
-                    if (!rdr.IsDBNull(5)) obj.ColNumber = (Decimal?)OracleDecimal.SetPrecision(rdr.GetOracleDecimal(5), 29);
-                    if (!rdr.IsDBNull(6)) obj.ColDoublePrecision = (Decimal?)OracleDecimal.SetPrecision(rdr.GetOracleDecimal(6), 29);
-                    if (!rdr.IsDBNull(7)) obj.ColNumeric = Convert.ToInt64(rdr.GetValue(7));
-                    if (!rdr.IsDBNull(8)) obj.ColDecimal = Convert.ToInt64(rdr.GetValue(8));
+                    if (!rdr.IsDBNull(5)) obj.ColNumeric = Convert.ToInt64(rdr.GetValue(5));
+                    if (!rdr.IsDBNull(6)) obj.ColDecimal = Convert.ToInt64(rdr.GetValue(6));
+                    if (!rdr.IsDBNull(7)) obj.ColNumber = (Decimal?)OracleDecimal.SetPrecision(rdr.GetOracleDecimal(7), 29);
+                    if (!rdr.IsDBNull(8)) obj.ColDoublePrecision = (Decimal?)OracleDecimal.SetPrecision(rdr.GetOracleDecimal(8), 29);
                     if (!rdr.IsDBNull(9)) obj.ColFloat = (Decimal?)OracleDecimal.SetPrecision(rdr.GetOracleDecimal(9), 29);
                     if (!rdr.IsDBNull(10)) obj.ColBinaryFloat = Convert.ToSingle(rdr.GetValue(10));
                     if (!rdr.IsDBNull(11)) obj.ColBinaryDouble = Convert.ToDouble(rdr.GetValue(11));
@@ -4221,10 +4221,11 @@ namespace Schema.Odpt.Package {
         } // GetRowsUntypedRet
 
         public Int64? InsertRow(Int64? pColNumberId, Int64? pColInteger, Int64? pColInt, Int64? pColSmallint, 
-                Decimal? pColNumber, Decimal? pColDoublePrecision, Decimal? pColFloat, Single? pColBinaryFloat, Double? pColBinaryDouble, String pColVarcharMin, 
-                String pColVarcharMax, String pColVarchar2Min, String pColVarchar2Max, String pColNvarchar2Min, String pColNvarchar2Max, String pColCharMin, 
-                String pColCharMax, String pColNcharMin, String pColNcharMax, DateTime? pColDate, DateTime? pColTimestamp, DateTime? pColTimestampPrec0, 
-                DateTime? pColTimestampPrec9, Byte[] pColBlob, String pColClob, String pColNclob, OracleConnection optionalPreexistingOpenConnection = null) {
+                Int64? pColNumeric, Int64? pColDecimal, Decimal? pColNumber, Decimal? pColDoublePrecision, Decimal? pColFloat, Single? pColBinaryFloat, 
+                Double? pColBinaryDouble, String pColVarcharMin, String pColVarcharMax, String pColVarchar2Min, String pColVarchar2Max, String pColNvarchar2Min, 
+                String pColNvarchar2Max, String pColCharMin, String pColCharMax, String pColNcharMin, String pColNcharMax, DateTime? pColDate, 
+                DateTime? pColTimestamp, DateTime? pColTimestampPrec0, DateTime? pColTimestampPrec9, Byte[] pColBlob, String pColClob, String pColNclob, 
+                OracleConnection optionalPreexistingOpenConnection = null) {
             Int64? __ret = null; 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
             try {
@@ -4236,6 +4237,8 @@ namespace Schema.Odpt.Package {
                     __cmd.Parameters.Add(new OracleParameter("P_COL_INTEGER", OracleDbType.Int64, pColInteger, ParameterDirection.Input));
                     __cmd.Parameters.Add(new OracleParameter("P_COL_INT", OracleDbType.Int64, pColInt, ParameterDirection.Input));
                     __cmd.Parameters.Add(new OracleParameter("P_COL_SMALLINT", OracleDbType.Int64, pColSmallint, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("P_COL_NUMERIC", OracleDbType.Int64, pColNumeric, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("P_COL_DECIMAL", OracleDbType.Int64, pColDecimal, ParameterDirection.Input));
                     __cmd.Parameters.Add(new OracleParameter("P_COL_NUMBER", OracleDbType.Decimal, pColNumber, ParameterDirection.Input));
                     __cmd.Parameters.Add(new OracleParameter("P_COL_DOUBLE_PRECISION", OracleDbType.Decimal, pColDoublePrecision, ParameterDirection.Input));
                     __cmd.Parameters.Add(new OracleParameter("P_COL_FLOAT", OracleDbType.Decimal, pColFloat, ParameterDirection.Input));

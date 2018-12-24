@@ -46,13 +46,13 @@ namespace Schema.Odpt.Odpt.Table {
         [DataMember(Order=5, IsRequired=false)][XmlElement(Order=5, IsNullable=true)]
         public virtual Int64? ColSmallint { get; set; }
         [DataMember(Order=6, IsRequired=false)][XmlElement(Order=6, IsNullable=true)]
-        public virtual Decimal? ColNumber { get; set; }
-        [DataMember(Order=7, IsRequired=false)][XmlElement(Order=7, IsNullable=true)]
-        public virtual Decimal? ColDoublePrecision { get; set; }
-        [DataMember(Order=8, IsRequired=false)][XmlElement(Order=8, IsNullable=true)]
         public virtual Int64? ColNumeric { get; set; }
-        [DataMember(Order=9, IsRequired=false)][XmlElement(Order=9, IsNullable=true)]
+        [DataMember(Order=7, IsRequired=false)][XmlElement(Order=7, IsNullable=true)]
         public virtual Int64? ColDecimal { get; set; }
+        [DataMember(Order=8, IsRequired=false)][XmlElement(Order=8, IsNullable=true)]
+        public virtual Decimal? ColNumber { get; set; }
+        [DataMember(Order=9, IsRequired=false)][XmlElement(Order=9, IsNullable=true)]
+        public virtual Decimal? ColDoublePrecision { get; set; }
         [DataMember(Order=10, IsRequired=false)][XmlElement(Order=10, IsNullable=true)]
         public virtual Decimal? ColFloat { get; set; }
         [DataMember(Order=11, IsRequired=false)][XmlElement(Order=11, IsNullable=true)]

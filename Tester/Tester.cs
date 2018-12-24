@@ -177,7 +177,7 @@ namespace Odapter.Tester {
                 oracleClob.Append(new char[] { ' ' }, 0, 1);
                 oracleNClob.Append(new char[] { ' ' }, 0, 1);
 #endif
-                OdptPkgTableBig.Instance.InsertRow(0, 0, 0, 0, 0.0M, 0.0M, 0.0M, Single.NaN, Double.NaN, "", "", "", "", "", "", "", "", "", "", null, null, null, null,
+                OdptPkgTableBig.Instance.InsertRow(0, 0, 0, 0, 0, 0, 0.0M, 0.0M, 0.0M, Single.NaN, Double.NaN, "", "", "", "", "", "", "", "", "", "", null, null, null, null,
 #if SAFETYPE_BLOB
                     oracleBlob,
 #else
@@ -196,7 +196,7 @@ namespace Odapter.Tester {
                     conn);
 
                 // all explicitly null values
-                OdptPkgTableBig.Instance.InsertRow(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, conn);
+                OdptPkgTableBig.Instance.InsertRow(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, conn);
 
                 // min values for INTEGER, NUMBER, DATE, TIMESTAMP, LOB 
 #if SAFETYPE_BLOB
@@ -211,13 +211,13 @@ namespace Odapter.Tester {
 #endif
                 OdptPkgTableBig.Instance.InsertRow(
 #if SAFETYPE_INTEGER
-                    OracleDecimal.MinValue, OracleDecimal.Truncate(OracleDecimal.MinValue, 0), OracleDecimal.Truncate(OracleDecimal.MinValue, 0), OracleDecimal.Truncate(OracleDecimal.MinValue, 0),
+                    OracleDecimal.MinValue, OracleDecimal.Truncate(OracleDecimal.MinValue, 0), OracleDecimal.Truncate(OracleDecimal.MinValue, 0), OracleDecimal.Truncate(OracleDecimal.MinValue, 0), OracleDecimal.Truncate(OracleDecimal.MinValue, 0), OracleDecimal.Truncate(OracleDecimal.MinValue, 0),
 #elif DECIMAL_INTEGER
-                    MIN_DECIMAL, MIN_DECIMAL, MIN_DECIMAL, MIN_DECIMAL,
+                    MIN_DECIMAL, MIN_DECIMAL, MIN_DECIMAL, MIN_DECIMAL, MIN_DECIMAL, MIN_DECIMAL,
 #elif SHORT_INTEGER
-                    Int32.MinValue, Int32.MinValue, Int32.MinValue, Int32.MinValue,
+                    Int32.MinValue, Int32.MinValue, Int32.MinValue, Int32.MinValue, Int32.MinValue, Int32.MinValue,
 #else
-                    Int64.MinValue, Int64.MinValue, Int64.MinValue, Int64.MinValue,
+                    Int64.MinValue, Int64.MinValue, Int64.MinValue, Int64.MinValue, Int64.MinValue, Int64.MinValue,
 #endif
 #if !SAFETYPE_NUMBER
                     MIN_DECIMAL, MIN_DECIMAL, MIN_DECIMAL,
@@ -279,13 +279,13 @@ namespace Odapter.Tester {
 #endif
                 OdptPkgTableBig.Instance.InsertRow(
 #if SAFETYPE_INTEGER
-                    OracleDecimal.MaxValue, OracleDecimal.Truncate(OracleDecimal.MaxValue, 0), OracleDecimal.Truncate(OracleDecimal.MaxValue, 0), OracleDecimal.Truncate(OracleDecimal.MaxValue, 0),
+                    OracleDecimal.MaxValue, OracleDecimal.Truncate(OracleDecimal.MaxValue, 0), OracleDecimal.Truncate(OracleDecimal.MaxValue, 0), OracleDecimal.Truncate(OracleDecimal.MaxValue, 0), OracleDecimal.Truncate(OracleDecimal.MaxValue, 0), OracleDecimal.Truncate(OracleDecimal.MaxValue, 0),
 #elif DECIMAL_INTEGER
-                    MAX_DECIMAL, MAX_DECIMAL, MAX_DECIMAL, MAX_DECIMAL,
+                    MAX_DECIMAL, MAX_DECIMAL, MAX_DECIMAL, MAX_DECIMAL, MAX_DECIMAL, MAX_DECIMAL,
 #elif SHORT_INTEGER
-                    Int32.MaxValue, Int32.MaxValue, Int32.MaxValue, Int32.MaxValue,
+                    Int32.MaxValue, Int32.MaxValue, Int32.MaxValue, Int32.MaxValue, Int32.MaxValue, Int32.MaxValue,
 #else
-                    Int64.MaxValue, Int64.MaxValue, Int64.MaxValue, Int64.MaxValue,
+                    Int64.MaxValue, Int64.MaxValue, Int64.MaxValue, Int64.MaxValue, Int64.MaxValue, Int64.MaxValue,
 #endif
 
 #if !SAFETYPE_NUMBER
@@ -347,7 +347,7 @@ namespace Odapter.Tester {
 #endif
                 for (int i = 0; i < TABLE_BIG_ROWS_TO_INSERT; i++) {
                     OdptPkgTableBig.Instance.InsertRow(i + 1, i + 2, i + 3, i + 4,
-                        i + 5, i + 6, i + 7, i + 8, i + 9,
+                        i + 5, i + 6, i + 7, i + 8, i + 9, i + 10, i + 11,
                         "A", new string('?', MAX_STRING_SIZE_FOR_VARCHAR_COL), "B", new string('?', MAX_STRING_SIZE_FOR_VARCHAR_COL), "C", new string('?', MAX_STRING_SIZE_FOR_NVARCHAR_COL),
                         "D", new string('?', MAX_STRING_SIZE_FOR_CHAR_COL), "E", new string('?', MAX_STRING_SIZE_FOR_NCHAR_COL),
 #if !SAFETYPE_DATE
@@ -1558,14 +1558,37 @@ namespace Odapter.Tester {
             { get; set; }
             [HydratorMapAttribute(Position = 5)]
             public virtual
+#if SAFETYPE_INTEGER
+                            OracleDecimal?
+#elif DECIMAL_INTEGER
+                            Decimal?
+#elif SHORT_INTEGER
+                            Int32?
+#else
+                            Int64?
+#endif
+                                    ColNumeric { get; set; }
+            [HydratorMapAttribute(Position = 6)]
+            public virtual
+#if SAFETYPE_INTEGER
+                            OracleDecimal?
+#elif DECIMAL_INTEGER
+                            Decimal?
+#elif SHORT_INTEGER
+                            Int32?
+#else
+                            Int64?
+#endif
+                                    ColDecimal { get; set; }
+            [HydratorMapAttribute(Position = 7)]
+            public virtual
 #if SAFETYPE_NUMBER
                             OracleDecimal?
 #else
                             Decimal?
 #endif
-                                    ColNumber
-            { get; set; }
-            [HydratorMapAttribute(Position = 6)]
+                                    ColNumber { get; set; }
+            [HydratorMapAttribute(Position = 8)]
             public virtual
 #if SAFETYPE_NUMBER
                             OracleDecimal?
@@ -1573,32 +1596,6 @@ namespace Odapter.Tester {
                             Decimal?
 #endif
                                     ColDoublePrecision
-            { get; set; }
-            [HydratorMapAttribute(Position = 7)]
-            public virtual
-#if SAFETYPE_INTEGER
-                            OracleDecimal?
-#elif DECIMAL_INTEGER
-                            Decimal?
-#elif SHORT_INTEGER
-                            Int32?
-#else
-                            Int64?
-#endif
-                                    ColNumeric 
-            { get; set; }
-            [HydratorMapAttribute(Position = 8)]
-            public virtual
-#if SAFETYPE_INTEGER
-                            OracleDecimal?
-#elif DECIMAL_INTEGER
-                            Decimal?
-#elif SHORT_INTEGER
-                            Int32?
-#else
-                            Int64?
-#endif
-                                    ColDecimal 
             { get; set; }
             [HydratorMapAttribute(Position = 9)]
             public virtual
