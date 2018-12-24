@@ -8,8 +8,8 @@ CREATE TABLE ODPT.odpt_table_big (
 	col_smallint						SMALLINT,
 	col_number							NUMBER,
 	col_double_precision				DOUBLE PRECISION,
---	col_numeric							NUMERIC,		-- implementation to be determined
---	col_decimal							DECIMAL,		-- implementation to be determined
+	col_numeric							NUMERIC,		
+	col_decimal							DECIMAL,		
 	col_float							FLOAT,			-- FLOAT(126)
 	col_binary_float					BINARY_FLOAT,
 	col_binary_double					BINARY_DOUBLE,

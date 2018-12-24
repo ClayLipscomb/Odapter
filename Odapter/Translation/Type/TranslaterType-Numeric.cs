@@ -75,8 +75,8 @@ namespace Odapter {
         public bool IsValid(ITyped dataType) { return dataType.OrclType.BuildDataTypeFullName(dataType).Equals(DataTypeFull); }
         public string CSharpOracleDbType { get => CSharp.GetNumericOracleDbTypeEnum(_cSharpType); }
         public string CSharpOdpNetType { get => CSharp.ODP_NET_SAFE_TYPE_DECIMAL; }
-        public bool IsIgnoredAsParameter { get => true; }
-        public string IgnoredReason { get => TranslaterMessage.IgnoreNotImplemented(OrclType); }
+        public bool IsIgnoredAsParameter { get => false; }
+        public string IgnoredReason { get => String.Empty; }
     }
 
     internal sealed class TranslaterDoublePrecision : ITranslaterType {
@@ -126,9 +126,9 @@ namespace Odapter {
         public bool IsValid(ITyped dataType) {
             if ((dataType.DataType == Orcl.INTEGER)
                 ||
-                (dataType.DataType == Orcl.NUMBER && dataType.DataScale == 0 && dataType.DataPrecision >= 10)  // NUMBER(10,0) or greater
+                ((dataType.DataType == Orcl.NUMBER || dataType.DataType == Orcl.DECIMAL) && dataType.DataScale == 0 && dataType.DataPrecision >= 10)  // NUMBER(10,0) or greater
                 ||
-                (dataType.DataType == Orcl.NUMBER && dataType.DataScale == null && dataType.DataPrecision == null  // NUMBER
+                ((dataType.DataType == Orcl.NUMBER || dataType.DataType == Orcl.DECIMAL) && dataType.DataScale == null && dataType.DataPrecision == null  // NUMBER
                     && OrclUtil.IsIdLabel(dataType.DataTypeLabel) && IsConvertIdNumberToInteger))
                 return true;
             
@@ -261,8 +261,8 @@ namespace Odapter {
         private const string _cSharpType = CSharp.DECIMAL;
         public string CSharpOracleDbType { get => CSharp.GetNumericOracleDbTypeEnum(_cSharpType); }
         public string CSharpOdpNetType { get => CSharp.ODP_NET_SAFE_TYPE_DECIMAL; }
-        public bool IsIgnoredAsParameter { get => true; }
-        public string IgnoredReason { get => TranslaterMessage.IgnoreNotImplemented(OrclType); }
+        public bool IsIgnoredAsParameter { get => false; }
+        public string IgnoredReason { get => String.Empty; }
     }
 
     internal sealed class TranslaterPlsInteger : ITranslaterType {

@@ -37,6 +37,7 @@ namespace Odapter {
     internal sealed class OrclDecimal : OrclTypeBase, IOrclType {
         public string DataType { get => Orcl.DECIMAL; }
         public bool IsImplementedForAssociativeArray { get => true; }
+        public OrclDecimal() : base(new NormalizableDecimal()) { }
     }
 
     internal sealed class OrclDoublePrecision : OrclTypeBase, IOrclType {
@@ -75,6 +76,7 @@ namespace Odapter {
     internal sealed class OrclNumeric : OrclTypeBase, IOrclType {
         public string DataType { get => Orcl.NUMERIC; }
         public bool IsImplementedForAssociativeArray { get => true; }
+        public OrclNumeric() : base(new NormalizableDecimal()) { }
     }
 
     internal sealed class OrclPlsInteger : OrclTypeBase, IOrclType {

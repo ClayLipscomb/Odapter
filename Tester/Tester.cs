@@ -881,6 +881,36 @@ namespace Odapter.Tester {
                     Debug.Assert(pInList[i].Equals(pOutList[i]));
                     Debug.Assert(pInList[i].Equals(retList[i]));
                 }
+
+                // DECIMAL
+                // standard call
+                for (int i = 0; i < testValues.Count; i++) {
+                    pIn = testValues[i]; pInOut = null;
+                    ret = OdptPkgMain.Instance.FuncDecimal(pIn, ref pInOut, out pOut, null);
+                    Debug.Assert(pIn.Equals(pInOut) && pIn.Equals(pOut) && pIn.Equals(ret));
+                }
+
+                // assoc array 
+                pInList = pInOutList = testValues;
+                retList = OdptPkgMain.Instance.FuncAaDecimal(pInList, ref pInOutList, out pOutList, null);
+                for (int i = 0; i < pInList.Count; i++) Debug.Assert(pInList[i].Equals(pInOutList[i]));
+                for (int i = 0; i < pInList.Count; i++) Debug.Assert(pInList[i].Equals(pOutList[i]));
+                for (int i = 0; i < pInList.Count; i++) Debug.Assert(pInList[i].Equals(retList[i]));
+
+                // NUMERIC
+                // standard call
+                for (int i = 0; i < testValues.Count; i++) {
+                    pIn = testValues[i]; pInOut = null;
+                    ret = OdptPkgMain.Instance.FuncNumeric(pIn, ref pInOut, out pOut, null);
+                    Debug.Assert(pIn.Equals(pInOut) && pIn.Equals(pOut) && pIn.Equals(ret));
+                }
+
+                // assoc array
+                pInList = pInOutList = testValues;
+                retList = OdptPkgMain.Instance.FuncAaNumeric(pInList, ref pInOutList, out pOutList, null);
+                for (int i = 0; i < pInList.Count; i++) Debug.Assert(pInList[i].Equals(pInOutList[i]));
+                for (int i = 0; i < pInList.Count; i++) Debug.Assert(pInList[i].Equals(pOutList[i]));
+                for (int i = 0; i < pInList.Count; i++) Debug.Assert(pInList[i].Equals(retList[i]));
             }
 
             /// <summary>
@@ -1546,6 +1576,32 @@ namespace Odapter.Tester {
             { get; set; }
             [HydratorMapAttribute(Position = 7)]
             public virtual
+#if SAFETYPE_INTEGER
+                            OracleDecimal?
+#elif DECIMAL_INTEGER
+                            Decimal?
+#elif SHORT_INTEGER
+                            Int32?
+#else
+                            Int64?
+#endif
+                                    ColNumeric 
+            { get; set; }
+            [HydratorMapAttribute(Position = 8)]
+            public virtual
+#if SAFETYPE_INTEGER
+                            OracleDecimal?
+#elif DECIMAL_INTEGER
+                            Decimal?
+#elif SHORT_INTEGER
+                            Int32?
+#else
+                            Int64?
+#endif
+                                    ColDecimal 
+            { get; set; }
+            [HydratorMapAttribute(Position = 9)]
+            public virtual
 #if SAFETYPE_NUMBER
                             OracleDecimal?
 #else
@@ -1553,31 +1609,31 @@ namespace Odapter.Tester {
 #endif
                                     ColFloat
             { get; set; }
-            [HydratorMapAttribute(Position = 8)]
-            public virtual Single? ColBinaryFloat { get; set; }
-            [HydratorMapAttribute(Position = 9)]
-            public virtual Double? ColBinaryDouble { get; set; }
             [HydratorMapAttribute(Position = 10)]
-            public virtual String ColVarcharMin { get; set; }
+            public virtual Single? ColBinaryFloat { get; set; }
             [HydratorMapAttribute(Position = 11)]
-            public virtual String ColVarcharMax { get; set; }
+            public virtual Double? ColBinaryDouble { get; set; }
             [HydratorMapAttribute(Position = 12)]
-            public virtual String ColVarchar2Min { get; set; }
+            public virtual String ColVarcharMin { get; set; }
             [HydratorMapAttribute(Position = 13)]
-            public virtual String ColVarchar2Max { get; set; }
+            public virtual String ColVarcharMax { get; set; }
             [HydratorMapAttribute(Position = 14)]
-            public virtual String ColNvarchar2Min { get; set; }
+            public virtual String ColVarchar2Min { get; set; }
             [HydratorMapAttribute(Position = 15)]
-            public virtual String ColNvarchar2Max { get; set; }
+            public virtual String ColVarchar2Max { get; set; }
             [HydratorMapAttribute(Position = 16)]
-            public virtual String ColCharMin { get; set; }
+            public virtual String ColNvarchar2Min { get; set; }
             [HydratorMapAttribute(Position = 17)]
-            public virtual String ColCharMax { get; set; }
+            public virtual String ColNvarchar2Max { get; set; }
             [HydratorMapAttribute(Position = 18)]
-            public virtual String ColNcharMin { get; set; }
+            public virtual String ColCharMin { get; set; }
             [HydratorMapAttribute(Position = 19)]
-            public virtual String ColNcharMax { get; set; }
+            public virtual String ColCharMax { get; set; }
             [HydratorMapAttribute(Position = 20)]
+            public virtual String ColNcharMin { get; set; }
+            [HydratorMapAttribute(Position = 21)]
+            public virtual String ColNcharMax { get; set; }
+            [HydratorMapAttribute(Position = 22)]
             public virtual
 #if SAFETYPE_DATE
                             OracleDate?
@@ -1586,7 +1642,7 @@ namespace Odapter.Tester {
 #endif
                                     ColDate
             { get; set; }
-            [HydratorMapAttribute(Position = 21)]
+            [HydratorMapAttribute(Position = 23)]
             public virtual
 #if SAFETYPE_TIMESTAMP
                             OracleTimeStamp? 
@@ -1596,7 +1652,7 @@ namespace Odapter.Tester {
                                     ColTimestamp
             { get; set; }
 
-            [HydratorMapAttribute(Position = 22)]
+            [HydratorMapAttribute(Position = 24)]
             public virtual
 #if SAFETYPE_TIMESTAMP
                             OracleTimeStamp? 
@@ -1607,7 +1663,7 @@ namespace Odapter.Tester {
             { get; set; }
 
 
-            [HydratorMapAttribute(Position = 23)]
+            [HydratorMapAttribute(Position = 25)]
             public virtual
 #if SAFETYPE_TIMESTAMP
                             OracleTimeStamp? 
@@ -1617,7 +1673,7 @@ namespace Odapter.Tester {
                                     ColTimestampPrec9
             { get; set; }
 
-            [HydratorMapAttribute(Position = 24)]
+            [HydratorMapAttribute(Position = 26)]
             public virtual
 #if SAFETYPE_BLOB
                             OracleBlob
@@ -1625,7 +1681,7 @@ namespace Odapter.Tester {
                             Byte[]
 #endif
                                 ColBlob { get; set; }
-            [HydratorMapAttribute(Position = 25)]
+            [HydratorMapAttribute(Position = 27)]
             public virtual
 #if SAFETYPE_CLOB
                             OracleClob
@@ -1633,7 +1689,7 @@ namespace Odapter.Tester {
                             String
 #endif
                                 ColClob { get; set; }
-            [HydratorMapAttribute(Position = 26)]
+            [HydratorMapAttribute(Position = 28)]
             public virtual
 #if SAFETYPE_CLOB
                             OracleClob
@@ -1641,7 +1697,7 @@ namespace Odapter.Tester {
                             String
 #endif
                                 ColNclob { get; set; }
-            [HydratorMapAttribute(Position = 27)]
+            [HydratorMapAttribute(Position = 29)]
             public virtual String ColLast { get; set; }
         } // TTableBig
 

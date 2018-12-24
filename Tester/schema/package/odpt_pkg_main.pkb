@@ -549,6 +549,20 @@ CREATE OR REPLACE PACKAGE BODY ODPT.odpt_pkg_main AS
 		RETURN p_in;
 	END;
 
+    FUNCTION func_aa_numeric (p_in IN t_assocarray_numeric, p_in_out IN OUT t_assocarray_numeric, p_out OUT t_assocarray_numeric) RETURN t_assocarray_numeric IS
+    BEGIN
+		p_in_out := p_in;
+		p_out := p_in;
+		RETURN p_in;
+	END;
+
+    FUNCTION func_aa_decimal (p_in IN t_assocarray_decimal, p_in_out IN OUT t_assocarray_decimal, p_out OUT t_assocarray_decimal) RETURN t_assocarray_decimal IS
+    BEGIN
+		p_in_out := p_in;
+		p_out := p_in;
+		RETURN p_in;
+	END;
+
    FUNCTION func_aa_float (p_in IN t_assocarray_float, p_in_out IN OUT t_assocarray_float, p_out OUT t_assocarray_float) RETURN t_assocarray_float IS
    BEGIN
 		p_in_out := p_in;

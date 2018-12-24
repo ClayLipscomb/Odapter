@@ -5,8 +5,10 @@ CREATE OR REPLACE TYPE ODPT.odpt_big_ot IS OBJECT (
 	attr_int 							INT,
 	attr_smallint						SMALLINT,
 	attr_number							NUMBER,
-	--attr_numeric						NUMERIC,			-- postpone due to complexity
-	--attr_decimal						DECIMAL,			-- postpone due to complexity
+	attr_numeric						NUMERIC,
+	attr_numeric31_scale_21				NUMERIC(31,21),
+	attr_decimal						DECIMAL,			
+	attr_decima38_scale_37				DECIMAL(38,37),
 	attr_float							FLOAT,              
 	attr_double_precision				DOUBLE PRECISION,     
 	attr_binary_float					BINARY_FLOAT,

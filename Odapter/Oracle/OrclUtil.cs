@@ -109,13 +109,11 @@ namespace Odapter {
         }
 
         private static string NormalizeDataType(ITyped dataType) {
-            string dataTypeBase = dataType.DataType;
+            var dataTypeBase = dataType.DataType;
 
             if (dataTypeBase == null) dataTypeBase = Orcl.NULL; // procedure with *no parameters* will have a placeholder NULL-typed parameter representing no return
 
             if (dataTypeBase.StartsWith(Orcl.TIMESTAMP) && dataTypeBase.EndsWith(" TZ")) dataTypeBase = dataTypeBase.Replace(" TZ", " TIME ZONE"); // object attributes use "TZ" instead of "TIME ZONE"!
-
-            if (dataType.PlsType != null && (dataType.PlsType == Orcl.DECIMAL || dataType.PlsType == Orcl.NUMERIC)) dataTypeBase = dataType.PlsType; // will be unnecesary after these types are implemented
 
             if (dataTypeBase.Contains("(")) { // strip any inline parenthetical precision from data type - columns can have this
                 int openParenIndex = dataTypeBase.IndexOf("(");
@@ -134,12 +132,7 @@ namespace Odapter {
             var dataTypeSearch = NormalizeDataType(dataType);
             if (!OrclUtil.IsExistsType(dataTypeSearch)) dataTypeSearch = Orcl.OBJECT_TYPE;
             dataType.OrclType = OrclUtil.GetType(dataTypeSearch);
-            if (!dataType.OrclType.GetType().Equals(typeof(OrclUndefinedType))
-                && !dataType.OrclType.GetType().Equals(typeof(OrclDecimal))
-                && !dataType.OrclType.GetType().Equals(typeof(OrclNumeric))
-                && !dataType.OrclType.GetType().Equals(typeof(OrclObjectType)) )
-
-                dataType.DataType = dataType.OrclType.DataType;
+            if ( !dataType.OrclType.GetType().Equals(typeof(OrclUndefinedType)) && !dataType.OrclType.GetType().Equals(typeof(OrclObjectType)) ) dataType.DataType = dataType.OrclType.DataType;
 
             int? precision, scale;
             dataType.OrclType.NormalizePrecisionScale(dataType, out precision, out scale);

@@ -15,6 +15,8 @@ CREATE OR REPLACE PACKAGE ODPT.odpt_pkg_main AS
 	TYPE t_assocarray_binary_double IS TABLE OF odpt_table_big.col_binary_double%TYPE INDEX BY PLS_INTEGER;  
 	TYPE t_assocarray_binary_float IS TABLE OF odpt_table_big.col_binary_float%TYPE INDEX BY PLS_INTEGER;  
 	TYPE t_assocarray_double_precision IS TABLE OF odpt_table_big.col_double_precision%TYPE INDEX BY PLS_INTEGER;  
+	TYPE t_assocarray_numeric IS TABLE OF odpt_table_big.col_numeric%TYPE INDEX BY PLS_INTEGER;  
+	TYPE t_assocarray_decimal IS TABLE OF odpt_table_big.col_decimal%TYPE INDEX BY PLS_INTEGER;  
 	TYPE t_assocarray_float IS TABLE OF odpt_table_big.col_float%TYPE INDEX BY PLS_INTEGER;  
 
 	TYPE t_assocarray_varchar2 IS TABLE OF odpt_table_big.col_varchar2_max%TYPE INDEX BY PLS_INTEGER;  
@@ -42,17 +44,12 @@ CREATE OR REPLACE PACKAGE ODPT.odpt_pkg_main AS
 	-- data types ignored (not implemented) in code generation
 	TYPE t_record_type_ignored IS RECORD (
 		f_boolean							BOOLEAN,	 -- .NET cannot handle PL/SQL BOOLEAN
-		f_numeric							NUMERIC, -- implementation to be determined
-		f_decimal							DECIMAL, -- implementation to be determined
 		f_rowid								ROWID,
 		f_urowid							UROWID,
 		f_timestamp_w_l_time_zone 			TIMESTAMP WITH LOCAL TIME ZONE, 
 		f_timestamp_w_time_zone				TIMESTAMP WITH TIME ZONE,	
 		f_raw								RAW(1),
 		f_bfile								BFILE,
-		f_blob								BLOB,
-		f_clob								CLOB,
-		f_nclob								NCLOB,
 		f_xmltype							XMLTYPE,
 		f_long								LONG,				-- deprecated
 		f_long_raw							LONG RAW,			-- deprecated
@@ -102,6 +99,8 @@ CREATE OR REPLACE PACKAGE ODPT.odpt_pkg_main AS
 	FUNCTION func_binary_double(p_in IN BINARY_DOUBLE, p_in_out IN OUT BINARY_DOUBLE, p_out OUT BINARY_DOUBLE) RETURN BINARY_DOUBLE;
 	PROCEDURE proc_binary_double_const(p_min_normal OUT BINARY_DOUBLE, p_max_normal OUT BINARY_DOUBLE);
 	FUNCTION func_double_precision(p_in IN DOUBLE PRECISION, p_in_out IN OUT DOUBLE PRECISION, p_out OUT DOUBLE PRECISION) RETURN DOUBLE PRECISION;
+	FUNCTION func_numeric(p_in IN NUMERIC, p_in_out IN OUT NUMERIC, p_out OUT NUMERIC) RETURN NUMERIC;
+	FUNCTION func_decimal(p_in IN DECIMAL, p_in_out IN OUT DECIMAL, p_out OUT DECIMAL) RETURN DECIMAL;
 
 	FUNCTION func_varchar(p_in IN VARCHAR, p_in_out IN OUT VARCHAR, p_out OUT VARCHAR) RETURN VARCHAR;
 	FUNCTION func_varchar2(p_in IN VARCHAR2, p_in_out IN OUT VARCHAR2, p_out OUT VARCHAR2) RETURN VARCHAR2;
@@ -132,6 +131,8 @@ CREATE OR REPLACE PACKAGE ODPT.odpt_pkg_main AS
 	FUNCTION func_aa_binary_double (p_in IN t_assocarray_binary_double, p_in_out IN OUT t_assocarray_binary_double, p_out OUT t_assocarray_binary_double) RETURN t_assocarray_binary_double;
 	FUNCTION func_aa_binary_float (p_in IN t_assocarray_binary_float, p_in_out IN OUT t_assocarray_binary_float, p_out OUT t_assocarray_binary_float) RETURN t_assocarray_binary_float;
 	FUNCTION func_aa_double_precision (p_in IN t_assocarray_double_precision, p_in_out IN OUT t_assocarray_double_precision, p_out OUT t_assocarray_double_precision) RETURN t_assocarray_double_precision;
+	FUNCTION func_aa_numeric (p_in IN t_assocarray_numeric, p_in_out IN OUT t_assocarray_numeric, p_out OUT t_assocarray_numeric) RETURN t_assocarray_numeric;
+	FUNCTION func_aa_decimal (p_in IN t_assocarray_decimal, p_in_out IN OUT t_assocarray_decimal, p_out OUT t_assocarray_decimal) RETURN t_assocarray_decimal;
 	FUNCTION func_aa_float (p_in IN t_assocarray_float, p_in_out IN OUT t_assocarray_float, p_out OUT t_assocarray_float) RETURN t_assocarray_float;
 	FUNCTION func_aa_varchar2 (p_in IN t_assocarray_varchar2, p_in_out IN OUT t_assocarray_varchar2, p_out OUT t_assocarray_varchar2) RETURN t_assocarray_varchar2;
 	FUNCTION func_aa_nvarchar2 (p_in IN t_assocarray_nvarchar2, p_in_out IN OUT t_assocarray_nvarchar2, p_out OUT t_assocarray_nvarchar2) RETURN t_assocarray_nvarchar2;
@@ -156,8 +157,6 @@ CREATE OR REPLACE PACKAGE ODPT.odpt_pkg_main AS
 	FUNCTION func_timestamp_w_time_zone(p_in IN TIMESTAMP WITH TIME ZONE, p_in_out IN OUT TIMESTAMP WITH TIME ZONE, p_out OUT TIMESTAMP WITH TIME ZONE) RETURN TIMESTAMP WITH TIME ZONE;
 	FUNCTION func_bfile(p_in IN BFILE, p_in_out IN OUT BFILE, p_out OUT BFILE) RETURN BFILE;
 	FUNCTION func_raw(p_in IN RAW, p_in_out IN OUT RAW, p_out OUT RAW) RETURN RAW;
-	FUNCTION func_numeric(p_in IN NUMERIC, p_in_out IN OUT NUMERIC, p_out OUT NUMERIC) RETURN NUMERIC;
-	FUNCTION func_decimal(p_in IN DECIMAL, p_in_out IN OUT DECIMAL, p_out OUT DECIMAL) RETURN DECIMAL;
 	FUNCTION func_interval_day_to_second(p_in IN INTERVAL DAY TO SECOND, p_in_out IN OUT INTERVAL DAY TO SECOND, p_out OUT INTERVAL DAY TO SECOND) RETURN INTERVAL DAY TO SECOND;
 	FUNCTION func_interval_year_to_month(p_in IN INTERVAL YEAR TO MONTH, p_in_out IN OUT INTERVAL YEAR TO MONTH, p_out OUT INTERVAL YEAR TO MONTH) RETURN INTERVAL YEAR TO MONTH;
 
@@ -173,7 +172,7 @@ CREATE OR REPLACE PACKAGE ODPT.odpt_pkg_main AS
     --      Oracle argument view not revealing if associative array is VARCHAR2-indexed
     FUNCTION func_aa_integer_v (p_in IN t_assocarray_integer_v, p_in_out IN OUT t_assocarray_integer_v, p_out OUT t_assocarray_integer_v) RETURN t_assocarray_integer_v;
 	
-	-- will not be implemented due to deprecation, demand or practicality
+	-- will never implemented due to Oracle deprecation
 	FUNCTION func_long(p_in IN LONG, p_in_out IN OUT LONG, p_out OUT LONG) RETURN LONG;
 	FUNCTION func_long_raw(p_in IN LONG RAW, p_in_out IN OUT LONG RAW, p_out OUT LONG RAW) RETURN LONG RAW;
 

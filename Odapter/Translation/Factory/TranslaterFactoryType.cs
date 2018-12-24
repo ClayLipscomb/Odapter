@@ -63,6 +63,7 @@ namespace Odapter {
                 new TranslaterNclob(CSharpTypeUsedForOracleClob),
                 new TranslaterNvarchar2(),
                 new TranslaterNumber(CSharpTypeUsedForOracleNumber),
+                new TranslaterNumeric(),
                 new TranslaterPlsInteger(),
                 new TranslaterPlsqlBoolean(),
                 new TranslaterPositive(),
@@ -117,12 +118,9 @@ namespace Odapter {
         private static string BuildFullType(ITyped dataType) {
             string dataTypeFull;
             
-            if (!String.IsNullOrWhiteSpace(dataType.PlsType) 
-                && (dataType.PlsType == Orcl.DECIMAL || dataType.PlsType == Orcl.NUMERIC)) 
-                dataTypeFull = dataType.OrclType.BuildDataTypeFullName(dataType);
-            else if (OracleTypeTranslaters.Any(t => t.IsValid(dataType)))    // translater already exists in factory
+            if (OracleTypeTranslaters.Any(t => t.IsValid(dataType)))    // translater already exists in factory
                 dataTypeFull = OracleTypeTranslaters.First(t => t.IsValid(dataType)).DataTypeFull;
-            else                                                             // translater does not exist in factory
+            else                                                        // translater does not exist in factory
                 dataTypeFull = dataType.OrclType.BuildDataTypeFullName(dataType);
 
             return dataTypeFull;

@@ -9,6 +9,8 @@ CREATE OR REPLACE PACKAGE ODPT.odpt_pkg_table_big AS
 			col_smallint odpt_table_big.col_smallint%TYPE,
 			col_number odpt_table_big.col_number%TYPE,
 			col_double_precision odpt_table_big.col_double_precision%TYPE,
+			col_numeric odpt_table_big.col_numeric%TYPE,
+			col_decimal odpt_table_big.col_decimal%TYPE,
 			col_float odpt_table_big.col_float%TYPE,
 			col_binary_float odpt_table_big.col_binary_float%TYPE,
 			col_binary_double odpt_table_big.col_binary_double%TYPE,
