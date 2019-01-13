@@ -234,6 +234,13 @@ CREATE OR REPLACE PACKAGE BODY ODPT.odpt_pkg_main AS
 		RETURN p_in;
 	END;
 
+    FUNCTION func_real(p_in IN REAL, p_in_out IN OUT REAL, p_out OUT REAL) RETURN REAL IS
+	BEGIN
+		p_in_out := p_in;
+		p_out := p_in;
+		RETURN p_in;
+	END;	
+
     PROCEDURE proc_binary_float_const(p_min_normal OUT BINARY_FLOAT, p_max_normal OUT BINARY_FLOAT) IS
 	BEGIN
 		SELECT	BINARY_FLOAT_MIN_NORMAL, BINARY_FLOAT_MAX_NORMAL
@@ -565,6 +572,13 @@ CREATE OR REPLACE PACKAGE BODY ODPT.odpt_pkg_main AS
 
    FUNCTION func_aa_float (p_in IN t_assocarray_float, p_in_out IN OUT t_assocarray_float, p_out OUT t_assocarray_float) RETURN t_assocarray_float IS
    BEGIN
+		p_in_out := p_in;
+		p_out := p_in;
+		RETURN p_in;
+	END;
+
+    FUNCTION func_aa_real (p_in IN t_assocarray_real, p_in_out IN OUT t_assocarray_real, p_out OUT t_assocarray_real) RETURN t_assocarray_real IS
+    BEGIN
 		p_in_out := p_in;
 		p_out := p_in;
 		RETURN p_in;

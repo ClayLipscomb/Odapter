@@ -12,6 +12,7 @@ CREATE OR REPLACE PACKAGE ODPT.odpt_pkg_table_big AS
 			col_number odpt_table_big.col_number%TYPE,
 			col_double_precision odpt_table_big.col_double_precision%TYPE,
 			col_float odpt_table_big.col_float%TYPE,
+			col_real odpt_table_big.col_real%TYPE,
 			col_binary_float odpt_table_big.col_binary_float%TYPE,
 			col_binary_double odpt_table_big.col_binary_double%TYPE,
 								
@@ -67,6 +68,7 @@ CREATE OR REPLACE PACKAGE ODPT.odpt_pkg_table_big AS
 							p_col_number IN odpt_table_big.col_number%TYPE,
 							p_col_double_precision IN odpt_table_big.col_double_precision%TYPE,
 							p_col_float IN odpt_table_big.col_float%TYPE,
+							p_col_real IN odpt_table_big.col_real%TYPE,
 							p_col_binary_float IN odpt_table_big.col_binary_float%TYPE,
 							p_col_binary_double IN odpt_table_big.col_binary_double%TYPE,
 								

@@ -18,6 +18,7 @@ CREATE OR REPLACE PACKAGE ODPT.odpt_pkg_main AS
 	TYPE t_assocarray_numeric IS TABLE OF odpt_table_big.col_numeric%TYPE INDEX BY PLS_INTEGER;  
 	TYPE t_assocarray_decimal IS TABLE OF odpt_table_big.col_decimal%TYPE INDEX BY PLS_INTEGER;  
 	TYPE t_assocarray_float IS TABLE OF odpt_table_big.col_float%TYPE INDEX BY PLS_INTEGER;  
+	TYPE t_assocarray_real IS TABLE OF odpt_table_big.col_real%TYPE INDEX BY PLS_INTEGER;  
 
 	TYPE t_assocarray_varchar2 IS TABLE OF odpt_table_big.col_varchar2_max%TYPE INDEX BY PLS_INTEGER;  
 	TYPE t_assocarray_nvarchar2 IS TABLE OF odpt_table_big.col_nvarchar2_max%TYPE INDEX BY PLS_INTEGER;  
@@ -94,6 +95,7 @@ CREATE OR REPLACE PACKAGE ODPT.odpt_pkg_main AS
 
 	FUNCTION func_number(p_in IN NUMBER, p_in_out IN OUT NUMBER, p_out OUT NUMBER) RETURN NUMBER;
 	FUNCTION func_float(p_in IN FLOAT, p_in_out IN OUT FLOAT, p_out OUT FLOAT) RETURN FLOAT;
+	FUNCTION func_real(p_in IN REAL, p_in_out IN OUT REAL, p_out OUT REAL) RETURN REAL;
 	FUNCTION func_binary_float(p_in IN BINARY_FLOAT, p_in_out IN OUT BINARY_FLOAT, p_out OUT BINARY_FLOAT) RETURN BINARY_FLOAT;
 	PROCEDURE proc_binary_float_const(p_min_normal OUT BINARY_FLOAT, p_max_normal OUT BINARY_FLOAT);
 	FUNCTION func_binary_double(p_in IN BINARY_DOUBLE, p_in_out IN OUT BINARY_DOUBLE, p_out OUT BINARY_DOUBLE) RETURN BINARY_DOUBLE;
@@ -134,6 +136,7 @@ CREATE OR REPLACE PACKAGE ODPT.odpt_pkg_main AS
 	FUNCTION func_aa_numeric (p_in IN t_assocarray_numeric, p_in_out IN OUT t_assocarray_numeric, p_out OUT t_assocarray_numeric) RETURN t_assocarray_numeric;
 	FUNCTION func_aa_decimal (p_in IN t_assocarray_decimal, p_in_out IN OUT t_assocarray_decimal, p_out OUT t_assocarray_decimal) RETURN t_assocarray_decimal;
 	FUNCTION func_aa_float (p_in IN t_assocarray_float, p_in_out IN OUT t_assocarray_float, p_out OUT t_assocarray_float) RETURN t_assocarray_float;
+	FUNCTION func_aa_real (p_in IN t_assocarray_real, p_in_out IN OUT t_assocarray_real, p_out OUT t_assocarray_real) RETURN t_assocarray_real;
 	FUNCTION func_aa_varchar2 (p_in IN t_assocarray_varchar2, p_in_out IN OUT t_assocarray_varchar2, p_out OUT t_assocarray_varchar2) RETURN t_assocarray_varchar2;
 	FUNCTION func_aa_nvarchar2 (p_in IN t_assocarray_nvarchar2, p_in_out IN OUT t_assocarray_nvarchar2, p_out OUT t_assocarray_nvarchar2) RETURN t_assocarray_nvarchar2;
 	FUNCTION func_aa_string (p_in IN t_assocarray_string, p_in_out IN OUT t_assocarray_string, p_out OUT t_assocarray_string) RETURN t_assocarray_string;

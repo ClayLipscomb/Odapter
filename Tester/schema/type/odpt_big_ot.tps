@@ -10,6 +10,7 @@ CREATE OR REPLACE TYPE ODPT.odpt_big_ot IS OBJECT (
 	attr_decimal						DECIMAL,			
 	attr_decima38_scale_37				DECIMAL(38,37),
 	attr_float							FLOAT,              
+	attr_real							REAL,
 	attr_double_precision				DOUBLE PRECISION,     
 	attr_binary_float					BINARY_FLOAT,
 	attr_binary_double					BINARY_DOUBLE,

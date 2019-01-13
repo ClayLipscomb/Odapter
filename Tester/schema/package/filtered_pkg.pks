@@ -15,6 +15,7 @@ CREATE OR REPLACE PACKAGE ODPT.filtered_pkg AS
 			col_number odpt_table_big.col_number%TYPE,
 			col_double_precision odpt_table_big.col_double_precision%TYPE,
 			col_float odpt_table_big.col_float%TYPE,
+			col_real odpt_table_big.col_real%TYPE,
 			col_binary_float odpt_table_big.col_binary_float%TYPE,
 			col_binary_double odpt_table_big.col_binary_double%TYPE,
 								

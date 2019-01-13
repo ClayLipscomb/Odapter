@@ -11,6 +11,7 @@ CREATE TABLE ODPT.odpt_table_big (
 	col_number							NUMBER,
 	col_double_precision				DOUBLE PRECISION,
 	col_float							FLOAT,			-- FLOAT(126)
+	col_real							REAL,			-- FLOAT(63)
 	col_binary_float					BINARY_FLOAT,
 	col_binary_double					BINARY_DOUBLE,
 	
