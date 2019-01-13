@@ -114,22 +114,13 @@ namespace Odapter {
         private static string CSharpTypeUsedForOracleClob { get; set; }
         #endregion
 
-        #region Translation methods
-        private static string BuildFullType(ITyped dataType) {
-            string dataTypeFull;
-            
-            if (OracleTypeTranslaters.Any(t => t.IsValid(dataType)))    // translater already exists in factory
-                dataTypeFull = OracleTypeTranslaters.First(t => t.IsValid(dataType)).DataTypeFull;
-            else                                                        // translater does not exist in factory
-                dataTypeFull = dataType.OrclType.BuildDataTypeFullName(dataType);
-
-            return dataTypeFull;
-        }
-
         internal static ITranslaterType GetTranslater(ITyped dataType) {
-            var dataTypeFull = BuildFullType(dataType);
+            string dataTypeFull = String.Empty;
 
-            if (!OracleTypeTranslaters.Any(t => t.DataTypeFull.Equals(dataTypeFull))) {
+            if (OracleTypeTranslaters.Any(t => t.IsValid(dataType))) {  
+                dataTypeFull = OracleTypeTranslaters.First(t => t.IsValid(dataType)).DataTypeFull;
+            } else {
+                dataTypeFull = dataType.OrclType.BuildDataTypeFullName(dataType);
                 switch (dataType.DataType) { // dynamically create custom type translaters for complex types
                     case Orcl.ASSOCIATITVE_ARRAY:
                         OracleTypeTranslaters.Add(new TranslaterAssociativeArray(dataTypeFull, CSharpTypeUsedForOracleAssociativeArray, dataType));
@@ -152,10 +143,9 @@ namespace Odapter {
                 }
             }
 
-            return OracleTypeTranslaters.SingleOrDefault(t => t.DataTypeFull.Equals(dataTypeFull));
+            return OracleTypeTranslaters.First(t => t.DataTypeFull.Equals(dataTypeFull));
         }
 
         internal static ITranslaterType GetTranslaterNull() { return OracleTypeTranslaters.First(t => t is TranslaterNullType); }
-        #endregion
     }
 }

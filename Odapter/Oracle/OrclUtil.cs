@@ -20,6 +20,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
+using OU = Odapter.OrclUtil;
+
 namespace Odapter {
     /// <summary>
     /// Oracle specific types and logic
@@ -78,16 +80,6 @@ namespace Odapter {
                 new OrclXmltype()
         };
 
-        /// <summary>
-        /// Determine if Oracle type is an unqualified NUMBER or an equivalent (i.e., no precision or scale)
-        /// </summary>
-        /// <param name="oracleType"></param>
-        /// <returns></returns>
-        internal static bool IsOracleNumberEquivalent(String oracleType) {
-            if (new List<String>() { Orcl.NUMBER, Orcl.FLOAT, Orcl.BINARY_FLOAT }.Contains(oracleType)) return true;
-            return true;
-        }
-
         internal static bool IsComplexDataType(string dataType) { return _complexDataTypes.Contains(dataType); }
 
         internal static bool IsExistsType(string dataType) { return OracleTypes.Any(ot => ot.DataType.Equals(dataType)); }
@@ -108,50 +100,65 @@ namespace Odapter {
             return OracleTypes.SingleOrDefault(ot => ot.DataType.Equals(dataTypeSearch));
         }
 
-        private static string NormalizeDataType(ITyped dataType) {
-            var dataTypeBase = dataType.DataType;
+        private static ITyped NormalzeDataTypeNull(ITyped type) {
+            type.DataType = type.DataType == null ? Orcl.NULL : type.DataType; // procedure with *no parameters* will have a placeholder NULL-typed parameter representing no return
+            return type;
+        }
 
-            if (dataTypeBase == null) dataTypeBase = Orcl.NULL; // procedure with *no parameters* will have a placeholder NULL-typed parameter representing no return
+        private static ITyped NormalzeDataTypeTimestamp(ITyped type) {
+            var tzSuffix = @" TZ"; // object attributes use "TZ" instead of "TIME ZONE"!
+            type.DataType = type.DataType.StartsWith(Orcl.TIMESTAMP) && type.DataType.EndsWith(tzSuffix) ? type.DataType.Replace(tzSuffix, " TIME ZONE") : type.DataType;
+            return type;
+        }
 
-            if (dataTypeBase.StartsWith(Orcl.TIMESTAMP) && dataTypeBase.EndsWith(" TZ")) dataTypeBase = dataTypeBase.Replace(" TZ", " TIME ZONE"); // object attributes use "TZ" instead of "TIME ZONE"!
-
-            if (dataTypeBase.Contains("(")) { // strip any inline parenthetical precision from data type - columns can have this
-                int openParenIndex = dataTypeBase.IndexOf("(");
-                dataTypeBase = dataTypeBase.Remove(openParenIndex, dataTypeBase.IndexOf(")") - openParenIndex + 1);
+        private static ITyped NormalzeDataTypeAggregated(ITyped type) {
+            if (type.DataType.Contains("(")) { // strip any inline parentheses - columns can have this
+                int openParenIndex = type.DataType.IndexOf("(");
+                type.DataType = type.DataType.Remove(openParenIndex, type.DataType.IndexOf(")") - openParenIndex + 1);
             }
+            return type;
+        }
 
-            if (dataTypeBase == Orcl.UNDEFINED && dataType.DataTypeProperName == Orcl.XMLTYPE) dataTypeBase = Orcl.XMLTYPE;
+        private static ITyped NormalzeDataTypeXmlType(ITyped type) {
+            type.DataType = type.DataType == Orcl.UNDEFINED && type.DataTypeProperName == Orcl.XMLTYPE ? Orcl.XMLTYPE : type.DataType;
+            return type;
+        }
 
-            return dataTypeBase;
+        private static string NormalizeDataType(ITyped type) {
+            var typeN = OU.NormalzeDataTypeNull(type);
+            typeN = OU.NormalzeDataTypeTimestamp(typeN);
+            typeN = OU.NormalzeDataTypeAggregated(typeN);
+            typeN = OU.NormalzeDataTypeXmlType(typeN);
+            return typeN.DataType;
         }
     
-        internal static void Normalize(ITyped dataType) {
-            dataType.PreNormalizedValues = String.Format("DataType: {0}, DataPrecison: {1}, DataScale: {2}, CharLength: {3}", 
-                dataType.DataType, dataType.DataPrecision.HasValue ? dataType.DataPrecision.ToString() : "null", dataType.DataScale.HasValue ? dataType.DataScale.ToString() : "null", dataType.CharLength.HasValue ? dataType.CharLength.ToString() : "null");
+        internal static void Normalize(ITyped type) {
+            type.PreNormalizedValues = String.Format("DataType: {0}, DataPrecison: {1}, DataScale: {2}, CharLength: {3}", 
+                type.DataType, type.DataPrecision.HasValue ? type.DataPrecision.ToString() : "null", type.DataScale.HasValue ? type.DataScale.ToString() : "null", type.CharLength.HasValue ? type.CharLength.ToString() : "null");
 
-            var dataTypeSearch = NormalizeDataType(dataType);
+            var dataTypeSearch = NormalizeDataType(type);
             if (!OrclUtil.IsExistsType(dataTypeSearch)) dataTypeSearch = Orcl.OBJECT;
-            dataType.OrclType = OrclUtil.GetType(dataTypeSearch);
-            if ( !dataType.OrclType.GetType().Equals(typeof(OrclUndefinedType)) && !dataType.OrclType.GetType().Equals(typeof(OrclObjectType)) ) dataType.DataType = dataType.OrclType.DataType;
+            type.OrclType = OrclUtil.GetType(dataTypeSearch);
+            if (type.OrclType.DataType != Orcl.OBJECT) type.DataType = type.OrclType.DataType;
 
             int? precision, scale;
-            dataType.OrclType.NormalizePrecisionScale(dataType, out precision, out scale);
-            dataType.DataPrecision = precision;
-            dataType.DataScale = scale;
-            dataType.CharLength = dataType.OrclType.NormalizeCharLength(dataType);
+            type.OrclType.NormalizePrecisionScale(type, out precision, out scale);
+            type.DataPrecision = precision;
+            type.DataScale = scale;
+            type.CharLength = type.OrclType.NormalizeCharLength(type);
         }
 
-        internal static string BuildAggregateType(ITyped dataType) {
-            if (dataType.CharLength.HasValue) {
-                return dataType.DataType + "(" + dataType.CharLength + ")";   // VARCHAR2, CHAR2, etc.
-            } else if (dataType.DataPrecision.HasValue) {
-                if (dataType.DataType.StartsWith(Orcl.TIMESTAMP)) {  // TIMESTAMP, TIMESTAMP WITH TIME ZONE, etc.
-                    return dataType.DataType.Insert(9, "(" + dataType.DataPrecision + ")");
+        internal static string BuildAggregateType(ITyped type) {
+            if (type.CharLength.HasValue) {
+                return type.DataType + "(" + type.CharLength + ")";   // VARCHAR2, CHAR2, etc.
+            } else if (type.DataPrecision.HasValue) {
+                if (type.DataType.StartsWith(Orcl.TIMESTAMP)) {  // TIMESTAMP, TIMESTAMP WITH TIME ZONE, etc.
+                    return type.DataType.Insert(9, "(" + type.DataPrecision + ")");
                 } else {
-                    return dataType.DataType + "(" + dataType.DataPrecision + (dataType.DataScale > 0 ? "," + dataType.DataScale : "") + ")"; // a number
+                    return type.DataType + "(" + type.DataPrecision + (type.DataScale > 0 ? "," + type.DataScale : "") + ")"; // a number
                 }
             } else {
-                return dataType.DataType;
+                return type.DataType;
             }
         }
 

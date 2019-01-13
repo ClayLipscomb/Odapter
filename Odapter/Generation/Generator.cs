@@ -708,7 +708,7 @@ namespace Odapter {
                 classText.Append(Tab(5) + "if (!" + paramNameOracleReader + ".IsDBNull(" + f.MapPosition + ")) "
                     + "obj." + TranslaterName.Convert(f) + " = ");
 
-                if (f.Translater.GetCSharpType(true).Equals(CSharp.DECIMAL) && OrclUtil.IsOracleNumberEquivalent(f.DataType)) {
+                if (f.Translater.GetCSharpType(true).Equals(CSharp.DECIMAL)) { 
                     classText.Append("(Decimal?)OracleDecimal.SetPrecision(" + paramNameOracleReader + ".GetOracleDecimal(" + f.MapPosition.ToString() + "), 29)");
                 } else if (CSharp.IsOdpNetType(f.Translater.GetCSharpType())) {
                     classText.Append("(" + f.Translater.GetCSharpType() + ")" + paramNameOracleReader + ".GetOracleValue(" + f.MapPosition.ToString() + ")"); // ODP.NET
