@@ -19,7 +19,7 @@ Odapter is a [single executable](/OdapterWnFrm/bin/x64/Release) that generates C
 | PL/SQL and Schema Objects                           | C# |
 | --------------------------------------------------- | -------- |
 | Case insensitive                                    | Case sensitive | 
-| underscore_delimited naming                         | PascalCase & camelCase naming     |
+| snake_case naming 		                      | PascalCase & camelCase naming     |
 | Package Record Type Field                           | Property     |
 | Package Record Type                                 | Nested public class of properties    |
 | Function or Stored Procedure (packaged)             | Method    |
@@ -59,7 +59,7 @@ Odapter is a [single executable](/OdapterWnFrm/bin/x64/Release) that generates C
 * Invokes packaged functions and stored procedures
 * Hydrates a List of (record type derived) DTOs from a returned (incl. OUT param) typed cursor result set
 * Hydrates a List of DTOs from a returned untyped cursor result set using configurable mapping:
-    - Mapping by name: column name to property name (underscore_delimited column translated to public PascalCase, protected camelCase or privated underscore prefixed camelCase property)
+    - Mapping by name: column name to property name (snake_case column translated to public PascalCase, protected camelCase or private underscore prefixed camelCase property)
     - Mapping by position: column position to property position via attribute
     - For performance, uses thread-safe static cache for mappings of C# DTO to Oracle result set
 * Constructs (from underlying columns) and hydrates DataTable from returned untyped cursor result set; captions are created from column name or alias
