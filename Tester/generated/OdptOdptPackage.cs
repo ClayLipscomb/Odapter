@@ -3218,10 +3218,10 @@ namespace Schema.Odpt.Odpt.Package {
                     if (!rdr.IsDBNull(4)) obj.ColSmallint = Convert.ToInt64(rdr.GetValue(4));
                     if (!rdr.IsDBNull(5)) obj.ColNumeric = Convert.ToInt64(rdr.GetValue(5));
                     if (!rdr.IsDBNull(6)) obj.ColDecimal = Convert.ToInt64(rdr.GetValue(6));
-                    if (!rdr.IsDBNull(7)) obj.ColNumber = (Decimal?)OracleDecimal.SetPrecision(rdr.GetOracleDecimal(7), 29);
-                    if (!rdr.IsDBNull(8)) obj.ColDoublePrecision = (Decimal?)OracleDecimal.SetPrecision(rdr.GetOracleDecimal(8), 29);
-                    if (!rdr.IsDBNull(9)) obj.ColFloat = (Decimal?)OracleDecimal.SetPrecision(rdr.GetOracleDecimal(9), 29);
-                    if (!rdr.IsDBNull(10)) obj.ColReal = (Decimal?)OracleDecimal.SetPrecision(rdr.GetOracleDecimal(10), 29);
+                    if (!rdr.IsDBNull(7)) obj.ColNumber = (Decimal?)OracleDecimal.SetPrecision(rdr.GetOracleDecimal(7), 28);
+                    if (!rdr.IsDBNull(8)) obj.ColDoublePrecision = (Decimal?)OracleDecimal.SetPrecision(rdr.GetOracleDecimal(8), 28);
+                    if (!rdr.IsDBNull(9)) obj.ColFloat = (Decimal?)OracleDecimal.SetPrecision(rdr.GetOracleDecimal(9), 28);
+                    if (!rdr.IsDBNull(10)) obj.ColReal = (Decimal?)OracleDecimal.SetPrecision(rdr.GetOracleDecimal(10), 28);
                     if (!rdr.IsDBNull(11)) obj.ColBinaryFloat = Convert.ToSingle(rdr.GetValue(11));
                     if (!rdr.IsDBNull(12)) obj.ColBinaryDouble = Convert.ToDouble(rdr.GetValue(12));
                     if (!rdr.IsDBNull(13)) obj.ColVarcharMin = Convert.ToString(rdr.GetValue(13));
@@ -3363,10 +3363,10 @@ namespace Schema.Odpt.Odpt.Package {
                     if (!rdr.IsDBNull(4)) obj.ColSmallint = Convert.ToInt64(rdr.GetValue(4));
                     if (!rdr.IsDBNull(5)) obj.ColNumeric = Convert.ToInt64(rdr.GetValue(5));
                     if (!rdr.IsDBNull(6)) obj.ColDecimal = Convert.ToInt64(rdr.GetValue(6));
-                    if (!rdr.IsDBNull(7)) obj.ColNumber = (Decimal?)OracleDecimal.SetPrecision(rdr.GetOracleDecimal(7), 29);
-                    if (!rdr.IsDBNull(8)) obj.ColDoublePrecision = (Decimal?)OracleDecimal.SetPrecision(rdr.GetOracleDecimal(8), 29);
-                    if (!rdr.IsDBNull(9)) obj.ColFloat = (Decimal?)OracleDecimal.SetPrecision(rdr.GetOracleDecimal(9), 29);
-                    if (!rdr.IsDBNull(10)) obj.ColReal = (Decimal?)OracleDecimal.SetPrecision(rdr.GetOracleDecimal(10), 29);
+                    if (!rdr.IsDBNull(7)) obj.ColNumber = (Decimal?)OracleDecimal.SetPrecision(rdr.GetOracleDecimal(7), 28);
+                    if (!rdr.IsDBNull(8)) obj.ColDoublePrecision = (Decimal?)OracleDecimal.SetPrecision(rdr.GetOracleDecimal(8), 28);
+                    if (!rdr.IsDBNull(9)) obj.ColFloat = (Decimal?)OracleDecimal.SetPrecision(rdr.GetOracleDecimal(9), 28);
+                    if (!rdr.IsDBNull(10)) obj.ColReal = (Decimal?)OracleDecimal.SetPrecision(rdr.GetOracleDecimal(10), 28);
                     if (!rdr.IsDBNull(11)) obj.ColBinaryFloat = Convert.ToSingle(rdr.GetValue(11));
                     if (!rdr.IsDBNull(12)) obj.ColBinaryDouble = Convert.ToDouble(rdr.GetValue(12));
                     if (!rdr.IsDBNull(13)) obj.ColVarcharMin = Convert.ToString(rdr.GetValue(13));
@@ -3508,10 +3508,10 @@ namespace Schema.Odpt.Odpt.Package {
                     if (!rdr.IsDBNull(4)) obj.ColSmallint = Convert.ToInt64(rdr.GetValue(4));
                     if (!rdr.IsDBNull(5)) obj.ColNumeric = Convert.ToInt64(rdr.GetValue(5));
                     if (!rdr.IsDBNull(6)) obj.ColDecimal = Convert.ToInt64(rdr.GetValue(6));
-                    if (!rdr.IsDBNull(7)) obj.ColNumber = (Decimal?)OracleDecimal.SetPrecision(rdr.GetOracleDecimal(7), 29);
-                    if (!rdr.IsDBNull(8)) obj.ColDoublePrecision = (Decimal?)OracleDecimal.SetPrecision(rdr.GetOracleDecimal(8), 29);
-                    if (!rdr.IsDBNull(9)) obj.ColFloat = (Decimal?)OracleDecimal.SetPrecision(rdr.GetOracleDecimal(9), 29);
-                    if (!rdr.IsDBNull(10)) obj.ColReal = (Decimal?)OracleDecimal.SetPrecision(rdr.GetOracleDecimal(10), 29);
+                    if (!rdr.IsDBNull(7)) obj.ColNumber = (Decimal?)OracleDecimal.SetPrecision(rdr.GetOracleDecimal(7), 28);
+                    if (!rdr.IsDBNull(8)) obj.ColDoublePrecision = (Decimal?)OracleDecimal.SetPrecision(rdr.GetOracleDecimal(8), 28);
+                    if (!rdr.IsDBNull(9)) obj.ColFloat = (Decimal?)OracleDecimal.SetPrecision(rdr.GetOracleDecimal(9), 28);
+                    if (!rdr.IsDBNull(10)) obj.ColReal = (Decimal?)OracleDecimal.SetPrecision(rdr.GetOracleDecimal(10), 28);
                     if (!rdr.IsDBNull(11)) obj.ColBinaryFloat = Convert.ToSingle(rdr.GetValue(11));
                     if (!rdr.IsDBNull(12)) obj.ColBinaryDouble = Convert.ToDouble(rdr.GetValue(12));
                     if (!rdr.IsDBNull(13)) obj.ColVarcharMin = Convert.ToString(rdr.GetValue(13));
@@ -4818,7 +4818,7 @@ namespace Schema.Odpt.Odpt.Package {
                 while (rdr.Read()) {
                     T_TTableNumber obj = new T_TTableNumber();
                     if (!rdr.IsDBNull(0)) obj.Id = Convert.ToInt64(rdr.GetValue(0));
-                    if (!rdr.IsDBNull(1)) obj.ColNumber = (Decimal?)OracleDecimal.SetPrecision(rdr.GetOracleDecimal(1), 29);
+                    if (!rdr.IsDBNull(1)) obj.ColNumber = (Decimal?)OracleDecimal.SetPrecision(rdr.GetOracleDecimal(1), 28);
                     if (!rdr.IsDBNull(2)) obj.ColNumber1 = Convert.ToSByte(rdr.GetValue(2));
                     if (!rdr.IsDBNull(3)) obj.ColNumber2 = Convert.ToSByte(rdr.GetValue(3));
                     if (!rdr.IsDBNull(4)) obj.ColNumber3 = Convert.ToInt16(rdr.GetValue(4));
@@ -4844,12 +4844,12 @@ namespace Schema.Odpt.Odpt.Package {
                     if (!rdr.IsDBNull(24)) obj.ColNumber28Scale0 = Convert.ToInt64(rdr.GetValue(24));
                     if (!rdr.IsDBNull(25)) obj.ColNumber29Scale0 = Convert.ToInt64(rdr.GetValue(25));
                     if (!rdr.IsDBNull(26)) obj.ColNumber38Scale0 = Convert.ToInt64(rdr.GetValue(26));
-                    if (!rdr.IsDBNull(27)) obj.ColNumber2Scale1 = (Decimal?)OracleDecimal.SetPrecision(rdr.GetOracleDecimal(27), 29);
-                    if (!rdr.IsDBNull(28)) obj.ColNumber5Scale3 = (Decimal?)OracleDecimal.SetPrecision(rdr.GetOracleDecimal(28), 29);
-                    if (!rdr.IsDBNull(29)) obj.ColNumber15Scale11 = (Decimal?)OracleDecimal.SetPrecision(rdr.GetOracleDecimal(29), 29);
-                    if (!rdr.IsDBNull(30)) obj.ColNumber31Scale21 = (Decimal?)OracleDecimal.SetPrecision(rdr.GetOracleDecimal(30), 29);
-                    if (!rdr.IsDBNull(31)) obj.ColNumber38Scale37 = (Decimal?)OracleDecimal.SetPrecision(rdr.GetOracleDecimal(31), 29);
-                    if (!rdr.IsDBNull(32)) obj.ColNumberLast = (Decimal?)OracleDecimal.SetPrecision(rdr.GetOracleDecimal(32), 29);
+                    if (!rdr.IsDBNull(27)) obj.ColNumber2Scale1 = (Decimal?)OracleDecimal.SetPrecision(rdr.GetOracleDecimal(27), 28);
+                    if (!rdr.IsDBNull(28)) obj.ColNumber5Scale3 = (Decimal?)OracleDecimal.SetPrecision(rdr.GetOracleDecimal(28), 28);
+                    if (!rdr.IsDBNull(29)) obj.ColNumber15Scale11 = (Decimal?)OracleDecimal.SetPrecision(rdr.GetOracleDecimal(29), 28);
+                    if (!rdr.IsDBNull(30)) obj.ColNumber31Scale21 = (Decimal?)OracleDecimal.SetPrecision(rdr.GetOracleDecimal(30), 28);
+                    if (!rdr.IsDBNull(31)) obj.ColNumber38Scale37 = (Decimal?)OracleDecimal.SetPrecision(rdr.GetOracleDecimal(31), 28);
+                    if (!rdr.IsDBNull(32)) obj.ColNumberLast = (Decimal?)OracleDecimal.SetPrecision(rdr.GetOracleDecimal(32), 28);
                     __ret.Add(obj);
                     if (optionalMaxNumberRowsToReadFromAnyCursor != null && __ret.Count >= optionalMaxNumberRowsToReadFromAnyCursor) break;
                 }
@@ -4896,13 +4896,13 @@ namespace Schema.Odpt.Odpt.Package {
                 while (rdr.Read()) {
                     T_TTableNumberDec obj = new T_TTableNumberDec();
                     if (!rdr.IsDBNull(0)) obj.Id = Convert.ToInt64(rdr.GetValue(0));
-                    if (!rdr.IsDBNull(1)) obj.ColNumber = (Decimal?)OracleDecimal.SetPrecision(rdr.GetOracleDecimal(1), 29);
-                    if (!rdr.IsDBNull(2)) obj.ColNumber2Scale1 = (Decimal?)OracleDecimal.SetPrecision(rdr.GetOracleDecimal(2), 29);
-                    if (!rdr.IsDBNull(3)) obj.ColNumber5Scale3 = (Decimal?)OracleDecimal.SetPrecision(rdr.GetOracleDecimal(3), 29);
-                    if (!rdr.IsDBNull(4)) obj.ColNumber15Scale11 = (Decimal?)OracleDecimal.SetPrecision(rdr.GetOracleDecimal(4), 29);
-                    if (!rdr.IsDBNull(5)) obj.ColNumber31Scale21 = (Decimal?)OracleDecimal.SetPrecision(rdr.GetOracleDecimal(5), 29);
-                    if (!rdr.IsDBNull(6)) obj.ColNumber38Scale37 = (Decimal?)OracleDecimal.SetPrecision(rdr.GetOracleDecimal(6), 29);
-                    if (!rdr.IsDBNull(7)) obj.ColNumberLast = (Decimal?)OracleDecimal.SetPrecision(rdr.GetOracleDecimal(7), 29);
+                    if (!rdr.IsDBNull(1)) obj.ColNumber = (Decimal?)OracleDecimal.SetPrecision(rdr.GetOracleDecimal(1), 28);
+                    if (!rdr.IsDBNull(2)) obj.ColNumber2Scale1 = (Decimal?)OracleDecimal.SetPrecision(rdr.GetOracleDecimal(2), 28);
+                    if (!rdr.IsDBNull(3)) obj.ColNumber5Scale3 = (Decimal?)OracleDecimal.SetPrecision(rdr.GetOracleDecimal(3), 28);
+                    if (!rdr.IsDBNull(4)) obj.ColNumber15Scale11 = (Decimal?)OracleDecimal.SetPrecision(rdr.GetOracleDecimal(4), 28);
+                    if (!rdr.IsDBNull(5)) obj.ColNumber31Scale21 = (Decimal?)OracleDecimal.SetPrecision(rdr.GetOracleDecimal(5), 28);
+                    if (!rdr.IsDBNull(6)) obj.ColNumber38Scale37 = (Decimal?)OracleDecimal.SetPrecision(rdr.GetOracleDecimal(6), 28);
+                    if (!rdr.IsDBNull(7)) obj.ColNumberLast = (Decimal?)OracleDecimal.SetPrecision(rdr.GetOracleDecimal(7), 28);
                     __ret.Add(obj);
                     if (optionalMaxNumberRowsToReadFromAnyCursor != null && __ret.Count >= optionalMaxNumberRowsToReadFromAnyCursor) break;
                 }

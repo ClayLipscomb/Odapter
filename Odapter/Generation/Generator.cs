@@ -709,7 +709,7 @@ namespace Odapter {
                     + "obj." + TranslaterName.Convert(f) + " = ");
 
                 if (f.Translater.GetCSharpType(true).Equals(CSharp.DECIMAL)) { 
-                    classText.Append("(Decimal?)OracleDecimal.SetPrecision(" + paramNameOracleReader + ".GetOracleDecimal(" + f.MapPosition.ToString() + "), 29)");
+                    classText.Append("(Decimal?)OracleDecimal.SetPrecision(" + paramNameOracleReader + ".GetOracleDecimal(" + f.MapPosition.ToString() + "), 28)");
                 } else if (CSharp.IsOdpNetType(f.Translater.GetCSharpType())) {
                     classText.Append("(" + f.Translater.GetCSharpType() + ")" + paramNameOracleReader + ".GetOracleValue(" + f.MapPosition.ToString() + ")"); // ODP.NET
                 } else if ((new List<string> { Orcl.BLOB, Orcl.CLOB, Orcl.NCLOB }).Contains(f.DataType)) {
