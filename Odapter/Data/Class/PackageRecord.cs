@@ -31,14 +31,14 @@ namespace Odapter {
 
         // IEntityNameable specific
         public string ContainerType { get => TypeName ?? PackageName; }
-        public bool IsDefinedExternally { get => TypeName != null && PackageName != null && TypeName != PackageName; }
+        public bool IsDefinedExternally { get => TypeName != null && PackageName != null && TypeName != PackageName; } // defined external to the package using this record as a parameter
 
         public ITranslaterEntity Translater { get; set; }
 
         // IPackageRecord specific
-        public string PackageName { get; set; }
-        public string TypeName { get; set; }
-        public string TypeSubName { get; set; }
+        public string PackageName { get; set; }     // package where record type is used with proc argument
+        public string TypeName { get; set; }        // package containing record definition
+        public string TypeSubName { get; set; }     // record name
         public int CompareTo(IPackageRecord r) { return this.ToString().CompareTo(r.ToString()); }
         public IArgument RecordArgument { get; set; }
 
@@ -46,8 +46,8 @@ namespace Odapter {
 
         internal static string BuildRecordFullName(IEntityNameable rec) {
             string recordName;
-            if (Parameter.Instance.IsUsingSchemaFilter && rec.IsDefinedExternally)
-                // if filtering and record is defined in another package, name must be prefixed with the source package name to prevent naming conflict
+            if (Parameter.Instance.IsUsingSchemaFilter && !rec.ContainerType.StartsWith(Parameter.Instance.Filter) && rec.IsDefinedExternally)
+                // if filtering and record is defined in another package, prefix with owning package name only to *prevent naming conflict*
                 recordName = rec.ContainerType + Orcl.PERIOD + rec.EntityName;
             else
                 recordName = rec.EntityName;
@@ -62,8 +62,8 @@ namespace Odapter {
             //      better algorithm to guarantee uniqueness in the C# namespace.
             if (String.IsNullOrEmpty(rec.DataTypeProperName)) 
                 recordName = rec.NamingHelpValue + Orcl.PERIOD + (rec.DataTypeLabel ?? "RETURN") + Orcl.UNDERSCORE + "ROW_TYPE";
-            else if (Parameter.Instance.IsUsingSchemaFilter && rec.IsDefinedExternally) 
-                // if filtering and record is defined in another package, name must be prefixed with the source package name to prevent naming conflict
+            else if (Parameter.Instance.IsUsingSchemaFilter && !rec.ContainerType.StartsWith(Parameter.Instance.Filter) && rec.IsDefinedExternally)
+                // if filtering and record is defined in another package, prefix with owning package name only to *prevent naming conflict*
                 recordName = rec.ContainerType + Orcl.PERIOD + rec.DataTypeProperName;
             else 
                 recordName = rec.DataTypeProperName;

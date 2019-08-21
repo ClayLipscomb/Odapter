@@ -1,10 +1,10 @@
-CREATE OR REPLACE PACKAGE ODPT.filtered_pkg AS
+CREATE OR REPLACE PACKAGE ODPT.fltr_pkg_rec_used AS
 
 	-- untyped cursor type
 	TYPE t_ref_cursor IS REF CURSOR;
 
 	-- typed cursor type
-	TYPE t_table_big_filtered IS RECORD
+	TYPE t_table_big_flt_used IS RECORD
       (		id odpt_table_big.id%TYPE,
 			col_number_id odpt_table_big.col_number_id%TYPE,
 			col_integer odpt_table_big.col_integer%TYPE,
@@ -41,7 +41,9 @@ CREATE OR REPLACE PACKAGE ODPT.filtered_pkg AS
 			col_nclob odpt_table_big.col_nclob%TYPE,
 
 			col_last odpt_table_big.col_last%TYPE);
-	TYPE t_ref_cur_table_big_filtered IS REF CURSOR RETURN t_table_big_filtered;
+	TYPE t_ref_cursor_table_big IS REF CURSOR RETURN t_table_big_flt_used;
 
-END filtered_pkg;
+	FUNCTION get_rows_typed_ret RETURN t_ref_cursor_table_big;
+
+END fltr_pkg_rec_used;
 /

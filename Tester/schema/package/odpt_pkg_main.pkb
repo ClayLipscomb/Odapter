@@ -508,6 +508,13 @@ CREATE OR REPLACE PACKAGE BODY ODPT.odpt_pkg_main AS
 		RETURN p_in;
 	END;
 
+	FUNCTION func_aa_record (p_in IN t_assocarray_record, p_in_out IN OUT t_assocarray_record, p_out OUT t_assocarray_record) RETURN t_assocarray_record IS
+    BEGIN
+		p_in_out := p_in;
+		p_out := p_in;
+		RETURN p_in;
+	END;
+
     FUNCTION func_aa_smallint (p_in IN t_assocarray_smallint, p_in_out IN OUT t_assocarray_smallint, p_out OUT t_assocarray_smallint) RETURN t_assocarray_smallint IS
     BEGIN
 		p_in_out := p_in;

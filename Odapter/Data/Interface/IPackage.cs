@@ -1,6 +1,6 @@
 ﻿//------------------------------------------------------------------------------
 //    Odapter - a C# code generator for Oracle packages
-//    Copyright(C) 2018 Clay Lipscomb
+//    Copyright(C) 2019 Clay Lipscomb
 //
 //    This program is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
@@ -29,6 +29,8 @@ namespace Odapter {
 
         List<IProcedure> Procedures { get; set; }
 
+        List<IPackageRecord> RecordsToGenerate { get; set; }
+
         /// <summary>
         /// Determine if proc has a duplicate signature of another proc in the package. Signatures are duplicate if the procs
         /// have the same name, same param count, same respective param directions and same respective param types. In PL/SQL,
@@ -38,5 +40,9 @@ namespace Odapter {
         /// <param name="proc"></param>
         /// <returns></returns>
         bool HasDuplicateSignature(IProcedure proc);
+
+        bool HasProcedureWithRecordArgument(IArgument arg);
+
+        bool ShouldGenerateRecordFromArgument(IArgument arg);
     }
 }

@@ -1,6 +1,6 @@
 ﻿//------------------------------------------------------------------------------
 //    Odapter - a C# code generator for Oracle packages
-//    Copyright(C) 2018 Clay Lipscomb
+//    Copyright(C) 2019 Clay Lipscomb
 //
 //    This program is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
@@ -25,6 +25,9 @@ namespace Odapter {
         public string PackageName { get { return objectName; } set { objectName = value; } }  private string objectName { get; set; } // object_name is underlying sys view column
         public string Owner { get; set; }
         public List<IProcedure> Procedures { get; set; }
+        public List<IPackageRecord> RecordsToGenerate { get; set; } = new List<IPackageRecord>();
+
+        public override string ToString() { return PackageName; }
 
         /// <summary>
         /// Determine if proc has a duplicate signature of another proc in the package. Signatures are duplicate if the procs
@@ -42,6 +45,22 @@ namespace Odapter {
                         .SequenceEqual  // params count, direction and type are exact match (excl. return arg)
                     (proc.Arguments.Where(a => !a.IsReturnArgument).OrderBy(a => a.Sequence).Select(a => a.InOut + a.DataType)))
                 );
+        }
+
+        public bool HasProcedureWithRecordArgument(IArgument arg) {
+            return Procedures.Exists(proc => proc.Arguments.Exists(procArg => 
+                                                                   procArg.OrclType is OrclRecord
+                                                                && procArg.TypeSubname == arg.TypeSubname   // record name match
+                                                                && procArg.TypeName == arg.TypeName         // arg record owned by package
+                                                                && procArg.PackageName == arg.TypeName      // arg record used by package
+                                                                && !procArg.IsDefinedExternally));   
+        }
+
+        public bool ShouldGenerateRecordFromArgument(IArgument arg) {
+            return arg.OrclType is OrclRecord
+                && RecordsToGenerate.Exists(rec => arg.TypeSubname == rec.TypeSubName   // record name match
+                                                && arg.TypeName == rec.TypeName         // arg record owned by package
+                                                && arg.PackageName == rec.PackageName); // arg record used by package
         }
     }
 }

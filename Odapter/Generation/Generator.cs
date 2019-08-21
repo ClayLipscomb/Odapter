@@ -76,11 +76,11 @@ namespace Odapter {
         private class GenericType {
             internal string PackageTypeName { get; set; }
             internal string TypeName { get; set; }
-            internal bool WeaklyTyped { get; set; }
-            internal GenericType(string packageTypeName, string typeName, bool weaklyTyped) {
+            internal bool Untyped { get; set; }
+            internal GenericType(string packageTypeName, string typeName, bool untyped) {
                 PackageTypeName = packageTypeName;
                 TypeName = typeName;
-                WeaklyTyped = weaklyTyped;
+                Untyped = untyped;
             }
         }
         #endregion
@@ -191,22 +191,22 @@ namespace Odapter {
         /// </summary>
         /// <param name="args"></param>
         /// <returns>list of types</returns>
-        private List<GenericType> GetMethodGenericTypes(IProcedure proc) {
+        private List<GenericType> GetMethodGenericTypes(IProcedure proc, IPackage pack) {
             List<GenericType> genericTypes = new List<GenericType>(); // created empty list
 
-            string cSharpType, packageTypeName;
+            string typeName, packageTypeName;
             foreach (IArgument arg in proc.Arguments) {
                 if (arg.DataLevel != 0) continue; // all signature arguments are initially found at 0 data level
-                if (arg.DataType.Equals(Orcl.REF_CURSOR) && arg.InOut.Equals(Orcl.OUT)) { // only out cursors can use generics
-                    cSharpType = arg.Translater.GetCSharpType(false); 
-                    packageTypeName = arg.NextArgument != null && !String.IsNullOrEmpty(arg.NextArgument.TypeName)
-                            && !Parameter.Instance.IsUsingSchemaFilter
-                            && !arg.PackageName.Equals(arg.NextArgument.TypeName)
+                if (arg.OrclType is OrclRefCursor && arg.InOut.Equals(Orcl.OUT)) { // only out cursor args use generics
+                    typeName = CSharp.ExtractSubtypeFromGenericCollectionType(arg.Translater.GetCSharpType(false), false);
+                    packageTypeName = arg.NextArgument != null && arg.NextArgument.OrclType is OrclRecord
+                           && !Parameter.Instance.IsUsingSchemaFilter
+                           && !arg.PackageName.Equals(arg.NextArgument.TypeName)       // record not defined in this package
+                           && !pack.ShouldGenerateRecordFromArgument(arg.NextArgument) // record not *generated* in this package adapter
                         ? TranslaterName.ConvertToPascal(arg.NextArgument.TypeName)
                         : null;
-                    if (!genericTypes.Exists(a => a.TypeName == CSharp.ExtractSubtypeFromGenericCollectionType(cSharpType, false)))
-                        genericTypes.Add(new GenericType(packageTypeName, CSharp.ExtractSubtypeFromGenericCollectionType(cSharpType, false), 
-                            arg.NextArgument == null || arg.NextArgument.DataLevel == arg.DataLevel));
+                    if (!genericTypes.Exists(a => a.TypeName == typeName))
+                        genericTypes.Add(new GenericType(packageTypeName, typeName, arg.IsUntypedCursor));
                 }
             }
             return genericTypes;
@@ -312,7 +312,7 @@ namespace Odapter {
             foreach (GenericType gt in genericTypes) {
                 sb.AppendLine();
                 sb.Append(Tab(4) + "where " + gt.TypeName + " : class"
-                    + (dynamicMapping || gt.WeaklyTyped 
+                    + (dynamicMapping || gt.Untyped 
                         ? "" 
                         : ", " 
                             + (gt.PackageTypeName == null ? "" : gt.PackageTypeName + ".")
@@ -534,7 +534,7 @@ namespace Odapter {
             List<GenericType> genericTypesUsed = new List<GenericType>();
 
             // get generic types (for cursors when in given translation mode) used by the method
-            if (!TranslaterManager.UseDatatableForUntypedCursor) genericTypesUsed = GetMethodGenericTypes(proc);
+            if (!TranslaterManager.UseDatatableForUntypedCursor) genericTypesUsed = GetMethodGenericTypes(proc, pack);
 
             /////////////////////////////////////////////////////////////////////////
             // bypass creation of methods that use certain types of arguments/returns
@@ -919,16 +919,15 @@ namespace Odapter {
                     classText.AppendLine(Tab(2) + "private static readonly " + className + " _instance = new " + className + "();");
                     classText.AppendLine(Tab(2) + "public static " + className + " Instance { get { return _instance; } }");
 
-                    // for each record type in this package
-                    int i = 0;
+                    // for each possible record type in this package
                     foreach (IPackageRecord rec in records
-                        .Where(r => (r.PackageName ?? "").Equals(pack.PackageName) || (r.TypeName ?? "").Equals(pack.PackageName))
-                        .GroupBy(r => new { r.TypeName, r.EntityName})
+                        .Where(r => (r.PackageName ?? "").Equals(pack.PackageName) || (r.TypeName ?? "").Equals(pack.PackageName) ) // either referenced by package or owned by package
+                        .GroupBy(r => new { r.PackageName, r.TypeName, r.EntityName})
                         .Select(g => g.First())
                         .ToList()) {
 
                         // unless otherwise specified, skip creation of records derived from a package outside of the filter or schema
-                        if (!Parameter.Instance.IsDuplicatePackageRecordOriginatingOutsideFilterAndSchema) {
+                        if (!Parameter.Instance.IsDuplicatePackageRecordOriginatingOutsideFilterAndSchema && Parameter.Instance.IsUsingSchemaFilter) {
                             // owned by another schema
                             if (!(rec.Owner ?? "").Equals(pack.Owner)) continue;
 
@@ -936,17 +935,22 @@ namespace Odapter {
                             if (!packages.Exists(p => p.PackageName.Equals(rec.TypeName))) continue;
                         }
 
-                        // always skip record creation if owned by another package *within* both the filter and schema
-                        if (!(rec.TypeName ?? "").Equals(pack.PackageName) 
-                            && packages.Exists(p => p.PackageName.Equals(rec.TypeName))) { // package of origin of record being created
-                            i++;
+                        // always skip record creation if owned and used by another package *within* both the filter and schema
+                        if (!(rec.TypeName ?? "").Equals(pack.PackageName) // if rec does not exist in this package
+                            && packages.Exists(p => p.PackageName.Equals(rec.TypeName ?? "")                    // package owns record
+                                                && p.HasProcedureWithRecordArgument(rec.RecordArgument)) ) {    // package uses record as argument
                             continue;
                         }
 
+                        // do not create record from an instance of the record referenced in a different package
+                        if (rec.IsDefinedExternally && (rec.TypeName ?? "").Equals(pack.PackageName)) continue;
+
+                        pack.RecordsToGenerate.Add(rec); // record included in this package's generation (unless ignored due to implementation issue)
+
                         string reasonMsg;
                         if (!rec.IsIgnoredDueToOracleTypes(out reasonMsg)) {
-                                // create interface for record class
-                                classText.AppendLine();
+                            // create interface for record class
+                            classText.AppendLine();
                             classText.Append(GenerateEntityInterface(rec, 1));
                         }
 
@@ -957,8 +961,8 @@ namespace Odapter {
                             Parameter.Instance.IsDataContractPackageRecord, Parameter.Instance.IsXmlElementPackageRecord, 2));
 
                         if (!rec.IsIgnoredDueToOracleTypes(out reasonMsg)) {
-                                // create custom reader
-                                classText.AppendLine();
+                            // create custom reader
+                            classText.AppendLine();
                             classText.Append(GenerateRecordTypeReadResultMethod(rec));
                         }
                     }

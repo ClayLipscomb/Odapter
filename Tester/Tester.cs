@@ -494,7 +494,7 @@ namespace Odapter.Tester {
 #endif
                 DataTable retDataTable, outDataTable, outDataTable2;
 
-                retList = OdptPkgTableBig.Instance.GetRowsTypedFilteredPkg<
+                retList = OdptPkgTableBig.Instance.GetRowsTypedFltrUsed< 
 #if ODPT_FILTER_PREFIX
                     FilteredPkgTTableBigFiltered
 #else
@@ -505,7 +505,7 @@ namespace Odapter.Tester {
                 Debug.Assert(outList.Count == rowLimit);
                 Debug.Assert(outList2.Count == rowLimit);
 
-                retList = OdptPkgTableBig.Instance.GetRowsUntypedFilteredPkg<
+                retList = OdptPkgTableBig.Instance.GetRowsUntypedFltrUnused<
 #if ODPT_FILTER_PREFIX
                     FilteredPkgTTableBigFiltered, FilteredPkgTTableBigFiltered, FilteredPkgTTableBigFiltered
 #else
@@ -516,7 +516,7 @@ namespace Odapter.Tester {
                 Debug.Assert(outList.Count == rowLimit);
                 Debug.Assert(outList2.Count == rowLimit);
 
-                retDataTable = OdptPkgTableBig.Instance.GetRowsUntypedFilteredPkg(out outDataTable, out outDataTable2, true, rowLimit, null);
+                retDataTable = OdptPkgTableBig.Instance.GetRowsUntypedFltrUnused(out outDataTable, out outDataTable2, true, rowLimit, null);
                 Debug.Assert(retDataTable.Rows.Count == rowLimit);
                 Debug.Assert(outDataTable.Rows.Count == rowLimit);
                 Debug.Assert(outDataTable2.Rows.Count == rowLimit);
@@ -1768,9 +1768,9 @@ namespace Odapter.Tester {
         #endregion
         #region Table Big filtered
 #if ODPT_FILTER_PREFIX
-        public class FilteredPkgTTableBigFiltered : OdptPkgTableBig.FilteredPkgTTableBigFiltered { }
+        public class FilteredPkgTTableBigFiltered : OdptPkgTableBig.FltrPkgRecUsedTTableBigFltUsed { }
 #else
-        public class TTableBigFiltered : FilteredPkg.TTableBigFiltered { }
+        public class TTableBigFiltered : FltrPkgRecUsed.TTableBigFltUsed { }
 #endif
         #endregion
         #region Table Number

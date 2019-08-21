@@ -102,8 +102,11 @@ CREATE OR REPLACE PACKAGE ODPT.odpt_pkg_table_big AS
 	PROCEDURE proc_typed_cursor_in_out(p_ref_cursor IN OUT t_ref_cursor_table_big);
 	PROCEDURE proc_untyped_cursor_in_out(p_ref_cursor IN OUT t_ref_cursor);	
 	
-	FUNCTION get_rows_typed_filtered_pkg(p_ref_cursor OUT filtered_pkg.t_ref_cur_table_big_filtered, p_ref_cursor2 OUT filtered_pkg.t_ref_cur_table_big_filtered) RETURN filtered_pkg.t_ref_cur_table_big_filtered;
-	FUNCTION get_rows_untyped_filtered_pkg(p_ref_cursor OUT filtered_pkg.t_ref_cursor, p_ref_cursor2 OUT filtered_pkg.t_ref_cursor) RETURN filtered_pkg.t_ref_cursor;
+	FUNCTION get_rows_typed_fltr_unused(p_ref_cursor OUT fltr_pkg_rec_unused.t_ref_cursor_table_big, p_ref_cursor2 OUT fltr_pkg_rec_unused.t_ref_cursor_table_big) RETURN fltr_pkg_rec_unused.t_ref_cursor_table_big;
+	FUNCTION get_rows_untyped_fltr_unused(p_ref_cursor OUT fltr_pkg_rec_unused.t_ref_cursor, p_ref_cursor2 OUT fltr_pkg_rec_unused.t_ref_cursor) RETURN fltr_pkg_rec_unused.t_ref_cursor;
+
+	FUNCTION get_rows_typed_fltr_used(p_ref_cursor OUT fltr_pkg_rec_used.t_ref_cursor_table_big, p_ref_cursor2 OUT fltr_pkg_rec_used.t_ref_cursor_table_big) RETURN fltr_pkg_rec_used.t_ref_cursor_table_big;
+	FUNCTION get_rows_untyped_fltr_used(p_ref_cursor OUT fltr_pkg_rec_used.t_ref_cursor, p_ref_cursor2 OUT fltr_pkg_rec_used.t_ref_cursor) RETURN fltr_pkg_rec_used.t_ref_cursor;
 	
 	FUNCTION get_rows_typed_ret RETURN t_ref_cursor_table_big;
 	FUNCTION get_rows_typed_out(p_ref_cursor OUT t_ref_cursor_table_big) RETURN INTEGER;	

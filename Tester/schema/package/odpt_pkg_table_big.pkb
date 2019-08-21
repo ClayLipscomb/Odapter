@@ -173,10 +173,10 @@ CREATE OR REPLACE PACKAGE BODY ODPT.odpt_pkg_table_big AS
 		NULL;
 	END;
 
-	---------------------------------
-	-- record types from filtered_pkg
-	FUNCTION get_rows_typed_filtered_pkg(p_ref_cursor OUT filtered_pkg.t_ref_cur_table_big_filtered, p_ref_cursor2 OUT filtered_pkg.t_ref_cur_table_big_filtered) RETURN filtered_pkg.t_ref_cur_table_big_filtered IS
-		l_cursor	filtered_pkg.t_ref_cur_table_big_filtered;
+	--------------------------------------------------
+	-- cursors and record types from filtered packages
+	FUNCTION get_rows_typed_fltr_unused(p_ref_cursor OUT fltr_pkg_rec_unused.t_ref_cursor_table_big, p_ref_cursor2 OUT fltr_pkg_rec_unused.t_ref_cursor_table_big) RETURN fltr_pkg_rec_unused.t_ref_cursor_table_big IS
+		l_cursor	fltr_pkg_rec_unused.t_ref_cursor_table_big;
 	BEGIN
 		OPEN l_cursor FOR
 		SELECT *
@@ -196,8 +196,29 @@ CREATE OR REPLACE PACKAGE BODY ODPT.odpt_pkg_table_big AS
 		RETURN l_cursor;
 	END;	
 	
-	FUNCTION get_rows_untyped_filtered_pkg(p_ref_cursor OUT filtered_pkg.t_ref_cursor, p_ref_cursor2 OUT filtered_pkg.t_ref_cursor) RETURN filtered_pkg.t_ref_cursor IS
-		l_cursor	filtered_pkg.t_ref_cur_table_big_filtered;
+	FUNCTION get_rows_untyped_fltr_unused(p_ref_cursor OUT fltr_pkg_rec_unused.t_ref_cursor, p_ref_cursor2 OUT fltr_pkg_rec_unused.t_ref_cursor) RETURN fltr_pkg_rec_unused.t_ref_cursor IS
+		l_cursor	fltr_pkg_rec_unused.t_ref_cursor;
+	BEGIN
+		OPEN l_cursor FOR
+		SELECT *
+		FROM  odpt_table_big
+		ORDER BY id;    
+	
+		OPEN p_ref_cursor FOR
+		SELECT *
+		FROM  odpt_table_big
+		ORDER BY id;    
+
+		OPEN p_ref_cursor2 FOR
+		SELECT *
+		FROM  odpt_table_big
+		ORDER BY id;    
+		
+		RETURN l_cursor;
+	END;		
+
+	FUNCTION get_rows_typed_fltr_used(p_ref_cursor OUT fltr_pkg_rec_used.t_ref_cursor_table_big, p_ref_cursor2 OUT fltr_pkg_rec_used.t_ref_cursor_table_big) RETURN fltr_pkg_rec_used.t_ref_cursor_table_big IS
+		l_cursor	fltr_pkg_rec_used.t_ref_cursor_table_big;
 	BEGIN
 		OPEN l_cursor FOR
 		SELECT *
@@ -217,6 +238,28 @@ CREATE OR REPLACE PACKAGE BODY ODPT.odpt_pkg_table_big AS
 		RETURN l_cursor;
 	END;	
 	
+	FUNCTION get_rows_untyped_fltr_used(p_ref_cursor OUT fltr_pkg_rec_used.t_ref_cursor, p_ref_cursor2 OUT fltr_pkg_rec_used.t_ref_cursor) RETURN fltr_pkg_rec_used.t_ref_cursor IS
+		l_cursor	fltr_pkg_rec_used.t_ref_cursor;
+	BEGIN
+		OPEN l_cursor FOR
+		SELECT *
+		FROM  odpt_table_big
+		ORDER BY id;    
+	
+		OPEN p_ref_cursor FOR
+		SELECT *
+		FROM  odpt_table_big
+		ORDER BY id;    
+
+		OPEN p_ref_cursor2 FOR
+		SELECT *
+		FROM  odpt_table_big
+		ORDER BY id;    
+		
+		RETURN l_cursor;
+	END;	
+
+
 	----------------
 	-- typed cursors
 	FUNCTION get_rows_typed_ret RETURN t_ref_cursor_table_big IS

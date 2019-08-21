@@ -107,8 +107,9 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
-    <None Include="schema\package\filtered_pkg.pkb" />
-    <None Include="schema\package\filtered_pkg.pks" />
+    <None Include="schema\package\fltr_pkg_empty.pks" />
+    <None Include="schema\package\fltr_pkg_rec_used.pks" />
+    <None Include="schema\package\fltr_pkg_rec_unused.pks" />
     <None Include="schema\package\odpt_pkg_include!.pks" />
     <None Include="schema\package\odpt_pkg_include&amp;.pks" />
     <None Include="schema\package\odpt_pkg_log.pkb" />
@@ -120,6 +121,7 @@
     <None Include="schema\package\odpt_pkg_main.pks" />
     <None Include="schema\package\odpt_pkg_sql.pkb" />
     <None Include="schema\package\odpt_pkg_sql.pks" />
+    <None Include="schema\package\fltr_pkg_rec_used.pkb" />
     <None Include="schema\package\odpt_pkg_table_big.pkb" />
     <None Include="schema\package\odpt_pkg_table_big.pks" />
     <None Include="schema\package\odpt_pkg_table_number.pkb" />

@@ -38,6 +38,7 @@ CREATE OR REPLACE PACKAGE ODPT.odpt_pkg_main AS
 	TYPE t_assocarray_timestamp_prec9 IS TABLE OF odpt_table_big.col_timestamp_prec9%TYPE INDEX BY PLS_INTEGER;  
 
 	TYPE t_assocarray_boolean IS TABLE OF BOOLEAN INDEX BY PLS_INTEGER;  
+	TYPE t_assocarray_record IS TABLE OF odpt_pkg_table_big.t_table_big INDEX BY PLS_INTEGER;  
 
 	-- associative array types - VARCHAR2 indexed
 	TYPE t_assocarray_integer_v IS TABLE OF odpt_table_big.col_integer%TYPE INDEX BY VARCHAR2(100);  
@@ -170,6 +171,8 @@ CREATE OR REPLACE PACKAGE ODPT.odpt_pkg_main AS
 	FUNCTION func_aa_binary_integer (p_in IN t_assocarray_binary_integer, p_in_out IN OUT t_assocarray_binary_integer, p_out OUT t_assocarray_binary_integer) RETURN t_assocarray_binary_integer;
 	FUNCTION func_aa_pls_integer (p_in IN t_assocarray_pls_integer, p_in_out IN OUT t_assocarray_pls_integer, p_out OUT t_assocarray_pls_integer) RETURN t_assocarray_pls_integer;
 	FUNCTION func_aa_boolean (p_in IN t_assocarray_boolean, p_in_out IN OUT t_assocarray_boolean, p_out OUT t_assocarray_boolean) RETURN t_assocarray_boolean;
+
+	FUNCTION func_aa_record (p_in IN t_assocarray_record, p_in_out IN OUT t_assocarray_record, p_out OUT t_assocarray_record) RETURN t_assocarray_record;
 
     -- implemented but successful execution is not possible due to ODP.NET not handling VARCHAR2-indexed associative array; cannot comment out due
     --      Oracle argument view not revealing if associative array is VARCHAR2-indexed
