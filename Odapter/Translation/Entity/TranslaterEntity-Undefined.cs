@@ -27,7 +27,7 @@ namespace Odapter {
             DataTypeFull = dataType;
         }
 
-        public string CSharpScope { get => String.Empty; }
+        public string CSharpAccessModifier { get => String.Empty; }
         public string CSharpName { get => String.Empty; }
         public string CSharpType { get => String.Empty; }
 

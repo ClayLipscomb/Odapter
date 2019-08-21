@@ -28,7 +28,7 @@ namespace Odapter {
             DataTypeFull = dataType;
         }
 
-        public string CSharpScope { get => CSharp.PUBLIC; }
+        public string CSharpAccessModifier { get => CSharp.PUBLIC; }
         public string CSharpName { get => TranslaterName.ConvertToPascal(DataTypeFull); }
         public string CSharpType { get => CSharp.CLASS; }
 

@@ -1007,7 +1007,7 @@ namespace Odapter {
             string dbAncestorTypeName = null;   // only object type can have a database ancestor
             if (entity is IObjectType) dbAncestorTypeName = ((IObjectType)entity).DbAncestorTypeName;
 
-            string classFirstLine = entity.Translater.CSharpScope + (entity.IsInstantiable ? "" : " abstract") + (isPartial ? " partial" : "") + " " + entity.Translater.CSharpType + " " + className
+            string classFirstLine = entity.Translater.CSharpAccessModifier + (entity.IsInstantiable ? "" : " abstract") + (isPartial ? " partial" : "") + " " + entity.Translater.CSharpType + " " + className
                 + (!String.IsNullOrEmpty(dbAncestorTypeName)
                         ? " : " + TranslaterName.ConvertToPascal(dbAncestorTypeName) // Oracle ancestor gets precedence
                         : (!String.IsNullOrEmpty(ancestorClassName)
@@ -1075,7 +1075,7 @@ namespace Odapter {
             string interfaceName = CSharp.ToInterface(entity.Translater.CSharpName);
 
             StringBuilder classText = new StringBuilder("");
-            classText.AppendLine(Tab(tabIndentCount + 1) + entity.Translater.CSharpScope + " interface " + interfaceName + " {"); // start record interface
+            classText.AppendLine(Tab(tabIndentCount + 1) + entity.Translater.CSharpAccessModifier + " interface " + interfaceName + " {"); // start record interface
             foreach (IEntityAttribute attr in entity.Attributes) { // loop through all fields
                 string cSharpType = attr.Translater.GetCSharpType();
                 classText.AppendLine(Tab(tabIndentCount + 2) + (attr.ContainerClassName == null ? "" : attr.ContainerClassName + ".") + cSharpType 

@@ -28,7 +28,7 @@ namespace Odapter {
         /// </summary>
         IOrclType OrclType { get; }
 
-        string CSharpScope { get; }
+        string CSharpAccessModifier { get; }
         string CSharpName { get; }
         string CSharpType { get; }
     }
