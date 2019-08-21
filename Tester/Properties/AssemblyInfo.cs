@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Odapter Tester")]
-[assembly: AssemblyCopyright("Copyright © Clay Lipscomb 2018")]
+[assembly: AssemblyCopyright("Copyright © Clay Lipscomb 2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
