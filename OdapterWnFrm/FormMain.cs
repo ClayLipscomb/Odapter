@@ -483,7 +483,7 @@ namespace OdapterWnFrm {
             Parameter.Instance.AncestorClassNameTable = txtBaseTableClass.Text;
             Parameter.Instance.AncestorClassNameView = txtBaseViewClass.Text;
 
-            Parameter.Instance.MaxAssocArraySize = Convert.ToInt16(txtMaxAssocArraySize.Text);
+            Parameter.Instance.MaxAssocArraySize = Convert.ToInt32(txtMaxAssocArraySize.Text);
             Parameter.Instance.MaxReturnAndOutArgStringSize = Convert.ToInt16(txtMaxReturnArgStringSize.Text);
 
             Parameter.Instance.CSharpTypeUsedForOracleRefCursor = cmbCSharpTypeUsedForOracleRefCursor.SelectedValue.ToString();

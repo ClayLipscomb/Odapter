@@ -190,7 +190,7 @@ namespace Odapter {
         }
 
         // sizing
-        public short MaxAssocArraySize { get; set; }
+        public int MaxAssocArraySize { get; set; }
         public short MaxReturnAndOutArgStringSize { get; set; }
 
         // type translation - IParameterTranslation

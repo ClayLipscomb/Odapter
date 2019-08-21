@@ -71,7 +71,7 @@ namespace Odapter {
         bool IsIncludeFilterPrefixInNaming { get; set; }
         bool IsUseAutoImplementedProperties { get; set; }
         string LocalVariableNameSuffix { get; set; }
-        short MaxAssocArraySize { get; set; }
+        int MaxAssocArraySize { get; set; }
         short MaxReturnAndOutArgStringSize { get; set; }
     }
 }
