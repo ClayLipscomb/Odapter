@@ -1184,17 +1184,21 @@ namespace Odapter {
         }
 
         #region Miscellanous Methods
-        public static string GetAppNameVersionLabel() {
+        public static string GetAppVersion() {
             string version = "";
             object[] attributes = typeof(Generator).Assembly.GetCustomAttributes(typeof(AssemblyInformationalVersionAttribute), false);
             if (attributes.Length > 0) version = (attributes[0] as AssemblyInformationalVersionAttribute).InformationalVersion;
-            return APPLICATION_NAME + " " + version 
+            return version;
+        }
+
+        public static string GetAppNameVersionLabel() {
+            return APPLICATION_NAME + " " + GetAppVersion()
 #if DEBUG
                 + " *** DEBUG BUILD ***"
 #endif
                 ;
         }
-       
+
         /// <summary>
         /// Deploy copy of necessary code that is not generated from schema
         /// </summary>
