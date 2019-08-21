@@ -87,8 +87,8 @@ namespace Odapter {
             CSharpTypeUsedForOracleAssociativeArray = CSharp.ILIST_OF_T;
             CSharpTypeUsedForOracleInteger = CSharp.INT64;
             CSharpTypeUsedForOracleNumber = CSharp.DECIMAL;
-            CSharpTypeUsedForOracleDate = CSharp.DATE_TIME;
-            CSharpTypeUsedForOracleTimeStamp = CSharp.DATE_TIME;
+            CSharpTypeUsedForOracleDate = CSharp.DATE_TIME_OFFSET;
+            CSharpTypeUsedForOracleTimeStamp = CSharp.DATE_TIME_OFFSET;
             CSharpTypeUsedForOracleIntervalDayToSecond = CSharp.TIME_SPAN;
             CSharpTypeUsedForOracleBlob = CSharp.BYTE_ARRAY;
             CSharpTypeUsedForOracleClob = CSharp.STRING;

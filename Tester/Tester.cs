@@ -18,6 +18,7 @@
 
 //#define SHORT_INTEGER               // INTEGER as Int32
 //#define DECIMAL_INTEGER             // INTEGER as Decimal
+#define DATE_TIME                   // DATE as DateTime
 
 //#define SAFETYPE_INTEGER            // INTEGER as safe type OracleDecimal
 //#define SAFETYPE_NUMBER             // NUMBER as safe type OracleDecimal
@@ -1254,7 +1255,11 @@ namespace Odapter.Tester {
             /// Test use of DateTime, OracleDate, OracleTimeStamp 
             /// </summary>
             private void TestDateCalls() {
-#if !SAFETYPE_DATE
+#if SAFETYPE_DATE
+                OracleDate? pInDateTime, pInOutDateTime, pOutDateTime, retDateTime;
+                IList<OracleDate?> pInListDateTime, pInOutListDateTime, pOutListDateTime, retListDateTime;
+                IList<OracleDate?> dateTimeTestValues = new List<OracleDate?>() { OracleDate.GetSysDate(), OracleDate.MaxValue, OracleDate.MinValue, OracleDate.Null };
+#elif DATE_TIME
                 DateTime? pInDateTime, pInOutDateTime, pOutDateTime, retDateTime;
                 IList<DateTime?> pInListDateTime, pInOutListDateTime, pOutListDateTime, retListDateTime;
                 IList<DateTime?> dateTimeTestValues = new List<DateTime?>() { 
@@ -1262,29 +1267,33 @@ namespace Odapter.Tester {
                     DateTime.Now, DateTime.MaxValue.AddMilliseconds(-1), DateTime.MinValue.AddMilliseconds(1),
     #endif
                     null };
-#else
-                OracleDate? pInDateTime, pInOutDateTime, pOutDateTime, retDateTime;
-                IList<OracleDate?> pInListDateTime, pInOutListDateTime, pOutListDateTime, retListDateTime;
-                IList<OracleDate?> dateTimeTestValues = new List<OracleDate?>() { OracleDate.GetSysDate(), OracleDate.MaxValue, OracleDate.MinValue, OracleDate.Null };
+#else // DateTimeOffset
+                DateTimeOffset? pInDateTime, pInOutDateTime, pOutDateTime, retDateTime;
+                IList<DateTimeOffset?> pInListDateTime, pInOutListDateTime, pOutListDateTime, retListDateTime;
+                IList<DateTimeOffset?> dateTimeTestValues = new List<DateTimeOffset?>() { 
+    #if !CSHARP30 // Unmanaged has issues with time portion, min value and max value
+                    DateTimeOffset.Now, DateTimeOffset.MaxValue.AddMilliseconds(-1), DateTimeOffset.MinValue.AddMilliseconds(1),
+    #endif
+                    null };
 #endif
                 // DATE
                 // standard call
                 for (int i = 0; i < dateTimeTestValues.Count; i++) {
                     pInDateTime = pInOutDateTime = dateTimeTestValues[i];
                     retDateTime = OdptPkgMain.Instance.FuncDate(pInDateTime, ref pInOutDateTime, out pOutDateTime, null);
-#if !SAFETYPE_DATE
+#if SAFETYPE_DATE
+                    if (pInDateTime.Value.IsNull) {
+                        Debug.Assert(pInOutDateTime.Value.IsNull && pOutDateTime.Value.IsNull && retDateTime.Value.IsNull);
+                    } else {
+    #if !CSHARP30 // Unmanaged OracleDate.Equals() is always false, works fine with Managed
+                        Debug.Assert(pInDateTime.Equals(pInOutDateTime) && pInDateTime.Equals(pOutDateTime) && pInDateTime.Equals(retDateTime));
+    #endif
+                    }
+#else
                     if (pInDateTime == null)
                         Debug.Assert(pInOutDateTime == null && pOutDateTime == null && retDateTime == null);
                     else {
                         Debug.Assert(pInDateTime - pInOutDateTime < TimeSpan.FromSeconds(1) && pInDateTime - pOutDateTime < TimeSpan.FromSeconds(1) && pInDateTime - retDateTime < TimeSpan.FromSeconds(1));
-                    }
-#else
-                    if (pInDateTime.Value.IsNull) {
-                        Debug.Assert(pInOutDateTime.Value.IsNull && pOutDateTime.Value.IsNull && retDateTime.Value.IsNull);
-                    } else {
-#if !CSHARP30 // Unmanaged OracleDate.Equals() is always false, works fine with Managed
-                        Debug.Assert(pInDateTime.Equals(pInOutDateTime) && pInDateTime.Equals(pOutDateTime) && pInDateTime.Equals(retDateTime));
-#endif
                     }
 #endif
                 }
@@ -1292,41 +1301,44 @@ namespace Odapter.Tester {
                 // assoc array
                 pInListDateTime = pInOutListDateTime = dateTimeTestValues;
                 retListDateTime = OdptPkgMain.Instance.FuncAaDate(pInListDateTime, ref pInOutListDateTime, out pOutListDateTime, null);
-#if !SAFETYPE_DATE
-                for (int i = 0; i < pInListDateTime.Count; i++) Debug.Assert(!(pInListDateTime[i] - pInOutListDateTime[i] > TimeSpan.FromSeconds(1)));
-                for (int i = 0; i < pInListDateTime.Count; i++) Debug.Assert(!(pInListDateTime[i] - pOutListDateTime[i] > TimeSpan.FromSeconds(1)));
-                for (int i = 0; i < pInListDateTime.Count; i++) Debug.Assert(!(pInListDateTime[i] - retListDateTime[i] > TimeSpan.FromSeconds(1)));
-#else
-#if !CSHARP30 // Unmanaged OracleDate.Equals() is always false, works fine with Managed
+#if SAFETYPE_DATE
+    #if !CSHARP30 // Unmanaged OracleDate.Equals() is always false, works fine with Managed
                 for (int i = 0; i < pInListDateTime.Count; i++) Debug.Assert(pInListDateTime[i].Equals(pInOutListDateTime[i]));
                 for (int i = 0; i < pInListDateTime.Count; i++) Debug.Assert(pInListDateTime[i].Equals(pOutListDateTime[i]));
                 for (int i = 0; i < pInListDateTime.Count; i++) Debug.Assert(pInListDateTime[i].Equals(retListDateTime[i]));
-#endif
+    #endif
+#else
+                for (int i = 0; i < pInListDateTime.Count; i++) Debug.Assert(!(pInListDateTime[i] - pInOutListDateTime[i] > TimeSpan.FromSeconds(1)));
+                for (int i = 0; i < pInListDateTime.Count; i++) Debug.Assert(!(pInListDateTime[i] - pOutListDateTime[i] > TimeSpan.FromSeconds(1)));
+                for (int i = 0; i < pInListDateTime.Count; i++) Debug.Assert(!(pInListDateTime[i] - retListDateTime[i] > TimeSpan.FromSeconds(1)));
 #endif
 
-#if !SAFETYPE_TIMESTAMP
+#if SAFETYPE_TIMESTAMP
+                OracleTimeStamp? pInTimeStamp, pInOutTimeStamp, pOutTimeStamp, retTimeStamp;
+                //List<OracleTimeStamp?> pInListTimeStamp, pInOutListTimeStamp, pOutListTimeStamp, retListTimeStamp;
+                IList<OracleTimeStamp?> timeStampTestValues = new List<OracleTimeStamp?>() { OracleTimeStamp.GetSysDate(), OracleTimeStamp.MaxValue.AddMilliseconds(-1), OracleTimeStamp.MinValue.AddMilliseconds(1), OracleTimeStamp.Null };
+#elif DATE_TIME
                 DateTime? pInTimeStamp, pInOutTimeStamp, pOutTimeStamp, retTimeStamp;
-                //List<DateTime?> pInListTimeStamp, pInOutListTimeStamp, pOutListTimeStamp, retListTimeStamp;
                 IList<DateTime?> timeStampTestValues = new List<DateTime?>() {
 #if !CSHARP30   // Unmanaged has issues with non-null TIMESTAMP values
                     DateTime.Now, DateTime.MaxValue.AddMilliseconds(-1), DateTime.MinValue.AddMilliseconds(1),
 #endif
                     null };
-#else
-                OracleTimeStamp? pInTimeStamp, pInOutTimeStamp, pOutTimeStamp, retTimeStamp;
-                //List<OracleTimeStamp?> pInListTimeStamp, pInOutListTimeStamp, pOutListTimeStamp, retListTimeStamp;
-                IList<OracleTimeStamp?> timeStampTestValues = new List<OracleTimeStamp?>() { OracleTimeStamp.GetSysDate(), OracleTimeStamp.MaxValue.AddMilliseconds(-1), OracleTimeStamp.MinValue.AddMilliseconds(1), OracleTimeStamp.Null };
+#else // DateTimeOffset
+                DateTimeOffset? pInTimeStamp, pInOutTimeStamp, pOutTimeStamp, retTimeStamp;
+                IList<DateTimeOffset?> timeStampTestValues = new List<DateTimeOffset?>() {
+    #if !CSHARP30   // Unmanaged has issues with non-null TIMESTAMP values
+                    DateTimeOffset.Now, DateTimeOffset.MaxValue.AddMilliseconds(-1), DateTimeOffset.MinValue.AddMilliseconds(1),
+    #endif
+                    null };
+
 #endif
                 // TIMESTAMP 
                 // standard call
                 for (int i = 0; i < timeStampTestValues.Count; i++) {
                     pInTimeStamp = pInOutTimeStamp = timeStampTestValues[i];
                     retTimeStamp = OdptPkgMain.Instance.FuncTimestamp(pInTimeStamp, ref pInOutTimeStamp, out pOutTimeStamp, null);
-#if !SAFETYPE_TIMESTAMP
-                    Debug.Assert(!(pInTimeStamp - pInOutTimeStamp > TimeSpan.FromSeconds(1)));
-                    Debug.Assert(!(pInTimeStamp - pOutTimeStamp > TimeSpan.FromSeconds(1)));
-                    Debug.Assert(!(pInTimeStamp - retTimeStamp > TimeSpan.FromSeconds(1)));
-#else
+#if SAFETYPE_TIMESTAMP
                     if (pInTimeStamp.Value.IsNull) {
                         Debug.Assert(pInOutTimeStamp.Value.IsNull && pOutTimeStamp.Value.IsNull && retTimeStamp.Value.IsNull);
                     } else {
@@ -1334,6 +1346,10 @@ namespace Odapter.Tester {
                         Debug.Assert(OracleTimeStamp.SetPrecision(pInTimeStamp.Value, 5).Equals(OracleTimeStamp.SetPrecision(pOutTimeStamp.Value, 5)));
                         Debug.Assert(OracleTimeStamp.SetPrecision(pInTimeStamp.Value, 5).Equals(OracleTimeStamp.SetPrecision(retTimeStamp.Value, 5)));
                     }
+#else
+                    Debug.Assert(!(pInTimeStamp - pInOutTimeStamp > TimeSpan.FromSeconds(1)));
+                    Debug.Assert(!(pInTimeStamp - pOutTimeStamp > TimeSpan.FromSeconds(1)));
+                    Debug.Assert(!(pInTimeStamp - retTimeStamp > TimeSpan.FromSeconds(1)));
 #endif
                 }
 
@@ -1344,6 +1360,7 @@ namespace Odapter.Tester {
                 //for (int i = 0; i < pInListTimeStamp.Count; i++) if (pInListTimeStamp[i] - pOutListTimeStamp[i] > TimeSpan.FromSeconds( 1 )) throw new Exception( "Error" );
                 //for (int i = 0; i < pInListTimeStamp.Count; i++) if (pInListTimeStamp[i] - retListTimeStamp[i] > TimeSpan.FromSeconds( 1 )) throw new Exception( "Error" );
             }
+
             private void TestTimeSpanCalls() {
             }
             #endregion
@@ -1657,8 +1674,10 @@ namespace Odapter.Tester {
             public virtual
 #if SAFETYPE_DATE
                             OracleDate?
-#else
+#elif DATE_TIME
                             DateTime?
+#else
+                            DateTimeOffset?
 #endif
                                     ColDate
             { get; set; }
@@ -1666,20 +1685,24 @@ namespace Odapter.Tester {
             public virtual
 #if SAFETYPE_TIMESTAMP
                             OracleTimeStamp? 
-#else
+#elif DATE_TIME
                             DateTime?
+#else
+                            DateTimeOffset?
 #endif
-                                    ColTimestamp
+            ColTimestamp
             { get; set; }
 
             [HydratorMapAttribute(Position = 25)]
             public virtual
 #if SAFETYPE_TIMESTAMP
                             OracleTimeStamp? 
-#else
+#elif DATE_TIME
                             DateTime?
+#else
+                            DateTimeOffset?
 #endif
-                                    ColTimestampPrec0
+            ColTimestampPrec0
             { get; set; }
 
 
@@ -1687,10 +1710,12 @@ namespace Odapter.Tester {
             public virtual
 #if SAFETYPE_TIMESTAMP
                             OracleTimeStamp? 
-#else
+#elif DATE_TIME
                             DateTime?
+#else
+                            DateTimeOffset?
 #endif
-                                    ColTimestampPrec9
+            ColTimestampPrec9
             { get; set; }
 
             [HydratorMapAttribute(Position = 27)]

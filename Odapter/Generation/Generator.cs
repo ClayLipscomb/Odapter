@@ -385,7 +385,7 @@ namespace Odapter {
                     + "(" + oracleArrayCode + "[_i].ToString()));");
             } else {
                 sb.AppendLine(Tab(tabIndentCount + 2) 
-                    + ": " + (CSharp.ExtractSubtypeFromGenericCollectionType(cSharpArgType, true).Equals(CSharp.BIG_INTEGER) ? CSharp.BIG_INTEGER + ".Parse" : "Convert.To" + CSharp.ExtractSubtypeFromGenericCollectionType(cSharpArgType, true))
+                    + ": " + (CSharp.ExtractSubtypeFromGenericCollectionType(cSharpArgType, true).Equals(CSharp.DATE_TIME_OFFSET) ? CSharp.DATE_TIME_OFFSET + ".Parse" : "Convert.To" + CSharp.ExtractSubtypeFromGenericCollectionType(cSharpArgType, true))
                     + "((" + oracleArrayCode + "[_i].ToString())));");
             }
             return sb.ToString();
@@ -431,7 +431,9 @@ namespace Odapter {
                         if (isLobDataType) // assign non-null value 
                             sb.AppendLine(Tab(6) + ": ((" + arg.Translater.CSharpOdpNetType + ")" + LOCAL_VAR_NAME_COMMAND_PARAMS + "[\"" + oracleArgName + "\"].Value).Value;");
                         else
-                            sb.AppendLine(Tab(6) + ": Convert.To" + cSharpArgType + "(" + LOCAL_VAR_NAME_COMMAND_PARAMS + "[\"" + oracleArgName + "\"].Value.ToString());");
+                            sb.AppendLine(Tab(6) + ": " 
+                                + (new List<String> { CSharp.DATE_TIME_OFFSET }.Contains(cSharpArgType) ? cSharpArgType + ".Parse" : "Convert.To" + cSharpArgType)
+                                + "(" + LOCAL_VAR_NAME_COMMAND_PARAMS + "[\"" + oracleArgName + "\"].Value.ToString());");
                     }
                 }
                 prevArgIsAssocArray = isAssocArray;
@@ -714,6 +716,8 @@ namespace Odapter {
                     classText.Append("(" + f.Translater.GetCSharpType() + ")" + paramNameOracleReader + ".GetOracleValue(" + f.MapPosition.ToString() + ")"); // ODP.NET
                 } else if ((new List<string> { Orcl.BLOB, Orcl.CLOB, Orcl.NCLOB }).Contains(f.DataType)) {
                     classText.Append(paramNameOracleReader + "." + CSharp.GET_ORACLE + CaseConverter.ConvertToCapitalized(f.DataType.Substring(f.DataType.Length - 4, 4)) + "(" + f.MapPosition.ToString() + ").Value");
+                } else if ((new List<string> { CSharp.DATE_TIME_OFFSET }).Contains(f.Translater.GetCSharpType(true))) {
+                    classText.Append(f.Translater.GetCSharpType(true) + ".Parse" + "(" + paramNameOracleReader + ".GetValue(" + f.MapPosition.ToString() + ").ToString())"); // primitive
                 } else {
                     classText.Append("Convert.To" + f.Translater.GetCSharpType(true) + "(" + paramNameOracleReader + ".GetValue(" + f.MapPosition.ToString() + "))"); // primitive
                 }

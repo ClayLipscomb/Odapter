@@ -42,6 +42,7 @@ namespace Odapter {
         public const string BIG_INTEGER = "BigInteger";
         public const string BIG_RATIONAL = "BigRational";
         public const string DATE_TIME = "DateTime";
+        public const string DATE_TIME_OFFSET = "DateTimeOffset";
         public const string TIME_SPAN = "TimeSpan";
         public const string DOUBLE = "Double";
         public const string SINGLE = "Single";
@@ -98,7 +99,7 @@ namespace Odapter {
 
         #region Type categories
         internal static readonly IList<string> StructTypes = new List<string> {
-            SBYTE, BYTE, INT16, UINT16, INT32, UINT32, INT64, UINT64, DATE_TIME, TIME_SPAN, DOUBLE, SINGLE, FLOAT, DECIMAL,
+            SBYTE, BYTE, INT16, UINT16, INT32, UINT32, INT64, UINT64, DATE_TIME, DATE_TIME_OFFSET, TIME_SPAN, DOUBLE, SINGLE, FLOAT, DECIMAL,
             ODP_NET_SAFE_TYPE_DECIMAL, ODP_NET_SAFE_TYPE_STRING,
             ODP_NET_SAFE_TYPE_DATE, ODP_NET_SAFE_TYPE_TIMESTAMP, ODP_NET_SAFE_TYPE_TIMESTAMP_LTZ, ODP_NET_SAFE_TYPE_TMESTAMP_TZ,
             ODP_NET_SAFE_TYPE_INTERVAL_DS, ODP_NET_SAFE_TYPE_INTERVAL_YM,
