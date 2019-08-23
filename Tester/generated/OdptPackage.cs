@@ -2795,6 +2795,9 @@ namespace Schema.Odpt.Package {
         // **PROC IGNORED** - REF types are not available in ODP.NET managed
         // public String FuncRef(String pIn, ref String pInOut, out String pOut, OracleConnection optionalPreexistingOpenConnection = null)
 
+        // **PROC IGNORED** - .NET cannot send/receive a PL/SQL RECORD (apart from cursor)
+        // public FuncRowReturnRowType FuncRow(FuncRowPInRowType pIn, ref FuncRowPInOutRowType pInOut, out FuncRowPOutRowType pOut, OracleConnection optionalPreexistingOpenConnection = null)
+
         // **PROC IGNORED** - Code generation for ROWID types has not been implemented
         // public String FuncRowid(String pIn, ref String pInOut, out String pOut, OracleConnection optionalPreexistingOpenConnection = null)
 

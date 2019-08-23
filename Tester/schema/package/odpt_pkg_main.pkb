@@ -435,6 +435,13 @@ CREATE OR REPLACE PACKAGE BODY ODPT.odpt_pkg_main AS
 		RETURN p_in;
 	END;
 	
+	FUNCTION func_row(p_in IN odpt_table_big%ROWTYPE, p_in_out IN OUT odpt_table_big%ROWTYPE, p_out OUT odpt_table_big%ROWTYPE) RETURN odpt_table_big%ROWTYPE IS
+	BEGIN
+		p_in_out := p_in;
+		p_out := p_in;
+		RETURN p_in;
+	END;
+
     FUNCTION func_interval_day_to_second(p_in IN INTERVAL DAY TO SECOND, p_in_out IN OUT INTERVAL DAY TO SECOND, p_out OUT INTERVAL DAY TO SECOND) RETURN INTERVAL DAY TO SECOND IS
 	BEGIN
 		p_in_out := p_in;

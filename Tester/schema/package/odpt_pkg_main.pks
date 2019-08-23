@@ -168,11 +168,12 @@ CREATE OR REPLACE PACKAGE ODPT.odpt_pkg_main AS
 	-- implementation not possible due to binding restriction of PL/SQL types
 	FUNCTION func_object_type(p_in IN odpt_big_ot, p_in_out IN OUT odpt_big_ot, p_out OUT odpt_big_ot) RETURN odpt_big_ot;
 	FUNCTION func_record(p_in IN odpt_pkg_table_big.t_table_big, p_in_out IN OUT odpt_pkg_table_big.t_table_big, p_out OUT odpt_pkg_table_big.t_table_big) RETURN odpt_pkg_table_big.t_table_big;
+	FUNCTION func_row(p_in IN odpt_table_big%ROWTYPE, p_in_out IN OUT odpt_table_big%ROWTYPE, p_out OUT odpt_table_big%ROWTYPE) RETURN odpt_table_big%ROWTYPE;
 	FUNCTION func_boolean(p_in IN BOOLEAN, p_in_out IN OUT BOOLEAN, p_out OUT BOOLEAN) RETURN BOOLEAN; -- impossible to bind in C#
+
 	FUNCTION func_aa_binary_integer (p_in IN t_assocarray_binary_integer, p_in_out IN OUT t_assocarray_binary_integer, p_out OUT t_assocarray_binary_integer) RETURN t_assocarray_binary_integer;
 	FUNCTION func_aa_pls_integer (p_in IN t_assocarray_pls_integer, p_in_out IN OUT t_assocarray_pls_integer, p_out OUT t_assocarray_pls_integer) RETURN t_assocarray_pls_integer;
 	FUNCTION func_aa_boolean (p_in IN t_assocarray_boolean, p_in_out IN OUT t_assocarray_boolean, p_out OUT t_assocarray_boolean) RETURN t_assocarray_boolean;
-
 	FUNCTION func_aa_record (p_in IN t_assocarray_record, p_in_out IN OUT t_assocarray_record, p_out OUT t_assocarray_record) RETURN t_assocarray_record;
 	FUNCTION func_aa_row (p_in IN t_assocarray_row, p_in_out IN OUT t_assocarray_row, p_out OUT t_assocarray_row) RETURN t_assocarray_row;
 
