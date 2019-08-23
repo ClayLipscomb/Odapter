@@ -1731,6 +1731,9 @@ namespace Schema.Odpt.Package {
         // **PROC IGNORED** - .NET cannot send/receive an associative array of a PL/SQL RECORD
         // public IList<TTableBig> FuncAaRecord(IList<TTableBig> pIn, ref IList<TTableBig> pInOut, out IList<TTableBig> pOut, OracleConnection optionalPreexistingOpenConnection = null)
 
+        // **PROC IGNORED** - .NET cannot send/receive an associative array of a PL/SQL RECORD
+        // public IList<TTableBig> FuncAaRow(IList<TTableBig> pIn, ref IList<TTableBig> pInOut, out IList<TTableBig> pOut, OracleConnection optionalPreexistingOpenConnection = null)
+
         public IList<Int64?> FuncAaSmallint(IList<Int64?> pIn, ref IList<Int64?> pInOut, out IList<Int64?> pOut, OracleConnection optionalPreexistingOpenConnection = null) {
             IList<Int64?> __ret = new List<Int64?>(); pOut = new List<Int64?>(); 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();

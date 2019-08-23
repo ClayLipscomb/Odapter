@@ -147,8 +147,6 @@ namespace Odapter {
             foreach (IArgument arg in arguments) {
                 switch (arg.DataType) {
                     case Orcl.RECORD:
-                        if (arg.DataLevel == 0) continue; // ignore straight record type (without cursor)
-
                         // send the record argument and a list of all subsequent arguments
                         LoadRecordType<T_PackageRecord, T_Field, T_Argument>(arg, arguments.GetRange(arguments.IndexOf(arg) + 1, arguments.Count - arguments.IndexOf(arg) - 1));
                         continue;
@@ -168,10 +166,10 @@ namespace Odapter {
             where T_PackageRecord : class, IPackageRecord, new() 
             where T_Field : class, IField, new() 
             where T_Argument : class, IArgument, new() {
-            if (recordArg.DataType != Orcl.RECORD) throw new Exception("Argument sent to LoadRecordType() that is not a PL/SQL RECORD");
+            if (recordArg.DataType != Orcl.RECORD) return;
 
-            // happens for type OBJECT, TABLE, VARRAY or UNDEFINED
-            if ((recordArg.TypeName == null && recordArg.TypeSubname != null) || (recordArg.TypeName != null && recordArg.TypeSubname == null)) return;
+            if (recordArg.DataLevel == 0) return;                                       // ignore straight record type (without cursor/array)
+            if (recordArg.TypeName == null && recordArg.TypeSubname == null) return;    // ignore cursor/array of (table) row
 
             // if the record type has already been stored, do not proceeed
             if (PackageRecordTypes.Any(r => (r.TypeSubName ?? "") == (recordArg.TypeSubname ?? "")

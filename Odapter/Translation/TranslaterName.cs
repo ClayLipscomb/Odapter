@@ -97,7 +97,7 @@ namespace Odapter {
             string propertyName = ConvertToPascal(field.AttrName);
 
             // prevent identical class name and property name which is not allowed by C#
-            if (field.EntityName.Equals(field.AttrName)) propertyName += "Field";
+            if ((field.EntityName ?? "").Equals(field.AttrName)) propertyName += "Field";
             return propertyName;
         }
     }

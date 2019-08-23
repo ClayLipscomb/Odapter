@@ -30,7 +30,7 @@ namespace Odapter {
         internal static void Initialize() { InitEntityTranslaters(); }
 
         internal static ITranslaterEntity GetTranslater(IEntity entity) {
-            var dataTypeFull = entity.OrclEntity.BuildEntityTypeFullName(entity);
+            var dataTypeFull = entity.OrclEntity.BuildEntityTypeFullName(entity) ?? "UNDEFINED_ENTITY_NAME";
 
             if (!OracleEntityTranslaters.Any(t => t.DataTypeFull.Equals(dataTypeFull))) {
                 switch (entity.EntityType) { 
