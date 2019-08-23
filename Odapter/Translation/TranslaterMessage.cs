@@ -37,6 +37,7 @@ namespace Odapter {
             return FormatOracleTypes(String.Format(msg, insert1));
         }
 
+        internal static string IgnoreNotImplemented(string orclType)                    { return FormatMsg(IGNORE_NOT_IMPLEMENTED, orclType); }
         internal static string IgnoreNotImplemented(IOrclType orclType)                 { return FormatMsg(IGNORE_NOT_IMPLEMENTED, orclType.DataType); }
         internal static string IgnoreNotAvailableOdpNetMananged(IOrclType orclType)     { return FormatMsg(IGNORE_NOT_AVAILABLE_ODP_NET_MANAGED, orclType.DataType); }
         internal static string IgnoreNoSendReceive(IOrclType orclType)                  { return FormatMsg(IGNORE_NO_SEND_RECEIVE, orclType.DataType); }

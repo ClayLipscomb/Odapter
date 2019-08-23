@@ -28,6 +28,11 @@ namespace Odapter {
         }
     }
 
+    internal sealed class OrclNestedTable : OrclTypeBase, IOrclType {
+        public string DataType { get => Orcl.NESTED_TABLE; }
+        public bool IsImplementedForAssociativeArray { get => false; }
+    }
+
     internal sealed class OrclVarray : OrclTypeBase, IOrclType {
         public string DataType { get => Orcl.VARRAY; }
         public bool IsImplementedForAssociativeArray { get => false; }

@@ -2487,6 +2487,9 @@ namespace Schema.Odpt.Package {
             return __ret;
         } // FuncNclob
 
+        // **PROC IGNORED** - Code generation for NESTED TABLE types has not been implemented
+        // public IList<Decimal?> FuncNnNumber(IList<Decimal?> pIn, ref IList<Decimal?> pInOut, out IList<Decimal?> pOut, OracleConnection optionalPreexistingOpenConnection = null)
+
         public Decimal? FuncNoParam(OracleConnection optionalPreexistingOpenConnection = null) {
             Decimal? __ret = null; 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
@@ -2979,6 +2982,9 @@ namespace Schema.Odpt.Package {
             }
             return __ret;
         } // FuncVarchar2
+
+        // **PROC IGNORED** - Code generation for VARRAY types has not been implemented
+        // public IList<Decimal?> FuncVaNumber(IList<Decimal?> pIn, ref IList<Decimal?> pInOut, out IList<Decimal?> pOut, OracleConnection optionalPreexistingOpenConnection = null)
 
         // **PROC IGNORED** - XMLTYPE types are not available in ODP.NET managed
         // public XmlDocument FuncXmltype(XmlDocument pIn, ref XmlDocument pInOut, out XmlDocument pOut, OracleConnection optionalPreexistingOpenConnection = null)

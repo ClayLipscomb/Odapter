@@ -63,7 +63,10 @@ namespace Odapter {
         public bool IsDefinedExternally { get => TypeName != null && PackageName != null && TypeName != PackageName; }
         public string NamingHelpValue { get => ProcedureName; }
 
-        public ITyped SubType { get => (DataType == Orcl.ASSOCIATITVE_ARRAY || (DataType == Orcl.REF_CURSOR && !IsUntypedCursor)) ? NextArgument : null; }
+        public ITyped SubType { get => 
+                (DataType == Orcl.ASSOCIATITVE_ARRAY || DataType == Orcl.NESTED_TABLE || DataType == Orcl.VARRAY || (DataType == Orcl.REF_CURSOR && !IsUntypedCursor)) 
+                ? NextArgument 
+                : null; }
         public ITranslaterType Translater { get; set; }
     }
 }

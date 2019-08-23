@@ -708,4 +708,20 @@ CREATE OR REPLACE PACKAGE BODY ODPT.odpt_pkg_main AS
 		RETURN p_in;
 	END;
 	
+	-----------------------
+	FUNCTION func_nn_number (p_in IN t_nestedtable_number, p_in_out IN OUT t_nestedtable_number, p_out OUT t_nestedtable_number) RETURN t_nestedtable_number IS
+    BEGIN
+	   	p_in_out := p_in;
+		p_out := p_in;
+		RETURN p_in;
+	END;
+
+	----------------------
+	FUNCTION func_va_number (p_in IN t_va_number, p_in_out IN OUT t_va_number, p_out OUT t_va_number) RETURN t_va_number IS
+    BEGIN
+	   	p_in_out := p_in;
+		p_out := p_in;
+		RETURN p_in;
+	END;
+
 END odpt_pkg_main;

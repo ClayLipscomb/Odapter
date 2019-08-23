@@ -44,6 +44,15 @@ CREATE OR REPLACE PACKAGE ODPT.odpt_pkg_main AS
 	-- associative array types - VARCHAR2 indexed
 	TYPE t_assocarray_integer_v IS TABLE OF odpt_table_big.col_integer%TYPE INDEX BY VARCHAR2(100);  
 	
+	-- nested table types
+	TYPE t_nestedtable_number IS TABLE OF odpt_table_big.col_number%TYPE;
+	--TYPE t_nestedtable_integer IS TABLE OF odpt_table_big.col_integer%TYPE;
+	--TYPE t_nestedtable_varchar2 IS TABLE OF odpt_table_big.col_varchar2_max%TYPE;
+	--TYPE t_nestedtable_date IS TABLE OF odpt_table_big.col_date%TYPE;  
+
+	-- varray types
+	TYPE t_va_number IS VARRAY(10) of NUMBER;
+
 	-- data types ignored (not implemented) in code generation
 	TYPE t_record_type_ignored IS RECORD (
 		f_boolean							BOOLEAN,	 -- .NET cannot handle PL/SQL BOOLEAN
@@ -123,14 +132,13 @@ CREATE OR REPLACE PACKAGE ODPT.odpt_pkg_main AS
 	FUNCTION func_clob(p_in IN CLOB, p_in_out IN OUT CLOB, p_out OUT CLOB) RETURN CLOB;
 	FUNCTION func_nclob(p_in IN NCLOB, p_in_out IN OUT NCLOB, p_out OUT NCLOB) RETURN NCLOB;
 
+	-- associative array functions
 	FUNCTION func_aa_integer (p_in IN t_assocarray_integer, p_in_out IN OUT t_assocarray_integer, p_out OUT t_assocarray_integer) RETURN t_assocarray_integer;
 	FUNCTION func_aa_smallint (p_in IN t_assocarray_smallint, p_in_out IN OUT t_assocarray_smallint, p_out OUT t_assocarray_smallint) RETURN t_assocarray_smallint;
-
     FUNCTION func_aa_natural (p_in IN t_assocarray_natural, p_in_out IN OUT t_assocarray_natural, p_out OUT t_assocarray_natural) RETURN t_assocarray_natural;
     FUNCTION func_aa_naturaln (p_in IN t_assocarray_naturaln, p_in_out IN OUT t_assocarray_naturaln, p_out OUT t_assocarray_naturaln) RETURN t_assocarray_naturaln;
     FUNCTION func_aa_positive (p_in IN t_assocarray_positive, p_in_out IN OUT t_assocarray_positive, p_out OUT t_assocarray_positive) RETURN t_assocarray_positive;
     FUNCTION func_aa_positiven (p_in IN t_assocarray_positiven, p_in_out IN OUT t_assocarray_positiven, p_out OUT t_assocarray_positiven) RETURN t_assocarray_positiven;
-
 	FUNCTION func_aa_number (p_in IN t_assocarray_number, p_in_out IN OUT t_assocarray_number, p_out OUT t_assocarray_number) RETURN t_assocarray_number;
 	FUNCTION func_aa_binary_double (p_in IN t_assocarray_binary_double, p_in_out IN OUT t_assocarray_binary_double, p_out OUT t_assocarray_binary_double) RETURN t_assocarray_binary_double;
 	FUNCTION func_aa_binary_float (p_in IN t_assocarray_binary_float, p_in_out IN OUT t_assocarray_binary_float, p_out OUT t_assocarray_binary_float) RETURN t_assocarray_binary_float;
@@ -151,6 +159,12 @@ CREATE OR REPLACE PACKAGE ODPT.odpt_pkg_main AS
 	FUNCTION func_aa_blob (p_in IN t_assocarray_blob, p_in_out IN OUT t_assocarray_blob, p_out OUT t_assocarray_blob) RETURN t_assocarray_blob;
 	FUNCTION func_aa_clob (p_in IN t_assocarray_clob, p_in_out IN OUT t_assocarray_clob, p_out OUT t_assocarray_clob) RETURN t_assocarray_clob;
 	FUNCTION func_aa_nclob (p_in IN t_assocarray_nclob, p_in_out IN OUT t_assocarray_nclob, p_out OUT t_assocarray_nclob) RETURN t_assocarray_nclob;
+
+	-- nested table functions
+	FUNCTION func_nn_number (p_in IN t_nestedtable_number, p_in_out IN OUT t_nestedtable_number, p_out OUT t_nestedtable_number) RETURN t_nestedtable_number;
+
+	-- varray functions
+	FUNCTION func_va_number (p_in IN t_va_number, p_in_out IN OUT t_va_number, p_out OUT t_va_number) RETURN t_va_number;
 
 	--------------------------------------------------
 	-- UNIMPLEMENTED and COMMENTED OUT in generated C#

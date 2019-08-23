@@ -53,6 +53,7 @@ namespace Odapter {
                 new OrclNaturaln(),
                 new OrclNchar(),
                 new OrclNclob(),
+                new OrclNestedTable(),
                 new OrclNumeric(),
                 new OrclNvarchar2(),
                 new OrclObjectType(),

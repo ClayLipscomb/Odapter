@@ -61,17 +61,55 @@ namespace Odapter {
         //      VARCHAR2, equiv or subtypes: VARCHAR, STRING
     }
 
+    internal sealed class TranslaterNestedTable : ITranslaterType {
+        public string DataTypeFull { get; private set; }
+        public IOrclType OrclType { get => OrclUtil.GetType(Orcl.NESTED_TABLE); }
+
+        // translation to C#
+        public string GetCSharpType(bool typeNotNullable = false, bool nonInterfaceType = false) {
+            return CSharp.GenericCollectionOf((nonInterfaceType ? CSharp.LIST_OF_T : CSharpType), SubCSharpType);
+        }
+        private string CSharpType { get; set; }
+        private string SubCSharpType { get; set; }
+        public bool IsValid(ITyped dataType) { return dataType.OrclType.BuildDataTypeFullName(dataType).Equals(DataTypeFull); }
+        public string CSharpOracleDbType { get => String.Empty; }
+        public string CSharpOdpNetType { get => String.Empty; }
+        public bool IsIgnoredAsParameter { get => true; }
+        public string IgnoredReason { get => TranslaterMessage.IgnoreNotImplemented($"NESTED {Orcl.NESTED_TABLE}"); }
+
+        internal TranslaterNestedTable(string dataTypeFull, string cSharpType, ITyped dbDataType) {
+            DataTypeFull = dataTypeFull;
+            CSharpType = cSharpType;
+            SubCSharpType = TranslaterFactoryType.GetTranslater(dbDataType.SubType).GetCSharpType();
+        }
+        private TranslaterNestedTable() { }
+
+        public override string ToString() { return DataTypeFull; }
+    }
+
     internal sealed class TranslaterVarray : ITranslaterType {
-        public string DataTypeFull { get => OrclType.DataType; }
+        public string DataTypeFull { get; private set; }
         public IOrclType OrclType { get => OrclUtil.GetType(Orcl.VARRAY); }
 
         // translation to C#
-        public string GetCSharpType(bool typeNotNullable = false, bool nonInterfaceType = false) { return CSharpType; }
-        private string CSharpType { get => CSharp.ILIST_OF_T; }
+        public string GetCSharpType(bool typeNotNullable = false, bool nonInterfaceType = false) {
+            return CSharp.GenericCollectionOf((nonInterfaceType ? CSharp.LIST_OF_T : CSharpType), SubCSharpType);
+        }
+        private string CSharpType { get; set; }
+        private string SubCSharpType { get; set; }
         public bool IsValid(ITyped dataType) { return dataType.OrclType.BuildDataTypeFullName(dataType).Equals(DataTypeFull); }
         public string CSharpOracleDbType { get => String.Empty; }
         public string CSharpOdpNetType { get => String.Empty; }
         public bool IsIgnoredAsParameter { get => true; }
         public string IgnoredReason { get => TranslaterMessage.IgnoreNotImplemented(OrclType); }
+
+        internal TranslaterVarray(string dataTypeFull, string cSharpType, ITyped dbDataType) {
+            DataTypeFull = dataTypeFull;
+            CSharpType = cSharpType;
+            SubCSharpType = TranslaterFactoryType.GetTranslater(dbDataType.SubType).GetCSharpType();
+        }
+        private TranslaterVarray() { }
+
+        public override string ToString() { return DataTypeFull; }
     }
 }

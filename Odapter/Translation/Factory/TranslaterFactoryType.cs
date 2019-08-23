@@ -77,7 +77,6 @@ namespace Odapter {
                 new TranslaterTimestamp(CSharpTypeUsedForOracleTimeStamp),
                 new TranslaterTimestampWithLocalTimeZone(),
                 new TranslaterTimestampWithTimeZone(),
-                new TranslaterVarray(),
                 new TranslaterURowId(),
                 new TranslaterVarchar(),
                 new TranslaterVarchar2(),
@@ -136,6 +135,12 @@ namespace Odapter {
                         break;
                     case Orcl.RECORD:
                         OracleTypeTranslaters.Add(new TranslaterRecordType(dataTypeFull));
+                        break;
+                    case Orcl.NESTED_TABLE:
+                        OracleTypeTranslaters.Add(new TranslaterNestedTable(dataTypeFull, CSharpTypeUsedForOracleAssociativeArray, dataType));
+                        break;
+                    case Orcl.VARRAY:
+                        OracleTypeTranslaters.Add(new TranslaterVarray(dataTypeFull, CSharpTypeUsedForOracleAssociativeArray, dataType));
                         break;
                     default:
                         OracleTypeTranslaters.Add(new TranslaterUndefinedType(dataTypeFull));
