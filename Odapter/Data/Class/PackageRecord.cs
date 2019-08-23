@@ -61,7 +61,7 @@ namespace Odapter {
             //      use proc name (which is what subtype usually is anyway) and some extra special text. We need a 
             //      better algorithm to guarantee uniqueness in the C# namespace.
             if (String.IsNullOrEmpty(rec.DataTypeProperName)) 
-                recordName = rec.NamingHelpValue + Orcl.PERIOD + (rec.DataTypeLabel ?? "RETURN") + Orcl.UNDERSCORE + "ROW_TYPE";
+                recordName = rec.NamingHelpValue + Orcl.PERIOD + (rec.DataTypeLabel ?? "SOME") + Orcl.UNDERSCORE + "ROW_TYPE";
             else if (Parameter.Instance.IsUsingSchemaFilter && !rec.ContainerType.StartsWith(Parameter.Instance.Filter) && rec.IsDefinedExternally)
                 // if filtering and record is defined in another package, prefix with owning package name only to *prevent naming conflict*
                 recordName = rec.ContainerType + Orcl.PERIOD + rec.DataTypeProperName;

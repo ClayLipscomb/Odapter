@@ -1514,7 +1514,7 @@ namespace Schema.Odpt.Odpt.Package {
         // public IList<TTableBig> FuncAaRecord(IList<TTableBig> pIn, ref IList<TTableBig> pInOut, out IList<TTableBig> pOut, OracleConnection optionalPreexistingOpenConnection = null)
 
         // **PROC IGNORED** - .NET cannot send/receive an associative array of a PL/SQL RECORD
-        // public IList<TTableBig> FuncAaRow(IList<TTableBig> pIn, ref IList<TTableBig> pInOut, out IList<TTableBig> pOut, OracleConnection optionalPreexistingOpenConnection = null)
+        // public IList<FuncAaRowSomeRowType> FuncAaRow(IList<FuncAaRowSomeRowType> pIn, ref IList<FuncAaRowSomeRowType> pInOut, out IList<FuncAaRowSomeRowType> pOut, OracleConnection optionalPreexistingOpenConnection = null)
 
         public IList<Int64?> FuncAaSmallint(IList<Int64?> pIn, ref IList<Int64?> pInOut, out IList<Int64?> pOut, OracleConnection optionalPreexistingOpenConnection = null) {
             IList<Int64?> __ret = new List<Int64?>(); pOut = new List<Int64?>(); 
@@ -2578,7 +2578,7 @@ namespace Schema.Odpt.Odpt.Package {
         // public String FuncRef(String pIn, ref String pInOut, out String pOut, OracleConnection optionalPreexistingOpenConnection = null)
 
         // **PROC IGNORED** - .NET cannot send/receive a PL/SQL RECORD (apart from cursor)
-        // public FuncRowReturnRowType FuncRow(FuncRowPInRowType pIn, ref FuncRowPInOutRowType pInOut, out FuncRowPOutRowType pOut, OracleConnection optionalPreexistingOpenConnection = null)
+        // public FuncRowSomeRowType FuncRow(FuncRowPInRowType pIn, ref FuncRowPInOutRowType pInOut, out FuncRowPOutRowType pOut, OracleConnection optionalPreexistingOpenConnection = null)
 
         // **PROC IGNORED** - Code generation for ROWID types has not been implemented
         // public String FuncRowid(String pIn, ref String pInOut, out String pOut, OracleConnection optionalPreexistingOpenConnection = null)

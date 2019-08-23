@@ -157,6 +157,8 @@ namespace Odapter {
                 } else {
                     return type.DataType + "(" + type.DataPrecision + (type.DataScale > 0 ? "," + type.DataScale : "") + ")"; // a number
                 }
+            } else if (type.DataType == Orcl.RECORD) {
+                return type.OrclType.BuildDataTypeFullName(type);
             } else {
                 return type.DataType;
             }
