@@ -580,7 +580,7 @@ namespace Odapter {
                             ? null
                             : (m.IsRoundOracleDecimalToCSharpDecimal
                                 // an OracleDecimal (sig dig 38) has to be rounded to fit in C# Decimal (sig dig 28)
-                                ? (Decimal?)OracleDecimal.SetPrecision(reader.GetOracleDecimal(reader.GetOrdinal(m.Column.ColumnName)), 29)
+                                ? (Decimal?)OracleDecimal.SetPrecision(reader.GetOracleDecimal(reader.GetOrdinal(m.Column.ColumnName)), 28)
                                 : (m.MemberUnderlyingType.Namespace.Equals("Oracle." +
 #if CSHARP30
                                     "DataAccess" 
@@ -766,7 +766,7 @@ namespace Odapter {
                         else if (readerColumns[c].ColumnType == typeof(OracleString))
                             drow[colName[c]] = (String)reader.GetOracleString(reader.GetOrdinal(colName[c]));
                         else if (readerColumns[c].ColumnType == typeof(OracleDecimal))
-                            drow[colName[c]] = (OracleDecimal?)OracleDecimal.SetPrecision(reader.GetOracleDecimal(reader.GetOrdinal(colName[c])), 29);
+                            drow[colName[c]] = (OracleDecimal?)OracleDecimal.SetPrecision(reader.GetOracleDecimal(reader.GetOrdinal(colName[c])), 28);
                         else if (readerColumns[c].ColumnType == typeof(OracleDate))
                             drow[colName[c]] = (OracleDate?)reader.GetOracleDate(reader.GetOrdinal(colName[c]));
                         else if (readerColumns[c].ColumnType == typeof(OracleTimeStamp))
