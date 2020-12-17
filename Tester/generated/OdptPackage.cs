@@ -298,20 +298,20 @@ namespace Schema.Odpt.Package {
                     __cmd.CommandType = CommandType.StoredProcedure;
                     __cmd.BindByName = true;
 
-                    __cmd.Parameters.Add(new OracleParameter("P_SOURCES", OracleDbType.Varchar2, 1000, null, ParameterDirection.Output));
+                    __cmd.Parameters.Add(new OracleParameter("P_SOURCES", OracleDbType.Varchar2, 50000, null, ParameterDirection.Output));
                     __cmd.Parameters["P_SOURCES"].CollectionType = OracleCollectionType.PLSQLAssociativeArray;
-                    __cmd.Parameters["P_SOURCES"].ArrayBindSize = new int[1000];
-                    for (int _i = 0; _i < 1000; _i++) { __cmd.Parameters["P_SOURCES"].ArrayBindSize[_i] = 100; }
+                    __cmd.Parameters["P_SOURCES"].ArrayBindSize = new int[50000];
+                    for (int _i = 0; _i < 50000; _i++) { __cmd.Parameters["P_SOURCES"].ArrayBindSize[_i] = 100; }
 
-                    __cmd.Parameters.Add(new OracleParameter("P_INTERFACES", OracleDbType.Varchar2, 1000, null, ParameterDirection.Output));
+                    __cmd.Parameters.Add(new OracleParameter("P_INTERFACES", OracleDbType.Varchar2, 50000, null, ParameterDirection.Output));
                     __cmd.Parameters["P_INTERFACES"].CollectionType = OracleCollectionType.PLSQLAssociativeArray;
-                    __cmd.Parameters["P_INTERFACES"].ArrayBindSize = new int[1000];
-                    for (int _i = 0; _i < 1000; _i++) { __cmd.Parameters["P_INTERFACES"].ArrayBindSize[_i] = 200; }
+                    __cmd.Parameters["P_INTERFACES"].ArrayBindSize = new int[50000];
+                    for (int _i = 0; _i < 50000; _i++) { __cmd.Parameters["P_INTERFACES"].ArrayBindSize[_i] = 200; }
 
-                    __cmd.Parameters.Add(new OracleParameter("P_USER_NAMES", OracleDbType.Varchar2, 1000, null, ParameterDirection.Output));
+                    __cmd.Parameters.Add(new OracleParameter("P_USER_NAMES", OracleDbType.Varchar2, 50000, null, ParameterDirection.Output));
                     __cmd.Parameters["P_USER_NAMES"].CollectionType = OracleCollectionType.PLSQLAssociativeArray;
-                    __cmd.Parameters["P_USER_NAMES"].ArrayBindSize = new int[1000];
-                    for (int _i = 0; _i < 1000; _i++) { __cmd.Parameters["P_USER_NAMES"].ArrayBindSize[_i] = 128; }
+                    __cmd.Parameters["P_USER_NAMES"].ArrayBindSize = new int[50000];
+                    for (int _i = 0; _i < 50000; _i++) { __cmd.Parameters["P_USER_NAMES"].ArrayBindSize[_i] = 128; }
                     if (pMaxAgeInDays != null) __cmd.Parameters.Add(new OracleParameter("P_MAX_AGE_IN_DAYS", OracleDbType.Decimal, pMaxAgeInDays, ParameterDirection.Input));
 
                     OracleCommandTrace __cmdTrace = IsTracing(__cmd) ? new OracleCommandTrace(__cmd) : null;
@@ -420,13 +420,13 @@ namespace Schema.Odpt.Package {
                     __cmd.CommandType = CommandType.StoredProcedure;
                     __cmd.BindByName = true;
 
-                    __cmd.Parameters.Add(new OracleParameter("P_SEVERITIES", OracleDbType.Byte, 1000, null, ParameterDirection.Output));
+                    __cmd.Parameters.Add(new OracleParameter("P_SEVERITIES", OracleDbType.Byte, 50000, null, ParameterDirection.Output));
                     __cmd.Parameters["P_SEVERITIES"].CollectionType = OracleCollectionType.PLSQLAssociativeArray;
 
-                    __cmd.Parameters.Add(new OracleParameter("P_SEVERITY_DESCRIPTIONS", OracleDbType.Varchar2, 1000, null, ParameterDirection.Output));
+                    __cmd.Parameters.Add(new OracleParameter("P_SEVERITY_DESCRIPTIONS", OracleDbType.Varchar2, 50000, null, ParameterDirection.Output));
                     __cmd.Parameters["P_SEVERITY_DESCRIPTIONS"].CollectionType = OracleCollectionType.PLSQLAssociativeArray;
-                    __cmd.Parameters["P_SEVERITY_DESCRIPTIONS"].ArrayBindSize = new int[1000];
-                    for (int _i = 0; _i < 1000; _i++) { __cmd.Parameters["P_SEVERITY_DESCRIPTIONS"].ArrayBindSize[_i] = 10; }
+                    __cmd.Parameters["P_SEVERITY_DESCRIPTIONS"].ArrayBindSize = new int[50000];
+                    for (int _i = 0; _i < 50000; _i++) { __cmd.Parameters["P_SEVERITY_DESCRIPTIONS"].ArrayBindSize[_i] = 10; }
 
                     OracleCommandTrace __cmdTrace = IsTracing(__cmd) ? new OracleCommandTrace(__cmd) : null;
                     int __rowsAffected = __cmd.ExecuteNonQuery();
@@ -940,18 +940,18 @@ namespace Schema.Odpt.Package {
                     __cmd.CommandType = CommandType.StoredProcedure;
                     __cmd.BindByName = true;
 
-                    __cmd.Parameters.Add(new OracleParameter("!RETURN", OracleDbType.BinaryDouble, 1000, null, ParameterDirection.ReturnValue));
+                    __cmd.Parameters.Add(new OracleParameter("!RETURN", OracleDbType.BinaryDouble, 50000, null, ParameterDirection.ReturnValue));
                     __cmd.Parameters["!RETURN"].CollectionType = OracleCollectionType.PLSQLAssociativeArray;
 
                     __cmd.Parameters.Add(new OracleParameter("P_IN", OracleDbType.BinaryDouble, (pIn == null ? 0 : pIn.Count), null, ParameterDirection.Input));
                     __cmd.Parameters["P_IN"].Value = (pIn == null || pIn.Count == 0 ? new Double?[]{} : pIn.ToArray());
                     __cmd.Parameters["P_IN"].CollectionType = OracleCollectionType.PLSQLAssociativeArray;
 
-                    __cmd.Parameters.Add(new OracleParameter("P_IN_OUT", OracleDbType.BinaryDouble, 1000, null, ParameterDirection.InputOutput));
+                    __cmd.Parameters.Add(new OracleParameter("P_IN_OUT", OracleDbType.BinaryDouble, 50000, null, ParameterDirection.InputOutput));
                     __cmd.Parameters["P_IN_OUT"].Value = (pInOut == null || pInOut.Count == 0 ? new Double?[]{} : pInOut.ToArray());
                     __cmd.Parameters["P_IN_OUT"].CollectionType = OracleCollectionType.PLSQLAssociativeArray;
 
-                    __cmd.Parameters.Add(new OracleParameter("P_OUT", OracleDbType.BinaryDouble, 1000, null, ParameterDirection.Output));
+                    __cmd.Parameters.Add(new OracleParameter("P_OUT", OracleDbType.BinaryDouble, 50000, null, ParameterDirection.Output));
                     __cmd.Parameters["P_OUT"].CollectionType = OracleCollectionType.PLSQLAssociativeArray;
 
                     OracleCommandTrace __cmdTrace = IsTracing(__cmd) ? new OracleCommandTrace(__cmd) : null;
@@ -993,18 +993,18 @@ namespace Schema.Odpt.Package {
                     __cmd.CommandType = CommandType.StoredProcedure;
                     __cmd.BindByName = true;
 
-                    __cmd.Parameters.Add(new OracleParameter("!RETURN", OracleDbType.BinaryFloat, 1000, null, ParameterDirection.ReturnValue));
+                    __cmd.Parameters.Add(new OracleParameter("!RETURN", OracleDbType.BinaryFloat, 50000, null, ParameterDirection.ReturnValue));
                     __cmd.Parameters["!RETURN"].CollectionType = OracleCollectionType.PLSQLAssociativeArray;
 
                     __cmd.Parameters.Add(new OracleParameter("P_IN", OracleDbType.BinaryFloat, (pIn == null ? 0 : pIn.Count), null, ParameterDirection.Input));
                     __cmd.Parameters["P_IN"].Value = (pIn == null || pIn.Count == 0 ? new Single?[]{} : pIn.ToArray());
                     __cmd.Parameters["P_IN"].CollectionType = OracleCollectionType.PLSQLAssociativeArray;
 
-                    __cmd.Parameters.Add(new OracleParameter("P_IN_OUT", OracleDbType.BinaryFloat, 1000, null, ParameterDirection.InputOutput));
+                    __cmd.Parameters.Add(new OracleParameter("P_IN_OUT", OracleDbType.BinaryFloat, 50000, null, ParameterDirection.InputOutput));
                     __cmd.Parameters["P_IN_OUT"].Value = (pInOut == null || pInOut.Count == 0 ? new Single?[]{} : pInOut.ToArray());
                     __cmd.Parameters["P_IN_OUT"].CollectionType = OracleCollectionType.PLSQLAssociativeArray;
 
-                    __cmd.Parameters.Add(new OracleParameter("P_OUT", OracleDbType.BinaryFloat, 1000, null, ParameterDirection.Output));
+                    __cmd.Parameters.Add(new OracleParameter("P_OUT", OracleDbType.BinaryFloat, 50000, null, ParameterDirection.Output));
                     __cmd.Parameters["P_OUT"].CollectionType = OracleCollectionType.PLSQLAssociativeArray;
 
                     OracleCommandTrace __cmdTrace = IsTracing(__cmd) ? new OracleCommandTrace(__cmd) : null;
@@ -1055,27 +1055,27 @@ namespace Schema.Odpt.Package {
                     __cmd.CommandType = CommandType.StoredProcedure;
                     __cmd.BindByName = true;
 
-                    __cmd.Parameters.Add(new OracleParameter("!RETURN", OracleDbType.Char, 1000, null, ParameterDirection.ReturnValue));
+                    __cmd.Parameters.Add(new OracleParameter("!RETURN", OracleDbType.Char, 50000, null, ParameterDirection.ReturnValue));
                     __cmd.Parameters["!RETURN"].CollectionType = OracleCollectionType.PLSQLAssociativeArray;
-                    __cmd.Parameters["!RETURN"].ArrayBindSize = new int[1000];
-                    for (int _i = 0; _i < 1000; _i++) { __cmd.Parameters["!RETURN"].ArrayBindSize[_i] = 2000; }
+                    __cmd.Parameters["!RETURN"].ArrayBindSize = new int[50000];
+                    for (int _i = 0; _i < 50000; _i++) { __cmd.Parameters["!RETURN"].ArrayBindSize[_i] = 2000; }
 
                     __cmd.Parameters.Add(new OracleParameter("P_IN", OracleDbType.Char, (pIn == null ? 0 : pIn.Count), null, ParameterDirection.Input));
                     __cmd.Parameters["P_IN"].Value = (pIn == null || pIn.Count == 0 ? new String[]{} : pIn.ToArray());
                     __cmd.Parameters["P_IN"].CollectionType = OracleCollectionType.PLSQLAssociativeArray;
-                    __cmd.Parameters["P_IN"].ArrayBindSize = new int[1000];
-                    for (int _i = 0; _i < 1000; _i++) { __cmd.Parameters["P_IN"].ArrayBindSize[_i] = 2000; }
+                    __cmd.Parameters["P_IN"].ArrayBindSize = new int[50000];
+                    for (int _i = 0; _i < 50000; _i++) { __cmd.Parameters["P_IN"].ArrayBindSize[_i] = 2000; }
 
-                    __cmd.Parameters.Add(new OracleParameter("P_IN_OUT", OracleDbType.Char, 1000, null, ParameterDirection.InputOutput));
+                    __cmd.Parameters.Add(new OracleParameter("P_IN_OUT", OracleDbType.Char, 50000, null, ParameterDirection.InputOutput));
                     __cmd.Parameters["P_IN_OUT"].Value = (pInOut == null || pInOut.Count == 0 ? new String[]{} : pInOut.ToArray());
                     __cmd.Parameters["P_IN_OUT"].CollectionType = OracleCollectionType.PLSQLAssociativeArray;
-                    __cmd.Parameters["P_IN_OUT"].ArrayBindSize = new int[1000];
-                    for (int _i = 0; _i < 1000; _i++) { __cmd.Parameters["P_IN_OUT"].ArrayBindSize[_i] = 2000; }
+                    __cmd.Parameters["P_IN_OUT"].ArrayBindSize = new int[50000];
+                    for (int _i = 0; _i < 50000; _i++) { __cmd.Parameters["P_IN_OUT"].ArrayBindSize[_i] = 2000; }
 
-                    __cmd.Parameters.Add(new OracleParameter("P_OUT", OracleDbType.Char, 1000, null, ParameterDirection.Output));
+                    __cmd.Parameters.Add(new OracleParameter("P_OUT", OracleDbType.Char, 50000, null, ParameterDirection.Output));
                     __cmd.Parameters["P_OUT"].CollectionType = OracleCollectionType.PLSQLAssociativeArray;
-                    __cmd.Parameters["P_OUT"].ArrayBindSize = new int[1000];
-                    for (int _i = 0; _i < 1000; _i++) { __cmd.Parameters["P_OUT"].ArrayBindSize[_i] = 2000; }
+                    __cmd.Parameters["P_OUT"].ArrayBindSize = new int[50000];
+                    for (int _i = 0; _i < 50000; _i++) { __cmd.Parameters["P_OUT"].ArrayBindSize[_i] = 2000; }
 
                     OracleCommandTrace __cmdTrace = IsTracing(__cmd) ? new OracleCommandTrace(__cmd) : null;
                     int __rowsAffected = __cmd.ExecuteNonQuery();
@@ -1119,18 +1119,18 @@ namespace Schema.Odpt.Package {
                     __cmd.CommandType = CommandType.StoredProcedure;
                     __cmd.BindByName = true;
 
-                    __cmd.Parameters.Add(new OracleParameter("!RETURN", OracleDbType.Date, 1000, null, ParameterDirection.ReturnValue));
+                    __cmd.Parameters.Add(new OracleParameter("!RETURN", OracleDbType.Date, 50000, null, ParameterDirection.ReturnValue));
                     __cmd.Parameters["!RETURN"].CollectionType = OracleCollectionType.PLSQLAssociativeArray;
 
                     __cmd.Parameters.Add(new OracleParameter("P_IN", OracleDbType.Date, (pIn == null ? 0 : pIn.Count), null, ParameterDirection.Input));
                     __cmd.Parameters["P_IN"].Value = (pIn == null || pIn.Count == 0 ? new DateTime?[]{} : pIn.ToArray());
                     __cmd.Parameters["P_IN"].CollectionType = OracleCollectionType.PLSQLAssociativeArray;
 
-                    __cmd.Parameters.Add(new OracleParameter("P_IN_OUT", OracleDbType.Date, 1000, null, ParameterDirection.InputOutput));
+                    __cmd.Parameters.Add(new OracleParameter("P_IN_OUT", OracleDbType.Date, 50000, null, ParameterDirection.InputOutput));
                     __cmd.Parameters["P_IN_OUT"].Value = (pInOut == null || pInOut.Count == 0 ? new DateTime?[]{} : pInOut.ToArray());
                     __cmd.Parameters["P_IN_OUT"].CollectionType = OracleCollectionType.PLSQLAssociativeArray;
 
-                    __cmd.Parameters.Add(new OracleParameter("P_OUT", OracleDbType.Date, 1000, null, ParameterDirection.Output));
+                    __cmd.Parameters.Add(new OracleParameter("P_OUT", OracleDbType.Date, 50000, null, ParameterDirection.Output));
                     __cmd.Parameters["P_OUT"].CollectionType = OracleCollectionType.PLSQLAssociativeArray;
 
                     OracleCommandTrace __cmdTrace = IsTracing(__cmd) ? new OracleCommandTrace(__cmd) : null;
@@ -1172,18 +1172,18 @@ namespace Schema.Odpt.Package {
                     __cmd.CommandType = CommandType.StoredProcedure;
                     __cmd.BindByName = true;
 
-                    __cmd.Parameters.Add(new OracleParameter("!RETURN", OracleDbType.Int64, 1000, null, ParameterDirection.ReturnValue));
+                    __cmd.Parameters.Add(new OracleParameter("!RETURN", OracleDbType.Int64, 50000, null, ParameterDirection.ReturnValue));
                     __cmd.Parameters["!RETURN"].CollectionType = OracleCollectionType.PLSQLAssociativeArray;
 
                     __cmd.Parameters.Add(new OracleParameter("P_IN", OracleDbType.Int64, (pIn == null ? 0 : pIn.Count), null, ParameterDirection.Input));
                     __cmd.Parameters["P_IN"].Value = (pIn == null || pIn.Count == 0 ? new Int64?[]{} : pIn.ToArray());
                     __cmd.Parameters["P_IN"].CollectionType = OracleCollectionType.PLSQLAssociativeArray;
 
-                    __cmd.Parameters.Add(new OracleParameter("P_IN_OUT", OracleDbType.Int64, 1000, null, ParameterDirection.InputOutput));
+                    __cmd.Parameters.Add(new OracleParameter("P_IN_OUT", OracleDbType.Int64, 50000, null, ParameterDirection.InputOutput));
                     __cmd.Parameters["P_IN_OUT"].Value = (pInOut == null || pInOut.Count == 0 ? new Int64?[]{} : pInOut.ToArray());
                     __cmd.Parameters["P_IN_OUT"].CollectionType = OracleCollectionType.PLSQLAssociativeArray;
 
-                    __cmd.Parameters.Add(new OracleParameter("P_OUT", OracleDbType.Int64, 1000, null, ParameterDirection.Output));
+                    __cmd.Parameters.Add(new OracleParameter("P_OUT", OracleDbType.Int64, 50000, null, ParameterDirection.Output));
                     __cmd.Parameters["P_OUT"].CollectionType = OracleCollectionType.PLSQLAssociativeArray;
 
                     OracleCommandTrace __cmdTrace = IsTracing(__cmd) ? new OracleCommandTrace(__cmd) : null;
@@ -1225,18 +1225,18 @@ namespace Schema.Odpt.Package {
                     __cmd.CommandType = CommandType.StoredProcedure;
                     __cmd.BindByName = true;
 
-                    __cmd.Parameters.Add(new OracleParameter("!RETURN", OracleDbType.Decimal, 1000, null, ParameterDirection.ReturnValue));
+                    __cmd.Parameters.Add(new OracleParameter("!RETURN", OracleDbType.Decimal, 50000, null, ParameterDirection.ReturnValue));
                     __cmd.Parameters["!RETURN"].CollectionType = OracleCollectionType.PLSQLAssociativeArray;
 
                     __cmd.Parameters.Add(new OracleParameter("P_IN", OracleDbType.Decimal, (pIn == null ? 0 : pIn.Count), null, ParameterDirection.Input));
                     __cmd.Parameters["P_IN"].Value = (pIn == null || pIn.Count == 0 ? new Decimal?[]{} : pIn.ToArray());
                     __cmd.Parameters["P_IN"].CollectionType = OracleCollectionType.PLSQLAssociativeArray;
 
-                    __cmd.Parameters.Add(new OracleParameter("P_IN_OUT", OracleDbType.Decimal, 1000, null, ParameterDirection.InputOutput));
+                    __cmd.Parameters.Add(new OracleParameter("P_IN_OUT", OracleDbType.Decimal, 50000, null, ParameterDirection.InputOutput));
                     __cmd.Parameters["P_IN_OUT"].Value = (pInOut == null || pInOut.Count == 0 ? new Decimal?[]{} : pInOut.ToArray());
                     __cmd.Parameters["P_IN_OUT"].CollectionType = OracleCollectionType.PLSQLAssociativeArray;
 
-                    __cmd.Parameters.Add(new OracleParameter("P_OUT", OracleDbType.Decimal, 1000, null, ParameterDirection.Output));
+                    __cmd.Parameters.Add(new OracleParameter("P_OUT", OracleDbType.Decimal, 50000, null, ParameterDirection.Output));
                     __cmd.Parameters["P_OUT"].CollectionType = OracleCollectionType.PLSQLAssociativeArray;
 
                     OracleCommandTrace __cmdTrace = IsTracing(__cmd) ? new OracleCommandTrace(__cmd) : null;
@@ -1278,18 +1278,18 @@ namespace Schema.Odpt.Package {
                     __cmd.CommandType = CommandType.StoredProcedure;
                     __cmd.BindByName = true;
 
-                    __cmd.Parameters.Add(new OracleParameter("!RETURN", OracleDbType.Decimal, 1000, null, ParameterDirection.ReturnValue));
+                    __cmd.Parameters.Add(new OracleParameter("!RETURN", OracleDbType.Decimal, 50000, null, ParameterDirection.ReturnValue));
                     __cmd.Parameters["!RETURN"].CollectionType = OracleCollectionType.PLSQLAssociativeArray;
 
                     __cmd.Parameters.Add(new OracleParameter("P_IN", OracleDbType.Decimal, (pIn == null ? 0 : pIn.Count), null, ParameterDirection.Input));
                     __cmd.Parameters["P_IN"].Value = (pIn == null || pIn.Count == 0 ? new Decimal?[]{} : pIn.ToArray());
                     __cmd.Parameters["P_IN"].CollectionType = OracleCollectionType.PLSQLAssociativeArray;
 
-                    __cmd.Parameters.Add(new OracleParameter("P_IN_OUT", OracleDbType.Decimal, 1000, null, ParameterDirection.InputOutput));
+                    __cmd.Parameters.Add(new OracleParameter("P_IN_OUT", OracleDbType.Decimal, 50000, null, ParameterDirection.InputOutput));
                     __cmd.Parameters["P_IN_OUT"].Value = (pInOut == null || pInOut.Count == 0 ? new Decimal?[]{} : pInOut.ToArray());
                     __cmd.Parameters["P_IN_OUT"].CollectionType = OracleCollectionType.PLSQLAssociativeArray;
 
-                    __cmd.Parameters.Add(new OracleParameter("P_OUT", OracleDbType.Decimal, 1000, null, ParameterDirection.Output));
+                    __cmd.Parameters.Add(new OracleParameter("P_OUT", OracleDbType.Decimal, 50000, null, ParameterDirection.Output));
                     __cmd.Parameters["P_OUT"].CollectionType = OracleCollectionType.PLSQLAssociativeArray;
 
                     OracleCommandTrace __cmdTrace = IsTracing(__cmd) ? new OracleCommandTrace(__cmd) : null;
@@ -1331,18 +1331,18 @@ namespace Schema.Odpt.Package {
                     __cmd.CommandType = CommandType.StoredProcedure;
                     __cmd.BindByName = true;
 
-                    __cmd.Parameters.Add(new OracleParameter("!RETURN", OracleDbType.Int64, 1000, null, ParameterDirection.ReturnValue));
+                    __cmd.Parameters.Add(new OracleParameter("!RETURN", OracleDbType.Int64, 50000, null, ParameterDirection.ReturnValue));
                     __cmd.Parameters["!RETURN"].CollectionType = OracleCollectionType.PLSQLAssociativeArray;
 
                     __cmd.Parameters.Add(new OracleParameter("P_IN", OracleDbType.Int64, (pIn == null ? 0 : pIn.Count), null, ParameterDirection.Input));
                     __cmd.Parameters["P_IN"].Value = (pIn == null || pIn.Count == 0 ? new Int64?[]{} : pIn.ToArray());
                     __cmd.Parameters["P_IN"].CollectionType = OracleCollectionType.PLSQLAssociativeArray;
 
-                    __cmd.Parameters.Add(new OracleParameter("P_IN_OUT", OracleDbType.Int64, 1000, null, ParameterDirection.InputOutput));
+                    __cmd.Parameters.Add(new OracleParameter("P_IN_OUT", OracleDbType.Int64, 50000, null, ParameterDirection.InputOutput));
                     __cmd.Parameters["P_IN_OUT"].Value = (pInOut == null || pInOut.Count == 0 ? new Int64?[]{} : pInOut.ToArray());
                     __cmd.Parameters["P_IN_OUT"].CollectionType = OracleCollectionType.PLSQLAssociativeArray;
 
-                    __cmd.Parameters.Add(new OracleParameter("P_OUT", OracleDbType.Int64, 1000, null, ParameterDirection.Output));
+                    __cmd.Parameters.Add(new OracleParameter("P_OUT", OracleDbType.Int64, 50000, null, ParameterDirection.Output));
                     __cmd.Parameters["P_OUT"].CollectionType = OracleCollectionType.PLSQLAssociativeArray;
 
                     OracleCommandTrace __cmdTrace = IsTracing(__cmd) ? new OracleCommandTrace(__cmd) : null;
@@ -1384,18 +1384,18 @@ namespace Schema.Odpt.Package {
                     __cmd.CommandType = CommandType.StoredProcedure;
                     __cmd.BindByName = true;
 
-                    __cmd.Parameters.Add(new OracleParameter("!RETURN", OracleDbType.Int64, 1000, null, ParameterDirection.ReturnValue));
+                    __cmd.Parameters.Add(new OracleParameter("!RETURN", OracleDbType.Int64, 50000, null, ParameterDirection.ReturnValue));
                     __cmd.Parameters["!RETURN"].CollectionType = OracleCollectionType.PLSQLAssociativeArray;
 
                     __cmd.Parameters.Add(new OracleParameter("P_IN", OracleDbType.Int64, (pIn == null ? 0 : pIn.Count), null, ParameterDirection.Input));
                     __cmd.Parameters["P_IN"].Value = (pIn == null || pIn.Count == 0 ? new Int64?[]{} : pIn.ToArray());
                     __cmd.Parameters["P_IN"].CollectionType = OracleCollectionType.PLSQLAssociativeArray;
 
-                    __cmd.Parameters.Add(new OracleParameter("P_IN_OUT", OracleDbType.Int64, 1000, null, ParameterDirection.InputOutput));
+                    __cmd.Parameters.Add(new OracleParameter("P_IN_OUT", OracleDbType.Int64, 50000, null, ParameterDirection.InputOutput));
                     __cmd.Parameters["P_IN_OUT"].Value = (pInOut == null || pInOut.Count == 0 ? new Int64?[]{} : pInOut.ToArray());
                     __cmd.Parameters["P_IN_OUT"].CollectionType = OracleCollectionType.PLSQLAssociativeArray;
 
-                    __cmd.Parameters.Add(new OracleParameter("P_OUT", OracleDbType.Int64, 1000, null, ParameterDirection.Output));
+                    __cmd.Parameters.Add(new OracleParameter("P_OUT", OracleDbType.Int64, 50000, null, ParameterDirection.Output));
                     __cmd.Parameters["P_OUT"].CollectionType = OracleCollectionType.PLSQLAssociativeArray;
 
                     OracleCommandTrace __cmdTrace = IsTracing(__cmd) ? new OracleCommandTrace(__cmd) : null;
@@ -1443,27 +1443,27 @@ namespace Schema.Odpt.Package {
                     __cmd.CommandType = CommandType.StoredProcedure;
                     __cmd.BindByName = true;
 
-                    __cmd.Parameters.Add(new OracleParameter("!RETURN", OracleDbType.NChar, 1000, null, ParameterDirection.ReturnValue));
+                    __cmd.Parameters.Add(new OracleParameter("!RETURN", OracleDbType.NChar, 50000, null, ParameterDirection.ReturnValue));
                     __cmd.Parameters["!RETURN"].CollectionType = OracleCollectionType.PLSQLAssociativeArray;
-                    __cmd.Parameters["!RETURN"].ArrayBindSize = new int[1000];
-                    for (int _i = 0; _i < 1000; _i++) { __cmd.Parameters["!RETURN"].ArrayBindSize[_i] = 1000; }
+                    __cmd.Parameters["!RETURN"].ArrayBindSize = new int[50000];
+                    for (int _i = 0; _i < 50000; _i++) { __cmd.Parameters["!RETURN"].ArrayBindSize[_i] = 1000; }
 
                     __cmd.Parameters.Add(new OracleParameter("P_IN", OracleDbType.NChar, (pIn == null ? 0 : pIn.Count), null, ParameterDirection.Input));
                     __cmd.Parameters["P_IN"].Value = (pIn == null || pIn.Count == 0 ? new String[]{} : pIn.ToArray());
                     __cmd.Parameters["P_IN"].CollectionType = OracleCollectionType.PLSQLAssociativeArray;
-                    __cmd.Parameters["P_IN"].ArrayBindSize = new int[1000];
-                    for (int _i = 0; _i < 1000; _i++) { __cmd.Parameters["P_IN"].ArrayBindSize[_i] = 1000; }
+                    __cmd.Parameters["P_IN"].ArrayBindSize = new int[50000];
+                    for (int _i = 0; _i < 50000; _i++) { __cmd.Parameters["P_IN"].ArrayBindSize[_i] = 1000; }
 
-                    __cmd.Parameters.Add(new OracleParameter("P_IN_OUT", OracleDbType.NChar, 1000, null, ParameterDirection.InputOutput));
+                    __cmd.Parameters.Add(new OracleParameter("P_IN_OUT", OracleDbType.NChar, 50000, null, ParameterDirection.InputOutput));
                     __cmd.Parameters["P_IN_OUT"].Value = (pInOut == null || pInOut.Count == 0 ? new String[]{} : pInOut.ToArray());
                     __cmd.Parameters["P_IN_OUT"].CollectionType = OracleCollectionType.PLSQLAssociativeArray;
-                    __cmd.Parameters["P_IN_OUT"].ArrayBindSize = new int[1000];
-                    for (int _i = 0; _i < 1000; _i++) { __cmd.Parameters["P_IN_OUT"].ArrayBindSize[_i] = 1000; }
+                    __cmd.Parameters["P_IN_OUT"].ArrayBindSize = new int[50000];
+                    for (int _i = 0; _i < 50000; _i++) { __cmd.Parameters["P_IN_OUT"].ArrayBindSize[_i] = 1000; }
 
-                    __cmd.Parameters.Add(new OracleParameter("P_OUT", OracleDbType.NChar, 1000, null, ParameterDirection.Output));
+                    __cmd.Parameters.Add(new OracleParameter("P_OUT", OracleDbType.NChar, 50000, null, ParameterDirection.Output));
                     __cmd.Parameters["P_OUT"].CollectionType = OracleCollectionType.PLSQLAssociativeArray;
-                    __cmd.Parameters["P_OUT"].ArrayBindSize = new int[1000];
-                    for (int _i = 0; _i < 1000; _i++) { __cmd.Parameters["P_OUT"].ArrayBindSize[_i] = 1000; }
+                    __cmd.Parameters["P_OUT"].ArrayBindSize = new int[50000];
+                    for (int _i = 0; _i < 50000; _i++) { __cmd.Parameters["P_OUT"].ArrayBindSize[_i] = 1000; }
 
                     OracleCommandTrace __cmdTrace = IsTracing(__cmd) ? new OracleCommandTrace(__cmd) : null;
                     int __rowsAffected = __cmd.ExecuteNonQuery();
@@ -1507,18 +1507,18 @@ namespace Schema.Odpt.Package {
                     __cmd.CommandType = CommandType.StoredProcedure;
                     __cmd.BindByName = true;
 
-                    __cmd.Parameters.Add(new OracleParameter("!RETURN", OracleDbType.Decimal, 1000, null, ParameterDirection.ReturnValue));
+                    __cmd.Parameters.Add(new OracleParameter("!RETURN", OracleDbType.Decimal, 50000, null, ParameterDirection.ReturnValue));
                     __cmd.Parameters["!RETURN"].CollectionType = OracleCollectionType.PLSQLAssociativeArray;
 
                     __cmd.Parameters.Add(new OracleParameter("P_IN", OracleDbType.Decimal, (pIn == null ? 0 : pIn.Count), null, ParameterDirection.Input));
                     __cmd.Parameters["P_IN"].Value = (pIn == null || pIn.Count == 0 ? new Decimal?[]{} : pIn.ToArray());
                     __cmd.Parameters["P_IN"].CollectionType = OracleCollectionType.PLSQLAssociativeArray;
 
-                    __cmd.Parameters.Add(new OracleParameter("P_IN_OUT", OracleDbType.Decimal, 1000, null, ParameterDirection.InputOutput));
+                    __cmd.Parameters.Add(new OracleParameter("P_IN_OUT", OracleDbType.Decimal, 50000, null, ParameterDirection.InputOutput));
                     __cmd.Parameters["P_IN_OUT"].Value = (pInOut == null || pInOut.Count == 0 ? new Decimal?[]{} : pInOut.ToArray());
                     __cmd.Parameters["P_IN_OUT"].CollectionType = OracleCollectionType.PLSQLAssociativeArray;
 
-                    __cmd.Parameters.Add(new OracleParameter("P_OUT", OracleDbType.Decimal, 1000, null, ParameterDirection.Output));
+                    __cmd.Parameters.Add(new OracleParameter("P_OUT", OracleDbType.Decimal, 50000, null, ParameterDirection.Output));
                     __cmd.Parameters["P_OUT"].CollectionType = OracleCollectionType.PLSQLAssociativeArray;
 
                     OracleCommandTrace __cmdTrace = IsTracing(__cmd) ? new OracleCommandTrace(__cmd) : null;
@@ -1560,18 +1560,18 @@ namespace Schema.Odpt.Package {
                     __cmd.CommandType = CommandType.StoredProcedure;
                     __cmd.BindByName = true;
 
-                    __cmd.Parameters.Add(new OracleParameter("!RETURN", OracleDbType.Int64, 1000, null, ParameterDirection.ReturnValue));
+                    __cmd.Parameters.Add(new OracleParameter("!RETURN", OracleDbType.Int64, 50000, null, ParameterDirection.ReturnValue));
                     __cmd.Parameters["!RETURN"].CollectionType = OracleCollectionType.PLSQLAssociativeArray;
 
                     __cmd.Parameters.Add(new OracleParameter("P_IN", OracleDbType.Int64, (pIn == null ? 0 : pIn.Count), null, ParameterDirection.Input));
                     __cmd.Parameters["P_IN"].Value = (pIn == null || pIn.Count == 0 ? new Int64?[]{} : pIn.ToArray());
                     __cmd.Parameters["P_IN"].CollectionType = OracleCollectionType.PLSQLAssociativeArray;
 
-                    __cmd.Parameters.Add(new OracleParameter("P_IN_OUT", OracleDbType.Int64, 1000, null, ParameterDirection.InputOutput));
+                    __cmd.Parameters.Add(new OracleParameter("P_IN_OUT", OracleDbType.Int64, 50000, null, ParameterDirection.InputOutput));
                     __cmd.Parameters["P_IN_OUT"].Value = (pInOut == null || pInOut.Count == 0 ? new Int64?[]{} : pInOut.ToArray());
                     __cmd.Parameters["P_IN_OUT"].CollectionType = OracleCollectionType.PLSQLAssociativeArray;
 
-                    __cmd.Parameters.Add(new OracleParameter("P_OUT", OracleDbType.Int64, 1000, null, ParameterDirection.Output));
+                    __cmd.Parameters.Add(new OracleParameter("P_OUT", OracleDbType.Int64, 50000, null, ParameterDirection.Output));
                     __cmd.Parameters["P_OUT"].CollectionType = OracleCollectionType.PLSQLAssociativeArray;
 
                     OracleCommandTrace __cmdTrace = IsTracing(__cmd) ? new OracleCommandTrace(__cmd) : null;
@@ -1613,27 +1613,27 @@ namespace Schema.Odpt.Package {
                     __cmd.CommandType = CommandType.StoredProcedure;
                     __cmd.BindByName = true;
 
-                    __cmd.Parameters.Add(new OracleParameter("!RETURN", OracleDbType.NVarchar2, 1000, null, ParameterDirection.ReturnValue));
+                    __cmd.Parameters.Add(new OracleParameter("!RETURN", OracleDbType.NVarchar2, 50000, null, ParameterDirection.ReturnValue));
                     __cmd.Parameters["!RETURN"].CollectionType = OracleCollectionType.PLSQLAssociativeArray;
-                    __cmd.Parameters["!RETURN"].ArrayBindSize = new int[1000];
-                    for (int _i = 0; _i < 1000; _i++) { __cmd.Parameters["!RETURN"].ArrayBindSize[_i] = 2000; }
+                    __cmd.Parameters["!RETURN"].ArrayBindSize = new int[50000];
+                    for (int _i = 0; _i < 50000; _i++) { __cmd.Parameters["!RETURN"].ArrayBindSize[_i] = 2000; }
 
                     __cmd.Parameters.Add(new OracleParameter("P_IN", OracleDbType.NVarchar2, (pIn == null ? 0 : pIn.Count), null, ParameterDirection.Input));
                     __cmd.Parameters["P_IN"].Value = (pIn == null || pIn.Count == 0 ? new String[]{} : pIn.ToArray());
                     __cmd.Parameters["P_IN"].CollectionType = OracleCollectionType.PLSQLAssociativeArray;
-                    __cmd.Parameters["P_IN"].ArrayBindSize = new int[1000];
-                    for (int _i = 0; _i < 1000; _i++) { __cmd.Parameters["P_IN"].ArrayBindSize[_i] = 2000; }
+                    __cmd.Parameters["P_IN"].ArrayBindSize = new int[50000];
+                    for (int _i = 0; _i < 50000; _i++) { __cmd.Parameters["P_IN"].ArrayBindSize[_i] = 2000; }
 
-                    __cmd.Parameters.Add(new OracleParameter("P_IN_OUT", OracleDbType.NVarchar2, 1000, null, ParameterDirection.InputOutput));
+                    __cmd.Parameters.Add(new OracleParameter("P_IN_OUT", OracleDbType.NVarchar2, 50000, null, ParameterDirection.InputOutput));
                     __cmd.Parameters["P_IN_OUT"].Value = (pInOut == null || pInOut.Count == 0 ? new String[]{} : pInOut.ToArray());
                     __cmd.Parameters["P_IN_OUT"].CollectionType = OracleCollectionType.PLSQLAssociativeArray;
-                    __cmd.Parameters["P_IN_OUT"].ArrayBindSize = new int[1000];
-                    for (int _i = 0; _i < 1000; _i++) { __cmd.Parameters["P_IN_OUT"].ArrayBindSize[_i] = 2000; }
+                    __cmd.Parameters["P_IN_OUT"].ArrayBindSize = new int[50000];
+                    for (int _i = 0; _i < 50000; _i++) { __cmd.Parameters["P_IN_OUT"].ArrayBindSize[_i] = 2000; }
 
-                    __cmd.Parameters.Add(new OracleParameter("P_OUT", OracleDbType.NVarchar2, 1000, null, ParameterDirection.Output));
+                    __cmd.Parameters.Add(new OracleParameter("P_OUT", OracleDbType.NVarchar2, 50000, null, ParameterDirection.Output));
                     __cmd.Parameters["P_OUT"].CollectionType = OracleCollectionType.PLSQLAssociativeArray;
-                    __cmd.Parameters["P_OUT"].ArrayBindSize = new int[1000];
-                    for (int _i = 0; _i < 1000; _i++) { __cmd.Parameters["P_OUT"].ArrayBindSize[_i] = 2000; }
+                    __cmd.Parameters["P_OUT"].ArrayBindSize = new int[50000];
+                    for (int _i = 0; _i < 50000; _i++) { __cmd.Parameters["P_OUT"].ArrayBindSize[_i] = 2000; }
 
                     OracleCommandTrace __cmdTrace = IsTracing(__cmd) ? new OracleCommandTrace(__cmd) : null;
                     int __rowsAffected = __cmd.ExecuteNonQuery();
@@ -1683,18 +1683,18 @@ namespace Schema.Odpt.Package {
                     __cmd.CommandType = CommandType.StoredProcedure;
                     __cmd.BindByName = true;
 
-                    __cmd.Parameters.Add(new OracleParameter("!RETURN", OracleDbType.Decimal, 1000, null, ParameterDirection.ReturnValue));
+                    __cmd.Parameters.Add(new OracleParameter("!RETURN", OracleDbType.Decimal, 50000, null, ParameterDirection.ReturnValue));
                     __cmd.Parameters["!RETURN"].CollectionType = OracleCollectionType.PLSQLAssociativeArray;
 
                     __cmd.Parameters.Add(new OracleParameter("P_IN", OracleDbType.Decimal, (pIn == null ? 0 : pIn.Count), null, ParameterDirection.Input));
                     __cmd.Parameters["P_IN"].Value = (pIn == null || pIn.Count == 0 ? new Decimal?[]{} : pIn.ToArray());
                     __cmd.Parameters["P_IN"].CollectionType = OracleCollectionType.PLSQLAssociativeArray;
 
-                    __cmd.Parameters.Add(new OracleParameter("P_IN_OUT", OracleDbType.Decimal, 1000, null, ParameterDirection.InputOutput));
+                    __cmd.Parameters.Add(new OracleParameter("P_IN_OUT", OracleDbType.Decimal, 50000, null, ParameterDirection.InputOutput));
                     __cmd.Parameters["P_IN_OUT"].Value = (pInOut == null || pInOut.Count == 0 ? new Decimal?[]{} : pInOut.ToArray());
                     __cmd.Parameters["P_IN_OUT"].CollectionType = OracleCollectionType.PLSQLAssociativeArray;
 
-                    __cmd.Parameters.Add(new OracleParameter("P_OUT", OracleDbType.Decimal, 1000, null, ParameterDirection.Output));
+                    __cmd.Parameters.Add(new OracleParameter("P_OUT", OracleDbType.Decimal, 50000, null, ParameterDirection.Output));
                     __cmd.Parameters["P_OUT"].CollectionType = OracleCollectionType.PLSQLAssociativeArray;
 
                     OracleCommandTrace __cmdTrace = IsTracing(__cmd) ? new OracleCommandTrace(__cmd) : null;
@@ -1742,18 +1742,18 @@ namespace Schema.Odpt.Package {
                     __cmd.CommandType = CommandType.StoredProcedure;
                     __cmd.BindByName = true;
 
-                    __cmd.Parameters.Add(new OracleParameter("!RETURN", OracleDbType.Int64, 1000, null, ParameterDirection.ReturnValue));
+                    __cmd.Parameters.Add(new OracleParameter("!RETURN", OracleDbType.Int64, 50000, null, ParameterDirection.ReturnValue));
                     __cmd.Parameters["!RETURN"].CollectionType = OracleCollectionType.PLSQLAssociativeArray;
 
                     __cmd.Parameters.Add(new OracleParameter("P_IN", OracleDbType.Int64, (pIn == null ? 0 : pIn.Count), null, ParameterDirection.Input));
                     __cmd.Parameters["P_IN"].Value = (pIn == null || pIn.Count == 0 ? new Int64?[]{} : pIn.ToArray());
                     __cmd.Parameters["P_IN"].CollectionType = OracleCollectionType.PLSQLAssociativeArray;
 
-                    __cmd.Parameters.Add(new OracleParameter("P_IN_OUT", OracleDbType.Int64, 1000, null, ParameterDirection.InputOutput));
+                    __cmd.Parameters.Add(new OracleParameter("P_IN_OUT", OracleDbType.Int64, 50000, null, ParameterDirection.InputOutput));
                     __cmd.Parameters["P_IN_OUT"].Value = (pInOut == null || pInOut.Count == 0 ? new Int64?[]{} : pInOut.ToArray());
                     __cmd.Parameters["P_IN_OUT"].CollectionType = OracleCollectionType.PLSQLAssociativeArray;
 
-                    __cmd.Parameters.Add(new OracleParameter("P_OUT", OracleDbType.Int64, 1000, null, ParameterDirection.Output));
+                    __cmd.Parameters.Add(new OracleParameter("P_OUT", OracleDbType.Int64, 50000, null, ParameterDirection.Output));
                     __cmd.Parameters["P_OUT"].CollectionType = OracleCollectionType.PLSQLAssociativeArray;
 
                     OracleCommandTrace __cmdTrace = IsTracing(__cmd) ? new OracleCommandTrace(__cmd) : null;
@@ -1795,27 +1795,27 @@ namespace Schema.Odpt.Package {
                     __cmd.CommandType = CommandType.StoredProcedure;
                     __cmd.BindByName = true;
 
-                    __cmd.Parameters.Add(new OracleParameter("!RETURN", OracleDbType.Varchar2, 1000, null, ParameterDirection.ReturnValue));
+                    __cmd.Parameters.Add(new OracleParameter("!RETURN", OracleDbType.Varchar2, 50000, null, ParameterDirection.ReturnValue));
                     __cmd.Parameters["!RETURN"].CollectionType = OracleCollectionType.PLSQLAssociativeArray;
-                    __cmd.Parameters["!RETURN"].ArrayBindSize = new int[1000];
-                    for (int _i = 0; _i < 1000; _i++) { __cmd.Parameters["!RETURN"].ArrayBindSize[_i] = 32767; }
+                    __cmd.Parameters["!RETURN"].ArrayBindSize = new int[50000];
+                    for (int _i = 0; _i < 50000; _i++) { __cmd.Parameters["!RETURN"].ArrayBindSize[_i] = 32767; }
 
                     __cmd.Parameters.Add(new OracleParameter("P_IN", OracleDbType.Varchar2, (pIn == null ? 0 : pIn.Count), null, ParameterDirection.Input));
                     __cmd.Parameters["P_IN"].Value = (pIn == null || pIn.Count == 0 ? new String[]{} : pIn.ToArray());
                     __cmd.Parameters["P_IN"].CollectionType = OracleCollectionType.PLSQLAssociativeArray;
-                    __cmd.Parameters["P_IN"].ArrayBindSize = new int[1000];
-                    for (int _i = 0; _i < 1000; _i++) { __cmd.Parameters["P_IN"].ArrayBindSize[_i] = 32767; }
+                    __cmd.Parameters["P_IN"].ArrayBindSize = new int[50000];
+                    for (int _i = 0; _i < 50000; _i++) { __cmd.Parameters["P_IN"].ArrayBindSize[_i] = 32767; }
 
-                    __cmd.Parameters.Add(new OracleParameter("P_IN_OUT", OracleDbType.Varchar2, 1000, null, ParameterDirection.InputOutput));
+                    __cmd.Parameters.Add(new OracleParameter("P_IN_OUT", OracleDbType.Varchar2, 50000, null, ParameterDirection.InputOutput));
                     __cmd.Parameters["P_IN_OUT"].Value = (pInOut == null || pInOut.Count == 0 ? new String[]{} : pInOut.ToArray());
                     __cmd.Parameters["P_IN_OUT"].CollectionType = OracleCollectionType.PLSQLAssociativeArray;
-                    __cmd.Parameters["P_IN_OUT"].ArrayBindSize = new int[1000];
-                    for (int _i = 0; _i < 1000; _i++) { __cmd.Parameters["P_IN_OUT"].ArrayBindSize[_i] = 32767; }
+                    __cmd.Parameters["P_IN_OUT"].ArrayBindSize = new int[50000];
+                    for (int _i = 0; _i < 50000; _i++) { __cmd.Parameters["P_IN_OUT"].ArrayBindSize[_i] = 32767; }
 
-                    __cmd.Parameters.Add(new OracleParameter("P_OUT", OracleDbType.Varchar2, 1000, null, ParameterDirection.Output));
+                    __cmd.Parameters.Add(new OracleParameter("P_OUT", OracleDbType.Varchar2, 50000, null, ParameterDirection.Output));
                     __cmd.Parameters["P_OUT"].CollectionType = OracleCollectionType.PLSQLAssociativeArray;
-                    __cmd.Parameters["P_OUT"].ArrayBindSize = new int[1000];
-                    for (int _i = 0; _i < 1000; _i++) { __cmd.Parameters["P_OUT"].ArrayBindSize[_i] = 32767; }
+                    __cmd.Parameters["P_OUT"].ArrayBindSize = new int[50000];
+                    for (int _i = 0; _i < 50000; _i++) { __cmd.Parameters["P_OUT"].ArrayBindSize[_i] = 32767; }
 
                     OracleCommandTrace __cmdTrace = IsTracing(__cmd) ? new OracleCommandTrace(__cmd) : null;
                     int __rowsAffected = __cmd.ExecuteNonQuery();
@@ -1865,27 +1865,27 @@ namespace Schema.Odpt.Package {
                     __cmd.CommandType = CommandType.StoredProcedure;
                     __cmd.BindByName = true;
 
-                    __cmd.Parameters.Add(new OracleParameter("!RETURN", OracleDbType.Varchar2, 1000, null, ParameterDirection.ReturnValue));
+                    __cmd.Parameters.Add(new OracleParameter("!RETURN", OracleDbType.Varchar2, 50000, null, ParameterDirection.ReturnValue));
                     __cmd.Parameters["!RETURN"].CollectionType = OracleCollectionType.PLSQLAssociativeArray;
-                    __cmd.Parameters["!RETURN"].ArrayBindSize = new int[1000];
-                    for (int _i = 0; _i < 1000; _i++) { __cmd.Parameters["!RETURN"].ArrayBindSize[_i] = 4000; }
+                    __cmd.Parameters["!RETURN"].ArrayBindSize = new int[50000];
+                    for (int _i = 0; _i < 50000; _i++) { __cmd.Parameters["!RETURN"].ArrayBindSize[_i] = 4000; }
 
                     __cmd.Parameters.Add(new OracleParameter("P_IN", OracleDbType.Varchar2, (pIn == null ? 0 : pIn.Count), null, ParameterDirection.Input));
                     __cmd.Parameters["P_IN"].Value = (pIn == null || pIn.Count == 0 ? new String[]{} : pIn.ToArray());
                     __cmd.Parameters["P_IN"].CollectionType = OracleCollectionType.PLSQLAssociativeArray;
-                    __cmd.Parameters["P_IN"].ArrayBindSize = new int[1000];
-                    for (int _i = 0; _i < 1000; _i++) { __cmd.Parameters["P_IN"].ArrayBindSize[_i] = 4000; }
+                    __cmd.Parameters["P_IN"].ArrayBindSize = new int[50000];
+                    for (int _i = 0; _i < 50000; _i++) { __cmd.Parameters["P_IN"].ArrayBindSize[_i] = 4000; }
 
-                    __cmd.Parameters.Add(new OracleParameter("P_IN_OUT", OracleDbType.Varchar2, 1000, null, ParameterDirection.InputOutput));
+                    __cmd.Parameters.Add(new OracleParameter("P_IN_OUT", OracleDbType.Varchar2, 50000, null, ParameterDirection.InputOutput));
                     __cmd.Parameters["P_IN_OUT"].Value = (pInOut == null || pInOut.Count == 0 ? new String[]{} : pInOut.ToArray());
                     __cmd.Parameters["P_IN_OUT"].CollectionType = OracleCollectionType.PLSQLAssociativeArray;
-                    __cmd.Parameters["P_IN_OUT"].ArrayBindSize = new int[1000];
-                    for (int _i = 0; _i < 1000; _i++) { __cmd.Parameters["P_IN_OUT"].ArrayBindSize[_i] = 4000; }
+                    __cmd.Parameters["P_IN_OUT"].ArrayBindSize = new int[50000];
+                    for (int _i = 0; _i < 50000; _i++) { __cmd.Parameters["P_IN_OUT"].ArrayBindSize[_i] = 4000; }
 
-                    __cmd.Parameters.Add(new OracleParameter("P_OUT", OracleDbType.Varchar2, 1000, null, ParameterDirection.Output));
+                    __cmd.Parameters.Add(new OracleParameter("P_OUT", OracleDbType.Varchar2, 50000, null, ParameterDirection.Output));
                     __cmd.Parameters["P_OUT"].CollectionType = OracleCollectionType.PLSQLAssociativeArray;
-                    __cmd.Parameters["P_OUT"].ArrayBindSize = new int[1000];
-                    for (int _i = 0; _i < 1000; _i++) { __cmd.Parameters["P_OUT"].ArrayBindSize[_i] = 4000; }
+                    __cmd.Parameters["P_OUT"].ArrayBindSize = new int[50000];
+                    for (int _i = 0; _i < 50000; _i++) { __cmd.Parameters["P_OUT"].ArrayBindSize[_i] = 4000; }
 
                     OracleCommandTrace __cmdTrace = IsTracing(__cmd) ? new OracleCommandTrace(__cmd) : null;
                     int __rowsAffected = __cmd.ExecuteNonQuery();
@@ -2487,9 +2487,6 @@ namespace Schema.Odpt.Package {
             return __ret;
         } // FuncNclob
 
-        // **PROC IGNORED** - Code generation for NESTED TABLE types has not been implemented
-        // public IList<Decimal?> FuncNnNumber(IList<Decimal?> pIn, ref IList<Decimal?> pInOut, out IList<Decimal?> pOut, OracleConnection optionalPreexistingOpenConnection = null)
-
         public Decimal? FuncNoParam(OracleConnection optionalPreexistingOpenConnection = null) {
             Decimal? __ret = null; 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
@@ -2514,6 +2511,9 @@ namespace Schema.Odpt.Package {
             }
             return __ret;
         } // FuncNoParam
+
+        // **PROC IGNORED** - Code generation for NESTED TABLE types has not been implemented
+        // public IList<Decimal?> FuncNtNumber(IList<Decimal?> pIn, ref IList<Decimal?> pInOut, out IList<Decimal?> pOut, OracleConnection optionalPreexistingOpenConnection = null)
 
         public Decimal? FuncNumber(Decimal? pIn, ref Decimal? pInOut, out Decimal? pOut, OracleConnection optionalPreexistingOpenConnection = null) {
             Decimal? __ret = null; pOut = null; 
@@ -5838,7 +5838,7 @@ namespace Schema.Odpt.Package {
                     __cmd.Parameters.Add(new OracleParameter("P_IN_NUMBER", OracleDbType.Decimal, pInNumber, ParameterDirection.Input));
                     __cmd.Parameters.Add(new OracleParameter("P_IN_OUT_VARCHAR2", OracleDbType.Varchar2, 32767, pInOutVarchar2, ParameterDirection.InputOutput));
 
-                    __cmd.Parameters.Add(new OracleParameter("P_IN_OUT_ASSOCARRAY_INTEGER", OracleDbType.Int64, 1000, null, ParameterDirection.InputOutput));
+                    __cmd.Parameters.Add(new OracleParameter("P_IN_OUT_ASSOCARRAY_INTEGER", OracleDbType.Int64, 50000, null, ParameterDirection.InputOutput));
                     __cmd.Parameters["P_IN_OUT_ASSOCARRAY_INTEGER"].Value = (pInOutAssocarrayInteger == null || pInOutAssocarrayInteger.Count == 0 ? new Int64?[]{} : pInOutAssocarrayInteger.ToArray());
                     __cmd.Parameters["P_IN_OUT_ASSOCARRAY_INTEGER"].CollectionType = OracleCollectionType.PLSQLAssociativeArray;
                     __cmd.Parameters.Add(new OracleParameter("P_OUT_DATE", OracleDbType.Date, null, ParameterDirection.Output));
@@ -5886,7 +5886,7 @@ namespace Schema.Odpt.Package {
                     __cmd.Parameters.Add(new OracleParameter("P_IN_NUMBER", OracleDbType.Decimal, pInNumber, ParameterDirection.Input));
                     __cmd.Parameters.Add(new OracleParameter("P_IN_OUT_VARCHAR2", OracleDbType.Varchar2, 32767, pInOutVarchar2, ParameterDirection.InputOutput));
 
-                    __cmd.Parameters.Add(new OracleParameter("P_IN_OUT_ASSOCARRAY_INTEGER", OracleDbType.Int64, 1000, null, ParameterDirection.InputOutput));
+                    __cmd.Parameters.Add(new OracleParameter("P_IN_OUT_ASSOCARRAY_INTEGER", OracleDbType.Int64, 50000, null, ParameterDirection.InputOutput));
                     __cmd.Parameters["P_IN_OUT_ASSOCARRAY_INTEGER"].Value = (pInOutAssocarrayInteger == null || pInOutAssocarrayInteger.Count == 0 ? new Int64?[]{} : pInOutAssocarrayInteger.ToArray());
                     __cmd.Parameters["P_IN_OUT_ASSOCARRAY_INTEGER"].CollectionType = OracleCollectionType.PLSQLAssociativeArray;
                     __cmd.Parameters.Add(new OracleParameter("P_OUT_DATE", OracleDbType.Date, null, ParameterDirection.Output));
