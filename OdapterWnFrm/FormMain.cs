@@ -595,5 +595,9 @@ namespace OdapterWnFrm {
         private void cbDuplicatePackageRecordOriginatingOutsideFilterAndSchema_CheckedChanged(object sender, EventArgs e) {
 
         }
+
+        private void cbUseAutoImplementedProperties_CheckedChanged(object sender, EventArgs e) {
+
+        }
     }
 }
