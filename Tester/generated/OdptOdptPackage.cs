@@ -2269,9 +2269,6 @@ namespace Schema.Odpt.Odpt.Package {
             return __ret;
         } // FuncNclob
 
-        // **PROC IGNORED** - Code generation for NESTED TABLE types has not been implemented
-        // public IList<Decimal?> FuncNnNumber(IList<Decimal?> pIn, ref IList<Decimal?> pInOut, out IList<Decimal?> pOut, OracleConnection optionalPreexistingOpenConnection = null)
-
         public Decimal? FuncNoParam(OracleConnection optionalPreexistingOpenConnection = null) {
             Decimal? __ret = null; 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
@@ -2296,6 +2293,9 @@ namespace Schema.Odpt.Odpt.Package {
             }
             return __ret;
         } // FuncNoParam
+
+        // **PROC IGNORED** - Code generation for NESTED TABLE types has not been implemented
+        // public IList<Decimal?> FuncNtNumber(IList<Decimal?> pIn, ref IList<Decimal?> pInOut, out IList<Decimal?> pOut, OracleConnection optionalPreexistingOpenConnection = null)
 
         public Decimal? FuncNumber(Decimal? pIn, ref Decimal? pInOut, out Decimal? pOut, OracleConnection optionalPreexistingOpenConnection = null) {
             Decimal? __ret = null; pOut = null; 
