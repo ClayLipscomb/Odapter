@@ -709,7 +709,7 @@ CREATE OR REPLACE PACKAGE BODY ODPT.odpt_pkg_main AS
 	END;
 	
 	-----------------------
-	FUNCTION func_nn_number (p_in IN t_nestedtable_number, p_in_out IN OUT t_nestedtable_number, p_out OUT t_nestedtable_number) RETURN t_nestedtable_number IS
+	FUNCTION func_nt_number (p_in IN t_nestedtable_number, p_in_out IN OUT t_nestedtable_number, p_out OUT t_nestedtable_number) RETURN t_nestedtable_number IS
     BEGIN
 	   	p_in_out := p_in;
 		p_out := p_in;
