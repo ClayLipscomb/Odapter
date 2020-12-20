@@ -21,11 +21,11 @@ Odapter is a [single executable](/OdapterWnFrm/bin/x64/Release) that generates C
 | Case insensitive                                    | Case sensitive | 
 | snake_case naming 		                          | PascalCase & camelCase naming     |
 | Package Record Type Field                           | Property     |
-| Package Record Type                                 | Nested public class of properties    |
+| Package Record Type                                 | Interface of setters and nested abstract getter/setter class    |
 | Function or Stored Procedure (packaged)             | Method    |
-| Package                                             | Singleton class of methods and nested classes    |
+| Package                                             | Singleton class of methods, interfaces and nested classes    |
 | Schema                                              | Namespace (with nesting)    |
-| Object Type, Table, View                            | Class of properties    |
+| Object, Table, View                                 | Getter/setter Class    |
 
 ### Code Generation Features
 
@@ -371,7 +371,7 @@ namespace OdapterExample {
         public List<Int32> Int32ListPropertyExtra { get; set; }     // custom property
     }
 
-    // Implements the package record type's interface, adding custom properties 
+    // Implements the package record type's setter interface, adding custom properties 
     public class DtoImplemented : XmplPkgExample.ITTableBigPartial {  // no mapping required
         public Int64? Id { get; set; }
         public Int64? ColInteger { get; set; }
