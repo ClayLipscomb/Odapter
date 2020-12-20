@@ -3117,37 +3117,37 @@ namespace Schema.Odpt.Odpt.Package {
         public static OdptPkgTableBig Instance { get { return _instance; } }
 
         public interface IFltrPkgRecUnusedTTableBigFltUnused {
-            Int64? Id { get; set; }
-            Int64? ColNumberId { get; set; }
-            Int64? ColInteger { get; set; }
-            Int64? ColInt { get; set; }
-            Int64? ColSmallint { get; set; }
-            Int64? ColNumeric { get; set; }
-            Int64? ColDecimal { get; set; }
-            Decimal? ColNumber { get; set; }
-            Decimal? ColDoublePrecision { get; set; }
-            Decimal? ColFloat { get; set; }
-            Decimal? ColReal { get; set; }
-            Single? ColBinaryFloat { get; set; }
-            Double? ColBinaryDouble { get; set; }
-            String ColVarcharMin { get; set; }
-            String ColVarcharMax { get; set; }
-            String ColVarchar2Min { get; set; }
-            String ColVarchar2Max { get; set; }
-            String ColNvarchar2Min { get; set; }
-            String ColNvarchar2Max { get; set; }
-            String ColCharMin { get; set; }
-            String ColCharMax { get; set; }
-            String ColNcharMin { get; set; }
-            String ColNcharMax { get; set; }
-            DateTime? ColDate { get; set; }
-            DateTime? ColTimestamp { get; set; }
-            DateTime? ColTimestampPrec0 { get; set; }
-            DateTime? ColTimestampPrec9 { get; set; }
-            Byte[] ColBlob { get; set; }
-            String ColClob { get; set; }
-            String ColNclob { get; set; }
-            String ColLast { get; set; }
+            Int64? Id { set; }
+            Int64? ColNumberId { set; }
+            Int64? ColInteger { set; }
+            Int64? ColInt { set; }
+            Int64? ColSmallint { set; }
+            Int64? ColNumeric { set; }
+            Int64? ColDecimal { set; }
+            Decimal? ColNumber { set; }
+            Decimal? ColDoublePrecision { set; }
+            Decimal? ColFloat { set; }
+            Decimal? ColReal { set; }
+            Single? ColBinaryFloat { set; }
+            Double? ColBinaryDouble { set; }
+            String ColVarcharMin { set; }
+            String ColVarcharMax { set; }
+            String ColVarchar2Min { set; }
+            String ColVarchar2Max { set; }
+            String ColNvarchar2Min { set; }
+            String ColNvarchar2Max { set; }
+            String ColCharMin { set; }
+            String ColCharMax { set; }
+            String ColNcharMin { set; }
+            String ColNcharMax { set; }
+            DateTime? ColDate { set; }
+            DateTime? ColTimestamp { set; }
+            DateTime? ColTimestampPrec0 { set; }
+            DateTime? ColTimestampPrec9 { set; }
+            Byte[] ColBlob { set; }
+            String ColClob { set; }
+            String ColNclob { set; }
+            String ColLast { set; }
         } // IFltrPkgRecUnusedTTableBigFltUnused
 
         [DataContract(Namespace="http://odpt.business.com")][Serializable()]
@@ -3262,37 +3262,37 @@ namespace Schema.Odpt.Odpt.Package {
         } // ReadResultIFltrPkgRecUnusedTTableBigFltUnused
 
         public interface IFltrPkgRecUsedTTableBigFltUsed {
-            Int64? Id { get; set; }
-            Int64? ColNumberId { get; set; }
-            Int64? ColInteger { get; set; }
-            Int64? ColInt { get; set; }
-            Int64? ColSmallint { get; set; }
-            Int64? ColNumeric { get; set; }
-            Int64? ColDecimal { get; set; }
-            Decimal? ColNumber { get; set; }
-            Decimal? ColDoublePrecision { get; set; }
-            Decimal? ColFloat { get; set; }
-            Decimal? ColReal { get; set; }
-            Single? ColBinaryFloat { get; set; }
-            Double? ColBinaryDouble { get; set; }
-            String ColVarcharMin { get; set; }
-            String ColVarcharMax { get; set; }
-            String ColVarchar2Min { get; set; }
-            String ColVarchar2Max { get; set; }
-            String ColNvarchar2Min { get; set; }
-            String ColNvarchar2Max { get; set; }
-            String ColCharMin { get; set; }
-            String ColCharMax { get; set; }
-            String ColNcharMin { get; set; }
-            String ColNcharMax { get; set; }
-            DateTime? ColDate { get; set; }
-            DateTime? ColTimestamp { get; set; }
-            DateTime? ColTimestampPrec0 { get; set; }
-            DateTime? ColTimestampPrec9 { get; set; }
-            Byte[] ColBlob { get; set; }
-            String ColClob { get; set; }
-            String ColNclob { get; set; }
-            String ColLast { get; set; }
+            Int64? Id { set; }
+            Int64? ColNumberId { set; }
+            Int64? ColInteger { set; }
+            Int64? ColInt { set; }
+            Int64? ColSmallint { set; }
+            Int64? ColNumeric { set; }
+            Int64? ColDecimal { set; }
+            Decimal? ColNumber { set; }
+            Decimal? ColDoublePrecision { set; }
+            Decimal? ColFloat { set; }
+            Decimal? ColReal { set; }
+            Single? ColBinaryFloat { set; }
+            Double? ColBinaryDouble { set; }
+            String ColVarcharMin { set; }
+            String ColVarcharMax { set; }
+            String ColVarchar2Min { set; }
+            String ColVarchar2Max { set; }
+            String ColNvarchar2Min { set; }
+            String ColNvarchar2Max { set; }
+            String ColCharMin { set; }
+            String ColCharMax { set; }
+            String ColNcharMin { set; }
+            String ColNcharMax { set; }
+            DateTime? ColDate { set; }
+            DateTime? ColTimestamp { set; }
+            DateTime? ColTimestampPrec0 { set; }
+            DateTime? ColTimestampPrec9 { set; }
+            Byte[] ColBlob { set; }
+            String ColClob { set; }
+            String ColNclob { set; }
+            String ColLast { set; }
         } // IFltrPkgRecUsedTTableBigFltUsed
 
         [DataContract(Namespace="http://odpt.business.com")][Serializable()]
@@ -3407,37 +3407,37 @@ namespace Schema.Odpt.Odpt.Package {
         } // ReadResultIFltrPkgRecUsedTTableBigFltUsed
 
         public interface ITTableBig {
-            Int64? Id { get; set; }
-            Int64? ColNumberId { get; set; }
-            Int64? ColInteger { get; set; }
-            Int64? ColInt { get; set; }
-            Int64? ColSmallint { get; set; }
-            Int64? ColNumeric { get; set; }
-            Int64? ColDecimal { get; set; }
-            Decimal? ColNumber { get; set; }
-            Decimal? ColDoublePrecision { get; set; }
-            Decimal? ColFloat { get; set; }
-            Decimal? ColReal { get; set; }
-            Single? ColBinaryFloat { get; set; }
-            Double? ColBinaryDouble { get; set; }
-            String ColVarcharMin { get; set; }
-            String ColVarcharMax { get; set; }
-            String ColVarchar2Min { get; set; }
-            String ColVarchar2Max { get; set; }
-            String ColNvarchar2Min { get; set; }
-            String ColNvarchar2Max { get; set; }
-            String ColCharMin { get; set; }
-            String ColCharMax { get; set; }
-            String ColNcharMin { get; set; }
-            String ColNcharMax { get; set; }
-            DateTime? ColDate { get; set; }
-            DateTime? ColTimestamp { get; set; }
-            DateTime? ColTimestampPrec0 { get; set; }
-            DateTime? ColTimestampPrec9 { get; set; }
-            Byte[] ColBlob { get; set; }
-            String ColClob { get; set; }
-            String ColNclob { get; set; }
-            String ColLast { get; set; }
+            Int64? Id { set; }
+            Int64? ColNumberId { set; }
+            Int64? ColInteger { set; }
+            Int64? ColInt { set; }
+            Int64? ColSmallint { set; }
+            Int64? ColNumeric { set; }
+            Int64? ColDecimal { set; }
+            Decimal? ColNumber { set; }
+            Decimal? ColDoublePrecision { set; }
+            Decimal? ColFloat { set; }
+            Decimal? ColReal { set; }
+            Single? ColBinaryFloat { set; }
+            Double? ColBinaryDouble { set; }
+            String ColVarcharMin { set; }
+            String ColVarcharMax { set; }
+            String ColVarchar2Min { set; }
+            String ColVarchar2Max { set; }
+            String ColNvarchar2Min { set; }
+            String ColNvarchar2Max { set; }
+            String ColCharMin { set; }
+            String ColCharMax { set; }
+            String ColNcharMin { set; }
+            String ColNcharMax { set; }
+            DateTime? ColDate { set; }
+            DateTime? ColTimestamp { set; }
+            DateTime? ColTimestampPrec0 { set; }
+            DateTime? ColTimestampPrec9 { set; }
+            Byte[] ColBlob { set; }
+            String ColClob { set; }
+            String ColNclob { set; }
+            String ColLast { set; }
         } // ITTableBig
 
         [DataContract(Namespace="http://odpt.business.com")][Serializable()]
@@ -3552,18 +3552,18 @@ namespace Schema.Odpt.Odpt.Package {
         } // ReadResultITTableBig
 
         public interface ITTableBigChar {
-            Int64? Id { get; set; }
-            String ColVarcharMin { get; set; }
-            String ColVarcharMax { get; set; }
-            String ColVarchar2Min { get; set; }
-            String ColVarchar2Max { get; set; }
-            String ColNvarchar2Min { get; set; }
-            String ColNvarchar2Max { get; set; }
-            String ColCharMin { get; set; }
-            String ColCharMax { get; set; }
-            String ColNcharMin { get; set; }
-            String ColNcharMax { get; set; }
-            String ColLast { get; set; }
+            Int64? Id { set; }
+            String ColVarcharMin { set; }
+            String ColVarcharMax { set; }
+            String ColVarchar2Min { set; }
+            String ColVarchar2Max { set; }
+            String ColNvarchar2Min { set; }
+            String ColNvarchar2Max { set; }
+            String ColCharMin { set; }
+            String ColCharMax { set; }
+            String ColNcharMin { set; }
+            String ColNcharMax { set; }
+            String ColLast { set; }
         } // ITTableBigChar
 
         [DataContract(Namespace="http://odpt.business.com")][Serializable()]
@@ -4717,39 +4717,39 @@ namespace Schema.Odpt.Odpt.Package {
         public static OdptPkgTableNumber Instance { get { return _instance; } }
 
         public interface ITTableNumber {
-            Int64? Id { get; set; }
-            Decimal? ColNumber { get; set; }
-            SByte? ColNumber1 { get; set; }
-            SByte? ColNumber2 { get; set; }
-            Int16? ColNumber3 { get; set; }
-            Int16? ColNumber4 { get; set; }
-            Int32? ColNumber5 { get; set; }
-            Int32? ColNumber6 { get; set; }
-            Int32? ColNumber7 { get; set; }
-            Int32? ColNumber8 { get; set; }
-            Int32? ColNumber9 { get; set; }
-            Int64? ColNumber10 { get; set; }
-            Int64? ColNumber18 { get; set; }
-            Int64? ColNumber19 { get; set; }
-            Int64? ColNumber38 { get; set; }
-            SByte? ColNumber1Scale0 { get; set; }
-            SByte? ColNumber2Scale0 { get; set; }
-            Int16? ColNumber3Scale0 { get; set; }
-            Int16? ColNumber4Scale0 { get; set; }
-            Int32? ColNumber5Scale0 { get; set; }
-            Int32? ColNumber9Scale0 { get; set; }
-            Int64? ColNumber10Scale0 { get; set; }
-            Int64? ColNumber18Scale0 { get; set; }
-            Int64? ColNumber19Scale0 { get; set; }
-            Int64? ColNumber28Scale0 { get; set; }
-            Int64? ColNumber29Scale0 { get; set; }
-            Int64? ColNumber38Scale0 { get; set; }
-            Decimal? ColNumber2Scale1 { get; set; }
-            Decimal? ColNumber5Scale3 { get; set; }
-            Decimal? ColNumber15Scale11 { get; set; }
-            Decimal? ColNumber31Scale21 { get; set; }
-            Decimal? ColNumber38Scale37 { get; set; }
-            Decimal? ColNumberLast { get; set; }
+            Int64? Id { set; }
+            Decimal? ColNumber { set; }
+            SByte? ColNumber1 { set; }
+            SByte? ColNumber2 { set; }
+            Int16? ColNumber3 { set; }
+            Int16? ColNumber4 { set; }
+            Int32? ColNumber5 { set; }
+            Int32? ColNumber6 { set; }
+            Int32? ColNumber7 { set; }
+            Int32? ColNumber8 { set; }
+            Int32? ColNumber9 { set; }
+            Int64? ColNumber10 { set; }
+            Int64? ColNumber18 { set; }
+            Int64? ColNumber19 { set; }
+            Int64? ColNumber38 { set; }
+            SByte? ColNumber1Scale0 { set; }
+            SByte? ColNumber2Scale0 { set; }
+            Int16? ColNumber3Scale0 { set; }
+            Int16? ColNumber4Scale0 { set; }
+            Int32? ColNumber5Scale0 { set; }
+            Int32? ColNumber9Scale0 { set; }
+            Int64? ColNumber10Scale0 { set; }
+            Int64? ColNumber18Scale0 { set; }
+            Int64? ColNumber19Scale0 { set; }
+            Int64? ColNumber28Scale0 { set; }
+            Int64? ColNumber29Scale0 { set; }
+            Int64? ColNumber38Scale0 { set; }
+            Decimal? ColNumber2Scale1 { set; }
+            Decimal? ColNumber5Scale3 { set; }
+            Decimal? ColNumber15Scale11 { set; }
+            Decimal? ColNumber31Scale21 { set; }
+            Decimal? ColNumber38Scale37 { set; }
+            Decimal? ColNumberLast { set; }
         } // ITTableNumber
 
         [DataContract(Namespace="http://odpt.business.com")][Serializable()]
@@ -4870,14 +4870,14 @@ namespace Schema.Odpt.Odpt.Package {
         } // ReadResultITTableNumber
 
         public interface ITTableNumberDec {
-            Int64? Id { get; set; }
-            Decimal? ColNumber { get; set; }
-            Decimal? ColNumber2Scale1 { get; set; }
-            Decimal? ColNumber5Scale3 { get; set; }
-            Decimal? ColNumber15Scale11 { get; set; }
-            Decimal? ColNumber31Scale21 { get; set; }
-            Decimal? ColNumber38Scale37 { get; set; }
-            Decimal? ColNumberLast { get; set; }
+            Int64? Id { set; }
+            Decimal? ColNumber { set; }
+            Decimal? ColNumber2Scale1 { set; }
+            Decimal? ColNumber5Scale3 { set; }
+            Decimal? ColNumber15Scale11 { set; }
+            Decimal? ColNumber31Scale21 { set; }
+            Decimal? ColNumber38Scale37 { set; }
+            Decimal? ColNumberLast { set; }
         } // ITTableNumberDec
 
         [DataContract(Namespace="http://odpt.business.com")][Serializable()]

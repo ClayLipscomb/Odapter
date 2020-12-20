@@ -27,12 +27,12 @@ namespace Schema.Odpt.Xmpl.Package {
         public static XmplPkgExample Instance { get { return _instance; } }
 
         public interface ITTableBigPartial {
-            Int64? Id { get; set; }
-            Int64? ColInteger { get; set; }
-            Decimal? ColNumber { get; set; }
-            String ColVarchar2Max { get; set; }
-            DateTime? ColDate { get; set; }
-            OracleTimeStamp? ColTimestamp { get; set; }
+            Int64? Id { set; }
+            Int64? ColInteger { set; }
+            Decimal? ColNumber { set; }
+            String ColVarchar2Max { set; }
+            DateTime? ColDate { set; }
+            OracleTimeStamp? ColTimestamp { set; }
         } // ITTableBigPartial
 
         [DataContract(Namespace="http://corp.xmpl.com")][Serializable()]
