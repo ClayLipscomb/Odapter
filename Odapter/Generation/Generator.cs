@@ -1084,7 +1084,7 @@ namespace Odapter {
                 string cSharpType = attr.Translater.GetCSharpType();
                 classText.AppendLine(Tab(tabIndentCount + 2) + (attr.ContainerClassName == null ? "" : attr.ContainerClassName + ".") + cSharpType 
                     + " " + TranslaterName.Convert(attr)
-                    + " { get; set; }");
+                    + " { set; }");
             }
             classText.AppendLine(Tab(tabIndentCount + 1) + "} // " + interfaceName); // end record interface
             return classText.ToString();
