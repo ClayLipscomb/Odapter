@@ -236,7 +236,6 @@ namespace Odapter {
         /// Load all proc arguments for given schema and filter
         /// </summary>
         /// <param name="connection"></param>
-        /// <param name="packaged">If true load only packaged arguments, else load non-packaged.</param>
         private void LoadArguments<T_Argument>(OracleConnection connection)
             where T_Argument : class, IArgument, new() {
 
@@ -249,6 +248,7 @@ namespace Odapter {
                             + " a.object_name, a.package_name, a.defaulted, a.owner, a.type_link "
                         + " FROM sys.all_arguments a, sys.all_objects o "
                         + " WHERE a.owner = :owner "
+                        + " AND a.owner = o.owner "
                         + " AND a.package_name = o.object_name "
                         + " AND UPPER(o.object_type) = :objectType "
                         + " AND UPPER(a.package_name) LIKE :packageNamePrefix || '%' "
