@@ -32,6 +32,10 @@ namespace Odapter {
         string TypeName { get; set; }           // 1) package containing TypeSubName defintion or 2) proper name of object type
         string TypeSubname { get; set; }        // proper name of DataType (e.g., record name)
         string TypeLink { get; set; }
+        /// <summary>
+        /// Holds sys.all_objects.owner
+        /// </summary>
+        string OwnerObject { get; set; }        
         bool Defaulted { get; } 
         bool IsReturnArgument { get; }
         bool IsUntypedCursor { get; }

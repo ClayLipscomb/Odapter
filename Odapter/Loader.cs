@@ -245,18 +245,25 @@ namespace Odapter {
                             + " CAST(a.data_precision as NUMBER(9,0)) data_precision, CAST(a.char_length as NUMBER(9,0)) char_length, "
                             + " CAST(a.data_scale as NUMBER(9,0)) data_scale, "
                             + " a.type_owner, a.type_name, a.type_subname, a.pls_type, "
-                            + " a.object_name, a.package_name, a.defaulted, a.owner, a.type_link "
+                            + " a.object_name, a.package_name, a.defaulted, a.owner, a.type_link, "
+                            + " o.owner owner_object "
                         + " FROM sys.all_arguments a, sys.all_objects o "
                         + " WHERE a.owner = :owner "
-                        + " AND a.owner = o.owner "
+                        //  This join logic is necessary but it can cause the query to never return. We cannot require that an Oracle instance
+                        //      be configured or tuned in order for the system views to perform. Instead, we need to enforce this condition 
+                        //      in C# (see below).
+                        //+ " AND a.owner = o.owner "
+
                         + " AND a.package_name = o.object_name "
-                        + " AND UPPER(o.object_type) = :objectType "
+                        + " AND UPPER(o.object_type) = :objectType "    // required to restrict to package spec only
                         + " AND UPPER(a.package_name) LIKE :packageNamePrefix || '%' "
                         + " ORDER BY a.package_name, a.object_name, a.overload, a.sequence ";
 
             DisplayMessage("Reading package arguments...");
-            List<IArgument> args = connection.Query<T_Argument>(sql, 
-                new { owner = Schema, objectType = SytemTableObjectType.PACKAGE.ToString(), packageNamePrefix = Filter.ToUpper() }).ToList<IArgument>();
+            List<IArgument> args = connection.Query<T_Argument>(sql,
+                new { owner = Schema, objectType = SytemTableObjectType.PACKAGE.ToString(), packageNamePrefix = Filter.ToUpper() })
+                .Where(a => a.Owner == a.OwnerObject)   // prevents inclusion of identically named package argument from another schema
+                .ToList<IArgument>();
             if (IsExcludeObjectsNamesWithSpecificChars) args = args.FindAll(a => a.PackageName.IndexOfAny(ObjectNameCharsToExclude) == -1);
             DisplayMessage(args.Count.ToString() + " arguments read.");
 
