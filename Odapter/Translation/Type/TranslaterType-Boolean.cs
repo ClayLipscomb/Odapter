@@ -30,7 +30,9 @@ namespace Odapter {
         public string CSharpOracleDbType { get => String.Empty; }
         public string CSharpOdpNetType { get => String.Empty; }
         public bool IsIgnoredAsParameter { get => true; }
-        public string IgnoredReason { get => TranslaterMessage.IgnoreNoSendReceive(OrclType); }
+        public string IgnoredReasonAsParameter { get => TranslaterMessage.IgnoreNoSendReceive(OrclType); }
+        public bool IsIgnoredAsAttribute { get => true; }
+        public string IgnoredReasonAsAttribute { get => TranslaterMessage.IgnoreNoSendReceive(OrclType); }
     }
 
     internal class TranslaterPlsqlBoolean : ITranslaterType {
@@ -44,6 +46,8 @@ namespace Odapter {
         public string CSharpOracleDbType { get => String.Empty; }
         public string CSharpOdpNetType { get => String.Empty; }
         public bool IsIgnoredAsParameter { get => true; }
-        public string IgnoredReason { get => TranslaterMessage.IgnoreNoSendReceive(OrclType); }
+        public string IgnoredReasonAsParameter { get => TranslaterMessage.IgnoreNoSendReceive(OrclType); }
+        public bool IsIgnoredAsAttribute { get => true; }
+        public string IgnoredReasonAsAttribute { get => TranslaterMessage.IgnoreNoSendReceive(OrclType); }
     }
 }

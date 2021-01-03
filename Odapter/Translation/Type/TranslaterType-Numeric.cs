@@ -31,7 +31,9 @@ namespace Odapter {
         public string CSharpOracleDbType { get => CSharp.GetNumericOracleDbTypeEnum(_cSharpType); }
         public string CSharpOdpNetType { get => CSharp.ODP_NET_SAFE_TYPE_DECIMAL; }
         public bool IsIgnoredAsParameter { get => false; }
-        public string IgnoredReason { get => String.Empty; }
+        public string IgnoredReasonAsParameter { get => String.Empty; }
+        public bool IsIgnoredAsAttribute { get => false; }
+        public string IgnoredReasonAsAttribute { get => String.Empty; }
     }
 
     internal sealed class TranslaterBinaryFloat : ITranslaterType {
@@ -46,7 +48,9 @@ namespace Odapter {
         public string CSharpOracleDbType { get => CSharp.GetNumericOracleDbTypeEnum(_cSharpType); }
         public string CSharpOdpNetType { get => CSharp.ODP_NET_SAFE_TYPE_DECIMAL; }
         public bool IsIgnoredAsParameter { get => false; }
-        public string IgnoredReason { get => String.Empty; }
+        public string IgnoredReasonAsParameter { get => String.Empty; }
+        public bool IsIgnoredAsAttribute { get => false; }
+        public string IgnoredReasonAsAttribute { get => String.Empty; }
     }
 
     internal sealed class TranslaterBinaryInteger : ITranslaterType {
@@ -61,7 +65,9 @@ namespace Odapter {
         public string CSharpOracleDbType { get => CSharp.GetNumericOracleDbTypeEnum(_cSharpType); }
         public string CSharpOdpNetType { get => CSharp.ODP_NET_SAFE_TYPE_DECIMAL; }
         public bool IsIgnoredAsParameter { get => false; }
-        public string IgnoredReason { get => String.Empty; }
+        public string IgnoredReasonAsParameter { get => String.Empty; }
+        public bool IsIgnoredAsAttribute { get => false; }
+        public string IgnoredReasonAsAttribute { get => String.Empty; }
     }
 
     internal sealed class TranslaterDecimal : ITranslaterType {
@@ -76,7 +82,9 @@ namespace Odapter {
         public string CSharpOracleDbType { get => CSharp.GetNumericOracleDbTypeEnum(_cSharpType); }
         public string CSharpOdpNetType { get => CSharp.ODP_NET_SAFE_TYPE_DECIMAL; }
         public bool IsIgnoredAsParameter { get => false; }
-        public string IgnoredReason { get => String.Empty; }
+        public string IgnoredReasonAsParameter { get => String.Empty; }
+        public bool IsIgnoredAsAttribute { get => false; }
+        public string IgnoredReasonAsAttribute { get => String.Empty; }
     }
 
     internal sealed class TranslaterDoublePrecision : ITranslaterType {
@@ -91,7 +99,9 @@ namespace Odapter {
         public string CSharpOracleDbType { get => CSharp.GetNumericOracleDbTypeEnum(_cSharpType); }
         public string CSharpOdpNetType { get => CSharp.ODP_NET_SAFE_TYPE_DECIMAL; }
         public bool IsIgnoredAsParameter { get => false; }
-        public string IgnoredReason { get => String.Empty; }
+        public string IgnoredReasonAsParameter { get => String.Empty; }
+        public bool IsIgnoredAsAttribute { get => false; }
+        public string IgnoredReasonAsAttribute { get => String.Empty; }
 
         internal TranslaterDoublePrecision(string cSharpType) { _cSharpType = cSharpType; }
         private TranslaterDoublePrecision() { }
@@ -109,7 +119,9 @@ namespace Odapter {
         public string CSharpOracleDbType { get => CSharp.GetNumericOracleDbTypeEnum(_cSharpType); }
         public string CSharpOdpNetType { get => CSharp.ODP_NET_SAFE_TYPE_DECIMAL; }
         public bool IsIgnoredAsParameter { get => false; }
-        public string IgnoredReason { get => String.Empty; }
+        public string IgnoredReasonAsParameter { get => String.Empty; }
+        public bool IsIgnoredAsAttribute { get => false; }
+        public string IgnoredReasonAsAttribute { get => String.Empty; }
 
         internal TranslaterFloat(string cSharpType) { _cSharpType = cSharpType; }
         private TranslaterFloat() { }
@@ -138,7 +150,9 @@ namespace Odapter {
         public string CSharpOracleDbType { get => CSharp.GetNumericOracleDbTypeEnum(_cSharpType); }
         public string CSharpOdpNetType { get => CSharp.ODP_NET_SAFE_TYPE_DECIMAL; }
         public bool IsIgnoredAsParameter { get => false; }
-        public string IgnoredReason { get => String.Empty; }
+        public string IgnoredReasonAsParameter { get => String.Empty; }
+        public bool IsIgnoredAsAttribute { get => false; }
+        public string IgnoredReasonAsAttribute { get => String.Empty; }
         private bool IsConvertIdNumberToInteger { get; set; }
 
         internal TranslaterInteger(string cSharpType, bool isConvertIdNumbertoInteger) { _cSharpType = cSharpType; IsConvertIdNumberToInteger = isConvertIdNumbertoInteger; }
@@ -157,7 +171,9 @@ namespace Odapter {
         public string CSharpOracleDbType { get => CSharp.GetNumericOracleDbTypeEnum(_cSharpType); }
         public string CSharpOdpNetType { get => CSharp.ODP_NET_SAFE_TYPE_DECIMAL; }
         public bool IsIgnoredAsParameter { get => false; }
-        public string IgnoredReason { get => String.Empty; }
+        public string IgnoredReasonAsParameter { get => String.Empty; }
+        public bool IsIgnoredAsAttribute { get => false; }
+        public string IgnoredReasonAsAttribute { get => String.Empty; }
     }
 
     internal sealed class TranslaterNaturaln : ITranslaterType {
@@ -172,7 +188,9 @@ namespace Odapter {
         public string CSharpOracleDbType { get => CSharp.GetNumericOracleDbTypeEnum(_cSharpType); }
         public string CSharpOdpNetType { get => CSharp.ODP_NET_SAFE_TYPE_DECIMAL; }
         public bool IsIgnoredAsParameter { get => false; }
-        public string IgnoredReason { get => String.Empty; }
+        public string IgnoredReasonAsParameter { get => String.Empty; }
+        public bool IsIgnoredAsAttribute { get => false; }
+        public string IgnoredReasonAsAttribute { get => String.Empty; }
     }
 
     internal class TranslaterNumber : ITranslaterType {
@@ -187,7 +205,9 @@ namespace Odapter {
         public string CSharpOracleDbType { get => CSharp.GetNumericOracleDbTypeEnum(_cSharpType); }
         public string CSharpOdpNetType { get => CSharp.ODP_NET_SAFE_TYPE_DECIMAL; }
         public bool IsIgnoredAsParameter { get => false; }
-        public string IgnoredReason { get => String.Empty; }
+        public string IgnoredReasonAsParameter { get => String.Empty; }
+        public bool IsIgnoredAsAttribute { get => false; }
+        public string IgnoredReasonAsAttribute { get => String.Empty; }
 
         internal TranslaterNumber(string cSharpType) : this(cSharpType, Orcl.NUMBER) { }
         protected TranslaterNumber(string cSharpType, string dataTypeFull) { _cSharpType = cSharpType; DataTypeFull = dataTypeFull; }
@@ -262,7 +282,9 @@ namespace Odapter {
         public string CSharpOracleDbType { get => CSharp.GetNumericOracleDbTypeEnum(_cSharpType); }
         public string CSharpOdpNetType { get => CSharp.ODP_NET_SAFE_TYPE_DECIMAL; }
         public bool IsIgnoredAsParameter { get => false; }
-        public string IgnoredReason { get => String.Empty; }
+        public string IgnoredReasonAsParameter { get => String.Empty; }
+        public bool IsIgnoredAsAttribute { get => false; }
+        public string IgnoredReasonAsAttribute { get => String.Empty; }
     }
 
     internal sealed class TranslaterPlsInteger : ITranslaterType {
@@ -277,7 +299,9 @@ namespace Odapter {
         public string CSharpOracleDbType { get => CSharp.GetNumericOracleDbTypeEnum(_cSharpType); }
         public string CSharpOdpNetType { get => CSharp.ODP_NET_SAFE_TYPE_DECIMAL; }
         public bool IsIgnoredAsParameter { get => false; }
-        public string IgnoredReason { get => String.Empty; }
+        public string IgnoredReasonAsParameter { get => String.Empty; }
+        public bool IsIgnoredAsAttribute { get => false; }
+        public string IgnoredReasonAsAttribute { get => String.Empty; }
     }
 
     internal sealed class TranslaterPositive : ITranslaterType {
@@ -292,7 +316,9 @@ namespace Odapter {
         public string CSharpOracleDbType { get => CSharp.GetNumericOracleDbTypeEnum(_cSharpType); }
         public string CSharpOdpNetType { get => CSharp.ODP_NET_SAFE_TYPE_DECIMAL; }
         public bool IsIgnoredAsParameter { get => false; }
-        public string IgnoredReason { get => String.Empty; }
+        public string IgnoredReasonAsParameter { get => String.Empty; }
+        public bool IsIgnoredAsAttribute { get => false; }
+        public string IgnoredReasonAsAttribute { get => String.Empty; }
     }
 
     internal sealed class TranslaterPositiven : ITranslaterType {
@@ -307,7 +333,9 @@ namespace Odapter {
         public string CSharpOracleDbType { get => CSharp.GetNumericOracleDbTypeEnum(_cSharpType); }
         public string CSharpOdpNetType { get => CSharp.ODP_NET_SAFE_TYPE_DECIMAL; }
         public bool IsIgnoredAsParameter { get => false; }
-        public string IgnoredReason { get => String.Empty; }
+        public string IgnoredReasonAsParameter { get => String.Empty; }
+        public bool IsIgnoredAsAttribute { get => false; }
+        public string IgnoredReasonAsAttribute { get => String.Empty; }
     }
 
     internal sealed class TranslaterReal : ITranslaterType {
@@ -322,7 +350,9 @@ namespace Odapter {
         public string CSharpOracleDbType { get => CSharp.GetNumericOracleDbTypeEnum(_cSharpType); }
         public string CSharpOdpNetType { get => CSharp.ODP_NET_SAFE_TYPE_DECIMAL; }
         public bool IsIgnoredAsParameter { get => true; }
-        public string IgnoredReason { get => TranslaterMessage.IgnoreNotImplemented(OrclType); }
+        public string IgnoredReasonAsParameter { get => TranslaterMessage.IgnoreNotImplemented(OrclType); }
+        public bool IsIgnoredAsAttribute { get => true; }
+        public string IgnoredReasonAsAttribute { get => TranslaterMessage.IgnoreNotImplemented(OrclType); }
 
         internal TranslaterReal(string cSharpType) { _cSharpType = cSharpType; }
         private TranslaterReal() { }
@@ -340,7 +370,9 @@ namespace Odapter {
         public string CSharpOracleDbType { get => CSharp.GetNumericOracleDbTypeEnum(_cSharpType); }
         public string CSharpOdpNetType { get => CSharp.ODP_NET_SAFE_TYPE_DECIMAL; }
         public bool IsIgnoredAsParameter { get => false; }
-        public string IgnoredReason { get => String.Empty; }
+        public string IgnoredReasonAsParameter { get => String.Empty; }
+        public bool IsIgnoredAsAttribute { get => false; }
+        public string IgnoredReasonAsAttribute { get => String.Empty; }
 
         internal TranslaterSmallint(string cSharpType) { _cSharpType = cSharpType; }
         private TranslaterSmallint() { }

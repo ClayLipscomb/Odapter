@@ -33,8 +33,22 @@ namespace Odapter {
         bool IsValid(ITyped dataType);
         string CSharpOracleDbType { get; }
         string CSharpOdpNetType { get; }
+        /// <summary>
+        /// Should type be ignored during translation as a procedure parameter
+        /// </summary>
         bool IsIgnoredAsParameter { get; }
-        string IgnoredReason { get; }
+        /// <summary>
+        /// Reason if ignored during translation as a procedure parameter
+        /// </summary>
+        string IgnoredReasonAsParameter { get; }
+        /// <summary>
+        /// Should type be ignored during translation as an entity attribute
+        /// </summary>
+        bool IsIgnoredAsAttribute { get; }
+        /// <summary>
+        /// Reason if ignored during translation as an entity attribute
+        /// </summary>
+        string IgnoredReasonAsAttribute { get; }
     }
 
     // types explicitly not implemented in ODP.NET managed: ARRAY (Varray, Nested Table), BOOLEAN, OBJECT, REF, XML_TYPE

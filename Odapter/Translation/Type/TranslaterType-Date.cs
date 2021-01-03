@@ -30,7 +30,9 @@ namespace Odapter {
         public string CSharpOracleDbType { get => CSharp.ORACLEDBTYPE_DATE; }
         public string CSharpOdpNetType { get => CSharp.ODP_NET_SAFE_TYPE_DATE; }
         public bool IsIgnoredAsParameter { get => false; }
-        public string IgnoredReason { get => String.Empty; }
+        public string IgnoredReasonAsParameter { get => String.Empty; }
+        public bool IsIgnoredAsAttribute { get => false; }
+        public string IgnoredReasonAsAttribute { get => String.Empty; }
 
         internal TranslaterDate(string cSharpType) { _cSharpType = cSharpType; }
         private TranslaterDate() { }
@@ -47,7 +49,9 @@ namespace Odapter {
         public string CSharpOracleDbType { get => CSharp.ORACLEDBTYPE_INTERVAL_DAY_TO_SECOND; }
         public string CSharpOdpNetType { get => CSharp.ODP_NET_SAFE_TYPE_INTERVAL_DS; }
         public bool IsIgnoredAsParameter { get => true; }
-        public string IgnoredReason { get => TranslaterMessage.IgnoreNotImplemented(OrclType); }
+        public string IgnoredReasonAsParameter { get => TranslaterMessage.IgnoreNotImplemented(OrclType); }
+        public bool IsIgnoredAsAttribute { get => true; }
+        public string IgnoredReasonAsAttribute { get => TranslaterMessage.IgnoreNotImplemented(OrclType); }
     }
 
     internal class TranslaterIntervalYearToMonth : ITranslaterType {
@@ -61,7 +65,9 @@ namespace Odapter {
         public string CSharpOracleDbType { get => CSharp.ORACLEDBTYPE_INTERVAL_YEAR_TO_MONTH; }
         public string CSharpOdpNetType { get => CSharp.ODP_NET_SAFE_TYPE_INTERVAL_YM; }
         public bool IsIgnoredAsParameter { get => true; }
-        public string IgnoredReason { get => TranslaterMessage.IgnoreNotImplemented(OrclType); }
+        public string IgnoredReasonAsParameter { get => TranslaterMessage.IgnoreNotImplemented(OrclType); }
+        public bool IsIgnoredAsAttribute { get => true; }
+        public string IgnoredReasonAsAttribute { get => TranslaterMessage.IgnoreNotImplemented(OrclType); }
     }
 
     internal class TranslaterTimestamp : ITranslaterType {
@@ -75,7 +81,9 @@ namespace Odapter {
         public string CSharpOracleDbType { get => CSharp.ORACLEDBTYPE_TIMESTAMP; }
         public string CSharpOdpNetType { get => CSharp.ODP_NET_SAFE_TYPE_TIMESTAMP; }
         public bool IsIgnoredAsParameter { get => false; }
-        public string IgnoredReason { get => String.Empty; }
+        public string IgnoredReasonAsParameter { get => String.Empty; }
+        public bool IsIgnoredAsAttribute { get => false; }
+        public string IgnoredReasonAsAttribute { get => String.Empty; }
 
         internal TranslaterTimestamp(string cSharpType) { _cSharpType = cSharpType; }
         private TranslaterTimestamp() { }
@@ -92,7 +100,9 @@ namespace Odapter {
         public string CSharpOracleDbType { get => CSharp.ORACLEDBTYPE_TIMESTAMP_LTZ; }
         public string CSharpOdpNetType { get => CSharp.ODP_NET_SAFE_TYPE_TIMESTAMP_LTZ; }
         public bool IsIgnoredAsParameter { get => true; }
-        public string IgnoredReason { get => TranslaterMessage.IgnoreNotImplemented(OrclType); }
+        public string IgnoredReasonAsParameter { get => TranslaterMessage.IgnoreNotImplemented(OrclType); }
+        public bool IsIgnoredAsAttribute { get => true; }
+        public string IgnoredReasonAsAttribute { get => TranslaterMessage.IgnoreNotImplemented(OrclType); }
     }
 
     internal class TranslaterTimestampWithTimeZone : ITranslaterType {
@@ -106,6 +116,8 @@ namespace Odapter {
         public string CSharpOracleDbType { get => CSharp.ORACLEDBTYPE_TIMESTAMP_TZ; }
         public string CSharpOdpNetType { get => CSharp.ODP_NET_SAFE_TYPE_TMESTAMP_TZ; }
         public bool IsIgnoredAsParameter { get => true; }
-        public string IgnoredReason { get => TranslaterMessage.IgnoreNotImplemented(OrclType); }
+        public string IgnoredReasonAsParameter { get => TranslaterMessage.IgnoreNotImplemented(OrclType); }
+        public bool IsIgnoredAsAttribute { get => true; }
+        public string IgnoredReasonAsAttribute { get => TranslaterMessage.IgnoreNotImplemented(OrclType); }
     }
 }

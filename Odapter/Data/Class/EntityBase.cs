@@ -32,9 +32,9 @@ namespace Odapter {
         /// <returns></returns>
         public bool IsIgnoredDueToOracleTypes(out string reasonMsg) {
             reasonMsg = "";
-            IEntityAttribute attr = this.Attributes.Find(a => a.Translater.IsIgnoredAsParameter);
+            IEntityAttribute attr = this.Attributes.Find(a => a.Translater.IsIgnoredAsAttribute);
             if (attr != null) {
-                reasonMsg = attr.Translater.IgnoredReason;
+                reasonMsg = attr.Translater.IgnoredReasonAsAttribute;
                 return true;
             }
             return false;
