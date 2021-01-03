@@ -10,7 +10,7 @@ CREATE OR REPLACE PACKAGE ODPT.odpt_pkg_main AS
 	TYPE t_assocarray_naturaln IS TABLE OF NATURALN INDEX BY PLS_INTEGER;  
 	TYPE t_assocarray_positive IS TABLE OF POSITIVE INDEX BY PLS_INTEGER;  
 	TYPE t_assocarray_positiven IS TABLE OF POSITIVEN INDEX BY PLS_INTEGER;  
-  
+
 	TYPE t_assocarray_number IS TABLE OF odpt_table_big.col_number%TYPE INDEX BY PLS_INTEGER;  
 	TYPE t_assocarray_binary_double IS TABLE OF odpt_table_big.col_binary_double%TYPE INDEX BY PLS_INTEGER;  
 	TYPE t_assocarray_binary_float IS TABLE OF odpt_table_big.col_binary_float%TYPE INDEX BY PLS_INTEGER;  
@@ -26,13 +26,13 @@ CREATE OR REPLACE PACKAGE ODPT.odpt_pkg_main AS
 
 	TYPE t_assocarray_char IS TABLE OF odpt_table_big.col_char_max%TYPE INDEX BY PLS_INTEGER;  
 	TYPE t_assocarray_nchar IS TABLE OF odpt_table_big.col_nchar_max%TYPE INDEX BY PLS_INTEGER;  
-  
+
 	TYPE t_assocarray_blob IS TABLE OF odpt_table_big.col_blob%TYPE INDEX BY PLS_INTEGER;  
 	TYPE t_assocarray_clob IS TABLE OF odpt_table_big.col_clob%TYPE INDEX BY PLS_INTEGER;  
 	TYPE t_assocarray_nclob IS TABLE OF odpt_table_big.col_nclob%TYPE INDEX BY PLS_INTEGER;  
 
 	TYPE t_assocarray_date IS TABLE OF odpt_table_big.col_date%TYPE INDEX BY PLS_INTEGER;  
-  
+
 	TYPE t_assocarray_timestamp IS TABLE OF odpt_table_big.col_timestamp%TYPE INDEX BY PLS_INTEGER;  
 	TYPE t_assocarray_timestamp_prec0 IS TABLE OF odpt_table_big.col_timestamp_prec0%TYPE INDEX BY PLS_INTEGER;  
 	TYPE t_assocarray_timestamp_prec9 IS TABLE OF odpt_table_big.col_timestamp_prec9%TYPE INDEX BY PLS_INTEGER;  
@@ -43,7 +43,7 @@ CREATE OR REPLACE PACKAGE ODPT.odpt_pkg_main AS
 
 	-- associative array types - VARCHAR2 indexed
 	TYPE t_assocarray_integer_v IS TABLE OF odpt_table_big.col_integer%TYPE INDEX BY VARCHAR2(100);  
-	
+
 	-- nested table types
 	TYPE t_nestedtable_number IS TABLE OF odpt_table_big.col_number%TYPE;
 	--TYPE t_nestedtable_integer IS TABLE OF odpt_table_big.col_integer%TYPE;
@@ -54,51 +54,119 @@ CREATE OR REPLACE PACKAGE ODPT.odpt_pkg_main AS
 	TYPE t_va_number IS VARRAY(10) of NUMBER;
 
 	-- data types ignored (not implemented) in code generation
-	TYPE t_record_type_ignored IS RECORD (
-		f_boolean							BOOLEAN,	 -- .NET cannot handle PL/SQL BOOLEAN
-		f_rowid								ROWID,
-		f_urowid							UROWID,
-		f_timestamp_w_l_time_zone 			TIMESTAMP WITH LOCAL TIME ZONE, 
-		f_timestamp_w_time_zone				TIMESTAMP WITH TIME ZONE,	
-		f_raw								RAW(1),
-		f_bfile								BFILE,
-		f_xmltype							XMLTYPE,
-		f_long								LONG,				-- deprecated
-		f_long_raw							LONG RAW,			-- deprecated
-		f_last								NUMBER
+--	TYPE t_record_type_ignored IS RECORD (
+--		f_boolean							BOOLEAN,	 -- .NET cannot handle PL/SQL BOOLEAN
+--		f_rowid								ROWID,
+--		f_urowid							UROWID,
+--		f_timestamp_w_l_time_zone 			TIMESTAMP WITH LOCAL TIME ZONE, 
+--		f_timestamp_w_time_zone				TIMESTAMP WITH TIME ZONE,	
+--		f_raw								RAW(1),
+--		f_bfile								BFILE,
+--		f_xmltype							XMLTYPE,
+--		f_long								LONG,				-- deprecated
+--		f_long_raw							LONG RAW,			-- deprecated
+--		f_last								NUMBER
+--	);
+--	TYPE t_cursor_typed_ignored IS REF CURSOR RETURN t_record_type_ignored;
+
+    ---------------------------------------------------------------------
+	-- data types ignored (not implemented) in record type code generation
+	TYPE t_ignore_aa_integer IS RECORD (
+		f_aa_integer					    t_assocarray_integer
 	);
-	TYPE t_cursor_typed_ignored IS REF CURSOR RETURN t_record_type_ignored;
+	TYPE t_cursor_ignore_aa_integer IS REF CURSOR RETURN t_ignore_aa_integer;
     
+	TYPE t_ignore_boolean IS RECORD (
+		f_boolean							BOOLEAN	 -- .NET cannot handle PL/SQL BOOLEAN
+	);
+	TYPE t_cursor_ignore_boolean IS REF CURSOR RETURN t_ignore_boolean;
+    
+	TYPE t_ignore_rowid IS RECORD (
+		f_rowid								ROWID
+	);
+	TYPE t_cursor_ignore_rowid IS REF CURSOR RETURN t_ignore_rowid;
+
+	TYPE t_ignore_urowid IS RECORD (
+		f_urowid							UROWID
+	);
+	TYPE t_cursor_ignore_urowid IS REF CURSOR RETURN t_ignore_urowid;
+
+	TYPE t_ignore_ts_w_l_t_z IS RECORD (
+		f_timestamp_w_l_time_zone 			TIMESTAMP WITH LOCAL TIME ZONE
+	);
+	TYPE t_cursor_ignore_ts_w_l_t_z IS REF CURSOR RETURN t_ignore_ts_w_l_t_z;
+
+	TYPE t_ignore_ts_w_t_z IS RECORD (
+		f_timestamp_w_time_zone				TIMESTAMP WITH TIME ZONE
+	);
+	TYPE t_cursor_ignore_ts_w_t_z IS REF CURSOR RETURN t_ignore_ts_w_t_z;
+
+	TYPE t_ignore_raw IS RECORD (
+		f_raw								RAW(1)
+	);
+	TYPE t_cursor_ignore_raw IS REF CURSOR RETURN t_ignore_raw;
+
+	TYPE t_ignore_bfile IS RECORD (
+		f_bfile								BFILE
+	);
+	TYPE t_cursor_ignore_bfile IS REF CURSOR RETURN t_ignore_bfile;
+
+	TYPE t_ignore_xmltype IS RECORD (
+		f_xmltype							XMLTYPE
+	);
+	TYPE t_cursor_ignore_xmltype IS REF CURSOR RETURN t_ignore_xmltype;
+
+	TYPE t_ignore_long IS RECORD (
+		f_long								LONG				-- deprecated
+	);
+	TYPE t_cursor_ignore_long IS REF CURSOR RETURN t_ignore_long;
+
+	TYPE t_ignore_long_raw IS RECORD (
+		f_long_raw							LONG RAW			-- deprecated
+	);
+	TYPE t_cursor_ignore_long_raw IS REF CURSOR RETURN t_ignore_long_raw;
+    ---------------------------------------------------------------------
+
     PROCEDURE proc_underscore_suffix;
     PROCEDURE proc_underscore_suffix_;
-    
+
     PROCEDURE proc_raise_exception;    
-    
+
     PROCEDURE proc_nocopy_increment(p_in IN INTEGER, p_in_out_nocopy IN OUT NOCOPY INTEGER, p_out_nocopy OUT NOCOPY INTEGER);
-    
+
     PROCEDURE proc_no_param;
     FUNCTION func_no_param RETURN NUMBER;
-    
+
     PROCEDURE duplicate_signature(p_param_in1 IN INTEGER, p_param_in_out1 IN OUT INTEGER, p_param_out1 OUT INTEGER);
     PROCEDURE duplicate_signature(p_param_in2 IN INTEGER, p_param_in_out2 IN OUT INTEGER, p_param_out2 OUT INTEGER);
     PROCEDURE duplicate_signature(p_param_in3 IN INTEGER, p_param_in_out3 IN OUT INTEGER, p_param_out3 OUT INTEGER);
     FUNCTION duplicate_signature(p_param_in1 IN INTEGER, p_param_in_out1 IN OUT INTEGER, p_param_out1 OUT INTEGER) RETURN INTEGER;
     FUNCTION duplicate_signature(p_param_in2 IN INTEGER, p_param_in_out2 IN OUT INTEGER, p_param_out2 OUT INTEGER) RETURN INTEGER;
     FUNCTION duplicate_signature(p_param_in3 IN INTEGER, p_param_in_out3 IN OUT INTEGER, p_param_out3 OUT INTEGER) RETURN INTEGER;
-    
+
 	PROCEDURE proc_optional_param(p_in_number_required IN NUMBER, p_in_out_number_required IN OUT NUMBER, p_in_number_optional IN NUMBER DEFAULT 0, p_in_varchar2_optional IN VARCHAR2 DEFAULT 'TEST');
 	FUNCTION func_optional_param(p_in_number_required IN NUMBER, p_in_out_number_required IN OUT NUMBER, 
 		p_in_number_optional IN NUMBER DEFAULT 0, p_in_varchar2_optional IN VARCHAR2 DEFAULT 'TEST') RETURN NUMBER;
 
-	FUNCTION func_cursor_typed_ignored RETURN t_cursor_typed_ignored;
-   
+	--FUNCTION func_cursor_ignore_aa_integer RETURN t_cursor_ignore_aa_integer;
+	FUNCTION func_cursor_ignore_boolean RETURN t_cursor_ignore_boolean;
+	FUNCTION func_cursor_ignore_rowid RETURN t_cursor_ignore_rowid;
+	FUNCTION func_cursor_ignore_urowid RETURN t_cursor_ignore_urowid;
+	FUNCTION func_cursor_ignore_ts_w_l_t_z RETURN t_cursor_ignore_ts_w_l_t_z;
+	FUNCTION func_cursor_ignore_ts_w_t_z RETURN t_cursor_ignore_ts_w_t_z;
+	FUNCTION func_cursor_ignore_raw RETURN t_cursor_ignore_raw;
+	FUNCTION func_cursor_ignore_bfile RETURN t_cursor_ignore_bfile;
+	FUNCTION func_cursor_ignore_xmltype RETURN t_cursor_ignore_xmltype;
+	FUNCTION func_cursor_ignore_long RETURN t_cursor_ignore_long;
+	FUNCTION func_cursor_ignore_long_raw RETURN t_cursor_ignore_long_raw;
+
 	FUNCTION func_integer(p_in IN INTEGER, p_in_out IN OUT INTEGER, p_out OUT INTEGER) RETURN INTEGER;
 	FUNCTION func_int(p_in IN INT, p_in_out IN OUT INT, p_out OUT INT) RETURN INT;
 	FUNCTION func_smallint(p_in IN SMALLINT, p_in_out IN OUT SMALLINT, p_out OUT SMALLINT) RETURN SMALLINT;
 
 	FUNCTION func_binary_integer(p_in IN BINARY_INTEGER, p_in_out IN OUT BINARY_INTEGER, p_out OUT BINARY_INTEGER) RETURN BINARY_INTEGER;
 	FUNCTION func_pls_integer(p_in IN PLS_INTEGER, p_in_out IN OUT PLS_INTEGER, p_out OUT PLS_INTEGER) RETURN PLS_INTEGER;
-		
+
 	FUNCTION func_natural(p_in IN NATURAL, p_in_out IN OUT NATURAL, p_out OUT NATURAL) RETURN NATURAL;
 	FUNCTION func_naturaln(p_in IN NATURALN, p_in_out IN OUT NATURALN, p_out OUT NATURALN) RETURN NATURALN;
 	FUNCTION func_positive(p_in IN POSITIVE, p_in_out IN OUT POSITIVE, p_out OUT POSITIVE) RETURN POSITIVE;
@@ -119,10 +187,10 @@ CREATE OR REPLACE PACKAGE ODPT.odpt_pkg_main AS
 	FUNCTION func_varchar2(p_in IN VARCHAR2, p_in_out IN OUT VARCHAR2, p_out OUT VARCHAR2) RETURN VARCHAR2;
 	FUNCTION func_nvarchar2(p_in IN NVARCHAR2, p_in_out IN OUT NVARCHAR2, p_out OUT NVARCHAR2) RETURN NVARCHAR2;
 	FUNCTION func_string(p_in IN STRING, p_in_out IN OUT STRING, p_out OUT STRING) RETURN STRING;
-	
+
 	FUNCTION func_nchar(p_in IN NCHAR, p_in_out IN OUT NCHAR, p_out OUT NCHAR) RETURN NCHAR;
 	FUNCTION func_char(p_in IN CHAR, p_in_out IN OUT CHAR, p_out OUT CHAR) RETURN CHAR;   
-	
+
 	FUNCTION func_ref(p_in IN REF odpt_big_ot, p_in_out IN OUT REF odpt_big_ot, p_out OUT REF odpt_big_ot) RETURN REF odpt_big_ot;
 
 	FUNCTION func_date(p_in IN DATE, p_in_out IN OUT DATE, p_out OUT DATE) RETURN DATE;
@@ -194,7 +262,7 @@ CREATE OR REPLACE PACKAGE ODPT.odpt_pkg_main AS
     -- implemented but successful execution is not possible due to ODP.NET not handling VARCHAR2-indexed associative array; cannot comment out due
     --      Oracle argument view not revealing if associative array is VARCHAR2-indexed
     FUNCTION func_aa_integer_v (p_in IN t_assocarray_integer_v, p_in_out IN OUT t_assocarray_integer_v, p_out OUT t_assocarray_integer_v) RETURN t_assocarray_integer_v;
-	
+
 	-- will never implemented due to Oracle deprecation
 	FUNCTION func_long(p_in IN LONG, p_in_out IN OUT LONG, p_out OUT LONG) RETURN LONG;
 	FUNCTION func_long_raw(p_in IN LONG RAW, p_in_out IN OUT LONG RAW, p_out OUT LONG RAW) RETURN LONG RAW;
