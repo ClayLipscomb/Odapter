@@ -195,6 +195,9 @@ namespace Odapter {
             int columnPosition = 0;
             foreach (IArgument arg in args) {
                 if (arg.DataLevel == recordDataLevel + 1) { // found a record field
+
+                    if (arg.OrclType is OrclAssociativeArray) return;   // logic needs to be moved to translation domain
+
                     // each of these fields are to be added to the record
                     IField f = new T_Field { Name = arg.ArgumentName, EntityName = recordArg.TypeSubname, DataType = arg.DataType,
                         DataPrecision = arg.DataPrecision, DataScale = arg.DataScale, CharLength = arg.CharLength,
