@@ -398,10 +398,10 @@ CREATE OR REPLACE PACKAGE BODY ODPT.odpt_pkg_main AS
 		RETURN p_in;
 	END;
 
---	FUNCTION func_cursor_ignore_aa_integer RETURN t_cursor_ignore_aa_integer IS
---	BEGIN
---		RETURN NULL;
---	END;
+	FUNCTION func_cursor_ignore_aa_integer RETURN t_cursor_ignore_aa_integer IS
+	BEGIN
+		RETURN NULL;
+	END;
 
 	FUNCTION func_cursor_ignore_boolean RETURN t_cursor_ignore_boolean IS
 	BEGIN

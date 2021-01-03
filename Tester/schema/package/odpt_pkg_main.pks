@@ -148,7 +148,7 @@ CREATE OR REPLACE PACKAGE ODPT.odpt_pkg_main AS
 	FUNCTION func_optional_param(p_in_number_required IN NUMBER, p_in_out_number_required IN OUT NUMBER, 
 		p_in_number_optional IN NUMBER DEFAULT 0, p_in_varchar2_optional IN VARCHAR2 DEFAULT 'TEST') RETURN NUMBER;
 
-	--FUNCTION func_cursor_ignore_aa_integer RETURN t_cursor_ignore_aa_integer;
+	FUNCTION func_cursor_ignore_aa_integer RETURN t_cursor_ignore_aa_integer;
 	FUNCTION func_cursor_ignore_boolean RETURN t_cursor_ignore_boolean;
 	FUNCTION func_cursor_ignore_rowid RETURN t_cursor_ignore_rowid;
 	FUNCTION func_cursor_ignore_urowid RETURN t_cursor_ignore_urowid;
