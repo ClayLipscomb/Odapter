@@ -522,8 +522,35 @@ namespace Schema.Odpt.Odpt.Package {
         private static readonly OdptPkgMain _instance = new OdptPkgMain();
         public static OdptPkgMain Instance { get { return _instance; } }
 
+        // **RECORD IGNORED** - Code generation for BFILE types has not been implemented field
+        // public abstract partial class TIgnoreBfile : Schema.Odpt.Odpt.OdptPackageRecord, ITIgnoreBfile {
+
         // **RECORD IGNORED** - .NET cannot send/receive a PL/SQL BOOLEAN field
-        // public abstract partial class TRecordTypeIgnored : Schema.Odpt.Odpt.OdptPackageRecord, ITRecordTypeIgnored {
+        // public abstract partial class TIgnoreBoolean : Schema.Odpt.Odpt.OdptPackageRecord, ITIgnoreBoolean {
+
+        // **RECORD IGNORED** - Code generation for LONG will not be implemented due to Oracle deprecation field
+        // public abstract partial class TIgnoreLong : Schema.Odpt.Odpt.OdptPackageRecord, ITIgnoreLong {
+
+        // **RECORD IGNORED** - Code generation for LONG RAW will not be implemented due to Oracle deprecation field
+        // public abstract partial class TIgnoreLongRaw : Schema.Odpt.Odpt.OdptPackageRecord, ITIgnoreLongRaw {
+
+        // **RECORD IGNORED** - Code generation for RAW types has not been implemented field
+        // public abstract partial class TIgnoreRaw : Schema.Odpt.Odpt.OdptPackageRecord, ITIgnoreRaw {
+
+        // **RECORD IGNORED** - Code generation for ROWID types has not been implemented field
+        // public abstract partial class TIgnoreRowid : Schema.Odpt.Odpt.OdptPackageRecord, ITIgnoreRowid {
+
+        // **RECORD IGNORED** - Code generation for TIMESTAMP WITH LOCAL TIME ZONE types has not been implemented field
+        // public abstract partial class TIgnoreTsWLTZ : Schema.Odpt.Odpt.OdptPackageRecord, ITIgnoreTsWLTZ {
+
+        // **RECORD IGNORED** - Code generation for TIMESTAMP WITH TIME ZONE types has not been implemented field
+        // public abstract partial class TIgnoreTsWTZ : Schema.Odpt.Odpt.OdptPackageRecord, ITIgnoreTsWTZ {
+
+        // **RECORD IGNORED** - Code generation for UROWID types has not been implemented field
+        // public abstract partial class TIgnoreUrowid : Schema.Odpt.Odpt.OdptPackageRecord, ITIgnoreUrowid {
+
+        // **RECORD IGNORED** - XMLTYPE types are not available in ODP.NET managed field
+        // public abstract partial class TIgnoreXmltype : Schema.Odpt.Odpt.OdptPackageRecord, ITIgnoreXmltype {
 
         public void DuplicateSignature1(Int64? pParamIn1, ref Int64? pParamInOut1, out Int64? pParamOut1, OracleConnection optionalPreexistingOpenConnection = null) {
             pParamOut1 = null; 
@@ -1910,12 +1937,75 @@ namespace Schema.Odpt.Odpt.Package {
             return __ret;
         } // FuncClob
 
+        // **PROC IGNORED** - Code generation for BFILE types has not been implemented
+        // public ICollection<T_TIgnoreBfile> FuncCursorIgnoreBfile<T_TIgnoreBfile>(
+        //        bool mapColumnToObjectPropertyByPosition = false, bool allowUnmappedColumnsToBeExcluded = false, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
+
+        // **PROC IGNORED** - Code generation for BFILE types has not been implemented
+        // public ICollection<T_TIgnoreBfile> FuncCursorIgnoreBfile<T_TIgnoreBfile>(UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
+
         // **PROC IGNORED** - .NET cannot send/receive a PL/SQL BOOLEAN
-        // public ICollection<T_TRecordTypeIgnored> FuncCursorTypedIgnored<T_TRecordTypeIgnored>(
+        // public ICollection<T_TIgnoreBoolean> FuncCursorIgnoreBoolean<T_TIgnoreBoolean>(
         //        bool mapColumnToObjectPropertyByPosition = false, bool allowUnmappedColumnsToBeExcluded = false, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
 
         // **PROC IGNORED** - .NET cannot send/receive a PL/SQL BOOLEAN
-        // public ICollection<T_TRecordTypeIgnored> FuncCursorTypedIgnored<T_TRecordTypeIgnored>(UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
+        // public ICollection<T_TIgnoreBoolean> FuncCursorIgnoreBoolean<T_TIgnoreBoolean>(UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
+
+        // **PROC IGNORED** - Code generation for LONG will not be implemented due to Oracle deprecation
+        // public ICollection<T_TIgnoreLong> FuncCursorIgnoreLong<T_TIgnoreLong>(
+        //        bool mapColumnToObjectPropertyByPosition = false, bool allowUnmappedColumnsToBeExcluded = false, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
+
+        // **PROC IGNORED** - Code generation for LONG will not be implemented due to Oracle deprecation
+        // public ICollection<T_TIgnoreLong> FuncCursorIgnoreLong<T_TIgnoreLong>(UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
+
+        // **PROC IGNORED** - Code generation for LONG RAW will not be implemented due to Oracle deprecation
+        // public ICollection<T_TIgnoreLongRaw> FuncCursorIgnoreLongRaw<T_TIgnoreLongRaw>(
+        //        bool mapColumnToObjectPropertyByPosition = false, bool allowUnmappedColumnsToBeExcluded = false, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
+
+        // **PROC IGNORED** - Code generation for LONG RAW will not be implemented due to Oracle deprecation
+        // public ICollection<T_TIgnoreLongRaw> FuncCursorIgnoreLongRaw<T_TIgnoreLongRaw>(UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
+
+        // **PROC IGNORED** - Code generation for RAW types has not been implemented
+        // public ICollection<T_TIgnoreRaw> FuncCursorIgnoreRaw<T_TIgnoreRaw>(
+        //        bool mapColumnToObjectPropertyByPosition = false, bool allowUnmappedColumnsToBeExcluded = false, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
+
+        // **PROC IGNORED** - Code generation for RAW types has not been implemented
+        // public ICollection<T_TIgnoreRaw> FuncCursorIgnoreRaw<T_TIgnoreRaw>(UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
+
+        // **PROC IGNORED** - Code generation for ROWID types has not been implemented
+        // public ICollection<T_TIgnoreRowid> FuncCursorIgnoreRowid<T_TIgnoreRowid>(
+        //        bool mapColumnToObjectPropertyByPosition = false, bool allowUnmappedColumnsToBeExcluded = false, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
+
+        // **PROC IGNORED** - Code generation for ROWID types has not been implemented
+        // public ICollection<T_TIgnoreRowid> FuncCursorIgnoreRowid<T_TIgnoreRowid>(UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
+
+        // **PROC IGNORED** - Code generation for TIMESTAMP WITH LOCAL TIME ZONE types has not been implemented
+        // public ICollection<T_TIgnoreTsWLTZ> FuncCursorIgnoreTsWLTZ<T_TIgnoreTsWLTZ>(
+        //        bool mapColumnToObjectPropertyByPosition = false, bool allowUnmappedColumnsToBeExcluded = false, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
+
+        // **PROC IGNORED** - Code generation for TIMESTAMP WITH LOCAL TIME ZONE types has not been implemented
+        // public ICollection<T_TIgnoreTsWLTZ> FuncCursorIgnoreTsWLTZ<T_TIgnoreTsWLTZ>(UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
+
+        // **PROC IGNORED** - Code generation for TIMESTAMP WITH TIME ZONE types has not been implemented
+        // public ICollection<T_TIgnoreTsWTZ> FuncCursorIgnoreTsWTZ<T_TIgnoreTsWTZ>(
+        //        bool mapColumnToObjectPropertyByPosition = false, bool allowUnmappedColumnsToBeExcluded = false, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
+
+        // **PROC IGNORED** - Code generation for TIMESTAMP WITH TIME ZONE types has not been implemented
+        // public ICollection<T_TIgnoreTsWTZ> FuncCursorIgnoreTsWTZ<T_TIgnoreTsWTZ>(UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
+
+        // **PROC IGNORED** - Code generation for UROWID types has not been implemented
+        // public ICollection<T_TIgnoreUrowid> FuncCursorIgnoreUrowid<T_TIgnoreUrowid>(
+        //        bool mapColumnToObjectPropertyByPosition = false, bool allowUnmappedColumnsToBeExcluded = false, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
+
+        // **PROC IGNORED** - Code generation for UROWID types has not been implemented
+        // public ICollection<T_TIgnoreUrowid> FuncCursorIgnoreUrowid<T_TIgnoreUrowid>(UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
+
+        // **PROC IGNORED** - XMLTYPE types are not available in ODP.NET managed
+        // public ICollection<T_TIgnoreXmltype> FuncCursorIgnoreXmltype<T_TIgnoreXmltype>(
+        //        bool mapColumnToObjectPropertyByPosition = false, bool allowUnmappedColumnsToBeExcluded = false, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
+
+        // **PROC IGNORED** - XMLTYPE types are not available in ODP.NET managed
+        // public ICollection<T_TIgnoreXmltype> FuncCursorIgnoreXmltype<T_TIgnoreXmltype>(UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
 
         public DateTime? FuncDate(DateTime? pIn, ref DateTime? pInOut, out DateTime? pOut, OracleConnection optionalPreexistingOpenConnection = null) {
             DateTime? __ret = null; pOut = null; 
@@ -5701,4 +5791,18 @@ namespace Schema.Odpt.Odpt.Package {
             }
         } // TruncTable
     } // OdptPkgTableNumber
+
+    public sealed partial class OdptSupplierInfoPkg : Schema.Odpt.Odpt.OdptAdapter {
+        private OdptSupplierInfoPkg() { }
+        private static readonly OdptSupplierInfoPkg _instance = new OdptSupplierInfoPkg();
+        public static OdptSupplierInfoPkg Instance { get { return _instance; } }
+
+        // **PROC IGNORED** - .NET cannot send/receive an associative array of a PL/SQL RECORD
+        // public void SupplierDetails(Int64? iVendorId, Int64? iVendorSiteId, Int64? iVendorContactId, out TSupplierInfoRec oSupplierInfo, 
+        //        out Boolean oSuccess, OracleConnection optionalPreexistingOpenConnection = null)
+
+        // **PROC IGNORED** - .NET cannot send/receive an associative array of a PL/SQL RECORD
+        // public void SupplierDetails(Int64? iFromVendorId, Int64? iToVendorId, out IList<TSupplierInfoRec> oSupplierInfoTab, out Boolean oSuccess, 
+        //        OracleConnection optionalPreexistingOpenConnection = null)
+    } // OdptSupplierInfoPkg
 } // Schema.Odpt.Odpt.Package
