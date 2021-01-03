@@ -34,7 +34,7 @@ namespace Odapter {
             reasonMsg = "";
             IEntityAttribute attr = this.Attributes.Find(a => a.Translater.IsIgnoredAsParameter);
             if (attr != null) {
-                reasonMsg = TranslaterMessage.FormatMsg(attr.Translater.IgnoredReason) + " " + attr.GetType().Name.ToLower();
+                reasonMsg = attr.Translater.IgnoredReason;
                 return true;
             }
             return false;
