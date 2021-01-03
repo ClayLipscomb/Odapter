@@ -242,6 +242,9 @@ namespace Odapter {
         private void LoadArguments<T_Argument>(OracleConnection connection)
             where T_Argument : class, IArgument, new() {
 
+            DisplayMessage("Reading package arguments...");
+            bool isFiltering = !String.IsNullOrWhiteSpace(Filter);
+
             string sql = " SELECT CAST(a.position as NUMBER(9,0)) position, a.overload, "
                             + " CAST(a.data_level as NUMBER(9,0)) data_level, a.argument_name, "
                             + " CAST(a.sequence as NUMBER(9,0)) sequence, a.data_type, a.in_out, CAST(a.data_length as NUMBER(9,0)) data_length, "
@@ -252,20 +255,24 @@ namespace Odapter {
                             + " o.owner owner_object "
                         + " FROM sys.all_arguments a, sys.all_objects o "
                         + " WHERE a.owner = :owner "
+
                         //  This join logic is necessary but it can cause the query to never return. We cannot require that an Oracle instance
                         //      be configured or tuned in order for the system views to perform. Instead, we need to enforce this condition 
-                        //      in C# (see below).
-                        //+ " AND a.owner = o.owner "
+                        //      in C# (see below **).
+                        // + " AND a.owner = o.owner " !!
 
                         + " AND a.package_name = o.object_name "
                         + " AND UPPER(o.object_type) = :objectType "    // required to restrict to package spec only
-                        + " AND UPPER(a.package_name) LIKE :packageNamePrefix || '%' "
+                        +  (isFiltering ? " AND UPPER(a.package_name) LIKE :packageNamePrefix || '%' " : String.Empty)
                         + " ORDER BY a.package_name, a.object_name, a.overload, a.sequence ";
 
-            DisplayMessage("Reading package arguments...");
-            List<IArgument> args = connection.Query<T_Argument>(sql,
-                new { owner = Schema, objectType = SytemTableObjectType.PACKAGE.ToString(), packageNamePrefix = Filter.ToUpper() })
-                .Where(a => a.Owner == a.OwnerObject)   // prevents inclusion of identically named package argument from another schema
+            var dynamicParameters = new DynamicParameters();
+            dynamicParameters.Add("owner", Schema);
+            dynamicParameters.Add("objectType", SytemTableObjectType.PACKAGE.ToString());
+            if (isFiltering) dynamicParameters.Add("packageNamePrefix", Filter.ToUpper());
+
+            List<IArgument> args = connection.Query<T_Argument>(sql, dynamicParameters)
+                .Where(a => a.Owner == a.OwnerObject)   // ** prevents inclusion of identically named package argument from another schema
                 .ToList<IArgument>();
             if (IsExcludeObjectsNamesWithSpecificChars) args = args.FindAll(a => a.PackageName.IndexOfAny(ObjectNameCharsToExclude) == -1);
             DisplayMessage(args.Count.ToString() + " arguments read.");
