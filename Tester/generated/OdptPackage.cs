@@ -740,8 +740,35 @@ namespace Schema.Odpt.Package {
         private static readonly OdptPkgMain _instance = new OdptPkgMain();
         public static OdptPkgMain Instance { get { return _instance; } }
 
-        // **RECORD IGNORED** - .NET cannot send/receive a PL/SQL BOOLEAN field
-        // public abstract partial class TRecordTypeIgnored : Schema.Odpt.OdptPackageRecord, ITRecordTypeIgnored {
+        // **RECORD IGNORED** - Code generation for BFILE type has not been implemented
+        // public abstract partial class TIgnoreBfile : Schema.Odpt.OdptPackageRecord, ITIgnoreBfile {
+
+        // **RECORD IGNORED** - .NET cannot send/receive a PL/SQL BOOLEAN type
+        // public abstract partial class TIgnoreBoolean : Schema.Odpt.OdptPackageRecord, ITIgnoreBoolean {
+
+        // **RECORD IGNORED** - Code generation for LONG type will not be implemented due to Oracle deprecation
+        // public abstract partial class TIgnoreLong : Schema.Odpt.OdptPackageRecord, ITIgnoreLong {
+
+        // **RECORD IGNORED** - Code generation for LONG RAW type will not be implemented due to Oracle deprecation
+        // public abstract partial class TIgnoreLongRaw : Schema.Odpt.OdptPackageRecord, ITIgnoreLongRaw {
+
+        // **RECORD IGNORED** - Code generation for RAW type has not been implemented
+        // public abstract partial class TIgnoreRaw : Schema.Odpt.OdptPackageRecord, ITIgnoreRaw {
+
+        // **RECORD IGNORED** - Code generation for ROWID type has not been implemented
+        // public abstract partial class TIgnoreRowid : Schema.Odpt.OdptPackageRecord, ITIgnoreRowid {
+
+        // **RECORD IGNORED** - Code generation for TIMESTAMP WITH LOCAL TIME ZONE type has not been implemented
+        // public abstract partial class TIgnoreTsWLTZ : Schema.Odpt.OdptPackageRecord, ITIgnoreTsWLTZ {
+
+        // **RECORD IGNORED** - Code generation for TIMESTAMP WITH TIME ZONE type has not been implemented
+        // public abstract partial class TIgnoreTsWTZ : Schema.Odpt.OdptPackageRecord, ITIgnoreTsWTZ {
+
+        // **RECORD IGNORED** - Code generation for UROWID type has not been implemented
+        // public abstract partial class TIgnoreUrowid : Schema.Odpt.OdptPackageRecord, ITIgnoreUrowid {
+
+        // **RECORD IGNORED** - XMLTYPE type is not available in ODP.NET managed
+        // public abstract partial class TIgnoreXmltype : Schema.Odpt.OdptPackageRecord, ITIgnoreXmltype {
 
         public void DuplicateSignature1(Int64? pParamIn1, ref Int64? pParamInOut1, out Int64? pParamOut1, OracleConnection optionalPreexistingOpenConnection = null) {
             pParamOut1 = null; 
@@ -1038,13 +1065,13 @@ namespace Schema.Odpt.Package {
             return __ret;
         } // FuncAaBinaryFloat
 
-        // **PROC IGNORED** - .NET cannot send/receive an associative array of a BINARY_INTEGER
+        // **PROC IGNORED** - .NET cannot send/receive an associative array of a BINARY_INTEGER type
         // public IList<Int32?> FuncAaBinaryInteger(IList<Int32?> pIn, ref IList<Int32?> pInOut, out IList<Int32?> pOut, OracleConnection optionalPreexistingOpenConnection = null)
 
-        // **PROC IGNORED** - .NET cannot send/receive an associative array of a BLOB
+        // **PROC IGNORED** - .NET cannot send/receive an associative array of a BLOB type
         // public IList<Byte[]> FuncAaBlob(IList<Byte[]> pIn, ref IList<Byte[]> pInOut, out IList<Byte[]> pOut, OracleConnection optionalPreexistingOpenConnection = null)
 
-        // **PROC IGNORED** - .NET cannot send/receive an associative array of a PL/SQL BOOLEAN
+        // **PROC IGNORED** - .NET cannot send/receive an associative array of a PL/SQL BOOLEAN type
         // public IList<Boolean> FuncAaBoolean(IList<Boolean> pIn, ref IList<Boolean> pInOut, out IList<Boolean> pOut, OracleConnection optionalPreexistingOpenConnection = null)
 
         public IList<String> FuncAaChar(IList<String> pIn, ref IList<String> pInOut, out IList<String> pOut, OracleConnection optionalPreexistingOpenConnection = null) {
@@ -1108,7 +1135,7 @@ namespace Schema.Odpt.Package {
             return __ret;
         } // FuncAaChar
 
-        // **PROC IGNORED** - .NET cannot send/receive an associative array of a CLOB
+        // **PROC IGNORED** - .NET cannot send/receive an associative array of a CLOB type
         // public IList<String> FuncAaClob(IList<String> pIn, ref IList<String> pInOut, out IList<String> pOut, OracleConnection optionalPreexistingOpenConnection = null)
 
         public IList<DateTime?> FuncAaDate(IList<DateTime?> pIn, ref IList<DateTime?> pInOut, out IList<DateTime?> pOut, OracleConnection optionalPreexistingOpenConnection = null) {
@@ -1429,10 +1456,10 @@ namespace Schema.Odpt.Package {
             return __ret;
         } // FuncAaIntegerV
 
-        // **PROC IGNORED** - .NET cannot send/receive an associative array of a BINARY_INTEGER
+        // **PROC IGNORED** - .NET cannot send/receive an associative array of a BINARY_INTEGER type
         // public IList<Int32?> FuncAaNatural(IList<Int32?> pIn, ref IList<Int32?> pInOut, out IList<Int32?> pOut, OracleConnection optionalPreexistingOpenConnection = null)
 
-        // **PROC IGNORED** - .NET cannot send/receive an associative array of a BINARY_INTEGER
+        // **PROC IGNORED** - .NET cannot send/receive an associative array of a BINARY_INTEGER type
         // public IList<Int32?> FuncAaNaturaln(IList<Int32?> pIn, ref IList<Int32?> pInOut, out IList<Int32?> pOut, OracleConnection optionalPreexistingOpenConnection = null)
 
         public IList<String> FuncAaNchar(IList<String> pIn, ref IList<String> pInOut, out IList<String> pOut, OracleConnection optionalPreexistingOpenConnection = null) {
@@ -1496,7 +1523,7 @@ namespace Schema.Odpt.Package {
             return __ret;
         } // FuncAaNchar
 
-        // **PROC IGNORED** - .NET cannot send/receive an associative array of a NCLOB
+        // **PROC IGNORED** - .NET cannot send/receive an associative array of a NCLOB type
         // public IList<String> FuncAaNclob(IList<String> pIn, ref IList<String> pInOut, out IList<String> pOut, OracleConnection optionalPreexistingOpenConnection = null)
 
         public IList<Decimal?> FuncAaNumber(IList<Decimal?> pIn, ref IList<Decimal?> pInOut, out IList<Decimal?> pOut, OracleConnection optionalPreexistingOpenConnection = null) {
@@ -1666,13 +1693,13 @@ namespace Schema.Odpt.Package {
             return __ret;
         } // FuncAaNvarchar2
 
-        // **PROC IGNORED** - .NET cannot send/receive an associative array of a BINARY_INTEGER
+        // **PROC IGNORED** - .NET cannot send/receive an associative array of a BINARY_INTEGER type
         // public IList<Int32?> FuncAaPlsInteger(IList<Int32?> pIn, ref IList<Int32?> pInOut, out IList<Int32?> pOut, OracleConnection optionalPreexistingOpenConnection = null)
 
-        // **PROC IGNORED** - .NET cannot send/receive an associative array of a BINARY_INTEGER
+        // **PROC IGNORED** - .NET cannot send/receive an associative array of a BINARY_INTEGER type
         // public IList<Int32?> FuncAaPositive(IList<Int32?> pIn, ref IList<Int32?> pInOut, out IList<Int32?> pOut, OracleConnection optionalPreexistingOpenConnection = null)
 
-        // **PROC IGNORED** - .NET cannot send/receive an associative array of a BINARY_INTEGER
+        // **PROC IGNORED** - .NET cannot send/receive an associative array of a BINARY_INTEGER type
         // public IList<Int32?> FuncAaPositiven(IList<Int32?> pIn, ref IList<Int32?> pInOut, out IList<Int32?> pOut, OracleConnection optionalPreexistingOpenConnection = null)
 
         public IList<Decimal?> FuncAaReal(IList<Decimal?> pIn, ref IList<Decimal?> pInOut, out IList<Decimal?> pOut, OracleConnection optionalPreexistingOpenConnection = null) {
@@ -1728,10 +1755,10 @@ namespace Schema.Odpt.Package {
             return __ret;
         } // FuncAaReal
 
-        // **PROC IGNORED** - .NET cannot send/receive an associative array of a PL/SQL RECORD
+        // **PROC IGNORED** - .NET cannot send/receive an associative array of a PL/SQL RECORD type
         // public IList<TTableBig> FuncAaRecord(IList<TTableBig> pIn, ref IList<TTableBig> pInOut, out IList<TTableBig> pOut, OracleConnection optionalPreexistingOpenConnection = null)
 
-        // **PROC IGNORED** - .NET cannot send/receive an associative array of a PL/SQL RECORD
+        // **PROC IGNORED** - .NET cannot send/receive an associative array of a PL/SQL RECORD type
         // public IList<FuncAaRowSomeRowType> FuncAaRow(IList<FuncAaRowSomeRowType> pIn, ref IList<FuncAaRowSomeRowType> pInOut, out IList<FuncAaRowSomeRowType> pOut, OracleConnection optionalPreexistingOpenConnection = null)
 
         public IList<Int64?> FuncAaSmallint(IList<Int64?> pIn, ref IList<Int64?> pInOut, out IList<Int64?> pOut, OracleConnection optionalPreexistingOpenConnection = null) {
@@ -1848,13 +1875,13 @@ namespace Schema.Odpt.Package {
             return __ret;
         } // FuncAaString
 
-        // **PROC IGNORED** - .NET cannot send/receive an associative array of a TIMESTAMP
+        // **PROC IGNORED** - .NET cannot send/receive an associative array of a TIMESTAMP type
         // public IList<DateTime?> FuncAaTimestamp(IList<DateTime?> pIn, ref IList<DateTime?> pInOut, out IList<DateTime?> pOut, OracleConnection optionalPreexistingOpenConnection = null)
 
-        // **PROC IGNORED** - .NET cannot send/receive an associative array of a TIMESTAMP
+        // **PROC IGNORED** - .NET cannot send/receive an associative array of a TIMESTAMP type
         // public IList<DateTime?> FuncAaTimestampPrec0(IList<DateTime?> pIn, ref IList<DateTime?> pInOut, out IList<DateTime?> pOut, OracleConnection optionalPreexistingOpenConnection = null)
 
-        // **PROC IGNORED** - .NET cannot send/receive an associative array of a TIMESTAMP
+        // **PROC IGNORED** - .NET cannot send/receive an associative array of a TIMESTAMP type
         // public IList<DateTime?> FuncAaTimestampPrec9(IList<DateTime?> pIn, ref IList<DateTime?> pInOut, out IList<DateTime?> pOut, OracleConnection optionalPreexistingOpenConnection = null)
 
         public IList<String> FuncAaVarchar2(IList<String> pIn, ref IList<String> pInOut, out IList<String> pOut, OracleConnection optionalPreexistingOpenConnection = null) {
@@ -1918,7 +1945,7 @@ namespace Schema.Odpt.Package {
             return __ret;
         } // FuncAaVarchar2
 
-        // **PROC IGNORED** - Code generation for BFILE types has not been implemented
+        // **PROC IGNORED** - Code generation for BFILE type has not been implemented
         // public Byte[] FuncBfile(Byte[] pIn, ref Byte[] pInOut, out Byte[] pOut, OracleConnection optionalPreexistingOpenConnection = null)
 
         public Double? FuncBinaryDouble(Double? pIn, ref Double? pInOut, out Double? pOut, OracleConnection optionalPreexistingOpenConnection = null) {
@@ -2057,7 +2084,7 @@ namespace Schema.Odpt.Package {
             return __ret;
         } // FuncBlob
 
-        // **PROC IGNORED** - .NET cannot send/receive a PL/SQL BOOLEAN
+        // **PROC IGNORED** - .NET cannot send/receive a PL/SQL BOOLEAN type
         // public Boolean FuncBoolean(Boolean pIn, ref Boolean pInOut, out Boolean pOut, OracleConnection optionalPreexistingOpenConnection = null)
 
         public String FuncChar(String pIn, ref String pInOut, out String pOut, OracleConnection optionalPreexistingOpenConnection = null) {
@@ -2128,12 +2155,75 @@ namespace Schema.Odpt.Package {
             return __ret;
         } // FuncClob
 
-        // **PROC IGNORED** - .NET cannot send/receive a PL/SQL BOOLEAN
-        // public ICollection<T_TRecordTypeIgnored> FuncCursorTypedIgnored<T_TRecordTypeIgnored>(
+        // **PROC IGNORED** - Code generation for BFILE type has not been implemented
+        // public ICollection<T_TIgnoreBfile> FuncCursorIgnoreBfile<T_TIgnoreBfile>(
         //        bool mapColumnToObjectPropertyByPosition = false, bool allowUnmappedColumnsToBeExcluded = false, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
 
-        // **PROC IGNORED** - .NET cannot send/receive a PL/SQL BOOLEAN
-        // public ICollection<T_TRecordTypeIgnored> FuncCursorTypedIgnored<T_TRecordTypeIgnored>(UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
+        // **PROC IGNORED** - Code generation for BFILE type has not been implemented
+        // public ICollection<T_TIgnoreBfile> FuncCursorIgnoreBfile<T_TIgnoreBfile>(UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
+
+        // **PROC IGNORED** - .NET cannot send/receive a PL/SQL BOOLEAN type
+        // public ICollection<T_TIgnoreBoolean> FuncCursorIgnoreBoolean<T_TIgnoreBoolean>(
+        //        bool mapColumnToObjectPropertyByPosition = false, bool allowUnmappedColumnsToBeExcluded = false, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
+
+        // **PROC IGNORED** - .NET cannot send/receive a PL/SQL BOOLEAN type
+        // public ICollection<T_TIgnoreBoolean> FuncCursorIgnoreBoolean<T_TIgnoreBoolean>(UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
+
+        // **PROC IGNORED** - Code generation for LONG type will not be implemented due to Oracle deprecation
+        // public ICollection<T_TIgnoreLong> FuncCursorIgnoreLong<T_TIgnoreLong>(
+        //        bool mapColumnToObjectPropertyByPosition = false, bool allowUnmappedColumnsToBeExcluded = false, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
+
+        // **PROC IGNORED** - Code generation for LONG type will not be implemented due to Oracle deprecation
+        // public ICollection<T_TIgnoreLong> FuncCursorIgnoreLong<T_TIgnoreLong>(UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
+
+        // **PROC IGNORED** - Code generation for LONG RAW type will not be implemented due to Oracle deprecation
+        // public ICollection<T_TIgnoreLongRaw> FuncCursorIgnoreLongRaw<T_TIgnoreLongRaw>(
+        //        bool mapColumnToObjectPropertyByPosition = false, bool allowUnmappedColumnsToBeExcluded = false, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
+
+        // **PROC IGNORED** - Code generation for LONG RAW type will not be implemented due to Oracle deprecation
+        // public ICollection<T_TIgnoreLongRaw> FuncCursorIgnoreLongRaw<T_TIgnoreLongRaw>(UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
+
+        // **PROC IGNORED** - Code generation for RAW type has not been implemented
+        // public ICollection<T_TIgnoreRaw> FuncCursorIgnoreRaw<T_TIgnoreRaw>(
+        //        bool mapColumnToObjectPropertyByPosition = false, bool allowUnmappedColumnsToBeExcluded = false, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
+
+        // **PROC IGNORED** - Code generation for RAW type has not been implemented
+        // public ICollection<T_TIgnoreRaw> FuncCursorIgnoreRaw<T_TIgnoreRaw>(UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
+
+        // **PROC IGNORED** - Code generation for ROWID type has not been implemented
+        // public ICollection<T_TIgnoreRowid> FuncCursorIgnoreRowid<T_TIgnoreRowid>(
+        //        bool mapColumnToObjectPropertyByPosition = false, bool allowUnmappedColumnsToBeExcluded = false, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
+
+        // **PROC IGNORED** - Code generation for ROWID type has not been implemented
+        // public ICollection<T_TIgnoreRowid> FuncCursorIgnoreRowid<T_TIgnoreRowid>(UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
+
+        // **PROC IGNORED** - Code generation for TIMESTAMP WITH LOCAL TIME ZONE type has not been implemented
+        // public ICollection<T_TIgnoreTsWLTZ> FuncCursorIgnoreTsWLTZ<T_TIgnoreTsWLTZ>(
+        //        bool mapColumnToObjectPropertyByPosition = false, bool allowUnmappedColumnsToBeExcluded = false, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
+
+        // **PROC IGNORED** - Code generation for TIMESTAMP WITH LOCAL TIME ZONE type has not been implemented
+        // public ICollection<T_TIgnoreTsWLTZ> FuncCursorIgnoreTsWLTZ<T_TIgnoreTsWLTZ>(UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
+
+        // **PROC IGNORED** - Code generation for TIMESTAMP WITH TIME ZONE type has not been implemented
+        // public ICollection<T_TIgnoreTsWTZ> FuncCursorIgnoreTsWTZ<T_TIgnoreTsWTZ>(
+        //        bool mapColumnToObjectPropertyByPosition = false, bool allowUnmappedColumnsToBeExcluded = false, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
+
+        // **PROC IGNORED** - Code generation for TIMESTAMP WITH TIME ZONE type has not been implemented
+        // public ICollection<T_TIgnoreTsWTZ> FuncCursorIgnoreTsWTZ<T_TIgnoreTsWTZ>(UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
+
+        // **PROC IGNORED** - Code generation for UROWID type has not been implemented
+        // public ICollection<T_TIgnoreUrowid> FuncCursorIgnoreUrowid<T_TIgnoreUrowid>(
+        //        bool mapColumnToObjectPropertyByPosition = false, bool allowUnmappedColumnsToBeExcluded = false, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
+
+        // **PROC IGNORED** - Code generation for UROWID type has not been implemented
+        // public ICollection<T_TIgnoreUrowid> FuncCursorIgnoreUrowid<T_TIgnoreUrowid>(UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
+
+        // **PROC IGNORED** - XMLTYPE type is not available in ODP.NET managed
+        // public ICollection<T_TIgnoreXmltype> FuncCursorIgnoreXmltype<T_TIgnoreXmltype>(
+        //        bool mapColumnToObjectPropertyByPosition = false, bool allowUnmappedColumnsToBeExcluded = false, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
+
+        // **PROC IGNORED** - XMLTYPE type is not available in ODP.NET managed
+        // public ICollection<T_TIgnoreXmltype> FuncCursorIgnoreXmltype<T_TIgnoreXmltype>(UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
 
         public DateTime? FuncDate(DateTime? pIn, ref DateTime? pInOut, out DateTime? pOut, OracleConnection optionalPreexistingOpenConnection = null) {
             DateTime? __ret = null; pOut = null; 
@@ -2339,16 +2429,16 @@ namespace Schema.Odpt.Package {
             return __ret;
         } // FuncInteger
 
-        // **PROC IGNORED** - Code generation for INTERVAL DAY TO SECOND types has not been implemented
+        // **PROC IGNORED** - Code generation for INTERVAL DAY TO SECOND type has not been implemented
         // public TimeSpan? FuncIntervalDayToSecond(TimeSpan? pIn, ref TimeSpan? pInOut, out TimeSpan? pOut, OracleConnection optionalPreexistingOpenConnection = null)
 
-        // **PROC IGNORED** - Code generation for INTERVAL YEAR TO MONTH types has not been implemented
+        // **PROC IGNORED** - Code generation for INTERVAL YEAR TO MONTH type has not been implemented
         // public TimeSpan? FuncIntervalYearToMonth(TimeSpan? pIn, ref TimeSpan? pInOut, out TimeSpan? pOut, OracleConnection optionalPreexistingOpenConnection = null)
 
-        // **PROC IGNORED** - Code generation for LONG will not be implemented due to Oracle deprecation
+        // **PROC IGNORED** - Code generation for LONG type will not be implemented due to Oracle deprecation
         // public Byte[] FuncLong(Byte[] pIn, ref Byte[] pInOut, out Byte[] pOut, OracleConnection optionalPreexistingOpenConnection = null)
 
-        // **PROC IGNORED** - Code generation for LONG RAW will not be implemented due to Oracle deprecation
+        // **PROC IGNORED** - Code generation for LONG RAW type will not be implemented due to Oracle deprecation
         // public Byte[] FuncLongRaw(Byte[] pIn, ref Byte[] pInOut, out Byte[] pOut, OracleConnection optionalPreexistingOpenConnection = null)
 
         public Int32? FuncNatural(Int32? pIn, ref Int32? pInOut, out Int32? pOut, OracleConnection optionalPreexistingOpenConnection = null) {
@@ -2512,7 +2602,7 @@ namespace Schema.Odpt.Package {
             return __ret;
         } // FuncNoParam
 
-        // **PROC IGNORED** - Code generation for NESTED TABLE types has not been implemented
+        // **PROC IGNORED** - Code generation for NESTED TABLE type has not been implemented
         // public IList<Decimal?> FuncNtNumber(IList<Decimal?> pIn, ref IList<Decimal?> pInOut, out IList<Decimal?> pOut, OracleConnection optionalPreexistingOpenConnection = null)
 
         public Decimal? FuncNumber(Decimal? pIn, ref Decimal? pInOut, out Decimal? pOut, OracleConnection optionalPreexistingOpenConnection = null) {
@@ -2617,7 +2707,7 @@ namespace Schema.Odpt.Package {
             return __ret;
         } // FuncNvarchar2
 
-        // **PROC IGNORED** - OBJECT types are not available in ODP.NET managed
+        // **PROC IGNORED** - OBJECT type is not available in ODP.NET managed
         // public OdptBigOt FuncObjectType(OdptBigOt pIn, ref OdptBigOt pInOut, out OdptBigOt pOut, OracleConnection optionalPreexistingOpenConnection = null)
 
         public Decimal? FuncOptionalParam(Decimal? pInNumberRequired, ref Decimal? pInOutNumberRequired, Decimal? pInNumberOptional = null, String pInVarchar2Optional = null, 
@@ -2755,7 +2845,7 @@ namespace Schema.Odpt.Package {
             return __ret;
         } // FuncPositiven
 
-        // **PROC IGNORED** - Code generation for RAW types has not been implemented
+        // **PROC IGNORED** - Code generation for RAW type has not been implemented
         // public Byte[] FuncRaw(Byte[] pIn, ref Byte[] pInOut, out Byte[] pOut, OracleConnection optionalPreexistingOpenConnection = null)
 
         public Decimal? FuncReal(Decimal? pIn, ref Decimal? pInOut, out Decimal? pOut, OracleConnection optionalPreexistingOpenConnection = null) {
@@ -2792,16 +2882,16 @@ namespace Schema.Odpt.Package {
             return __ret;
         } // FuncReal
 
-        // **PROC IGNORED** - .NET cannot send/receive a PL/SQL RECORD (apart from cursor)
+        // **PROC IGNORED** - .NET cannot send/receive a PL/SQL RECORD type (apart from cursor)
         // public TTableBig FuncRecord(TTableBig pIn, ref TTableBig pInOut, out TTableBig pOut, OracleConnection optionalPreexistingOpenConnection = null)
 
-        // **PROC IGNORED** - REF types are not available in ODP.NET managed
+        // **PROC IGNORED** - REF type is not available in ODP.NET managed
         // public String FuncRef(String pIn, ref String pInOut, out String pOut, OracleConnection optionalPreexistingOpenConnection = null)
 
-        // **PROC IGNORED** - .NET cannot send/receive a PL/SQL RECORD (apart from cursor)
+        // **PROC IGNORED** - .NET cannot send/receive a PL/SQL RECORD type (apart from cursor)
         // public FuncRowSomeRowType FuncRow(FuncRowPInRowType pIn, ref FuncRowPInOutRowType pInOut, out FuncRowPOutRowType pOut, OracleConnection optionalPreexistingOpenConnection = null)
 
-        // **PROC IGNORED** - Code generation for ROWID types has not been implemented
+        // **PROC IGNORED** - Code generation for ROWID type has not been implemented
         // public String FuncRowid(String pIn, ref String pInOut, out String pOut, OracleConnection optionalPreexistingOpenConnection = null)
 
         public Int64? FuncSmallint(Int64? pIn, ref Int64? pInOut, out Int64? pOut, OracleConnection optionalPreexistingOpenConnection = null) {
@@ -2906,13 +2996,13 @@ namespace Schema.Odpt.Package {
             return __ret;
         } // FuncTimestamp
 
-        // **PROC IGNORED** - Code generation for TIMESTAMP WITH LOCAL TIME ZONE types has not been implemented
+        // **PROC IGNORED** - Code generation for TIMESTAMP WITH LOCAL TIME ZONE type has not been implemented
         // public DateTime? FuncTimestampWLTimeZone(DateTime? pIn, ref DateTime? pInOut, out DateTime? pOut, OracleConnection optionalPreexistingOpenConnection = null)
 
-        // **PROC IGNORED** - Code generation for TIMESTAMP WITH TIME ZONE types has not been implemented
+        // **PROC IGNORED** - Code generation for TIMESTAMP WITH TIME ZONE type has not been implemented
         // public DateTime? FuncTimestampWTimeZone(DateTime? pIn, ref DateTime? pInOut, out DateTime? pOut, OracleConnection optionalPreexistingOpenConnection = null)
 
-        // **PROC IGNORED** - Code generation for UROWID types has not been implemented
+        // **PROC IGNORED** - Code generation for UROWID type has not been implemented
         // public String FuncUrowid(String pIn, ref String pInOut, out String pOut, OracleConnection optionalPreexistingOpenConnection = null)
 
         public String FuncVarchar(String pIn, ref String pInOut, out String pOut, OracleConnection optionalPreexistingOpenConnection = null) {
@@ -2983,10 +3073,10 @@ namespace Schema.Odpt.Package {
             return __ret;
         } // FuncVarchar2
 
-        // **PROC IGNORED** - Code generation for VARRAY types has not been implemented
+        // **PROC IGNORED** - Code generation for VARRAY type has not been implemented
         // public IList<Decimal?> FuncVaNumber(IList<Decimal?> pIn, ref IList<Decimal?> pInOut, out IList<Decimal?> pOut, OracleConnection optionalPreexistingOpenConnection = null)
 
-        // **PROC IGNORED** - XMLTYPE types are not available in ODP.NET managed
+        // **PROC IGNORED** - XMLTYPE type is not available in ODP.NET managed
         // public XmlDocument FuncXmltype(XmlDocument pIn, ref XmlDocument pInOut, out XmlDocument pOut, OracleConnection optionalPreexistingOpenConnection = null)
 
         public void ProcBinaryDoubleConst(out Double? pMinNormal, out Double? pMaxNormal, OracleConnection optionalPreexistingOpenConnection = null) {
@@ -3183,7 +3273,7 @@ namespace Schema.Odpt.Package {
         private static readonly OdptPkgSql _instance = new OdptPkgSql();
         public static OdptPkgSql Instance { get { return _instance; } }
 
-        // **PROC IGNORED** - .NET cannot send/receive a PL/SQL BOOLEAN
+        // **PROC IGNORED** - .NET cannot send/receive a PL/SQL BOOLEAN type
         // public void WhereCondition(ref String pWhere, String pOperand1, String pOperator, String pOperand2, 
         //        Boolean pOr, OracleConnection optionalPreexistingOpenConnection = null)
 
@@ -4755,13 +4845,13 @@ namespace Schema.Odpt.Package {
             return __ret;
         } // InsertRow
 
-        // **PROC IGNORED** - .NET cannot send/receive a PL/SQL RECORD (apart from cursor)
+        // **PROC IGNORED** - .NET cannot send/receive a PL/SQL RECORD type (apart from cursor)
         // public Int64? InsertRow(InsertRowPRowRowType pRow, OracleConnection optionalPreexistingOpenConnection = null)
 
-        // **PROC IGNORED** - .NET cannot send a REF CURSOR
+        // **PROC IGNORED** - .NET cannot send a REF CURSOR type
         // public void ProcTypedCursorIn(ICollection<T_TTableBig> pRefCursor, OracleConnection optionalPreexistingOpenConnection = null)
 
-        // **PROC IGNORED** - .NET cannot send a REF CURSOR
+        // **PROC IGNORED** - .NET cannot send a REF CURSOR type
         // public void ProcTypedCursorInOut(ref ICollection<T_TTableBig> pRefCursor, OracleConnection optionalPreexistingOpenConnection = null)
 
         public void TruncTable(OracleConnection optionalPreexistingOpenConnection = null) {
@@ -5752,7 +5842,7 @@ namespace Schema.Odpt.Package {
             return __ret;
         } // InsertRow
 
-        // **PROC IGNORED** - .NET cannot send/receive a PL/SQL RECORD (apart from cursor)
+        // **PROC IGNORED** - .NET cannot send/receive a PL/SQL RECORD type (apart from cursor)
         // public Int64? InsertRow(InsertRowPRowRowType pRow, OracleConnection optionalPreexistingOpenConnection = null)
 
         public void TruncTable(OracleConnection optionalPreexistingOpenConnection = null) {
