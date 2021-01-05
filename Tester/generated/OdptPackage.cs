@@ -740,6 +740,9 @@ namespace Schema.Odpt.Package {
         private static readonly OdptPkgMain _instance = new OdptPkgMain();
         public static OdptPkgMain Instance { get { return _instance; } }
 
+        // **RECORD IGNORED** - .NET cannot send/receive an associative array type field in a record
+        // public abstract partial class TIgnoreAaInteger : Schema.Odpt.OdptPackageRecord, ITIgnoreAaInteger {
+
         // **RECORD IGNORED** - Code generation for BFILE type has not been implemented
         // public abstract partial class TIgnoreBfile : Schema.Odpt.OdptPackageRecord, ITIgnoreBfile {
 
