@@ -42,6 +42,7 @@ namespace Odapter {
         public int MapPosition { get; set; }
         public int CompareTo(IField f) { return Name.CompareTo(f.Name); }
         public string TypeOwner { get; set; }
+        public IField SubField { get; set; }
 
         // ITyped specific
         public IOrclType OrclType { get; set; }
@@ -56,7 +57,7 @@ namespace Odapter {
         public bool IsDefinedExternally { get => DataType.Equals(Orcl.OBJECT); }
         public string NamingHelpValue { get; }
 
-        public ITyped SubType { get; }
+        public ITyped SubType { get => SubField; }
         public ITranslaterType Translater { get; set; }
     }
 }

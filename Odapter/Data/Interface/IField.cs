@@ -23,5 +23,11 @@ namespace Odapter {
         string Name { get; set; }
         int MapPosition { get; set; }
         string TypeOwner { get; set; }
+        /// <summary>
+        /// Holds a psuedo "sub field" at next data level down that is necessary to determine 
+        /// the full type of this field. For example, an associative array of a NUMBER will have
+        /// have a "sub field" for the NUMBER component.
+        /// </summary>
+        IField SubField { get; set; }
     }
 }
