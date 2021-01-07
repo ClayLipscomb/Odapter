@@ -555,6 +555,35 @@ namespace Schema.Odpt.Odpt.Package {
         // **RECORD IGNORED** - XMLTYPE type is not available in ODP.NET managed
         // public abstract partial class TIgnoreXmltype : Schema.Odpt.Odpt.OdptPackageRecord, ITIgnoreXmltype {
 
+        public interface ITRecFldSameName {
+            Decimal? FNumber { set; }
+            Decimal? TRecFldSameNameTRecFldSameName { set; }
+        } // ITRecFldSameName
+
+        [DataContract(Namespace="http://odpt.business.com")][Serializable()]
+        public abstract partial class TRecFldSameName : Schema.Odpt.Odpt.OdptPackageRecord, ITRecFldSameName {
+            private Byte propertyToEnsuresPartialClassNamesAreUniqueAtCompileTime { get; set; }
+            [DataMember(Order=0, IsRequired=false)][XmlElement(Order=0, IsNullable=true)]
+            public virtual Decimal? FNumber { get; set; }
+            [DataMember(Order=1, IsRequired=false)][XmlElement(Order=1, IsNullable=true)]
+            public virtual Decimal? TRecFldSameNameTRecFldSameName { get; set; }
+        } // TRecFldSameName
+
+        public ICollection<T_TRecFldSameName> ReadResultITRecFldSameName<T_TRecFldSameName>(OracleDataReader rdr, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null)
+                where T_TRecFldSameName : class, ITRecFldSameName, new()   {
+            ICollection<T_TRecFldSameName> __ret = new List<T_TRecFldSameName>();
+            if (rdr != null && rdr.HasRows) {
+                while (rdr.Read()) {
+                    T_TRecFldSameName obj = new T_TRecFldSameName();
+                    if (!rdr.IsDBNull(0)) obj.FNumber = (Decimal?)OracleDecimal.SetPrecision(rdr.GetOracleDecimal(0), 28);
+                    if (!rdr.IsDBNull(1)) obj.TRecFldSameNameTRecFldSameName = (Decimal?)OracleDecimal.SetPrecision(rdr.GetOracleDecimal(1), 28);
+                    __ret.Add(obj);
+                    if (optionalMaxNumberRowsToReadFromAnyCursor != null && __ret.Count >= optionalMaxNumberRowsToReadFromAnyCursor) break;
+                }
+            }
+            return __ret;
+        } // ReadResultITRecFldSameName
+
         public void DuplicateSignature1(Int64? pParamIn1, ref Int64? pParamInOut1, out Int64? pParamOut1, OracleConnection optionalPreexistingOpenConnection = null) {
             pParamOut1 = null; 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
@@ -2870,6 +2899,61 @@ namespace Schema.Odpt.Odpt.Package {
 
         // **PROC IGNORED** - XMLTYPE type is not available in ODP.NET managed
         // public XmlDocument FuncXmltype(XmlDocument pIn, ref XmlDocument pInOut, out XmlDocument pOut, OracleConnection optionalPreexistingOpenConnection = null)
+
+        public ICollection<T_TRecFldSameName> GetRefCurRecFldSameName<T_TRecFldSameName>(
+                bool mapColumnToObjectPropertyByPosition = false, bool allowUnmappedColumnsToBeExcluded = false, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
+                where T_TRecFldSameName : class, new() {
+            ICollection<T_TRecFldSameName> __ret = new List<T_TRecFldSameName>(); 
+            OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
+            try {
+                using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_MAIN.GET_REF_CUR_REC_FLD_SAME_NAME", __conn)) {
+                    __cmd.CommandType = CommandType.StoredProcedure;
+                    __cmd.BindByName = true;
+                    __cmd.Parameters.Add(new OracleParameter("!RETURN", OracleDbType.RefCursor, null, ParameterDirection.ReturnValue));
+
+                    OracleCommandTrace __cmdTrace = IsTracing(__cmd) ? new OracleCommandTrace(__cmd) : null;
+                    int __rowsAffected = __cmd.ExecuteNonQuery();
+                    if (!((OracleRefCursor)__cmd.Parameters["!RETURN"].Value).IsNull)
+                        using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["!RETURN"].Value).GetDataReader()) {
+                            __ret = Hydrator.ReadResult<T_TRecFldSameName>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
+                        } // using OracleDataReader
+                    if (__cmdTrace != null) TraceCompletion(__cmdTrace, __ret.Count);
+                } // using OracleCommand
+            } finally {
+                if (optionalPreexistingOpenConnection == null) {
+                    __conn.Close();
+                    __conn.Dispose();
+                }
+            }
+            return __ret;
+        } // GetRefCurRecFldSameName
+
+        public ICollection<T_TRecFldSameName> GetRefCurRecFldSameName<T_TRecFldSameName>(UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
+                where T_TRecFldSameName : class, ITRecFldSameName, new() {
+            ICollection<T_TRecFldSameName> __ret = new List<T_TRecFldSameName>(); 
+            OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
+            try {
+                using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_MAIN.GET_REF_CUR_REC_FLD_SAME_NAME", __conn)) {
+                    __cmd.CommandType = CommandType.StoredProcedure;
+                    __cmd.BindByName = true;
+                    __cmd.Parameters.Add(new OracleParameter("!RETURN", OracleDbType.RefCursor, null, ParameterDirection.ReturnValue));
+
+                    OracleCommandTrace __cmdTrace = IsTracing(__cmd) ? new OracleCommandTrace(__cmd) : null;
+                    int __rowsAffected = __cmd.ExecuteNonQuery();
+                    if (!((OracleRefCursor)__cmd.Parameters["!RETURN"].Value).IsNull)
+                        using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["!RETURN"].Value).GetDataReader()) {
+                            __ret = ReadResultITRecFldSameName<T_TRecFldSameName>(__rdr, optionalMaxNumberRowsToReadFromAnyCursor);
+                        } // using OracleDataReader
+                    if (__cmdTrace != null) TraceCompletion(__cmdTrace, __ret.Count);
+                } // using OracleCommand
+            } finally {
+                if (optionalPreexistingOpenConnection == null) {
+                    __conn.Close();
+                    __conn.Dispose();
+                }
+            }
+            return __ret;
+        } // GetRefCurRecFldSameName
 
         public void ProcBinaryDoubleConst(out Double? pMinNormal, out Double? pMaxNormal, OracleConnection optionalPreexistingOpenConnection = null) {
             pMinNormal = null; pMaxNormal = null; 
