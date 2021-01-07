@@ -1,5 +1,11 @@
 CREATE OR REPLACE PACKAGE BODY ODPT.odpt_pkg_main AS
 
+	FUNCTION get_ref_cur_rec_fld_same_name RETURN t_ref_cur_rec_fld_same_name IS	
+		l_cursor	t_ref_cur_rec_fld_same_name;
+	BEGIN
+		RETURN l_cursor;
+	END;	
+
     PROCEDURE proc_underscore_suffix IS
 	BEGIN
         RETURN;

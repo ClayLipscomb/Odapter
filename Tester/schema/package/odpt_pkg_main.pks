@@ -127,6 +127,15 @@ CREATE OR REPLACE PACKAGE ODPT.odpt_pkg_main AS
 	TYPE t_cursor_ignore_long_raw IS REF CURSOR RETURN t_ignore_long_raw;
     ---------------------------------------------------------------------
 
+	-- record type and field have same name
+	TYPE t_rec_fld_same_name IS RECORD (
+		f_number				NUMBER,
+		t_rec_fld_same_name		NUMBER
+	);
+	TYPE t_ref_cur_rec_fld_same_name IS REF CURSOR RETURN t_rec_fld_same_name;
+
+	FUNCTION get_ref_cur_rec_fld_same_name RETURN t_ref_cur_rec_fld_same_name;
+
     PROCEDURE proc_underscore_suffix;
     PROCEDURE proc_underscore_suffix_;
 
