@@ -1407,7 +1407,7 @@ namespace Odapter.Tester {
                 }
 
                 // NOCOPY test
-#if SAFETYPE_NUMBER
+#if SAFETYPE_INTEGER
                 OracleDecimal? 
 #elif DECIMAL_INTEGER
                 Decimal?
