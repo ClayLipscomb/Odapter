@@ -37,7 +37,12 @@ namespace Odapter {
         public string CSharpOracleDbType { get => String.Empty; }
         public string CSharpOdpNetType { get => String.Empty; }
         public bool IsIgnoredAsParameter { get => false; }
-        public string IgnoredReason { get => String.Empty; }
+        public string IgnoredReasonAsParameter { get => String.Empty; }
+        /// <summary>
+        /// Attribute only possible for record type field (not table, view or object)
+        /// </summary>
+        public bool IsIgnoredAsAttribute { get => true; }
+        public string IgnoredReasonAsAttribute { get => TranslaterMessage.IgnoreNoSendReceiveRecordFieldTyped(OrclType); }
 
         internal TranslaterAssociativeArray(string dataTypeFull, string cSharpType, ITyped dbDataType) {
             DataTypeFull = dataTypeFull;
@@ -75,7 +80,9 @@ namespace Odapter {
         public string CSharpOracleDbType { get => String.Empty; }
         public string CSharpOdpNetType { get => String.Empty; }
         public bool IsIgnoredAsParameter { get => true; }
-        public string IgnoredReason { get => TranslaterMessage.IgnoreNotImplemented($"NESTED {Orcl.NESTED_TABLE}"); }
+        public string IgnoredReasonAsParameter { get => TranslaterMessage.IgnoreNotImplemented($"NESTED {Orcl.NESTED_TABLE}"); }
+        public bool IsIgnoredAsAttribute { get => true; }
+        public string IgnoredReasonAsAttribute { get => TranslaterMessage.IgnoreNotImplemented($"NESTED {Orcl.NESTED_TABLE}"); }
 
         internal TranslaterNestedTable(string dataTypeFull, string cSharpType, ITyped dbDataType) {
             DataTypeFull = dataTypeFull;
@@ -101,7 +108,9 @@ namespace Odapter {
         public string CSharpOracleDbType { get => String.Empty; }
         public string CSharpOdpNetType { get => String.Empty; }
         public bool IsIgnoredAsParameter { get => true; }
-        public string IgnoredReason { get => TranslaterMessage.IgnoreNotImplemented(OrclType); }
+        public string IgnoredReasonAsParameter { get => TranslaterMessage.IgnoreNotImplemented(OrclType); }
+        public bool IsIgnoredAsAttribute { get => true; }
+        public string IgnoredReasonAsAttribute { get => TranslaterMessage.IgnoreNotImplemented(OrclType); }
 
         internal TranslaterVarray(string dataTypeFull, string cSharpType, ITyped dbDataType) {
             DataTypeFull = dataTypeFull;

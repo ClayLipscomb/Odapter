@@ -44,6 +44,7 @@ namespace Odapter {
         public string TypeName { get; set; }        // 1) package containing TypeSubName defintion or 2) proper name of object type
         public string TypeSubname { get; set; }     // proper name of DataType (e.g., record name)
         public string TypeLink { get; set; }
+        public string OwnerObject { get; set; }
         public bool Defaulted { get { return (defaulted.Equals("Y")); } } private string defaulted { get; set; }
 
         public bool IsReturnArgument { get { return (Position == 0 && DataLevel == 0 && ArgumentName == null && InOut == Orcl.OUT); } }

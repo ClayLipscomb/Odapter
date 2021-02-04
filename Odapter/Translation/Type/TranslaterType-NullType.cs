@@ -30,6 +30,8 @@ namespace Odapter {
         public string CSharpOracleDbType { get => String.Empty; }
         public string CSharpOdpNetType { get => String.Empty; }
         public bool IsIgnoredAsParameter { get => false; }
-        public string IgnoredReason { get => String.Empty; }
+        public string IgnoredReasonAsParameter { get => String.Empty; }
+        public bool IsIgnoredAsAttribute { get => false; }
+        public string IgnoredReasonAsAttribute { get => String.Empty; }
     }
 }

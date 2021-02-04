@@ -30,8 +30,9 @@ namespace Odapter {
         public string CSharpOracleDbType { get => CSharp.ORACLEDBTYPE_OBJECT; }
         public string CSharpOdpNetType { get => String.Empty; }
         public bool IsIgnoredAsParameter { get => true; }
-        public string IgnoredReason { get => TranslaterMessage.IgnoreNotAvailableOdpNetMananged(OrclType); }
-        //public string IgnoredReason { get => TranslaterMessage.IgnoreNotImplemented(OrclType); } 
+        public string IgnoredReasonAsParameter { get => TranslaterMessage.IgnoreNotAvailableOdpNetMananged(OrclType); }
+        public bool IsIgnoredAsAttribute { get => true; }
+        public string IgnoredReasonAsAttribute { get => TranslaterMessage.IgnoreNotAvailableOdpNetMananged(OrclType); }
 
         internal TranslaterObjectType(string dataTypeFull) {
             DataTypeFull = dataTypeFull;

@@ -30,6 +30,8 @@ namespace Odapter {
         public string CSharpOracleDbType { get => String.Empty; }
         public string CSharpOdpNetType { get => CSharp.ODP_NET_SAFE_TYPE_REF; }
         public bool IsIgnoredAsParameter { get => true; }
-        public string IgnoredReason { get => TranslaterMessage.IgnoreNotAvailableOdpNetMananged(OrclType); }
+        public string IgnoredReasonAsParameter { get => TranslaterMessage.IgnoreNotAvailableOdpNetMananged(OrclType); }
+        public bool IsIgnoredAsAttribute { get => true; }
+        public string IgnoredReasonAsAttribute { get => TranslaterMessage.IgnoreNotAvailableOdpNetMananged(OrclType); }
     }
 }

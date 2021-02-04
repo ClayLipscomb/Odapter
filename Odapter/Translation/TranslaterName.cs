@@ -84,21 +84,17 @@ namespace Odapter {
 
         internal static string Convert(IArgument arg) { return ConvertToCamel(arg.ArgumentName); }
 
-        internal static string Convert(IEntityAttribute attrib) { return ConvertToPascal(attrib.AttrName); }
-
         /// <summary>
-        /// Convert an Oracle record field name to a C# property name
+        /// Convert an Oracle entity attribute name to a C# property name
         /// </summary>
-        /// <param name="fieldName"></param>
-        /// <param name="recordName"></param>
-        /// <param name="usePascalCase"></param>
+        /// <param name="attrib"></param>
         /// <returns></returns>
-        internal static string Convert(IField field) {
-            string propertyName = ConvertToPascal(field.AttrName);
+        internal static string Convert(IEntityAttribute attrib) {
+            string propertyName = ConvertToPascal(attrib.AttrName);
+            // prevent identical class name and property name (not allowed by C#) by "doubling" the name
+            if ((attrib.EntityName ?? "").Equals(attrib.AttrName)) propertyName += propertyName;
 
-            // prevent identical class name and property name which is not allowed by C#
-            if ((field.EntityName ?? "").Equals(field.AttrName)) propertyName += "Field";
-            return propertyName;
+            return propertyName; 
         }
     }
 }

@@ -30,7 +30,9 @@ namespace Odapter {
         public string CSharpOracleDbType { get => CSharp.ORACLEDBTYPE_BFILE; }
         public string CSharpOdpNetType { get => CSharp.ODP_NET_SAFE_TYPE_BFILE; }
         public bool IsIgnoredAsParameter { get => true; }
-        public string IgnoredReason { get => TranslaterMessage.IgnoreNotImplemented(OrclType); }
+        public string IgnoredReasonAsParameter { get => TranslaterMessage.IgnoreNotImplemented(OrclType); }
+        public bool IsIgnoredAsAttribute { get => true; }
+        public string IgnoredReasonAsAttribute { get => TranslaterMessage.IgnoreNotImplemented(OrclType); }
     }
 
     internal class TranslaterBlob : ITranslaterType {
@@ -44,7 +46,9 @@ namespace Odapter {
         public string CSharpOracleDbType { get => CSharp.ORACLEDBTYPE_BLOB; }
         public string CSharpOdpNetType { get => CSharp.ODP_NET_SAFE_TYPE_BLOB; }
         public bool IsIgnoredAsParameter { get => false; }
-        public string IgnoredReason { get => String.Empty; }
+        public string IgnoredReasonAsParameter { get => String.Empty; }
+        public bool IsIgnoredAsAttribute { get => false; }
+        public string IgnoredReasonAsAttribute { get => String.Empty; }
 
         internal TranslaterBlob(string cSharpType) { _cSharpType = cSharpType; }
         private TranslaterBlob() { }
@@ -61,7 +65,9 @@ namespace Odapter {
         public string CSharpOracleDbType { get => CSharp.ORACLEDBTYPE_CLOB; }
         public string CSharpOdpNetType { get => CSharp.ODP_NET_SAFE_TYPE_CLOB; }
         public bool IsIgnoredAsParameter { get => false; }
-        public string IgnoredReason { get => String.Empty; }
+        public string IgnoredReasonAsParameter { get => String.Empty; }
+        public bool IsIgnoredAsAttribute { get => false; }
+        public string IgnoredReasonAsAttribute { get => String.Empty; }
 
         internal TranslaterClob(string cSharpType) { _cSharpType = cSharpType; }
         private TranslaterClob() { }
@@ -78,7 +84,9 @@ namespace Odapter {
         public string CSharpOracleDbType { get => CSharp.ORACLEDBTYPE_LONGRAW; }
         public string CSharpOdpNetType { get => String.Empty; }
         public bool IsIgnoredAsParameter { get => true; }
-        public string IgnoredReason { get => TranslaterMessage.IgnoreOracleDeprecation(OrclType); }
+        public string IgnoredReasonAsParameter { get => TranslaterMessage.IgnoreOracleDeprecation(OrclType); }
+        public bool IsIgnoredAsAttribute { get => true; }
+        public string IgnoredReasonAsAttribute { get => TranslaterMessage.IgnoreOracleDeprecation(OrclType); }
     }
 
     internal class TranslaterNclob : ITranslaterType {
@@ -92,7 +100,9 @@ namespace Odapter {
         public string CSharpOracleDbType { get => CSharp.ORACLEDBTYPE_NCLOB; }
         public string CSharpOdpNetType { get => CSharp.ODP_NET_SAFE_TYPE_CLOB; }
         public bool IsIgnoredAsParameter { get => false; }
-        public string IgnoredReason { get => String.Empty; }
+        public string IgnoredReasonAsParameter { get => String.Empty; }
+        public bool IsIgnoredAsAttribute { get => false; }
+        public string IgnoredReasonAsAttribute { get => String.Empty; }
 
         internal TranslaterNclob(string cSharpType) { _cSharpType = cSharpType; }
         private TranslaterNclob() { }
@@ -109,6 +119,8 @@ namespace Odapter {
         public string CSharpOracleDbType { get => CSharp.ORACLEDBTYPE_RAW; }
         public string CSharpOdpNetType { get => String.Empty; }
         public bool IsIgnoredAsParameter { get => true; }
-        public string IgnoredReason { get => TranslaterMessage.IgnoreNotImplemented(OrclType); }
+        public string IgnoredReasonAsParameter { get => TranslaterMessage.IgnoreNotImplemented(OrclType); }
+        public bool IsIgnoredAsAttribute { get => true; }
+        public string IgnoredReasonAsAttribute { get => TranslaterMessage.IgnoreNotImplemented(OrclType); }
     }
 }

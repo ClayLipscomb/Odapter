@@ -156,6 +156,51 @@ namespace Odapter {
             }
             return;
         }
+        
+        /// <summary>
+        /// Build a field from argument data
+        /// </summary>
+        /// <typeparam name="T_Field"></typeparam>
+        /// <param name="arg"></param>
+        /// <param name="recordArg"></param>
+        /// <param name="mapPosition"></param>
+        /// <returns></returns>
+        private IField BuildField<T_Field>(IArgument arg, IArgument recordArg, int mapPosition) where T_Field : class, IField, new() { 
+
+            IField field = new T_Field {
+                Name = arg.ArgumentName,
+                EntityName = recordArg.TypeSubname,
+                DataType = arg.DataType,
+                DataPrecision = arg.DataPrecision,
+                DataScale = arg.DataScale,
+                CharLength = arg.CharLength,
+                OrclType = arg.OrclType,
+                MapPosition = mapPosition,
+                SubField = (arg?.NextArgument?.DataLevel == arg.DataLevel + 1) 
+                    ? BuildField<T_Field>(arg.NextArgument, recordArg, mapPosition) 
+                    : null
+            };
+
+            //if (arg?.NextArgument?.DataLevel == arg.DataLevel + 1) field.SubField = BuildField<T_Field>(arg.NextArgument, recordArg, mapPosition);
+
+            // set the containing class from the package name
+            if (!String.IsNullOrEmpty(arg.TypeName) && !arg.TypeName.Equals(arg.PackageName)) {
+                if (!Parameter.Instance.IsDuplicatePackageRecordOriginatingOutsideFilterAndSchema
+                    // owned by another schema or owned by package that was filtered out 
+                    && (!(arg.Owner ?? "").Equals(arg.TypeOwner)
+                        || !Packages.Any(p => p.PackageName.Equals(arg.TypeName)))) {
+                    field.ContainerClassName = TranslaterName.ConvertToPascal(arg.TypeName);
+                }
+
+                if (!(arg.TypeName ?? "").Equals(arg.PackageName)
+                        && Packages.Any(p => p.PackageName.Equals(arg.TypeName)) // package of origin of record being created
+                        && PackageRecordTypes.Exists(r => r.PackageName.Equals(arg.TypeName) && r.TypeSubName.Equals(arg.TypeSubname))) {
+                    field.ContainerClassName = TranslaterName.ConvertToPascal(arg.TypeName);
+                }
+            }
+
+            return field;
+        }
 
         /// <summary>
         /// Given a record type argument, extract and store the record type and its fields (recurse if necessary)
@@ -195,29 +240,7 @@ namespace Odapter {
             int columnPosition = 0;
             foreach (IArgument arg in args) {
                 if (arg.DataLevel == recordDataLevel + 1) { // found a record field
-                    // each of these fields are to be added to the record
-                    IField f = new T_Field { Name = arg.ArgumentName, EntityName = recordArg.TypeSubname, DataType = arg.DataType,
-                        DataPrecision = arg.DataPrecision, DataScale = arg.DataScale, CharLength = arg.CharLength,
-                        OrclType = arg.OrclType, MapPosition = columnPosition++
-                    };
-
-                    // set the containing class from the package name
-                    if (!String.IsNullOrEmpty(arg.TypeName) && !arg.TypeName.Equals(arg.PackageName)) {
-                        if (!Parameter.Instance.IsDuplicatePackageRecordOriginatingOutsideFilterAndSchema
-                                // owned by another schema or owned by package that was filtered out 
-                            && (    !(arg.Owner ?? "").Equals(arg.TypeOwner) 
-                                || !Packages.Any(p => p.PackageName.Equals(arg.TypeName)) )   ) {
-                            f.ContainerClassName = TranslaterName.ConvertToPascal(arg.TypeName);
-                        }
-
-                        if (    !(arg.TypeName ?? "").Equals(arg.PackageName)
-                                && Packages.Any(p => p.PackageName.Equals(arg.TypeName)) // package of origin of record being created
-                                && PackageRecordTypes.Exists(r => r.PackageName.Equals(arg.TypeName) && r.TypeSubName.Equals(arg.TypeSubname))) {
-                            f.ContainerClassName = TranslaterName.ConvertToPascal(arg.TypeName);
-                        }
-                    }
-
-                    newRec.Attributes.Add(f);
+                    newRec.Attributes.Add(BuildField<T_Field>(arg, recordArg, columnPosition++));
                 } else if (arg.DataLevel == recordDataLevel + 2) { // found a lower level field, so skip
                     continue;
                 } else if (arg.DataLevel <= recordDataLevel) { // we are past the last record field, we are done
@@ -236,9 +259,11 @@ namespace Odapter {
         /// Load all proc arguments for given schema and filter
         /// </summary>
         /// <param name="connection"></param>
-        /// <param name="packaged">If true load only packaged arguments, else load non-packaged.</param>
         private void LoadArguments<T_Argument>(OracleConnection connection)
             where T_Argument : class, IArgument, new() {
+
+            DisplayMessage("Reading package arguments...");
+            bool isFiltering = !String.IsNullOrWhiteSpace(Filter);
 
             string sql = " SELECT CAST(a.position as NUMBER(9,0)) position, a.overload, "
                             + " CAST(a.data_level as NUMBER(9,0)) data_level, a.argument_name, "
@@ -246,17 +271,29 @@ namespace Odapter {
                             + " CAST(a.data_precision as NUMBER(9,0)) data_precision, CAST(a.char_length as NUMBER(9,0)) char_length, "
                             + " CAST(a.data_scale as NUMBER(9,0)) data_scale, "
                             + " a.type_owner, a.type_name, a.type_subname, a.pls_type, "
-                            + " a.object_name, a.package_name, a.defaulted, a.owner, a.type_link "
+                            + " a.object_name, a.package_name, a.defaulted, a.owner, a.type_link, "
+                            + " o.owner owner_object "
                         + " FROM sys.all_arguments a, sys.all_objects o "
                         + " WHERE a.owner = :owner "
+
+                        //  This join logic is necessary but it can cause the query to never return. We cannot require that an Oracle instance
+                        //      be configured or tuned in order for the system views to perform. Instead, we need to enforce this condition 
+                        //      in C# (see below **).
+                        // + " AND a.owner = o.owner " !!
+
                         + " AND a.package_name = o.object_name "
-                        + " AND UPPER(o.object_type) = :objectType "
-                        + " AND UPPER(a.package_name) LIKE :packageNamePrefix || '%' "
+                        + " AND UPPER(o.object_type) = :objectType "    // required to restrict to package spec only
+                        +  (isFiltering ? " AND UPPER(a.package_name) LIKE :packageNamePrefix || '%' " : String.Empty)
                         + " ORDER BY a.package_name, a.object_name, a.overload, a.sequence ";
 
-            DisplayMessage("Reading package arguments...");
-            List<IArgument> args = connection.Query<T_Argument>(sql, 
-                new { owner = Schema, objectType = SytemTableObjectType.PACKAGE.ToString(), packageNamePrefix = Filter.ToUpper() }).ToList<IArgument>();
+            var dynamicParameters = new DynamicParameters();
+            dynamicParameters.Add("owner", Schema);
+            dynamicParameters.Add("objectType", SytemTableObjectType.PACKAGE.ToString());
+            if (isFiltering) dynamicParameters.Add("packageNamePrefix", Filter.ToUpper());
+
+            List<IArgument> args = connection.Query<T_Argument>(sql, dynamicParameters)
+                .Where(a => a.Owner == a.OwnerObject)   // ** prevents inclusion of identically named package argument from another schema
+                .ToList<IArgument>();
             if (IsExcludeObjectsNamesWithSpecificChars) args = args.FindAll(a => a.PackageName.IndexOfAny(ObjectNameCharsToExclude) == -1);
             DisplayMessage(args.Count.ToString() + " arguments read.");
 

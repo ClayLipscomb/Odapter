@@ -30,7 +30,9 @@ namespace Odapter {
         public string CSharpOracleDbType { get => CSharp.ORACLEDBTYPE_CHAR; }
         public string CSharpOdpNetType { get => CSharp.ODP_NET_SAFE_TYPE_STRING; }
         public bool IsIgnoredAsParameter { get => false; }
-        public string IgnoredReason { get => String.Empty; }
+        public string IgnoredReasonAsParameter { get => String.Empty; }
+        public bool IsIgnoredAsAttribute { get => false; }
+        public string IgnoredReasonAsAttribute { get => String.Empty; }
     }
 
     internal class TranslaterLong : ITranslaterType {
@@ -44,7 +46,9 @@ namespace Odapter {
         public string CSharpOracleDbType { get => CSharp.ORACLEDBTYPE_LONG; }
         public string CSharpOdpNetType { get => CSharp.ODP_NET_SAFE_TYPE_STRING; }
         public bool IsIgnoredAsParameter { get => true; }
-        public string IgnoredReason { get => TranslaterMessage.IgnoreOracleDeprecation(OrclType); }
+        public string IgnoredReasonAsParameter { get => TranslaterMessage.IgnoreOracleDeprecation(OrclType); }
+        public bool IsIgnoredAsAttribute { get => true; }
+        public string IgnoredReasonAsAttribute { get => TranslaterMessage.IgnoreOracleDeprecation(OrclType); }
     }
 
     internal class TranslaterNchar : ITranslaterType {
@@ -58,7 +62,9 @@ namespace Odapter {
         public string CSharpOracleDbType { get => CSharp.ORACLEDBTYPE_NCHAR; }
         public string CSharpOdpNetType { get => CSharp.ODP_NET_SAFE_TYPE_STRING; }
         public bool IsIgnoredAsParameter { get => false; }
-        public string IgnoredReason { get => String.Empty; }
+        public string IgnoredReasonAsParameter { get => String.Empty; }
+        public bool IsIgnoredAsAttribute { get => false; }
+        public string IgnoredReasonAsAttribute { get => String.Empty; }
     }
 
     internal class TranslaterNvarchar2 : ITranslaterType {
@@ -72,7 +78,9 @@ namespace Odapter {
         public string CSharpOracleDbType { get => CSharp.ORACLEDBTYPE_NVARCHAR2; }
         public string CSharpOdpNetType { get => CSharp.ODP_NET_SAFE_TYPE_STRING; }
         public bool IsIgnoredAsParameter { get => false; }
-        public string IgnoredReason { get => String.Empty; }
+        public string IgnoredReasonAsParameter { get => String.Empty; }
+        public bool IsIgnoredAsAttribute { get => false; }
+        public string IgnoredReasonAsAttribute { get => String.Empty; }
     }
 
     internal class TranslaterString : ITranslaterType {
@@ -86,7 +94,9 @@ namespace Odapter {
         public string CSharpOracleDbType { get => CSharp.ORACLEDBTYPE_VARCHAR2; }
         public string CSharpOdpNetType { get => CSharp.ODP_NET_SAFE_TYPE_STRING; }
         public bool IsIgnoredAsParameter { get => false; }
-        public string IgnoredReason { get => String.Empty; }
+        public string IgnoredReasonAsParameter { get => String.Empty; }
+        public bool IsIgnoredAsAttribute { get => false; }
+        public string IgnoredReasonAsAttribute { get => String.Empty; }
     }
 
     internal class TranslaterVarchar : ITranslaterType {
@@ -100,7 +110,9 @@ namespace Odapter {
         public string CSharpOracleDbType { get => CSharp.ORACLEDBTYPE_VARCHAR2; }
         public string CSharpOdpNetType { get => CSharp.ODP_NET_SAFE_TYPE_STRING; }
         public bool IsIgnoredAsParameter { get => false; }
-        public string IgnoredReason { get => String.Empty; }
+        public string IgnoredReasonAsParameter { get => String.Empty; }
+        public bool IsIgnoredAsAttribute { get => false; }
+        public string IgnoredReasonAsAttribute { get => String.Empty; }
     }
 
     internal class TranslaterVarchar2 : ITranslaterType {
@@ -114,6 +126,8 @@ namespace Odapter {
         public string CSharpOracleDbType { get => CSharp.ORACLEDBTYPE_VARCHAR2; }
         public string CSharpOdpNetType { get => CSharp.ODP_NET_SAFE_TYPE_STRING; }
         public bool IsIgnoredAsParameter { get => false; }
-        public string IgnoredReason { get => String.Empty; }
+        public string IgnoredReasonAsParameter { get => String.Empty; }
+        public bool IsIgnoredAsAttribute { get => false; }
+        public string IgnoredReasonAsAttribute { get => String.Empty; }
     }
 }

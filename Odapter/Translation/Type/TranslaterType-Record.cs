@@ -30,7 +30,9 @@ namespace Odapter {
         public string CSharpOracleDbType { get => String.Empty; }
         public string CSharpOdpNetType { get => String.Empty; }
         public bool IsIgnoredAsParameter { get => true; }  // refers only to stand-alone record
-        public string IgnoredReason { get => TranslaterMessage.IgnoreNoSendReceiveRecord(); }
+        public string IgnoredReasonAsParameter { get => TranslaterMessage.IgnoreNoSendReceiveRecord(); }
+        public bool IsIgnoredAsAttribute { get => true; }  // refers only to stand-alone record
+        public string IgnoredReasonAsAttribute { get => TranslaterMessage.IgnoreNoSendReceiveRecord(); }
 
         internal TranslaterRecordType(string dataType) {
             DataTypeFull = dataType;

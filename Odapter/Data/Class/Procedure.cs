@@ -16,6 +16,7 @@
 //    along with this program.If not, see<http://www.gnu.org/licenses/>.
 //------------------------------------------------------------------------------
 
+using System;
 using System.Collections.Generic;
 
 namespace Odapter {
@@ -102,7 +103,7 @@ namespace Odapter {
         /// <param name="reasonMsg"></param>
         /// <returns></returns>
         public bool IsIgnoredDueToOracleTypes(out string reasonMsg) {
-            reasonMsg = "";
+            reasonMsg = String.Empty;
             IOrclType unimplemntedDataType;
 
             if (HasArgumentOfOracleTypeAssocArrayOfUnimplementedType(out unimplemntedDataType)) {
@@ -113,8 +114,12 @@ namespace Odapter {
                 return true;
             } else {
                 foreach (IArgument arg in Arguments) {
-                    if (arg.Translater.IsIgnoredAsParameter && !(arg.DataType.Equals(Orcl.RECORD) && arg.DataLevel > 0)) {
-                        reasonMsg = arg.Translater.IgnoredReason;
+                    if (arg.Translater.IsIgnoredAsParameter 
+                        && !(arg.DataType.Equals(Orcl.RECORD) && arg.DataLevel > 0) ) {  // record of cursor argument
+                        reasonMsg = arg.Translater.IgnoredReasonAsParameter;
+                        return true;
+                    } else if (arg.Translater.IsIgnoredAsAttribute && arg.DataLevel > 1) { 
+                        reasonMsg = arg.Translater.IgnoredReasonAsAttribute;
                         return true;
                     }
                 }

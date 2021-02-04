@@ -33,7 +33,9 @@ namespace Odapter {
         public string CSharpOracleDbType { get => CSharp.ORACLEDBTYPE_REF_CURSOR; }
         public string CSharpOdpNetType { get => CSharp.ODP_NET_SAFE_TYPE_REF_CURSOR; }
         public bool IsIgnoredAsParameter { get => false; }
-        public string IgnoredReason { get => String.Empty; }
+        public string IgnoredReasonAsParameter { get => String.Empty; }
+        public bool IsIgnoredAsAttribute { get => false; }
+        public string IgnoredReasonAsAttribute { get => String.Empty; }
 
         internal TranslaterRefCursorTyped(string dataTypeFull, string cSharpType, ITyped dbDataType) {
             DataTypeFull = dataTypeFull;
@@ -64,7 +66,9 @@ namespace Odapter {
         public string CSharpOracleDbType { get => CSharp.ORACLEDBTYPE_REF_CURSOR; }
         public string CSharpOdpNetType { get => CSharp.ODP_NET_SAFE_TYPE_REF_CURSOR; }
         public bool IsIgnoredAsParameter { get => false; }
-        public string IgnoredReason { get => String.Empty; }
+        public string IgnoredReasonAsParameter { get => String.Empty; }
+        public bool IsIgnoredAsAttribute { get => false; }
+        public string IgnoredReasonAsAttribute { get => String.Empty; }
 
         internal TranslaterRefCursorUntyped(string dataTypeFull, string cSharpType, ITyped dbDataType) {
             DataTypeFull = dataTypeFull;
