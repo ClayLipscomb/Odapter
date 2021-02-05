@@ -142,11 +142,22 @@ CREATE OR REPLACE PACKAGE BODY ODPT.odpt_pkg_main AS
 		RETURN;
 	END;
 
-	FUNCTION func_optional_param(p_in_number_required IN NUMBER, p_in_out_number_required IN OUT NUMBER, 
-		p_in_number_optional IN NUMBER DEFAULT 0, p_in_varchar2_optional IN VARCHAR2 DEFAULT 'TEST') RETURN NUMBER IS
+	PROCEDURE proc_optional_param(p_in_number_optional IN NUMBER DEFAULT 0, p_in_varchar2_optional IN VARCHAR2 DEFAULT 'TEST', p_in_number_required IN NUMBER, p_in_out_number_required IN OUT NUMBER) IS
+	BEGIN
+		p_in_out_number_required := p_in_number_required;
+		RETURN;
+	END;
+
+	FUNCTION func_optional_param(p_in_number_required IN NUMBER, p_in_out_number_required IN OUT NUMBER, p_in_number_optional IN NUMBER DEFAULT 0, p_in_varchar2_optional IN VARCHAR2 DEFAULT 'TEST') RETURN NUMBER IS
 	BEGIN
 		p_in_out_number_required := p_in_number_required;
 		RETURN p_in_out_number_required;
+	END;
+
+	FUNCTION func_optional_param(p_in_number_optional IN NUMBER DEFAULT 0, p_in_varchar2_optional IN VARCHAR2 DEFAULT 'TEST', p_in_number_required IN NUMBER, p_in_out_number_required IN OUT NUMBER) RETURN NUMBER IS
+	BEGIN
+		p_in_out_number_required := p_in_number_required;
+		RETURN p_in_out_number_required; 
 	END;
 
 	FUNCTION func_integer(p_in IN INTEGER, p_in_out IN OUT INTEGER, p_out OUT INTEGER) RETURN INTEGER IS

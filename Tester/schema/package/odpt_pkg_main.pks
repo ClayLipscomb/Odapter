@@ -163,8 +163,9 @@ CREATE OR REPLACE PACKAGE ODPT.odpt_pkg_main AS
     FUNCTION dup_signature_translated_date(p_param_in IN TIMESTAMP, p_param_in_out IN OUT TIMESTAMP, p_param_out OUT TIMESTAMP) RETURN TIMESTAMP;
 
 	PROCEDURE proc_optional_param(p_in_number_required IN NUMBER, p_in_out_number_required IN OUT NUMBER, p_in_number_optional IN NUMBER DEFAULT 0, p_in_varchar2_optional IN VARCHAR2 DEFAULT 'TEST');
-	FUNCTION func_optional_param(p_in_number_required IN NUMBER, p_in_out_number_required IN OUT NUMBER, 
-		p_in_number_optional IN NUMBER DEFAULT 0, p_in_varchar2_optional IN VARCHAR2 DEFAULT 'TEST') RETURN NUMBER;
+	PROCEDURE proc_optional_param(p_in_number_optional IN NUMBER DEFAULT 0, p_in_varchar2_optional IN VARCHAR2 DEFAULT 'TEST', p_in_number_required IN NUMBER, p_in_out_number_required IN OUT NUMBER);
+	FUNCTION func_optional_param(p_in_number_required IN NUMBER, p_in_out_number_required IN OUT NUMBER, p_in_number_optional IN NUMBER DEFAULT 0, p_in_varchar2_optional IN VARCHAR2 DEFAULT 'TEST') RETURN NUMBER;
+	FUNCTION func_optional_param(p_in_number_optional IN NUMBER DEFAULT 0, p_in_varchar2_optional IN VARCHAR2 DEFAULT 'TEST', p_in_number_required IN NUMBER, p_in_out_number_required IN OUT NUMBER) RETURN NUMBER;
 
 	FUNCTION func_cursor_ignore_aa_integer RETURN t_cursor_ignore_aa_integer;
 	FUNCTION func_cursor_ignore_boolean RETURN t_cursor_ignore_boolean;
