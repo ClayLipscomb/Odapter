@@ -17,10 +17,30 @@
 //------------------------------------------------------------------------------
 
 using System;
+using System.Linq;
 
 namespace Odapter {
     internal static class TranslaterName  {
         private const string CHARACTER_ABBREV = "char";
+
+        /// <summary>
+        /// Determine if proc translated to C# has a duplicate signature of another translated proc in the package. PL/SQL signatures are 
+        /// duplicate only if the procs have the same proc name, same parameter count, same respective parameter directions, 
+        /// and same respective parameter types. So as long as there is a difference in parameter names, a duplicate signature will not occur. 
+        /// But in C#, both parameter names and parameter (translated) types must be different to prevent a duplicate signature (and compiler error).
+        /// </summary>
+        /// <param name="proc"></param>
+        /// <param name="package"></param>
+        /// <returns></returns>
+        private static bool HasDuplicateSignatureTranslated(IProcedure proc, IPackage package) {
+            return package.Procedures.Exists(p =>
+                p.ProcedureName.Equals(proc.ProcedureName)  // same proc name
+                && !(p.Overload ?? String.Empty).Equals(proc.Overload ?? String.Empty)  // different overload
+                && ((p.Arguments.Where(a => !a.IsReturnArgument).OrderBy(a => a.Sequence).Select(a => a.InOut + a.Translater.GetCSharpType()))
+                        .SequenceEqual  // params count, direction and type are exact match (excl. return arg)
+                    (proc.Arguments.Where(a => !a.IsReturnArgument).OrderBy(a => a.Sequence).Select(a => a.InOut + a.Translater.GetCSharpType())))
+                );
+        }
 
         /// <summary>
         /// Convert an Oracle entity/object name (table, package, argument, column etc.) to a valid C# equivalent 
@@ -75,7 +95,7 @@ namespace Odapter {
             if (proc.PackageName != null && proc.PackageName == proc.ProcedureName) methodName += "Proc";
 
             // if proc has duplicate sig, append overload number to name to keep unique in C#
-            if (package.HasDuplicateSignature(proc)) methodName += proc.Overload;
+            if (HasDuplicateSignatureTranslated(proc, package)) methodName += proc.Overload;
 
             return methodName;
         }
