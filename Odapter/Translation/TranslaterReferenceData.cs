@@ -34,7 +34,6 @@ namespace Odapter {
         }
 
         public static readonly IList<CSharpVersionOption> CSharpOptions = new List<CSharpVersionOption> {
-            new CSharpVersionOption(CSharpVersion.ThreeZero, @"3.0 (.NET 3.5, unmanaged ODP.NET)"),
             new CSharpVersionOption(CSharpVersion.FourZero , @"4.0 (.NET 4.0 minimum, managed ODP.NET)")
         };
 
