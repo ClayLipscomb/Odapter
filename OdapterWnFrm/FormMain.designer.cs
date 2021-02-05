@@ -1506,9 +1506,9 @@ namespace OdapterWnFrm {
             this.lblCSharpTypeUsedForOracleAssociativeArray.Name = "lblCSharpTypeUsedForOracleAssociativeArray";
             this.lblCSharpTypeUsedForOracleAssociativeArray.Size = new System.Drawing.Size(167, 16);
             this.lblCSharpTypeUsedForOracleAssociativeArray.TabIndex = 66;
-            this.lblCSharpTypeUsedForOracleAssociativeArray.Text = "Collections";
+            this.lblCSharpTypeUsedForOracleAssociativeArray.Text = "Associative Array";
             this.lblCSharpTypeUsedForOracleAssociativeArray.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.toolTip1.SetToolTip(this.lblCSharpTypeUsedForOracleAssociativeArray, "An Oracle associative array, nested table, VARRAY.");
+            this.toolTip1.SetToolTip(this.lblCSharpTypeUsedForOracleAssociativeArray, "An Oracle associative array");
             // 
             // gbSettings
             // 
