@@ -153,6 +153,15 @@ CREATE OR REPLACE PACKAGE ODPT.odpt_pkg_main AS
     FUNCTION duplicate_signature(p_param_in2 IN INTEGER, p_param_in_out2 IN OUT INTEGER, p_param_out2 OUT INTEGER) RETURN INTEGER;
     FUNCTION duplicate_signature(p_param_in3 IN INTEGER, p_param_in_out3 IN OUT INTEGER, p_param_out3 OUT INTEGER) RETURN INTEGER;
 
+    FUNCTION dup_signature_translated_str(p_param_in IN VARCHAR2, p_param_in_out IN OUT VARCHAR2, p_param_out OUT VARCHAR2) RETURN VARCHAR2;
+    FUNCTION dup_signature_translated_str(p_param_in IN NVARCHAR2, p_param_in_out IN OUT NVARCHAR2, p_param_out OUT NVARCHAR2) RETURN NVARCHAR2; 
+    FUNCTION dup_signature_translated_str(p_param_in IN CHAR, p_param_in_out IN OUT CHAR, p_param_out OUT CHAR) RETURN CHAR; 
+    FUNCTION dup_signature_translated_str(p_param_in IN NCHAR, p_param_in_out IN OUT NCHAR, p_param_out OUT NCHAR) RETURN NCHAR; 
+    FUNCTION dup_signature_translated_str(p_param_in IN CLOB, p_param_in_out IN OUT CLOB, p_param_out OUT CLOB) RETURN CLOB; 
+    FUNCTION dup_signature_translated_str(p_param_in IN NCLOB, p_param_in_out IN OUT NCLOB, p_param_out OUT NCLOB) RETURN NCLOB; 
+    FUNCTION dup_signature_translated_date(p_param_in IN DATE, p_param_in_out IN OUT DATE, p_param_out OUT DATE) RETURN DATE;
+    FUNCTION dup_signature_translated_date(p_param_in IN TIMESTAMP, p_param_in_out IN OUT TIMESTAMP, p_param_out OUT TIMESTAMP) RETURN TIMESTAMP;
+
 	PROCEDURE proc_optional_param(p_in_number_required IN NUMBER, p_in_out_number_required IN OUT NUMBER, p_in_number_optional IN NUMBER DEFAULT 0, p_in_varchar2_optional IN VARCHAR2 DEFAULT 'TEST');
 	FUNCTION func_optional_param(p_in_number_required IN NUMBER, p_in_out_number_required IN OUT NUMBER, 
 		p_in_number_optional IN NUMBER DEFAULT 0, p_in_varchar2_optional IN VARCHAR2 DEFAULT 'TEST') RETURN NUMBER;

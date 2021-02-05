@@ -80,6 +80,62 @@ CREATE OR REPLACE PACKAGE BODY ODPT.odpt_pkg_main AS
         RETURN p_param_in3 + 3;    
     END;   
 
+    FUNCTION dup_signature_translated_str(p_param_in IN VARCHAR2, p_param_in_out IN OUT VARCHAR2, p_param_out OUT VARCHAR2) RETURN VARCHAR2 IS
+    BEGIN
+  		p_param_in_out := p_param_in;
+      	p_param_out := p_param_in;    
+        RETURN p_param_in;
+    END; 
+
+    FUNCTION dup_signature_translated_str(p_param_in IN NVARCHAR2, p_param_in_out IN OUT NVARCHAR2, p_param_out OUT NVARCHAR2) RETURN NVARCHAR2 IS
+    BEGIN
+  		p_param_in_out := p_param_in;
+      	p_param_out := p_param_in;    
+        RETURN p_param_in;   
+    END; 
+
+    FUNCTION dup_signature_translated_str(p_param_in IN CHAR, p_param_in_out IN OUT CHAR, p_param_out OUT CHAR) RETURN CHAR IS
+    BEGIN
+  		p_param_in_out := p_param_in;
+      	p_param_out := p_param_in;    
+        RETURN p_param_in;    
+    END; 
+
+    FUNCTION dup_signature_translated_str(p_param_in IN NCHAR, p_param_in_out IN OUT NCHAR, p_param_out OUT NCHAR) RETURN NCHAR IS
+    BEGIN
+  		p_param_in_out := p_param_in;
+      	p_param_out := p_param_in;    
+        RETURN p_param_in;    
+    END; 
+
+    FUNCTION dup_signature_translated_str(p_param_in IN CLOB, p_param_in_out IN OUT CLOB, p_param_out OUT CLOB) RETURN CLOB IS
+    BEGIN
+  		p_param_in_out := p_param_in;
+      	p_param_out := p_param_in;    
+        RETURN p_param_in;     
+    END; 
+
+    FUNCTION dup_signature_translated_str(p_param_in IN NCLOB, p_param_in_out IN OUT NCLOB, p_param_out OUT NCLOB) RETURN NCLOB IS
+    BEGIN
+  		p_param_in_out := p_param_in;
+      	p_param_out := p_param_in;    
+        RETURN p_param_in;     
+    END; 
+
+    FUNCTION dup_signature_translated_date(p_param_in IN DATE, p_param_in_out IN OUT DATE, p_param_out OUT DATE) RETURN DATE IS
+    BEGIN
+  		p_param_in_out := p_param_in;
+      	p_param_out := p_param_in;    
+        RETURN p_param_in;    
+    END; 
+
+    FUNCTION dup_signature_translated_date(p_param_in IN TIMESTAMP, p_param_in_out IN OUT TIMESTAMP, p_param_out OUT TIMESTAMP) RETURN TIMESTAMP IS
+    BEGIN
+  		p_param_in_out := p_param_in;
+      	p_param_out := p_param_in;    
+        RETURN p_param_in;     
+    END; 
+
 	PROCEDURE proc_optional_param(p_in_number_required IN NUMBER, p_in_out_number_required IN OUT NUMBER, p_in_number_optional IN NUMBER DEFAULT 0, p_in_varchar2_optional IN VARCHAR2 DEFAULT 'TEST') IS
 	BEGIN
 		p_in_out_number_required := p_in_number_required;
