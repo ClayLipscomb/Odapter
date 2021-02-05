@@ -36,9 +36,10 @@ namespace Odapter {
             return package.Procedures.Exists(p =>
                 p.ProcedureName.Equals(proc.ProcedureName)  // same proc name
                 && !(p.Overload ?? String.Empty).Equals(proc.Overload ?? String.Empty)  // different overload
-                && ((p.Arguments.Where(a => !a.IsReturnArgument).OrderBy(a => a.Sequence).Select(a => a.InOut + a.Translater.GetCSharpType()))
+                && ((p.Arguments.Where(a => !a.IsReturnArgument).OrderBy(a => a.Defaulted).ThenBy(a => a.Sequence).Select(a => a.InOut + a.Translater.GetCSharpType()))
                         .SequenceEqual  // params count, direction and type are exact match (excl. return arg)
-                    (proc.Arguments.Where(a => !a.IsReturnArgument).OrderBy(a => a.Sequence).Select(a => a.InOut + a.Translater.GetCSharpType())))
+                    (proc.Arguments.Where(a => !a.IsReturnArgument).OrderBy(a => a.Defaulted).ThenBy(a => a.Sequence).Select(a => a.InOut + a.Translater.GetCSharpType())))
+                    // ordering moves all defaulted (defaulted="Y") past required (defaulted="N")
                 );
         }
 

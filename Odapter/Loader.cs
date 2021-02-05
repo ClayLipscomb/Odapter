@@ -284,7 +284,7 @@ namespace Odapter {
                         + " AND a.package_name = o.object_name "
                         + " AND UPPER(o.object_type) = :objectType "    // required to restrict to package spec only
                         +  (isFiltering ? " AND UPPER(a.package_name) LIKE :packageNamePrefix || '%' " : String.Empty)
-                        + " ORDER BY a.package_name, a.object_name, a.overload, a.sequence ";
+                        + " ORDER BY a.package_name, a.object_name, a.overload, a.defaulted, a.sequence ";  // moves all defaulted (defaulted="Y") past required (defaulted="N")
 
             var dynamicParameters = new DynamicParameters();
             dynamicParameters.Add("owner", Schema);
