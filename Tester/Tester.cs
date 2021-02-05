@@ -30,8 +30,7 @@
 
 #define ODPT_FILTER_PREFIX          // "ODPT" as filter prefix of schema
 #define MAPPING_FOR_TYPED_CURSOR    // optional overloads for typed cursors methods are generated for mapping
-#define SEED_TABLES                 // seed all tables with test data
-//#define CSHARP30                    // C# 3.0 (.NET 3.5)
+//#define SEED_TABLES                 // seed all tables with test data
 
 //#define LARGE_LOB_SIZE
 
@@ -43,13 +42,9 @@ using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 
-#if CSHARP30
-using Oracle.DataAccess.Client;
-using Oracle.DataAccess.Types;
-#else
 using Oracle.ManagedDataAccess.Client;
 using Oracle.ManagedDataAccess.Types;
-#endif
+
 #if ODPT_FILTER_PREFIX
 using Schema.Odpt.Odpt;
 using Schema.Odpt.Odpt.Package;
@@ -76,13 +71,7 @@ namespace Odapter.Tester {
             private const uint TABLE_BIG_ROWS_TO_RETRIEVE = 100;
 
             // VARCHAR2, VARCHAR, NVARCHAR2, STRING
-            private const int MAX_STRING_SIZE_FOR_VARCHAR_ARG =
-#if CSHARP30
-                5    // >= 4096 overflows against XE with managed
-#else
-                8191    // >= 8192 overflows against XE with managed 
-#endif
-                ; // >= 8192 overflows against XE with managed
+            private const int MAX_STRING_SIZE_FOR_VARCHAR_ARG = 8191;    // >= 8192 overflows against XE with managed 
             private const int MAX_STRING_SIZE_FOR_VARCHAR_IN_ASSOC_ARRAY = 4000;
             private const int MAX_STRING_SIZE_FOR_NVARCHAR_IN_ASSOC_ARRAY = 1000;
             private const int MAX_STRING_SIZE_FOR_CHAR = 2000;
@@ -141,9 +130,7 @@ namespace Odapter.Tester {
 
                 TestCursorFilteredPackageTableBig();
 
-#if !CSHARP30 // unmanaged driver can't handle duplicate signatures
                 TestDuplicateSignatureCalls();
-#endif
                 TestNoParamCalls();
                 TestOptionalParamCalls();
                 TestMiscCalls();
@@ -415,11 +402,7 @@ namespace Odapter.Tester {
                                                         null, null, null, null, null, null, null, null, null, null, null, null, null);
                 // min values 
                 OdptPkgTableNumber.Instance.InsertRow(MIN_DECIMAL / 100000000,
-#if CSHARP30
-                                                        0, 0, // unmanaged bug treats OracleDbType.Byte as unsigned and throws on negative number
-#else
                                                         -9, -99,
-#endif
                                                         -999, -9999, -99999,
                                                         -Convert.ToInt32(new string('9', 6)), -Convert.ToInt32(new string('9', 7)), -Convert.ToInt32(new string('9', 8)), -Convert.ToInt32(new string('9', 9)),
 
@@ -432,11 +415,7 @@ namespace Odapter.Tester {
 #else
                                                         -Convert.ToInt64(new string('9', 10)), -Convert.ToInt64(new string('9', 18)), Int64.MinValue, Int64.MinValue,
 #endif
-#if CSHARP30
-                                                        0, 0, // unmanaged bug treats OracleDbType.Byte as unsigned and throws on negative number
-#else
                                                         -9, -99,
-#endif
                                                         -999, -9999, -99999, -Convert.ToInt32(new string('9', 9)),
 
 #if SAFETYPE_INTEGER
@@ -1006,11 +985,7 @@ namespace Odapter.Tester {
                 //pInDouble = 1.7976931348623157e308d; // BINARY_DOUBLE_MAX_NORMAL fails to return
                 //pInDouble = 2.2250738585072014e-308d; // BINARY_DOUBLE_MIN_NORMAL fails to return
 
-                IList<Double?> doubleTestValues = new List<Double?>() { MAX_BINARY_DOUBLE, MIN_BINARY_DOUBLE, 0.0d, null
-#if !CSHARP30
-                    , Double.NaN
-#endif
-                };
+                IList<Double?> doubleTestValues = new List<Double?>() { MAX_BINARY_DOUBLE, MIN_BINARY_DOUBLE, 0.0d, null, Double.NaN };
 
                 // BINARY_DOUBLE
                 // standard call
@@ -1039,11 +1014,7 @@ namespace Odapter.Tester {
                 Single? binaryFloatMinNormal, binaryFloatMaxNormal;
                 OdptPkgMain.Instance.ProcBinaryFloatConst(out binaryFloatMinNormal, out binaryFloatMaxNormal, null);
 
-                IList<Single?> singleTestValues = new List<Single?>() { binaryFloatMaxNormal, binaryFloatMinNormal, 0.0f, null
-#if !CSHARP30
-                    , Single.NaN
-#endif
-                };
+                IList<Single?> singleTestValues = new List<Single?>() { binaryFloatMaxNormal, binaryFloatMinNormal, 0.0f, null, Single.NaN };
 
                 // standard call
                 foreach (Single? st in singleTestValues) {
@@ -1183,9 +1154,7 @@ namespace Odapter.Tester {
                 Debug.Assert(
 #if SAFETYPE_CLOB
                     (pInString.Value.Equals(pInOutString.Value))
-#if !CSHARP30   // 3.0 is failing to hydrate the out and return; 'ORA-24806: LOB form mismatch'
                         && (pInString.Value.Equals(pOutString.Value)) && (pInString.Value.Equals(retString.Value))
-#endif
 #else
                     pInString.Equals(pInOutString) && pInString.Equals(pOutString) && pInString.Equals(retString)
 #endif
@@ -1264,17 +1233,13 @@ namespace Odapter.Tester {
                 DateTime? pInDateTime, pInOutDateTime, pOutDateTime, retDateTime;
                 IList<DateTime?> pInListDateTime, pInOutListDateTime, pOutListDateTime, retListDateTime;
                 IList<DateTime?> dateTimeTestValues = new List<DateTime?>() { 
-    #if !CSHARP30 // Unmanaged has issues with time portion, min value and max value
                     DateTime.Now, DateTime.MaxValue.AddMilliseconds(-1), DateTime.MinValue.AddMilliseconds(1),
-    #endif
                     null };
 #else // DateTimeOffset
                 DateTimeOffset? pInDateTime, pInOutDateTime, pOutDateTime, retDateTime;
                 IList<DateTimeOffset?> pInListDateTime, pInOutListDateTime, pOutListDateTime, retListDateTime;
                 IList<DateTimeOffset?> dateTimeTestValues = new List<DateTimeOffset?>() { 
-    #if !CSHARP30 // Unmanaged has issues with time portion, min value and max value
                     DateTimeOffset.Now, DateTimeOffset.MaxValue.AddMilliseconds(-1), DateTimeOffset.MinValue.AddMilliseconds(1),
-    #endif
                     null };
 #endif
                 // DATE
@@ -1286,9 +1251,7 @@ namespace Odapter.Tester {
                     if (pInDateTime.Value.IsNull) {
                         Debug.Assert(pInOutDateTime.Value.IsNull && pOutDateTime.Value.IsNull && retDateTime.Value.IsNull);
                     } else {
-    #if !CSHARP30 // Unmanaged OracleDate.Equals() is always false, works fine with Managed
                         Debug.Assert(pInDateTime.Equals(pInOutDateTime) && pInDateTime.Equals(pOutDateTime) && pInDateTime.Equals(retDateTime));
-    #endif
                     }
 #else
                     if (pInDateTime == null)
@@ -1303,11 +1266,9 @@ namespace Odapter.Tester {
                 pInListDateTime = pInOutListDateTime = dateTimeTestValues;
                 retListDateTime = OdptPkgMain.Instance.FuncAaDate(pInListDateTime, ref pInOutListDateTime, out pOutListDateTime, null);
 #if SAFETYPE_DATE
-    #if !CSHARP30 // Unmanaged OracleDate.Equals() is always false, works fine with Managed
                 for (int i = 0; i < pInListDateTime.Count; i++) Debug.Assert(pInListDateTime[i].Equals(pInOutListDateTime[i]));
                 for (int i = 0; i < pInListDateTime.Count; i++) Debug.Assert(pInListDateTime[i].Equals(pOutListDateTime[i]));
                 for (int i = 0; i < pInListDateTime.Count; i++) Debug.Assert(pInListDateTime[i].Equals(retListDateTime[i]));
-    #endif
 #else
                 for (int i = 0; i < pInListDateTime.Count; i++) Debug.Assert(!(pInListDateTime[i] - pInOutListDateTime[i] > TimeSpan.FromSeconds(1)));
                 for (int i = 0; i < pInListDateTime.Count; i++) Debug.Assert(!(pInListDateTime[i] - pOutListDateTime[i] > TimeSpan.FromSeconds(1)));
@@ -1321,16 +1282,12 @@ namespace Odapter.Tester {
 #elif DATE_TIME
                 DateTime? pInTimeStamp, pInOutTimeStamp, pOutTimeStamp, retTimeStamp;
                 IList<DateTime?> timeStampTestValues = new List<DateTime?>() {
-#if !CSHARP30   // Unmanaged has issues with non-null TIMESTAMP values
                     DateTime.Now, DateTime.MaxValue.AddMilliseconds(-1), DateTime.MinValue.AddMilliseconds(1),
-#endif
                     null };
 #else // DateTimeOffset
                 DateTimeOffset? pInTimeStamp, pInOutTimeStamp, pOutTimeStamp, retTimeStamp;
                 IList<DateTimeOffset?> timeStampTestValues = new List<DateTimeOffset?>() {
-    #if !CSHARP30   // Unmanaged has issues with non-null TIMESTAMP values
                     DateTimeOffset.Now, DateTimeOffset.MaxValue.AddMilliseconds(-1), DateTimeOffset.MinValue.AddMilliseconds(1),
-    #endif
                     null };
 
 #endif
@@ -1389,11 +1346,9 @@ namespace Odapter.Tester {
             }
 
             private void TestSingleton() {
-#if !CSHARP30
                 OdptPkgMain first = null, second = null, third = null;
                 Parallel.Invoke(() => first = OdptPkgMain.Instance, () => second = OdptPkgMain.Instance, () => third = OdptPkgMain.Instance);
                 Debug.Assert(Object.ReferenceEquals(first, second) && Object.ReferenceEquals(first, third));
-#endif
             }
 
             private void TestMiscCalls() {
