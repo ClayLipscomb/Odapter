@@ -991,6 +991,278 @@ namespace Schema.Odpt.Package {
             return __ret;
         } // DuplicateSignature6
 
+        public DateTime? DupSignatureTranslatedDate1(DateTime? pParamIn, ref DateTime? pParamInOut, out DateTime? pParamOut, OracleConnection optionalPreexistingOpenConnection = null) {
+            DateTime? __ret = null; pParamOut = null; 
+            OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
+            try {
+                using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_MAIN.DUP_SIGNATURE_TRANSLATED_DATE", __conn)) {
+                    __cmd.CommandType = CommandType.StoredProcedure;
+                    __cmd.BindByName = true;
+                    __cmd.Parameters.Add(new OracleParameter("!RETURN", OracleDbType.Date, null, ParameterDirection.ReturnValue));
+                    __cmd.Parameters.Add(new OracleParameter("P_PARAM_IN", OracleDbType.Date, pParamIn, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("P_PARAM_IN_OUT", OracleDbType.Date, pParamInOut, ParameterDirection.InputOutput));
+                    __cmd.Parameters.Add(new OracleParameter("P_PARAM_OUT", OracleDbType.Date, null, ParameterDirection.Output));
+
+                    OracleCommandTrace __cmdTrace = IsTracing(__cmd) ? new OracleCommandTrace(__cmd) : null;
+                    int __rowsAffected = __cmd.ExecuteNonQuery();
+                    __ret = __cmd.Parameters["!RETURN"].Status == OracleParameterStatus.NullFetched
+                        ? (DateTime?)null
+                        : Convert.ToDateTime(__cmd.Parameters["!RETURN"].Value.ToString());
+                    pParamInOut = __cmd.Parameters["P_PARAM_IN_OUT"].Status == OracleParameterStatus.NullFetched
+                        ? (DateTime?)null
+                        : Convert.ToDateTime(__cmd.Parameters["P_PARAM_IN_OUT"].Value.ToString());
+                    pParamOut = __cmd.Parameters["P_PARAM_OUT"].Status == OracleParameterStatus.NullFetched
+                        ? (DateTime?)null
+                        : Convert.ToDateTime(__cmd.Parameters["P_PARAM_OUT"].Value.ToString());
+                    if (__cmdTrace != null) TraceCompletion(__cmdTrace);
+                } // using OracleCommand
+            } finally {
+                if (optionalPreexistingOpenConnection == null) {
+                    __conn.Close();
+                    __conn.Dispose();
+                }
+            }
+            return __ret;
+        } // DupSignatureTranslatedDate1
+
+        public DateTime? DupSignatureTranslatedDate2(DateTime? pParamIn, ref DateTime? pParamInOut, out DateTime? pParamOut, OracleConnection optionalPreexistingOpenConnection = null) {
+            DateTime? __ret = null; pParamOut = null; 
+            OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
+            try {
+                using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_MAIN.DUP_SIGNATURE_TRANSLATED_DATE", __conn)) {
+                    __cmd.CommandType = CommandType.StoredProcedure;
+                    __cmd.BindByName = true;
+                    __cmd.Parameters.Add(new OracleParameter("!RETURN", OracleDbType.TimeStamp, null, ParameterDirection.ReturnValue));
+                    __cmd.Parameters.Add(new OracleParameter("P_PARAM_IN", OracleDbType.TimeStamp, pParamIn, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("P_PARAM_IN_OUT", OracleDbType.TimeStamp, pParamInOut, ParameterDirection.InputOutput));
+                    __cmd.Parameters.Add(new OracleParameter("P_PARAM_OUT", OracleDbType.TimeStamp, null, ParameterDirection.Output));
+
+                    OracleCommandTrace __cmdTrace = IsTracing(__cmd) ? new OracleCommandTrace(__cmd) : null;
+                    int __rowsAffected = __cmd.ExecuteNonQuery();
+                    __ret = __cmd.Parameters["!RETURN"].Status == OracleParameterStatus.NullFetched
+                        ? (DateTime?)null
+                        : Convert.ToDateTime(__cmd.Parameters["!RETURN"].Value.ToString());
+                    pParamInOut = __cmd.Parameters["P_PARAM_IN_OUT"].Status == OracleParameterStatus.NullFetched
+                        ? (DateTime?)null
+                        : Convert.ToDateTime(__cmd.Parameters["P_PARAM_IN_OUT"].Value.ToString());
+                    pParamOut = __cmd.Parameters["P_PARAM_OUT"].Status == OracleParameterStatus.NullFetched
+                        ? (DateTime?)null
+                        : Convert.ToDateTime(__cmd.Parameters["P_PARAM_OUT"].Value.ToString());
+                    if (__cmdTrace != null) TraceCompletion(__cmdTrace);
+                } // using OracleCommand
+            } finally {
+                if (optionalPreexistingOpenConnection == null) {
+                    __conn.Close();
+                    __conn.Dispose();
+                }
+            }
+            return __ret;
+        } // DupSignatureTranslatedDate2
+
+        public String DupSignatureTranslatedStr1(String pParamIn, ref String pParamInOut, out String pParamOut, OracleConnection optionalPreexistingOpenConnection = null) {
+            String __ret = null; pParamOut = null; 
+            OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
+            try {
+                using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_MAIN.DUP_SIGNATURE_TRANSLATED_STR", __conn)) {
+                    __cmd.CommandType = CommandType.StoredProcedure;
+                    __cmd.BindByName = true;
+                    __cmd.Parameters.Add(new OracleParameter("!RETURN", OracleDbType.Varchar2, 32767, null, ParameterDirection.ReturnValue));
+                    __cmd.Parameters.Add(new OracleParameter("P_PARAM_IN", OracleDbType.Varchar2, pParamIn, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("P_PARAM_IN_OUT", OracleDbType.Varchar2, 32767, pParamInOut, ParameterDirection.InputOutput));
+                    __cmd.Parameters.Add(new OracleParameter("P_PARAM_OUT", OracleDbType.Varchar2, 32767, null, ParameterDirection.Output));
+
+                    OracleCommandTrace __cmdTrace = IsTracing(__cmd) ? new OracleCommandTrace(__cmd) : null;
+                    int __rowsAffected = __cmd.ExecuteNonQuery();
+                    __ret = __cmd.Parameters["!RETURN"].Status == OracleParameterStatus.NullFetched
+                        ? (String)null
+                        : Convert.ToString(__cmd.Parameters["!RETURN"].Value.ToString());
+                    pParamInOut = __cmd.Parameters["P_PARAM_IN_OUT"].Status == OracleParameterStatus.NullFetched
+                        ? (String)null
+                        : Convert.ToString(__cmd.Parameters["P_PARAM_IN_OUT"].Value.ToString());
+                    pParamOut = __cmd.Parameters["P_PARAM_OUT"].Status == OracleParameterStatus.NullFetched
+                        ? (String)null
+                        : Convert.ToString(__cmd.Parameters["P_PARAM_OUT"].Value.ToString());
+                    if (__cmdTrace != null) TraceCompletion(__cmdTrace);
+                } // using OracleCommand
+            } finally {
+                if (optionalPreexistingOpenConnection == null) {
+                    __conn.Close();
+                    __conn.Dispose();
+                }
+            }
+            return __ret;
+        } // DupSignatureTranslatedStr1
+
+        public String DupSignatureTranslatedStr2(String pParamIn, ref String pParamInOut, out String pParamOut, OracleConnection optionalPreexistingOpenConnection = null) {
+            String __ret = null; pParamOut = null; 
+            OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
+            try {
+                using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_MAIN.DUP_SIGNATURE_TRANSLATED_STR", __conn)) {
+                    __cmd.CommandType = CommandType.StoredProcedure;
+                    __cmd.BindByName = true;
+                    __cmd.Parameters.Add(new OracleParameter("!RETURN", OracleDbType.NVarchar2, 32767, null, ParameterDirection.ReturnValue));
+                    __cmd.Parameters.Add(new OracleParameter("P_PARAM_IN", OracleDbType.NVarchar2, pParamIn, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("P_PARAM_IN_OUT", OracleDbType.NVarchar2, 32767, pParamInOut, ParameterDirection.InputOutput));
+                    __cmd.Parameters.Add(new OracleParameter("P_PARAM_OUT", OracleDbType.NVarchar2, 32767, null, ParameterDirection.Output));
+
+                    OracleCommandTrace __cmdTrace = IsTracing(__cmd) ? new OracleCommandTrace(__cmd) : null;
+                    int __rowsAffected = __cmd.ExecuteNonQuery();
+                    __ret = __cmd.Parameters["!RETURN"].Status == OracleParameterStatus.NullFetched
+                        ? (String)null
+                        : Convert.ToString(__cmd.Parameters["!RETURN"].Value.ToString());
+                    pParamInOut = __cmd.Parameters["P_PARAM_IN_OUT"].Status == OracleParameterStatus.NullFetched
+                        ? (String)null
+                        : Convert.ToString(__cmd.Parameters["P_PARAM_IN_OUT"].Value.ToString());
+                    pParamOut = __cmd.Parameters["P_PARAM_OUT"].Status == OracleParameterStatus.NullFetched
+                        ? (String)null
+                        : Convert.ToString(__cmd.Parameters["P_PARAM_OUT"].Value.ToString());
+                    if (__cmdTrace != null) TraceCompletion(__cmdTrace);
+                } // using OracleCommand
+            } finally {
+                if (optionalPreexistingOpenConnection == null) {
+                    __conn.Close();
+                    __conn.Dispose();
+                }
+            }
+            return __ret;
+        } // DupSignatureTranslatedStr2
+
+        public String DupSignatureTranslatedStr3(String pParamIn, ref String pParamInOut, out String pParamOut, OracleConnection optionalPreexistingOpenConnection = null) {
+            String __ret = null; pParamOut = null; 
+            OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
+            try {
+                using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_MAIN.DUP_SIGNATURE_TRANSLATED_STR", __conn)) {
+                    __cmd.CommandType = CommandType.StoredProcedure;
+                    __cmd.BindByName = true;
+                    __cmd.Parameters.Add(new OracleParameter("!RETURN", OracleDbType.Char, 2000, null, ParameterDirection.ReturnValue));
+                    __cmd.Parameters.Add(new OracleParameter("P_PARAM_IN", OracleDbType.Char, pParamIn, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("P_PARAM_IN_OUT", OracleDbType.Char, 2000, pParamInOut, ParameterDirection.InputOutput));
+                    __cmd.Parameters.Add(new OracleParameter("P_PARAM_OUT", OracleDbType.Char, 2000, null, ParameterDirection.Output));
+
+                    OracleCommandTrace __cmdTrace = IsTracing(__cmd) ? new OracleCommandTrace(__cmd) : null;
+                    int __rowsAffected = __cmd.ExecuteNonQuery();
+                    __ret = __cmd.Parameters["!RETURN"].Status == OracleParameterStatus.NullFetched
+                        ? (String)null
+                        : Convert.ToString(__cmd.Parameters["!RETURN"].Value.ToString());
+                    pParamInOut = __cmd.Parameters["P_PARAM_IN_OUT"].Status == OracleParameterStatus.NullFetched
+                        ? (String)null
+                        : Convert.ToString(__cmd.Parameters["P_PARAM_IN_OUT"].Value.ToString());
+                    pParamOut = __cmd.Parameters["P_PARAM_OUT"].Status == OracleParameterStatus.NullFetched
+                        ? (String)null
+                        : Convert.ToString(__cmd.Parameters["P_PARAM_OUT"].Value.ToString());
+                    if (__cmdTrace != null) TraceCompletion(__cmdTrace);
+                } // using OracleCommand
+            } finally {
+                if (optionalPreexistingOpenConnection == null) {
+                    __conn.Close();
+                    __conn.Dispose();
+                }
+            }
+            return __ret;
+        } // DupSignatureTranslatedStr3
+
+        public String DupSignatureTranslatedStr4(String pParamIn, ref String pParamInOut, out String pParamOut, OracleConnection optionalPreexistingOpenConnection = null) {
+            String __ret = null; pParamOut = null; 
+            OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
+            try {
+                using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_MAIN.DUP_SIGNATURE_TRANSLATED_STR", __conn)) {
+                    __cmd.CommandType = CommandType.StoredProcedure;
+                    __cmd.BindByName = true;
+                    __cmd.Parameters.Add(new OracleParameter("!RETURN", OracleDbType.NChar, 2000, null, ParameterDirection.ReturnValue));
+                    __cmd.Parameters.Add(new OracleParameter("P_PARAM_IN", OracleDbType.NChar, pParamIn, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("P_PARAM_IN_OUT", OracleDbType.NChar, 2000, pParamInOut, ParameterDirection.InputOutput));
+                    __cmd.Parameters.Add(new OracleParameter("P_PARAM_OUT", OracleDbType.NChar, 2000, null, ParameterDirection.Output));
+
+                    OracleCommandTrace __cmdTrace = IsTracing(__cmd) ? new OracleCommandTrace(__cmd) : null;
+                    int __rowsAffected = __cmd.ExecuteNonQuery();
+                    __ret = __cmd.Parameters["!RETURN"].Status == OracleParameterStatus.NullFetched
+                        ? (String)null
+                        : Convert.ToString(__cmd.Parameters["!RETURN"].Value.ToString());
+                    pParamInOut = __cmd.Parameters["P_PARAM_IN_OUT"].Status == OracleParameterStatus.NullFetched
+                        ? (String)null
+                        : Convert.ToString(__cmd.Parameters["P_PARAM_IN_OUT"].Value.ToString());
+                    pParamOut = __cmd.Parameters["P_PARAM_OUT"].Status == OracleParameterStatus.NullFetched
+                        ? (String)null
+                        : Convert.ToString(__cmd.Parameters["P_PARAM_OUT"].Value.ToString());
+                    if (__cmdTrace != null) TraceCompletion(__cmdTrace);
+                } // using OracleCommand
+            } finally {
+                if (optionalPreexistingOpenConnection == null) {
+                    __conn.Close();
+                    __conn.Dispose();
+                }
+            }
+            return __ret;
+        } // DupSignatureTranslatedStr4
+
+        public String DupSignatureTranslatedStr5(String pParamIn, ref String pParamInOut, out String pParamOut, OracleConnection optionalPreexistingOpenConnection = null) {
+            String __ret = null; pParamOut = null; 
+            OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
+            try {
+                using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_MAIN.DUP_SIGNATURE_TRANSLATED_STR", __conn)) {
+                    __cmd.CommandType = CommandType.StoredProcedure;
+                    __cmd.BindByName = true;
+                    __cmd.Parameters.Add(new OracleParameter("!RETURN", OracleDbType.Clob, 2147483647, null, ParameterDirection.ReturnValue));
+                    __cmd.Parameters.Add(new OracleParameter("P_PARAM_IN", OracleDbType.Clob, pParamIn, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("P_PARAM_IN_OUT", OracleDbType.Clob, 2147483647, pParamInOut, ParameterDirection.InputOutput));
+                    __cmd.Parameters.Add(new OracleParameter("P_PARAM_OUT", OracleDbType.Clob, 2147483647, null, ParameterDirection.Output));
+
+                    OracleCommandTrace __cmdTrace = IsTracing(__cmd) ? new OracleCommandTrace(__cmd) : null;
+                    int __rowsAffected = __cmd.ExecuteNonQuery();
+                    __ret = __cmd.Parameters["!RETURN"].Status == OracleParameterStatus.NullFetched
+                        ? (String)null
+                        : ((OracleClob)__cmd.Parameters["!RETURN"].Value).Value;
+                    pParamInOut = __cmd.Parameters["P_PARAM_IN_OUT"].Status == OracleParameterStatus.NullFetched
+                        ? (String)null
+                        : ((OracleClob)__cmd.Parameters["P_PARAM_IN_OUT"].Value).Value;
+                    pParamOut = __cmd.Parameters["P_PARAM_OUT"].Status == OracleParameterStatus.NullFetched
+                        ? (String)null
+                        : ((OracleClob)__cmd.Parameters["P_PARAM_OUT"].Value).Value;
+                    if (__cmdTrace != null) TraceCompletion(__cmdTrace);
+                } // using OracleCommand
+            } finally {
+                if (optionalPreexistingOpenConnection == null) {
+                    __conn.Close();
+                    __conn.Dispose();
+                }
+            }
+            return __ret;
+        } // DupSignatureTranslatedStr5
+
+        public String DupSignatureTranslatedStr6(String pParamIn, ref String pParamInOut, out String pParamOut, OracleConnection optionalPreexistingOpenConnection = null) {
+            String __ret = null; pParamOut = null; 
+            OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
+            try {
+                using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_MAIN.DUP_SIGNATURE_TRANSLATED_STR", __conn)) {
+                    __cmd.CommandType = CommandType.StoredProcedure;
+                    __cmd.BindByName = true;
+                    __cmd.Parameters.Add(new OracleParameter("!RETURN", OracleDbType.NClob, 2147483647, null, ParameterDirection.ReturnValue));
+                    __cmd.Parameters.Add(new OracleParameter("P_PARAM_IN", OracleDbType.NClob, pParamIn, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("P_PARAM_IN_OUT", OracleDbType.NClob, 2147483647, pParamInOut, ParameterDirection.InputOutput));
+                    __cmd.Parameters.Add(new OracleParameter("P_PARAM_OUT", OracleDbType.NClob, 2147483647, null, ParameterDirection.Output));
+
+                    OracleCommandTrace __cmdTrace = IsTracing(__cmd) ? new OracleCommandTrace(__cmd) : null;
+                    int __rowsAffected = __cmd.ExecuteNonQuery();
+                    __ret = __cmd.Parameters["!RETURN"].Status == OracleParameterStatus.NullFetched
+                        ? (String)null
+                        : ((OracleClob)__cmd.Parameters["!RETURN"].Value).Value;
+                    pParamInOut = __cmd.Parameters["P_PARAM_IN_OUT"].Status == OracleParameterStatus.NullFetched
+                        ? (String)null
+                        : ((OracleClob)__cmd.Parameters["P_PARAM_IN_OUT"].Value).Value;
+                    pParamOut = __cmd.Parameters["P_PARAM_OUT"].Status == OracleParameterStatus.NullFetched
+                        ? (String)null
+                        : ((OracleClob)__cmd.Parameters["P_PARAM_OUT"].Value).Value;
+                    if (__cmdTrace != null) TraceCompletion(__cmdTrace);
+                } // using OracleCommand
+            } finally {
+                if (optionalPreexistingOpenConnection == null) {
+                    __conn.Close();
+                    __conn.Dispose();
+                }
+            }
+            return __ret;
+        } // DupSignatureTranslatedStr6
+
         public IList<Double?> FuncAaBinaryDouble(IList<Double?> pIn, ref IList<Double?> pInOut, out IList<Double?> pOut, OracleConnection optionalPreexistingOpenConnection = null) {
             IList<Double?> __ret = new List<Double?>(); pOut = new List<Double?>(); 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
