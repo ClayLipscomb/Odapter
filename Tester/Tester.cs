@@ -1484,30 +1484,30 @@ namespace Odapter.Tester {
                     pInNumberRequired = decimalTestValues[i]; pInOutNumberRequired = decimalTestValues[i]; pInNumberOptional = decimalTestValues[i];
 
                     // proc
-                    OdptPkgMain.Instance.ProcOptionalParam(pInNumberRequired, ref pInOutNumberRequired, pInNumberOptional, pInVarchar2Optional, null);
+                    OdptPkgMain.Instance.ProcOptionalParam2(pInNumberRequired, ref pInOutNumberRequired, pInNumberOptional, pInVarchar2Optional, null);
 #if !CSHARP30
                     Debug.Assert(pInNumberRequired.Equals(pInOutNumberRequired));
-                    OdptPkgMain.Instance.ProcOptionalParam(pInNumberRequired, ref pInOutNumberRequired, pInNumberOptional, pInVarchar2Optional);
+                    OdptPkgMain.Instance.ProcOptionalParam2(pInNumberRequired, ref pInOutNumberRequired, pInNumberOptional, pInVarchar2Optional);
                     Debug.Assert(pInNumberRequired.Equals(pInOutNumberRequired));
-                    OdptPkgMain.Instance.ProcOptionalParam(pInNumberRequired, ref pInOutNumberRequired, pInNumberOptional);
+                    OdptPkgMain.Instance.ProcOptionalParam2(pInNumberRequired, ref pInOutNumberRequired, pInNumberOptional);
                     Debug.Assert(pInNumberRequired.Equals(pInOutNumberRequired));
-                    OdptPkgMain.Instance.ProcOptionalParam(pInNumberRequired, ref pInOutNumberRequired);
+                    OdptPkgMain.Instance.ProcOptionalParam2(pInNumberRequired, ref pInOutNumberRequired);
                     Debug.Assert(pInNumberRequired.Equals(pInOutNumberRequired));
-                    OdptPkgMain.Instance.ProcOptionalParam(pInNumberRequired, ref pInOutNumberRequired, optionalPreexistingOpenConnection : null);
+                    OdptPkgMain.Instance.ProcOptionalParam2(pInNumberRequired, ref pInOutNumberRequired, optionalPreexistingOpenConnection : null);
                     Debug.Assert(pInNumberRequired.Equals(pInOutNumberRequired));
 #endif
 
                     // func
-                    pRetNumber = OdptPkgMain.Instance.FuncOptionalParam(pInNumberRequired, ref pInOutNumberRequired, pInNumberOptional, pInVarchar2Optional, null);
+                    pRetNumber = OdptPkgMain.Instance.FuncOptionalParam2(pInNumberRequired, ref pInOutNumberRequired, pInNumberOptional, pInVarchar2Optional, null);
                     Debug.Assert(pInNumberRequired.Equals(pInOutNumberRequired) && pInNumberRequired.Equals(pRetNumber));
 #if !CSHARP30
-                    pRetNumber = OdptPkgMain.Instance.FuncOptionalParam(pInNumberRequired, ref pInOutNumberRequired, pInNumberOptional, pInVarchar2Optional);
+                    pRetNumber = OdptPkgMain.Instance.FuncOptionalParam2(pInNumberRequired, ref pInOutNumberRequired, pInNumberOptional, pInVarchar2Optional);
                     Debug.Assert(pInNumberRequired.Equals(pInOutNumberRequired) && pInNumberRequired.Equals(pRetNumber));
-                    pRetNumber = OdptPkgMain.Instance.FuncOptionalParam(pInNumberRequired, ref pInOutNumberRequired, pInNumberOptional);
+                    pRetNumber = OdptPkgMain.Instance.FuncOptionalParam2(pInNumberRequired, ref pInOutNumberRequired, pInNumberOptional);
                     Debug.Assert(pInNumberRequired.Equals(pInOutNumberRequired) && pInNumberRequired.Equals(pRetNumber));
-                    pRetNumber = OdptPkgMain.Instance.FuncOptionalParam(pInNumberRequired, ref pInOutNumberRequired);
+                    pRetNumber = OdptPkgMain.Instance.FuncOptionalParam2(pInNumberRequired, ref pInOutNumberRequired);
                     Debug.Assert(pInNumberRequired.Equals(pInOutNumberRequired) && pInNumberRequired.Equals(pRetNumber));
-                    pRetNumber = OdptPkgMain.Instance.FuncOptionalParam(pInNumberRequired, ref pInOutNumberRequired, optionalPreexistingOpenConnection : null);
+                    pRetNumber = OdptPkgMain.Instance.FuncOptionalParam2(pInNumberRequired, ref pInOutNumberRequired, optionalPreexistingOpenConnection : null);
                     Debug.Assert(pInNumberRequired.Equals(pInOutNumberRequired) && pInNumberRequired.Equals(pRetNumber));
 #endif
                 }

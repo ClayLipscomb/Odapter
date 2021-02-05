@@ -2803,7 +2803,7 @@ namespace Schema.Odpt.Odpt.Package {
         // **PROC IGNORED** - OBJECT type is not available in ODP.NET managed
         // public OdptBigOt FuncObjectType(OdptBigOt pIn, ref OdptBigOt pInOut, out OdptBigOt pOut, OracleConnection optionalPreexistingOpenConnection = null)
 
-        public Decimal? FuncOptionalParam(Decimal? pInNumberRequired, ref Decimal? pInOutNumberRequired, Decimal? pInNumberOptional = null, String pInVarchar2Optional = null, 
+        public Decimal? FuncOptionalParam1(Decimal? pInNumberRequired, ref Decimal? pInOutNumberRequired, Decimal? pInNumberOptional = null, String pInVarchar2Optional = null, 
                 OracleConnection optionalPreexistingOpenConnection = null) {
             Decimal? __ret = null; 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
@@ -2834,7 +2834,40 @@ namespace Schema.Odpt.Odpt.Package {
                 }
             }
             return __ret;
-        } // FuncOptionalParam
+        } // FuncOptionalParam1
+
+        public Decimal? FuncOptionalParam2(Decimal? pInNumberRequired, ref Decimal? pInOutNumberRequired, Decimal? pInNumberOptional = null, String pInVarchar2Optional = null, 
+                OracleConnection optionalPreexistingOpenConnection = null) {
+            Decimal? __ret = null; 
+            OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
+            try {
+                using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_MAIN.FUNC_OPTIONAL_PARAM", __conn)) {
+                    __cmd.CommandType = CommandType.StoredProcedure;
+                    __cmd.BindByName = true;
+                    __cmd.Parameters.Add(new OracleParameter("!RETURN", OracleDbType.Decimal, null, ParameterDirection.ReturnValue));
+                    __cmd.Parameters.Add(new OracleParameter("P_IN_NUMBER_REQUIRED", OracleDbType.Decimal, pInNumberRequired, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("P_IN_OUT_NUMBER_REQUIRED", OracleDbType.Decimal, pInOutNumberRequired, ParameterDirection.InputOutput));
+                    if (pInNumberOptional != null) __cmd.Parameters.Add(new OracleParameter("P_IN_NUMBER_OPTIONAL", OracleDbType.Decimal, pInNumberOptional, ParameterDirection.Input));
+                    if (pInVarchar2Optional != null) __cmd.Parameters.Add(new OracleParameter("P_IN_VARCHAR2_OPTIONAL", OracleDbType.Varchar2, pInVarchar2Optional, ParameterDirection.Input));
+
+                    OracleCommandTrace __cmdTrace = IsTracing(__cmd) ? new OracleCommandTrace(__cmd) : null;
+                    int __rowsAffected = __cmd.ExecuteNonQuery();
+                    __ret = __cmd.Parameters["!RETURN"].Status == OracleParameterStatus.NullFetched
+                        ? (Decimal?)null
+                        : Convert.ToDecimal(__cmd.Parameters["!RETURN"].Value.ToString());
+                    pInOutNumberRequired = __cmd.Parameters["P_IN_OUT_NUMBER_REQUIRED"].Status == OracleParameterStatus.NullFetched
+                        ? (Decimal?)null
+                        : Convert.ToDecimal(__cmd.Parameters["P_IN_OUT_NUMBER_REQUIRED"].Value.ToString());
+                    if (__cmdTrace != null) TraceCompletion(__cmdTrace);
+                } // using OracleCommand
+            } finally {
+                if (optionalPreexistingOpenConnection == null) {
+                    __conn.Close();
+                    __conn.Dispose();
+                }
+            }
+            return __ret;
+        } // FuncOptionalParam2
 
         public Int32? FuncPlsInteger(Int32? pIn, ref Int32? pInOut, out Int32? pOut, OracleConnection optionalPreexistingOpenConnection = null) {
             Int32? __ret = null; pOut = null; 
@@ -3331,7 +3364,7 @@ namespace Schema.Odpt.Odpt.Package {
             }
         } // ProcNoParam
 
-        public void ProcOptionalParam(Decimal? pInNumberRequired, ref Decimal? pInOutNumberRequired, Decimal? pInNumberOptional = null, String pInVarchar2Optional = null, 
+        public void ProcOptionalParam1(Decimal? pInNumberRequired, ref Decimal? pInOutNumberRequired, Decimal? pInNumberOptional = null, String pInVarchar2Optional = null, 
                 OracleConnection optionalPreexistingOpenConnection = null) {
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
             try {
@@ -3356,7 +3389,34 @@ namespace Schema.Odpt.Odpt.Package {
                     __conn.Dispose();
                 }
             }
-        } // ProcOptionalParam
+        } // ProcOptionalParam1
+
+        public void ProcOptionalParam2(Decimal? pInNumberRequired, ref Decimal? pInOutNumberRequired, Decimal? pInNumberOptional = null, String pInVarchar2Optional = null, 
+                OracleConnection optionalPreexistingOpenConnection = null) {
+            OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
+            try {
+                using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_MAIN.PROC_OPTIONAL_PARAM", __conn)) {
+                    __cmd.CommandType = CommandType.StoredProcedure;
+                    __cmd.BindByName = true;
+                    __cmd.Parameters.Add(new OracleParameter("P_IN_NUMBER_REQUIRED", OracleDbType.Decimal, pInNumberRequired, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("P_IN_OUT_NUMBER_REQUIRED", OracleDbType.Decimal, pInOutNumberRequired, ParameterDirection.InputOutput));
+                    if (pInNumberOptional != null) __cmd.Parameters.Add(new OracleParameter("P_IN_NUMBER_OPTIONAL", OracleDbType.Decimal, pInNumberOptional, ParameterDirection.Input));
+                    if (pInVarchar2Optional != null) __cmd.Parameters.Add(new OracleParameter("P_IN_VARCHAR2_OPTIONAL", OracleDbType.Varchar2, pInVarchar2Optional, ParameterDirection.Input));
+
+                    OracleCommandTrace __cmdTrace = IsTracing(__cmd) ? new OracleCommandTrace(__cmd) : null;
+                    int __rowsAffected = __cmd.ExecuteNonQuery();
+                    pInOutNumberRequired = __cmd.Parameters["P_IN_OUT_NUMBER_REQUIRED"].Status == OracleParameterStatus.NullFetched
+                        ? (Decimal?)null
+                        : Convert.ToDecimal(__cmd.Parameters["P_IN_OUT_NUMBER_REQUIRED"].Value.ToString());
+                    if (__cmdTrace != null) TraceCompletion(__cmdTrace);
+                } // using OracleCommand
+            } finally {
+                if (optionalPreexistingOpenConnection == null) {
+                    __conn.Close();
+                    __conn.Dispose();
+                }
+            }
+        } // ProcOptionalParam2
 
         public void ProcRaiseException(OracleConnection optionalPreexistingOpenConnection = null) {
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
