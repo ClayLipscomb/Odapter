@@ -18,6 +18,7 @@
 
 //#define SHORT_INTEGER               // INTEGER as Int32
 //#define DECIMAL_INTEGER             // INTEGER as Decimal
+
 #define DATE_TIME                   // DATE as DateTime
 
 //#define SAFETYPE_INTEGER            // INTEGER as safe type OracleDecimal
@@ -1484,32 +1485,50 @@ namespace Odapter.Tester {
                     pInNumberRequired = decimalTestValues[i]; pInOutNumberRequired = decimalTestValues[i]; pInNumberOptional = decimalTestValues[i];
 
                     // proc
-                    OdptPkgMain.Instance.ProcOptionalParam2(pInNumberRequired, ref pInOutNumberRequired, pInNumberOptional, pInVarchar2Optional, null);
-#if !CSHARP30
+                    OdptPkgMain.Instance.ProcOptionalParam(pInNumberRequired, ref pInOutNumberRequired, pInNumberOptional, pInVarchar2Optional, null);
                     Debug.Assert(pInNumberRequired.Equals(pInOutNumberRequired));
-                    OdptPkgMain.Instance.ProcOptionalParam2(pInNumberRequired, ref pInOutNumberRequired, pInNumberOptional, pInVarchar2Optional);
+                    OdptPkgMain.Instance.ProcOptionalParam(pInNumberRequired, ref pInOutNumberRequired, pInNumberOptional, pInVarchar2Optional);
                     Debug.Assert(pInNumberRequired.Equals(pInOutNumberRequired));
-                    OdptPkgMain.Instance.ProcOptionalParam2(pInNumberRequired, ref pInOutNumberRequired, pInNumberOptional);
+                    OdptPkgMain.Instance.ProcOptionalParam(pInNumberRequired, ref pInOutNumberRequired, pInNumberOptional);
                     Debug.Assert(pInNumberRequired.Equals(pInOutNumberRequired));
-                    OdptPkgMain.Instance.ProcOptionalParam2(pInNumberRequired, ref pInOutNumberRequired);
+                    OdptPkgMain.Instance.ProcOptionalParam(pInNumberRequired, ref pInOutNumberRequired);
                     Debug.Assert(pInNumberRequired.Equals(pInOutNumberRequired));
-                    OdptPkgMain.Instance.ProcOptionalParam2(pInNumberRequired, ref pInOutNumberRequired, optionalPreexistingOpenConnection : null);
+                    OdptPkgMain.Instance.ProcOptionalParam(pInNumberRequired, ref pInOutNumberRequired, optionalPreexistingOpenConnection : null);
                     Debug.Assert(pInNumberRequired.Equals(pInOutNumberRequired));
-#endif
+
+                    OdptPkgMain.Instance.ProcOptionalParamReversed(pInNumberRequired, ref pInOutNumberRequired, pInNumberOptional, pInVarchar2Optional, null);
+                    Debug.Assert(pInNumberRequired.Equals(pInOutNumberRequired));
+                    OdptPkgMain.Instance.ProcOptionalParamReversed(pInNumberRequired, ref pInOutNumberRequired, pInNumberOptional, pInVarchar2Optional);
+                    Debug.Assert(pInNumberRequired.Equals(pInOutNumberRequired));
+                    OdptPkgMain.Instance.ProcOptionalParamReversed(pInNumberRequired, ref pInOutNumberRequired, pInNumberOptional);
+                    Debug.Assert(pInNumberRequired.Equals(pInOutNumberRequired));
+                    OdptPkgMain.Instance.ProcOptionalParamReversed(pInNumberRequired, ref pInOutNumberRequired);
+                    Debug.Assert(pInNumberRequired.Equals(pInOutNumberRequired));
+                    OdptPkgMain.Instance.ProcOptionalParamReversed(pInNumberRequired, ref pInOutNumberRequired, optionalPreexistingOpenConnection: null);
+                    Debug.Assert(pInNumberRequired.Equals(pInOutNumberRequired));
 
                     // func
-                    pRetNumber = OdptPkgMain.Instance.FuncOptionalParam2(pInNumberRequired, ref pInOutNumberRequired, pInNumberOptional, pInVarchar2Optional, null);
+                    pRetNumber = OdptPkgMain.Instance.FuncOptionalParam(pInNumberRequired, ref pInOutNumberRequired, pInNumberOptional, pInVarchar2Optional, null);
                     Debug.Assert(pInNumberRequired.Equals(pInOutNumberRequired) && pInNumberRequired.Equals(pRetNumber));
-#if !CSHARP30
-                    pRetNumber = OdptPkgMain.Instance.FuncOptionalParam2(pInNumberRequired, ref pInOutNumberRequired, pInNumberOptional, pInVarchar2Optional);
+                    pRetNumber = OdptPkgMain.Instance.FuncOptionalParam(pInNumberRequired, ref pInOutNumberRequired, pInNumberOptional, pInVarchar2Optional);
                     Debug.Assert(pInNumberRequired.Equals(pInOutNumberRequired) && pInNumberRequired.Equals(pRetNumber));
-                    pRetNumber = OdptPkgMain.Instance.FuncOptionalParam2(pInNumberRequired, ref pInOutNumberRequired, pInNumberOptional);
+                    pRetNumber = OdptPkgMain.Instance.FuncOptionalParam(pInNumberRequired, ref pInOutNumberRequired, pInNumberOptional);
                     Debug.Assert(pInNumberRequired.Equals(pInOutNumberRequired) && pInNumberRequired.Equals(pRetNumber));
-                    pRetNumber = OdptPkgMain.Instance.FuncOptionalParam2(pInNumberRequired, ref pInOutNumberRequired);
+                    pRetNumber = OdptPkgMain.Instance.FuncOptionalParam(pInNumberRequired, ref pInOutNumberRequired);
                     Debug.Assert(pInNumberRequired.Equals(pInOutNumberRequired) && pInNumberRequired.Equals(pRetNumber));
-                    pRetNumber = OdptPkgMain.Instance.FuncOptionalParam2(pInNumberRequired, ref pInOutNumberRequired, optionalPreexistingOpenConnection : null);
+                    pRetNumber = OdptPkgMain.Instance.FuncOptionalParam(pInNumberRequired, ref pInOutNumberRequired, optionalPreexistingOpenConnection : null);
                     Debug.Assert(pInNumberRequired.Equals(pInOutNumberRequired) && pInNumberRequired.Equals(pRetNumber));
-#endif
+
+                    pRetNumber = OdptPkgMain.Instance.FuncOptionalParamReversed(pInNumberRequired, ref pInOutNumberRequired, pInNumberOptional, pInVarchar2Optional, null);
+                    Debug.Assert(pInNumberRequired.Equals(pInOutNumberRequired) && pInNumberRequired.Equals(pRetNumber));
+                    pRetNumber = OdptPkgMain.Instance.FuncOptionalParamReversed(pInNumberRequired, ref pInOutNumberRequired, pInNumberOptional, pInVarchar2Optional);
+                    Debug.Assert(pInNumberRequired.Equals(pInOutNumberRequired) && pInNumberRequired.Equals(pRetNumber));
+                    pRetNumber = OdptPkgMain.Instance.FuncOptionalParamReversed(pInNumberRequired, ref pInOutNumberRequired, pInNumberOptional);
+                    Debug.Assert(pInNumberRequired.Equals(pInOutNumberRequired) && pInNumberRequired.Equals(pRetNumber));
+                    pRetNumber = OdptPkgMain.Instance.FuncOptionalParamReversed(pInNumberRequired, ref pInOutNumberRequired);
+                    Debug.Assert(pInNumberRequired.Equals(pInOutNumberRequired) && pInNumberRequired.Equals(pRetNumber));
+                    pRetNumber = OdptPkgMain.Instance.FuncOptionalParamReversed(pInNumberRequired, ref pInOutNumberRequired, optionalPreexistingOpenConnection: null);
+                    Debug.Assert(pInNumberRequired.Equals(pInOutNumberRequired) && pInNumberRequired.Equals(pRetNumber));
                 }
             }
 #endregion

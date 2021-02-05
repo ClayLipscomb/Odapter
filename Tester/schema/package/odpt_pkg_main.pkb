@@ -142,7 +142,7 @@ CREATE OR REPLACE PACKAGE BODY ODPT.odpt_pkg_main AS
 		RETURN;
 	END;
 
-	PROCEDURE proc_optional_param(p_in_number_optional IN NUMBER DEFAULT 0, p_in_varchar2_optional IN VARCHAR2 DEFAULT 'TEST', p_in_number_required IN NUMBER, p_in_out_number_required IN OUT NUMBER) IS
+	PROCEDURE proc_optional_param_reversed(p_in_number_optional IN NUMBER DEFAULT 0, p_in_varchar2_optional IN VARCHAR2 DEFAULT 'TEST', p_in_number_required IN NUMBER, p_in_out_number_required IN OUT NUMBER) IS
 	BEGIN
 		p_in_out_number_required := p_in_number_required;
 		RETURN;
@@ -154,7 +154,7 @@ CREATE OR REPLACE PACKAGE BODY ODPT.odpt_pkg_main AS
 		RETURN p_in_out_number_required;
 	END;
 
-	FUNCTION func_optional_param(p_in_number_optional IN NUMBER DEFAULT 0, p_in_varchar2_optional IN VARCHAR2 DEFAULT 'TEST', p_in_number_required IN NUMBER, p_in_out_number_required IN OUT NUMBER) RETURN NUMBER IS
+	FUNCTION func_optional_param_reversed(p_in_number_optional IN NUMBER DEFAULT 0, p_in_varchar2_optional IN VARCHAR2 DEFAULT 'TEST', p_in_number_required IN NUMBER, p_in_out_number_required IN OUT NUMBER) RETURN NUMBER IS
 	BEGIN
 		p_in_out_number_required := p_in_number_required;
 		RETURN p_in_out_number_required; 
