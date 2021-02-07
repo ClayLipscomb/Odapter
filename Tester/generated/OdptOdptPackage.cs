@@ -584,11 +584,11 @@ namespace Schema.Odpt.Odpt.Package {
             return __ret;
         } // ReadResultITRecFldSameName
 
-        public void DuplicateSignature1(Int64? pParamIn1, ref Int64? pParamInOut1, out Int64? pParamOut1, OracleConnection optionalPreexistingOpenConnection = null) {
+        public void DupSignature1(Int64? pParamIn1, ref Int64? pParamInOut1, out Int64? pParamOut1, OracleConnection optionalPreexistingOpenConnection = null) {
             pParamOut1 = null; 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
             try {
-                using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_MAIN.DUPLICATE_SIGNATURE", __conn)) {
+                using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_MAIN.DUP_SIGNATURE", __conn)) {
                     __cmd.CommandType = CommandType.StoredProcedure;
                     __cmd.BindByName = true;
                     __cmd.Parameters.Add(new OracleParameter("P_PARAM_IN1", OracleDbType.Int64, pParamIn1, ParameterDirection.Input));
@@ -611,13 +611,13 @@ namespace Schema.Odpt.Odpt.Package {
                     __conn.Dispose();
                 }
             }
-        } // DuplicateSignature1
+        } // DupSignature1
 
-        public void DuplicateSignature2(Int64? pParamIn2, ref Int64? pParamInOut2, out Int64? pParamOut2, OracleConnection optionalPreexistingOpenConnection = null) {
+        public void DupSignature2(Int64? pParamIn2, ref Int64? pParamInOut2, out Int64? pParamOut2, OracleConnection optionalPreexistingOpenConnection = null) {
             pParamOut2 = null; 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
             try {
-                using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_MAIN.DUPLICATE_SIGNATURE", __conn)) {
+                using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_MAIN.DUP_SIGNATURE", __conn)) {
                     __cmd.CommandType = CommandType.StoredProcedure;
                     __cmd.BindByName = true;
                     __cmd.Parameters.Add(new OracleParameter("P_PARAM_IN2", OracleDbType.Int64, pParamIn2, ParameterDirection.Input));
@@ -640,13 +640,13 @@ namespace Schema.Odpt.Odpt.Package {
                     __conn.Dispose();
                 }
             }
-        } // DuplicateSignature2
+        } // DupSignature2
 
-        public void DuplicateSignature3(Int64? pParamIn3, ref Int64? pParamInOut3, out Int64? pParamOut3, OracleConnection optionalPreexistingOpenConnection = null) {
+        public void DupSignature3(Int64? pParamIn3, ref Int64? pParamInOut3, out Int64? pParamOut3, OracleConnection optionalPreexistingOpenConnection = null) {
             pParamOut3 = null; 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
             try {
-                using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_MAIN.DUPLICATE_SIGNATURE", __conn)) {
+                using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_MAIN.DUP_SIGNATURE", __conn)) {
                     __cmd.CommandType = CommandType.StoredProcedure;
                     __cmd.BindByName = true;
                     __cmd.Parameters.Add(new OracleParameter("P_PARAM_IN3", OracleDbType.Int64, pParamIn3, ParameterDirection.Input));
@@ -669,13 +669,13 @@ namespace Schema.Odpt.Odpt.Package {
                     __conn.Dispose();
                 }
             }
-        } // DuplicateSignature3
+        } // DupSignature3
 
-        public Int64? DuplicateSignature4(Int64? pParamIn1, ref Int64? pParamInOut1, out Int64? pParamOut1, OracleConnection optionalPreexistingOpenConnection = null) {
+        public Int64? DupSignature4(Int64? pParamIn1, ref Int64? pParamInOut1, out Int64? pParamOut1, OracleConnection optionalPreexistingOpenConnection = null) {
             Int64? __ret = null; pParamOut1 = null; 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
             try {
-                using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_MAIN.DUPLICATE_SIGNATURE", __conn)) {
+                using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_MAIN.DUP_SIGNATURE", __conn)) {
                     __cmd.CommandType = CommandType.StoredProcedure;
                     __cmd.BindByName = true;
                     __cmd.Parameters.Add(new OracleParameter("!RETURN", OracleDbType.Int64, null, ParameterDirection.ReturnValue));
@@ -703,13 +703,13 @@ namespace Schema.Odpt.Odpt.Package {
                 }
             }
             return __ret;
-        } // DuplicateSignature4
+        } // DupSignature4
 
-        public Int64? DuplicateSignature5(Int64? pParamIn2, ref Int64? pParamInOut2, out Int64? pParamOut2, OracleConnection optionalPreexistingOpenConnection = null) {
+        public Int64? DupSignature5(Int64? pParamIn2, ref Int64? pParamInOut2, out Int64? pParamOut2, OracleConnection optionalPreexistingOpenConnection = null) {
             Int64? __ret = null; pParamOut2 = null; 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
             try {
-                using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_MAIN.DUPLICATE_SIGNATURE", __conn)) {
+                using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_MAIN.DUP_SIGNATURE", __conn)) {
                     __cmd.CommandType = CommandType.StoredProcedure;
                     __cmd.BindByName = true;
                     __cmd.Parameters.Add(new OracleParameter("!RETURN", OracleDbType.Int64, null, ParameterDirection.ReturnValue));
@@ -737,13 +737,13 @@ namespace Schema.Odpt.Odpt.Package {
                 }
             }
             return __ret;
-        } // DuplicateSignature5
+        } // DupSignature5
 
-        public Int64? DuplicateSignature6(Int64? pParamIn3, ref Int64? pParamInOut3, out Int64? pParamOut3, OracleConnection optionalPreexistingOpenConnection = null) {
+        public Int64? DupSignature6(Int64? pParamIn3, ref Int64? pParamInOut3, out Int64? pParamOut3, OracleConnection optionalPreexistingOpenConnection = null) {
             Int64? __ret = null; pParamOut3 = null; 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
             try {
-                using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_MAIN.DUPLICATE_SIGNATURE", __conn)) {
+                using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_MAIN.DUP_SIGNATURE", __conn)) {
                     __cmd.CommandType = CommandType.StoredProcedure;
                     __cmd.BindByName = true;
                     __cmd.Parameters.Add(new OracleParameter("!RETURN", OracleDbType.Int64, null, ParameterDirection.ReturnValue));
@@ -771,7 +771,7 @@ namespace Schema.Odpt.Odpt.Package {
                 }
             }
             return __ret;
-        } // DuplicateSignature6
+        } // DupSignature6
 
         public DateTime? DupSignatureTranslatedDate1(DateTime? pParamIn, ref DateTime? pParamInOut, out DateTime? pParamOut, OracleConnection optionalPreexistingOpenConnection = null) {
             DateTime? __ret = null; pParamOut = null; 
@@ -1044,6 +1044,49 @@ namespace Schema.Odpt.Odpt.Package {
             }
             return __ret;
         } // DupSignatureTranslatedStr6
+
+        // **PROC IGNORED** - Code generation for LONG type will not be implemented due to Oracle deprecation
+        // public Byte[] DupSigTranslatedByteArr(Byte[] pParamIn, ref Byte[] pParamInOut, out Byte[] pParamOut, OracleConnection optionalPreexistingOpenConnection = null)
+
+        // **PROC IGNORED** - Code generation for BFILE type has not been implemented
+        // public Byte[] DupSigTranslatedByteArr(Byte[] pParamIn, ref Byte[] pParamInOut, out Byte[] pParamOut, OracleConnection optionalPreexistingOpenConnection = null)
+
+        public Byte[] DupSigTranslatedByteArr(Byte[] pParamIn, ref Byte[] pParamInOut, out Byte[] pParamOut, OracleConnection optionalPreexistingOpenConnection = null) {
+            Byte[] __ret = null; pParamOut = null; 
+            OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
+            try {
+                using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_MAIN.DUP_SIG_TRANSLATED_BYTE_ARR", __conn)) {
+                    __cmd.CommandType = CommandType.StoredProcedure;
+                    __cmd.BindByName = true;
+                    __cmd.Parameters.Add(new OracleParameter("!RETURN", OracleDbType.Blob, null, ParameterDirection.ReturnValue));
+                    __cmd.Parameters.Add(new OracleParameter("P_PARAM_IN", OracleDbType.Blob, pParamIn, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("P_PARAM_IN_OUT", OracleDbType.Blob, pParamInOut, ParameterDirection.InputOutput));
+                    __cmd.Parameters.Add(new OracleParameter("P_PARAM_OUT", OracleDbType.Blob, null, ParameterDirection.Output));
+
+                    OracleCommandTrace __cmdTrace = IsTracing(__cmd) ? new OracleCommandTrace(__cmd) : null;
+                    int __rowsAffected = __cmd.ExecuteNonQuery();
+                    __ret = __cmd.Parameters["!RETURN"].Status == OracleParameterStatus.NullFetched
+                        ? (Byte[])null
+                        : ((OracleBlob)__cmd.Parameters["!RETURN"].Value).Value;
+                    pParamInOut = __cmd.Parameters["P_PARAM_IN_OUT"].Status == OracleParameterStatus.NullFetched
+                        ? (Byte[])null
+                        : ((OracleBlob)__cmd.Parameters["P_PARAM_IN_OUT"].Value).Value;
+                    pParamOut = __cmd.Parameters["P_PARAM_OUT"].Status == OracleParameterStatus.NullFetched
+                        ? (Byte[])null
+                        : ((OracleBlob)__cmd.Parameters["P_PARAM_OUT"].Value).Value;
+                    if (__cmdTrace != null) TraceCompletion(__cmdTrace);
+                } // using OracleCommand
+            } finally {
+                if (optionalPreexistingOpenConnection == null) {
+                    __conn.Close();
+                    __conn.Dispose();
+                }
+            }
+            return __ret;
+        } // DupSigTranslatedByteArr
+
+        // **PROC IGNORED** - Code generation for RAW type has not been implemented
+        // public Byte[] DupSigTranslatedByteArr(Byte[] pParamIn, ref Byte[] pParamInOut, out Byte[] pParamOut, OracleConnection optionalPreexistingOpenConnection = null)
 
         public IList<Double?> FuncAaBinaryDouble(IList<Double?> pIn, ref IList<Double?> pInOut, out IList<Double?> pOut, OracleConnection optionalPreexistingOpenConnection = null) {
             IList<Double?> __ret = new List<Double?>(); pOut = new List<Double?>(); 

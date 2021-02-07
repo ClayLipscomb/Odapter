@@ -35,6 +35,7 @@ namespace Odapter {
         private static bool HasDuplicateSignatureTranslated(IProcedure proc, IPackage package) {
             return package.Procedures.Exists(p =>
                 p.ProcedureName.Equals(proc.ProcedureName)  // same proc name
+                && !p.IsIgnoredDueToOracleTypes(out _)
                 && !(p.Overload ?? String.Empty).Equals(proc.Overload ?? String.Empty)  // different overload
                 && ((p.Arguments.Where(a => !a.IsReturnArgument).OrderBy(a => a.Defaulted).ThenBy(a => a.Sequence).Select(a => a.InOut + a.Translater.GetCSharpType()))
                         .SequenceEqual  // params count, direction and type are exact match (excl. return arg)
@@ -96,7 +97,7 @@ namespace Odapter {
             if (proc.PackageName != null && proc.PackageName == proc.ProcedureName) methodName += "Proc";
 
             // if proc has duplicate sig, append overload number to name to keep unique in C#
-            if (HasDuplicateSignatureTranslated(proc, package)) methodName += proc.Overload;
+            if (HasDuplicateSignatureTranslated(proc, package) && !proc.IsIgnoredDueToOracleTypes(out _)) methodName += proc.Overload;
 
             return methodName;
         }
