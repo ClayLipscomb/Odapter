@@ -54,15 +54,11 @@ namespace Odapter {
         public const string OBJECT_TYPE = "Object";
         public const string XML_DOCUMENT = "XmlDocument";
         public const string DATATABLE = "DataTable";
-        private const string OF_T = "<T>";
         private const string INTERFACE_PREFIX = "I";
-        private const string LIST = "List";
-        private const string ILIST = INTERFACE_PREFIX + LIST;
+        internal const string LIST = "List";
+        internal const string ILIST = INTERFACE_PREFIX + LIST;
         private const string COLLECTION = "Collection";
-        private const string ICOLLECTION = INTERFACE_PREFIX + COLLECTION;
-        public const string LIST_OF_T = LIST + OF_T;
-        public const string ILIST_OF_T = ILIST + OF_T;
-        public const string ICOLLECTION_OF_T = ICOLLECTION + OF_T;
+        internal const string ICOLLECTION = INTERFACE_PREFIX + COLLECTION;
         public static readonly List<string> GENERIC_COLLECTION_BASE_TYPES = new List<string>() { LIST, ILIST, ICOLLECTION };  // implemented to date
         public const string VOID = "void";
         public const string GENERIC_TYPE_PREFIX = "T_";
@@ -247,7 +243,7 @@ namespace Odapter {
         /// <param name="subType">Subtype; the T type</param>
         /// <returns></returns>
         internal static string GenericCollectionOf(string genCollectionBaseType, string subType) {
-            return genCollectionBaseType.Replace(OF_T, "") + "<" + subType + ">";
+            return $"{genCollectionBaseType}<{subType}>";
         }
 
         /// <summary>

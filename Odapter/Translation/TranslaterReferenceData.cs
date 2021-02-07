@@ -49,11 +49,11 @@ namespace Odapter {
         }
 
         public static readonly IDictionary<string, List<CustomTranslatedCSharpType>> CustomTypeTranslationOptions = new Dictionary<string, List<CustomTranslatedCSharpType>>() {
-            {Orcl.REF_CURSOR, new List<CustomTranslatedCSharpType> {                new CustomTranslatedCSharpType(CSharp.ILIST_OF_T, @""),
-                                                                                    new CustomTranslatedCSharpType(CSharp.ICOLLECTION_OF_T, @""),
-                                                                                    new CustomTranslatedCSharpType(CSharp.LIST_OF_T, @"concrete, not recommended") } },
-            {Orcl.ASSOCIATITVE_ARRAY, new List<CustomTranslatedCSharpType> {        new CustomTranslatedCSharpType(CSharp.ILIST_OF_T, @""),
-                                                                                    new CustomTranslatedCSharpType(CSharp.LIST_OF_T, @"concrete, not recommended") } },
+            {Orcl.REF_CURSOR, new List<CustomTranslatedCSharpType> {                new CustomTranslatedCSharpType(CSharp.ILIST, @""),
+                                                                                    new CustomTranslatedCSharpType(CSharp.ICOLLECTION, @""),
+                                                                                    new CustomTranslatedCSharpType(CSharp.LIST, @"concrete, not recommended") } },
+            {Orcl.ASSOCIATITVE_ARRAY, new List<CustomTranslatedCSharpType> {        new CustomTranslatedCSharpType(CSharp.ILIST, @""),
+                                                                                    new CustomTranslatedCSharpType(CSharp.LIST, @"concrete, not recommended") } },
             {Orcl.INTEGER, new List<CustomTranslatedCSharpType> {                   new CustomTranslatedCSharpType(CSharp.INT32, @"9 digit limit, not recommended"),
                                                                                     new CustomTranslatedCSharpType(CSharp.INT64, @"18 digit limit, usually safe"),
                                                                                     new CustomTranslatedCSharpType(CSharp.DECIMAL, @"28 digit limit"),

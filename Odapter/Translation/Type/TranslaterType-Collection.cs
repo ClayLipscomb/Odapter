@@ -29,7 +29,7 @@ namespace Odapter {
             // be used within PL/SQL, a Dictionary object cannot be pased from .NET. We can only pass the values
             // using an array index instead of key. So we treat an associative array as a List of a type in C#. 
             // The sub type is in the subsequent Oracle arg.
-            return CSharp.GenericCollectionOf((nonInterfaceType ? CSharp.LIST_OF_T : CSharpType), SubCSharpType);
+            return CSharp.GenericCollectionOf((nonInterfaceType ? CSharp.LIST : CSharpType), SubCSharpType);
         }
         private string CSharpType { get; set; } 
         private string SubCSharpType { get; set; }
@@ -72,7 +72,7 @@ namespace Odapter {
 
         // translation to C#
         public string GetCSharpType(bool typeNotNullable = false, bool nonInterfaceType = false) {
-            return CSharp.GenericCollectionOf((nonInterfaceType ? CSharp.LIST_OF_T : CSharpType), SubCSharpType);
+            return CSharp.GenericCollectionOf((nonInterfaceType ? CSharp.LIST : CSharpType), SubCSharpType);
         }
         private string CSharpType { get; set; }
         private string SubCSharpType { get; set; }
@@ -100,7 +100,7 @@ namespace Odapter {
 
         // translation to C#
         public string GetCSharpType(bool typeNotNullable = false, bool nonInterfaceType = false) {
-            return CSharp.GenericCollectionOf((nonInterfaceType ? CSharp.LIST_OF_T : CSharpType), SubCSharpType);
+            return CSharp.GenericCollectionOf((nonInterfaceType ? CSharp.LIST : CSharpType), SubCSharpType);
         }
         private string CSharpType { get; set; }
         private string SubCSharpType { get; set; }

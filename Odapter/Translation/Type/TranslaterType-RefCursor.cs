@@ -25,7 +25,7 @@ namespace Odapter {
 
         // translation to C#
         public string GetCSharpType(bool typeNotNullable = false, bool nonInterfaceType = false) {
-            return CSharp.GenericCollectionOf((nonInterfaceType ? CSharp.LIST_OF_T : CSharpType), CSharp.GENERIC_TYPE_PREFIX + SubCSharpType);
+            return CSharp.GenericCollectionOf((nonInterfaceType ? CSharp.LIST : CSharpType), CSharp.GENERIC_TYPE_PREFIX + SubCSharpType);
         }
         private string CSharpType { get => _cSharpType; } private readonly string _cSharpType;
         private string SubCSharpType { get => _subCSharpType; } private readonly string _subCSharpType;
@@ -58,7 +58,7 @@ namespace Odapter {
                     // otherwise, we are configured to use a Datatable
                     ? CSharp.DATATABLE
                     // generic list; create informative subtype name that is unique among multiple untyped (cursor) args in proc
-                    : CSharp.GenericCollectionOf((nonInterfaceType ? CSharp.LIST_OF_T : CSharpType), CSharp.GENERIC_TYPE_PREFIX + SubCSharpType);
+                    : CSharp.GenericCollectionOf((nonInterfaceType ? CSharp.LIST : CSharpType), CSharp.GENERIC_TYPE_PREFIX + SubCSharpType);
         }
         private string CSharpType { get; set; }
         private string SubCSharpType { get; set; }

@@ -83,8 +83,8 @@ namespace Odapter {
             IsConvertOracleNumberToIntegerIfColumnNameIsId = true;
             IsUseAutoImplementedProperties = true;
 
-            CSharpTypeUsedForOracleRefCursor = CSharp.ILIST_OF_T;
-            CSharpTypeUsedForOracleAssociativeArray = CSharp.ILIST_OF_T;
+            CSharpTypeUsedForOracleRefCursor = CSharp.ILIST;
+            CSharpTypeUsedForOracleAssociativeArray = CSharp.ILIST;
             CSharpTypeUsedForOracleInteger = CSharp.INT64;
             CSharpTypeUsedForOracleNumber = CSharp.DECIMAL;
             CSharpTypeUsedForOracleDate = CSharp.DATE_TIME;
@@ -274,6 +274,11 @@ namespace Odapter {
             try {
                 System.Xml.Serialization.XmlSerializer xs = new System.Xml.Serialization.XmlSerializer(typeof(Parameter));
                 _instance = (Parameter)xs.Deserialize(reader);
+
+                // remove <T> for backward compatibility
+                string OF_T = @"<T>";
+                _instance.CSharpTypeUsedForOracleRefCursor = _instance.CSharpTypeUsedForOracleRefCursor.Replace(OF_T, String.Empty);
+                _instance.CSharpTypeUsedForOracleAssociativeArray = _instance.CSharpTypeUsedForOracleAssociativeArray.Replace(OF_T, String.Empty);
             } catch {
                 throw;
             } finally {
