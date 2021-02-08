@@ -72,13 +72,12 @@ Odapter is a [single executable](/OdapterWnFrm/bin/x64/Release) that generates C
 4. Enter Schema, Login and Password
 5. If your project uses only a prefixed subset of the schema's packages, enter Filter Prefix value
 6. Enter the Output Path for all generated files (your project folder)
-7. If your project targets the .NET 3.5 framework, select 3.0 as the C# Version
-8. For all other fields, use default settings
-9. Click Generate 
-10. After successful generation, enter a project based .config file name in File Source and click Save Current
-11. Open your project and add the generated files
-12. Add a reference for the managed ODP.NET driver.
-13. Add "using Schema.YourSchemaName.YourFilterPrefixIfAny.Package" to project files in order to access packages
+7. For all other fields, use default settings
+8. Click Generate 
+9. After successful generation, enter a project based .config file name in File Source and click Save Current
+10. Open your project and add the generated files
+11. Add a reference for the managed ODP.NET driver.
+12. Add "using Schema.YourSchemaName.YourFilterPrefixIfAny.Package" to project files in order to access packages
 
 For examples, see code below and [Tester.cs](/Tester).
 
