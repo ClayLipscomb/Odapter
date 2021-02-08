@@ -70,8 +70,8 @@ namespace Odapter {
         public const string ODP_NET_SAFE_TYPE_DECIMAL       = ODP_NET_TYPE_PREFIX + "Decimal";
         public const string ODP_NET_SAFE_TYPE_DATE          = ODP_NET_TYPE_PREFIX + "Date";
         public const string ODP_NET_SAFE_TYPE_TIMESTAMP     = ODP_NET_TYPE_PREFIX + "TimeStamp";
-        public const string ODP_NET_SAFE_TYPE_TIMESTAMP_LTZ = ODP_NET_TYPE_PREFIX + "TimeStampLTZ";
         public const string ODP_NET_SAFE_TYPE_TMESTAMP_TZ   = ODP_NET_TYPE_PREFIX + "TimeStampTZ";
+        public const string ODP_NET_SAFE_TYPE_TIMESTAMP_LTZ = ODP_NET_TYPE_PREFIX + "TimeStampLTZ";
         public const string ODP_NET_SAFE_TYPE_INTERVAL_DS   = ODP_NET_TYPE_PREFIX + "IntervalDS";
         public const string ODP_NET_SAFE_TYPE_INTERVAL_YM   = ODP_NET_TYPE_PREFIX + "IntervalYM";
         public const string ODP_NET_SAFE_TYPE_STRING        = ODP_NET_TYPE_PREFIX + "String";

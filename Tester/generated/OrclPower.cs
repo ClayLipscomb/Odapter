@@ -27,19 +27,12 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Data;
-#if CSHARP30
-using Oracle.DataAccess.Client;
-using Oracle.DataAccess.Types;
-#else
 using Oracle.ManagedDataAccess.Client;
 using Oracle.ManagedDataAccess.Types;
-#endif
 using System.Linq;
 using System.Threading;
 using System.Diagnostics;
-#if !CSHARP30
 using System.Collections.Concurrent;
-#endif
 
 namespace Odapter {
     #region Classes Supplemental to Hydrator
@@ -583,20 +576,16 @@ namespace Odapter {
             // create a DTO instance with properties/fields set from respective columns based on mappings
             T obj = new T(); // create new instance
             foreach (ColumnMapping m in mappings) {
-                value = reader.IsDBNull(reader.GetOrdinal(m.Column.ColumnName))
-                            ? null
-                            : (m.IsRoundOracleDecimalToCSharpDecimal
-                                // an OracleDecimal (sig dig 38) has to be rounded to fit in C# Decimal (sig dig 28)
-                                ? (Decimal?)OracleDecimal.SetPrecision(reader.GetOracleDecimal(reader.GetOrdinal(m.Column.ColumnName)), 28)
-                                : (m.MemberUnderlyingType.Namespace.Equals("Oracle." +
-#if CSHARP30
-                                    "DataAccess" 
-#else
-                                    "ManagedDataAccess" 
-#endif
-                                    + ".Types")
-                                    ? reader.GetOracleValue(reader.GetOrdinal(m.Column.ColumnName))
-                                    : reader.GetValue(reader.GetOrdinal(m.Column.ColumnName))));
+                if (reader.IsDBNull(reader.GetOrdinal(m.Column.ColumnName)))
+                    value = null;
+                else if (m.IsRoundOracleDecimalToCSharpDecimal) // an OracleDecimal (sig dig 38) has to be rounded to fit in C# Decimal (sig dig 28)
+                    value = (Decimal?)OracleDecimal.SetPrecision(reader.GetOracleDecimal(reader.GetOrdinal(m.Column.ColumnName)), 28);
+                else if (m.MemberUnderlyingType.Namespace.Equals("Oracle.ManagedDataAccess.Types"))
+                    value = reader.GetOracleValue(reader.GetOrdinal(m.Column.ColumnName));
+                else if (m.MemberUnderlyingType.Equals(typeof(DateTimeOffset)))
+                    value = DateTimeOffset.Parse(reader.GetValue(reader.GetOrdinal(m.Column.ColumnName)).ToString());
+                else
+                    value = reader.GetValue(reader.GetOrdinal(m.Column.ColumnName));
                 SetObjectMember(obj, m.Member, value);
             }
             return obj;

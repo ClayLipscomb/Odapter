@@ -29,5 +29,7 @@ namespace Odapter {
         string CSharpTypeUsedForOracleNumber { get; set; }
         string CSharpTypeUsedForOracleRefCursor { get; set; }
         string CSharpTypeUsedForOracleTimeStamp { get; set; }
+        string CSharpTypeUsedForOracleTimeStampTZ { get; set; }
+        string CSharpTypeUsedForOracleTimeStampLTZ { get; set; }
     }
 }

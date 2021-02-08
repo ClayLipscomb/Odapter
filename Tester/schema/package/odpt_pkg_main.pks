@@ -53,22 +53,6 @@ CREATE OR REPLACE PACKAGE ODPT.odpt_pkg_main AS
 	-- varray types
 	TYPE t_va_number IS VARRAY(10) of NUMBER;
 
-	-- data types ignored (not implemented) in code generation
---	TYPE t_record_type_ignored IS RECORD (
---		f_boolean							BOOLEAN,	 -- .NET cannot handle PL/SQL BOOLEAN
---		f_rowid								ROWID,
---		f_urowid							UROWID,
---		f_timestamp_w_l_time_zone 			TIMESTAMP WITH LOCAL TIME ZONE, 
---		f_timestamp_w_time_zone				TIMESTAMP WITH TIME ZONE,	
---		f_raw								RAW(1),
---		f_bfile								BFILE,
---		f_xmltype							XMLTYPE,
---		f_long								LONG,				-- deprecated
---		f_long_raw							LONG RAW,			-- deprecated
---		f_last								NUMBER
---	);
---	TYPE t_cursor_typed_ignored IS REF CURSOR RETURN t_record_type_ignored;
-
     ---------------------------------------------------------------------
 	-- data types ignored (not implemented) in record type code generation
 	TYPE t_ignore_aa_integer IS RECORD (
@@ -90,16 +74,6 @@ CREATE OR REPLACE PACKAGE ODPT.odpt_pkg_main AS
 		f_urowid							UROWID
 	);
 	TYPE t_cursor_ignore_urowid IS REF CURSOR RETURN t_ignore_urowid;
-
-	TYPE t_ignore_ts_w_l_t_z IS RECORD (
-		f_timestamp_w_l_time_zone 			TIMESTAMP WITH LOCAL TIME ZONE
-	);
-	TYPE t_cursor_ignore_ts_w_l_t_z IS REF CURSOR RETURN t_ignore_ts_w_l_t_z;
-
-	TYPE t_ignore_ts_w_t_z IS RECORD (
-		f_timestamp_w_time_zone				TIMESTAMP WITH TIME ZONE
-	);
-	TYPE t_cursor_ignore_ts_w_t_z IS REF CURSOR RETURN t_ignore_ts_w_t_z;
 
 	TYPE t_ignore_raw IS RECORD (
 		f_raw								RAW(1)
@@ -177,8 +151,6 @@ CREATE OR REPLACE PACKAGE ODPT.odpt_pkg_main AS
 	FUNCTION func_cursor_ignore_boolean RETURN t_cursor_ignore_boolean;
 	FUNCTION func_cursor_ignore_rowid RETURN t_cursor_ignore_rowid;
 	FUNCTION func_cursor_ignore_urowid RETURN t_cursor_ignore_urowid;
-	FUNCTION func_cursor_ignore_ts_w_l_t_z RETURN t_cursor_ignore_ts_w_l_t_z;
-	FUNCTION func_cursor_ignore_ts_w_t_z RETURN t_cursor_ignore_ts_w_t_z;
 	FUNCTION func_cursor_ignore_raw RETURN t_cursor_ignore_raw;
 	FUNCTION func_cursor_ignore_bfile RETURN t_cursor_ignore_bfile;
 	FUNCTION func_cursor_ignore_xmltype RETURN t_cursor_ignore_xmltype;
@@ -220,6 +192,8 @@ CREATE OR REPLACE PACKAGE ODPT.odpt_pkg_main AS
 
 	FUNCTION func_date(p_in IN DATE, p_in_out IN OUT DATE, p_out OUT DATE) RETURN DATE;
 	FUNCTION func_timestamp(p_in IN TIMESTAMP, p_in_out IN OUT TIMESTAMP, p_out OUT TIMESTAMP)	RETURN TIMESTAMP;
+	FUNCTION func_timestamp_w_l_time_zone(p_in IN TIMESTAMP WITH LOCAL TIME ZONE, p_in_out IN OUT TIMESTAMP WITH LOCAL TIME ZONE, p_out OUT TIMESTAMP WITH LOCAL TIME ZONE) RETURN TIMESTAMP WITH LOCAL TIME ZONE;
+	FUNCTION func_timestamp_w_time_zone(p_in IN TIMESTAMP WITH TIME ZONE, p_in_out IN OUT TIMESTAMP WITH TIME ZONE, p_out OUT TIMESTAMP WITH TIME ZONE) RETURN TIMESTAMP WITH TIME ZONE;
 
 	FUNCTION func_blob(p_in IN BLOB, p_in_out IN OUT BLOB, p_out OUT BLOB) RETURN BLOB;
 	FUNCTION func_clob(p_in IN CLOB, p_in_out IN OUT CLOB, p_out OUT CLOB) RETURN CLOB;
@@ -265,8 +239,6 @@ CREATE OR REPLACE PACKAGE ODPT.odpt_pkg_main AS
 	FUNCTION func_xmltype(p_in IN XMLTYPE, p_in_out IN OUT XMLTYPE, p_out OUT XMLTYPE) RETURN XMLTYPE;
 	FUNCTION func_rowid(p_in IN ROWID, p_in_out IN OUT ROWID, p_out OUT ROWID)	RETURN ROWID;
 	FUNCTION func_urowid(p_in IN UROWID, p_in_out IN OUT UROWID, p_out OUT UROWID) RETURN UROWID;
-	FUNCTION func_timestamp_w_l_time_zone(p_in IN TIMESTAMP WITH LOCAL TIME ZONE, p_in_out IN OUT TIMESTAMP WITH LOCAL TIME ZONE, p_out OUT TIMESTAMP WITH LOCAL TIME ZONE) RETURN TIMESTAMP WITH LOCAL TIME ZONE;
-	FUNCTION func_timestamp_w_time_zone(p_in IN TIMESTAMP WITH TIME ZONE, p_in_out IN OUT TIMESTAMP WITH TIME ZONE, p_out OUT TIMESTAMP WITH TIME ZONE) RETURN TIMESTAMP WITH TIME ZONE;
 	FUNCTION func_bfile(p_in IN BFILE, p_in_out IN OUT BFILE, p_out OUT BFILE) RETURN BFILE;
 	FUNCTION func_raw(p_in IN RAW, p_in_out IN OUT RAW, p_out OUT RAW) RETURN RAW;
 	FUNCTION func_interval_day_to_second(p_in IN INTERVAL DAY TO SECOND, p_in_out IN OUT INTERVAL DAY TO SECOND, p_out OUT INTERVAL DAY TO SECOND) RETURN INTERVAL DAY TO SECOND;

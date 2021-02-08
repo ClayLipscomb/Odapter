@@ -518,17 +518,7 @@ CREATE OR REPLACE PACKAGE BODY ODPT.odpt_pkg_main AS
 	BEGIN
 		RETURN NULL;
 	END;
-    
-	FUNCTION func_cursor_ignore_ts_w_l_t_z RETURN t_cursor_ignore_ts_w_l_t_z IS
-	BEGIN
-		RETURN NULL;
-	END;
-    
-	FUNCTION func_cursor_ignore_ts_w_t_z RETURN t_cursor_ignore_ts_w_t_z IS
-	BEGIN
-		RETURN NULL; 
-	END;
-    
+  
 	FUNCTION func_cursor_ignore_raw RETURN t_cursor_ignore_raw IS
 	BEGIN
 		RETURN NULL;

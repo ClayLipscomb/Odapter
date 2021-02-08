@@ -35,7 +35,13 @@ CREATE OR REPLACE PACKAGE ODPT.fltr_pkg_rec_used AS
 			col_timestamp odpt_table_big.col_timestamp%TYPE,
 			col_timestamp_prec0 odpt_table_big.col_timestamp_prec0%TYPE,
 			col_timestamp_prec9 odpt_table_big.col_timestamp_prec9%TYPE,
-
+            col_timestamp_t_z					odpt_table_big.col_timestamp_t_z%TYPE,
+            col_timestamp_t_z_prec0				odpt_table_big.col_timestamp_t_z_prec0%TYPE,
+            col_timestamp_t_z_prec9				odpt_table_big.col_timestamp_t_z_prec9%TYPE,
+            col_timestamp_l_t_z					odpt_table_big.col_timestamp_l_t_z%TYPE,
+            col_timestamp_l_t_z_prec0			odpt_table_big.col_timestamp_l_t_z_prec0%TYPE,
+            col_timestamp_l_t_z_prec9			odpt_table_big.col_timestamp_l_t_z_prec9%TYPE,
+	
 			col_blob odpt_table_big.col_blob%TYPE,
 			col_clob odpt_table_big.col_clob%TYPE,
 			col_nclob odpt_table_big.col_nclob%TYPE,

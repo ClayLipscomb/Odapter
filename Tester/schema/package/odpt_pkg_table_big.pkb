@@ -29,6 +29,12 @@ CREATE OR REPLACE PACKAGE BODY ODPT.odpt_pkg_table_big AS
 								p_col_timestamp IN odpt_table_big.col_timestamp%TYPE,
 								p_col_timestamp_prec0 IN odpt_table_big.col_timestamp_prec0%TYPE,								
 								p_col_timestamp_prec9 IN odpt_table_big.col_timestamp_prec9%TYPE,
+                                p_col_timestamp_t_z					IN odpt_table_big.col_timestamp_t_z%TYPE,
+                                p_col_timestamp_t_z_prec0			IN odpt_table_big.col_timestamp_t_z_prec0%TYPE,
+                                p_col_timestamp_t_z_prec9			IN odpt_table_big.col_timestamp_t_z_prec9%TYPE,
+                                p_col_timestamp_l_t_z				IN odpt_table_big.col_timestamp_l_t_z%TYPE,
+                                p_col_timestamp_l_t_z_prec0			IN odpt_table_big.col_timestamp_l_t_z_prec0%TYPE,
+                                p_col_timestamp_l_t_z_prec9			IN odpt_table_big.col_timestamp_l_t_z_prec9%TYPE,
 								
 								p_col_blob IN odpt_table_big.col_blob%TYPE,
 								p_col_clob IN odpt_table_big.col_clob%TYPE,
@@ -66,6 +72,12 @@ CREATE OR REPLACE PACKAGE BODY ODPT.odpt_pkg_table_big AS
 					col_timestamp,
 					col_timestamp_prec0,
 					col_timestamp_prec9,
+                    col_timestamp_t_z,
+                    col_timestamp_t_z_prec0,
+                    col_timestamp_t_z_prec9,
+                    col_timestamp_l_t_z,
+                    col_timestamp_l_t_z_prec0,
+                    col_timestamp_l_t_z_prec9,
 					col_blob,
 					col_clob,
 					col_nclob,
@@ -97,6 +109,12 @@ CREATE OR REPLACE PACKAGE BODY ODPT.odpt_pkg_table_big AS
 					p_col_timestamp,
 					p_col_timestamp_prec0,
 					p_col_timestamp_prec9,
+                    p_row.col_timestamp_t_z,
+                    p_row.col_timestamp_t_z_prec0,
+                    p_row.col_timestamp_t_z_prec9,
+                    p_row.col_timestamp_l_t_z,
+                    p_row.col_timestamp_l_t_z_prec0,
+                    p_row.col_timestamp_l_t_z_prec9,
 					p_col_blob,
 					p_col_clob,
 					p_col_nclob,
@@ -134,6 +152,12 @@ CREATE OR REPLACE PACKAGE BODY ODPT.odpt_pkg_table_big AS
 					p_row.col_timestamp,
 					p_row.col_timestamp_prec0,
 					p_row.col_timestamp_prec9,
+                    p_row.col_timestamp_t_z,
+                    p_row.col_timestamp_t_z_prec0,
+                    p_row.col_timestamp_t_z_prec9,
+                    p_row.col_timestamp_l_t_z,
+                    p_row.col_timestamp_l_t_z_prec0,
+                    p_row.col_timestamp_l_t_z_prec9,
 					p_row.col_blob,
 					p_row.col_clob,
 					p_row.col_nclob
@@ -258,7 +282,6 @@ CREATE OR REPLACE PACKAGE BODY ODPT.odpt_pkg_table_big AS
 		
 		RETURN l_cursor;
 	END;	
-
 
 	----------------
 	-- typed cursors

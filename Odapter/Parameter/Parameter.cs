@@ -89,6 +89,8 @@ namespace Odapter {
             CSharpTypeUsedForOracleNumber = CSharp.DECIMAL;
             CSharpTypeUsedForOracleDate = CSharp.DATE_TIME;
             CSharpTypeUsedForOracleTimeStamp = CSharp.DATE_TIME;
+            CSharpTypeUsedForOracleTimeStampTZ = CSharp.DATE_TIME_OFFSET;
+            CSharpTypeUsedForOracleTimeStampLTZ = CSharp.DATE_TIME;
             CSharpTypeUsedForOracleIntervalDayToSecond = CSharp.TIME_SPAN;
             CSharpTypeUsedForOracleBlob = CSharp.BYTE_ARRAY;
             CSharpTypeUsedForOracleClob = CSharp.STRING;
@@ -200,6 +202,8 @@ namespace Odapter {
         public string CSharpTypeUsedForOracleNumber { get; set; }
         public string CSharpTypeUsedForOracleDate { get; set; }
         public string CSharpTypeUsedForOracleTimeStamp { get; set; }
+        public string CSharpTypeUsedForOracleTimeStampTZ { get; set; }
+        public string CSharpTypeUsedForOracleTimeStampLTZ { get; set; }
         public string CSharpTypeUsedForOracleIntervalDayToSecond { get; set; }
         public string CSharpTypeUsedForOracleBlob { get; set; }
         public string CSharpTypeUsedForOracleClob { get; set; }

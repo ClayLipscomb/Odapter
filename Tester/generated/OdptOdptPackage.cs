@@ -543,12 +543,6 @@ namespace Schema.Odpt.Odpt.Package {
         // **RECORD IGNORED** - Code generation for ROWID type has not been implemented
         // public abstract partial class TIgnoreRowid : Schema.Odpt.Odpt.OdptPackageRecord, ITIgnoreRowid {
 
-        // **RECORD IGNORED** - Code generation for TIMESTAMP WITH LOCAL TIME ZONE type has not been implemented
-        // public abstract partial class TIgnoreTsWLTZ : Schema.Odpt.Odpt.OdptPackageRecord, ITIgnoreTsWLTZ {
-
-        // **RECORD IGNORED** - Code generation for TIMESTAMP WITH TIME ZONE type has not been implemented
-        // public abstract partial class TIgnoreTsWTZ : Schema.Odpt.Odpt.OdptPackageRecord, ITIgnoreTsWTZ {
-
         // **RECORD IGNORED** - Code generation for UROWID type has not been implemented
         // public abstract partial class TIgnoreUrowid : Schema.Odpt.Odpt.OdptPackageRecord, ITIgnoreUrowid {
 
@@ -2333,20 +2327,6 @@ namespace Schema.Odpt.Odpt.Package {
         // **PROC IGNORED** - Code generation for ROWID type has not been implemented
         // public ICollection<T_TIgnoreRowid> FuncCursorIgnoreRowid<T_TIgnoreRowid>(UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
 
-        // **PROC IGNORED** - Code generation for TIMESTAMP WITH LOCAL TIME ZONE type has not been implemented
-        // public ICollection<T_TIgnoreTsWLTZ> FuncCursorIgnoreTsWLTZ<T_TIgnoreTsWLTZ>(
-        //        bool mapColumnToObjectPropertyByPosition = false, bool allowUnmappedColumnsToBeExcluded = false, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
-
-        // **PROC IGNORED** - Code generation for TIMESTAMP WITH LOCAL TIME ZONE type has not been implemented
-        // public ICollection<T_TIgnoreTsWLTZ> FuncCursorIgnoreTsWLTZ<T_TIgnoreTsWLTZ>(UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
-
-        // **PROC IGNORED** - Code generation for TIMESTAMP WITH TIME ZONE type has not been implemented
-        // public ICollection<T_TIgnoreTsWTZ> FuncCursorIgnoreTsWTZ<T_TIgnoreTsWTZ>(
-        //        bool mapColumnToObjectPropertyByPosition = false, bool allowUnmappedColumnsToBeExcluded = false, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
-
-        // **PROC IGNORED** - Code generation for TIMESTAMP WITH TIME ZONE type has not been implemented
-        // public ICollection<T_TIgnoreTsWTZ> FuncCursorIgnoreTsWTZ<T_TIgnoreTsWTZ>(UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
-
         // **PROC IGNORED** - Code generation for UROWID type has not been implemented
         // public ICollection<T_TIgnoreUrowid> FuncCursorIgnoreUrowid<T_TIgnoreUrowid>(
         //        bool mapColumnToObjectPropertyByPosition = false, bool allowUnmappedColumnsToBeExcluded = false, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
@@ -3165,11 +3145,73 @@ namespace Schema.Odpt.Odpt.Package {
             return __ret;
         } // FuncTimestamp
 
-        // **PROC IGNORED** - Code generation for TIMESTAMP WITH LOCAL TIME ZONE type has not been implemented
-        // public DateTime? FuncTimestampWLTimeZone(DateTime? pIn, ref DateTime? pInOut, out DateTime? pOut, OracleConnection optionalPreexistingOpenConnection = null)
+        public DateTime? FuncTimestampWLTimeZone(DateTime? pIn, ref DateTime? pInOut, out DateTime? pOut, OracleConnection optionalPreexistingOpenConnection = null) {
+            DateTime? __ret = null; pOut = null; 
+            OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
+            try {
+                using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_MAIN.FUNC_TIMESTAMP_W_L_TIME_ZONE", __conn)) {
+                    __cmd.CommandType = CommandType.StoredProcedure;
+                    __cmd.BindByName = true;
+                    __cmd.Parameters.Add(new OracleParameter("!RETURN", OracleDbType.TimeStampLTZ, null, ParameterDirection.ReturnValue));
+                    __cmd.Parameters.Add(new OracleParameter("P_IN", OracleDbType.TimeStampLTZ, pIn, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("P_IN_OUT", OracleDbType.TimeStampLTZ, pInOut, ParameterDirection.InputOutput));
+                    __cmd.Parameters.Add(new OracleParameter("P_OUT", OracleDbType.TimeStampLTZ, null, ParameterDirection.Output));
 
-        // **PROC IGNORED** - Code generation for TIMESTAMP WITH TIME ZONE type has not been implemented
-        // public DateTime? FuncTimestampWTimeZone(DateTime? pIn, ref DateTime? pInOut, out DateTime? pOut, OracleConnection optionalPreexistingOpenConnection = null)
+                    OracleCommandTrace __cmdTrace = IsTracing(__cmd) ? new OracleCommandTrace(__cmd) : null;
+                    int __rowsAffected = __cmd.ExecuteNonQuery();
+                    __ret = __cmd.Parameters["!RETURN"].Status == OracleParameterStatus.NullFetched
+                        ? (DateTime?)null
+                        : Convert.ToDateTime(__cmd.Parameters["!RETURN"].Value.ToString());
+                    pInOut = __cmd.Parameters["P_IN_OUT"].Status == OracleParameterStatus.NullFetched
+                        ? (DateTime?)null
+                        : Convert.ToDateTime(__cmd.Parameters["P_IN_OUT"].Value.ToString());
+                    pOut = __cmd.Parameters["P_OUT"].Status == OracleParameterStatus.NullFetched
+                        ? (DateTime?)null
+                        : Convert.ToDateTime(__cmd.Parameters["P_OUT"].Value.ToString());
+                    if (__cmdTrace != null) TraceCompletion(__cmdTrace);
+                } // using OracleCommand
+            } finally {
+                if (optionalPreexistingOpenConnection == null) {
+                    __conn.Close();
+                    __conn.Dispose();
+                }
+            }
+            return __ret;
+        } // FuncTimestampWLTimeZone
+
+        public DateTimeOffset? FuncTimestampWTimeZone(DateTimeOffset? pIn, ref DateTimeOffset? pInOut, out DateTimeOffset? pOut, OracleConnection optionalPreexistingOpenConnection = null) {
+            DateTimeOffset? __ret = null; pOut = null; 
+            OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
+            try {
+                using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_MAIN.FUNC_TIMESTAMP_W_TIME_ZONE", __conn)) {
+                    __cmd.CommandType = CommandType.StoredProcedure;
+                    __cmd.BindByName = true;
+                    __cmd.Parameters.Add(new OracleParameter("!RETURN", OracleDbType.TimeStampTZ, null, ParameterDirection.ReturnValue));
+                    __cmd.Parameters.Add(new OracleParameter("P_IN", OracleDbType.TimeStampTZ, pIn, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("P_IN_OUT", OracleDbType.TimeStampTZ, pInOut, ParameterDirection.InputOutput));
+                    __cmd.Parameters.Add(new OracleParameter("P_OUT", OracleDbType.TimeStampTZ, null, ParameterDirection.Output));
+
+                    OracleCommandTrace __cmdTrace = IsTracing(__cmd) ? new OracleCommandTrace(__cmd) : null;
+                    int __rowsAffected = __cmd.ExecuteNonQuery();
+                    __ret = __cmd.Parameters["!RETURN"].Status == OracleParameterStatus.NullFetched
+                        ? (DateTimeOffset?)null
+                        : DateTimeOffset.Parse(__cmd.Parameters["!RETURN"].Value.ToString());
+                    pInOut = __cmd.Parameters["P_IN_OUT"].Status == OracleParameterStatus.NullFetched
+                        ? (DateTimeOffset?)null
+                        : DateTimeOffset.Parse(__cmd.Parameters["P_IN_OUT"].Value.ToString());
+                    pOut = __cmd.Parameters["P_OUT"].Status == OracleParameterStatus.NullFetched
+                        ? (DateTimeOffset?)null
+                        : DateTimeOffset.Parse(__cmd.Parameters["P_OUT"].Value.ToString());
+                    if (__cmdTrace != null) TraceCompletion(__cmdTrace);
+                } // using OracleCommand
+            } finally {
+                if (optionalPreexistingOpenConnection == null) {
+                    __conn.Close();
+                    __conn.Dispose();
+                }
+            }
+            return __ret;
+        } // FuncTimestampWTimeZone
 
         // **PROC IGNORED** - Code generation for UROWID type has not been implemented
         // public String FuncUrowid(String pIn, ref String pInOut, out String pOut, OracleConnection optionalPreexistingOpenConnection = null)
@@ -3703,6 +3745,12 @@ namespace Schema.Odpt.Odpt.Package {
             DateTime? ColTimestamp { set; }
             DateTime? ColTimestampPrec0 { set; }
             DateTime? ColTimestampPrec9 { set; }
+            DateTimeOffset? ColTimestampTZ { set; }
+            DateTimeOffset? ColTimestampTZPrec0 { set; }
+            DateTimeOffset? ColTimestampTZPrec9 { set; }
+            DateTime? ColTimestampLTZ { set; }
+            DateTime? ColTimestampLTZPrec0 { set; }
+            DateTime? ColTimestampLTZPrec9 { set; }
             Byte[] ColBlob { set; }
             String ColClob { set; }
             String ColNclob { set; }
@@ -3767,12 +3815,24 @@ namespace Schema.Odpt.Odpt.Package {
             [DataMember(Order=26, IsRequired=false)][XmlElement(Order=26, IsNullable=true)]
             public virtual DateTime? ColTimestampPrec9 { get; set; }
             [DataMember(Order=27, IsRequired=false)][XmlElement(Order=27, IsNullable=true)]
-            public virtual Byte[] ColBlob { get; set; }
+            public virtual DateTimeOffset? ColTimestampTZ { get; set; }
             [DataMember(Order=28, IsRequired=false)][XmlElement(Order=28, IsNullable=true)]
-            public virtual String ColClob { get; set; }
+            public virtual DateTimeOffset? ColTimestampTZPrec0 { get; set; }
             [DataMember(Order=29, IsRequired=false)][XmlElement(Order=29, IsNullable=true)]
-            public virtual String ColNclob { get; set; }
+            public virtual DateTimeOffset? ColTimestampTZPrec9 { get; set; }
             [DataMember(Order=30, IsRequired=false)][XmlElement(Order=30, IsNullable=true)]
+            public virtual DateTime? ColTimestampLTZ { get; set; }
+            [DataMember(Order=31, IsRequired=false)][XmlElement(Order=31, IsNullable=true)]
+            public virtual DateTime? ColTimestampLTZPrec0 { get; set; }
+            [DataMember(Order=32, IsRequired=false)][XmlElement(Order=32, IsNullable=true)]
+            public virtual DateTime? ColTimestampLTZPrec9 { get; set; }
+            [DataMember(Order=33, IsRequired=false)][XmlElement(Order=33, IsNullable=true)]
+            public virtual Byte[] ColBlob { get; set; }
+            [DataMember(Order=34, IsRequired=false)][XmlElement(Order=34, IsNullable=true)]
+            public virtual String ColClob { get; set; }
+            [DataMember(Order=35, IsRequired=false)][XmlElement(Order=35, IsNullable=true)]
+            public virtual String ColNclob { get; set; }
+            [DataMember(Order=36, IsRequired=false)][XmlElement(Order=36, IsNullable=true)]
             public virtual String ColLast { get; set; }
         } // FltrPkgRecUnusedTTableBigFltUnused
 
@@ -3809,10 +3869,16 @@ namespace Schema.Odpt.Odpt.Package {
                     if (!rdr.IsDBNull(24)) obj.ColTimestamp = Convert.ToDateTime(rdr.GetValue(24));
                     if (!rdr.IsDBNull(25)) obj.ColTimestampPrec0 = Convert.ToDateTime(rdr.GetValue(25));
                     if (!rdr.IsDBNull(26)) obj.ColTimestampPrec9 = Convert.ToDateTime(rdr.GetValue(26));
-                    if (!rdr.IsDBNull(27)) obj.ColBlob = rdr.GetOracleBlob(27).Value;
-                    if (!rdr.IsDBNull(28)) obj.ColClob = rdr.GetOracleClob(28).Value;
-                    if (!rdr.IsDBNull(29)) obj.ColNclob = rdr.GetOracleClob(29).Value;
-                    if (!rdr.IsDBNull(30)) obj.ColLast = Convert.ToString(rdr.GetValue(30));
+                    if (!rdr.IsDBNull(27)) obj.ColTimestampTZ = DateTimeOffset.Parse(rdr.GetValue(27).ToString());
+                    if (!rdr.IsDBNull(28)) obj.ColTimestampTZPrec0 = DateTimeOffset.Parse(rdr.GetValue(28).ToString());
+                    if (!rdr.IsDBNull(29)) obj.ColTimestampTZPrec9 = DateTimeOffset.Parse(rdr.GetValue(29).ToString());
+                    if (!rdr.IsDBNull(30)) obj.ColTimestampLTZ = Convert.ToDateTime(rdr.GetValue(30));
+                    if (!rdr.IsDBNull(31)) obj.ColTimestampLTZPrec0 = Convert.ToDateTime(rdr.GetValue(31));
+                    if (!rdr.IsDBNull(32)) obj.ColTimestampLTZPrec9 = Convert.ToDateTime(rdr.GetValue(32));
+                    if (!rdr.IsDBNull(33)) obj.ColBlob = rdr.GetOracleBlob(33).Value;
+                    if (!rdr.IsDBNull(34)) obj.ColClob = rdr.GetOracleClob(34).Value;
+                    if (!rdr.IsDBNull(35)) obj.ColNclob = rdr.GetOracleClob(35).Value;
+                    if (!rdr.IsDBNull(36)) obj.ColLast = Convert.ToString(rdr.GetValue(36));
                     __ret.Add(obj);
                     if (optionalMaxNumberRowsToReadFromAnyCursor != null && __ret.Count >= optionalMaxNumberRowsToReadFromAnyCursor) break;
                 }
@@ -3848,6 +3914,12 @@ namespace Schema.Odpt.Odpt.Package {
             DateTime? ColTimestamp { set; }
             DateTime? ColTimestampPrec0 { set; }
             DateTime? ColTimestampPrec9 { set; }
+            DateTimeOffset? ColTimestampTZ { set; }
+            DateTimeOffset? ColTimestampTZPrec0 { set; }
+            DateTimeOffset? ColTimestampTZPrec9 { set; }
+            DateTime? ColTimestampLTZ { set; }
+            DateTime? ColTimestampLTZPrec0 { set; }
+            DateTime? ColTimestampLTZPrec9 { set; }
             Byte[] ColBlob { set; }
             String ColClob { set; }
             String ColNclob { set; }
@@ -3912,12 +3984,24 @@ namespace Schema.Odpt.Odpt.Package {
             [DataMember(Order=26, IsRequired=false)][XmlElement(Order=26, IsNullable=true)]
             public virtual DateTime? ColTimestampPrec9 { get; set; }
             [DataMember(Order=27, IsRequired=false)][XmlElement(Order=27, IsNullable=true)]
-            public virtual Byte[] ColBlob { get; set; }
+            public virtual DateTimeOffset? ColTimestampTZ { get; set; }
             [DataMember(Order=28, IsRequired=false)][XmlElement(Order=28, IsNullable=true)]
-            public virtual String ColClob { get; set; }
+            public virtual DateTimeOffset? ColTimestampTZPrec0 { get; set; }
             [DataMember(Order=29, IsRequired=false)][XmlElement(Order=29, IsNullable=true)]
-            public virtual String ColNclob { get; set; }
+            public virtual DateTimeOffset? ColTimestampTZPrec9 { get; set; }
             [DataMember(Order=30, IsRequired=false)][XmlElement(Order=30, IsNullable=true)]
+            public virtual DateTime? ColTimestampLTZ { get; set; }
+            [DataMember(Order=31, IsRequired=false)][XmlElement(Order=31, IsNullable=true)]
+            public virtual DateTime? ColTimestampLTZPrec0 { get; set; }
+            [DataMember(Order=32, IsRequired=false)][XmlElement(Order=32, IsNullable=true)]
+            public virtual DateTime? ColTimestampLTZPrec9 { get; set; }
+            [DataMember(Order=33, IsRequired=false)][XmlElement(Order=33, IsNullable=true)]
+            public virtual Byte[] ColBlob { get; set; }
+            [DataMember(Order=34, IsRequired=false)][XmlElement(Order=34, IsNullable=true)]
+            public virtual String ColClob { get; set; }
+            [DataMember(Order=35, IsRequired=false)][XmlElement(Order=35, IsNullable=true)]
+            public virtual String ColNclob { get; set; }
+            [DataMember(Order=36, IsRequired=false)][XmlElement(Order=36, IsNullable=true)]
             public virtual String ColLast { get; set; }
         } // FltrPkgRecUsedTTableBigFltUsed
 
@@ -3954,10 +4038,16 @@ namespace Schema.Odpt.Odpt.Package {
                     if (!rdr.IsDBNull(24)) obj.ColTimestamp = Convert.ToDateTime(rdr.GetValue(24));
                     if (!rdr.IsDBNull(25)) obj.ColTimestampPrec0 = Convert.ToDateTime(rdr.GetValue(25));
                     if (!rdr.IsDBNull(26)) obj.ColTimestampPrec9 = Convert.ToDateTime(rdr.GetValue(26));
-                    if (!rdr.IsDBNull(27)) obj.ColBlob = rdr.GetOracleBlob(27).Value;
-                    if (!rdr.IsDBNull(28)) obj.ColClob = rdr.GetOracleClob(28).Value;
-                    if (!rdr.IsDBNull(29)) obj.ColNclob = rdr.GetOracleClob(29).Value;
-                    if (!rdr.IsDBNull(30)) obj.ColLast = Convert.ToString(rdr.GetValue(30));
+                    if (!rdr.IsDBNull(27)) obj.ColTimestampTZ = DateTimeOffset.Parse(rdr.GetValue(27).ToString());
+                    if (!rdr.IsDBNull(28)) obj.ColTimestampTZPrec0 = DateTimeOffset.Parse(rdr.GetValue(28).ToString());
+                    if (!rdr.IsDBNull(29)) obj.ColTimestampTZPrec9 = DateTimeOffset.Parse(rdr.GetValue(29).ToString());
+                    if (!rdr.IsDBNull(30)) obj.ColTimestampLTZ = Convert.ToDateTime(rdr.GetValue(30));
+                    if (!rdr.IsDBNull(31)) obj.ColTimestampLTZPrec0 = Convert.ToDateTime(rdr.GetValue(31));
+                    if (!rdr.IsDBNull(32)) obj.ColTimestampLTZPrec9 = Convert.ToDateTime(rdr.GetValue(32));
+                    if (!rdr.IsDBNull(33)) obj.ColBlob = rdr.GetOracleBlob(33).Value;
+                    if (!rdr.IsDBNull(34)) obj.ColClob = rdr.GetOracleClob(34).Value;
+                    if (!rdr.IsDBNull(35)) obj.ColNclob = rdr.GetOracleClob(35).Value;
+                    if (!rdr.IsDBNull(36)) obj.ColLast = Convert.ToString(rdr.GetValue(36));
                     __ret.Add(obj);
                     if (optionalMaxNumberRowsToReadFromAnyCursor != null && __ret.Count >= optionalMaxNumberRowsToReadFromAnyCursor) break;
                 }
@@ -3993,6 +4083,12 @@ namespace Schema.Odpt.Odpt.Package {
             DateTime? ColTimestamp { set; }
             DateTime? ColTimestampPrec0 { set; }
             DateTime? ColTimestampPrec9 { set; }
+            DateTimeOffset? ColTimestampTZ { set; }
+            DateTimeOffset? ColTimestampTZPrec0 { set; }
+            DateTimeOffset? ColTimestampTZPrec9 { set; }
+            DateTime? ColTimestampLTZ { set; }
+            DateTime? ColTimestampLTZPrec0 { set; }
+            DateTime? ColTimestampLTZPrec9 { set; }
             Byte[] ColBlob { set; }
             String ColClob { set; }
             String ColNclob { set; }
@@ -4057,12 +4153,24 @@ namespace Schema.Odpt.Odpt.Package {
             [DataMember(Order=26, IsRequired=false)][XmlElement(Order=26, IsNullable=true)]
             public virtual DateTime? ColTimestampPrec9 { get; set; }
             [DataMember(Order=27, IsRequired=false)][XmlElement(Order=27, IsNullable=true)]
-            public virtual Byte[] ColBlob { get; set; }
+            public virtual DateTimeOffset? ColTimestampTZ { get; set; }
             [DataMember(Order=28, IsRequired=false)][XmlElement(Order=28, IsNullable=true)]
-            public virtual String ColClob { get; set; }
+            public virtual DateTimeOffset? ColTimestampTZPrec0 { get; set; }
             [DataMember(Order=29, IsRequired=false)][XmlElement(Order=29, IsNullable=true)]
-            public virtual String ColNclob { get; set; }
+            public virtual DateTimeOffset? ColTimestampTZPrec9 { get; set; }
             [DataMember(Order=30, IsRequired=false)][XmlElement(Order=30, IsNullable=true)]
+            public virtual DateTime? ColTimestampLTZ { get; set; }
+            [DataMember(Order=31, IsRequired=false)][XmlElement(Order=31, IsNullable=true)]
+            public virtual DateTime? ColTimestampLTZPrec0 { get; set; }
+            [DataMember(Order=32, IsRequired=false)][XmlElement(Order=32, IsNullable=true)]
+            public virtual DateTime? ColTimestampLTZPrec9 { get; set; }
+            [DataMember(Order=33, IsRequired=false)][XmlElement(Order=33, IsNullable=true)]
+            public virtual Byte[] ColBlob { get; set; }
+            [DataMember(Order=34, IsRequired=false)][XmlElement(Order=34, IsNullable=true)]
+            public virtual String ColClob { get; set; }
+            [DataMember(Order=35, IsRequired=false)][XmlElement(Order=35, IsNullable=true)]
+            public virtual String ColNclob { get; set; }
+            [DataMember(Order=36, IsRequired=false)][XmlElement(Order=36, IsNullable=true)]
             public virtual String ColLast { get; set; }
         } // TTableBig
 
@@ -4099,10 +4207,16 @@ namespace Schema.Odpt.Odpt.Package {
                     if (!rdr.IsDBNull(24)) obj.ColTimestamp = Convert.ToDateTime(rdr.GetValue(24));
                     if (!rdr.IsDBNull(25)) obj.ColTimestampPrec0 = Convert.ToDateTime(rdr.GetValue(25));
                     if (!rdr.IsDBNull(26)) obj.ColTimestampPrec9 = Convert.ToDateTime(rdr.GetValue(26));
-                    if (!rdr.IsDBNull(27)) obj.ColBlob = rdr.GetOracleBlob(27).Value;
-                    if (!rdr.IsDBNull(28)) obj.ColClob = rdr.GetOracleClob(28).Value;
-                    if (!rdr.IsDBNull(29)) obj.ColNclob = rdr.GetOracleClob(29).Value;
-                    if (!rdr.IsDBNull(30)) obj.ColLast = Convert.ToString(rdr.GetValue(30));
+                    if (!rdr.IsDBNull(27)) obj.ColTimestampTZ = DateTimeOffset.Parse(rdr.GetValue(27).ToString());
+                    if (!rdr.IsDBNull(28)) obj.ColTimestampTZPrec0 = DateTimeOffset.Parse(rdr.GetValue(28).ToString());
+                    if (!rdr.IsDBNull(29)) obj.ColTimestampTZPrec9 = DateTimeOffset.Parse(rdr.GetValue(29).ToString());
+                    if (!rdr.IsDBNull(30)) obj.ColTimestampLTZ = Convert.ToDateTime(rdr.GetValue(30));
+                    if (!rdr.IsDBNull(31)) obj.ColTimestampLTZPrec0 = Convert.ToDateTime(rdr.GetValue(31));
+                    if (!rdr.IsDBNull(32)) obj.ColTimestampLTZPrec9 = Convert.ToDateTime(rdr.GetValue(32));
+                    if (!rdr.IsDBNull(33)) obj.ColBlob = rdr.GetOracleBlob(33).Value;
+                    if (!rdr.IsDBNull(34)) obj.ColClob = rdr.GetOracleClob(34).Value;
+                    if (!rdr.IsDBNull(35)) obj.ColNclob = rdr.GetOracleClob(35).Value;
+                    if (!rdr.IsDBNull(36)) obj.ColLast = Convert.ToString(rdr.GetValue(36));
                     __ret.Add(obj);
                     if (optionalMaxNumberRowsToReadFromAnyCursor != null && __ret.Count >= optionalMaxNumberRowsToReadFromAnyCursor) break;
                 }
@@ -5186,7 +5300,8 @@ namespace Schema.Odpt.Odpt.Package {
                 Int64? pColNumeric, Int64? pColDecimal, Decimal? pColNumber, Decimal? pColDoublePrecision, Decimal? pColFloat, Decimal? pColReal, 
                 Single? pColBinaryFloat, Double? pColBinaryDouble, String pColVarcharMin, String pColVarcharMax, String pColVarchar2Min, String pColVarchar2Max, 
                 String pColNvarchar2Min, String pColNvarchar2Max, String pColCharMin, String pColCharMax, String pColNcharMin, String pColNcharMax, 
-                DateTime? pColDate, DateTime? pColTimestamp, DateTime? pColTimestampPrec0, DateTime? pColTimestampPrec9, Byte[] pColBlob, String pColClob, 
+                DateTime? pColDate, DateTime? pColTimestamp, DateTime? pColTimestampPrec0, DateTime? pColTimestampPrec9, DateTimeOffset? pColTimestampTZ, DateTimeOffset? pColTimestampTZPrec0, 
+                DateTimeOffset? pColTimestampTZPrec9, DateTime? pColTimestampLTZ, DateTime? pColTimestampLTZPrec0, DateTime? pColTimestampLTZPrec9, Byte[] pColBlob, String pColClob, 
                 String pColNclob, OracleConnection optionalPreexistingOpenConnection = null) {
             Int64? __ret = null; 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
@@ -5221,6 +5336,12 @@ namespace Schema.Odpt.Odpt.Package {
                     __cmd.Parameters.Add(new OracleParameter("P_COL_TIMESTAMP", OracleDbType.TimeStamp, pColTimestamp, ParameterDirection.Input));
                     __cmd.Parameters.Add(new OracleParameter("P_COL_TIMESTAMP_PREC0", OracleDbType.TimeStamp, pColTimestampPrec0, ParameterDirection.Input));
                     __cmd.Parameters.Add(new OracleParameter("P_COL_TIMESTAMP_PREC9", OracleDbType.TimeStamp, pColTimestampPrec9, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("P_COL_TIMESTAMP_T_Z", OracleDbType.TimeStampTZ, pColTimestampTZ, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("P_COL_TIMESTAMP_T_Z_PREC0", OracleDbType.TimeStampTZ, pColTimestampTZPrec0, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("P_COL_TIMESTAMP_T_Z_PREC9", OracleDbType.TimeStampTZ, pColTimestampTZPrec9, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("P_COL_TIMESTAMP_L_T_Z", OracleDbType.TimeStampLTZ, pColTimestampLTZ, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("P_COL_TIMESTAMP_L_T_Z_PREC0", OracleDbType.TimeStampLTZ, pColTimestampLTZPrec0, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("P_COL_TIMESTAMP_L_T_Z_PREC9", OracleDbType.TimeStampLTZ, pColTimestampLTZPrec9, ParameterDirection.Input));
                     __cmd.Parameters.Add(new OracleParameter("P_COL_BLOB", OracleDbType.Blob, pColBlob, ParameterDirection.Input));
                     __cmd.Parameters.Add(new OracleParameter("P_COL_CLOB", OracleDbType.Clob, pColClob, ParameterDirection.Input));
                     __cmd.Parameters.Add(new OracleParameter("P_COL_NCLOB", OracleDbType.NClob, pColNclob, ParameterDirection.Input));

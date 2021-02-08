@@ -127,7 +127,7 @@ namespace Schema.Odpt.Type.Object {
         [DataMember(Order=28, IsRequired=false)][XmlElement(Order=28, IsNullable=true)]
         public virtual DateTime? AttrTimestampWLTimeZone { get; set; }
         [DataMember(Order=29, IsRequired=false)][XmlElement(Order=29, IsNullable=true)]
-        public virtual DateTime? AttrTimestampWTimeZone { get; set; }
+        public virtual DateTimeOffset? AttrTimestampWTimeZone { get; set; }
         [DataMember(Order=30, IsRequired=false)][XmlElement(Order=30, IsNullable=true)]
         public virtual Byte[] AttrBlob { get; set; }
         [DataMember(Order=31, IsRequired=false)][XmlElement(Order=31, IsNullable=true)]

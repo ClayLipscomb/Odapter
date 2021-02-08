@@ -340,6 +340,8 @@ namespace OdapterWnFrm {
                 { cmbCSharpTypeUsedForOracleNumber,                 Orcl.NUMBER },
                 { cmbCSharpTypeUsedForOracleDate,                   Orcl.DATE },
                 { cmbCSharpTypeUsedForOracleTimestamp,              Orcl.TIMESTAMP },
+                { cmbCSharpTypeUsedForOracleTimestampTZ,            Orcl.TIMESTAMP_WITH_TIME_ZONE },
+                { cmbCSharpTypeUsedForOracleTimestampLTZ,           Orcl.TIMESTAMP_WITH_LOCAL_TIME_ZONE },
                 { cmbCSharpTypeUsedForOracleIntervalDayToSecond,    Orcl.INTERVAL_DAY_TO_SECOND },
                 { cmbCSharpTypeUsedForOracleBlob,                   Orcl.BLOB },
                 { cmbCSharpTypeUsedForOracleClob,                   Orcl.CLOB }
@@ -444,6 +446,8 @@ namespace OdapterWnFrm {
             cmbCSharpTypeUsedForOracleNumber.SelectedValue = Parameter.Instance.CSharpTypeUsedForOracleNumber;
             cmbCSharpTypeUsedForOracleDate.SelectedValue = Parameter.Instance.CSharpTypeUsedForOracleDate;
             cmbCSharpTypeUsedForOracleTimestamp.SelectedValue = Parameter.Instance.CSharpTypeUsedForOracleTimeStamp;
+            cmbCSharpTypeUsedForOracleTimestampTZ.SelectedValue = Parameter.Instance.CSharpTypeUsedForOracleTimeStampTZ;
+            cmbCSharpTypeUsedForOracleTimestampLTZ.SelectedValue = Parameter.Instance.CSharpTypeUsedForOracleTimeStampLTZ;
             cmbCSharpTypeUsedForOracleIntervalDayToSecond.SelectedValue = Parameter.Instance.CSharpTypeUsedForOracleIntervalDayToSecond;
             cmbCSharpTypeUsedForOracleBlob.SelectedValue = Parameter.Instance.CSharpTypeUsedForOracleBlob;
             cmbCSharpTypeUsedForOracleClob.SelectedValue = Parameter.Instance.CSharpTypeUsedForOracleClob;
@@ -492,6 +496,9 @@ namespace OdapterWnFrm {
             Parameter.Instance.CSharpTypeUsedForOracleNumber = cmbCSharpTypeUsedForOracleNumber.SelectedValue.ToString();
             Parameter.Instance.CSharpTypeUsedForOracleDate = cmbCSharpTypeUsedForOracleDate.SelectedValue.ToString();
             Parameter.Instance.CSharpTypeUsedForOracleTimeStamp = cmbCSharpTypeUsedForOracleTimestamp.SelectedValue.ToString();
+            Parameter.Instance.CSharpTypeUsedForOracleTimeStampTZ = cmbCSharpTypeUsedForOracleTimestampTZ.SelectedValue.ToString();
+            Parameter.Instance.CSharpTypeUsedForOracleTimeStampLTZ = cmbCSharpTypeUsedForOracleTimestampLTZ.SelectedValue.ToString();
+
             Parameter.Instance.CSharpTypeUsedForOracleIntervalDayToSecond = cmbCSharpTypeUsedForOracleIntervalDayToSecond.SelectedValue.ToString();
             Parameter.Instance.CSharpTypeUsedForOracleBlob = cmbCSharpTypeUsedForOracleBlob.SelectedValue.ToString();
             Parameter.Instance.CSharpTypeUsedForOracleClob = cmbCSharpTypeUsedForOracleClob.SelectedValue.ToString();

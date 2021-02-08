@@ -89,35 +89,39 @@ namespace Odapter {
         private TranslaterTimestamp() { }
     }
 
-    internal class TranslaterTimestampWithLocalTimeZone : ITranslaterType {
+    internal class TranslaterTimestampLTZ : ITranslaterType {
         public string DataTypeFull { get => OrclType.DataType; }
         public IOrclType OrclType { get => OrclUtil.GetType(Orcl.TIMESTAMP_WITH_LOCAL_TIME_ZONE); }
 
         // translation to C#
         public string GetCSharpType(bool typeNotNullable = false, bool nonInterfaceType = false) { return (typeNotNullable ? CSharpType.TrimEnd('?') : CSharpType); }
-        private string CSharpType { get => CSharp.AsNullable(CSharp.DATE_TIME); }
+        private string CSharpType { get => CSharp.AsNullable(_cSharpType); } private readonly string _cSharpType;
         public bool IsValid(ITyped dataType) { return dataType.OrclType.BuildDataTypeFullName(dataType).Equals(DataTypeFull); }
         public string CSharpOracleDbType { get => CSharp.ORACLEDBTYPE_TIMESTAMP_LTZ; }
         public string CSharpOdpNetType { get => CSharp.ODP_NET_SAFE_TYPE_TIMESTAMP_LTZ; }
-        public bool IsIgnoredAsParameter { get => true; }
-        public string IgnoredReasonAsParameter { get => TranslaterMessage.IgnoreNotImplemented(OrclType); }
-        public bool IsIgnoredAsAttribute { get => true; }
-        public string IgnoredReasonAsAttribute { get => TranslaterMessage.IgnoreNotImplemented(OrclType); }
+        public bool IsIgnoredAsParameter { get => false; }
+        public string IgnoredReasonAsParameter { get => String.Empty; }
+        public bool IsIgnoredAsAttribute { get => false; }
+        public string IgnoredReasonAsAttribute { get => String.Empty; }
+        internal TranslaterTimestampLTZ(string cSharpType) { _cSharpType = cSharpType; }
+        private TranslaterTimestampLTZ() { }
     }
 
-    internal class TranslaterTimestampWithTimeZone : ITranslaterType {
+    internal class TranslaterTimestampTZ : ITranslaterType {
         public string DataTypeFull { get => OrclType.DataType; }
         public IOrclType OrclType { get => OrclUtil.GetType(Orcl.TIMESTAMP_WITH_TIME_ZONE); }
 
         // translation to C#
         public string GetCSharpType(bool typeNotNullable = false, bool nonInterfaceType = false) { return (typeNotNullable ? CSharpType.TrimEnd('?') : CSharpType); }
-        private string CSharpType { get => CSharp.AsNullable(CSharp.DATE_TIME); }
+        private string CSharpType { get => CSharp.AsNullable(_cSharpType); } private readonly string _cSharpType;
         public bool IsValid(ITyped dataType) { return dataType.OrclType.BuildDataTypeFullName(dataType).Equals(DataTypeFull); }
         public string CSharpOracleDbType { get => CSharp.ORACLEDBTYPE_TIMESTAMP_TZ; }
         public string CSharpOdpNetType { get => CSharp.ODP_NET_SAFE_TYPE_TMESTAMP_TZ; }
-        public bool IsIgnoredAsParameter { get => true; }
-        public string IgnoredReasonAsParameter { get => TranslaterMessage.IgnoreNotImplemented(OrclType); }
-        public bool IsIgnoredAsAttribute { get => true; }
-        public string IgnoredReasonAsAttribute { get => TranslaterMessage.IgnoreNotImplemented(OrclType); }
+        public bool IsIgnoredAsParameter { get => false; }
+        public string IgnoredReasonAsParameter { get => String.Empty; }
+        public bool IsIgnoredAsAttribute { get => false; }
+        public string IgnoredReasonAsAttribute { get => String.Empty; }
+        internal TranslaterTimestampTZ(string cSharpType) { _cSharpType = cSharpType; }
+        private TranslaterTimestampTZ() { }
     }
 }

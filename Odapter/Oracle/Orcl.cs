@@ -81,9 +81,9 @@ namespace Odapter {
         internal const string BFILE = "BFILE"; 
         internal const string BINARY_DOUBLE = "BINARY_DOUBLE"; 
         internal const string BINARY_FLOAT = "BINARY_FLOAT"; 
-        public const string TIMESTAMP = "TIMESTAMP"; 
-        internal const string TIMESTAMP_WITH_LOCAL_TIME_ZONE = "TIMESTAMP WITH LOCAL TIME ZONE"; 
-        internal const string TIMESTAMP_WITH_TIME_ZONE = "TIMESTAMP WITH TIME ZONE"; 
+        public const string TIMESTAMP = "TIMESTAMP";
+        public const string TIMESTAMP_WITH_LOCAL_TIME_ZONE = "TIMESTAMP WITH LOCAL TIME ZONE";
+        public const string TIMESTAMP_WITH_TIME_ZONE = "TIMESTAMP WITH TIME ZONE"; 
         public const string INTERVAL_DAY_TO_SECOND = "INTERVAL DAY TO SECOND"; 
         internal const string INTERVAL_YEAR_TO_MONTH = "INTERVAL YEAR TO MONTH"; 
         internal const string MLSLABEL = "MLSLABEL"; // deprecated

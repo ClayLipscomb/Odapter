@@ -75,8 +75,8 @@ namespace Odapter {
                 new TranslaterSmallint(CSharpTypeUsedForOracleInteger),
                 new TranslaterString(),
                 new TranslaterTimestamp(CSharpTypeUsedForOracleTimeStamp),
-                new TranslaterTimestampWithLocalTimeZone(),
-                new TranslaterTimestampWithTimeZone(),
+                new TranslaterTimestampTZ(CSharpTypeUsedForOracleTimeStampTZ),
+                new TranslaterTimestampLTZ(CSharpTypeUsedForOracleTimeStampLTZ),
                 new TranslaterURowId(),
                 new TranslaterVarchar(),
                 new TranslaterVarchar2(),
@@ -86,16 +86,18 @@ namespace Odapter {
         }
 
         internal static void Initialize(IParameterTranslation param) {
-            CSharpTypeUsedForOracleRefCursor                = param.CSharpTypeUsedForOracleRefCursor;
-            CSharpTypeUsedForOracleAssociativeArray         = param.CSharpTypeUsedForOracleAssociativeArray;
-            CSharpTypeUsedForOracleInteger                  = param.CSharpTypeUsedForOracleInteger;
-            CSharpTypeUsedForOracleNumber                   = param.CSharpTypeUsedForOracleNumber;
-            IsConvertOracleNumberToIntegerIfColumnNameIsId  = param.IsConvertOracleNumberToIntegerIfColumnNameIsId;
-            CSharpTypeUsedForOracleDate                     = param.CSharpTypeUsedForOracleDate;
-            CSharpTypeUsedForOracleTimeStamp                = param.CSharpTypeUsedForOracleTimeStamp;
-            CSharpTypeUsedForOracleIntervalDayToSecond      = param.CSharpTypeUsedForOracleIntervalDayToSecond;
-            CSharpTypeUsedForOracleBlob                     = param.CSharpTypeUsedForOracleBlob;
-            CSharpTypeUsedForOracleClob                     = param.CSharpTypeUsedForOracleClob;
+            CSharpTypeUsedForOracleRefCursor                    = param.CSharpTypeUsedForOracleRefCursor;
+            CSharpTypeUsedForOracleAssociativeArray             = param.CSharpTypeUsedForOracleAssociativeArray;
+            CSharpTypeUsedForOracleInteger                      = param.CSharpTypeUsedForOracleInteger;
+            CSharpTypeUsedForOracleNumber                       = param.CSharpTypeUsedForOracleNumber;
+            IsConvertOracleNumberToIntegerIfColumnNameIsId      = param.IsConvertOracleNumberToIntegerIfColumnNameIsId;
+            CSharpTypeUsedForOracleDate                         = param.CSharpTypeUsedForOracleDate;
+            CSharpTypeUsedForOracleTimeStamp                    = param.CSharpTypeUsedForOracleTimeStamp;
+            CSharpTypeUsedForOracleTimeStampTZ                  = param.CSharpTypeUsedForOracleTimeStampTZ;
+            CSharpTypeUsedForOracleTimeStampLTZ                 = param.CSharpTypeUsedForOracleTimeStampLTZ;
+            CSharpTypeUsedForOracleIntervalDayToSecond          = param.CSharpTypeUsedForOracleIntervalDayToSecond;
+            CSharpTypeUsedForOracleBlob                         = param.CSharpTypeUsedForOracleBlob;
+            CSharpTypeUsedForOracleClob                         = param.CSharpTypeUsedForOracleClob;
 
             InitTypeTranslaters();
         }
@@ -108,6 +110,8 @@ namespace Odapter {
         private static bool IsConvertOracleNumberToIntegerIfColumnNameIsId;
         private static string CSharpTypeUsedForOracleDate { get; set; }
         private static string CSharpTypeUsedForOracleTimeStamp { get; set; }
+        private static string CSharpTypeUsedForOracleTimeStampTZ { get; set; }
+        private static string CSharpTypeUsedForOracleTimeStampLTZ { get; set; }
         private static string CSharpTypeUsedForOracleIntervalDayToSecond { get; set; }
         private static string CSharpTypeUsedForOracleBlob { get; set; }
         private static string CSharpTypeUsedForOracleClob { get; set; }

@@ -101,6 +101,7 @@
     <Compile Include="generated\OdptTable.cs" />
     <Compile Include="generated\OdptView.cs" />
     <Compile Include="generated\OrclPower.cs" />
+    <Compile Include="Util.cs" />
     <Compile Include="Tester.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

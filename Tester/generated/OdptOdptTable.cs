@@ -90,12 +90,24 @@ namespace Schema.Odpt.Odpt.Table {
         [DataMember(Order=27, IsRequired=false)][XmlElement(Order=27, IsNullable=true)]
         public virtual DateTime? ColTimestampPrec9 { get; set; }
         [DataMember(Order=28, IsRequired=false)][XmlElement(Order=28, IsNullable=true)]
-        public virtual Byte[] ColBlob { get; set; }
+        public virtual DateTimeOffset? ColTimestampTZ { get; set; }
         [DataMember(Order=29, IsRequired=false)][XmlElement(Order=29, IsNullable=true)]
-        public virtual String ColClob { get; set; }
+        public virtual DateTimeOffset? ColTimestampTZPrec0 { get; set; }
         [DataMember(Order=30, IsRequired=false)][XmlElement(Order=30, IsNullable=true)]
-        public virtual String ColNclob { get; set; }
+        public virtual DateTimeOffset? ColTimestampTZPrec9 { get; set; }
         [DataMember(Order=31, IsRequired=false)][XmlElement(Order=31, IsNullable=true)]
+        public virtual DateTime? ColTimestampLTZ { get; set; }
+        [DataMember(Order=32, IsRequired=false)][XmlElement(Order=32, IsNullable=true)]
+        public virtual DateTime? ColTimestampLTZPrec0 { get; set; }
+        [DataMember(Order=33, IsRequired=false)][XmlElement(Order=33, IsNullable=true)]
+        public virtual DateTime? ColTimestampLTZPrec9 { get; set; }
+        [DataMember(Order=34, IsRequired=false)][XmlElement(Order=34, IsNullable=true)]
+        public virtual Byte[] ColBlob { get; set; }
+        [DataMember(Order=35, IsRequired=false)][XmlElement(Order=35, IsNullable=true)]
+        public virtual String ColClob { get; set; }
+        [DataMember(Order=36, IsRequired=false)][XmlElement(Order=36, IsNullable=true)]
+        public virtual String ColNclob { get; set; }
+        [DataMember(Order=37, IsRequired=false)][XmlElement(Order=37, IsNullable=true)]
         public virtual String ColLast { get; set; }
     } // OdptTableBig
 
