@@ -9,10 +9,9 @@ Odapter is a [single executable](/OdapterWnFrm/bin/x64/Release) that generates C
 * Windows 64-bit 
 * .NET Framework 
     - 4.0 minimum for code generator
-    - 3.5 minimum for project
+    - 4.0 minimum for destination project
 * ODP.NET for destination project
-    - Managed Driver 12.2.1100 if targeting .NET Framework 4.0 or higher
-    - Unmanaged Driver 12.2.0.1 if targeting .NET Framework 3.5
+    - Managed Driver 12.2.1100, targeting .NET Framework 4.0 or higher
 
 ### Oracle to C# Translation Examples
 
@@ -37,7 +36,7 @@ Odapter is a [single executable](/OdapterWnFrm/bin/x64/Release) that generates C
 * Configurable translation of Oracle INTEGER, NUMBER, DATE, TIMESTAMP types, including options for ODP.NET safe types (OracleDecimal, OracleDate, OracleTimestamp)
 * Configurable translation of Oracle BLOB and CLOB/NCLOB types, including options for ODP.NET safe types (OracleBlob, OracleClob)
 * Translates Oracle IN, OUT and IN OUT parameters to C#
-* Translates Oracle optional (defaulted) parameters to (C# 4.0+)
+* Translates Oracle optional (defaulted) parameters to C#
 * Generates standalone DTO class for each object type, table, and view
 * Configurable for either auto-implemented, or protected field wrapped, DTO properties
 * Generates ancestor adapter class and DTO classes for customization
@@ -47,7 +46,7 @@ Odapter is a [single executable](/OdapterWnFrm/bin/x64/Release) that generates C
 * Optionally filters schema objects via prefix and/or special characters
 * Optionally generates C# classes as partial for packages, package record types, object types, tables and views
 * Optionally generates C# DTOs with Serializable, DataContract/DataMember (incl. namespace) or XmlElementAttribute attributes for package record types, object types, tables and views
-* Generates C# 3.0 or 4.0+ code (respectively .NET 3.5 or 4.0+)
+* Generates C# 4.0+ code (.NET 4.0+)
 * Generates single C# file for all packages, object types, tables and views, respectively
 * Handles package referencing a record type defined in a different package (including filtered)
 * Easily adaptable to legacy .NET projects and Oracle schemas
@@ -78,7 +77,7 @@ Odapter is a [single executable](/OdapterWnFrm/bin/x64/Release) that generates C
 9. Click Generate 
 10. After successful generation, enter a project based .config file name in File Source and click Save Current
 11. Open your project and add the generated files
-12. If your project targets .NET 3.5, add a reference for the unmanaged ODP.NET driver; if .NET 4.0 or higher, add a reference for the managed ODP.NET driver.
+12. Add a reference for the managed ODP.NET driver.
 13. Add "using Schema.YourSchemaName.YourFilterPrefixIfAny.Package" to project files in order to access packages
 
 For examples, see code below and [Tester.cs](/Tester).
