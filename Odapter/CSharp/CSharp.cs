@@ -205,9 +205,7 @@ namespace Odapter {
         /// </summary>
         /// <param name="word"></param>
         /// <returns></returns>
-        internal static bool IsKeyword(string word) {
-            return Enum.IsDefined(typeof(Keyword), word.ToUpper());
-        }
+        internal static bool IsKeyword(string word) => Enum.IsDefined(typeof(Keyword), word.ToUpper());
 
         /// <summary>
         /// Accepts generic collection type and returns its sub type
@@ -236,9 +234,7 @@ namespace Odapter {
         /// <param name="genCollectionBaseType">Base type of generic collection</param>
         /// <param name="subType">Subtype; the T type</param>
         /// <returns></returns>
-        internal static string GenericCollectionOf(string genCollectionBaseType, string subType) {
-            return $"{genCollectionBaseType}<{subType}>";
-        }
+        internal static string GenericCollectionOf(string genCollectionBaseType, string subType) => $"{genCollectionBaseType}<{subType}>";
 
         /// <summary>
         /// For a valid interface name, return equivalent class name
@@ -266,29 +262,8 @@ namespace Odapter {
         /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>
-        internal static bool IsOdpNetType(string type) {
-            return !String.IsNullOrEmpty(type) && type.StartsWith(ODP_NET_TYPE_PREFIX);
-        }
-
-        internal static string AsNullable(string cSharpType) {
-            return cSharpType.Trim() + (StructTypes.Contains(cSharpType) ? NULLABLE_SUFFIX  : String.Empty);
-        }
-
-        /// <summary>
-        /// Is a C# type nullable
-        /// </summary>
-        /// <param name="type"></param>
-        /// <returns></returns>
-        //internal static bool IsTypeNullable(string type) {
-        //    if (String.IsNullOrEmpty(type)) return false;
-
-        //    return type.EndsWith(NULLABLE_SUFFIX)
-        //        || type.Equals(STRING)
-        //        || type.Equals(DATATABLE)
-        //        || type.StartsWith(LIST)
-        //        || type.StartsWith(ILIST)
-        //        || type.StartsWith(ICOLLECTION);
-        //}
+        internal static bool IsOdpNetType(string type) => !String.IsNullOrEmpty(type) && type.StartsWith(ODP_NET_TYPE_PREFIX);
+        internal static string AsNullable(string cSharpType) => cSharpType.Trim() + (StructTypes.Contains(cSharpType) ? NULLABLE_SUFFIX : String.Empty);
+        internal static string AsNonNullable(string cSharpType) => cSharpType.TrimEnd(NULLABLE_SUFFIX.ToCharArray());
     }
 }
-

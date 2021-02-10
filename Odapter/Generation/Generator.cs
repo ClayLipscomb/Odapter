@@ -326,8 +326,9 @@ namespace Odapter {
                 int tabIndentCount, bool dynamicMapping = false) {
 
             string returnListSubTypeFullyQualifiedPackageTypeName = null;
+            string subType = CSharp.ExtractSubtypeFromGenericCollectionType(cSharpArgType, false);
             if (genericTypesUsed.Count > 0) {
-                GenericType gt = genericTypesUsed.Find(g => g.TypeName == CSharp.ExtractSubtypeFromGenericCollectionType(cSharpArgType, false) && g.PackageTypeName != null);
+                GenericType gt = genericTypesUsed.Find(g => g.TypeName == subType && g.PackageTypeName != null);
                 if (gt != null) returnListSubTypeFullyQualifiedPackageTypeName = gt.PackageTypeName;
             }
 
@@ -337,7 +338,7 @@ namespace Odapter {
             sb.Append(Tab(tabIndentCount + 2) + cSharpArgName + " = ");
             if (dynamicMapping) {
                 sb.AppendLine(ORCL_UTIL_CLASS + ".ReadResult"
-                    + (cSharpArgType == CSharp.DATATABLE ? "" : "<" + CSharp.ExtractSubtypeFromGenericCollectionType(cSharpArgType, false) + ">")
+                    + (cSharpArgType == CSharp.DATATABLE ? "" : "<" + subType + ">")
                     + "(" + LOCAL_VAR_NAME_READER
                             + (cSharpArgType == CSharp.DATATABLE
                                 ? ", " + PARAM_NAME_CONVERT_COLUMN_NAME_TO_TITLE_CASE
@@ -346,8 +347,8 @@ namespace Odapter {
                     + ");");
             } else {
                 sb.AppendLine((returnListSubTypeFullyQualifiedPackageTypeName == null ? "" : returnListSubTypeFullyQualifiedPackageTypeName + ".Instance.")
-                    + CSharp.READ_RESULT + CSharp.ToInterface(CSharp.ExtractSubtypeFromGenericCollectionType(cSharpArgType, false).Substring(2))
-                    + "<" + CSharp.ExtractSubtypeFromGenericCollectionType(cSharpArgType, false) + ">"
+                    + CSharp.READ_RESULT + CSharp.ToInterface(subType.Substring(2))
+                    + "<" + subType + ">"
                     + "(" + LOCAL_VAR_NAME_READER
                     + ", " + PARAM_NAME_MAXIMUM_ROWS_CURSOR // max rows to read
                     + ");");
@@ -367,24 +368,28 @@ namespace Odapter {
         private string GenerateAssocArrayOutArgumentRetrieveCode(string cSharpArgType, string cSharpArgName, IArgument oracleArg, int tabIndentCount) {
 
             StringBuilder sb = new StringBuilder("");
+            string subType = CSharp.ExtractSubtypeFromGenericCollectionType(cSharpArgType, false);
+            string subTypeNonNullable = CSharp.AsNonNullable(subType);
+
             sb.AppendLine(Tab(5) + cSharpArgName + " = new " + CSharp.DeInterface(cSharpArgType) + "();");   // instantiate non-interface type
             string oracleArrayCode = "(" + LOCAL_VAR_NAME_COMMAND_PARAMS + "[\"" + (oracleArg.ArgumentName ?? FUNC_RETURN_PARAM_NAME) + "\"].Value as "
                 + oracleArg.NextArgument.Translater.CSharpOdpNetType + "[])";
             sb.AppendLine(Tab(5) + "for (int _i = 0; _i < " + oracleArrayCode + ".Length; _i++)");
             sb.AppendLine(Tab(tabIndentCount + 1) + cSharpArgName + ".Add(" + oracleArrayCode + "[_i].IsNull");
 
-            if (CSharp.IsOdpNetType(CSharp.ExtractSubtypeFromGenericCollectionType(cSharpArgType, false))) {
-                sb.AppendLine(Tab(tabIndentCount + 2) + "? " + CSharp.ExtractSubtypeFromGenericCollectionType(cSharpArgType, true) + ".Null ");
+            bool isOdpNetType = CSharp.IsOdpNetType(subType);
+            if (isOdpNetType) {
+                sb.AppendLine(Tab(tabIndentCount + 2) + "? " + subTypeNonNullable + ".Null ");
             } else {
-                sb.AppendLine(Tab(tabIndentCount + 2) + "? (" + CSharp.ExtractSubtypeFromGenericCollectionType(cSharpArgType, false) + ")null ");
+                sb.AppendLine(Tab(tabIndentCount + 2) + "? (" + subType + ")null ");
             }
 
-            if (CSharp.IsOdpNetType(CSharp.ExtractSubtypeFromGenericCollectionType(cSharpArgType, false))) {
-                sb.AppendLine(Tab(tabIndentCount + 2) + ": (" + CSharp.ExtractSubtypeFromGenericCollectionType(cSharpArgType, false) + ")"
+            if (isOdpNetType) {
+                sb.AppendLine(Tab(tabIndentCount + 2) + ": (" + subType + ")"
                     + "(" + oracleArrayCode + "[_i].ToString()));");
             } else {
                 sb.AppendLine(Tab(tabIndentCount + 2) 
-                    + ": " + (CSharp.ExtractSubtypeFromGenericCollectionType(cSharpArgType, true).Equals(CSharp.DATE_TIME_OFFSET) ? CSharp.DATE_TIME_OFFSET + ".Parse" : "Convert.To" + CSharp.ExtractSubtypeFromGenericCollectionType(cSharpArgType, true))
+                    + ": " + (subTypeNonNullable.Equals(CSharp.DATE_TIME_OFFSET) ? CSharp.DATE_TIME_OFFSET + ".Parse" : "Convert.To" + subTypeNonNullable)
                     + "((" + oracleArrayCode + "[_i].ToString())));");
             }
             return sb.ToString();
