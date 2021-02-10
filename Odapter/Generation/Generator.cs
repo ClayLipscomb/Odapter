@@ -325,10 +325,9 @@ namespace Odapter {
         private string GenerateRefCursorOutArgumentRetrieveCode(List<GenericType> genericTypesUsed, string cSharpArgType, string cSharpArgName, string oracleArgName,
                 int tabIndentCount, bool dynamicMapping = false) {
 
-            string outListSubType = CSharp.ExtractSubtypeFromGenericCollectionType(cSharpArgType, false);
             string returnListSubTypeFullyQualifiedPackageTypeName = null;
             if (genericTypesUsed.Count > 0) {
-                GenericType gt = genericTypesUsed.Find(g => g.TypeName == outListSubType && g.PackageTypeName != null);
+                GenericType gt = genericTypesUsed.Find(g => g.TypeName == CSharp.ExtractSubtypeFromGenericCollectionType(cSharpArgType, false) && g.PackageTypeName != null);
                 if (gt != null) returnListSubTypeFullyQualifiedPackageTypeName = gt.PackageTypeName;
             }
 
@@ -1094,10 +1093,11 @@ namespace Odapter {
             bool isSerializable, bool isPartial, bool isDataMember, bool isXmlElement)
             where I_Entity : IEntity {
 
+            string entityName = CSharp.DeInterface(typeof(I_Entity).Name); // need better code for this
             string fileName = _outputPath + @"\" + CaseConverter.ConvertUnderscoreDelimitedToPascalCase(_schema)
-                + CaseConverter.ConvertUnderscoreDelimitedToPascalCase(GetFilterValueIfUsedInNaming()) + CSharp.DeInterface(typeof(I_Entity).Name) + ".cs";
+                + CaseConverter.ConvertUnderscoreDelimitedToPascalCase(GetFilterValueIfUsedInNaming()) + entityName + ".cs";
 
-            DisplayMessage("Coding " + CSharp.DeInterface(typeof(I_Entity).Name).ToLower() + "s (" + fileName.Substring(fileName.LastIndexOf('\\') + 1) + ")...");
+            DisplayMessage("Coding " + entityName.ToLower() + "s (" + fileName.Substring(fileName.LastIndexOf('\\') + 1) + ")...");
 
             try {
                 StreamWriter outFile = new StreamWriter(fileName);

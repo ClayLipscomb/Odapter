@@ -24,6 +24,9 @@ OdapterWnFrm/bin/x64/Release/*.config
 # DLLs
 Odapter/bin/x64/Debug/*.dll
 Odapter/bin/x64/Release/*.dll
+*.dll
+!**/Oracle.ManagedDataAccess.dll
+
 
 # executables
 *.exe
@@ -315,3 +318,4 @@ __pycache__/
 /OdapterFS
 *.zip
 *.xml
+/OdapterFSharp/CSharp - Copy.fs

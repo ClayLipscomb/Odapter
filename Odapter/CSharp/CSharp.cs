@@ -31,7 +31,7 @@ namespace Odapter {
         #region C# Types
         public const string SBYTE = "SByte";
         public const string BYTE = "Byte";
-        public const string SBYTE_ARRAY = SBYTE + ARRAY_BRACKETS;
+        //public const string SBYTE_ARRAY = SBYTE + ARRAY_BRACKETS;
         public const string BYTE_ARRAY = BYTE + ARRAY_BRACKETS;
         public const string INT16 = "Int16";            // short
         public const string UINT16 = "UInt16";          // unsigned short
@@ -160,11 +160,6 @@ namespace Odapter {
         public const string ORACLEDBTYPE_INTERVAL_YEAR_TO_MONTH = ORACLEDBTYPE + "IntervalYM";
         #endregion
 
-        #region using
-        //public const string USING_ORACLE_DATAACCESS_CLIENT = USING + " " + "Oracle.ManagedDataAccess.Client";
-        //public const string USING_ORACLE_DATAACCESS_TYPES = USING + " " + "Oracle.ManagedDataAccess.Types";
-        #endregion 
-
         #region Keywords
         private enum Keyword {
             ABSTRACT, EVENT, NEW, STRUCT,
@@ -221,7 +216,6 @@ namespace Odapter {
         /// <param name="excludeNullableSymbol">Whether to exclude nullable symbol from returned subtype</param>
         /// <returns></returns>
         internal static string ExtractSubtypeFromGenericCollectionType(string genCollType, bool excludeNullableSymbol) {
-            if (!IsValidGenericCollectionType(genCollType)) return "InvalidTypeSentToExtractSubtypeFromGenericCollectionType:" + genCollType;
             string subType = genCollType.Substring(genCollType.IndexOf('<') + 1, genCollType.Length - genCollType.IndexOf('<') - 2);
             return (excludeNullableSymbol ? subType.TrimEnd(NULLABLE_SUFFIX.ToCharArray()) : subType);
         }
@@ -285,16 +279,16 @@ namespace Odapter {
         /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>
-        internal static bool IsTypeNullable(string type) {
-            if (String.IsNullOrEmpty(type)) return false;
+        //internal static bool IsTypeNullable(string type) {
+        //    if (String.IsNullOrEmpty(type)) return false;
 
-            return type.EndsWith(NULLABLE_SUFFIX)
-                || type.Equals(STRING)
-                || type.Equals(DATATABLE)
-                || type.StartsWith(LIST)
-                || type.StartsWith(ILIST)
-                || type.StartsWith(ICOLLECTION);
-        }
+        //    return type.EndsWith(NULLABLE_SUFFIX)
+        //        || type.Equals(STRING)
+        //        || type.Equals(DATATABLE)
+        //        || type.StartsWith(LIST)
+        //        || type.StartsWith(ILIST)
+        //        || type.StartsWith(ICOLLECTION);
+        //}
     }
 }
 
