@@ -366,12 +366,11 @@ namespace Odapter {
         /// <param name="tabIndentCount"></param>
         /// <returns></returns>
         private string GenerateAssocArrayOutArgumentRetrieveCode(string cSharpArgType, string cSharpArgName, IArgument oracleArg, int tabIndentCount) {
-
-            StringBuilder sb = new StringBuilder("");
             string subType = CSharp.ExtractSubtypeFromGenericCollectionType(cSharpArgType, false);
             string subTypeNonNullable = CSharp.AsNonNullable(subType);
 
-            sb.AppendLine(Tab(5) + cSharpArgName + " = new " + CSharp.DeInterface(cSharpArgType) + "();");   // instantiate non-interface type
+            StringBuilder sb = new StringBuilder("");
+            sb.AppendLine(Tab(5) + cSharpArgName + " = new " + CS.GenericCollectionOf(CS.LIST, subType) + "();"); 
             string oracleArrayCode = "(" + LOCAL_VAR_NAME_COMMAND_PARAMS + "[\"" + (oracleArg.ArgumentName ?? FUNC_RETURN_PARAM_NAME) + "\"].Value as "
                 + oracleArg.NextArgument.Translater.CSharpOdpNetType + "[])";
             sb.AppendLine(Tab(5) + "for (int _i = 0; _i < " + oracleArrayCode + ".Length; _i++)");
