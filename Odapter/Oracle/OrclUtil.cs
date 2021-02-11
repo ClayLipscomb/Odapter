@@ -27,10 +27,14 @@ namespace Odapter {
     /// Oracle specific types and logic
     /// </summary>
     public static class OrclUtil {
-        private static readonly List<string> _complexDataTypes = new List<string> { Orcl.ASSOCIATITVE_ARRAY, Orcl.OBJECT, Orcl.RECORD, Orcl.REF_CURSOR, Orcl.VARRAY, Orcl.XMLTYPE };
+        private static readonly List<string> _complexDataTypes = 
+            new List<string> { Orcl.ASSOCIATITVE_ARRAY, Orcl.OBJECT, Orcl.RECORD, Orcl.REF_CURSOR, Orcl.VARRAY, Orcl.XMLTYPE, Orcl.ANYDATA, Orcl.ANYDATASET, Orcl.ANYTYPE };
 
-        private static IList<IOrclType> OracleTypes = new List<IOrclType> {
+        private static readonly IEnumerable<IOrclType> OracleTypes = new HashSet<IOrclType> {
                 new OrclAssociativeArray(),
+                new OrclAnydata(),
+                new OrclAnydataset(),
+                new OrclAnytype(),
                 new OrclBinaryDouble(),
                 new OrclBinaryFloat(),
                 new OrclBinaryInteger(),
@@ -120,6 +124,11 @@ namespace Odapter {
             return type;
         }
 
+        private static ITyped NormalzeDataTypeUndefined(ITyped type) {
+            type.DataType = type.DataType == Orcl.UNDEFINED ? type.DataTypeProperName : type.DataType;
+            return type;
+        }
+
         private static ITyped NormalzeDataTypeXmlType(ITyped type) {
             type.DataType = type.DataType == Orcl.UNDEFINED && type.DataTypeProperName == Orcl.XMLTYPE ? Orcl.XMLTYPE : type.DataType;
             return type;
@@ -129,7 +138,7 @@ namespace Odapter {
             var typeN = OU.NormalzeDataTypeNull(type);
             typeN = OU.NormalzeDataTypeTimestamp(typeN);
             typeN = OU.NormalzeDataTypeAggregated(typeN);
-            typeN = OU.NormalzeDataTypeXmlType(typeN);
+            typeN = OU.NormalzeDataTypeUndefined(typeN);
             return typeN.DataType;
         }
     
