@@ -349,9 +349,9 @@ namespace Odapter {
         public bool IsValid(ITyped dataType) { return dataType.OrclType.BuildDataTypeFullName(dataType).Equals(DataTypeFull); }
         public string CSharpOracleDbType { get => CSharp.GetNumericOracleDbTypeEnum(_cSharpType); }
         public string CSharpOdpNetType { get => CSharp.ODP_NET_SAFE_TYPE_DECIMAL; }
-        public bool IsIgnoredAsParameter { get => true; }
+        public bool IsIgnoredAsParameter { get => false; }
         public string IgnoredReasonAsParameter { get => TranslaterMessage.IgnoreNotImplemented(OrclType); }
-        public bool IsIgnoredAsAttribute { get => true; }
+        public bool IsIgnoredAsAttribute { get => false; }
         public string IgnoredReasonAsAttribute { get => TranslaterMessage.IgnoreNotImplemented(OrclType); }
 
         internal TranslaterReal(string cSharpType) { _cSharpType = cSharpType; }

@@ -1025,9 +1025,10 @@ namespace Odapter {
             /////////////////////////////////////////////////////////////////////////////
             // bypass creation of package records that using unimplemented Oracle types
             string ignoreReason;
-            if (isPackageRecord && entity.IsIgnoredDueToOracleTypes(out ignoreReason)) {
-                    classText.AppendLine(Tab(2) + "// **RECORD IGNORED** - " + ignoreReason);
-                classText.AppendLine(Tab(2) + "// " + classFirstLine);
+            if (/*isPackageRecord &&*/ entity.IsIgnoredDueToOracleTypes(out ignoreReason)) {
+                int tab = isPackageRecord ? 2 : 1;
+                classText.AppendLine(Tab(tab) + "// **RECORD IGNORED** - " + ignoreReason);
+                classText.AppendLine(Tab(tab) + "// " + classFirstLine);
                 return classText.ToString();
             }
 

@@ -129,6 +129,7 @@
     <Compile Include="Data\Class\Procedure.cs" />
     <Compile Include="Data\Class\Table.cs" />
     <Compile Include="Data\Class\View.cs" />
+    <Compile Include="Oracle\Type\OrclType-Any.cs" />
     <Compile Include="Oracle\Type\OrclType-Boolean.cs" />
     <Compile Include="Oracle\Type\OrclType-LOB.cs" />
     <Compile Include="Oracle\Entity\OrclEntity-Table.cs" />
@@ -158,6 +159,7 @@
     <Compile Include="Translation\TranslaterName.cs" />
     <Compile Include="Translation\TranslaterMessage.cs" />
     <Compile Include="Oracle\Type\OrclType-Record.cs" />
+    <Compile Include="Translation\Type\TranslaterType-Any.cs" />
     <Compile Include="Translation\Type\TranslaterType-Numeric.cs" />
     <Compile Include="Translation\Type\TranslaterType-Collection.cs" />
     <Compile Include="Translation\Type\TranslaterType-Boolean.cs" />

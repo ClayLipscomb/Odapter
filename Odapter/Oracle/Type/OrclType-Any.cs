@@ -19,8 +19,17 @@
 using System;
 
 namespace Odapter {
-    internal sealed class OrclUndefinedType : OrclTypeBase, IOrclType {
-        public string DataType { get => Orcl.UNDEFINED; }   // occurs for cases like eOracle ANY* types
+    internal sealed class OrclAnydata : OrclTypeBase, IOrclType {
+        public string DataType { get => Orcl.ANYDATA; }
+        public bool IsImplementedForAssociativeArray { get => false; }
+    }
+
+    internal sealed class OrclAnydataset : OrclTypeBase, IOrclType {
+        public string DataType { get => Orcl.ANYDATASET; }
+        public bool IsImplementedForAssociativeArray { get => false; }
+    }
+    internal sealed class OrclAnytype : OrclTypeBase, IOrclType {
+        public string DataType { get => Orcl.ANYTYPE; }
         public bool IsImplementedForAssociativeArray { get => false; }
     }
 }

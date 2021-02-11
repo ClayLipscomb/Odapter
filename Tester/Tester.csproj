@@ -154,6 +154,7 @@
     <Content Include="lib\Oracle.DataAccess.dll" />
     <Content Include="schema\create schema.sql" />
     <Content Include="schema\misc\odpt_sequences.sql" />
+    <Content Include="schema\table\odpt_table_ignore_any.sql" />
     <Content Include="schema\table\odpt_table_big.sql" />
     <Content Include="schema\table\odpt_table_logs.sql" />
     <Content Include="schema\table\odpt_table_number.sql" />

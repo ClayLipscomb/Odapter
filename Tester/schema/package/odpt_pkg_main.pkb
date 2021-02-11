@@ -188,6 +188,27 @@ CREATE OR REPLACE PACKAGE BODY ODPT.odpt_pkg_main AS
 		RETURN p_in_out_number_required; 
 	END;
 
+   	FUNCTION func_anydata(p_in IN ANYDATA, p_in_out IN OUT ANYDATA, p_out OUT ANYDATA) RETURN ANYDATA IS
+	BEGIN
+		p_in_out := p_in;
+		p_out := p_in;
+		RETURN p_in;
+	END;
+
+   	FUNCTION func_anydataset(p_in IN ANYDATASET, p_in_out IN OUT ANYDATASET, p_out OUT ANYDATASET) RETURN ANYDATASET IS
+	BEGIN
+		p_in_out := p_in;
+		p_out := p_in;
+		RETURN p_in;
+	END;
+
+   	FUNCTION func_anytype(p_in IN ANYTYPE, p_in_out IN OUT ANYTYPE, p_out OUT ANYTYPE) RETURN ANYTYPE IS
+	BEGIN
+		p_in_out := p_in;
+		p_out := p_in;
+		RETURN p_in;
+	END;
+
 	FUNCTION func_integer(p_in IN INTEGER, p_in_out IN OUT INTEGER, p_out OUT INTEGER) RETURN INTEGER IS
 	BEGIN
 		p_in_out := p_in;

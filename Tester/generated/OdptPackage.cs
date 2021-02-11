@@ -2310,6 +2310,15 @@ namespace Schema.Odpt.Package {
             return __ret;
         } // FuncAaVarchar2
 
+        // **PROC IGNORED** - UNDEFINED type is not available in ODP.NET managed
+        // public  FuncAnydata( pIn, ref  pInOut, out  pOut, OracleConnection optionalPreexistingOpenConnection = null)
+
+        // **PROC IGNORED** - UNDEFINED type is not available in ODP.NET managed
+        // public  FuncAnydataset( pIn, ref  pInOut, out  pOut, OracleConnection optionalPreexistingOpenConnection = null)
+
+        // **PROC IGNORED** - UNDEFINED type is not available in ODP.NET managed
+        // public  FuncAnytype( pIn, ref  pInOut, out  pOut, OracleConnection optionalPreexistingOpenConnection = null)
+
         // **PROC IGNORED** - Code generation for BFILE type has not been implemented
         // public Byte[] FuncBfile(Byte[] pIn, ref Byte[] pInOut, out Byte[] pOut, OracleConnection optionalPreexistingOpenConnection = null)
 

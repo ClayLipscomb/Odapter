@@ -249,6 +249,9 @@ CREATE OR REPLACE PACKAGE ODPT.odpt_pkg_main AS
 	FUNCTION func_record(p_in IN odpt_pkg_table_big.t_table_big, p_in_out IN OUT odpt_pkg_table_big.t_table_big, p_out OUT odpt_pkg_table_big.t_table_big) RETURN odpt_pkg_table_big.t_table_big;
 	FUNCTION func_row(p_in IN odpt_table_big%ROWTYPE, p_in_out IN OUT odpt_table_big%ROWTYPE, p_out OUT odpt_table_big%ROWTYPE) RETURN odpt_table_big%ROWTYPE;
 	FUNCTION func_boolean(p_in IN BOOLEAN, p_in_out IN OUT BOOLEAN, p_out OUT BOOLEAN) RETURN BOOLEAN; -- impossible to bind in C#
+   	FUNCTION func_anydata(p_in IN ANYDATA, p_in_out IN OUT ANYDATA, p_out OUT ANYDATA) RETURN ANYDATA;
+   	FUNCTION func_anydataset(p_in IN ANYDATASET, p_in_out IN OUT ANYDATASET, p_out OUT ANYDATASET) RETURN ANYDATASET;
+   	FUNCTION func_anytype(p_in IN ANYTYPE, p_in_out IN OUT ANYTYPE, p_out OUT ANYTYPE) RETURN ANYTYPE;
 
 	FUNCTION func_aa_binary_integer (p_in IN t_assocarray_binary_integer, p_in_out IN OUT t_assocarray_binary_integer, p_out OUT t_assocarray_binary_integer) RETURN t_assocarray_binary_integer;
 	FUNCTION func_aa_pls_integer (p_in IN t_assocarray_pls_integer, p_in_out IN OUT t_assocarray_pls_integer, p_out OUT t_assocarray_pls_integer) RETURN t_assocarray_pls_integer;

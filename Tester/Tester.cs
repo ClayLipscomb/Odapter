@@ -1465,7 +1465,7 @@ namespace Odapter.Tester {
 
                 OdptTableBig tablBig = new OdptTableBig(); ;
                 OdptTableNumber tableNumber = new OdptTableNumber();
-                OdptTableObject tableObject = new OdptTableObject();
+                //OdptTableObject tableObject = new OdptTableObject();
                 OdptLogs tableLogs = new OdptLogs();
 
                 OdptViewBigV viewBig = new OdptViewBigV();

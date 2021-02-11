@@ -111,6 +111,9 @@ namespace Schema.Odpt.Table {
         public virtual String ColLast { get; set; }
     } // OdptTableBig
 
+    // **RECORD IGNORED** - UNDEFINED type is not available in ODP.NET managed
+    // public partial class OdptTableIgnoreAny : Schema.Odpt.OdptTable {
+
     [DataContract(Namespace="http://odpt.business.com")][Serializable()]
     public partial class OdptTableNumber : Schema.Odpt.OdptTable {
         private Byte propertyToEnsuresPartialClassNamesAreUniqueAtCompileTime { get; set; }
@@ -182,16 +185,6 @@ namespace Schema.Odpt.Table {
         public virtual Decimal? ColNumberLast { get; set; }
     } // OdptTableNumber
 
-    [DataContract(Namespace="http://odpt.business.com")][Serializable()]
-    public partial class OdptTableObject : Schema.Odpt.OdptTable {
-        private Byte propertyToEnsuresPartialClassNamesAreUniqueAtCompileTime { get; set; }
-        [DataMember(Order=1, IsRequired=true)][XmlElement(Order=1, IsNullable=true)]
-        public virtual Int64? Id { get; set; }
-        [DataMember(Order=2, IsRequired=false)][XmlElement(Order=2, IsNullable=true)]
-        public virtual OdptBigOt ColObject { get; set; }
-        [DataMember(Order=3, IsRequired=false)][XmlElement(Order=3, IsNullable=true)]
-        public virtual OdptBigOt ColRefObject { get; set; }
-        [DataMember(Order=4, IsRequired=false)][XmlElement(Order=4, IsNullable=true)]
-        public virtual Int64? ColLast { get; set; }
-    } // OdptTableObject
+    // **RECORD IGNORED** - OBJECT type is not available in ODP.NET managed
+    // public partial class OdptTableObject : Schema.Odpt.OdptTable {
 } // Schema.Odpt.Table

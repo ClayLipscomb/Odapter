@@ -40,7 +40,9 @@ namespace Odapter {
                 new TranslaterNumber3(),
                 new TranslaterNumber2(),
                 new TranslaterNumber1(),
-
+                new TranslaterAnydata(),
+                new TranslaterAnydataset(),
+                new TranslaterAnytype(),
                 new TranslaterBfile(),
                 new TranslaterBinaryDouble(),
                 new TranslaterBinaryFloat(),
