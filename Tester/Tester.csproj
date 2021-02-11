@@ -132,6 +132,7 @@
     <None Include="schema\package\xmpl_pkg_example.pks" />
     <None Include="schema\type\odpt_base_sc_trans_type_ot.tpb" />
     <None Include="schema\type\odpt_base_sc_trans_type_ot.tps" />
+    <None Include="schema\type\odpt_anydata_ot.tps" />
     <None Include="schema\type\odpt_big_ot.tps" />
     <None Include="schema\type\odpt_po_vendor_ot.tpb" />
     <None Include="schema\type\odpt_po_vendor_ot.tps" />
@@ -159,6 +160,8 @@
     <Content Include="schema\table\odpt_table_logs.sql" />
     <Content Include="schema\table\odpt_table_number.sql" />
     <Content Include="schema\table\odpt_table_object.sql" />
+    <None Include="schema\type\odpt_nested_table_ot.tps" />
+    <Content Include="schema\type\odpt_varchar2_nt.sql" />
     <Content Include="schema\view\odpt_view_big.sql" />
     <Content Include="Test Instructions.txt" />
   </ItemGroup>
