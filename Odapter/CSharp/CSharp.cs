@@ -49,7 +49,7 @@ namespace Odapter {
         public const string FLOAT = "float";
         public const string DECIMAL = "Decimal";
         public const string STRING = "String";
-        public const string LIST_OF_STRING = LIST + "<" + STRING + ">";
+        //public const string LIST_OF_STRING = LIST + "<" + STRING + ">";
         public const string BOOLEAN = "Boolean";
         public const string OBJECT_TYPE = "Object";
         public const string XML_DOCUMENT = "XmlDocument";
@@ -134,7 +134,7 @@ namespace Odapter {
         private const string ORACLEDBTYPE_INT32 = ORACLEDBTYPE + INT32;
         private const string ORACLEDBTYPE_INT64 = ORACLEDBTYPE + INT64;
         private const string ORACLEDBTYPE_DECIMAL = ORACLEDBTYPE + DECIMAL;
-        private const string ORACLEDBTYPE_DOUBLE = ORACLEDBTYPE + DOUBLE;
+        //private const string ORACLEDBTYPE_DOUBLE = ORACLEDBTYPE + DOUBLE;
         public const string ORACLEDBTYPE_DATE = ORACLEDBTYPE + "Date";
         public const string ORACLEDBTYPE_TIMESTAMP = ORACLEDBTYPE + "TimeStamp";
         public const string ORACLEDBTYPE_TIMESTAMP_TZ = ORACLEDBTYPE + "TimeStampTZ";
