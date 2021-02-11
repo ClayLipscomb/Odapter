@@ -12,6 +12,9 @@ using System.Xml.Serialization;
 using Oracle.ManagedDataAccess.Types;
 
 namespace Schema.Odpt.Odpt.Type.Object {
+    // **RECORD IGNORED** - ANYDATA type is not available in ODP.NET managed
+    // public partial class OdptAnydataOt : Schema.Odpt.Odpt.OdptObjectType {
+
     [DataContract(Namespace="http://odpt.business.com")][Serializable()]
     public abstract partial class OdptBaseScTransTypeOt : Schema.Odpt.Odpt.OdptObjectType {
         private Byte propertyToEnsuresPartialClassNamesAreUniqueAtCompileTime { get; set; }
@@ -137,6 +140,9 @@ namespace Schema.Odpt.Odpt.Type.Object {
         [DataMember(Order=33, IsRequired=false)][XmlElement(Order=33, IsNullable=true)]
         public virtual Int64? AttrLast { get; set; }
     } // OdptBigOt
+
+    // **RECORD IGNORED** - UNDEFINED type is not available in ODP.NET managed
+    // public partial class OdptNestedTableOt : Schema.Odpt.Odpt.OdptObjectType {
 
     [DataContract(Namespace="http://odpt.business.com")][Serializable()]
     public partial class OdptPoVendorOt : OdptScTtTblUniqueOt {

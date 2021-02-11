@@ -111,7 +111,7 @@ namespace Schema.Odpt.Odpt.Table {
         public virtual String ColLast { get; set; }
     } // OdptTableBig
 
-    // **RECORD IGNORED** - UNDEFINED type is not available in ODP.NET managed
+    // **RECORD IGNORED** - ANYDATA type is not available in ODP.NET managed
     // public partial class OdptTableIgnoreAny : Schema.Odpt.Odpt.OdptTable {
 
     [DataContract(Namespace="http://odpt.business.com")][Serializable()]
