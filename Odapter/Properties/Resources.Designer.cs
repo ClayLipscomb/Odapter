@@ -19,7 +19,7 @@ namespace Odapter.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Resources {
@@ -64,14 +64,13 @@ namespace Odapter.Properties {
         ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
         ///&lt;configuration&gt;
         ///  &lt;configSections&gt;
-        ///    &lt;section name=&quot;oracle.manageddataaccess.client&quot;
-        ///      type=&quot;OracleInternal.Common.ODPMSectionHandler, Oracle.ManagedDataAccess, Version=4.122.1.0, Culture=neutral, PublicKeyToken=89b483f429c47342&quot;/&gt;
+        ///    &lt;section name=&quot;oracle.manageddataaccess.client&quot; type=&quot;OracleInternal.Common.ODPMSectionHandler, Oracle.ManagedDataAccess, Version=4.122.1.0, Culture=neutral, PublicKeyToken=89b483f429c47342&quot;/&gt;
         ///    &lt;/configSections&gt;
-        ///&lt;startup&gt;&lt;supportedRuntime version=&quot;v4.0&quot; sku=&quot;.NETFramework,Version=v4.0&quot;/&gt;&lt;/startup&gt;
+        ///&lt;startup&gt;&lt;supportedRuntime version=&quot;v4.0&quot; sku=&quot;.NETFramework,Version=v4.6.2&quot;/&gt;&lt;/startup&gt;
         ///&lt;system.data&gt;
         ///&lt;DbProviderFactories&gt;
         ///&lt;remove invariant=&quot;Oracle.ManagedDataAccess.Client&quot;/&gt;
-        ///&lt;add name=&quot;ODP.NET, Manage [rest of string was truncated]&quot;;.
+        ///&lt;add name=&quot;ODP.NET, Managed Dri [rest of string was truncated]&quot;;.
         /// </summary>
         public static string App {
             get {
@@ -80,19 +79,16 @@ namespace Odapter.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to using System;
-        ///using System.Globalization;
-        ///using System.Text.RegularExpressions;
-        ///
-        ///namespace CaseConversion {
-        ///    /// &lt;summary&gt;
-        ///    /// Converts between various &quot;cases&quot; like camelCase, PascalCase, underscore_delimited
-        ///    /// &lt;/summary&gt;
-        ///    public class CaseConverter {
-        ///        #region Constant and Static members
-        ///        private const char UNDERSCORE = &apos;_&apos;;
-        ///        private const string UNDERSCORECHAR_WORD = &quot;underscorechar&quot;;
-        ///        private static TextInfo _textInfo = new CultureInfo(&quot;en-US&quot;, false [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to //------------------------------------------------------------------------------
+        /////    Odapter - a C# code generator for Oracle packages
+        /////    Copyright(C) 2021 Clay Lipscomb
+        /////
+        /////    This program is free software: you can redistribute it and/or modify
+        /////    it under the terms of the GNU General Public License as published by
+        /////    the Free Software Foundation, either version 3 of the License, or
+        /////    (at your option) any later version.
+        /////
+        /////    This program is distributed in the hope that it will [rest of string was truncated]&quot;;.
         /// </summary>
         public static string CaseConversion {
             get {
@@ -101,29 +97,16 @@ namespace Odapter.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to using System;
-        ///using System.Collections.Generic;
-        ///using System.Reflection;
-        ///using System.Data;
-        ///#if CSHARP30
-        ///using Oracle.DataAccess.Client;
-        ///using Oracle.DataAccess.Types;
-        ///#else
-        ///using Oracle.ManagedDataAccess.Client;
-        ///using Oracle.ManagedDataAccess.Types;
-        ///#endif
-        ///using System.Linq;
-        ///using CaseConversion;
-        ///using System.Threading;
-        ///using System.Diagnostics;
-        ///#if !CSHARP30
-        ///using System.Collections.Concurrent;
-        ///#endif
-        ///
-        ///namespace OrclPower {
-        ///#region Classes Supplemental to Hydrator
-        ///    /// &lt;summary&gt;
-        ///  [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to //------------------------------------------------------------------------------
+        /////    Odapter - a C# code generator for Oracle packages
+        /////    Copyright(C) 2021 Clay Lipscomb
+        /////
+        /////    This program is free software: you can redistribute it and/or modify
+        /////    it under the terms of the GNU General Public License as published by
+        /////    the Free Software Foundation, either version 3 of the License, or
+        /////    (at your option) any later version.
+        /////
+        /////    This program is distributed in the hope that it will [rest of string was truncated]&quot;;.
         /// </summary>
         public static string OrclPower {
             get {
