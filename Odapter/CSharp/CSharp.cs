@@ -235,27 +235,7 @@ namespace Odapter {
         /// <param name="subType">Subtype; the T type</param>
         /// <returns></returns>
         internal static string GenericCollectionOf(string genCollectionBaseType, string subType) => $"{genCollectionBaseType}<{subType}>";
-
-        /// <summary>
-        /// For a valid interface name, return equivalent class name
-        /// </summary>
-        /// <param name="interfaceName"></param>
-        /// <returns></returns>
-        internal static string DeInterface(string interfaceName) {
-            if (!String.IsNullOrWhiteSpace(interfaceName) && interfaceName.StartsWith(INTERFACE_PREFIX) && interfaceName.Substring(0, 2).All(char.IsUpper)) {
-                return interfaceName.TrimStart(INTERFACE_PREFIX.ToCharArray());
-            } else {
-                return interfaceName;   // not an interface, return argument as-is
-            }
-        }
-
-        internal static string ToInterface(string className) {
-            if (String.IsNullOrWhiteSpace(className)) {
-                return className;
-            } else {
-                return INTERFACE_PREFIX + className;
-            }
-        }
+        internal static string ToInterface(string className) => (String.IsNullOrWhiteSpace(className) ? String.Empty : INTERFACE_PREFIX) + className;
 
         /// <summary>
         /// Is C# type an ODP.NET type?

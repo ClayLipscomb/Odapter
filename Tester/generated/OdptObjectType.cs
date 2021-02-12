@@ -141,7 +141,7 @@ namespace Schema.Odpt.Type.Object {
         public virtual Int64? AttrLast { get; set; }
     } // OdptBigOt
 
-    // **RECORD IGNORED** - UNDEFINED type is not available in ODP.NET managed
+    // **RECORD IGNORED** - Code generation for NESTED TABLE type has not been implemented
     // public partial class OdptNestedTableOt : Schema.Odpt.OdptObjectType {
 
     [DataContract(Namespace="http://odpt.business.com")][Serializable()]

@@ -27,27 +27,27 @@ namespace Odapter {
     public static class Orcl {
         #region PL/SQL Type Constants (as found in SYS.ALL_ARGUMENTS)
         // PL/SQL collection types
-        public const string ASSOCIATITVE_ARRAY = "PL/SQL TABLE"; 
-        internal const string NESTED_TABLE = "TABLE"; 
-        internal const string VARRAY = "VARRAY"; 
+        public const string ASSOCIATITVE_ARRAY = "PL/SQL TABLE";
+        internal const string NESTED_TABLE = "TABLE";
+        internal const string VARRAY = "VARRAY";
 
         // PL/SQL-specific scalar types
-        public const string REF_CURSOR = "REF CURSOR"; 
-        internal const string BINARY_INTEGER = "BINARY_INTEGER"; 
-        internal const string NATURAL = "NATURAL"; 
-        internal const string NATURALN = "NATURALN"; 
-        internal const string POSITIVE = "POSITIVE"; 
+        public const string REF_CURSOR = "REF CURSOR";
+        internal const string BINARY_INTEGER = "BINARY_INTEGER";
+        internal const string NATURAL = "NATURAL";
+        internal const string NATURALN = "NATURALN";
+        internal const string POSITIVE = "POSITIVE";
         internal const string POSITIVEN = "POSITIVEN";
 
         internal const string PLS_INTEGER = "PLS_INTEGER"; // same as BINARY_INTEGER
-        internal const string PLSQL_BOOLEAN = "PL/SQL BOOLEAN"; 
+        internal const string PLSQL_BOOLEAN = "PL/SQL BOOLEAN";
         internal const string BOOLEAN = "BOOLEAN"; // found in pls_type column
 
         // PL/SQL and SQL "entity" types
         internal const string TABLE = "TABLE";
         internal const string VIEW = "VIEW";
-        internal const string OBJECT = "OBJECT"; 
-        internal const string RECORD = "PL/SQL RECORD"; 
+        internal const string OBJECT = "OBJECT";
+        internal const string RECORD = "PL/SQL RECORD";
 
         // SQL types, etc.
         public const string INTEGER = "INTEGER";
@@ -55,39 +55,39 @@ namespace Odapter {
         internal const string SMALLINT = "SMALLINT";
         internal const string UNSIGNED_INTEGER = "UNSIGNED INTEGER";
         internal const string STRING = "STRING";
-        internal const string NCHAR = "NCHAR"; 
+        internal const string NCHAR = "NCHAR";
         internal const string VARCHAR = "VARCHAR";
-        internal const string VARCHAR2 = "VARCHAR2"; 
+        internal const string VARCHAR2 = "VARCHAR2";
         internal const string NVARCHAR2 = "NVARCHAR2";
-        internal const string CHAR = "CHAR"; 
-        public const string BLOB = "BLOB"; 
+        internal const string CHAR = "CHAR";
+        public const string BLOB = "BLOB";
         public const string CLOB = "CLOB";
         internal const string NCLOB = "NCLOB";
-        internal const string LONG = "LONG"; 
-        internal const string ROWID = "ROWID"; 
-        internal const string UROWID = "UROWID"; 
-        internal const string REF = "REF"; 
+        internal const string LONG = "LONG";
+        internal const string ROWID = "ROWID";
+        internal const string UROWID = "UROWID";
+        internal const string REF = "REF";
         internal const string XMLTYPE = "XMLTYPE";
-        public const string NUMBER = "NUMBER"; 
-        internal const string NUMERIC = "NUMERIC"; 
-        internal const string FLOAT = "FLOAT"; 
+        public const string NUMBER = "NUMBER";
+        internal const string NUMERIC = "NUMERIC";
+        internal const string FLOAT = "FLOAT";
         internal const string DECIMAL = "DECIMAL";
         internal const string DOUBLE_PRECISION = "DOUBLE PRECISION";
         internal const string REAL = "REAL";
-        public const string DATE = "DATE"; 
-        internal const string TIME_WITH_TIME_ZONE = "TIME WITH TIME ZONE"; 
-        internal const string RAW = "RAW"; 
-        internal const string LONG_RAW = "LONG RAW";  
-        internal const string BFILE = "BFILE"; 
-        internal const string BINARY_DOUBLE = "BINARY_DOUBLE"; 
-        internal const string BINARY_FLOAT = "BINARY_FLOAT"; 
+        public const string DATE = "DATE";
+        internal const string TIME_WITH_TIME_ZONE = "TIME WITH TIME ZONE";
+        internal const string RAW = "RAW";
+        internal const string LONG_RAW = "LONG RAW";
+        internal const string BFILE = "BFILE";
+        internal const string BINARY_DOUBLE = "BINARY_DOUBLE";
+        internal const string BINARY_FLOAT = "BINARY_FLOAT";
         public const string TIMESTAMP = "TIMESTAMP";
         public const string TIMESTAMP_WITH_LOCAL_TIME_ZONE = "TIMESTAMP WITH LOCAL TIME ZONE";
-        public const string TIMESTAMP_WITH_TIME_ZONE = "TIMESTAMP WITH TIME ZONE"; 
-        public const string INTERVAL_DAY_TO_SECOND = "INTERVAL DAY TO SECOND"; 
-        internal const string INTERVAL_YEAR_TO_MONTH = "INTERVAL YEAR TO MONTH"; 
+        public const string TIMESTAMP_WITH_TIME_ZONE = "TIMESTAMP WITH TIME ZONE";
+        public const string INTERVAL_DAY_TO_SECOND = "INTERVAL DAY TO SECOND";
+        internal const string INTERVAL_YEAR_TO_MONTH = "INTERVAL YEAR TO MONTH";
         internal const string MLSLABEL = "MLSLABEL"; // deprecated
-        internal const string UNDEFINED = "UNDEFINED"; 
+        internal const string UNDEFINED = "UNDEFINED";
         internal const string NULL = "NULL";        // represents a NULL return type found only a procedure "paramter"
         #endregion
 
@@ -95,6 +95,15 @@ namespace Odapter {
         internal const string ANYDATA = "ANYDATA";
         internal const string ANYTYPE = "ANYTYPE";
         internal const string ANYDATASET = "ANYDATASET";
+        #endregion
+
+        #region SYS.all_types.typecode column values
+        internal const string TYPECODE_NESTED_TABLE = @"COLLECTION";
+        internal const string TYPECODE_OBJECT = @"OBJECT";
+        internal const string TYPECODE_XMLTYPE = @"XMLTYPE";
+        internal const string TYPECODE_ANYDATA = @"ANYDATA";
+        internal const string TYPECODE_ANYDATASET = @"ANYDATASET";
+        internal const string TYPECODE_ANYTYPE = @"ANYTYPE";
         #endregion
 
         #region Miscellaneous

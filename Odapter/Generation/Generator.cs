@@ -1012,7 +1012,7 @@ namespace Odapter {
             StringBuilder classText = new StringBuilder("");
 
             string dbAncestorTypeName = null;   // only object type can have a database ancestor
-            if (entity is IObjectType) dbAncestorTypeName = ((IObjectType)entity).DbAncestorTypeName;
+            if (entity is IObjectType type) dbAncestorTypeName = type.DbAncestorTypeName;
 
             string classFirstLine = entity.Translater.CSharpAccessModifier + (entity.IsInstantiable ? "" : " abstract") + (isPartial ? " partial" : "") + " " + entity.Translater.CSharpType + " " + className
                 + (!String.IsNullOrEmpty(dbAncestorTypeName)
@@ -1024,10 +1024,10 @@ namespace Odapter {
 
             /////////////////////////////////////////////////////////////////////////////
             // bypass creation of package records that using unimplemented Oracle types
-            string ignoreReason;
-            if (/*isPackageRecord &&*/ entity.IsIgnoredDueToOracleTypes(out ignoreReason)) {
+            if (entity.IsIgnoredDueToOracleTypes(out string ignoreReason)) {
+                string entityType = entity.GetType().Name.Replace("Package", String.Empty).Replace("Type", String.Empty).ToUpper();
                 int tab = isPackageRecord ? 2 : 1;
-                classText.AppendLine(Tab(tab) + "// **RECORD IGNORED** - " + ignoreReason);
+                classText.AppendLine(Tab(tab) + $"// **{entityType} IGNORED** - {ignoreReason}");
                 classText.AppendLine(Tab(tab) + "// " + classFirstLine);
                 return classText.ToString();
             }
@@ -1098,11 +1098,11 @@ namespace Odapter {
             bool isSerializable, bool isPartial, bool isDataMember, bool isXmlElement)
             where I_Entity : IEntity {
 
-            string entityName = CSharp.DeInterface(typeof(I_Entity).Name); // need better code for this
+            string entityTypeName = typeof(I_Entity).Name.TrimStart(@"I".ToCharArray());
             string fileName = _outputPath + @"\" + CaseConverter.ConvertUnderscoreDelimitedToPascalCase(_schema)
-                + CaseConverter.ConvertUnderscoreDelimitedToPascalCase(GetFilterValueIfUsedInNaming()) + entityName + ".cs";
+                + CaseConverter.ConvertUnderscoreDelimitedToPascalCase(GetFilterValueIfUsedInNaming()) + entityTypeName + ".cs";
 
-            DisplayMessage("Coding " + entityName.ToLower() + "s (" + fileName.Substring(fileName.LastIndexOf('\\') + 1) + ")...");
+            DisplayMessage("Coding " + entityTypeName.ToLower() + "s (" + fileName.Substring(fileName.LastIndexOf('\\') + 1) + ")...");
 
             try {
                 StreamWriter outFile = new StreamWriter(fileName);

@@ -28,7 +28,8 @@ namespace Odapter {
         string Aggregated { get; }
 
         string PlsType { get; set; }
-
+        // Option holder for SYS.all_types.typecode
+        string Typecode { get; set; }
         ITyped SubType { get; }
         ITranslaterType Translater { get; set; }
     }

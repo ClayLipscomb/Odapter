@@ -49,6 +49,7 @@ namespace Odapter {
         public string PreNormalizedValues { get; set; }
         public string Aggregated { get => OrclUtil.BuildAggregateType(this); }
         public string PlsType { get; set; }
+        public string Typecode { get; set; }
 
         // ITypedNameable specific
         public string DataTypeLabel { get => AttrName; }

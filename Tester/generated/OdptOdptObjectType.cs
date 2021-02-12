@@ -12,7 +12,7 @@ using System.Xml.Serialization;
 using Oracle.ManagedDataAccess.Types;
 
 namespace Schema.Odpt.Odpt.Type.Object {
-    // **RECORD IGNORED** - ANYDATA type is not available in ODP.NET managed
+    // **OBJECT IGNORED** - ANYDATA type is not available in ODP.NET managed
     // public partial class OdptAnydataOt : Schema.Odpt.Odpt.OdptObjectType {
 
     [DataContract(Namespace="http://odpt.business.com")][Serializable()]
@@ -141,7 +141,7 @@ namespace Schema.Odpt.Odpt.Type.Object {
         public virtual Int64? AttrLast { get; set; }
     } // OdptBigOt
 
-    // **RECORD IGNORED** - UNDEFINED type is not available in ODP.NET managed
+    // **OBJECT IGNORED** - Code generation for NESTED TABLE type has not been implemented
     // public partial class OdptNestedTableOt : Schema.Odpt.Odpt.OdptObjectType {
 
     [DataContract(Namespace="http://odpt.business.com")][Serializable()]

@@ -129,27 +129,39 @@ namespace Odapter {
             return type;
         }
 
-        //private static ITyped NormalzeDataTypeXmlType(ITyped type) {
-        //    type.DataType = type.DataType == Orcl.UNDEFINED && type.DataTypeProperName == Orcl.XMLTYPE ? Orcl.XMLTYPE : type.DataType;
-        //    return type;
-        //}
-
         private static string NormalizeDataType(ITyped type) {
             var typeN = OU.NormalzeDataTypeNull(type);
             typeN = OU.NormalzeDataTypeTimestamp(typeN);
             typeN = OU.NormalzeDataTypeAggregated(typeN);
             typeN = OU.NormalzeDataTypeUndefined(typeN);
-            return typeN.DataType;
+
+            if (OrclUtil.IsExistsType(typeN.DataType))
+                return typeN.DataType;
+            else
+                switch (typeN.Typecode) {
+                    case Orcl.TYPECODE_NESTED_TABLE:
+                        return Orcl.NESTED_TABLE;
+                    case Orcl.TYPECODE_OBJECT:
+                        return Orcl.OBJECT;
+                    case Orcl.TYPECODE_XMLTYPE:
+                        return Orcl.XMLTYPE;
+                    case Orcl.TYPECODE_ANYDATA:
+                        return Orcl.ANYDATA;
+                    case Orcl.TYPECODE_ANYDATASET:
+                        return Orcl.ANYDATASET;
+                    case Orcl.TYPECODE_ANYTYPE:
+                        return Orcl.ANYTYPE;
+                    default:
+                        return Orcl.UNDEFINED;
+                }
         }
     
         internal static void Normalize(ITyped type) {
             type.PreNormalizedValues = String.Format("DataType: {0}, DataPrecison: {1}, DataScale: {2}, CharLength: {3}", 
                 type.DataType, type.DataPrecision.HasValue ? type.DataPrecision.ToString() : "null", type.DataScale.HasValue ? type.DataScale.ToString() : "null", type.CharLength.HasValue ? type.CharLength.ToString() : "null");
-
             var dataTypeSearch = NormalizeDataType(type);
-            if (!OrclUtil.IsExistsType(dataTypeSearch)) dataTypeSearch = Orcl.OBJECT;
             type.OrclType = OrclUtil.GetType(dataTypeSearch);
-            if (type.OrclType.DataType != Orcl.OBJECT) type.DataType = type.OrclType.DataType;
+            if (!OrclUtil.IsExistsType(type.DataType)) type.DataType = type.OrclType.DataType;
 
             type.OrclType.NormalizePrecisionScale(type, out int? precision, out int? scale);
             type.DataPrecision = precision;
@@ -161,7 +173,7 @@ namespace Odapter {
             if (type.CharLength.HasValue) {
                 return type.DataType + "(" + type.CharLength + ")";   // VARCHAR2, CHAR2, etc.
             } else if (type.DataPrecision.HasValue) {
-                if (type.DataType.StartsWith(Orcl.TIMESTAMP)) {  // TIMESTAMP, TIMESTAMP WITH TIME ZONE, etc.
+                if (type.DataType.StartsWith(Orcl.TIMESTAMP)) {  // TIMESTAMP, TIMESTAMP TZ, TIMESTAMP LTZ
                     return type.DataType.Insert(9, "(" + type.DataPrecision + ")");
                 } else {
                     return type.DataType + "(" + type.DataPrecision + (type.DataScale > 0 ? "," + type.DataScale : "") + ")"; // a number
