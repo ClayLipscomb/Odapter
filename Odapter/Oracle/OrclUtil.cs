@@ -129,10 +129,10 @@ namespace Odapter {
             return type;
         }
 
-        private static ITyped NormalzeDataTypeXmlType(ITyped type) {
-            type.DataType = type.DataType == Orcl.UNDEFINED && type.DataTypeProperName == Orcl.XMLTYPE ? Orcl.XMLTYPE : type.DataType;
-            return type;
-        }
+        //private static ITyped NormalzeDataTypeXmlType(ITyped type) {
+        //    type.DataType = type.DataType == Orcl.UNDEFINED && type.DataTypeProperName == Orcl.XMLTYPE ? Orcl.XMLTYPE : type.DataType;
+        //    return type;
+        //}
 
         private static string NormalizeDataType(ITyped type) {
             var typeN = OU.NormalzeDataTypeNull(type);
@@ -151,8 +151,7 @@ namespace Odapter {
             type.OrclType = OrclUtil.GetType(dataTypeSearch);
             if (type.OrclType.DataType != Orcl.OBJECT) type.DataType = type.OrclType.DataType;
 
-            int? precision, scale;
-            type.OrclType.NormalizePrecisionScale(type, out precision, out scale);
+            type.OrclType.NormalizePrecisionScale(type, out int? precision, out int? scale);
             type.DataPrecision = precision;
             type.DataScale = scale;
             type.CharLength = type.OrclType.NormalizeCharLength(type);
