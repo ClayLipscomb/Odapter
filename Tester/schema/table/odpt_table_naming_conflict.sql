@@ -9,6 +9,8 @@ CREATE TABLE ODPT.odpt_table_naming_conflict (
     naming_conflict123      NUMBER,
     naming_conflict123_     NUMBER,
     naming_conflict123__    NUMBER
-    -- naming_conflict_123     NUMBER,
-    -- naming_conflict__123    NUMBER    
+    --naming_conflict_123     NUMBER,
+    --naming_conflict_n123    NUMBER,
+    --naming_conflict__123    NUMBER,
+    --naming_conflict__n123   NUMBER    
 );
