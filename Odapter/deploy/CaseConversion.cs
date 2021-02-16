@@ -27,8 +27,9 @@ namespace Odapter {
     public class CaseConverter {
         #region Constant and Static members
         private const char UNDERSCORE = '_';
-        private const string UNDERSCORECHAR_WORD = "underscorechar";
-        private static TextInfo _textInfo = new CultureInfo("en-US", false).TextInfo;
+        private static readonly TextInfo _textInfo = new CultureInfo("en-US", false).TextInfo;
+        private const string DEFAULT_NON_STANDARD_UNDERSCORE_REPLACEMENT = @"EXTRAUNDERSCORE";
+        //private const string PREFIX_FOR_NUMERIC_WORD = @"N";
         #endregion
 
         #region Case Conversion Methods
@@ -63,46 +64,42 @@ namespace Odapter {
         /// </summary>
         /// <param name="oldText">A camelCase string</param>
         /// <returns>underscore deliminted string</returns>
-        public static string ConvertCamelCaseToUnderscoreDelimited(String oldText) {
-            return DelimitCapitalizedWordsWithUnderscore(oldText).ToLower();
-        }
+        public static string ConvertCamelCaseToUnderscoreDelimited(String oldText) => DelimitCapitalizedWordsWithUnderscore(oldText).ToLower();
 
         /// <summary>
         /// Convert a PascalCase string to lower-case underscore_delimited
         /// </summary>
         /// <param name="oldText">A PascalCase string</param>
         /// <returns>underscore delimited string</returns>
-        public static string ConvertPascalCaseToUnderscoreDelimited(String oldText) {
-            return DelimitCapitalizedWordsWithUnderscore(oldText).ToLower();
-        }
+        public static string ConvertPascalCaseToUnderscoreDelimited(String oldText) => DelimitCapitalizedWordsWithUnderscore(oldText).ToLower();
 
         /// <summary>
         /// Convert an underscore_delimited string to PascalCase
         /// </summary>
         /// <param name="oldText"></param>
         /// <returns></returns>
-        private static string ConvertUnderscoreDelimitedToPascalCase(String oldText, bool preserveLeadingAndTrailingUnderscores) {
+        public static string ConvertUnderscoreDelimitedToPascalCase(String oldText, String nonStandardUnderscoreReplacement = null) {
             if (String.IsNullOrEmpty(oldText)) return string.Empty;
             string newText = oldText.Trim();
 
-            // treat any special characters like delimiters
-            newText = Regex.Replace(newText, "[^0-9a-zA-Z]+", UNDERSCORE.ToString());
+            // treat any non-underscore special characters like an underscore
+            newText = Regex.Replace(newText, "[^0-9a-zA-Z_]+", UNDERSCORE.ToString());
 
-            string[] token = newText.ToLower().Trim().Split(UNDERSCORE);
+            string[] token = newText?.ToLower()?.Trim()?.Split(UNDERSCORE);
             newText = string.Empty;
-            foreach (string t in token) newText += _textInfo.ToTitleCase(t);
+            foreach (string t in token) {
+                string word = String.IsNullOrWhiteSpace(t) ? ConvertToCapitalized(nonStandardUnderscoreReplacement ?? DEFAULT_NON_STANDARD_UNDERSCORE_REPLACEMENT) : t;
+                //word = (!String.IsNullOrWhiteSpace(word) && Char.IsDigit(word[0]) ? PREFIX_FOR_NUMERIC_WORD : String.Empty) + word;
+                newText += _textInfo.ToTitleCase(word);
+            }
 
             // We must guarantee uniqueness with leading/trailing underscores. In other words, if you 
             //  begin or end an underscore-delimited name with an underscore, we will either preserve
             //  the underscore as a character (non-standard for PascalCase) or replace it with the word 
             //  "Underscore" to keep a pure PascalCase (preferred).
-            if (!preserveLeadingAndTrailingUnderscores && oldText.EndsWith(UNDERSCORE.ToString())) newText += ConvertToCapitalized(UNDERSCORECHAR_WORD);
-            if (!preserveLeadingAndTrailingUnderscores && oldText.StartsWith(UNDERSCORE.ToString())) newText = ConvertToCapitalized(UNDERSCORECHAR_WORD) + newText;
+            //if (!preserveLeadingAndTrailingUnderscores && oldText.EndsWith(UNDERSCORE.ToString())) newText += ConvertToCapitalized(UNDERSCORECHAR_WORD);
+            //if (!preserveLeadingAndTrailingUnderscores && oldText.StartsWith(UNDERSCORE.ToString())) newText = ConvertToCapitalized(UNDERSCORECHAR_WORD) + newText;
             return newText;
-        }
-
-        public static string ConvertUnderscoreDelimitedToPascalCase(String oldText) {
-            return ConvertUnderscoreDelimitedToPascalCase(oldText, false);
         }
 
         /// <summary>
@@ -110,14 +107,10 @@ namespace Odapter {
         /// </summary>
         /// <param name="oldText"></param>
         /// <returns>camelCase string</returns>
-        private static string ConvertUnderscoreDelimitedToCamelCase(String oldText, bool preserveLeadingAndTrailingUnderscores) {
+        public static string ConvertUnderscoreDelimitedToCamelCase(String oldText, String nonStandardUnderscoreReplacement = null) {
             if (String.IsNullOrEmpty(oldText)) return string.Empty;
-            String pascalCase = ConvertUnderscoreDelimitedToPascalCase(oldText, preserveLeadingAndTrailingUnderscores);
-            return pascalCase.Substring(0, 1).ToLower() + (pascalCase.Length == 1 ? string.Empty : pascalCase.Substring(1));
-        }
-
-        public static string ConvertUnderscoreDelimitedToCamelCase(String oldText) {
-            return ConvertUnderscoreDelimitedToCamelCase(oldText, false);
+            String pascalCase = ConvertUnderscoreDelimitedToPascalCase(oldText, nonStandardUnderscoreReplacement);
+            return pascalCase?.Substring(0, 1)?.ToLower() + (pascalCase?.Length == 1 ? string.Empty : pascalCase?.Substring(1));
         }
 
         /// <summary>
@@ -125,10 +118,9 @@ namespace Odapter {
         /// </summary>
         /// <param name="columnName">underscore deliminted string</param>
         /// <returns>title case label</returns>
-        public static string ConvertUnderscoreDelimitedToLabel(string columnName) {
+        public static string ConvertUnderscoreDelimitedToLabel(string columnName) =>
             // assume words are delimited by underscore
-            return CultureInfo.CurrentCulture.TextInfo.ToTitleCase(columnName.ToLower().Replace(UNDERSCORE.ToString(), " "));
-        }
+            CultureInfo.CurrentCulture.TextInfo.ToTitleCase(columnName.ToLower().Replace(UNDERSCORE.ToString(), " "));
 
         /// <summary>
         /// Convert string to title case 
@@ -137,7 +129,6 @@ namespace Odapter {
         /// <returns>title case label</returns>
         public static string ConvertToCapitalized(string value) {
             if (string.IsNullOrEmpty(value)) return string.Empty;
-
             value = value.Trim();
             return char.ToUpper(value[0]) + (value.Length > 1 ? value.Substring(1).ToLower() : "");
         }
@@ -147,13 +138,8 @@ namespace Odapter {
         /// </summary>
         /// <param name="oldText"></param>
         /// <returns></returns>
-        private static string ConvertUnderscoreDelimitedToCamelCasePrefixedWithUnderscore(String oldText, bool preserveTrailingUnderscore) {
-            return UNDERSCORE + ConvertUnderscoreDelimitedToCamelCase(oldText, preserveTrailingUnderscore);
-        }
-
-        public static string ConvertUnderscoreDelimitedToCamelCasePrefixedWithUnderscore(String oldText) {
-            return ConvertUnderscoreDelimitedToCamelCase(oldText, false);
-        }
+        public static string ConvertUnderscoreDelimitedToCamelCasePrefixedWithUnderscore(String oldText, String nonStandardUnderscoreReplacement = null) =>
+            UNDERSCORE + ConvertUnderscoreDelimitedToCamelCase(oldText, nonStandardUnderscoreReplacement);
         #endregion
     }
 }

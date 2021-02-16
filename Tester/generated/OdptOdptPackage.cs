@@ -3550,7 +3550,7 @@ namespace Schema.Odpt.Odpt.Package {
             }
         } // ProcUnderscoreSuffix
 
-        public void ProcUnderscoreSuffixUnderscorechar(OracleConnection optionalPreexistingOpenConnection = null) {
+        public void ProcUnderscoreSuffixExtraunderscore(OracleConnection optionalPreexistingOpenConnection = null) {
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
             try {
                 using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_MAIN.PROC_UNDERSCORE_SUFFIX_", __conn)) {
@@ -3567,7 +3567,7 @@ namespace Schema.Odpt.Odpt.Package {
                     __conn.Dispose();
                 }
             }
-        } // ProcUnderscoreSuffixUnderscorechar
+        } // ProcUnderscoreSuffixExtraunderscore
     } // OdptPkgMain
 
     public sealed partial class OdptPkgSql : Schema.Odpt.Odpt.OdptAdapter {

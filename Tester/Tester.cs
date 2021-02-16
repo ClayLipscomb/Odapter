@@ -1487,7 +1487,7 @@ namespace Odapter.Tester {
 
             private void TestMiscCalls() {
                 OdptPkgMain.Instance.ProcUnderscoreSuffix(null);
-                OdptPkgMain.Instance.ProcUnderscoreSuffixUnderscorechar(null);
+                OdptPkgMain.Instance.ProcUnderscoreSuffixExtraunderscore(null);
 
                 try {
                     OdptPkgMain.Instance.ProcRaiseException(null);

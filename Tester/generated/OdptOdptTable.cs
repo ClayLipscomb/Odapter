@@ -115,6 +115,27 @@ namespace Schema.Odpt.Odpt.Table {
     // public partial class OdptTableIgnoreAny : Schema.Odpt.Odpt.OdptTable {
 
     [DataContract(Namespace="http://odpt.business.com")][Serializable()]
+    public partial class OdptTableNamingConflict : Schema.Odpt.Odpt.OdptTable {
+        private Byte propertyToEnsuresPartialClassNamesAreUniqueAtCompileTime { get; set; }
+        [DataMember(Order=1, IsRequired=false)][XmlElement(Order=1, IsNullable=true)]
+        public virtual Decimal? NamingConflict { get; set; }
+        [DataMember(Order=2, IsRequired=false)][XmlElement(Order=2, IsNullable=true)]
+        public virtual Decimal? NamingExtraunderscoreConflict { get; set; }
+        [DataMember(Order=3, IsRequired=false)][XmlElement(Order=3, IsNullable=true)]
+        public virtual Decimal? NamingExtraunderscoreExtraunderscoreConflict { get; set; }
+        [DataMember(Order=4, IsRequired=false)][XmlElement(Order=4, IsNullable=true)]
+        public virtual Decimal? NamingConflictExtraunderscore { get; set; }
+        [DataMember(Order=5, IsRequired=false)][XmlElement(Order=5, IsNullable=true)]
+        public virtual Decimal? NamingConflictExtraunderscoreExtraunderscore { get; set; }
+        [DataMember(Order=6, IsRequired=false)][XmlElement(Order=6, IsNullable=true)]
+        public virtual Decimal? NamingConflict123 { get; set; }
+        [DataMember(Order=7, IsRequired=false)][XmlElement(Order=7, IsNullable=true)]
+        public virtual Decimal? NamingConflict123Extraunderscore { get; set; }
+        [DataMember(Order=8, IsRequired=false)][XmlElement(Order=8, IsNullable=true)]
+        public virtual Decimal? NamingConflict123ExtraunderscoreExtraunderscore { get; set; }
+    } // OdptTableNamingConflict
+
+    [DataContract(Namespace="http://odpt.business.com")][Serializable()]
     public partial class OdptTableNumber : Schema.Odpt.Odpt.OdptTable {
         private Byte propertyToEnsuresPartialClassNamesAreUniqueAtCompileTime { get; set; }
         [DataMember(Order=1, IsRequired=true)][XmlElement(Order=1, IsNullable=true)]
