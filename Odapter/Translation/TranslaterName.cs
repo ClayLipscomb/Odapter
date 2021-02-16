@@ -74,8 +74,8 @@ namespace Odapter {
             oracleNameAdjusted = oracleNameAdjusted.Replace(@";", "semicolon" + CHARACTER_ABBREV);
 
             string cSharpName = (useCamelCase
-                ? CaseConverter.ConvertUnderscoreDelimitedToCamelCase(oracleNameAdjusted)
-                : CaseConverter.ConvertUnderscoreDelimitedToPascalCase(oracleNameAdjusted));
+                ? CaseConverter.ConvertSnakeCaseToCamelCase(oracleNameAdjusted)
+                : CaseConverter.ConvertSnakeCaseToPascalCase(oracleNameAdjusted));
             if (Char.IsDigit(cSharpName, 0)) cSharpName = (useCamelCase ? "t" : "T") + "he" + cSharpName; // a C# arg cannot start with number
             if (CSharp.IsKeyword(cSharpName)) cSharpName = cSharpName + "Cs"; // append text to avoid the C# keyword
             return cSharpName;

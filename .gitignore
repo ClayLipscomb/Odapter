@@ -318,3 +318,4 @@ __pycache__/
 *.zip
 *.xml
 /OdapterFSharp/CSharp - Copy.fs
+/Tester/schema/type/odpt_xmltype_ot.tps

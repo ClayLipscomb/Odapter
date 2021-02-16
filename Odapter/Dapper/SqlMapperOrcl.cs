@@ -1595,8 +1595,8 @@ this IDbConnection cnn, string sql, Func<TFirst, TSecond, TThird, TFourth, TRetu
                             /////////////////
                             // **ORACLE MOD** try mapping db column name to camelCase property and next PascalCase property name 
                             //  before standard Dapper mapping
-                            let prop = properties.FirstOrDefault(p => string.Equals(p.Name, CaseConverter.ConvertUnderscoreDelimitedToCamelCase(n), StringComparison.Ordinal))
-                                  ?? properties.FirstOrDefault(p => string.Equals(p.Name, CaseConverter.ConvertUnderscoreDelimitedToPascalCase(n), StringComparison.Ordinal)) 
+                            let prop = properties.FirstOrDefault(p => string.Equals(p.Name, CaseConverter.ConvertSnakeCaseToCamelCase(n), StringComparison.Ordinal))
+                                  ?? properties.FirstOrDefault(p => string.Equals(p.Name, CaseConverter.ConvertSnakeCaseToPascalCase(n), StringComparison.Ordinal)) 
                             /////////////////
                                   ?? properties.FirstOrDefault(p => string.Equals(p.Name, n, StringComparison.Ordinal)) // property case sensitive first
                                   ?? properties.FirstOrDefault(p => string.Equals(p.Name, n, StringComparison.OrdinalIgnoreCase)) // property case insensitive second

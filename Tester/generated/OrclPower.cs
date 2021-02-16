@@ -506,13 +506,13 @@ namespace Odapter {
                 // mapping by name
                 } else { 
                     // look first for an _underscorePrefixedCamelCase field, and then a camelCase field (both are non-public)
-                    FieldInfo field = Array.Find(fields, f => f.Name == CaseConverter.ConvertUnderscoreDelimitedToCamelCasePrefixedWithUnderscore(reader.GetName(c)))
-                                   ?? Array.Find(fields, f => f.Name == CaseConverter.ConvertUnderscoreDelimitedToCamelCase(reader.GetName(c)));
+                    FieldInfo field = Array.Find(fields, f => f.Name == CaseConverter.ConvertSnakeCaseToCamelCasePrefixedWithUnderscore(reader.GetName(c)))
+                                   ?? Array.Find(fields, f => f.Name == CaseConverter.ConvertSnakeCaseToCamelCase(reader.GetName(c)));
                     if (field != default(FieldInfo)) {
                         // valid field found, add completed column mapping to our list
                         mappings.Add(new ColumnMapping(new Column(reader.GetName(c), reader.GetProviderSpecificFieldType(c), reader.GetDataTypeName(c)), field));
                     } else { // otherwise, look for a PascalCase property (public) since field not found
-                        property = Array.Find(properties, p => p.Name == CaseConverter.ConvertUnderscoreDelimitedToPascalCase(reader.GetName(c)));
+                        property = Array.Find(properties, p => p.Name == CaseConverter.ConvertSnakeCaseToPascalCase(reader.GetName(c)));
                         if (property != default(PropertyInfo)) { // this is equivalent to a "not null" compare
                             // valid property found, add completed mapping to our list
                             mappings.Add(new ColumnMapping(new Column(reader.GetName(c), reader.GetProviderSpecificFieldType(c), reader.GetDataTypeName(c)), property));
@@ -739,7 +739,7 @@ namespace Odapter {
 
                 dc.Caption = 
                     convertColumnNameToTitleCaseInCaption ? 
-                    CaseConverter.ConvertUnderscoreDelimitedToLabel(col.ColumnName)
+                    CaseConverter.ConvertSnakeCaseToLabel(col.ColumnName)
                     : col.ColumnName
                     ;
                 dt.Columns.Add(dc);

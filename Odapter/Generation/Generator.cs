@@ -115,10 +115,10 @@ namespace Odapter {
                     : (String.IsNullOrEmpty(baseNamespace) 
                         ? ""
                         : baseNamespace + ".") 
-                        + CaseConverter.ConvertUnderscoreDelimitedToPascalCase(schema)
+                        + CaseConverter.ConvertSnakeCaseToPascalCase(schema)
                         + (String.IsNullOrEmpty(filter) 
                             ? ""
-                            : "." + CaseConverter.ConvertUnderscoreDelimitedToPascalCase(filter)); 
+                            : "." + CaseConverter.ConvertSnakeCaseToPascalCase(filter)); 
         }
 
         //public string GenerateNamespaceSchema() { return Generator.GenerateNamespaceSchema(_baseNamespace, _schema, GetFilterValueIfUsedInNaming()); }
@@ -146,23 +146,23 @@ namespace Odapter {
 
         #region Base Class Name Generation
         public static string GenerateBaseAdapterClassName(string schema) {
-            return String.IsNullOrEmpty(schema) ? "" : CaseConverter.ConvertUnderscoreDelimitedToPascalCase(schema) + "Adapter";
+            return String.IsNullOrEmpty(schema) ? "" : CaseConverter.ConvertSnakeCaseToPascalCase(schema) + "Adapter";
         }
 
         public static string GenerateBaseRecordClassName(string schema) {
-            return String.IsNullOrEmpty(schema) ? "" : CaseConverter.ConvertUnderscoreDelimitedToPascalCase(schema) + "PackageRecord";
+            return String.IsNullOrEmpty(schema) ? "" : CaseConverter.ConvertSnakeCaseToPascalCase(schema) + "PackageRecord";
         }
 
         public static string GenerateBaseObjectTypeClassName(string schema) {
-            return String.IsNullOrEmpty(schema) ? "" : CaseConverter.ConvertUnderscoreDelimitedToPascalCase(schema) + "ObjectType";
+            return String.IsNullOrEmpty(schema) ? "" : CaseConverter.ConvertSnakeCaseToPascalCase(schema) + "ObjectType";
         }
 
         public static string GenerateBaseTableClassName(string schema) {
-            return String.IsNullOrEmpty(schema) ? "" : CaseConverter.ConvertUnderscoreDelimitedToPascalCase(schema) + "Table";
+            return String.IsNullOrEmpty(schema) ? "" : CaseConverter.ConvertSnakeCaseToPascalCase(schema) + "Table";
         }
 
         public static string GenerateBaseViewClassName(string schema) {
-            return String.IsNullOrEmpty(schema) ? "" : CaseConverter.ConvertUnderscoreDelimitedToPascalCase(schema) + "View";
+            return String.IsNullOrEmpty(schema) ? "" : CaseConverter.ConvertSnakeCaseToPascalCase(schema) + "View";
         }
 
         //private string GetEntityNamespace<TEntity>() {
@@ -737,8 +737,8 @@ namespace Odapter {
         }
 
         private void WriteBaseEntityClasses(string baseClassName) {
-            string fileName = _outputPath + @"\" + CaseConverter.ConvertUnderscoreDelimitedToPascalCase(_schema)
-                + CaseConverter.ConvertUnderscoreDelimitedToPascalCase(GetFilterValueIfUsedInNaming()) + @"BaseEntity.cs";
+            string fileName = _outputPath + @"\" + CaseConverter.ConvertSnakeCaseToPascalCase(_schema)
+                + CaseConverter.ConvertSnakeCaseToPascalCase(GetFilterValueIfUsedInNaming()) + @"BaseEntity.cs";
 
             try {
                 StreamWriter outFile = new StreamWriter(fileName);
@@ -756,18 +756,18 @@ namespace Odapter {
                 outFile.WriteLine("namespace " + Parameter.Instance.NamespaceSchema + " {");
 
                 // determine the class name of the base entity
-                string baseEntityClassName = CaseConverter.ConvertUnderscoreDelimitedToPascalCase(_schema) + "Entity";
+                string baseEntityClassName = CaseConverter.ConvertSnakeCaseToPascalCase(_schema) + "Entity";
 
                 // create all base entity classes
                 outFile.WriteLine(GenerateBaseEntityClass(baseEntityClassName,
                     Parameter.Instance.NamespaceSchema, null));
-                outFile.WriteLine(GenerateBaseEntityClass(CaseConverter.ConvertUnderscoreDelimitedToPascalCase(_schema) + @"PackageRecord",
+                outFile.WriteLine(GenerateBaseEntityClass(CaseConverter.ConvertSnakeCaseToPascalCase(_schema) + @"PackageRecord",
                     Parameter.Instance.NamespaceSchema, baseEntityClassName));
-                outFile.WriteLine(GenerateBaseEntityClass(CaseConverter.ConvertUnderscoreDelimitedToPascalCase(_schema) + @"Table",
+                outFile.WriteLine(GenerateBaseEntityClass(CaseConverter.ConvertSnakeCaseToPascalCase(_schema) + @"Table",
                     Parameter.Instance.NamespaceSchema,  baseEntityClassName));
-                outFile.WriteLine(GenerateBaseEntityClass(CaseConverter.ConvertUnderscoreDelimitedToPascalCase(_schema) + @"View",
+                outFile.WriteLine(GenerateBaseEntityClass(CaseConverter.ConvertSnakeCaseToPascalCase(_schema) + @"View",
                     Parameter.Instance.NamespaceSchema, baseEntityClassName));
-                outFile.WriteLine(GenerateBaseEntityClass(CaseConverter.ConvertUnderscoreDelimitedToPascalCase(_schema) + @"ObjectType",
+                outFile.WriteLine(GenerateBaseEntityClass(CaseConverter.ConvertSnakeCaseToPascalCase(_schema) + @"ObjectType",
                     Parameter.Instance.NamespaceSchema, baseEntityClassName));
 
                 // close namespace 
@@ -842,8 +842,8 @@ namespace Odapter {
         }
 
         private void WriteBasePackageClass(string baseClassName) {
-            string fileName = _outputPath + @"\" + CaseConverter.ConvertUnderscoreDelimitedToPascalCase(_schema) 
-                + CaseConverter.ConvertUnderscoreDelimitedToPascalCase(GetFilterValueIfUsedInNaming()) + "BaseAdapter.cs";
+            string fileName = _outputPath + @"\" + CaseConverter.ConvertSnakeCaseToPascalCase(_schema) 
+                + CaseConverter.ConvertSnakeCaseToPascalCase(GetFilterValueIfUsedInNaming()) + "BaseAdapter.cs";
 
             try {
                 StreamWriter outFile = new StreamWriter(fileName);
@@ -878,8 +878,8 @@ namespace Odapter {
 
             if (packages.Count == 0) return;
 
-            string fileName = _outputPath + @"\" + CaseConverter.ConvertUnderscoreDelimitedToPascalCase(_schema)
-                + CaseConverter.ConvertUnderscoreDelimitedToPascalCase(GetFilterValueIfUsedInNaming()) + "Package.cs";
+            string fileName = _outputPath + @"\" + CaseConverter.ConvertSnakeCaseToPascalCase(_schema)
+                + CaseConverter.ConvertSnakeCaseToPascalCase(GetFilterValueIfUsedInNaming()) + "Package.cs";
             DisplayMessage("Coding packages (" + fileName.Substring(fileName.LastIndexOf('\\') + 1) + ")...");
 
             try {
@@ -1099,8 +1099,8 @@ namespace Odapter {
             where I_Entity : IEntity {
 
             string entityTypeName = typeof(I_Entity).Name.TrimStart(@"I".ToCharArray());
-            string fileName = _outputPath + @"\" + CaseConverter.ConvertUnderscoreDelimitedToPascalCase(_schema)
-                + CaseConverter.ConvertUnderscoreDelimitedToPascalCase(GetFilterValueIfUsedInNaming()) + entityTypeName + ".cs";
+            string fileName = _outputPath + @"\" + CaseConverter.ConvertSnakeCaseToPascalCase(_schema)
+                + CaseConverter.ConvertSnakeCaseToPascalCase(GetFilterValueIfUsedInNaming()) + entityTypeName + ".cs";
 
             DisplayMessage("Coding " + entityTypeName.ToLower() + "s (" + fileName.Substring(fileName.LastIndexOf('\\') + 1) + ")...");
 
