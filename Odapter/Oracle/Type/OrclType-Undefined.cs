@@ -20,7 +20,8 @@ using System;
 
 namespace Odapter {
     internal sealed class OrclUndefinedType : OrclTypeBase, IOrclType {
-        public string DataType { get => Orcl.UNDEFINED; }   // occurs for cases like eOracle ANY* types
+        public string DataType { get => Orcl.UNDEFINED; }   // occurs for cases like ANY* and XMLTYPE types
         public bool IsImplementedForAssociativeArray { get => false; }
+        public OrclUndefinedType() : base(new NormalizableDefault()) { }
     }
 }

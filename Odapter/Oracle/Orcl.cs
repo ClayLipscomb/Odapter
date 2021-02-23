@@ -13,7 +13,7 @@
 //    GNU General Public License for more details.
 //
 //    You should have received a copy of the GNU General Public License
-//    along with this program.If not, see<http://www.gnu.org/licenses/>.
+//    along with this program. If not, see<http://www.gnu.org/licenses/>.
 //------------------------------------------------------------------------------
 
 using System;
@@ -88,8 +88,20 @@ namespace Odapter {
         internal const string INTERVAL_YEAR_TO_MONTH = "INTERVAL YEAR TO MONTH";
         internal const string MLSLABEL = "MLSLABEL"; // deprecated
         internal const string UNDEFINED = "UNDEFINED";
-        internal const string NULL = "NULL";        // represents a NULL return type found only a procedure "paramter"
+        /// <summary>
+        /// Type could not be determined
+        /// </summary>
+        internal const string UNDETERMINED = @"UNDETERMINED";
+        internal const string NULL = "NULL";        // represents a NULL return type found only a procedure "parameter"
         #endregion
+
+        //#region "LCR" types
+        //internal const string LCR_DDL_RECORD = "LCR$_DDL_RECORD";
+        //internal const string LCR_ROW_RECORD = "LCR$_ROW_RECORD";
+        //internal const string LCR_ROW_LIST = "LCR$_ROW_LIST";
+        //internal const string LCR_ROW_UNIT_TYPE = "LCR$_ROW_UNIT";
+        //internal const string LCR_PROCEDURE_RECORD = "LCR$_PROCEDURE_RECORD";
+        //#endregion
 
         #region "Any" types
         internal const string ANYDATA = "ANYDATA";
@@ -104,6 +116,9 @@ namespace Odapter {
         internal const string TYPECODE_ANYDATA = @"ANYDATA";
         internal const string TYPECODE_ANYDATASET = @"ANYDATASET";
         internal const string TYPECODE_ANYTYPE = @"ANYTYPE";
+        internal const string TYPECODE_LCR_PROCEDURE_RECORD = "LCR$_PROCEDURE_RECORD";
+        internal const string TYPECODE_LCR_ROW_RECORD = "LCR$_ROW_RECORD";
+        internal const string TYPECODE_LCR_DDL_RECORD = "LCR$_DDL_RECORD";
         #endregion
 
         #region Miscellaneous

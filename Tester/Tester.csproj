@@ -134,10 +134,12 @@
     <None Include="schema\type\odpt_base_sc_trans_type_ot.tps" />
     <None Include="schema\type\odpt_anydata_ot.tps" />
     <None Include="schema\type\odpt_big_ot.tps" />
+    <None Include="schema\type\odpt_object_ot.tps" />
     <None Include="schema\type\odpt_po_vendor_ot.tpb" />
     <None Include="schema\type\odpt_po_vendor_ot.tps" />
     <None Include="schema\type\odpt_sc_tt_tbl_unique_ot.tpb" />
     <None Include="schema\type\odpt_sc_tt_tbl_unique_ot.tps" />
+    <None Include="schema\type\odpt_xmltype_ot.tps" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">

@@ -22,19 +22,28 @@ namespace Odapter {
     internal sealed class OrclAssociativeArray : OrclTypeBase, IOrclType {
         public string DataType { get => Orcl.ASSOCIATITVE_ARRAY; }
         public bool IsImplementedForAssociativeArray { get => false; }
-
-        public override string BuildDataTypeFullName(ITyped dbDataType) {
-            return String.Join(" ", new string[] { Orcl.ASSOCIATITVE_ARRAY, Orcl.OF, dbDataType.SubType.Aggregated });
-        }
+        public override string BuildDataTypeFullName(ITyped dbDataType) =>
+            // include "INDEX BY PLS_INTEGER" to ensure disinction from nested table although currently DataType holds "PL/SQL TABLE" 
+            // instead of "TABLE like nested table; assume PLS_INTEGER since ODP.NET cannot handle index by VARCHAR2
+            String.Join(" ", new string[] { DataType, Orcl.OF, dbDataType?.SubType?.Aggregated ?? Orcl.UNDETERMINED, @"INDEX BY PLS_INTEGER" });
     }
 
     internal sealed class OrclNestedTable : OrclTypeBase, IOrclType {
         public string DataType { get => Orcl.NESTED_TABLE; }
         public bool IsImplementedForAssociativeArray { get => false; }
+        public override string BuildDataTypeFullName(ITyped dbDataType) => 
+            dbDataType?.SubType == null 
+            ? dbDataType.DataTypeProperName
+            : String.Join(" ", new string[] { DataType, Orcl.OF, dbDataType?.SubType?.Aggregated ?? Orcl.UNDETERMINED });
     }
 
     internal sealed class OrclVarray : OrclTypeBase, IOrclType {
         public string DataType { get => Orcl.VARRAY; }
         public bool IsImplementedForAssociativeArray { get => false; }
+        public override string BuildDataTypeFullName(ITyped dbDataType) =>
+            dbDataType?.SubType == null
+            ? dbDataType.DataTypeProperName
+            // "N" can be found in radix of subtype if needed in future
+            : String.Join(" ", new string[] { DataType + @"(N)", Orcl.OF, dbDataType?.SubType?.Aggregated ?? Orcl.UNDETERMINED });
     }
 }

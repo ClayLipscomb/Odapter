@@ -29,17 +29,18 @@ namespace Odapter {
             // be used within PL/SQL, a Dictionary object cannot be pased from .NET. We can only pass the values
             // using an array index instead of key. So we treat an associative array as a List of a type in C#. 
             // The sub type is in the subsequent Oracle arg.
-            return CSharp.GenericCollectionOf((nonInterfaceType ? CSharp.LIST : CSharpType), SubCSharpType);
+            return CSharp.GenericCollectionOf((nonInterfaceType ? CSharp.LIST : CSharpType), CSharpTypeSub);
         }
-        private string CSharpType { get; set; } 
-        private string SubCSharpType { get; set; }
+        private string CSharpType { get; set; }
+        private ITranslaterType TranslaterSubType { get; set; }
+        private string CSharpTypeSub { get => TranslaterSubType?.GetCSharpType(); }
         public bool IsValid(ITyped dataType) { return dataType.OrclType.BuildDataTypeFullName(dataType).Equals(DataTypeFull); }
         public string CSharpOracleDbType { get => String.Empty; }
         public string CSharpOdpNetType { get => String.Empty; }
         public bool IsIgnoredAsParameter { get => false; }
         public string IgnoredReasonAsParameter { get => String.Empty; }
         /// <summary>
-        /// Attribute only possible for record type field (not table, view or object)
+        /// Associative array attribute only possible for record type field (not table, view or object)
         /// </summary>
         public bool IsIgnoredAsAttribute { get => true; }
         public string IgnoredReasonAsAttribute { get => TranslaterMessage.IgnoreNoSendReceiveRecordFieldTyped(OrclType); }
@@ -47,10 +48,9 @@ namespace Odapter {
         internal TranslaterAssociativeArray(string dataTypeFull, string cSharpType, ITyped dbDataType) {
             DataTypeFull = dataTypeFull;
             CSharpType = cSharpType;
-            SubCSharpType = TranslaterFactoryType.GetTranslater(dbDataType.SubType).GetCSharpType();
+            if (dbDataType.SubType != null) TranslaterSubType = TranslaterFactoryType.GetTranslater(dbDataType?.SubType);
         }
         private TranslaterAssociativeArray() { }
-
         public override string ToString() { return DataTypeFull; }
 
         // associative array subtypes officially implemented in ODP.NET https://docs.oracle.com/cd/E85694_01/ODPNT/featOraCommand.htm#GUID-05A6D391-E77F-41AF-83A2-FE86A3D98872
@@ -72,10 +72,11 @@ namespace Odapter {
 
         // translation to C#
         public string GetCSharpType(bool typeNotNullable = false, bool nonInterfaceType = false) {
-            return CSharp.GenericCollectionOf((nonInterfaceType ? CSharp.LIST : CSharpType), SubCSharpType);
+            return CSharp.GenericCollectionOf((nonInterfaceType ? CSharp.LIST : CSharpType), CSharpTypeSub);
         }
         private string CSharpType { get; set; }
-        private string SubCSharpType { get; set; }
+        private ITranslaterType TranslaterSubType { get; set; }
+        private string CSharpTypeSub { get => TranslaterSubType?.GetCSharpType(); }
         public bool IsValid(ITyped dataType) { return dataType.OrclType.BuildDataTypeFullName(dataType).Equals(DataTypeFull); }
         public string CSharpOracleDbType { get => String.Empty; }
         public string CSharpOdpNetType { get => String.Empty; }
@@ -83,14 +84,12 @@ namespace Odapter {
         public string IgnoredReasonAsParameter { get => TranslaterMessage.IgnoreNotImplemented($"NESTED {Orcl.NESTED_TABLE}"); }
         public bool IsIgnoredAsAttribute { get => true; }
         public string IgnoredReasonAsAttribute { get => TranslaterMessage.IgnoreNotImplemented($"NESTED {Orcl.NESTED_TABLE}"); }
-
         internal TranslaterNestedTable(string dataTypeFull, string cSharpType, ITyped dbDataType) {
             DataTypeFull = dataTypeFull;
             CSharpType = cSharpType;
-            SubCSharpType = TranslaterFactoryType.GetTranslater(dbDataType.SubType).GetCSharpType();
+            if (dbDataType.SubType != null) TranslaterSubType = TranslaterFactoryType.GetTranslater(dbDataType?.SubType);
         }
         private TranslaterNestedTable() { }
-
         public override string ToString() { return DataTypeFull; }
     }
 
@@ -115,10 +114,9 @@ namespace Odapter {
         internal TranslaterVarray(string dataTypeFull, string cSharpType, ITyped dbDataType) {
             DataTypeFull = dataTypeFull;
             CSharpType = cSharpType;
-            SubCSharpType = TranslaterFactoryType.GetTranslater(dbDataType.SubType).GetCSharpType();
+            if (dbDataType.SubType != null) SubCSharpType = TranslaterFactoryType.GetTranslater(dbDataType.SubType)?.GetCSharpType();
         }
         private TranslaterVarray() { }
-
         public override string ToString() { return DataTypeFull; }
     }
 }

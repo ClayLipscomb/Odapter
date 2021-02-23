@@ -144,6 +144,9 @@ namespace Schema.Odpt.Type.Object {
     // **OBJECT IGNORED** - Code generation for NESTED TABLE type has not been implemented
     // public partial class OdptNestedTableOt : Schema.Odpt.OdptObjectType {
 
+    // **OBJECT IGNORED** - OBJECT type is not available in ODP.NET managed
+    // public partial class OdptObjectOt : Schema.Odpt.OdptObjectType {
+
     [DataContract(Namespace="http://odpt.business.com")][Serializable()]
     public partial class OdptPoVendorOt : OdptScTtTblUniqueOt {
         private Byte propertyToEnsuresPartialClassNamesAreUniqueAtCompileTime { get; set; }
@@ -501,4 +504,7 @@ namespace Schema.Odpt.Type.Object {
     public abstract partial class OdptScTtTblUniqueOt : OdptBaseScTransTypeOt {
         private Byte propertyToEnsuresPartialClassNamesAreUniqueAtCompileTime { get; set; }
     } // OdptScTtTblUniqueOt
+
+    // **OBJECT IGNORED** - XMLTYPE type is not available in ODP.NET managed
+    // public partial class OdptXmltypeOt : Schema.Odpt.OdptObjectType {
 } // Schema.Odpt.Type.Object

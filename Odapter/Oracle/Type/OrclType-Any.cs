@@ -22,14 +22,16 @@ namespace Odapter {
     internal sealed class OrclAnydata : OrclTypeBase, IOrclType {
         public string DataType { get => Orcl.ANYDATA; }
         public bool IsImplementedForAssociativeArray { get => false; }
+        public OrclAnydata() : base(new NormalizableDefault()) { }
     }
-
     internal sealed class OrclAnydataset : OrclTypeBase, IOrclType {
         public string DataType { get => Orcl.ANYDATASET; }
         public bool IsImplementedForAssociativeArray { get => false; }
+        public OrclAnydataset() : base(new NormalizableDefault()) { }
     }
     internal sealed class OrclAnytype : OrclTypeBase, IOrclType {
         public string DataType { get => Orcl.ANYTYPE; }
         public bool IsImplementedForAssociativeArray { get => false; }
+        public OrclAnytype() : base(new NormalizableDefault()) { }
     }
 }

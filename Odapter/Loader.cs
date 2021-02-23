@@ -13,7 +13,7 @@
 //    GNU General Public License for more details.
 //
 //    You should have received a copy of the GNU General Public License
-//    along with this program.If not, see<http://www.gnu.org/licenses/>.
+//    along with this program. If not, see<http://www.gnu.org/licenses/>.
 //------------------------------------------------------------------------------
 
 using System;
@@ -402,7 +402,9 @@ namespace Odapter {
                     ? " SELECT a.type_name, "
                             + " a.attr_name, "
                             + " CAST(a.attr_no as NUMBER(9,0)) attr_no, "
-                            + " a.attr_type_name , "
+                            //+ " a.attr_type_name , "
+                            // attribute type can be NULL when type is actually XMLTYPE; need better way to handle this
+                            + $" (CASE WHEN a.attr_type_name IS NULL THEN '{Orcl.XMLTYPE}' ELSE a.attr_type_name END) attr_type_name, "
                             + " a.attr_type_owner , "
                             + " a.attr_type_mod , "
                             + " CAST(a.length as NUMBER(9,0)) length, "
@@ -413,7 +415,9 @@ namespace Odapter {
                         + " WHERE a.inherited = 'NO' "
                             + " AND UPPER(a.owner) = :owner "
                             + " AND UPPER(a.type_name) LIKE :objectNamePrefix || '%'"
-                            + " AND a.attr_type_name = t.type_name(+) "
+                            //+ " AND a.attr_type_name = t.type_name(+) "
+                            // attribute type can be NULL when type is actually XMLTYPE; need better way to handle this
+                            + $" AND (CASE WHEN a.attr_type_name IS NULL THEN '{Orcl.XMLTYPE}' ELSE a.attr_type_name END) = t.type_name(+) "
                             + " AND a.owner = t.owner(+) "
                         + " ORDER BY a.type_name, a.attr_no "
                     : " SELECT c.table_name "

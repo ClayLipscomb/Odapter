@@ -126,7 +126,7 @@ namespace Odapter {
                 dataTypeFull = OracleTypeTranslaters.First(t => t.IsValid(dataType)).DataTypeFull;
             } else {
                 dataTypeFull = dataType.OrclType.BuildDataTypeFullName(dataType);
-                switch (dataType.DataType) { // dynamically create custom type translaters for complex types
+                switch (OrclUtil.NormalizeDataType(dataType)) { // dynamically create custom type translaters for complex types
                     case Orcl.ASSOCIATITVE_ARRAY:
                         OracleTypeTranslaters.Add(new TranslaterAssociativeArray(dataTypeFull, CSharpTypeUsedForOracleAssociativeArray, dataType));
                         break;
