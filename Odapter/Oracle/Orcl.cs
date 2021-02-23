@@ -93,6 +93,7 @@ namespace Odapter {
         /// </summary>
         internal const string UNDETERMINED = @"UNDETERMINED";
         internal const string NULL = "NULL";        // represents a NULL return type found only a procedure "parameter"
+        internal const string PROCEDURE_RETURN = @"PROCEDURE_RETURN";
         #endregion
 
         //#region "LCR" types

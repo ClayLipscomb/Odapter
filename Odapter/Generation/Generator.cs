@@ -183,7 +183,7 @@ namespace Odapter {
         /// </summary>
         /// <returns></returns>
         private string GenerateMethodReturnType(IProcedure proc) {
-            return (proc.IsFunction() ? proc.Arguments[0].Translater : TranslaterFactoryType.GetTranslaterNull()).GetCSharpType();
+            return (proc.IsFunction() ? proc.Arguments[0].Translater : TranslaterFactoryType.GetTranslaterProcedureReturn()).GetCSharpType();
         }
 
         /// <summary>

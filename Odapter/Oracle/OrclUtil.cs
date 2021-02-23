@@ -83,8 +83,9 @@ namespace Odapter {
                 new OrclVarchar(),
                 new OrclVarchar2(),
                 new OrclVarray(),
-                new OrclNullType(),
-                new OrclXmltype()
+                new OrclXmltype(),
+
+                new OrclProcedureReturn()
         };
 
         internal static bool IsComplexDataType(string dataType) { return _complexDataTypes.Contains(dataType); }
@@ -110,9 +111,12 @@ namespace Odapter {
             return OracleTypes.SingleOrDefault(ot => ot.DataType.Equals(dataTypeSearch));
         }
 
-        private static string NormalizeDataTypeNullProcReturn(string dataType) {
-            return dataType ?? Orcl.NULL; // procedure with *no parameters* will have a placeholder NULL-typed parameter representing no return
-        }
+        /// <summary>
+        /// Procedure with *no parameters* will have a placeholder NULL-typed parameter representing no return
+        /// </summary>
+        /// <param name="dataType"></param>
+        /// <returns></returns>
+        private static string NormalizeDataTypeProcedureReturn(string dataType) => dataType ?? Orcl.PROCEDURE_RETURN;
 
         private static string NormalizeDataTypeTimestamp(string dataType) {
             var tzSuffix = @" TZ"; // object attributes use "TZ" instead of "TIME ZONE"!
@@ -132,10 +136,7 @@ namespace Odapter {
         /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>
-        private static string NormalizeDataTypeUndefined(string dataType, ITyped type) {
-            if (dataType == Orcl.UNDEFINED) dataType = type.DataTypeProperName;
-            return dataType;
-        }
+        private static string NormalizeDataTypeUndefined(string dataType, ITyped type) => dataType == Orcl.UNDEFINED ? type.DataTypeProperName : dataType;
 
         private static string NormalizeDataTypeFromTypeCode(string dataType, ITyped type) {
             if ( !(type is Argument) && !OrclUtil.IsExistsType(dataType) )
@@ -170,7 +171,7 @@ namespace Odapter {
 
         internal static string NormalizeDataType(ITyped type) {
             string dataType = type.DataType;
-            dataType = OU.NormalizeDataTypeNullProcReturn(dataType);
+            dataType = OU.NormalizeDataTypeProcedureReturn(dataType);
             dataType = OU.NormalizeDataTypeTimestamp(dataType);
             dataType = OU.NormalizeDataTypeAggregated(dataType);
             dataType = OU.NormalizeDataTypeUndefined(dataType, type);

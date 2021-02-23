@@ -140,6 +140,7 @@
     <Compile Include="Oracle\Type\OrclType-Boolean.cs" />
     <Compile Include="Oracle\Type\OrclType-LOB.cs" />
     <Compile Include="Oracle\Entity\OrclEntity-Table.cs" />
+    <Compile Include="Oracle\Type\OrclType-ProcedureReturn.cs" />
     <Compile Include="Oracle\Type\OrclType-Null.cs" />
     <Compile Include="Oracle\Type\OrclType-XML.cs" />
     <Compile Include="Oracle\Type\OrclType-Undefined.cs" />
@@ -178,7 +179,7 @@
     <Compile Include="Translation\Type\TranslaterType-Character.cs" />
     <Compile Include="Translation\Type\TranslaterType-RowId.cs" />
     <Compile Include="Translation\Type\TranslaterType-Ref.cs" />
-    <Compile Include="Translation\Type\TranslaterType-NullType.cs" />
+    <Compile Include="Translation\Type\TranslaterType-ProcedureReturn.cs" />
     <Compile Include="Translation\Type\TranslaterType-Undefined.cs" />
     <Compile Include="Translation\Type\TranslaterType-XML.cs" />
     <Compile Include="Oracle\Orcl.cs" />

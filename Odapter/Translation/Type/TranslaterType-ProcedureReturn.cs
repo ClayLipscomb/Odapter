@@ -9,7 +9,7 @@
 //
 //    This program is distributed in the hope that it will be useful,
 //    but WITHOUT ANY WARRANTY; without even the implied warranty of
-//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.See the
+//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 //    GNU General Public License for more details.
 //
 //    You should have received a copy of the GNU General Public License
@@ -19,9 +19,9 @@
 using System;
 
 namespace Odapter {
-    internal sealed class TranslaterNullType : ITranslaterType {
+    internal sealed class TranslaterProcedureReturn : ITranslaterType {
         public string DataTypeFull { get => OrclType.DataType; }
-        public IOrclType OrclType { get => OrclUtil.GetType(Orcl.NULL); }
+        public IOrclType OrclType { get => OrclUtil.GetType(Orcl.PROCEDURE_RETURN); }
 
         // translation to C#
         public string GetCSharpType(bool typeNotNullable = false, bool nonInterfaceType = false) { return CSharpType; }

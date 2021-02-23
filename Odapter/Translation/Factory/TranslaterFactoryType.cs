@@ -82,8 +82,9 @@ namespace Odapter {
                 new TranslaterURowId(),
                 new TranslaterVarchar(),
                 new TranslaterVarchar2(),
-                new TranslaterNullType(),
-                new TranslaterXmltype()
+                new TranslaterXmltype(),
+
+                new TranslaterProcedureReturn()
             };
         }
 
@@ -157,6 +158,6 @@ namespace Odapter {
             return OracleTypeTranslaters.First(t => t.DataTypeFull.Equals(dataTypeFull));
         }
 
-        internal static ITranslaterType GetTranslaterNull() { return OracleTypeTranslaters.First(t => t is TranslaterNullType); }
+        internal static ITranslaterType GetTranslaterProcedureReturn() { return OracleTypeTranslaters.First(t => t is TranslaterProcedureReturn); }
     }
 }
