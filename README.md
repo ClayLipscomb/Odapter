@@ -8,7 +8,7 @@ Odapter is a [single executable](/OdapterWnFrm/bin/x64/Release) that generates C
 * Oracle RDBMS 11g
 * Windows 64-bit 
 * .NET Framework 
-    - 4.0 minimum for code generator
+    - 4.6.2 minimum for code generator
     - 4.0 minimum for destination project
 * ODP.NET for destination project
     - Managed Driver 12.2.1100, targeting .NET Framework 4.0 or higher
@@ -20,7 +20,7 @@ Odapter is a [single executable](/OdapterWnFrm/bin/x64/Release) that generates C
 | Case insensitive                                    | Case sensitive | 
 | snake_case naming 		                          | PascalCase & camelCase naming     |
 | Package Record Type Field                           | Property     |
-| Package Record Type                                 | Interface of setters and nested abstract getter/setter class    |
+| Package Record Type                                 | Interface of setters; nested abstract getter/setter class    |
 | Function or Stored Procedure (packaged)             | Method    |
 | Package                                             | Singleton class of methods, interfaces and nested classes    |
 | Schema                                              | Namespace (with nesting)    |
@@ -46,7 +46,7 @@ Odapter is a [single executable](/OdapterWnFrm/bin/x64/Release) that generates C
 * Optionally filters schema objects via prefix and/or special characters
 * Optionally generates C# classes as partial for packages, package record types, object types, tables and views
 * Optionally generates C# DTOs with Serializable, DataContract/DataMember (incl. namespace) or XmlElementAttribute attributes for package record types, object types, tables and views
-* Generates C# 4.0+ code (.NET 4.0+)
+* Generates C# 4.0 code (.NET 4.0+)
 * Generates single C# file for all packages, object types, tables and views, respectively
 * Handles package referencing a record type defined in a different package (including filtered)
 * Easily adaptable to legacy .NET projects and Oracle schemas
