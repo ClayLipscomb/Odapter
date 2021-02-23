@@ -85,6 +85,8 @@ namespace Odapter.Tester {
             private const int MAX_STRING_SIZE_FOR_CHAR_COL = 2000;
             private const int MAX_STRING_SIZE_FOR_NCHAR_COL = 1000;
 
+            private const int MAX_ASSOC_ARRAY_SIZE = UInt16.MaxValue;
+
             // actual max of LOB *column* is 4 GB (4*1024*1024*1024-1 bytes) 4,294,967,295
             private const int LOB_SIZE =
 #if LARGE_LOB_SIZE
@@ -132,6 +134,7 @@ namespace Odapter.Tester {
 
                 TestCursorFilteredPackageTableBig();
 
+                TestAssociativeArrayCalls();
                 TestDuplicateSignatureCalls();
                 TestNoParamCalls();
                 TestOptionalParamCalls();
@@ -1458,6 +1461,31 @@ namespace Odapter.Tester {
             #endregion
 
             #region Miscellaneous tests
+            private void TestAssociativeArrayCalls() {
+#if SAFETYPE_INTEGER
+                IList<OracleDecimal?> pInList, pInOutList, pOutList, retList;
+                IList<OracleDecimal?> testValues = new List<OracleDecimal?>();
+#elif DECIMAL_INTEGER
+                IList<Decimal?> pInList, pInOutList, pOutList, retList;
+                IList<Decimal?> testValues = new List<Decimal?>();
+#elif SHORT_INTEGER
+                IList<Int32?> pInList, pInOutList, pOutList, retList;
+                IList<Int32?> testValues = new List<Int32?>();
+#else
+                IList<Int64?> pInList, pInOutList, pOutList, retList;
+                IList<Int64?> testValues = new List<Int64?>();
+#endif
+                // assoc array max size
+                for (int i = 0; i < MAX_ASSOC_ARRAY_SIZE; i++) testValues.Add(i);
+
+                // assoc array 
+                pInList = pInOutList = testValues;
+                retList = OdptPkgMain.Instance.FuncAaInteger(pInList, ref pInOutList, out pOutList, null);
+                for (int i = 0; i < pInList.Count; i++) Debug.Assert(pInList[i].Equals(pInOutList[i]));
+                for (int i = 0; i < pInList.Count; i++) Debug.Assert(pInList[i].Equals(pOutList[i]));
+                for (int i = 0; i < pInList.Count; i++) Debug.Assert(pInList[i].Equals(retList[i]));
+            }
+
             private void CompileTimeChecks() {
                 OdptPkgEmpty pkgEmpty = OdptPkgEmpty.Instance;
                 OdptPkgSql pkgSql = OdptPkgSql.Instance;

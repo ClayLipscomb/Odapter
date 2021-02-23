@@ -90,9 +90,17 @@ namespace OdapterWnFrm {
             }
             return null;
         }
-#endregion
+        #endregion
 
 #region Validations
+        private bool ValidateFieldValues() {
+            int maxAssocArraySize = Convert.ToInt32(txtMaxAssocArraySize.Text);
+            if (maxAssocArraySize < 1 || maxAssocArraySize > UInt16.MaxValue) {
+                DisplayMessage($"Max Size Assoc Array range is 1-{UInt16.MaxValue}.");
+                return false;
+            }
+            return true;
+        }
         private bool ValidateRequiredFields() {
             bool missingRequiredFields = false;
 
@@ -229,7 +237,7 @@ namespace OdapterWnFrm {
 
         private void btnStart_Clicked(object sender, EventArgs e) {
             InitMessageConsole();
-            if (!ValidateRequiredFields()) return;
+            if (!ValidateRequiredFields() || !ValidateFieldValues()) return;
             Cursor.Current = Cursors.WaitCursor;
             ExtractToParameters();
             Generator.Run(DisplayMessage);
