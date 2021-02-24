@@ -26,6 +26,7 @@ namespace Odapter {
 
         public override string BuildDataTypeFullName(ITyped dbDataType) {
             if (dbDataType.SubType == null) {
+                // appending parameter name guarantees uniqueness of underlying result sets types between different REF CURSOR parameters/return
                 return String.Join(" ", new string[] { Orcl.REF_CURSOR, "(PARAMETER:", (dbDataType.DataTypeLabel ?? Orcl.RETURN) + ")" });
             } else {
                 return String.Join(" ", new string[] { Orcl.REF_CURSOR, Orcl.RETURN, OrclUtil.GetType(Orcl.RECORD).BuildDataTypeFullName(dbDataType.SubType) });

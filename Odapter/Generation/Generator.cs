@@ -1163,6 +1163,9 @@ namespace Odapter {
             }
 
             TranslaterManager.AssignTranslaters(loader);
+            //displayMessageMethod($"Standard Oracle types available:{TranslaterFactoryType.FactoryCountStandard}");
+            displayMessageMethod($"Custom Oracle types found:{TranslaterFactoryType.FactoryCountCustom}");
+            displayMessageMethod($"Custom Oracle entities found:{TranslaterFactoryEntity.FactoryCountCustom}");
 
             // instantiate generator
             Generator generator = new Generator(Parameter.Instance.Schema, Parameter.Instance.OutputPath, displayMessageMethod, Parameter.Instance.DatabaseInstance,

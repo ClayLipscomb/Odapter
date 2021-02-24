@@ -13,7 +13,7 @@
 //    GNU General Public License for more details.
 //
 //    You should have received a copy of the GNU General Public License
-//    along with this program.If not, see<http://www.gnu.org/licenses/>.
+//    along with this program. If not, see<http://www.gnu.org/licenses/>.
 //------------------------------------------------------------------------------
 
 using System;
@@ -26,6 +26,7 @@ namespace Odapter {
     /// </summary>
     public static class TranslaterFactoryType {
 
+        private static int TypesInitializedCount;
         private static IList<ITranslaterType> OracleTypeTranslaters;
         private static void InitTypeTranslaters() {
             OracleTypeTranslaters = new List<ITranslaterType> { // *** Order of list matters. Modify with care. ***
@@ -40,6 +41,7 @@ namespace Odapter {
                 new TranslaterNumber3(),
                 new TranslaterNumber2(),
                 new TranslaterNumber1(),
+
                 new TranslaterAnydata(),
                 new TranslaterAnydataset(),
                 new TranslaterAnytype(),
@@ -86,6 +88,7 @@ namespace Odapter {
 
                 new TranslaterProcedureReturn()
             };
+            TypesInitializedCount = OracleTypeTranslaters.Count;
         }
 
         internal static void Initialize(IParameterTranslation param) {
@@ -159,5 +162,7 @@ namespace Odapter {
         }
 
         internal static ITranslaterType GetTranslaterProcedureReturn() { return OracleTypeTranslaters.First(t => t is TranslaterProcedureReturn); }
+        internal static long FactoryCountCustom { get => OracleTypeTranslaters.Count - TypesInitializedCount; }
+        internal static long FactoryCountStandard { get => TypesInitializedCount; }
     }
 }

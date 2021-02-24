@@ -212,8 +212,6 @@ namespace Odapter {
         internal TranslaterNumber(string cSharpType) : this(cSharpType, Orcl.NUMBER) { }
         protected TranslaterNumber(string cSharpType, string dataTypeFull) { _cSharpType = cSharpType; DataTypeFull = dataTypeFull; }
         private TranslaterNumber() { }
-
-        public override string ToString() { return DataTypeFull; }
     }
 
     internal sealed class TranslaterNumber1 : TranslaterNumber {
