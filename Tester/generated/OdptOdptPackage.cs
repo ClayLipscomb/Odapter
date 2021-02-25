@@ -1213,8 +1213,6 @@ namespace Schema.Odpt.Odpt.Package {
                     __cmd.Parameters.Add(new OracleParameter("P_IN", OracleDbType.Char, (pIn == null ? 0 : pIn.Count), null, ParameterDirection.Input));
                     __cmd.Parameters["P_IN"].Value = (pIn == null || pIn.Count == 0 ? new String[]{} : pIn.ToArray());
                     __cmd.Parameters["P_IN"].CollectionType = OracleCollectionType.PLSQLAssociativeArray;
-                    __cmd.Parameters["P_IN"].ArrayBindSize = new int[65535];
-                    for (int _i = 0; _i < 65535; _i++) { __cmd.Parameters["P_IN"].ArrayBindSize[_i] = 2000; }
 
                     __cmd.Parameters.Add(new OracleParameter("P_IN_OUT", OracleDbType.Char, 65535, null, ParameterDirection.InputOutput));
                     __cmd.Parameters["P_IN_OUT"].Value = (pInOut == null || pInOut.Count == 0 ? new String[]{} : pInOut.ToArray());
@@ -1526,6 +1524,35 @@ namespace Schema.Odpt.Odpt.Package {
             return __ret;
         } // FuncAaInteger
 
+        public Int64? FuncAaIntegerInCnt(IList<Int64?> pIn, OracleConnection optionalPreexistingOpenConnection = null) {
+            Int64? __ret = null; 
+            OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
+            try {
+                using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_MAIN.FUNC_AA_INTEGER_IN_CNT", __conn)) {
+                    __cmd.CommandType = CommandType.StoredProcedure;
+                    __cmd.BindByName = true;
+                    __cmd.Parameters.Add(new OracleParameter("!RETURN", OracleDbType.Int64, null, ParameterDirection.ReturnValue));
+
+                    __cmd.Parameters.Add(new OracleParameter("P_IN", OracleDbType.Int64, (pIn == null ? 0 : pIn.Count), null, ParameterDirection.Input));
+                    __cmd.Parameters["P_IN"].Value = (pIn == null || pIn.Count == 0 ? new Int64?[]{} : pIn.ToArray());
+                    __cmd.Parameters["P_IN"].CollectionType = OracleCollectionType.PLSQLAssociativeArray;
+
+                    OracleCommandTrace __cmdTrace = IsTracing(__cmd) ? new OracleCommandTrace(__cmd) : null;
+                    int __rowsAffected = __cmd.ExecuteNonQuery();
+                    __ret = __cmd.Parameters["!RETURN"].Status == OracleParameterStatus.NullFetched
+                        ? (Int64?)null
+                        : Convert.ToInt64(__cmd.Parameters["!RETURN"].Value.ToString());
+                    if (__cmdTrace != null) TraceCompletion(__cmdTrace);
+                } // using OracleCommand
+            } finally {
+                if (optionalPreexistingOpenConnection == null) {
+                    __conn.Close();
+                    __conn.Dispose();
+                }
+            }
+            return __ret;
+        } // FuncAaIntegerInCnt
+
         public IList<Int64?> FuncAaIntegerV(IList<Int64?> pIn, ref IList<Int64?> pInOut, out IList<Int64?> pOut, OracleConnection optionalPreexistingOpenConnection = null) {
             IList<Int64?> __ret = new List<Int64?>(); pOut = new List<Int64?>(); 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
@@ -1601,8 +1628,6 @@ namespace Schema.Odpt.Odpt.Package {
                     __cmd.Parameters.Add(new OracleParameter("P_IN", OracleDbType.NChar, (pIn == null ? 0 : pIn.Count), null, ParameterDirection.Input));
                     __cmd.Parameters["P_IN"].Value = (pIn == null || pIn.Count == 0 ? new String[]{} : pIn.ToArray());
                     __cmd.Parameters["P_IN"].CollectionType = OracleCollectionType.PLSQLAssociativeArray;
-                    __cmd.Parameters["P_IN"].ArrayBindSize = new int[65535];
-                    for (int _i = 0; _i < 65535; _i++) { __cmd.Parameters["P_IN"].ArrayBindSize[_i] = 1000; }
 
                     __cmd.Parameters.Add(new OracleParameter("P_IN_OUT", OracleDbType.NChar, 65535, null, ParameterDirection.InputOutput));
                     __cmd.Parameters["P_IN_OUT"].Value = (pInOut == null || pInOut.Count == 0 ? new String[]{} : pInOut.ToArray());
@@ -1771,8 +1796,6 @@ namespace Schema.Odpt.Odpt.Package {
                     __cmd.Parameters.Add(new OracleParameter("P_IN", OracleDbType.NVarchar2, (pIn == null ? 0 : pIn.Count), null, ParameterDirection.Input));
                     __cmd.Parameters["P_IN"].Value = (pIn == null || pIn.Count == 0 ? new String[]{} : pIn.ToArray());
                     __cmd.Parameters["P_IN"].CollectionType = OracleCollectionType.PLSQLAssociativeArray;
-                    __cmd.Parameters["P_IN"].ArrayBindSize = new int[65535];
-                    for (int _i = 0; _i < 65535; _i++) { __cmd.Parameters["P_IN"].ArrayBindSize[_i] = 2000; }
 
                     __cmd.Parameters.Add(new OracleParameter("P_IN_OUT", OracleDbType.NVarchar2, 65535, null, ParameterDirection.InputOutput));
                     __cmd.Parameters["P_IN_OUT"].Value = (pInOut == null || pInOut.Count == 0 ? new String[]{} : pInOut.ToArray());
@@ -1953,8 +1976,6 @@ namespace Schema.Odpt.Odpt.Package {
                     __cmd.Parameters.Add(new OracleParameter("P_IN", OracleDbType.Varchar2, (pIn == null ? 0 : pIn.Count), null, ParameterDirection.Input));
                     __cmd.Parameters["P_IN"].Value = (pIn == null || pIn.Count == 0 ? new String[]{} : pIn.ToArray());
                     __cmd.Parameters["P_IN"].CollectionType = OracleCollectionType.PLSQLAssociativeArray;
-                    __cmd.Parameters["P_IN"].ArrayBindSize = new int[65535];
-                    for (int _i = 0; _i < 65535; _i++) { __cmd.Parameters["P_IN"].ArrayBindSize[_i] = 32767; }
 
                     __cmd.Parameters.Add(new OracleParameter("P_IN_OUT", OracleDbType.Varchar2, 65535, null, ParameterDirection.InputOutput));
                     __cmd.Parameters["P_IN_OUT"].Value = (pInOut == null || pInOut.Count == 0 ? new String[]{} : pInOut.ToArray());
@@ -2023,8 +2044,6 @@ namespace Schema.Odpt.Odpt.Package {
                     __cmd.Parameters.Add(new OracleParameter("P_IN", OracleDbType.Varchar2, (pIn == null ? 0 : pIn.Count), null, ParameterDirection.Input));
                     __cmd.Parameters["P_IN"].Value = (pIn == null || pIn.Count == 0 ? new String[]{} : pIn.ToArray());
                     __cmd.Parameters["P_IN"].CollectionType = OracleCollectionType.PLSQLAssociativeArray;
-                    __cmd.Parameters["P_IN"].ArrayBindSize = new int[65535];
-                    for (int _i = 0; _i < 65535; _i++) { __cmd.Parameters["P_IN"].ArrayBindSize[_i] = 4000; }
 
                     __cmd.Parameters.Add(new OracleParameter("P_IN_OUT", OracleDbType.Varchar2, 65535, null, ParameterDirection.InputOutput));
                     __cmd.Parameters["P_IN_OUT"].Value = (pInOut == null || pInOut.Count == 0 ? new String[]{} : pInOut.ToArray());
@@ -2067,6 +2086,35 @@ namespace Schema.Odpt.Odpt.Package {
             }
             return __ret;
         } // FuncAaVarchar2
+
+        public Int64? FuncAaVarchar2InCnt(IList<String> pIn, OracleConnection optionalPreexistingOpenConnection = null) {
+            Int64? __ret = null; 
+            OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
+            try {
+                using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_MAIN.FUNC_AA_VARCHAR2_IN_CNT", __conn)) {
+                    __cmd.CommandType = CommandType.StoredProcedure;
+                    __cmd.BindByName = true;
+                    __cmd.Parameters.Add(new OracleParameter("!RETURN", OracleDbType.Int64, null, ParameterDirection.ReturnValue));
+
+                    __cmd.Parameters.Add(new OracleParameter("P_IN", OracleDbType.Varchar2, (pIn == null ? 0 : pIn.Count), null, ParameterDirection.Input));
+                    __cmd.Parameters["P_IN"].Value = (pIn == null || pIn.Count == 0 ? new String[]{} : pIn.ToArray());
+                    __cmd.Parameters["P_IN"].CollectionType = OracleCollectionType.PLSQLAssociativeArray;
+
+                    OracleCommandTrace __cmdTrace = IsTracing(__cmd) ? new OracleCommandTrace(__cmd) : null;
+                    int __rowsAffected = __cmd.ExecuteNonQuery();
+                    __ret = __cmd.Parameters["!RETURN"].Status == OracleParameterStatus.NullFetched
+                        ? (Int64?)null
+                        : Convert.ToInt64(__cmd.Parameters["!RETURN"].Value.ToString());
+                    if (__cmdTrace != null) TraceCompletion(__cmdTrace);
+                } // using OracleCommand
+            } finally {
+                if (optionalPreexistingOpenConnection == null) {
+                    __conn.Close();
+                    __conn.Dispose();
+                }
+            }
+            return __ret;
+        } // FuncAaVarchar2InCnt
 
         // **PROC IGNORED** - ANYDATA type is not available in ODP.NET managed
         // public  FuncAnydata( pIn, ref  pInOut, out  pOut, OracleConnection optionalPreexistingOpenConnection = null)

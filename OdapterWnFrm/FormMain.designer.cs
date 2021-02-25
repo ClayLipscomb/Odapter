@@ -1123,8 +1123,9 @@ namespace OdapterWnFrm {
             this.lblMaxReturnArgStringSize.Name = "lblMaxReturnArgStringSize";
             this.lblMaxReturnArgStringSize.Size = new System.Drawing.Size(440, 21);
             this.lblMaxReturnArgStringSize.TabIndex = 8;
-            this.lblMaxReturnArgStringSize.Text = "* Max Length of VARCHAR2 Return/Arg";
+            this.lblMaxReturnArgStringSize.Text = "* Max Length of VARCHAR2 Returned Arg";
             this.lblMaxReturnArgStringSize.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.toolTip1.SetToolTip(this.lblMaxReturnArgStringSize, "Maximum length of VARCHAR2 for OUT, IN/OUT arguments or function return.");
             this.lblMaxReturnArgStringSize.Click += new System.EventHandler(this.lblMaxReturnArgStringSize_Click);
             // 
             // txtMaxAssocArraySize
@@ -1147,8 +1148,9 @@ namespace OdapterWnFrm {
             this.lblMaxAssocArraySize.Name = "lblMaxAssocArraySize";
             this.lblMaxAssocArraySize.Size = new System.Drawing.Size(439, 20);
             this.lblMaxAssocArraySize.TabIndex = 10;
-            this.lblMaxAssocArraySize.Text = "* Max Size of Associative Array Return/Arg";
+            this.lblMaxAssocArraySize.Text = "* Max Size of Associative Array Returned Arg";
             this.lblMaxAssocArraySize.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.toolTip1.SetToolTip(this.lblMaxAssocArraySize, "Maximum size of associative array for OUT, IN/OUT arguments or function return.");
             // 
             // lblFilter
             // 

@@ -511,8 +511,8 @@ namespace Odapter {
                                 + cSharpArgSubTypeNullable + "[]{} : "
                                 + cSharpArgName + ".ToArray()" + ");");
                         sb.AppendLine(Tab(5) + (isCSharpParamOptional ? "\t" : "") + LOCAL_VAR_NAME_COMMAND_PARAMS + "[\"" + arg.ArgumentName + "\"].CollectionType = OracleCollectionType.PLSQLAssociativeArray;");
-                        // for assoc array of variable length types, set the ArrayBindSize with the maximum length of the type
-                        if (CSharp.ExtractSubtypeFromGenericCollectionType(cSharpArgType, true).Equals(CSharp.STRING)) {
+                        // for OUT/INOUT assoc array of variable length types, set the ArrayBindSize with the maximum length of the type
+                        if (CSharp.ExtractSubtypeFromGenericCollectionType(cSharpArgType, true).Equals(CSharp.STRING) && arg.InOut.EndsWith(Orcl.OUT.ToString())) {
                                 sb.AppendLine(Tab(5) + (isCSharpParamOptional ? "\t" : "") + LOCAL_VAR_NAME_COMMAND_PARAMS + "[\"" + arg.ArgumentName + "\"].ArrayBindSize = new int[" + Parameter.Instance.MaxAssocArraySize.ToString() + "];");
                             sb.AppendLine(Tab(5) + (isCSharpParamOptional ? "\t" : "")
                                 + "for (int _i = 0; _i < " + Parameter.Instance.MaxAssocArraySize.ToString() + "; _i++) { " + LOCAL_VAR_NAME_COMMAND_PARAMS + "[\"" + arg.ArgumentName + "\"].ArrayBindSize[_i] = "

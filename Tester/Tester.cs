@@ -13,7 +13,7 @@
 //    GNU General Public License for more details.
 //
 //    You should have received a copy of the GNU General Public License
-//    along with this program.If not, see<http://www.gnu.org/licenses/>.
+//    along with this program. If not, see<http://www.gnu.org/licenses/>.
 //------------------------------------------------------------------------------
 
 //#define SHORT_INTEGER               // INTEGER as Int32
@@ -85,7 +85,8 @@ namespace Odapter.Tester {
             private const int MAX_STRING_SIZE_FOR_CHAR_COL = 2000;
             private const int MAX_STRING_SIZE_FOR_NCHAR_COL = 1000;
 
-            private const int MAX_ASSOC_ARRAY_SIZE = UInt16.MaxValue;
+            private const int MAX_ASSOC_ARRAY_SIZE_OUT = UInt16.MaxValue;
+            private const int MAX_ASSOC_ARRAY_SIZE_IN = UInt16.MaxValue * 100;
 
             // actual max of LOB *column* is 4 GB (4*1024*1024*1024-1 bytes) 4,294,967,295
             private const int LOB_SIZE =
@@ -134,7 +135,9 @@ namespace Odapter.Tester {
 
                 TestCursorFilteredPackageTableBig();
 
-                TestAssociativeArrayCalls();
+                TestAssociativeArrayInt64MaxCalls();
+                TestAssociativeArrayStringMaxCalls();
+
                 TestDuplicateSignatureCalls();
                 TestNoParamCalls();
                 TestOptionalParamCalls();
@@ -1461,7 +1464,7 @@ namespace Odapter.Tester {
             #endregion
 
             #region Miscellaneous tests
-            private void TestAssociativeArrayCalls() {
+            private void TestAssociativeArrayInt64MaxCalls() {
 #if SAFETYPE_INTEGER
                 IList<OracleDecimal?> pInList, pInOutList, pOutList, retList;
                 IList<OracleDecimal?> testValues = new List<OracleDecimal?>();
@@ -1475,15 +1478,39 @@ namespace Odapter.Tester {
                 IList<Int64?> pInList, pInOutList, pOutList, retList;
                 IList<Int64?> testValues = new List<Int64?>();
 #endif
-                // assoc array max size
-                for (int i = 0; i < MAX_ASSOC_ARRAY_SIZE; i++) testValues.Add(i);
-
-                // assoc array 
+                // assoc array max size OUTBOUND
+                for (int i = 0; i < MAX_ASSOC_ARRAY_SIZE_OUT; i++) testValues.Add(i);
                 pInList = pInOutList = testValues;
                 retList = OdptPkgMain.Instance.FuncAaInteger(pInList, ref pInOutList, out pOutList, null);
                 for (int i = 0; i < pInList.Count; i++) Debug.Assert(pInList[i].Equals(pInOutList[i]));
                 for (int i = 0; i < pInList.Count; i++) Debug.Assert(pInList[i].Equals(pOutList[i]));
                 for (int i = 0; i < pInList.Count; i++) Debug.Assert(pInList[i].Equals(retList[i]));
+
+                // assoc array max size INBOUND
+                pInList.Clear();
+                for (int i = 0; i < MAX_ASSOC_ARRAY_SIZE_IN; i++) pInList.Add(i);
+                var cnt = OdptPkgMain.Instance.FuncAaIntegerInCnt(pInList, null);
+                Debug.Assert(pInList.Count == cnt);
+            }
+
+            private void TestAssociativeArrayStringMaxCalls() {
+                IList<String> pInList, pInOutList, pOutList, retList;
+                IList<String> testValues = new List<String>();
+                String testString = @"XYZ";
+
+                // assoc array max size OUTBOUND
+                for (int i = 0; i < MAX_ASSOC_ARRAY_SIZE_OUT; i++) testValues.Add(testString);
+                pInList = pInOutList = testValues;
+                retList = OdptPkgMain.Instance.FuncAaVarchar2(pInList, ref pInOutList, out pOutList, null);
+                for (int i = 0; i < pInList.Count; i++) Debug.Assert(pInList[i].Equals(pInOutList[i]));
+                for (int i = 0; i < pInList.Count; i++) Debug.Assert(pInList[i].Equals(pOutList[i]));
+                for (int i = 0; i < pInList.Count; i++) Debug.Assert(pInList[i].Equals(retList[i]));
+
+                // assoc array max size INBOUND
+                pInList.Clear();
+                for (int i = 0; i < MAX_ASSOC_ARRAY_SIZE_IN; i++) pInList.Add(testString);
+                var cnt = OdptPkgMain.Instance.FuncAaVarchar2InCnt(pInList, null);
+                Debug.Assert(pInList.Count == cnt);
             }
 
             private void CompileTimeChecks() {

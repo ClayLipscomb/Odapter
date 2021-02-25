@@ -863,6 +863,17 @@ CREATE OR REPLACE PACKAGE BODY ODPT.odpt_pkg_main AS
 	END;
 
    ---------------
+    FUNCTION func_aa_integer_in_cnt (p_in IN t_assocarray_integer) RETURN INTEGER IS
+    BEGIN 
+		RETURN p_in.COUNT;
+	END;
+
+    FUNCTION func_aa_varchar2_in_cnt (p_in IN t_assocarray_varchar2) RETURN INTEGER IS
+    BEGIN 
+		RETURN p_in.COUNT;
+	END;
+
+   ---------------
     FUNCTION func_aa_integer_v (p_in IN t_assocarray_integer_v, p_in_out IN OUT t_assocarray_integer_v, p_out OUT t_assocarray_integer_v) RETURN t_assocarray_integer_v IS
     BEGIN
 	   	p_in_out := p_in;

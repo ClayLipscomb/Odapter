@@ -227,6 +227,9 @@ CREATE OR REPLACE PACKAGE ODPT.odpt_pkg_main AS
 	FUNCTION func_aa_clob (p_in IN t_assocarray_clob, p_in_out IN OUT t_assocarray_clob, p_out OUT t_assocarray_clob) RETURN t_assocarray_clob;
 	FUNCTION func_aa_nclob (p_in IN t_assocarray_nclob, p_in_out IN OUT t_assocarray_nclob, p_out OUT t_assocarray_nclob) RETURN t_assocarray_nclob;
 
+    FUNCTION func_aa_integer_in_cnt (p_in IN t_assocarray_integer) RETURN INTEGER;
+    FUNCTION func_aa_varchar2_in_cnt (p_in IN t_assocarray_varchar2) RETURN INTEGER;
+
 	-- nested table functions
 	FUNCTION func_nt_number (p_in IN t_nestedtable_number, p_in_out IN OUT t_nestedtable_number, p_out OUT t_nestedtable_number) RETURN t_nestedtable_number;
 
