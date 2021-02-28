@@ -434,6 +434,7 @@ namespace OdapterWnFrm {
             // cmbCSharpVersion
             // 
             this.cmbCSharpVersion.BackColor = System.Drawing.Color.White;
+            this.cmbCSharpVersion.Enabled = false;
             this.cmbCSharpVersion.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbCSharpVersion.FormattingEnabled = true;
             this.cmbCSharpVersion.Location = new System.Drawing.Point(220, 199);
