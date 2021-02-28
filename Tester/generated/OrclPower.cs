@@ -20,7 +20,7 @@
 //    GNU General Public License for more details.
 //
 //    You should have received a copy of the GNU General Public License
-//    along with this program.If not, see<http://www.gnu.org/licenses/>.
+//    along with this program. If not, see<http://www.gnu.org/licenses/>.
 //------------------------------------------------------------------------------
 
 using System;
@@ -35,7 +35,7 @@ using System.Diagnostics;
 using System.Collections.Concurrent;
 
 namespace Odapter {
-    #region Classes Supplemental to Hydrator
+#region Classes Supplemental to Hydrator
     /// <summary>
     /// Attribute used by Hydrator when mapping by position
     /// </summary>
@@ -82,13 +82,6 @@ namespace Odapter {
                 : Nullable.GetUnderlyingType(Field.FieldType) ?? Field.FieldType;
             IsRoundOracleDecimalToCSharpDecimal = MemberUnderlyingType.Equals(typeof(System.Decimal))
                 && Column.ColumnType.Equals(typeof(OracleDecimal));
-//                && Column.ColumnType.Equals(typeof(Oracle.
-//#if CSHARP30
-//                    DataAccess
-//#else
-//                    ManagedDataAccess
-//#endif
-//                    .Types.OracleDecimal));
         }
     }
 
@@ -160,8 +153,8 @@ namespace Odapter {
             }
             return true;
         }
-#endregion
-    }
+        #endregion // IEquatable methods
+    } // ResultSetMappingIdentity
 
     /// <summary>
     /// A cache-ready element for mapping all columns in a result set to a C# class
@@ -194,7 +187,7 @@ namespace Odapter {
             CSharpTypeName = csharpTypeName;
         }
     }
-#endregion
+#endregion // Classes Supplemental to Hydrator
 
 #region Hydrator
     /// <summary>
@@ -216,19 +209,7 @@ namespace Odapter {
         private static String[] _stringValuesEquivalentToBooleanTrue = new String[] { "Y", "YES", "T", "TRUE", "1" };
         private static bool _cachingEnabled = true;
 
-        // four types of caches
-#if CSHARP30
-        // locking necessary to be thread safe
-        private static readonly Dictionary<ResultSetMappingIdentity, ResultSetMappingCacheItem> _mappingByPositionCache
-            = new Dictionary<ResultSetMappingIdentity, ResultSetMappingCacheItem>();
-        private static readonly Dictionary<ResultSetMappingIdentity, ResultSetMappingCacheItem> _mappingByNameCache
-            = new Dictionary<ResultSetMappingIdentity, ResultSetMappingCacheItem>();
-        private static readonly Dictionary<ResultSetMappingIdentity, ResultSetMappingCacheItem> _mappingByPositionFlexibleCache
-            = new Dictionary<ResultSetMappingIdentity, ResultSetMappingCacheItem>();
-        private static readonly Dictionary<ResultSetMappingIdentity, ResultSetMappingCacheItem> _mappingByNameFlexibleCache
-            = new Dictionary<ResultSetMappingIdentity, ResultSetMappingCacheItem>();
-#else
-        // thread safe without locking
+        // four types of caches; thread safe without locking
         private static readonly ConcurrentDictionary<ResultSetMappingIdentity, ResultSetMappingCacheItem> _mappingByPositionCache
             = new ConcurrentDictionary<ResultSetMappingIdentity, ResultSetMappingCacheItem>();
         private static readonly ConcurrentDictionary<ResultSetMappingIdentity, ResultSetMappingCacheItem> _mappingByNameCache
@@ -237,34 +218,9 @@ namespace Odapter {
             = new ConcurrentDictionary<ResultSetMappingIdentity, ResultSetMappingCacheItem>();
         private static readonly ConcurrentDictionary<ResultSetMappingIdentity, ResultSetMappingCacheItem> _mappingByNameFlexibleCache
             = new ConcurrentDictionary<ResultSetMappingIdentity, ResultSetMappingCacheItem>();
-#endif
 #endregion
 
 #region Cache-related methods
-#if CSHARP30
-        private static void SetMappingCache<T>(ref Dictionary<ResultSetMappingIdentity, ResultSetMappingCacheItem> cache,
-                                            ResultSetMappingIdentity key, List<ColumnMapping> resultSetMapping) {
-            if (!_cachingEnabled) return; 
-            lock(cache) {
-                cache[key] = ResultSetMappingCacheItem.CreateInstance<T>(resultSetMapping);
-            }
-        }
-
-        private static bool TryGetMappingCache(ref Dictionary<ResultSetMappingIdentity, ResultSetMappingCacheItem> cache,
-                                                ResultSetMappingIdentity key, out List<ColumnMapping> resultSetMapping) {
-            resultSetMapping = null;
-            if (!_cachingEnabled) return false;
-            lock (cache) {
-                ResultSetMappingCacheItem cacheItem;
-                if (cache.TryGetValue(key, out cacheItem)) {
-                    cacheItem.RecordHit();
-                    resultSetMapping = cacheItem.Mappings;
-                    return true;
-                }
-            }
-            return false;
-        }
-#else
         /// <summary>
         /// Store a result set mapping in a cache
         /// </summary>
@@ -297,7 +253,6 @@ namespace Odapter {
             }
             return false;
         }
-#endif
 
         /// <summary>
         /// Return a counts of all the cached queries
@@ -320,17 +275,10 @@ namespace Odapter {
         /// <param name="mappingByPositionFlexibleCache"></param>
         /// <param name="mappingByNameFlexibleCache"></param>
         public static void GetAllCaches(
-#if CSHARP30
-            out Dictionary<ResultSetMappingIdentity, ResultSetMappingCacheItem> mappingByPositionCache,
-            out Dictionary<ResultSetMappingIdentity, ResultSetMappingCacheItem> mappingByNameCache,
-            out Dictionary<ResultSetMappingIdentity, ResultSetMappingCacheItem> mappingByPositionFlexibleCache,
-            out Dictionary<ResultSetMappingIdentity, ResultSetMappingCacheItem> mappingByNameFlexibleCache
-#else
             out ConcurrentDictionary<ResultSetMappingIdentity, ResultSetMappingCacheItem> mappingByPositionCache,
             out ConcurrentDictionary<ResultSetMappingIdentity, ResultSetMappingCacheItem> mappingByNameCache,
             out ConcurrentDictionary<ResultSetMappingIdentity, ResultSetMappingCacheItem> mappingByPositionFlexibleCache,
             out ConcurrentDictionary<ResultSetMappingIdentity, ResultSetMappingCacheItem> mappingByNameFlexibleCache
-#endif
             ) {
             mappingByPositionCache = _mappingByPositionCache;
             mappingByNameCache = _mappingByNameCache;
@@ -339,25 +287,10 @@ namespace Odapter {
         }
 
         public static void ClearAllCaches() {
-#if CSHARP30
-            lock (_mappingByPositionCache) {
-                _mappingByPositionCache.Clear();
-            }
-            lock (_mappingByNameCache) {
-                _mappingByNameCache.Clear();
-            }
-            lock (_mappingByPositionFlexibleCache) {
-                _mappingByPositionFlexibleCache.Clear();
-            }
-            lock (_mappingByNameFlexibleCache) {
-                _mappingByNameFlexibleCache.Clear();
-            }
-#else
             _mappingByPositionCache.Clear();
             _mappingByNameCache.Clear();
             _mappingByPositionFlexibleCache.Clear();
             _mappingByNameFlexibleCache.Clear();
-#endif
         }
 
         public static void EnableCaching() { 
@@ -369,12 +302,10 @@ namespace Odapter {
             ClearAllCaches();
         }
 #endregion
-
         // TBD
         private static T ConvertObject<T>(object obj) { 
             return (T)Convert.ChangeType(obj, typeof(T)); 
         }
-
 #region Generics setter methods
         /// <summary>
         /// Set an object's property with a given value
@@ -428,8 +359,7 @@ namespace Odapter {
             else if (member.MemberType == MemberTypes.Property)
                 SetObjectProperty(obj, (PropertyInfo)member, value);
         }
-#endregion
-
+#endregion // Generics setter methods
         /// <summary>
         /// Create dictionary of column name and Oracle type of all columns in reader
         /// </summary>
@@ -543,15 +473,10 @@ namespace Odapter {
         private static List<ColumnMapping> GetMappings<T>(OracleDataReader reader, bool mapByPosition, bool allowUnmappedColumns) {
 
             // determine which of the four caches should be used 
-#if CSHARP30
-                Dictionary
-#else
-                ConcurrentDictionary
-#endif
-                    <ResultSetMappingIdentity, ResultSetMappingCacheItem> mappingCache =
-                        (mapByPosition
-                        ? (allowUnmappedColumns ? _mappingByPositionFlexibleCache : _mappingByPositionCache)
-                        : (allowUnmappedColumns ? _mappingByNameFlexibleCache : _mappingByNameCache));
+            ConcurrentDictionary<ResultSetMappingIdentity, ResultSetMappingCacheItem> mappingCache =
+                (mapByPosition
+                ? (allowUnmappedColumns ? _mappingByPositionFlexibleCache : _mappingByPositionCache)
+                : (allowUnmappedColumns ? _mappingByNameFlexibleCache : _mappingByNameCache));
 
             // a unique id can be derived from the C# type and result set alone
             ResultSetMappingIdentity mappingKey = ResultSetMappingIdentity.CreateInstance<T>(reader);
@@ -564,7 +489,6 @@ namespace Odapter {
             }
             return mappings;
         }
-
 #region Result set readers
         /// <summary>
         /// Return a generic object fetched from a data reader that has been advanced (read) to a row
@@ -608,17 +532,7 @@ namespace Odapter {
         /// property is not required for each column, permitting an unmapped column. If false, an exception will occur if 
         /// all reader columns cannot be mapped to a property.</param>
         /// <returns></returns>
-        public static T ReadResultRow<T>(OracleDataReader reader
-            , bool mapByPosition
-#if !CSHARP30
-                = false
-#endif
-            , bool allowUnmappedColumns
-#if !CSHARP30
-                = false
-#endif
-            ) where T : new() {
-
+        public static T ReadResultRow<T>(OracleDataReader reader, bool mapByPosition = false, bool allowUnmappedColumns = false) where T : new() {
             return ReadResultRow<T>(reader, GetMappings<T>(reader, mapByPosition, allowUnmappedColumns));
         }
 
@@ -639,20 +553,8 @@ namespace Odapter {
         /// property is not required for each column, permitting an unmapped column. If false, an exception will occur if 
         /// all reader columns cannot be mapped to a property.</param>
         /// <returns></returns>
-        public static List<T> ReadResult<T>(OracleDataReader reader
-            , bool mapByPosition
-#if !CSHARP30
-                = false
-#endif
-            , bool allowUnmappedColumns
-#if !CSHARP30
-                = false
-#endif
-            , UInt32? optionalMaximumNumberOfRowsToRead
-#if !CSHARP30
-                = null
-#endif
-            ) where T : new() {
+        public static List<T> ReadResult<T>(OracleDataReader reader, bool mapByPosition = false, bool allowUnmappedColumns = false, 
+            UInt32? optionalMaximumNumberOfRowsToRead = null) where T : new() {
 
             // get the mapping between this C# type and the reader's result set
             List<ColumnMapping> mappings = GetMappings<T>(reader, mapByPosition, allowUnmappedColumns);
@@ -691,16 +593,7 @@ namespace Odapter {
         /// </summary>
         /// <param name="reader">Reader prepared for fetching result set</param>
         /// <returns></returns>
-        public static DataTable ReadResult(OracleDataReader reader
-            , bool convertColumnNameToTitleCaseInCaption
-#if !CSHARP30
-            = false
-#endif
-            , UInt32? optionalMaximumNumberOfRowsToRead
-#if !CSHARP30
-            = null
-#endif
-            ) {
+        public static DataTable ReadResult(OracleDataReader reader, bool convertColumnNameToTitleCaseInCaption = false, UInt32? optionalMaximumNumberOfRowsToRead = null) {
 
             // determine name and type of each column in result set and build empty datatable
             DataTable dt = new DataTable();
@@ -791,7 +684,6 @@ namespace Odapter {
             return dt;
         }
 #endregion
-
 #region Miscelaneous methods
         /// <summary>
         /// Extract all values from an associative array parameter and return as comma delimited string
@@ -880,7 +772,7 @@ namespace Odapter {
 
 #endregion
     }
-#endregion
+#endregion // Hydrator
 
     /// <summary>
     /// Wrapper for an OracleCommand to be traced and timed. Should be instantiated just before command

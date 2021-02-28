@@ -33,7 +33,6 @@ namespace Odapter {
         string AncestorClassNameView { get; set; }
 
         CSharpVersion CSharpVersion { get; set; }
-        bool IsCSharp30 { get; }
         bool IsCSharp40 { get; }
 
         bool IsDeployResources { get; set; }

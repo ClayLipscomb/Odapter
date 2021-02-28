@@ -36,7 +36,6 @@ namespace Odapter {
 
         private string _objectTypeNamespace { get; set; }
 
-        private bool IsCSharp30 { get { return Parameter.Instance.CSharpVersion == CSharpVersion.ThreeZero; } }
         private bool IsCSharp40 { get { return Parameter.Instance.CSharpVersion == CSharpVersion.FourZero; } }
         #endregion
 
@@ -213,18 +212,16 @@ namespace Odapter {
         }
 
         /// <summary>
-        /// Determine all optional Oracle proc params that can be implemented in C# as optional params. For C# 4.0 optional params,
-        ///  an optional param must follow all required params. For C# 3.0, there are no optional params.
+        /// Determine all optional Oracle proc params that can be implemented in C# as optional params. For C# optional params,
+        ///  an optional param must follow all required params.
         /// </summary>
         /// <param name="args">Oracle argument list for function</param>
         /// <returns>A list of the Oracle param names that can be optional in C#</returns>
         private List<string> GetOptionalCSharpParameters(List<IArgument> args) {
             List<string> optionalParamNames = new List<string>();
-            if (!IsCSharp30) {
-                for (int i = args.Count - 1; i >= 0; i--) { // loop in reverse - C# optinal params must be declared after req params
-                    if (args[i].Defaulted) optionalParamNames.Add(args[i].ArgumentName);
-                    else break; // quit upon finding first required arg
-                }
+            for (int i = args.Count - 1; i >= 0; i--) { // loop in reverse - C# optinal params must be declared after req params
+                if (args[i].Defaulted) optionalParamNames.Add(args[i].ArgumentName);
+                else break; // quit upon finding first required arg
             }
             return optionalParamNames;
         }
@@ -268,17 +265,11 @@ namespace Odapter {
                     // mapping arguments with defaults 
                     argList.Add(("\r\n" + Tab(2) + (commentOutOnWrap ? "//" : "") + Tab(2)) // wrap as argument count increases
                         + (excludeTypes ? "" : "bool ") + PARAM_NAME_MAP_BY_POSITION
-                        + (excludeTypes
-                            ? ""
-                            : (IsCSharp30 ? "" : " = false"))
-                            );
+                        + (excludeTypes ? "" : " = false") );
                     argNum++;
                     argList.Add("" // wrap as argument count increases
                         + (excludeTypes ? "" : "bool ") + PARAM_NAME_ALLOW_UNMAPPED_COLUMNS
-                        + (excludeTypes
-                            ? ""
-                            : (IsCSharp30 ? "" : " = false"))
-                            );
+                        + (excludeTypes ? "" :  " = false") );
                     argNum++;
                 } 
             }
@@ -286,18 +277,18 @@ namespace Odapter {
             // Datatable column name conversion to title case arg
             if (dynamicMapping && TranslaterManager.UseDatatableForUntypedCursor) {
                 argList.Add((((argNum++ - 5) % 6 == 0) ? "\r\n" + Tab(2) + (commentOutOnWrap ? "//" : "") + Tab(2) : "") // wrap as argument count increases
-                    + CSharp.BOOLEAN + " " + PARAM_NAME_CONVERT_COLUMN_NAME_TO_TITLE_CASE + (IsCSharp30 ? "" : " = false"));
+                    + CSharp.BOOLEAN + " " + PARAM_NAME_CONVERT_COLUMN_NAME_TO_TITLE_CASE + " = false");
             }
 
             // row count limit argument for any method with cursor (List or Datatable)
             if (methodHasGenerics || (dynamicMapping && TranslaterManager.UseDatatableForUntypedCursor)) {
                 argList.Add((((argNum++ - 5) % 6 == 0) ? "\r\n" + Tab(2) + (commentOutOnWrap ? "//" : "") + Tab(2) : "") // wrap as argument count increases
-                    + CSharp.UINT32 + "? " + PARAM_NAME_MAXIMUM_ROWS_CURSOR + (IsCSharp30 ? "" : " = null"));
+                    + CSharp.UINT32 + "? " + PARAM_NAME_MAXIMUM_ROWS_CURSOR + " = null");
             }
 
             // add optional Oracle connection arg for all methods
             argList.Add((((argNum++ - 5) % 6 == 0) ? "\r\n" + Tab(2) + (commentOutOnWrap ? "//" : "") + Tab(2) : "") // wrap as argument count increases
-                + "OracleConnection" + " " + _oracleConnectionParamName + (IsCSharp30 ? "" : " = null"));
+                + "OracleConnection" + " " + _oracleConnectionParamName + " = null");
 
             return String.Join(", ", argList.ToArray());
         } // GenerateMethodArgumentsCommaDelimited
@@ -598,10 +589,9 @@ namespace Odapter {
                 + proc.ProcedureName + "\"" + ", " + LOCAL_VAR_NAME_CONNECTION + ")) {");
             methodText.AppendLine(Tab(5) + LOCAL_VAR_NAME_COMMAND + ".CommandType = CommandType.StoredProcedure;");
 
-            // For versions above C# 3.0, bind by name since it is necessary to handle not binding/settting Oracle optional parameters; 
-            // the corresponding C# optional params are defaulted to null. C# 3.0 has no optional params and thus we cannot replicate
-            // Oracle optional parameters; so we will use the defauult bind by position for 3.0.
-            if (!IsCSharp30) methodText.AppendLine(Tab(5) + LOCAL_VAR_NAME_COMMAND + ".BindByName = true;");
+            // Bind by name since it is necessary to handle not binding/settting Oracle optional parameters; 
+            // the corresponding C# optional params are defaulted to null. 
+            methodText.AppendLine(Tab(5) + LOCAL_VAR_NAME_COMMAND + ".BindByName = true;");
 
             methodText.Append(GenerateArgumentBindCode(proc.Arguments));
 
@@ -701,7 +691,7 @@ namespace Odapter {
             // signature
             classText.AppendLine(Tab(2) + "public " + returnType + " " + methodName + "<" + genericTypeParam + ">"
                 + "(OracleDataReader " + paramNameOracleReader + "" 
-                + ", " + CSharp.UINT32 + "? " + PARAM_NAME_MAXIMUM_ROWS_CURSOR + (Parameter.Instance.IsCSharp30 ? "" : " = " + CSharp.NULL) + ")");
+                + ", " + CSharp.UINT32 + "? " + PARAM_NAME_MAXIMUM_ROWS_CURSOR + " = " + CSharp.NULL + ")");
             classText.AppendLine(Tab(4) + "where " + genericTypeParam + " : class, " + interfaceName + ", new()  " + " {");
 
             classText.AppendLine(Tab(3) + returnType + " " + LOCAL_VAR_NAME_RETURN + " = new " + CSharp.GenericCollectionOf(CSharp.LIST, genericTypeParam) + "();");
@@ -1224,7 +1214,6 @@ namespace Odapter {
                 if (overwrite || !File.Exists(filePath)) {
                     File.Delete(filePath); // delete existing file since we have to write file in sections
                     File.WriteAllText(filePath, Comment.Instance.CommentAutoGenerated + Environment.NewLine);
-                    if (IsCSharp30) File.AppendAllText(filePath, "#define CSHARP30\r\n");   // for C# 3.0, add compiler option
                     File.AppendAllText(filePath, Properties.Resources.OrclPower);           // write body of source code
                 }
             } catch (UnauthorizedAccessException) {

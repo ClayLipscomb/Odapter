@@ -128,8 +128,6 @@ namespace Odapter {
         // .NET/C# version
         public CSharpVersion CSharpVersion { get; set; }
         [XmlIgnore]
-        public bool IsCSharp30 { get { return CSharpVersion == CSharpVersion.ThreeZero; } }
-        [XmlIgnore]
         public bool IsCSharp40 { get { return CSharpVersion == CSharpVersion.FourZero; } }
 
         // namespaces
