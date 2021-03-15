@@ -369,10 +369,12 @@ namespace OdapterWnFrm {
             cmbClientHome.ValueMember = @"Value";
             List<OracleHome> oraHomes = new List<OracleHome>();
             oraHomes = tnsNamesReader.GetOracleHomes();
-            oraHomes.Insert(0, new OracleHome("", ""));
-            if (oraHomes == null || oraHomes.Count == 0) DisplayMessage("Warning: Client homes not found.");
-            //oraHomes.Add(new OracleHome("OraHomeValue", "OraHomeDescription"));
+            oraHomes.Insert(0, new OracleHome(String.Empty, String.Empty)); // a valid selection for when no homes are used/found
             cmbClientHome.DataSource = oraHomes;
+            if (oraHomes == null || oraHomes.Count == 1)
+                DisplayMessage("Warning: Client homes not found.");
+            else
+                cmbClientHome.SelectedIndex = 1;    // assume the first home found is approriate and default to it
         }
 
         private void BindTnsNames() {
@@ -392,7 +394,6 @@ namespace OdapterWnFrm {
         }
 
         private void SetFromParameters() {
-            cmbClientHome.SelectedValue = Parameter.Instance.OracleHome;
             DbInstance = Parameter.Instance.DatabaseInstance;
             txtSchema.Text = Parameter.Instance.Schema;
             txtFilter.Text = Parameter.Instance.Filter;
@@ -471,7 +472,6 @@ namespace OdapterWnFrm {
         }
 
         private void ExtractToParameters() {
-            Parameter.Instance.OracleHome = cmbClientHome.SelectedValue.ToString();
             Parameter.Instance.DatabaseInstance = DbInstance;
             Parameter.Instance.Schema = txtSchema.Text;
             Parameter.Instance.Filter = txtFilter.Text;

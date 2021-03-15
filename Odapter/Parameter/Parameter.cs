@@ -67,7 +67,8 @@ namespace Odapter {
         #endregion
 
         public void RestoreDefaults() {
-            OracleHome = DatabaseInstance = Filter = Schema = UserLogin = Password =  OutputPath = String.Empty;
+            //OracleHome = 
+            DatabaseInstance = Filter = Schema = UserLogin = Password =  OutputPath = String.Empty;
 
             IsSavePassword = false;
             IsGeneratePackage = true;
@@ -113,9 +114,6 @@ namespace Odapter {
         }
 
         #region Properties
-        // schema and connection
-        public string OracleHome { get; set; }
-
         private string _databaseInstance;
         public string DatabaseInstance {
             get => _databaseInstance;
