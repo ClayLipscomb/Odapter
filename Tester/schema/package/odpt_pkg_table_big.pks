@@ -120,6 +120,8 @@ CREATE OR REPLACE PACKAGE ODPT.odpt_pkg_table_big AS
 	FUNCTION get_rows_typed_fltr_used(p_ref_cursor OUT fltr_pkg_rec_used.t_ref_cursor_table_big, p_ref_cursor2 OUT fltr_pkg_rec_used.t_ref_cursor_table_big) RETURN fltr_pkg_rec_used.t_ref_cursor_table_big;
 	FUNCTION get_rows_untyped_fltr_used(p_ref_cursor OUT fltr_pkg_rec_used.t_ref_cursor, p_ref_cursor2 OUT fltr_pkg_rec_used.t_ref_cursor) RETURN fltr_pkg_rec_used.t_ref_cursor;
 	
+	FUNCTION get_rows_typed_table_row_type RETURN t_ref_cursor_table_row_type;
+
 	FUNCTION get_rows_typed_ret RETURN t_ref_cursor_table_big;
 	FUNCTION get_rows_typed_out(p_ref_cursor OUT t_ref_cursor_table_big) RETURN INTEGER;	
 	FUNCTION get_rows_typed_out_ret(p_ref_cursor OUT t_ref_cursor_table_big) RETURN t_ref_cursor_table_big;	

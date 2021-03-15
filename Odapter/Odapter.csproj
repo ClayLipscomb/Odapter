@@ -142,6 +142,7 @@
     <Compile Include="Oracle\Entity\OrclEntity-Table.cs" />
     <Compile Include="Oracle\Type\OrclType-ProcedureReturn.cs" />
     <Compile Include="Oracle\Type\OrclType-Null.cs" />
+    <Compile Include="Oracle\Type\OrclType-Rowtype.cs" />
     <Compile Include="Oracle\Type\OrclType-XML.cs" />
     <Compile Include="Oracle\Type\OrclType-Undefined.cs" />
     <Compile Include="Oracle\Type\OrclType-RowId.cs" />
@@ -171,6 +172,7 @@
     <Compile Include="Translation\Type\TranslaterType-Numeric.cs" />
     <Compile Include="Translation\Type\TranslaterType-Collection.cs" />
     <Compile Include="Translation\Type\TranslaterType-Boolean.cs" />
+    <Compile Include="Translation\Type\TranslaterType-Rowtype.cs" />
     <Compile Include="Translation\Type\TranslaterType-Record.cs" />
     <Compile Include="Translation\Type\TranslaterType-Object.cs" />
     <Compile Include="Translation\Type\TranslaterType-Date.cs" />

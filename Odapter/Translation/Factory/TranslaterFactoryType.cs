@@ -148,6 +148,9 @@ namespace Odapter {
                     case Orcl.RECORD:
                         OracleTypeTranslaters.Add(new TranslaterRecordType(dataTypeFull));
                         break;
+                    case Orcl.ROWTYPE:
+                        OracleTypeTranslaters.Add(new TranslaterRowtype(dataTypeFull));
+                        break;
                     case Orcl.NESTED_TABLE:
                         OracleTypeTranslaters.Add(new TranslaterNestedTable(dataTypeFull, TypeTargetForOracleAssociativeArray, dataType));
                         break;

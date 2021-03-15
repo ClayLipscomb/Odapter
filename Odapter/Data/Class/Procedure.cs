@@ -96,6 +96,15 @@ namespace Odapter {
             return false;
         }
 
+        private bool HasArgumentOfRefCursorOfRowtype() {
+            foreach (IArgument arg in Arguments) {
+                if (Arguments.IndexOf(arg) == Arguments.Count - 1) return false; // reached end of arg list since ref cursor uses "2 args"
+                // check type of argument and its subsequent argument
+                if (arg.DataType == Orcl.REF_CURSOR && OrclUtil.NormalizeDataType(arg.NextArgument) == Orcl.ROWTYPE) return true;
+            }
+            return false;
+        }
+
         /// <summary>
         /// Determine whether procedure should be ignored due to certain data types
         /// </summary>
@@ -109,16 +118,19 @@ namespace Odapter {
             if (HasArgumentOfOracleTypeAssocArrayOfUnimplementedType(out unimplemntedDataType)) {
                 reasonMsg = TranslaterMessage.IgnoreNoSendAssocArrayUnimplemented(unimplemntedDataType);
                 return true;
+            }  else if (HasArgumentOfRefCursorOfRowtype()) {
+                reasonMsg = TranslaterMessage.IgnoreNotImplemented($"{Orcl.REF_CURSOR} OF {Orcl.ROWTYPE}");
+                return true;
             } else if (HasInArgumentOfOracleTypeRefCursor()) {
                 reasonMsg = TranslaterMessage.IgnoreNoSendRefCusror();
                 return true;
             } else {
                 foreach (IArgument arg in Arguments) {
-                    if (arg.Translater.IsIgnoredAsParameter 
-                        && !(arg.DataType.Equals(Orcl.RECORD) && arg.DataLevel > 0) ) {  // record of cursor argument
+                    if (arg.Translater.IsIgnoredAsParameter
+                        && !(arg.DataType.Equals(Orcl.RECORD) && arg.DataLevel > 0)) {  // record of cursor argument
                         reasonMsg = arg.Translater.IgnoredReasonAsParameter;
                         return true;
-                    } else if (arg.Translater.IsIgnoredAsAttribute && arg.DataLevel > 1) { 
+                    } else if (arg.Translater.IsIgnoredAsAttribute && arg.DataLevel > 1) {
                         reasonMsg = arg.Translater.IgnoredReasonAsAttribute;
                         return true;
                     }

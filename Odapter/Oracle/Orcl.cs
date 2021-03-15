@@ -48,6 +48,7 @@ namespace Odapter {
         internal const string VIEW = "VIEW";
         internal const string OBJECT = "OBJECT";
         internal const string RECORD = "PL/SQL RECORD";
+        internal const string ROWTYPE = "ROWTYPE";
 
         // SQL types, etc.
         public const string INTEGER = "INTEGER";

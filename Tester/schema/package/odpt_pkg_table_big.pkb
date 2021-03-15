@@ -285,6 +285,12 @@ CREATE OR REPLACE PACKAGE BODY ODPT.odpt_pkg_table_big AS
 
 	----------------
 	-- typed cursors
+	FUNCTION get_rows_typed_table_row_type RETURN t_ref_cursor_table_row_type IS
+		l_cursor	t_ref_cursor_table_row_type;
+    BEGIN
+        RETURN l_cursor;
+    END;
+
 	FUNCTION get_rows_typed_ret RETURN t_ref_cursor_table_big IS
 		l_cursor	t_ref_cursor_table_big;
 	BEGIN

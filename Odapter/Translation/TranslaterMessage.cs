@@ -25,6 +25,7 @@ namespace Odapter {
         private static readonly string IGNORE_NO_SEND_RECEIVE                       = ".NET cannot send/receive a {0} type";
         private static readonly string IGNORE_ORACLE_DEPRECATION                    = "Code generation for {0} type will not be implemented due to Oracle deprecation";
         private static readonly string IGNORE_NO_SEND_RECEIVE_RECORD                = $".NET cannot send/receive a {Orcl.RECORD} type (apart from cursor)";
+        private static readonly string IGNORE_NO_SEND_RECEIVE_ROWTYPE               = $".NET cannot send/receive a {Orcl.ROWTYPE} type (apart from cursor)";
         private static readonly string IGNORE_ORACLE_NO_RECEIVE                     = "Oracle cannot receive a {0} type as a parameter";
         private static readonly string IGNORE_NO_SEND_REF_CURSOR                    = $".NET cannot send a {Orcl.REF_CURSOR} type";
         private static readonly string IGNORE_NO_SEND_ASSOC_ARRAY_UNIMPLEMENTED     = $".NET cannot send/receive an {Orcl.ASSOCIATITVE_ARRAY}" + " of a {0} type";
@@ -36,7 +37,8 @@ namespace Odapter {
         internal static string IgnoreNotImplemented(IOrclType orclType)                 => FormatMsg(IGNORE_NOT_IMPLEMENTED, orclType.DataType); 
         internal static string IgnoreNotAvailableOdpNetMananged(IOrclType orclType)     => FormatMsg(IGNORE_NOT_AVAILABLE_ODP_NET_MANAGED, orclType.DataType); 
         internal static string IgnoreNoSendReceive(IOrclType orclType)                  => FormatMsg(IGNORE_NO_SEND_RECEIVE, orclType.DataType); 
-        internal static string IgnoreNoSendReceiveRecord()                              => FormatMsg(IGNORE_NO_SEND_RECEIVE_RECORD); 
+        internal static string IgnoreNoSendReceiveRecord()                              => FormatMsg(IGNORE_NO_SEND_RECEIVE_RECORD);
+        internal static string IgnoreNoSendReceiveRowtype()                             => FormatMsg(IGNORE_NO_SEND_RECEIVE_ROWTYPE);
         internal static string IgnoreOracleNoReceive(IOrclType orclType)                => FormatMsg(IGNORE_ORACLE_NO_RECEIVE, orclType.DataType); 
         internal static string IgnoreOracleDeprecation(IOrclType orclType)              => FormatMsg(IGNORE_ORACLE_DEPRECATION, orclType.DataType); 
         internal static string IgnoreNoSendRefCusror()                                  => FormatMsg(IGNORE_NO_SEND_REF_CURSOR); 
