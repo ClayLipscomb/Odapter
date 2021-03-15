@@ -16,35 +16,44 @@
 //    along with this program. If not, see<http://www.gnu.org/licenses/>.
 //------------------------------------------------------------------------------
 
-namespace OdapterFS.CSharp
+/// C# domain types
+namespace Odapter.CSharp
 
-    //type Blue = Aqua | Magenta
-
-    // C# domain types
+open System
+open Odapter.Casing;
 
     type Undefined = exn
+       
+    ///// A C# type that can be a translation target
+    [<NoComparison;NoEquality>]
+    type ITypeTargetable = 
+        /// Type can be turned to code
+        abstract member Code : string
+        /// Ensures type is not an explicitly nullable type (removes any suffix "?" in code)
+        abstract member SansNullable : ITypeTargetable
+        //inherit ICodeable 
+    /// A C# type that can be used to compose a more complex C# type
+    type ITypeComposable = 
+        inherit ITypeTargetable
     
-    /// *Atomic* type that can be turned to code
-    type ICodeable = 
-        abstract member ToCode : string
-    /// C# code type that can be a translation target
-    type ITypeTargetable = inherit ICodeable
-    /// Type that can be used to compose more complex type
-    type ITypeComposable = inherit ITypeTargetable
-    
-    type ToCode = ICodeable -> string
-    type ToCodeTabbed = ICodeable * byte -> string
+    //type ToCode = ICodeable -> string
+    type ToCodeTabbed = Object * uint32 -> string
 
     [<Struct>]
-    type CodeFragment =
-        | OracleDbType | GetOracle | ReadResult | T_ | CommandType | StoredProcedure | BindByName | Rows | Count
-        interface ICodeable with
-            member this.ToCode = this |> UtilUnion.fromDuCaseToString
+    type CSharpVersion = | FourZero with //| FiveZero
+        member this.ToString = this |> UtilUnion.fromDuCaseToString
+
+    [<Struct>]
+    type CodeFrag =
+        | ReadResult | T_ | CommandType | StoredProcedure | BindByName | Rows | Count | CollectionType | Get | Set 
+        | GetOracle  | OracleCollectionType | PLSQLAssociativeArray | OracleDbType | ArrayBindSize
+        member this.Code = this |> UtilUnion.fromDuCaseToString
+        override this.ToString() = this.Code
     [<Struct>]
     type CodeMethod =
-        | ExecuteNonQuery | Close | Dispose | Read | ToArray | ToString | GetDataReader | GetValue | GetOracleValue | SetPrecision
-        interface ICodeable with
-            member this.ToCode = this |> UtilUnion.fromDuCaseToString
+        | ExecuteNonQuery | Close | Dispose | Read | ToArray | GetDataReader | GetValue | GetOracleValue | SetPrecision | Parse
+        member this.Code = this |> UtilUnion.fromDuCaseToString
+        override this.ToString() = this.Code
     //[<Struct>] ?? using a struct causes a "CLR detected an invalid program" error
     type Keyword =
         | ABSTRACT | EVENT | NEW | STRUCT | AS | EXPLICIT | NULL | SWITCH | BASE | EXTERN | OBJECT | THIS | BOOL | FALSE | OPERATOR | THROW | BREAK | FINALLY | OUT | TRUE 
@@ -52,128 +61,218 @@ namespace OdapterFS.CSharp
         | UNCHECKED | CLASS | IF | READONLY | UNSAFE | CONST | IMPLICIT | REF | USHORT | CONTINUE | IN | RETURN | USING | DECIMAL | INT | SBYTE | VIRTUAL | DEFAULT | INTERFACE 
         | SEALED | VOLATILE | DELEGATE | INTERNAL | SHORT | VOID | DO | IS | SIZEOF | WHILE | DOUBLE | LOCK | STACKALLOC | ELSE | LONG | STATIC | ENUM | NAMESPACE | STRING 
         | DYNAMIC | GET | LET | PARTIAL | SET | VALUE | VAR | WHERE  // a few contextual keywords
-        interface ICodeable with
-            member this.ToCode = this |> UtilUnion.fromDuCaseToString |> toLower
+        member this.Code = this |> UtilUnion.fromDuCaseToString |> toLower
+        override this.ToString() = this.Code
+    [<Struct>]
+    type AccessModifier = | INTERNAL | PUBLIC | PROTECTED | PRIVATE  with
+        member this.Code = this |> UtilUnion.fromDuCaseToString |> toLower
+        override this.ToString() = this.Code
 
     [<Struct>]
-    type Namespace = Namespace of string with
-        interface IWrappedString with
-            member this.Value = let (Namespace s) = this in s
-        interface ICodeable with
-            member this.ToCode = (this :> IWrappedString).Value
+    type Namespace = internal Namespace of PascalCase with
+        member this.Code = let (Namespace pascalCase) = this in (pascalCase :> IWrappedString).Value
+        override this.ToString() = this.Code
     [<Struct>]
-    type TypeGeneric = GenericName of string with
+    type TypeGenericName = internal GenericName of string with // change to PascalCase in future
+        member this.Code = Literal.GENERIC_PREFIX + (this :> IWrappedString).Value
+        override this.ToString() = this.Code
         interface IWrappedString with
             member this.Value = let (GenericName s) = this in s
         interface ITypeTargetable with
-            member this.ToCode = (this :> IWrappedString).Value
+            member this.Code = this.Code
+            member this.SansNullable = this :> ITypeTargetable
+        member this.Value = (this :> IWrappedString).Value
         interface ITypeComposable
     [<Struct>]
-    type PropertyName = PropertyName of string with
-        interface IWrappedString with
-            member this.Value = let (PropertyName s) = this in s
-        interface ICodeable with
-            member this.ToCode = (this :> IWrappedString).Value
+    type PropertyName = internal PropertyName of PascalCase with
+        member this.Code = let (PropertyName pascalCase) = this in (pascalCase :> IWrappedString).Value
+        override this.ToString() = this.Code
     [<Struct>]
-    type InterfaceName = InterfaceName of string with
-        interface IWrappedString with
-            member this.Value = let (InterfaceName interfaceName) = this in interfaceName
-        interface ICodeable with
-            member this.ToCode = (this :> IWrappedString).Value
+    type MethodName = internal MethodName of PascalCase with
+        member this.Code = let (MethodName pascalCase) = this in (pascalCase :> IWrappedString).Value
+        override this.ToString() = this.Code
     [<Struct>]
-    type ClassName = ClassName of string with
-        interface IWrappedString with
-            member this.Value = let (ClassName s) = this in s
-        interface ICodeable with
-            member this.ToCode = (this :> IWrappedString).Value
+    type InterfaceName = internal InterfaceName of PascalCase with
+        member this.Code = let (InterfaceName pascalCase) = this in (pascalCase :> IWrappedString).Value
+        override this.ToString() = this.Code
+    [<Struct>]
+    type ClassName = internal ClassName of PascalCase with
+        member this.Code = let (ClassName pascalCase) = this in (pascalCase :> IWrappedString).Value
+        member this.Value = let (ClassName pascalCase) = this in pascalCase
+        override this.ToString() = this.Code
+        interface ITypeTargetable with
+            member this.Code = this.Code
+            member this.SansNullable = this :> ITypeTargetable
         interface ITypeComposable
+
+    [<Struct>]
+    type MethodNameReaderGetter = | GetValue | GetOracleValue | GetOracleDecimal | GetOracleBlob | GetOracleClob with
+        member this.Code = this |> UtilUnion.fromDuCaseToString 
+        override this.ToString() = this.Code
 
     [<Struct>]
     type OdpNetOracleDbTypeEnum =
-        | Byte | Int16 | Int32 | Int64 | Decimal | BinaryDouble | BinaryFloat | DateTime | TimeStamp | TimeStampTZ | TimeStampLTZ | IntervalDS | IntervalYM
-        | Varchar2 | NChar | NVarchar2 | Char | BFile | Blob | Clob | NClob | Long | XmlType | RefCursor | Raw | LongRaw
-        // Not Available in ODP.NET, Managed Driver: | Array | Object | Ref
-        interface ICodeable with
-            member this.ToCode = (UtilUnion.fromDuCaseToString CodeFragment.OracleDbType) + PERIOD + (this |> UtilUnion.fromDuCaseToString)
+        | Byte | Int16 | Int32 | Int64 | Decimal | BinaryDouble | BinaryFloat | Date | TimeStamp | TimeStampTZ | TimeStampLTZ | IntervalDS | IntervalYM
+        | Varchar2 | NChar | NVarchar2 | Char | BFile | Blob | Clob | NClob | Long | RefCursor | Raw | LongRaw 
+        // Not Available in ODP.NET, Managed Driver: Array, Boolean, Object, Ref, XmlType -> https://docs.oracle.com/database/121/ODPNT/OracleDbTypeEnumerationType.htm#ODPNT2286
+        | Boolean | XmlType // | Array | | Object | Ref  // Boolean and XmlType do compile
+        member this.Code = (UtilUnion.fromDuCaseToString CodeFrag.OracleDbType) + PERIOD + (this |> UtilUnion.fromDuCaseToString)
+        override this.ToString() = this.Code
 
     [<Struct>]
     type TypeValue =
-        | SByte | Byte | Int16 | UInt16 | Int32 | UInt32 | Int64 | UInt64  | DateTime | DateTimeOffset | TimeSpan | Double | Single | Float | Decimal 
-        | OracleDecimal | OracleDate | OracleString | OracleBinary | OracleRef | OracleXmlType | OracleTimestamp | OracleTimestampLTZ | OracleTimestampTZ | OracleIntervalDS | OracleIntervalYM 
-        member this.ToCode = this |> UtilUnion.fromDuCaseToString
-        member this.AsNullable = ValueNullable this
+        | SByte | Byte | Int16 | UInt16 | Int32 | UInt32 | Int64 | UInt64  | DateTime | DateTimeOffset | TimeSpan | Double | Single | Float | Decimal | BigInteger
+        | OracleDecimal | OracleDate | OracleString | OracleBinary | OracleRef | OracleTimeStamp | OracleTimeStampLTZ | OracleTimeStampTZ | OracleIntervalDS | OracleIntervalYM 
+        member this.Code = this |> UtilUnion.fromDuCaseToString
+        override this.ToString() = this.Code
+        member this.Nullable with get() = ValueNullable this
         interface ITypeTargetable with
-            member this.ToCode = this.ToCode
+            member this.Code = this.Code
+            member this.SansNullable = this :> ITypeTargetable
         interface ITypeComposable
-    and TypeValueNullable = internal ValueNullable of TypeValue with 
-        interface ITypeTargetable with
-            member this.ToCode = 
-                let (TypeValueNullable.ValueNullable tv) = this
-                tv.ToCode + Ltrl_CODE_NULLABLE_SUFFIX
-        interface ITypeComposable
+    and [<Struct>] TypeValueNullable = internal ValueNullable of TypeValue with 
+        member this.Code = let (TypeValueNullable.ValueNullable tv) = this in tv.Code + NULLABLE_SUFFIX
+        override this.ToString() = this.Code
         member this.TypeValue with get() = let (ValueNullable typeValue) = this in typeValue
-        member this.AsNonNullable = this.TypeValue
+        interface ITypeTargetable with
+            member this.Code = this.Code
+            member this.SansNullable = this.TypeValue :> ITypeTargetable
+        interface ITypeComposable
     [<Struct>]
     type TypeReference =
-        | Boolean |  Object | XmlDocument | String | BigInteger | BigRational | DataTable | Dyanmic | Void
-        | OracleRefCusror | OracleBFile | OracleBlob | OracleClob 
+        | Boolean |  Object | XmlDocument | String | DataTable | Dynamic | Void
+        | OracleRefCursor | OracleBFile | OracleBlob | OracleClob | OracleRef | OracleXmlType 
+        member this.Code = if this = Void then Keyword.VOID.Code else this |> UtilUnion.fromDuCaseToString 
+        override this.ToString() = this.Code
         interface ITypeTargetable with
-            member this.ToCode = if this = Void then (Keyword.VOID :> ICodeable).ToCode else this |> UtilUnion.fromDuCaseToString end
+            member this.Code = this.Code 
+            member this.SansNullable = this :> ITypeTargetable
         interface ITypeComposable
 
     [<Struct>]
-    type TypeCollection = | List | IList | ICollection 
+    type TypeNone = | NoType with
+        member _.Code = emptyString
+        override this.ToString() = this.Code
+        interface ITypeTargetable with
+            member this.Code = this.Code
+            member this.SansNullable = this :> ITypeTargetable
+
+    [<Struct>]
+    type TypeCollection = | List | IList | ICollection with
+        member this.Code = this |> UtilUnion.fromDuCaseToString
+        override this.ToString() = this.Code
+
     //[<NoEquality;NoComparison>]
     [<Struct>]
-    type TypeCollectionGeneric = { typeCollection: TypeCollection; subType: TypeComposable } with
-        // Value, ValueNullable, Reference, Class, GenericParameter, Interface
+    type TypeCollectionGeneric = internal { TypeCollection: TypeCollection; SubType: TypeComposable } with
+        member this.Code = 
+            let {TypeCollection = typeCollection; SubType = subType} = this
+            UtilUnion.fromDuCaseToString typeCollection + LT + subType.Code + GT
+        override this.ToString() = this.Code
         interface ITypeTargetable with
-            member this.ToCode = 
-                let {typeCollection = tColl; subType = tComp} = this
-                UtilUnion.fromDuCaseToString tColl + Ltrl_LT + (tComp :> ICodeable).ToCode + Ltrl_GT
-        member this.TypeCollection with get() = this.typeCollection
-        member this.SubType with get() = this.subType
-    /// Single dimensional array
-    and TypeArray = internal TypeArray of ITypeComposable with 
+            member this.Code = this.Code
+            member this.SansNullable = this :> ITypeTargetable
+        interface ITypeComposable
+        member this.GetTypeCollection with get() = this.TypeCollection 
+        member this.GetSubType with get() = 
+            match this.SubType with
+            | ComposableGeneric t           -> t :> ITypeTargetable
+            | ComposableValueNullable t     -> t :> ITypeTargetable
+            | ComposableValue t             -> t :> ITypeTargetable
+            | ComposableReference t         -> t :> ITypeTargetable
+            | ComposableClassName t         -> t :> ITypeTargetable
+            | ComposableArray t             -> t :> ITypeTargetable
+            | ComposableCollectionGeneric t -> t :> ITypeTargetable
+    and [<Struct>] TypeArray = internal TypeArray of TypeComposable with 
+        member this.SubType with get() = let (TypeArray typeComposable) = this in typeComposable
+        member this.Code = let (TypeArray.TypeArray typeComposable) = this in typeComposable.Code + BRACKETS
+        override this.ToString() = this.Code
         interface ITypeTargetable with
-            member this.ToCode = 
-                let (TypeArray.TypeArray subType) = this
-                subType.ToCode + Ltrl_BRACKETS
+            member this.Code = this.Code
+            member this.SansNullable = this :> ITypeTargetable
         interface ITypeComposable
     /// Type used to compose other types
     and TypeComposable = 
         internal 
-        | ComposableGeneric of TypeGeneric
+        | ComposableGeneric of TypeGenericName:TypeGenericName
         | ComposableReference of TypeReference:TypeReference
         | ComposableValue of TypeValue:TypeValue
         | ComposableValueNullable of TypeValueNullable:TypeValueNullable
         | ComposableClassName of ClassName:ClassName
         | ComposableArray of TypeArray:TypeArray
-        interface ITypeTargetable with
-            member this.ToCode = 
-                match this with
-                | ComposableGeneric t       -> (t :> ICodeable).ToCode
-                | ComposableValueNullable t -> (t :> ICodeable).ToCode
-                | ComposableValue t         -> (t :> ICodeable).ToCode
-                | ComposableReference t     -> (t :> ICodeable).ToCode
-                | ComposableClassName t     -> (t :> ICodeable).ToCode
-                | ComposableArray t         -> (t :> ICodeable).ToCode
+        | ComposableCollectionGeneric of TypeCollectionGeneric:TypeCollectionGeneric
+        member this.Code = 
+            match this with
+            | ComposableGeneric t           -> t.Code
+            | ComposableValueNullable t     -> t.Code
+            | ComposableValue t             -> t.Code
+            | ComposableReference t         -> t.Code
+            | ComposableClassName t         -> t.Code
+            | ComposableArray t             -> t.Code
+            | ComposableCollectionGeneric t -> t.Code
+        override this.ToString() = this.Code
+        member this.AsITypeComposable =
+            match this with
+            | ComposableGeneric t           -> t :> ITypeComposable
+            | ComposableValueNullable t     -> t :> ITypeComposable
+            | ComposableValue t             -> t :> ITypeComposable
+            | ComposableReference t         -> t :> ITypeComposable
+            | ComposableClassName t         -> t :> ITypeComposable
+            | ComposableArray t             -> t :> ITypeComposable
+            | ComposableCollectionGeneric t -> t :> ITypeComposable
         member this.ValueNullableToValue = 
             match this with
-            | ComposableValueNullable t    -> ComposableValue t.AsNonNullable
-            | ComposableGeneric _ | ComposableValue _ | ComposableReference _ | ComposableClassName _ | ComposableArray _ -> this
+            | ComposableValueNullable t -> ComposableValue t.TypeValue
+            | ComposableGeneric _ | ComposableValue _ | ComposableReference _ | ComposableClassName _ | ComposableArray _ | ComposableCollectionGeneric _ -> this
 
     [<Struct>]
-    type Property = { propertyName : PropertyName; propertyType : TypeComposable }
+    type TypeTarget = 
+        internal
+        | TargetValueNullable of TypeValueNullable:TypeValueNullable
+        | TargetValue of TypeValue:TypeValue
+        | TargetReference of TypeReference:TypeReference
+        | TargetGenericName of TypeGenericName:TypeGenericName
+        | TargetClassName of ClassName:ClassName
+        | TargetCollectionGeneric of TypeCollectionGeneric:TypeCollectionGeneric
+        | TargetArray of TypeArray:TypeArray
+        | TargetNone of TypeNone:TypeNone with
+        member this.AsITypeTargetable =
+            match this with
+            | TargetValueNullable t     -> t :> ITypeTargetable
+            | TargetValue t             -> t :> ITypeTargetable
+            | TargetReference t         -> t :> ITypeTargetable
+            | TargetGenericName t       -> t :> ITypeTargetable
+            | TargetClassName t         -> t :> ITypeTargetable
+            | TargetCollectionGeneric t -> t :> ITypeTargetable
+            | TargetArray t             -> t :> ITypeTargetable
+            | TargetNone t              -> t :> ITypeTargetable
+        member this.Code =
+            match this with
+            | TargetValueNullable t     -> t.Code
+            | TargetValue t             -> t.Code
+            | TargetReference t         -> t.Code
+            | TargetGenericName t       -> t.Code
+            | TargetClassName t         -> t.Code
+            | TargetCollectionGeneric t -> t.Code
+            | TargetArray t             -> t.Code
+            | TargetNone t              -> t.Code
+        override this.ToString() = this.Code
+        member this.SansNullable =
+            match this with
+            | TargetValueNullable t -> t.TypeValue |> TargetValue
+            | TargetGenericName _ | TargetValue _ | TargetReference _ | TargetClassName _ | TargetCollectionGeneric _ | TargetArray _ | TargetNone _ -> this 
+
     [<Struct>]
-    type TypeInterface = { interfaceName : InterfaceName; properties : Property seq }
+    type internal Property = { PropertyName : PropertyName; PropertyType : TypeComposable }
     [<Struct>]
-    type TypeClassDto = { 
-        className : ClassName; 
-        properties : seq<Property>
-        useDataMemberAttribute : bool; 
-        useXmlElementAttribute : bool
-        extendedClassName : ClassName; 
-        extendedClassNameNamespace : Namespace; 
-        implementedInterfaceName : InterfaceName
+    type internal TypeInterface = { InterfaceName : InterfaceName; Properties : Property seq }
+    [<Struct>]
+    type internal TypeClassDto = { 
+        ClassName : ClassName; 
+        Properties : Property seq
+        UseDataMemberAttribute : bool; 
+        UseXmlElementAttribute : bool
+        ExtendedClassName : ClassName; 
+        ExtendedClassNameNamespace : Namespace; 
+        ImplementedInterfaceName : InterfaceName
 }

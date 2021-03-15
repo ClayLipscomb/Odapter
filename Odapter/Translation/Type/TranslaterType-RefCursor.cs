@@ -17,66 +17,66 @@
 //------------------------------------------------------------------------------
 
 using System;
+using CS = Odapter.CSharp;
+using CSL = Odapter.CSharp.Logic.Api;
 
 namespace Odapter {
     internal sealed class TranslaterRefCursorTyped : ITranslaterType {
         public string DataTypeFull { get; private set; }
         public IOrclType OrclType { get => OrclUtil.GetType(Orcl.REF_CURSOR); }
-
         // translation to C#
-        public string GetCSharpType(bool typeNotNullable = false, bool nonInterfaceType = false) {
-            return CSharp.GenericCollectionOf((nonInterfaceType ? CSharp.LIST : CSharpType), CSharp.GENERIC_TYPE_PREFIX + SubCSharpType);
-        }
-        private string CSharpType { get => _cSharpType; } private readonly string _cSharpType;
-        private string SubCSharpType { get => _subCSharpType; } private readonly string _subCSharpType;
+        public CS.ITypeTargetable CSharpType { get => CSL.TypeCollectionGeneric(_typeCollection, _subTypeGeneric); }
+        public CS.ITypeTargetable CSharpSubType { get => _subTypeGeneric; }
+        private CS.TypeTarget TypeTargetTest { get; set; }
+        private readonly CS.TypeCollection _typeCollection;
+        private readonly CS.TypeGenericName _subTypeGeneric;
+        private readonly ITranslaterType _translaterSubType;
         public bool IsValid(ITyped dataType) { return dataType.OrclType.BuildDataTypeFullName(dataType).Equals(DataTypeFull); }
-        public string CSharpOracleDbType { get => CSharp.ORACLEDBTYPE_REF_CURSOR; }
-        public string CSharpOdpNetType { get => CSharp.ODP_NET_SAFE_TYPE_REF_CURSOR; }
+        public CS.OdpNetOracleDbTypeEnum CSharpOracleDbTypeEnum { get => CS.OdpNetOracleDbTypeEnum.RefCursor; }
+        public CS.ITypeTargetable CSharpOdpNetSafeType { get => CS.TypeReference.OracleRefCursor; }
         public bool IsIgnoredAsParameter { get => false; }
         public string IgnoredReasonAsParameter { get => String.Empty; }
         public bool IsIgnoredAsAttribute { get => false; }
         public string IgnoredReasonAsAttribute { get => String.Empty; }
-
-        internal TranslaterRefCursorTyped(string dataTypeFull, string cSharpType, ITyped dbDataType) {
+        internal TranslaterRefCursorTyped(string dataTypeFull, CS.TypeCollection typeCollection, ITyped dbDataType) {
+            //TypeTargetTest = CS.TypeTarget.NewTargetValue(CS.TypeValue.Double);
             DataTypeFull = dataTypeFull;
-            _cSharpType = cSharpType;
-            _subCSharpType = TranslaterFactoryType.GetTranslater(dbDataType.SubType).GetCSharpType();
+            _typeCollection = typeCollection;
+            _translaterSubType = TranslaterFactoryType.GetTranslater(dbDataType?.SubType);
+            //_subTypeGeneric = TranslaterName.TypeGenericNameOfOracleIdentifier(_translaterSubType?.DataTypeFull);
+            _subTypeGeneric = CSL.TypeGenericNameOf(_translaterSubType?.CSharpType);
         }
         private TranslaterRefCursorTyped() { }
-
         public override string ToString() { return DataTypeFull; }
     }
 
     internal sealed class TranslaterRefCursorUntyped : ITranslaterType {
         public string DataTypeFull { get; private set; }
         public IOrclType OrclType { get => OrclUtil.GetType(Orcl.REF_CURSOR); }
-
         // translation to C#
-        public string GetCSharpType(bool typeNotNullable = false, bool nonInterfaceType = false) {
-            // a weakly typed cursor is either a generic list or DataTable
-            return TranslaterManager.UseDatatableForUntypedCursor
-                    // otherwise, we are configured to use a Datatable
-                    ? CSharp.DATATABLE
-                    // generic list; create informative subtype name that is unique among multiple untyped (cursor) args in proc
-                    : CSharp.GenericCollectionOf((nonInterfaceType ? CSharp.LIST : CSharpType), CSharp.GENERIC_TYPE_PREFIX + SubCSharpType);
+        public CS.ITypeTargetable CSharpType { get =>
+            // a weakly typed cursor is either a DataTable or generic list
+            TranslaterManager.UseDatatableForUntypedCursor
+                ? CS.TypeReference.DataTable
+                : CSL.TypeCollectionGeneric(_typeCollection, _subTypeGeneric) as CS.ITypeTargetable; 
         }
-        private string CSharpType { get; set; }
-        private string SubCSharpType { get; set; }
+        public CS.ITypeTargetable CSharpSubType { get => _subTypeGeneric; }
+        private readonly CS.TypeCollection _typeCollection;
+        private readonly CS.TypeGenericName _subTypeGeneric;
         public bool IsValid(ITyped dataType) { return dataType.OrclType.BuildDataTypeFullName(dataType).Equals(DataTypeFull); }
-        public string CSharpOracleDbType { get => CSharp.ORACLEDBTYPE_REF_CURSOR; }
-        public string CSharpOdpNetType { get => CSharp.ODP_NET_SAFE_TYPE_REF_CURSOR; }
+        public CS.OdpNetOracleDbTypeEnum CSharpOracleDbTypeEnum { get => CS.OdpNetOracleDbTypeEnum.RefCursor; }
+        public CS.ITypeTargetable CSharpOdpNetSafeType { get => CS.TypeReference.OracleRefCursor; }
         public bool IsIgnoredAsParameter { get => false; }
         public string IgnoredReasonAsParameter { get => String.Empty; }
         public bool IsIgnoredAsAttribute { get => false; }
         public string IgnoredReasonAsAttribute { get => String.Empty; }
-
-        internal TranslaterRefCursorUntyped(string dataTypeFull, string cSharpType, ITyped dbDataType) {
+        internal TranslaterRefCursorUntyped(string dataTypeFull, CS.TypeCollection typeCollection, ITyped dbDataType) {
             DataTypeFull = dataTypeFull;
-            CSharpType = cSharpType;
-            SubCSharpType = TranslaterName.ConvertToCamel((dbDataType.DataTypeLabel ?? Orcl.RETURN) + "_UNTYPED");
+            _typeCollection = typeCollection;
+            // create informative subtype name that is unique among multiple untyped(cursor) args in proc
+            _subTypeGeneric = TranslaterName.TypeGenericNameOfOracleIdentifier((dbDataType.DataTypeLabel ?? Orcl.RETURN) + @"_UNTYPED");
         }
         private TranslaterRefCursorUntyped() { }
-
         public override string ToString() { return DataTypeFull; }
     }
 }

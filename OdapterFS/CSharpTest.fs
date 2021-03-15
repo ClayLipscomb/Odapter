@@ -16,9 +16,13 @@
 //    along with this program. If not, see<http://www.gnu.org/licenses/>.
 //------------------------------------------------------------------------------
 
-namespace OdapterFS.CSharp.Logic
+namespace Odapter
 
-open OdapterFS.CSharp
+open System;
+open Odapter.CSharp
+open Odapter.CSharp.Logic
+open Odapter.Casing;
+open Odapter.Translation.Api;
 
 module CSharpTest =
     let private testFunc a = 
@@ -27,24 +31,25 @@ module CSharpTest =
 
         let tvComposable = ComposableValue TypeValue.Int32
         let tvnComposable = ComposableValueNullable (ValueNullable TypeValue.TimeSpan)
-        let tvnComposable_iCodeable = tvnComposable :> ICodeable
-        let tvnComposable2 = ComposableValueNullable TypeValue.TimeSpan.AsNullable
+        //let tvnComposable_iCodeable = tvnComposable :> ICodeable
+        let tvnComposable2 = ComposableValueNullable TypeValue.TimeSpan.Nullable
         let trComposable = ComposableReference DataTable
-        //let typeClass = TypeClass.create "TheClassName"
-        let className = ClassName.create "MyClassName"
+        let pascalCase = PascalCase.create "TheClassName"
+        //let typeClass = ClassName.ClassName .create "TheClassName"
+        let className = ClassNameOfOracleIdentifier "PACKAGE.GOOD_PROC"
         //let typeInterface = TypeInterface.createOfClass typeClass
-        let typeGeneric = TypeGeneric.create "T_MyGeneric"
+        let typeGeneric = TypeGenericName.createOfClassName className
         let typeValue = TypeValue.Int16
         let typeReference = TypeReference.String
-        let typeValueNullale = TypeValue.DateTime.AsNullable
+        let typeValueNullale = TypeValue.DateTime.Nullable
 
         let isEqual = tvComposable.Equals(tvnComposable)
-        let isEqual1 = TypeComposable.isEquals tvComposable typeGeneric
+        //let isEqual1 = TypeComposable.isEquals tvComposable typeGeneric
 
-        let typeArray = TypeArray.create className
-        let typeArray2 = TypeArray.create typeValue
-        let typeArray3 = TypeArray.create typeReference
-        let typeArray4 = TypeArray.create typeValueNullale
+        let typeArray = TypeArray.create (ComposableClassName className)
+        let typeArray2 = TypeArray.create (ComposableValue typeValue)
+        let typeArray3 = TypeArray.create (ComposableReference typeReference)
+        let typeArray4 = TypeArray.create (ComposableValueNullable typeValueNullale)
 
         //let gc1 = TypeCollectionGeneric.createOfTypeValue(TypeCollection.ICollection, typeValue)
         //let gc2 = TypeCollectionGeneric.createOfTypeValueNullable(TypeCollection.IList, typeValueNullale)
@@ -58,12 +63,13 @@ module CSharpTest =
         let gc9 = TypeCollectionGeneric.create(TypeCollection.IList, ComposableGeneric typeGeneric)
         let gc10 = TypeCollectionGeneric.create(TypeCollection.IList, ComposableArray typeArray)
 
-        let arrayCodeables : ICodeable[] = [|kw ; typeValue; typeReference; typeValueNullale; className; typeGeneric|] 
-        let listCodeables : ICodeable list = [kw ; typeValue; typeReference; typeValueNullale; className; typeGeneric] 
-        let someCode = toCodeSpaced arrayCodeables
-        let someCode2 = toCodeCommaSpaced listCodeables
-        let someCode3 = toCodeSpaced [|className ; typeReference ; typeValueNullale|]
+        let arrayObjects : obj[] = [|kw ; typeValue; typeReference; typeValueNullale; className; typeGeneric|] 
+        let listObjects : obj list = [kw ; typeValue; typeReference; typeValueNullale; className; typeGeneric] 
+        let iTypeTargetableList : ITypeTargetable list = [typeValue; typeReference; typeValueNullale] 
+        let someCode = toCodeSpaced [|kw ; typeValue; typeReference; typeValueNullale; className; typeGeneric|] 
+        let someCode2 = toCodeCommaSpaced [kw ; typeValue; typeReference; typeValueNullale; className; typeGeneric] 
+        //let someCode3 = toCodeSpaced [| typeReference ; typeValueNullale|]
 
         let x = ValueNullable TypeValue.Byte
         let y = x.TypeValue
-        ""
+        emptyString

@@ -8,9 +8,11 @@
     <Compile Include="Extension.fs" />
     <Compile Include="Util.fs" />
     <Compile Include="WrappedString.fs" />
+    <Compile Include="Casing.fs" />
     <Compile Include="CSharpLiteral.fs" />
     <Compile Include="CSharpDomain.fs" />
     <Compile Include="CSharpLogic.fs" />
+    <Compile Include="Translate.fs" />
     <Compile Include="CSharpTest.fs" />
   </ItemGroup>
 </Project>

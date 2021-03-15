@@ -13,7 +13,7 @@
 //    GNU General Public License for more details.
 //
 //    You should have received a copy of the GNU General Public License
-//    along with this program.If not, see<http://www.gnu.org/licenses/>.
+//    along with this program. If not, see<http://www.gnu.org/licenses/>.
 //------------------------------------------------------------------------------
 
 using System;
@@ -24,6 +24,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Text;
 using Odapter;
+using Odapter.CSharp;
 
 namespace OdapterWnFrm {
     public partial class FormMain : Form {
@@ -400,7 +401,7 @@ namespace OdapterWnFrm {
             cbIsSavePassword.Checked = Parameter.Instance.IsSavePassword;
 
             txtOutputPath.Text = Parameter.Instance.OutputPath;
-            cmbCSharpVersion.SelectedValue = Parameter.Instance.CSharpVersion;
+            cmbCSharpVersion.SelectedValue = Parameter.Instance.TargetCSharpVersion;
 
             txtBaseNamespace.Text = Parameter.Instance.NamespaceBase;
             txtPackageNamespace.Text = Parameter.Instance.NamespacePackage;
@@ -453,9 +454,9 @@ namespace OdapterWnFrm {
             cmbCSharpTypeUsedForOracleInteger.SelectedValue = Parameter.Instance.CSharpTypeUsedForOracleInteger;
             cmbCSharpTypeUsedForOracleNumber.SelectedValue = Parameter.Instance.CSharpTypeUsedForOracleNumber;
             cmbCSharpTypeUsedForOracleDate.SelectedValue = Parameter.Instance.CSharpTypeUsedForOracleDate;
-            cmbCSharpTypeUsedForOracleTimestamp.SelectedValue = Parameter.Instance.CSharpTypeUsedForOracleTimeStamp;
-            cmbCSharpTypeUsedForOracleTimestampTZ.SelectedValue = Parameter.Instance.CSharpTypeUsedForOracleTimeStampTZ;
-            cmbCSharpTypeUsedForOracleTimestampLTZ.SelectedValue = Parameter.Instance.CSharpTypeUsedForOracleTimeStampLTZ;
+            cmbCSharpTypeUsedForOracleTimestamp.SelectedValue = Parameter.Instance.CSharpTypeUsedForOracleTimestamp;
+            cmbCSharpTypeUsedForOracleTimestampTZ.SelectedValue = Parameter.Instance.CSharpTypeUsedForOracleTimestampTZ;
+            cmbCSharpTypeUsedForOracleTimestampLTZ.SelectedValue = Parameter.Instance.CSharpTypeUsedForOracleTimestampLTZ;
             cmbCSharpTypeUsedForOracleIntervalDayToSecond.SelectedValue = Parameter.Instance.CSharpTypeUsedForOracleIntervalDayToSecond;
             cmbCSharpTypeUsedForOracleBlob.SelectedValue = Parameter.Instance.CSharpTypeUsedForOracleBlob;
             cmbCSharpTypeUsedForOracleClob.SelectedValue = Parameter.Instance.CSharpTypeUsedForOracleClob;
@@ -480,7 +481,7 @@ namespace OdapterWnFrm {
             Parameter.Instance.OutputPath = txtOutputPath.Text;
 
             Parameter.Instance.OutputPath = txtOutputPath.Text;
-            Parameter.Instance.CSharpVersion = cmbCSharpVersion.SelectedValue.ToString() == CSharpVersion.ThreeZero.ToString() ? CSharpVersion.ThreeZero: CSharpVersion.FourZero;
+            Parameter.Instance.TargetCSharpVersion = CSharpVersion.FourZero;
 
             Parameter.Instance.NamespaceBase = txtBaseNamespace.Text;
             Parameter.Instance.NamespacePackage = txtPackageNamespace.Text;
@@ -503,9 +504,9 @@ namespace OdapterWnFrm {
             Parameter.Instance.CSharpTypeUsedForOracleInteger = cmbCSharpTypeUsedForOracleInteger.SelectedValue.ToString();
             Parameter.Instance.CSharpTypeUsedForOracleNumber = cmbCSharpTypeUsedForOracleNumber.SelectedValue.ToString();
             Parameter.Instance.CSharpTypeUsedForOracleDate = cmbCSharpTypeUsedForOracleDate.SelectedValue.ToString();
-            Parameter.Instance.CSharpTypeUsedForOracleTimeStamp = cmbCSharpTypeUsedForOracleTimestamp.SelectedValue.ToString();
-            Parameter.Instance.CSharpTypeUsedForOracleTimeStampTZ = cmbCSharpTypeUsedForOracleTimestampTZ.SelectedValue.ToString();
-            Parameter.Instance.CSharpTypeUsedForOracleTimeStampLTZ = cmbCSharpTypeUsedForOracleTimestampLTZ.SelectedValue.ToString();
+            Parameter.Instance.CSharpTypeUsedForOracleTimestamp = cmbCSharpTypeUsedForOracleTimestamp.SelectedValue.ToString();
+            Parameter.Instance.CSharpTypeUsedForOracleTimestampTZ = cmbCSharpTypeUsedForOracleTimestampTZ.SelectedValue.ToString();
+            Parameter.Instance.CSharpTypeUsedForOracleTimestampLTZ = cmbCSharpTypeUsedForOracleTimestampLTZ.SelectedValue.ToString();
 
             Parameter.Instance.CSharpTypeUsedForOracleIntervalDayToSecond = cmbCSharpTypeUsedForOracleIntervalDayToSecond.SelectedValue.ToString();
             Parameter.Instance.CSharpTypeUsedForOracleBlob = cmbCSharpTypeUsedForOracleBlob.SelectedValue.ToString();

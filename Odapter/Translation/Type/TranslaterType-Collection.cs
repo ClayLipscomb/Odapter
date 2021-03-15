@@ -17,6 +17,8 @@
 //------------------------------------------------------------------------------
 
 using System;
+using CS = Odapter.CSharp;
+using CSL = Odapter.CSharp.Logic.Api;
 
 namespace Odapter {
     internal sealed class TranslaterAssociativeArray : ITranslaterType {
@@ -24,19 +26,17 @@ namespace Odapter {
         public IOrclType OrclType { get => OrclUtil.GetType(Orcl.ASSOCIATITVE_ARRAY); }
 
         // translation to C#
-        public string GetCSharpType(bool typeNotNullable = false, bool nonInterfaceType = false) {
-            // A PL/SQL associative array is similar to a C# Dictionary. Although the Dicionary type behavior can
-            // be used within PL/SQL, a Dictionary object cannot be pased from .NET. We can only pass the values
-            // using an array index instead of key. So we treat an associative array as a List of a type in C#. 
-            // The sub type is in the subsequent Oracle arg.
-            return CSharp.GenericCollectionOf((nonInterfaceType ? CSharp.LIST : CSharpType), CSharpTypeSub);
-        }
-        private string CSharpType { get; set; }
-        private ITranslaterType TranslaterSubType { get; set; }
-        private string CSharpTypeSub { get => TranslaterSubType?.GetCSharpType(); }
+        // A PL/SQL associative array is similar to a C# Dictionary. Although the Dicionary type behavior can
+        // be used within PL/SQL, a Dictionary object cannot be pased from .NET. We can only pass the values
+        // using an array index instead of key. So we treat an associative array as a List of a type in C#. 
+        // The sub type is in the subsequent Oracle arg.
+        public CS.ITypeTargetable CSharpType { get => CSL.TypeCollectionGeneric(_typeCollection, _translaterSubType.CSharpType); }
+        public CS.ITypeTargetable CSharpSubType { get => _translaterSubType.CSharpType; }
+        private readonly CS.TypeCollection _typeCollection;
+        private readonly ITranslaterType _translaterSubType;
         public bool IsValid(ITyped dataType) { return dataType.OrclType.BuildDataTypeFullName(dataType).Equals(DataTypeFull); }
-        public string CSharpOracleDbType { get => String.Empty; }
-        public string CSharpOdpNetType { get => String.Empty; }
+        public CS.OdpNetOracleDbTypeEnum CSharpOracleDbTypeEnum => CS.OdpNetOracleDbTypeEnum.Byte; // unused
+        public CS.ITypeTargetable CSharpOdpNetSafeType => CSL.TypeNone;
         public bool IsIgnoredAsParameter { get => false; }
         public string IgnoredReasonAsParameter { get => String.Empty; }
         /// <summary>
@@ -44,11 +44,10 @@ namespace Odapter {
         /// </summary>
         public bool IsIgnoredAsAttribute { get => true; }
         public string IgnoredReasonAsAttribute { get => TranslaterMessage.IgnoreNoSendReceiveRecordFieldTyped(OrclType); }
-
-        internal TranslaterAssociativeArray(string dataTypeFull, string cSharpType, ITyped dbDataType) {
+        internal TranslaterAssociativeArray(string dataTypeFull, CS.TypeCollection typeCollection, ITyped dbDataType) {
             DataTypeFull = dataTypeFull;
-            CSharpType = cSharpType;
-            if (dbDataType.SubType != null) TranslaterSubType = TranslaterFactoryType.GetTranslater(dbDataType?.SubType);
+            this._typeCollection = typeCollection;
+            this._translaterSubType = dbDataType.SubType != null ? TranslaterFactoryType.GetTranslater(dbDataType?.SubType) : new TranslaterNoneType();
         }
         private TranslaterAssociativeArray() { }
         public override string ToString() { return DataTypeFull; }
@@ -71,23 +70,22 @@ namespace Odapter {
         public IOrclType OrclType { get => OrclUtil.GetType(Orcl.NESTED_TABLE); }
 
         // translation to C#
-        public string GetCSharpType(bool typeNotNullable = false, bool nonInterfaceType = false) {
-            return CSharp.GenericCollectionOf((nonInterfaceType ? CSharp.LIST : CSharpType), CSharpTypeSub);
-        }
-        private string CSharpType { get; set; }
-        private ITranslaterType TranslaterSubType { get; set; }
-        private string CSharpTypeSub { get => TranslaterSubType?.GetCSharpType(); }
+        public CS.ITypeTargetable CSharpType { get => CSL.TypeCollectionGeneric(_typeCollection, _translaterSubType.CSharpType); }
+        public CS.ITypeTargetable CSharpSubType { get => _translaterSubType.CSharpType; }
+        private readonly CS.TypeCollection _typeCollection;
+        private readonly ITranslaterType _translaterSubType;
         public bool IsValid(ITyped dataType) { return dataType.OrclType.BuildDataTypeFullName(dataType).Equals(DataTypeFull); }
-        public string CSharpOracleDbType { get => String.Empty; }
-        public string CSharpOdpNetType { get => String.Empty; }
+        public CS.OdpNetOracleDbTypeEnum CSharpOracleDbTypeEnum => CS.OdpNetOracleDbTypeEnum.Byte; // unused
+        public CS.ITypeTargetable CSharpOdpNetSafeType => CSL.TypeNone;
         public bool IsIgnoredAsParameter { get => true; }
         public string IgnoredReasonAsParameter { get => TranslaterMessage.IgnoreNotImplemented($"NESTED {Orcl.NESTED_TABLE}"); }
         public bool IsIgnoredAsAttribute { get => true; }
         public string IgnoredReasonAsAttribute { get => TranslaterMessage.IgnoreNotImplemented($"NESTED {Orcl.NESTED_TABLE}"); }
-        internal TranslaterNestedTable(string dataTypeFull, string cSharpType, ITyped dbDataType) {
+
+        internal TranslaterNestedTable(string dataTypeFull, CS.TypeCollection typeCollection, ITyped dbDataType) {
             DataTypeFull = dataTypeFull;
-            CSharpType = cSharpType;
-            if (dbDataType.SubType != null) TranslaterSubType = TranslaterFactoryType.GetTranslater(dbDataType?.SubType);
+            this._typeCollection = typeCollection;
+            this._translaterSubType = dbDataType?.SubType != null ? TranslaterFactoryType.GetTranslater(dbDataType?.SubType) : new TranslaterNoneType();
         }
         private TranslaterNestedTable() { }
         public override string ToString() { return DataTypeFull; }
@@ -98,23 +96,21 @@ namespace Odapter {
         public IOrclType OrclType { get => OrclUtil.GetType(Orcl.VARRAY); }
 
         // translation to C#
-        public string GetCSharpType(bool typeNotNullable = false, bool nonInterfaceType = false) {
-            return CSharp.GenericCollectionOf((nonInterfaceType ? CSharp.LIST : CSharpType), SubCSharpType);
-        }
-        private string CSharpType { get; set; }
-        private string SubCSharpType { get; set; }
+        public CS.ITypeTargetable CSharpType { get => CSL.TypeCollectionGeneric(_typeCollection, _translaterSubType.CSharpType); }
+        public CS.ITypeTargetable CSharpSubType { get => _translaterSubType.CSharpType; }
+        private readonly CS.TypeCollection _typeCollection;
+        private readonly ITranslaterType _translaterSubType;
         public bool IsValid(ITyped dataType) { return dataType.OrclType.BuildDataTypeFullName(dataType).Equals(DataTypeFull); }
-        public string CSharpOracleDbType { get => String.Empty; }
-        public string CSharpOdpNetType { get => String.Empty; }
+        public CS.OdpNetOracleDbTypeEnum CSharpOracleDbTypeEnum => CS.OdpNetOracleDbTypeEnum.Byte; // unused
+        public CS.ITypeTargetable CSharpOdpNetSafeType => CSL.TypeNone;
         public bool IsIgnoredAsParameter { get => true; }
         public string IgnoredReasonAsParameter { get => TranslaterMessage.IgnoreNotImplemented(OrclType); }
         public bool IsIgnoredAsAttribute { get => true; }
         public string IgnoredReasonAsAttribute { get => TranslaterMessage.IgnoreNotImplemented(OrclType); }
-
-        internal TranslaterVarray(string dataTypeFull, string cSharpType, ITyped dbDataType) {
+        internal TranslaterVarray(string dataTypeFull, CS.TypeCollection typeCollection, ITyped dbDataType) {
             DataTypeFull = dataTypeFull;
-            CSharpType = cSharpType;
-            if (dbDataType.SubType != null) SubCSharpType = TranslaterFactoryType.GetTranslater(dbDataType.SubType)?.GetCSharpType();
+            this._typeCollection = typeCollection;
+            this._translaterSubType = dbDataType?.SubType != null ? TranslaterFactoryType.GetTranslater(dbDataType?.SubType) : new TranslaterNoneType();
         }
         private TranslaterVarray() { }
         public override string ToString() { return DataTypeFull; }

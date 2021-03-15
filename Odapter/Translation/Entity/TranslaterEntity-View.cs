@@ -17,6 +17,8 @@
 //------------------------------------------------------------------------------
 
 using System;
+using Odapter.CSharp;
+using CSL = Odapter.CSharp.Logic.Api;
 
 namespace Odapter {
     internal sealed class TranslaterView : ITranslaterEntity {
@@ -25,11 +27,11 @@ namespace Odapter {
 
         internal TranslaterView(string dataTypeFull) {
             DataTypeFull = dataTypeFull;
+            CSharpClassName = TranslaterName.ClassNameOfOracleIdentifier(dataTypeFull);
         }
-
-        public string CSharpAccessModifier { get => CSharp.PUBLIC; }
-        public string CSharpName { get => TranslaterName.ConvertToPascal(DataTypeFull); }
-        public string CSharpType { get => CSharp.CLASS; }
+        public ClassName CSharpClassName { get; private set; }
+        public AccessModifier CSharpAccessModifier { get => AccessModifier.PUBLIC; }
+        public string CSharpType { get => Keyword.CLASS.Code; }
 
         public override string ToString() { return DataTypeFull; }
     }

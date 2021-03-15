@@ -16,27 +16,25 @@
 //    along with this program. If not, see<http://www.gnu.org/licenses/>.
 //------------------------------------------------------------------------------
 
-namespace OdapterFS.CSharp
+namespace Odapter.CSharp
 
 [<AutoOpen>]
-module internal CSharpLiteral =
-    let UNDERSCORE = @"_"
-    let PERIOD = @"."
-    let SEMICOLON = @";"
-    let SPACE = @" "
-    let NEWLINE = @"\r\n"
-
-    // general constants
-    let [<Literal>] Ltrl_UNDEFINED = @"UNDEFINED"
-    let [<Literal>] Ltrl_ORACLE = @"Oracle"
+module Attribute =
+    let [<Literal>] SERIALIZABLE = @"[Serializable()]"
+    let [<Literal>] DATA_CONTRACT = @"DataContract"
+[<AutoOpen>]
+module Literal =
+    let [<Literal>] internal GENERIC_PREFIX = @"T_"
+    let [<Literal>] internal PERIOD = @"."
+    let [<Literal>] COLON = @":"
+    let [<Literal>] internal SEMICOLON = @";"
+    let [<Literal>] internal SPACE = @" "
+    let [<Literal>] internal NEWLINE = @"\r\n"
 
     // code constants
-    let [<Literal>] Ltrl_BRACKETS = @"[]"
-    let [<Literal>] Ltrl_CODE_NULLABLE_SUFFIX = @"?"
-    let [<Literal>] Ltrl_LT = @"<"
-    let [<Literal>] Ltrl_GT = @">"
-    let [<Literal>] Ltrl_CURLY_OPEN = @"{"
-    let [<Literal>] Ltrl_CURLY_CLOSE = @"}"
-    let [<Literal>] Ltrl_CODE_INTEFACE_PREFIX = @"I"
-    let [<Literal>] Ltrl_CODE_ATTRIBUTE_SERIALIZABLE = @"[Serializable()]"
-    let [<Literal>] Ltrl_CODE_ATTRIBUTE_DATA_CONTRACT = @"DataContract"
+    let [<Literal>] internal BRACKETS = @"[]"
+    let [<Literal>] internal NULLABLE_SUFFIX = @"?"
+    let [<Literal>] internal LT = @"<"
+    let [<Literal>] internal GT = @">"
+    let [<Literal>] internal CURLY_OPEN = @"{"
+    let [<Literal>] internal CURLY_CLOSE = @"}"

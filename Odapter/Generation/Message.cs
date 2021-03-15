@@ -23,5 +23,6 @@ namespace Odapter {
         internal static String BASE_PERMISSION_ERROR_MSG = @"Permission error writing ";
         internal static String GENERATION_COMPLETE = @"Generation completed.";
         internal static String NO_GENERATE_OPTIONS_SELECTED = @"No 'Code To Generate' options were selected.";
+        internal static String FormatFileWriteError(string fileName, Exception ex) => $"Error writing {fileName}. {ex.Message}. {ex.StackTrace}";
     }
 }

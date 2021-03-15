@@ -121,6 +121,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\OdapterFS\OdapterFS.fsproj">
+      <Project>{1fb7e445-e788-4fb6-bbf2-c88126f646ad}</Project>
+      <Name>OdapterFS</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Odapter\Odapter.csproj">
       <Project>{ae981fb3-e1f7-48e2-8ec4-4bb8af29293f}</Project>
       <Name>Odapter</Name>

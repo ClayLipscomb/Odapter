@@ -21,25 +21,26 @@ using CS = Odapter.CSharp;
 using CSL = Odapter.CSharp.Logic.Api;
 
 namespace Odapter {
-    internal sealed class TranslaterObjectType : ITranslaterType {
-        public string DataTypeFull { get; private set; }
-        public IOrclType OrclType { get => OrclUtil.GetType(Orcl.OBJECT); }
-
+    /// <summary>
+    /// Handles case when there is no translater
+    /// </summary>
+    internal sealed class TranslaterNoneType : ITranslaterType {
+        public string DataTypeFull { get; private set; } = String.Empty;
+        public IOrclType OrclType { get => OrclUtil.GetType(Orcl.UNDEFINED); }
         // translation to C#
-        public CS.ITypeTargetable CSharpType { get; private set; }
+        public CS.ITypeTargetable CSharpType { get; private set; } = CSL.TypeNone;
         public CS.ITypeTargetable CSharpSubType { get => CSL.TypeNone; }
         public bool IsValid(ITyped dataType) { return dataType.OrclType.BuildDataTypeFullName(dataType).Equals(DataTypeFull); }
-        public CS.OdpNetOracleDbTypeEnum CSharpOracleDbTypeEnum { get => CS.OdpNetOracleDbTypeEnum.Byte; }    // undefined
-        public CS.ITypeTargetable CSharpOdpNetSafeType { get => CS.TypeValue.OracleBinary; }
+        public CS.OdpNetOracleDbTypeEnum CSharpOracleDbTypeEnum { get => CS.OdpNetOracleDbTypeEnum.Byte; }
+        public CS.ITypeTargetable CSharpOdpNetSafeType { get => CSL.TypeNone; }
         public bool IsIgnoredAsParameter { get => true; }
-        public string IgnoredReasonAsParameter { get => TranslaterMessage.IgnoreNotAvailableOdpNetMananged(OrclType); }
+        public string IgnoredReasonAsParameter { get => TranslaterMessage.IgnoreNotImplemented(OrclType); }
         public bool IsIgnoredAsAttribute { get => true; }
-        public string IgnoredReasonAsAttribute { get => TranslaterMessage.IgnoreNotAvailableOdpNetMananged(OrclType); }
-        internal TranslaterObjectType(string dataTypeFull) {
+        public string IgnoredReasonAsAttribute { get => TranslaterMessage.IgnoreNotImplemented(OrclType); }
+        internal TranslaterNoneType(string dataTypeFull) {
             DataTypeFull = dataTypeFull;
-            CSharpType = TranslaterName.ClassNameOfOracleIdentifier(dataTypeFull);
+            CSharpType = String.IsNullOrWhiteSpace(dataTypeFull) ? CSL.TypeNone : TranslaterName.ClassNameOfOracleIdentifier(dataTypeFull) as CS.ITypeTargetable;
         }
-        private TranslaterObjectType() { }
-        public override string ToString() { return DataTypeFull; }
+        internal TranslaterNoneType() : this(String.Empty) { }
     }
 }

@@ -30,23 +30,17 @@ namespace Odapter {
         private static readonly string IGNORE_NO_SEND_ASSOC_ARRAY_UNIMPLEMENTED     = $".NET cannot send/receive an {Orcl.ASSOCIATITVE_ARRAY}" + " of a {0} type";
         private static readonly string IGNORE_NO_SEND_RECEIVE_RECORD_FIELD_TYPE     = ".NET cannot send/receive an {0} type field in a record";
 
-        private static string FormatOracleTypes(string txt) {
-            return txt.Replace(@"PLSQL", @"PL/SQL").Replace(Orcl.ASSOCIATITVE_ARRAY, "associative array");
-        }
-
-        internal static string FormatMsg(string msg, string dataTypeInsert = null) {
-            return FormatOracleTypes(String.Format(msg, dataTypeInsert));
-        }
-
-        internal static string IgnoreNotImplemented(string orclType)                            { return FormatMsg(IGNORE_NOT_IMPLEMENTED, orclType); }
-        internal static string IgnoreNotImplemented(IOrclType orclType)                         { return FormatMsg(IGNORE_NOT_IMPLEMENTED, orclType.DataType); }
-        internal static string IgnoreNotAvailableOdpNetMananged(IOrclType orclType)             { return FormatMsg(IGNORE_NOT_AVAILABLE_ODP_NET_MANAGED, orclType.DataType); }
-        internal static string IgnoreNoSendReceive(IOrclType orclType)                          { return FormatMsg(IGNORE_NO_SEND_RECEIVE, orclType.DataType); }
-        internal static string IgnoreNoSendReceiveRecord()                                      { return FormatMsg(IGNORE_NO_SEND_RECEIVE_RECORD); }
-        internal static string IgnoreOracleNoReceive(IOrclType orclType)                        { return FormatMsg(IGNORE_ORACLE_NO_RECEIVE, orclType.DataType); }
-        internal static string IgnoreOracleDeprecation(IOrclType orclType)                      { return FormatMsg(IGNORE_ORACLE_DEPRECATION, orclType.DataType); }
-        internal static string IgnoreNoSendRefCusror()                                          { return FormatMsg(IGNORE_NO_SEND_REF_CURSOR); }
-        internal static string IgnoreNoSendAssocArrayUnimplemented(IOrclType orclType)          { return FormatMsg(IGNORE_NO_SEND_ASSOC_ARRAY_UNIMPLEMENTED, orclType.DataType); }
-        internal static string IgnoreNoSendReceiveRecordFieldTyped(IOrclType orclType)          { return FormatMsg(IGNORE_NO_SEND_RECEIVE_RECORD_FIELD_TYPE, orclType.DataType); }
+        private static string FormatOracleTypes(string txt) => txt.Replace(@"PLSQL", @"PL/SQL").Replace(Orcl.ASSOCIATITVE_ARRAY, "associative array");
+        internal static string FormatMsg(string msg, string dataTypeInsert = null) => FormatOracleTypes(String.Format(msg, dataTypeInsert));
+        internal static string IgnoreNotImplemented(string orclType)                    => FormatMsg(IGNORE_NOT_IMPLEMENTED, orclType); 
+        internal static string IgnoreNotImplemented(IOrclType orclType)                 => FormatMsg(IGNORE_NOT_IMPLEMENTED, orclType.DataType); 
+        internal static string IgnoreNotAvailableOdpNetMananged(IOrclType orclType)     => FormatMsg(IGNORE_NOT_AVAILABLE_ODP_NET_MANAGED, orclType.DataType); 
+        internal static string IgnoreNoSendReceive(IOrclType orclType)                  => FormatMsg(IGNORE_NO_SEND_RECEIVE, orclType.DataType); 
+        internal static string IgnoreNoSendReceiveRecord()                              => FormatMsg(IGNORE_NO_SEND_RECEIVE_RECORD); 
+        internal static string IgnoreOracleNoReceive(IOrclType orclType)                => FormatMsg(IGNORE_ORACLE_NO_RECEIVE, orclType.DataType); 
+        internal static string IgnoreOracleDeprecation(IOrclType orclType)              => FormatMsg(IGNORE_ORACLE_DEPRECATION, orclType.DataType); 
+        internal static string IgnoreNoSendRefCusror()                                  => FormatMsg(IGNORE_NO_SEND_REF_CURSOR); 
+        internal static string IgnoreNoSendAssocArrayUnimplemented(IOrclType orclType)  => FormatMsg(IGNORE_NO_SEND_ASSOC_ARRAY_UNIMPLEMENTED, orclType.DataType); 
+        internal static string IgnoreNoSendReceiveRecordFieldTyped(IOrclType orclType)  => FormatMsg(IGNORE_NO_SEND_RECEIVE_RECORD_FIELD_TYPE, orclType.DataType); 
     }
 }

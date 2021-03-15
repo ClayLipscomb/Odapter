@@ -19,7 +19,7 @@
 namespace Odapter.Translation
 
 open System
-open Odapter.Case;
+open Odapter.Casing;
 open Odapter.CSharp.Logic
 
 [<AutoOpen>]
@@ -50,14 +50,14 @@ module internal Naming =
     //let private translateKeyword str = (if Keyword.isKeyword(str) then @"@" else emptyString) + str // prepend @ to C# keyword
     let private translateKeyword str = str + (if Keyword.isKeyword(str) then @"Cs" else emptyString) // append "Cs" to C# keyword
 
-    let internal snakeCaseOfOracleIdentifier identifier = identifier |> normalizeOracleSnakeCase |> SnakeCase.create
-    let internal pascalCaseOfOracleIdentifier identifier = identifier |> snakeCaseOfOracleIdentifier |> PascalCase.ofSnakeCase |> (PascalCase.map translateKeyword) 
-    let internal camelCaseOfOracleIdentifier identifier = identifier |> snakeCaseOfOracleIdentifier |> CamelCase.ofSnakeCase |> (CamelCase.map translateKeyword) 
-    let internal classNameOfOracleIdentifier identifier = identifier |> pascalCaseOfOracleIdentifier |> ClassName.ofPascalCase
-    let internal propertyNameOfOracleIdentifier identifier = identifier |> pascalCaseOfOracleIdentifier |> PropertyName.ofPascalCase
-    let internal typeGenericNameOfOracleIdentifier identifer = identifer |> camelCaseOfOracleIdentifier |> TypeGenericName.ofCamelCase
+    let internal snakeCaseOfOracleIdentifier = normalizeOracleSnakeCase >> SnakeCase.create
+    let internal pascalCaseOfOracleIdentifier = snakeCaseOfOracleIdentifier >> PascalCase.ofSnakeCase >> (PascalCase.map translateKeyword) 
+    let internal camelCaseOfOracleIdentifier = snakeCaseOfOracleIdentifier >> CamelCase.ofSnakeCase >> (CamelCase.map translateKeyword) 
+    let internal classNameOfOracleIdentifier = pascalCaseOfOracleIdentifier >> ClassName.ofPascalCase
+    let internal propertyNameOfOracleIdentifier = pascalCaseOfOracleIdentifier >> PropertyName.ofPascalCase
+    let internal typeGenericNameOfOracleIdentifier = camelCaseOfOracleIdentifier >> TypeGenericName.ofCamelCase
 
-module NamingApi =
+module Api =
     let ClassNameOfOracleIdentifier identifier = classNameOfOracleIdentifier identifier
     let PropertyNameOfOracleIdentifier identifier = propertyNameOfOracleIdentifier identifier
     let TypeGenericNameOfOracleIdentifier identifier = typeGenericNameOfOracleIdentifier identifier

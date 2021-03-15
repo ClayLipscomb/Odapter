@@ -13,7 +13,7 @@
 //    GNU General Public License for more details.
 //
 //    You should have received a copy of the GNU General Public License
-//    along with this program.If not, see<http://www.gnu.org/licenses/>.
+//    along with this program. If not, see<http://www.gnu.org/licenses/>.
 //------------------------------------------------------------------------------
 
 using System;
@@ -26,6 +26,8 @@ using System.Xml.Serialization;
 using System.Xml;
 using System.Reflection;
 using System.ComponentModel;
+using CS = Odapter.CSharp;
+using CSL = Odapter.CSharp.Logic.Api;
 
 namespace Odapter {
     /// <summary>
@@ -47,10 +49,21 @@ namespace Odapter {
         /// Raises the property changed event.
         /// </summary>
         /// <param name="propertyName">Name of the property.</param>
-        private void RaisePropertyChanged(string propertyName) {
-            PropertyChangedEventHandler handler = this.PropertyChanged;
-            if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
-        }
+        private void RaisePropertyChanged(string propertyName) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        #endregion
+
+        #region TypeTarget defaults
+        private static readonly CS.TypeCollection TypeTargetForOracleRefCursorDefault = CS.TypeCollection.IList;
+        private static readonly CS.TypeCollection TypeTargetForOracleAssociativeArrayDefault = CS.TypeCollection.IList;
+        private static readonly CS.TypeValue TypeTargetForOracleDateDefault = CS.TypeValue.DateTime;
+        private static readonly CS.TypeValue TypeTargetForOracleNumberDefault = CS.TypeValue.Decimal;
+        private static readonly CS.TypeValue TypeTargetForOracleIntegerDefault = CS.TypeValue.Int64;
+        private static readonly CS.TypeValue TypeTargetForOracleTimestampDefault = CS.TypeValue.DateTime;
+        private static readonly CS.TypeValue TypeTargetForOracleTimestampTZDefault = CS.TypeValue.DateTimeOffset;
+        private static readonly CS.TypeValue TypeTargetForOracleTimestampLTZDefault = CS.TypeValue.DateTime;
+        private static readonly CS.TypeReference TypeTargetForOracleClobDefault = CS.TypeReference.String;
+        private static readonly CS.ITypeTargetable TypeTargetForOracleBlobDefault = CSL.TypeArrayOf(CS.TypeValue.Byte);
+        private static readonly CS.ITypeTargetable TypeTargetForOracleBfileDefault = CSL.TypeArrayOf(CS.TypeValue.Byte);
         #endregion
 
         public void RestoreDefaults() {
@@ -72,9 +85,9 @@ namespace Odapter {
 
             AncestorClassNamePackage = AncestorClassNamePackageRecord = AncestorClassNameObjectType = AncestorClassNameTable = AncestorClassNameView = String.Empty;
 
-            MaxAssocArraySize = 50000;
-            MaxReturnAndOutArgStringSize = 32767;
-            CSharpVersion = CSharpVersion.FourZero;
+            MaxAssocArraySize = UInt16.MaxValue;
+            MaxReturnAndOutArgStringSize = Int16.MaxValue;
+            TargetCSharpVersion = CS.CSharpVersion.FourZero;
             IsDuplicatePackageRecordOriginatingOutsideFilterAndSchema = true;
             IsExcludeObjectsNamesWithSpecificChars = true;
             ObjectNameCharsToExclude = new char[] { '$', '#' };
@@ -83,18 +96,18 @@ namespace Odapter {
             IsConvertOracleNumberToIntegerIfColumnNameIsId = true;
             IsUseAutoImplementedProperties = true;
 
-            CSharpTypeUsedForOracleRefCursor = CSharp.ILIST;
-            CSharpTypeUsedForOracleAssociativeArray = CSharp.ILIST;
-            CSharpTypeUsedForOracleInteger = CSharp.INT64;
-            CSharpTypeUsedForOracleNumber = CSharp.DECIMAL;
-            CSharpTypeUsedForOracleDate = CSharp.DATE_TIME;
-            CSharpTypeUsedForOracleTimeStamp = CSharp.DATE_TIME;
-            CSharpTypeUsedForOracleTimeStampTZ = CSharp.DATE_TIME_OFFSET;
-            CSharpTypeUsedForOracleTimeStampLTZ = CSharp.DATE_TIME;
-            CSharpTypeUsedForOracleIntervalDayToSecond = CSharp.TIME_SPAN;
-            CSharpTypeUsedForOracleBlob = CSharp.BYTE_ARRAY;
-            CSharpTypeUsedForOracleClob = CSharp.STRING;
-            CSharpTypeUsedForOracleBFile = CSharp.BYTE_ARRAY;
+            TypeTargetForOracleRefCursor = TypeTargetForOracleRefCursorDefault;
+            TypeTargetForOracleAssociativeArray = TypeTargetForOracleAssociativeArrayDefault;
+            TypeTargetForOracleInteger = TypeTargetForOracleIntegerDefault;
+            TypeTargetForOracleNumber = TypeTargetForOracleNumberDefault;
+            TypeTargetForOracleDate = TypeTargetForOracleDateDefault;
+            TypeTargetForOracleTimestamp = TypeTargetForOracleTimestampDefault;
+            TypeTargetForOracleTimestampTZ = TypeTargetForOracleTimestampTZDefault;
+            TypeTargetForOracleTimestampLTZ = TypeTargetForOracleTimestampLTZDefault;
+            CSharpTypeUsedForOracleIntervalDayToSecond = CS.TypeValue.TimeSpan.Code;
+            TypeTargetForOracleBlob = TypeTargetForOracleBlobDefault;
+            TypeTargetForOracleClob = TypeTargetForOracleClobDefault;
+            TypeTargetForOracleBfile = TypeTargetForOracleBfileDefault;
 
             IsDeployResources = IsGenerateBaseAdapter = IsGenerateBaseEntities = true;
         }
@@ -126,9 +139,14 @@ namespace Odapter {
         public bool IsSavePassword { get; set; }
 
         // .NET/C# version
-        public CSharpVersion CSharpVersion { get; set; }
         [XmlIgnore]
-        public bool IsCSharp40 { get { return CSharpVersion == CSharpVersion.FourZero; } }
+        public CS.CSharpVersion TargetCSharpVersion { get; set; }
+        public string CSharpVersion {
+            get => TargetCSharpVersion.ToString();
+            set => TargetCSharpVersion = CSL.CSharpVersionOfStringWithDefault(value, CS.CSharpVersion.FourZero);
+        }
+        [XmlIgnore]
+        public bool IsCSharp40 { get => TargetCSharpVersion.Equals(CS.CSharpVersion.FourZero); }
 
         // namespaces
         private string _namespaceBase;
@@ -194,18 +212,74 @@ namespace Odapter {
         public short MaxReturnAndOutArgStringSize { get; set; }
 
         // type translation - IParameterTranslation
-        public string CSharpTypeUsedForOracleRefCursor { get; set; }
-        public string CSharpTypeUsedForOracleAssociativeArray { get; set; }
-        public string CSharpTypeUsedForOracleInteger { get; set; }
-        public string CSharpTypeUsedForOracleNumber { get; set; }
-        public string CSharpTypeUsedForOracleDate { get; set; }
-        public string CSharpTypeUsedForOracleTimeStamp { get; set; }
-        public string CSharpTypeUsedForOracleTimeStampTZ { get; set; }
-        public string CSharpTypeUsedForOracleTimeStampLTZ { get; set; }
+        [XmlIgnore]
+        public CS.TypeCollection TypeTargetForOracleRefCursor { get; set; }
+        public string CSharpTypeUsedForOracleRefCursor {
+            get => TypeTargetForOracleRefCursor.Code;
+            set => TypeTargetForOracleRefCursor = CSL.FromCodeTypeCollectionWithDefault(value, TypeTargetForOracleRefCursorDefault);
+        }
+        [XmlIgnore]
+        public CS.TypeCollection TypeTargetForOracleAssociativeArray { get; set; }
+        public string CSharpTypeUsedForOracleAssociativeArray { 
+            get => TypeTargetForOracleAssociativeArray.Code;
+            set => TypeTargetForOracleAssociativeArray = CSL.FromCodeTypeCollectionWithDefault(value, TypeTargetForOracleAssociativeArrayDefault);
+        }
+        [XmlIgnore]
+        public CS.TypeValue TypeTargetForOracleInteger { get; set; }
+        public string CSharpTypeUsedForOracleInteger { 
+            get => TypeTargetForOracleInteger.Code; 
+            set => TypeTargetForOracleInteger = CSL.FromCodeTypeValueWithDefault(value, TypeTargetForOracleIntegerDefault); 
+        }
+        [XmlIgnore]
+        public CS.TypeValue TypeTargetForOracleNumber { get; set; }
+        public string CSharpTypeUsedForOracleNumber {
+            get => TypeTargetForOracleNumber.Code;
+            set => TypeTargetForOracleNumber = CSL.FromCodeTypeValueWithDefault(value, TypeTargetForOracleNumberDefault);
+        }
+        [XmlIgnore]
+        public CS.TypeValue TypeTargetForOracleDate { get; set; }
+        public string CSharpTypeUsedForOracleDate { 
+            get => TypeTargetForOracleDate.Code; 
+            set => TypeTargetForOracleDate = CSL.FromCodeTypeValueWithDefault(value, TypeTargetForOracleDateDefault); 
+        }
+        [XmlIgnore]
+        public CS.TypeValue TypeTargetForOracleTimestamp { get; set; }
+        public string CSharpTypeUsedForOracleTimestamp {
+            get => TypeTargetForOracleTimestamp.Code;
+            set => TypeTargetForOracleTimestamp = CSL.FromCodeTypeValueWithDefault(value, TypeTargetForOracleTimestampDefault);
+        }
+        [XmlIgnore]
+        public CS.TypeValue TypeTargetForOracleTimestampTZ { get; set; }
+        public string CSharpTypeUsedForOracleTimestampTZ {
+            get => TypeTargetForOracleTimestampTZ.Code;
+            set => TypeTargetForOracleTimestampTZ = CSL.FromCodeTypeValueWithDefault(value, TypeTargetForOracleTimestampTZDefault);
+        }
+        [XmlIgnore]
+        public CS.TypeValue TypeTargetForOracleTimestampLTZ { get; set; }
+        public string CSharpTypeUsedForOracleTimestampLTZ {
+            get => TypeTargetForOracleTimestampLTZ.Code;
+            set => TypeTargetForOracleTimestampLTZ = CSL.FromCodeTypeValueWithDefault(value, TypeTargetForOracleTimestampLTZDefault);
+        }
         public string CSharpTypeUsedForOracleIntervalDayToSecond { get; set; }
-        public string CSharpTypeUsedForOracleBlob { get; set; }
-        public string CSharpTypeUsedForOracleClob { get; set; }
-        public string CSharpTypeUsedForOracleBFile { get; set; }    // pending implementation
+        [XmlIgnore]
+        public CS.ITypeTargetable TypeTargetForOracleBlob { get; set; }
+        public string CSharpTypeUsedForOracleBlob {
+            get => TypeTargetForOracleBlob.Code;
+            set => TypeTargetForOracleBlob = CSL.FromCodeTypeTargetableWithDefault(value, TypeTargetForOracleBlobDefault);
+        }
+        [XmlIgnore]
+        public CS.TypeReference TypeTargetForOracleClob { get; set; }
+        public string CSharpTypeUsedForOracleClob {
+            get => TypeTargetForOracleClob.Code;
+            set => TypeTargetForOracleClob = CSL.FromCodeTypeReferenceWithDefault(value, TypeTargetForOracleClobDefault);
+        }
+        [XmlIgnore]
+        public CS.ITypeTargetable TypeTargetForOracleBfile { get; set; }
+        [XmlIgnore]
+        public string CSharpTypeUsedForOracleBfile { // pending implementation
+            get => TypeTargetForOracleBfile.Code;
+            set => TypeTargetForOracleBfile = CSL.FromCodeTypeTargetableWithDefault(value, TypeTargetForOracleBfileDefault);
+        }
         public bool IsConvertOracleNumberToIntegerIfColumnNameIsId { get; set; }
         public bool IsUsingSchemaFilter { get => !String.IsNullOrWhiteSpace(Filter); }
 

@@ -17,6 +17,8 @@
 //------------------------------------------------------------------------------
 
 using System;
+using CS = Odapter.CSharp;
+using CSL = Odapter.CSharp.Logic.Api;
 
 namespace Odapter {
     internal sealed class TranslaterRecordType : ITranslaterType {
@@ -24,19 +26,19 @@ namespace Odapter {
         public IOrclType OrclType { get => OrclUtil.GetType(Orcl.RECORD); }
 
         // translation to C#
-        public string GetCSharpType(bool typeNotNullable = false, bool nonInterfaceType = false) { return CSharpType; }
-        private string CSharpType { get; set; }
+        public CS.ITypeTargetable CSharpType { get; private set; }
+        public CS.ITypeTargetable CSharpSubType { get => CSL.TypeNone; }
         public bool IsValid(ITyped dataType) { return dataType.OrclType.BuildDataTypeFullName(dataType).Equals(DataTypeFull); }
-        public string CSharpOracleDbType { get => String.Empty; }
-        public string CSharpOdpNetType { get => String.Empty; }
+        public CS.OdpNetOracleDbTypeEnum CSharpOracleDbTypeEnum => CS.OdpNetOracleDbTypeEnum.Byte; // unused
+        public CS.ITypeTargetable CSharpOdpNetSafeType => CSL.TypeNone;
         public bool IsIgnoredAsParameter { get => true; }  // refers only to stand-alone record
         public string IgnoredReasonAsParameter { get => TranslaterMessage.IgnoreNoSendReceiveRecord(); }
         public bool IsIgnoredAsAttribute { get => true; }  // refers only to stand-alone record
         public string IgnoredReasonAsAttribute { get => TranslaterMessage.IgnoreNoSendReceiveRecord(); }
 
-        internal TranslaterRecordType(string dataType) {
-            DataTypeFull = dataType;
-            CSharpType = TranslaterName.ConvertToPascal(DataTypeFull);
+        internal TranslaterRecordType(string dataTypeFull) {
+            DataTypeFull = dataTypeFull;
+            CSharpType = TranslaterName.ClassNameOfOracleIdentifier(dataTypeFull);
         }
 
         public override string ToString() { return DataTypeFull; }

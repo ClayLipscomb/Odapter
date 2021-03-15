@@ -18,9 +18,12 @@
 
 using System;
 using System.Linq;
+using CS = Odapter.CSharp;
+using Trns = Odapter.Translation.Api;
 
 namespace Odapter {
     internal static class TranslaterName  {
+        [Obsolete]
         private const string CHARACTER_ABBREV = "char";
 
         /// <summary>
@@ -37,9 +40,9 @@ namespace Odapter {
                 p.ProcedureName.Equals(proc.ProcedureName)  // same proc name
                 && !p.IsIgnoredDueToOracleTypes(out _)
                 && !(p.Overload ?? String.Empty).Equals(proc.Overload ?? String.Empty)  // different overload
-                && ((p.Arguments.Where(a => !a.IsReturnArgument).OrderBy(a => a.Defaulted).ThenBy(a => a.Sequence).Select(a => a.InOut + a.Translater.GetCSharpType()))
+                && ((p.Arguments.Where(a => !a.IsReturnArgument).OrderBy(a => a.Defaulted).ThenBy(a => a.Sequence).Select(a => a.InOut + a.Translater.CSharpType))
                         .SequenceEqual  // params count, direction and type are exact match (excl. return arg)
-                    (proc.Arguments.Where(a => !a.IsReturnArgument).OrderBy(a => a.Defaulted).ThenBy(a => a.Sequence).Select(a => a.InOut + a.Translater.GetCSharpType())))
+                    (proc.Arguments.Where(a => !a.IsReturnArgument).OrderBy(a => a.Defaulted).ThenBy(a => a.Sequence).Select(a => a.InOut + a.Translater.CSharpType)))
                     // ordering moves all defaulted (defaulted="Y") past required (defaulted="N")
                 );
         }
@@ -50,6 +53,7 @@ namespace Odapter {
         /// <param name="oracleArgName"></param>
         /// <param name="useCamelCase">convert to camelCase, otherwise defaults to PascalCase</param>
         /// <returns></returns>
+        [Obsolete]
         private static string Convert(string oracleName, bool useCamelCase) {
             if (String.IsNullOrEmpty(oracleName)) return null; // this occurs with a return arg
 
@@ -77,13 +81,15 @@ namespace Odapter {
                 ? CaseConverter.ConvertSnakeCaseToCamelCase(oracleNameAdjusted)
                 : CaseConverter.ConvertSnakeCaseToPascalCase(oracleNameAdjusted));
             if (Char.IsDigit(cSharpName, 0)) cSharpName = (useCamelCase ? "t" : "T") + "he" + cSharpName; // a C# arg cannot start with number
-            if (CSharp.IsKeyword(cSharpName)) cSharpName = cSharpName + "Cs"; // append text to avoid the C# keyword
+            if (Odapter.Obsolete.CSharp.IsKeyword(cSharpName)) cSharpName = cSharpName + "Cs"; // append text to avoid the C# keyword
             return cSharpName;
         }
 
-        internal static string ConvertToPascal(string oracleName) { return Convert(oracleName, false); }
-
-        internal static string ConvertToCamel(string oracleName) { return Convert(oracleName, true); }
+        internal static string ConvertToPascal(string oracleName) => Trns.PascalCaseOfOracleIdentifier(oracleName).Value;
+        internal static string ConvertToCamel(string oracleName) => Trns.CamelCaseOfOracleIdentifier(oracleName).Value;
+        internal static CS.ClassName ClassNameOfOracleIdentifier(string oracleIdentifier) => Trns.ClassNameOfOracleIdentifier(oracleIdentifier);
+        internal static CS.PropertyName PropertyNameOfOracleIdentifier(string oracleIdentifier) => Trns.PropertyNameOfOracleIdentifier(oracleIdentifier);
+        internal static CS.TypeGenericName TypeGenericNameOfOracleIdentifier(string oracleIdentifier) => Trns.TypeGenericNameOfOracleIdentifier(oracleIdentifier);
 
         /// <summary>
         /// Create C# method name for a procedure
@@ -102,9 +108,8 @@ namespace Odapter {
             return methodName;
         }
 
-        internal static string Convert(IPackage package) { return ConvertToPascal(package.PackageName); }
-
-        internal static string Convert(IArgument arg) { return ConvertToCamel(arg.ArgumentName); }
+        internal static string Convert(IPackage package) => ConvertToPascal(package.PackageName); 
+        internal static string Convert(IArgument arg) => ConvertToCamel(arg.ArgumentName);
 
         /// <summary>
         /// Convert an Oracle entity attribute name to a C# property name
@@ -112,7 +117,7 @@ namespace Odapter {
         /// <param name="attrib"></param>
         /// <returns></returns>
         internal static string Convert(IEntityAttribute attrib) {
-            string propertyName = ConvertToPascal(attrib.AttrName);
+            string propertyName = PropertyNameOfOracleIdentifier(attrib.AttrName).Code;
             // prevent identical class name and property name (not allowed by C#) by "doubling" the name
             if ((attrib.EntityName ?? "").Equals(attrib.AttrName)) propertyName += propertyName;
 

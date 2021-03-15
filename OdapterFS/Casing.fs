@@ -43,9 +43,22 @@ type CamelCaseUnderscorePrefixed = internal CamelCaseUnderscorePrefixed of strin
         member this.Value = this.Value
 
 [<AutoOpen>]
-module internal Util =
+module private Util =
     let [<Literal>] UNDERSCORE = @"_"
     let splitUnderscore str = split UNDERSCORE str
+
+[<AutoOpen>]
+module private Capitalization =
+    let capitalize (str: string) = 
+        if str |> trim |> isNullOrWhiteSpace then  
+            emptyString
+        else    
+            str |> Seq.mapi (fun i ch -> match i with | 0 -> (Char.ToUpper(ch)) | _ -> Char.ToLower(ch)) |> String.Concat
+    let deCapitalize (str: string) = 
+        if str |> trim |> isNullOrWhiteSpace then  
+            emptyString
+        else    
+            str |> Seq.mapi (fun i ch -> match i with | 0 -> (Char.ToLower(ch)) | _ -> ch) |> String.Concat
 
 [<AutoOpen>]
 module internal SnakeCase =
@@ -67,6 +80,8 @@ module internal PascalCase =
     let create input = WrappedString.create (*canonicalize:*)singleLineTrimmed PascalCase input
     let value = WrappedString.value
     let map f (PascalCase pascalCaseStr) = pascalCaseStr |> f |> create
+    let private add pc1 pc2 = PascalCase (value pc1 + value pc2)
+    let concat seqPascalCase = Seq.reduce add seqPascalCase
     let private fromSnakeCaseStrToPascalCaseStr str = 
         if str |> trim |> isNullOrWhiteSpace then 
             emptyString
@@ -87,7 +102,3 @@ module internal CamelCaseUnderscorePrefixed =
     let private create input = WrappedString.create (*canonicalize:*)singleLineTrimmed CamelCaseUnderscorePrefixed input
     let value = WrappedString.value
     let ofCamelCase (CamelCase camelCaseStr) = (Util.UNDERSCORE + camelCaseStr) |> create
-
-//module Api =
-//    let Capitalize str = capitalize str
-//    let DeCapitalize str = deCapitalize str

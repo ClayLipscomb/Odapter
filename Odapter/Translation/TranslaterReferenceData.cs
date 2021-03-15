@@ -18,6 +18,8 @@
 
 using System;
 using System.Collections.Generic;
+using Odapter.CSharp;
+using CSL = Odapter.CSharp.Logic.Api;
 
 namespace Odapter {
     /// <summary>
@@ -49,31 +51,31 @@ namespace Odapter {
         }
 
         public static readonly IDictionary<string, List<CustomTranslatedCSharpType>> CustomTypeTranslationOptions = new Dictionary<string, List<CustomTranslatedCSharpType>>() {
-            {Orcl.REF_CURSOR, new List<CustomTranslatedCSharpType> {                        new CustomTranslatedCSharpType(CSharp.ILIST, @""),
-                                                                                            new CustomTranslatedCSharpType(CSharp.ICOLLECTION, @""),
-                                                                                            new CustomTranslatedCSharpType(CSharp.LIST, @"concrete, not recommended") } },
-            {Orcl.ASSOCIATITVE_ARRAY, new List<CustomTranslatedCSharpType> {                new CustomTranslatedCSharpType(CSharp.ILIST, @""),
-                                                                                            new CustomTranslatedCSharpType(CSharp.LIST, @"concrete, not recommended") } },
-            {Orcl.INTEGER, new List<CustomTranslatedCSharpType> {                           new CustomTranslatedCSharpType(CSharp.INT32, @"9 digit limit, not recommended"),
-                                                                                            new CustomTranslatedCSharpType(CSharp.INT64, @"18 digit limit, usually safe"),
-                                                                                            new CustomTranslatedCSharpType(CSharp.DECIMAL, @"28 digit limit"),
-                                                                                            new CustomTranslatedCSharpType(CSharp.ODP_NET_SAFE_TYPE_DECIMAL, @"ODP.NET safe type struct") } },
-            {Orcl.NUMBER, new List<CustomTranslatedCSharpType> {                            new CustomTranslatedCSharpType(CSharp.DECIMAL, @"28 dig limit, auto rounding"),
-                                                                                            new CustomTranslatedCSharpType(CSharp.ODP_NET_SAFE_TYPE_DECIMAL, @"ODP.NET safe type struct") } },
-            {Orcl.DATE, new List<CustomTranslatedCSharpType> {                              new CustomTranslatedCSharpType(CSharp.DATE_TIME, @"no BC"),                                                                                    
-                                                                                            new CustomTranslatedCSharpType(CSharp.ODP_NET_SAFE_TYPE_DATE, @"ODP.NET safe type struct") } },
-            {Orcl.TIMESTAMP, new List<CustomTranslatedCSharpType> {                         new CustomTranslatedCSharpType(CSharp.DATE_TIME, @"e-7 max, no BC"),
-                                                                                            new CustomTranslatedCSharpType(CSharp.ODP_NET_SAFE_TYPE_TIMESTAMP, @"ODP.NET safe type struct") } },
-            {Orcl.TIMESTAMP_WITH_TIME_ZONE, new List<CustomTranslatedCSharpType> {          new CustomTranslatedCSharpType(CSharp.DATE_TIME_OFFSET, @"e-7 max, no BC"),
-                                                                                            new CustomTranslatedCSharpType(CSharp.ODP_NET_SAFE_TYPE_TMESTAMP_TZ, @"ODP.NET safe type struct") } },
-            {Orcl.TIMESTAMP_WITH_LOCAL_TIME_ZONE, new List<CustomTranslatedCSharpType> {    new CustomTranslatedCSharpType(CSharp.DATE_TIME, @"e-7 max, no BC"),
-                                                                                            new CustomTranslatedCSharpType(CSharp.ODP_NET_SAFE_TYPE_TIMESTAMP_LTZ, @"ODP.NET safe type struct") } },
-            {Orcl.INTERVAL_DAY_TO_SECOND, new List<CustomTranslatedCSharpType> {            new CustomTranslatedCSharpType(CSharp.TIME_SPAN, @"e-7 max"),
-                                                                                            new CustomTranslatedCSharpType(CSharp.ODP_NET_SAFE_TYPE_INTERVAL_DS, @"ODP.NET safe type struct") } },
-            {Orcl.BLOB, new List<CustomTranslatedCSharpType> {                              new CustomTranslatedCSharpType(CSharp.BYTE_ARRAY, @""),
-                                                                                            new CustomTranslatedCSharpType(CSharp.ODP_NET_SAFE_TYPE_BLOB, @"ODP.NET safe type class") } },
-            {Orcl.CLOB, new List<CustomTranslatedCSharpType> {                              new CustomTranslatedCSharpType(CSharp.STRING, @""),
-                                                                                            new CustomTranslatedCSharpType(CSharp.ODP_NET_SAFE_TYPE_CLOB, @"ODP.NET safe type class") } }
+            {Orcl.REF_CURSOR, new List<CustomTranslatedCSharpType> {                        new CustomTranslatedCSharpType(TypeCollection.IList.Code, @""),
+                                                                                            new CustomTranslatedCSharpType(TypeCollection.ICollection.Code, @""),
+                                                                                            new CustomTranslatedCSharpType(TypeCollection.List.Code, @"concrete, not recommended") } },
+            {Orcl.ASSOCIATITVE_ARRAY, new List<CustomTranslatedCSharpType> {                new CustomTranslatedCSharpType(TypeCollection.IList.Code, @""),
+                                                                                            new CustomTranslatedCSharpType(TypeCollection.List.Code, @"concrete, not recommended") } },
+            {Orcl.INTEGER, new List<CustomTranslatedCSharpType> {                           new CustomTranslatedCSharpType(TypeValue.Int32.Code, @"9 digit limit, not recommended"),
+                                                                                            new CustomTranslatedCSharpType(TypeValue.Int64.Code, @"18 digit limit, usually safe"),
+                                                                                            new CustomTranslatedCSharpType(TypeValue.Decimal.Code, @"28 digit limit"),
+                                                                                            new CustomTranslatedCSharpType(TypeValue.OracleDecimal.Code, @"ODP.NET safe type struct") } },
+            {Orcl.NUMBER, new List<CustomTranslatedCSharpType> {                            new CustomTranslatedCSharpType(TypeValue.Decimal.Code, @"28 dig limit, auto rounding"),
+                                                                                            new CustomTranslatedCSharpType(TypeValue.OracleDecimal.Code, @"ODP.NET safe type struct") } },
+            {Orcl.DATE, new List<CustomTranslatedCSharpType> {                              new CustomTranslatedCSharpType(TypeValue.DateTime.Code, @"no BC"),                                                                                    
+                                                                                            new CustomTranslatedCSharpType(TypeValue.OracleDate.Code, @"ODP.NET safe type struct") } },
+            {Orcl.TIMESTAMP, new List<CustomTranslatedCSharpType> {                         new CustomTranslatedCSharpType(TypeValue.DateTime.Code, @"e-7 max, no BC"),
+                                                                                            new CustomTranslatedCSharpType(TypeValue.OracleTimeStamp.Code, @"ODP.NET safe type struct") } },
+            {Orcl.TIMESTAMP_WITH_TIME_ZONE, new List<CustomTranslatedCSharpType> {          new CustomTranslatedCSharpType(TypeValue.DateTimeOffset.Code, @"e-7 max, no BC"),
+                                                                                            new CustomTranslatedCSharpType(TypeValue.OracleTimeStampTZ.Code, @"ODP.NET safe type struct") } },
+            {Orcl.TIMESTAMP_WITH_LOCAL_TIME_ZONE, new List<CustomTranslatedCSharpType> {    new CustomTranslatedCSharpType(TypeValue.DateTime.Code, @"e-7 max, no BC"),
+                                                                                            new CustomTranslatedCSharpType(TypeValue.OracleTimeStampLTZ.Code, @"ODP.NET safe type struct") } },
+            {Orcl.INTERVAL_DAY_TO_SECOND, new List<CustomTranslatedCSharpType> {            new CustomTranslatedCSharpType(TypeValue.TimeSpan.Code, @"e-7 max"),
+                                                                                            new CustomTranslatedCSharpType(TypeValue.OracleIntervalDS.Code, @"ODP.NET safe type struct") } },
+            {Orcl.BLOB, new List<CustomTranslatedCSharpType> {                              new CustomTranslatedCSharpType(CSL.TypeArrayOf(TypeValue.Byte).Code, @""),
+                                                                                            new CustomTranslatedCSharpType(TypeReference.OracleBlob.Code, @"ODP.NET safe type class") } },
+            {Orcl.CLOB, new List<CustomTranslatedCSharpType> {                              new CustomTranslatedCSharpType(TypeReference.String.Code, @""),
+                                                                                            new CustomTranslatedCSharpType(TypeReference.OracleClob.Code, @"ODP.NET safe type class") } }
         };
     }
 }

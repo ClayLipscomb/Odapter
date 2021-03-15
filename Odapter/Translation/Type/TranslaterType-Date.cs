@@ -17,37 +17,36 @@
 //------------------------------------------------------------------------------
 
 using System;
+using CS = Odapter.CSharp;
+using CSL = Odapter.CSharp.Logic.Api;
 
 namespace Odapter {
     internal class TranslaterDate : ITranslaterType {
         public string DataTypeFull { get => OrclType.DataType; }
         public IOrclType OrclType { get => OrclUtil.GetType(Orcl.DATE); }
-
         // translation to C#
-        public string GetCSharpType(bool typeNotNullable = false, bool nonInterfaceType = false) { return (typeNotNullable ? CSharpType.TrimEnd('?') : CSharpType); }
-        private string CSharpType { get => CSharp.AsNullable(_cSharpType); } private readonly string _cSharpType;
+        public CS.ITypeTargetable CSharpType { get; private set; }
+        public CS.ITypeTargetable CSharpSubType { get => CSL.TypeNone; }
         public bool IsValid(ITyped dataType) { return dataType.OrclType.BuildDataTypeFullName(dataType).Equals(DataTypeFull); }
-        public string CSharpOracleDbType { get => CSharp.ORACLEDBTYPE_DATE; }
-        public string CSharpOdpNetType { get => CSharp.ODP_NET_SAFE_TYPE_DATE; }
+        public CS.OdpNetOracleDbTypeEnum CSharpOracleDbTypeEnum { get => CS.OdpNetOracleDbTypeEnum.Date; }
+        public CS.ITypeTargetable CSharpOdpNetSafeType { get => CS.TypeValue.OracleDate; }
         public bool IsIgnoredAsParameter { get => false; }
         public string IgnoredReasonAsParameter { get => String.Empty; }
         public bool IsIgnoredAsAttribute { get => false; }
         public string IgnoredReasonAsAttribute { get => String.Empty; }
-
-        internal TranslaterDate(string cSharpType) { _cSharpType = cSharpType; }
+        internal TranslaterDate(CS.TypeValue typeValue) { CSharpType = typeValue.Nullable; } 
         private TranslaterDate() { }
     }
 
     internal class TranslaterIntervalDayToSecond : ITranslaterType {
         public string DataTypeFull { get => OrclType.DataType; }
         public IOrclType OrclType { get => OrclUtil.GetType(Orcl.INTERVAL_DAY_TO_SECOND); }
-
         // translation to C#
-        public string GetCSharpType(bool typeNotNullable = false, bool nonInterfaceType = false) { return (typeNotNullable ? CSharpType.TrimEnd('?') : CSharpType); }
-        private string CSharpType { get => CSharp.AsNullable(CSharp.TIME_SPAN); }
+        public CS.ITypeTargetable CSharpType => cSharpType; private readonly CS.TypeValueNullable cSharpType = CS.TypeValue.TimeSpan.Nullable;
+        public CS.ITypeTargetable CSharpSubType { get => CSL.TypeNone; }
         public bool IsValid(ITyped dataType) { return dataType.OrclType.BuildDataTypeFullName(dataType).Equals(DataTypeFull); }
-        public string CSharpOracleDbType { get => CSharp.ORACLEDBTYPE_INTERVAL_DAY_TO_SECOND; }
-        public string CSharpOdpNetType { get => CSharp.ODP_NET_SAFE_TYPE_INTERVAL_DS; }
+        public CS.OdpNetOracleDbTypeEnum CSharpOracleDbTypeEnum { get => CS.OdpNetOracleDbTypeEnum.IntervalDS; }
+        public CS.ITypeTargetable CSharpOdpNetSafeType { get => CS.TypeValue.OracleIntervalDS; }
         public bool IsIgnoredAsParameter { get => true; }
         public string IgnoredReasonAsParameter { get => TranslaterMessage.IgnoreNotImplemented(OrclType); }
         public bool IsIgnoredAsAttribute { get => true; }
@@ -57,13 +56,12 @@ namespace Odapter {
     internal class TranslaterIntervalYearToMonth : ITranslaterType {
         public string DataTypeFull { get => OrclType.DataType; }
         public IOrclType OrclType { get => OrclUtil.GetType(Orcl.INTERVAL_YEAR_TO_MONTH); }
-
         // translation to C#
-        public string GetCSharpType(bool typeNotNullable = false, bool nonInterfaceType = false) { return (typeNotNullable ? CSharpType.TrimEnd('?') : CSharpType); }
-        private string CSharpType { get => CSharp.AsNullable(CSharp.TIME_SPAN); }
+        public CS.ITypeTargetable CSharpType => cSharpType; private readonly CS.TypeValueNullable cSharpType = CS.TypeValue.TimeSpan.Nullable;
+        public CS.ITypeTargetable CSharpSubType { get => CSL.TypeNone; }
         public bool IsValid(ITyped dataType) { return dataType.OrclType.BuildDataTypeFullName(dataType).Equals(DataTypeFull); }
-        public string CSharpOracleDbType { get => CSharp.ORACLEDBTYPE_INTERVAL_YEAR_TO_MONTH; }
-        public string CSharpOdpNetType { get => CSharp.ODP_NET_SAFE_TYPE_INTERVAL_YM; }
+        public CS.OdpNetOracleDbTypeEnum CSharpOracleDbTypeEnum { get => CS.OdpNetOracleDbTypeEnum.IntervalYM; }
+        public CS.ITypeTargetable CSharpOdpNetSafeType { get => CS.TypeValue.OracleIntervalYM; }
         public bool IsIgnoredAsParameter { get => true; }
         public string IgnoredReasonAsParameter { get => TranslaterMessage.IgnoreNotImplemented(OrclType); }
         public bool IsIgnoredAsAttribute { get => true; }
@@ -73,55 +71,51 @@ namespace Odapter {
     internal class TranslaterTimestamp : ITranslaterType {
         public string DataTypeFull { get => OrclType.DataType; }
         public IOrclType OrclType { get => OrclUtil.GetType(Orcl.TIMESTAMP); }
-
         // translation to C#
-        public string GetCSharpType(bool typeNotNullable = false, bool nonInterfaceType = false) { return (typeNotNullable ? CSharpType.TrimEnd('?') : CSharpType); }
-        private string CSharpType { get => CSharp.AsNullable(_cSharpType); } private readonly string _cSharpType;
+        public CS.ITypeTargetable CSharpType { get; private set; }
+        public CS.ITypeTargetable CSharpSubType { get => CSL.TypeNone; }
         public bool IsValid(ITyped dataType) { return dataType.OrclType.BuildDataTypeFullName(dataType).Equals(DataTypeFull); }
-        public string CSharpOracleDbType { get => CSharp.ORACLEDBTYPE_TIMESTAMP; }
-        public string CSharpOdpNetType { get => CSharp.ODP_NET_SAFE_TYPE_TIMESTAMP; }
+        public CS.OdpNetOracleDbTypeEnum CSharpOracleDbTypeEnum { get => CS.OdpNetOracleDbTypeEnum.TimeStamp; }
+        public CS.ITypeTargetable CSharpOdpNetSafeType { get => CS.TypeValue.OracleTimeStamp; }
         public bool IsIgnoredAsParameter { get => false; }
         public string IgnoredReasonAsParameter { get => String.Empty; }
         public bool IsIgnoredAsAttribute { get => false; }
         public string IgnoredReasonAsAttribute { get => String.Empty; }
-
-        internal TranslaterTimestamp(string cSharpType) { _cSharpType = cSharpType; }
+        internal TranslaterTimestamp(CS.TypeValue typeValue) { CSharpType = typeValue.Nullable; }
         private TranslaterTimestamp() { }
     }
 
     internal class TranslaterTimestampLTZ : ITranslaterType {
         public string DataTypeFull { get => OrclType.DataType; }
         public IOrclType OrclType { get => OrclUtil.GetType(Orcl.TIMESTAMP_WITH_LOCAL_TIME_ZONE); }
-
         // translation to C#
-        public string GetCSharpType(bool typeNotNullable = false, bool nonInterfaceType = false) { return (typeNotNullable ? CSharpType.TrimEnd('?') : CSharpType); }
-        private string CSharpType { get => CSharp.AsNullable(_cSharpType); } private readonly string _cSharpType;
+        public CS.ITypeTargetable CSharpType { get; private set; }
+        public CS.ITypeTargetable CSharpSubType { get => CSL.TypeNone; }
         public bool IsValid(ITyped dataType) { return dataType.OrclType.BuildDataTypeFullName(dataType).Equals(DataTypeFull); }
-        public string CSharpOracleDbType { get => CSharp.ORACLEDBTYPE_TIMESTAMP_LTZ; }
-        public string CSharpOdpNetType { get => CSharp.ODP_NET_SAFE_TYPE_TIMESTAMP_LTZ; }
+        public CS.OdpNetOracleDbTypeEnum CSharpOracleDbTypeEnum { get => CS.OdpNetOracleDbTypeEnum.TimeStampLTZ; }
+        public CS.ITypeTargetable CSharpOdpNetSafeType { get => CS.TypeValue.OracleTimeStampLTZ; }
         public bool IsIgnoredAsParameter { get => false; }
         public string IgnoredReasonAsParameter { get => String.Empty; }
         public bool IsIgnoredAsAttribute { get => false; }
         public string IgnoredReasonAsAttribute { get => String.Empty; }
-        internal TranslaterTimestampLTZ(string cSharpType) { _cSharpType = cSharpType; }
+        internal TranslaterTimestampLTZ(CS.TypeValue typeValue) { CSharpType = typeValue.Nullable; }
         private TranslaterTimestampLTZ() { }
     }
 
     internal class TranslaterTimestampTZ : ITranslaterType {
         public string DataTypeFull { get => OrclType.DataType; }
         public IOrclType OrclType { get => OrclUtil.GetType(Orcl.TIMESTAMP_WITH_TIME_ZONE); }
-
         // translation to C#
-        public string GetCSharpType(bool typeNotNullable = false, bool nonInterfaceType = false) { return (typeNotNullable ? CSharpType.TrimEnd('?') : CSharpType); }
-        private string CSharpType { get => CSharp.AsNullable(_cSharpType); } private readonly string _cSharpType;
+        public CS.ITypeTargetable CSharpType { get; private set; }
+        public CS.ITypeTargetable CSharpSubType { get => CSL.TypeNone; }
         public bool IsValid(ITyped dataType) { return dataType.OrclType.BuildDataTypeFullName(dataType).Equals(DataTypeFull); }
-        public string CSharpOracleDbType { get => CSharp.ORACLEDBTYPE_TIMESTAMP_TZ; }
-        public string CSharpOdpNetType { get => CSharp.ODP_NET_SAFE_TYPE_TMESTAMP_TZ; }
+        public CS.OdpNetOracleDbTypeEnum CSharpOracleDbTypeEnum { get => CS.OdpNetOracleDbTypeEnum.TimeStampTZ; }
+        public CS.ITypeTargetable CSharpOdpNetSafeType { get => CS.TypeValue.OracleTimeStampTZ; }
         public bool IsIgnoredAsParameter { get => false; }
         public string IgnoredReasonAsParameter { get => String.Empty; }
         public bool IsIgnoredAsAttribute { get => false; }
         public string IgnoredReasonAsAttribute { get => String.Empty; }
-        internal TranslaterTimestampTZ(string cSharpType) { _cSharpType = cSharpType; }
+        internal TranslaterTimestampTZ(CS.TypeValue typeValue) { CSharpType = typeValue.Nullable; }
         private TranslaterTimestampTZ() { }
     }
 }

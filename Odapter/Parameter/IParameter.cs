@@ -17,6 +17,7 @@
 //------------------------------------------------------------------------------
 
 using System.Collections.Generic;
+using CS = Odapter.CSharp;
 
 namespace Odapter {
     public interface IParameter : IParameterLoad, IParameterTranslation {
@@ -32,7 +33,7 @@ namespace Odapter {
         string AncestorClassNameTable { get; set; }
         string AncestorClassNameView { get; set; }
 
-        CSharpVersion CSharpVersion { get; set; }
+        CS.CSharpVersion TargetCSharpVersion { get; set; }
         bool IsCSharp40 { get; }
 
         bool IsDeployResources { get; set; }

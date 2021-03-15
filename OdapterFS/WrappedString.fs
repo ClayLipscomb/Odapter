@@ -26,8 +26,8 @@ module internal WrappedString =
         abstract Value : string
 
     let create canonicalize (*isValid*) ctor str :'wrappedType = 
-        if str |> String.IsNullOrWhiteSpace then 
-            failwith $"{(typeof<'wrappedType>).GetGenericTypeDefinition()} cannot be null or empty"
+        if str |> String.IsNullOrWhiteSpace then // converts null to empty string
+            emptyString |> canonicalize |> ctor
         else
             str |> canonicalize |> ctor
 
