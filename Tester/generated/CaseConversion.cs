@@ -31,7 +31,7 @@ namespace Odapter {
     /// <summary>
     /// Converts between various "cases" like camelCase, PascalCase, underscore_delimited
     /// </summary>
-    public class CaseConverter {
+    internal class CaseConverter {
         #region Constant and Static members
         private const char UNDERSCORE = '_';
         private static readonly TextInfo _textInfo = new CultureInfo("en-US", false).TextInfo;
@@ -45,6 +45,7 @@ namespace Odapter {
         /// </summary>
         /// <param name="oldText">Any string. Should have uppercase letters like PascalCase or camelCase.</param>
         /// <returns></returns>
+        [Obsolete]
         private static string DelimitCapitalizedWordsWithUnderscore(String oldText) {
             if (String.IsNullOrEmpty(oldText)) return string.Empty;
             char[] oldTextChar = oldText.Trim().ToCharArray(); // get all characters
@@ -71,21 +72,23 @@ namespace Odapter {
         /// </summary>
         /// <param name="oldText">A camelCase string</param>
         /// <returns>underscore deliminted string</returns>
-        public static string ConvertCamelCaseToSnakeCase(String oldText) => DelimitCapitalizedWordsWithUnderscore(oldText).ToLower();
+        [Obsolete]
+        private static string ConvertCamelCaseToSnakeCase(String oldText) => DelimitCapitalizedWordsWithUnderscore(oldText).ToLower();
 
         /// <summary>
         /// Convert a PascalCase string to lower-case underscore_delimited
         /// </summary>
         /// <param name="oldText">A PascalCase string</param>
         /// <returns>underscore delimited string</returns>
-        public static string ConvertPascalCaseToSnakeCase(String oldText) => DelimitCapitalizedWordsWithUnderscore(oldText).ToLower();
+        [Obsolete]
+        private static string ConvertPascalCaseToSnakeCase(String oldText) => DelimitCapitalizedWordsWithUnderscore(oldText).ToLower();
 
         /// <summary>
         /// Convert an underscore_delimited string to PascalCase
         /// </summary>
         /// <param name="oldText"></param>
         /// <returns></returns>
-        public static string ConvertSnakeCaseToPascalCase(String oldText, String nonStandardUnderscoreReplacement = null) {
+        internal static string ConvertSnakeCaseToPascalCase(String oldText, String nonStandardUnderscoreReplacement = null) {
             if (String.IsNullOrEmpty(oldText)) return string.Empty;
             string newText = oldText.Trim();
 
@@ -114,7 +117,7 @@ namespace Odapter {
         /// </summary>
         /// <param name="oldText"></param>
         /// <returns>camelCase string</returns>
-        public static string ConvertSnakeCaseToCamelCase(String oldText, String nonStandardUnderscoreReplacement = null) {
+        internal static string ConvertSnakeCaseToCamelCase(String oldText, String nonStandardUnderscoreReplacement = null) {
             if (String.IsNullOrEmpty(oldText)) return string.Empty;
             String pascalCase = ConvertSnakeCaseToPascalCase(oldText, nonStandardUnderscoreReplacement);
             return pascalCase?.Substring(0, 1)?.ToLower() + (pascalCase?.Length == 1 ? string.Empty : pascalCase?.Substring(1));
@@ -125,7 +128,7 @@ namespace Odapter {
         /// </summary>
         /// <param name="columnName">underscore deliminted string</param>
         /// <returns>title case label</returns>
-        public static string ConvertSnakeCaseToLabel(string columnName) =>
+        internal static string ConvertSnakeCaseToLabel(string columnName) =>
             // assume words are delimited by underscore
             CultureInfo.CurrentCulture.TextInfo.ToTitleCase(columnName.ToLower().Replace(UNDERSCORE.ToString(), " "));
 
@@ -134,7 +137,7 @@ namespace Odapter {
         /// </summary>
         /// <param name="columnName">underscore delimited string</param>
         /// <returns>title case label</returns>
-        public static string ConvertToCapitalized(string value) {
+        internal static string ConvertToCapitalized(string value) {
             if (string.IsNullOrEmpty(value)) return string.Empty;
             value = value.Trim();
             return char.ToUpper(value[0]) + (value.Length > 1 ? value.Substring(1).ToLower() : "");
@@ -145,7 +148,7 @@ namespace Odapter {
         /// </summary>
         /// <param name="oldText"></param>
         /// <returns></returns>
-        public static string ConvertSnakeCaseToCamelCasePrefixedWithUnderscore(String oldText, String nonStandardUnderscoreReplacement = null) =>
+        internal static string ConvertSnakeCaseToCamelCasePrefixedWithUnderscore(String oldText, String nonStandardUnderscoreReplacement = null) =>
             UNDERSCORE + ConvertSnakeCaseToCamelCase(oldText, nonStandardUnderscoreReplacement);
         #endregion
     }
