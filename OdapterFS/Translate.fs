@@ -47,8 +47,7 @@ module internal Naming =
         |> replace (@":", @"colon" + CHARACTER_ABBREV)
         |> replace (@";", @"semicolon" + CHARACTER_ABBREV)
     
-    //let private translateKeyword str = (if Keyword.isKeyword(str) then @"@" else emptyString) + str // prepend @ to C# keyword
-    let private translateKeyword str = str + (if Keyword.isKeyword(str) then @"Cs" else emptyString) // append "Cs" to C# keyword
+    let private translateKeyword str = (if Keyword.isKeyword(str) then @"@" else emptyString) + str // prepend @ to C# keyword
 
     let internal snakeCaseOfOracleIdentifier = normalizeOracleSnakeCase >> SnakeCase.create
     let internal pascalCaseOfOracleIdentifier = snakeCaseOfOracleIdentifier >> PascalCase.ofSnakeCase >> (PascalCase.map translateKeyword) 

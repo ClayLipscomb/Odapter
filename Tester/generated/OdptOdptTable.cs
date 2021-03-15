@@ -25,7 +25,7 @@ namespace Schema.Odpt.Odpt.Table {
         [DataMember(Order=4, IsRequired=true)][XmlElement(Order=4, IsNullable=true)]
         public virtual SByte? Severity { get; set; }
         [DataMember(Order=5, IsRequired=false)][XmlElement(Order=5, IsNullable=true)]
-        public virtual String InterfaceCs { get; set; }
+        public virtual String @Interface { get; set; }
         [DataMember(Order=6, IsRequired=true)][XmlElement(Order=6, IsNullable=true)]
         public virtual String Source { get; set; }
         [DataMember(Order=7, IsRequired=true)][XmlElement(Order=7, IsNullable=true)]
