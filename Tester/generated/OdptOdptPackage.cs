@@ -1904,7 +1904,7 @@ namespace Schema.Odpt.Odpt.Package {
         // **PROC IGNORED** - .NET cannot send/receive an associative array of a PL/SQL RECORD type
         // public IList<TTableBig> FuncAaRecord(IList<TTableBig> pIn, ref IList<TTableBig> pInOut, out IList<TTableBig> pOut, OracleConnection optionalPreexistingOpenConnection = null)
 
-        // **PROC IGNORED** - .NET cannot send/receive an associative array of a PL/SQL RECORD type
+        // **PROC IGNORED** - .NET cannot send/receive an associative array of a ROWTYPE type
         // public IList<FuncAaRowSomeRowType> FuncAaRow(IList<FuncAaRowSomeRowType> pIn, ref IList<FuncAaRowSomeRowType> pInOut, out IList<FuncAaRowSomeRowType> pOut, OracleConnection optionalPreexistingOpenConnection = null)
 
         public IList<Int64?> FuncAaSmallint(IList<Int64?> pIn, ref IList<Int64?> pInOut, out IList<Int64?> pOut, OracleConnection optionalPreexistingOpenConnection = null) {
@@ -3094,7 +3094,7 @@ namespace Schema.Odpt.Odpt.Package {
         // **PROC IGNORED** - REF type is not available in ODP.NET managed
         // public String FuncRef(String pIn, ref String pInOut, out String pOut, OracleConnection optionalPreexistingOpenConnection = null)
 
-        // **PROC IGNORED** - .NET cannot send/receive a PL/SQL RECORD type (apart from cursor)
+        // **PROC IGNORED** - .NET cannot send/receive a ROWTYPE type (apart from cursor)
         // public FuncRowSomeRowType FuncRow(FuncRowPInRowType pIn, ref FuncRowPInOutRowType pInOut, out FuncRowPOutRowType pOut, OracleConnection optionalPreexistingOpenConnection = null)
 
         // **PROC IGNORED** - Code generation for ROWID type has not been implemented
@@ -4861,6 +4861,13 @@ namespace Schema.Odpt.Odpt.Package {
             return __ret;
         } // GetRowsTypedRet
 
+        // **PROC IGNORED** - Code generation for REF CURSOR OF ROWTYPE type has not been implemented
+        // public ICollection<T_GetRowsTypedTableRowTypeSomeRowType> GetRowsTypedTableRowType<T_GetRowsTypedTableRowTypeSomeRowType>(
+        //        bool mapColumnToObjectPropertyByPosition = false, bool allowUnmappedColumnsToBeExcluded = false, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
+
+        // **PROC IGNORED** - Code generation for REF CURSOR OF ROWTYPE type has not been implemented
+        // public ICollection<T_GetRowsTypedTableRowTypeSomeRowType> GetRowsTypedTableRowType<T_GetRowsTypedTableRowTypeSomeRowType>(UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
+
         public ICollection<T_returnUntyped> GetRowsUntypedFltrUnused<T_returnUntyped, T_pRefCursorUntyped, T_pRefCursor2Untyped>(out ICollection<T_pRefCursorUntyped> pRefCursor, out ICollection<T_pRefCursor2Untyped> pRefCursor2, 
                 bool mapColumnToObjectPropertyByPosition = false, bool allowUnmappedColumnsToBeExcluded = false, 
                 UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
@@ -5419,7 +5426,7 @@ namespace Schema.Odpt.Odpt.Package {
             return __ret;
         } // InsertRow
 
-        // **PROC IGNORED** - .NET cannot send/receive a PL/SQL RECORD type (apart from cursor)
+        // **PROC IGNORED** - .NET cannot send/receive a ROWTYPE type (apart from cursor)
         // public Int64? InsertRow(InsertRowPRowRowType pRow, OracleConnection optionalPreexistingOpenConnection = null)
 
         // **PROC IGNORED** - .NET cannot send a REF CURSOR type
@@ -6416,7 +6423,7 @@ namespace Schema.Odpt.Odpt.Package {
             return __ret;
         } // InsertRow
 
-        // **PROC IGNORED** - .NET cannot send/receive a PL/SQL RECORD type (apart from cursor)
+        // **PROC IGNORED** - .NET cannot send/receive a ROWTYPE type (apart from cursor)
         // public Int64? InsertRow(InsertRowPRowRowType pRow, OracleConnection optionalPreexistingOpenConnection = null)
 
         public void TruncTable(OracleConnection optionalPreexistingOpenConnection = null) {
