@@ -95,12 +95,20 @@ namespace OdapterWnFrm {
 
 #region Validations
         private bool ValidateFieldValues() {
+            bool validationErrorsFound = false;
             int maxAssocArraySize = Convert.ToInt32(txtMaxAssocArraySize.Text);
-            if (maxAssocArraySize < 1 || maxAssocArraySize > UInt16.MaxValue) {
-                DisplayMessage($"Max Size Assoc Array range is 1-{UInt16.MaxValue}.");
-                return false;
+            if (maxAssocArraySize < 1 || maxAssocArraySize > ushort.MaxValue) {
+                DisplayMessage($"Max Size Assoc Array range is 1-{ushort.MaxValue}.");
+                validationErrorsFound = true;
             }
-            return true;
+
+            int maxReturnArgStringSize = Convert.ToInt32(txtMaxReturnArgStringSize.Text);
+            if (maxReturnArgStringSize < 1 || maxReturnArgStringSize > short.MaxValue) {
+                DisplayMessage($"Max Length VARCHAR2 range is 1-{short.MaxValue}.");
+                validationErrorsFound = true;
+            }
+
+            return !validationErrorsFound;
         }
         private bool ValidateRequiredFields() {
             bool missingRequiredFields = false;
