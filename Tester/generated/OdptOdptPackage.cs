@@ -3811,6 +3811,15 @@ namespace Schema.Odpt.Odpt.Package {
             Byte[] ColBlob { set; }
             String ColClob { set; }
             String ColNclob { set; }
+            String Abstract { set; }
+            String Base { set; }
+            String Void { set; }
+            String Class { set; }
+            String Namespace { set; }
+            String Readonly { set; }
+            String Partial { set; }
+            String Const { set; }
+            String Using { set; }
             String ColLast { set; }
         } // IFltrPkgRecUnusedTTableBigFltUnused
 
@@ -3890,6 +3899,24 @@ namespace Schema.Odpt.Odpt.Package {
             [DataMember(Order=35, IsRequired=false)][XmlElement(Order=35, IsNullable=true)]
             public virtual String ColNclob { get; set; }
             [DataMember(Order=36, IsRequired=false)][XmlElement(Order=36, IsNullable=true)]
+            public virtual String Abstract { get; set; }
+            [DataMember(Order=37, IsRequired=false)][XmlElement(Order=37, IsNullable=true)]
+            public virtual String Base { get; set; }
+            [DataMember(Order=38, IsRequired=false)][XmlElement(Order=38, IsNullable=true)]
+            public virtual String Void { get; set; }
+            [DataMember(Order=39, IsRequired=false)][XmlElement(Order=39, IsNullable=true)]
+            public virtual String Class { get; set; }
+            [DataMember(Order=40, IsRequired=false)][XmlElement(Order=40, IsNullable=true)]
+            public virtual String Namespace { get; set; }
+            [DataMember(Order=41, IsRequired=false)][XmlElement(Order=41, IsNullable=true)]
+            public virtual String Readonly { get; set; }
+            [DataMember(Order=42, IsRequired=false)][XmlElement(Order=42, IsNullable=true)]
+            public virtual String Partial { get; set; }
+            [DataMember(Order=43, IsRequired=false)][XmlElement(Order=43, IsNullable=true)]
+            public virtual String Const { get; set; }
+            [DataMember(Order=44, IsRequired=false)][XmlElement(Order=44, IsNullable=true)]
+            public virtual String Using { get; set; }
+            [DataMember(Order=45, IsRequired=false)][XmlElement(Order=45, IsNullable=true)]
             public virtual String ColLast { get; set; }
         } // FltrPkgRecUnusedTTableBigFltUnused
 
@@ -3935,7 +3962,16 @@ namespace Schema.Odpt.Odpt.Package {
                     if (!rdr.IsDBNull(33)) obj.ColBlob = rdr.GetOracleBlob(33).Value;
                     if (!rdr.IsDBNull(34)) obj.ColClob = rdr.GetOracleClob(34).Value;
                     if (!rdr.IsDBNull(35)) obj.ColNclob = rdr.GetOracleClob(35).Value;
-                    if (!rdr.IsDBNull(36)) obj.ColLast = Convert.ToString(rdr.GetValue(36));
+                    if (!rdr.IsDBNull(36)) obj.Abstract = Convert.ToString(rdr.GetValue(36));
+                    if (!rdr.IsDBNull(37)) obj.Base = Convert.ToString(rdr.GetValue(37));
+                    if (!rdr.IsDBNull(38)) obj.Void = Convert.ToString(rdr.GetValue(38));
+                    if (!rdr.IsDBNull(39)) obj.Class = Convert.ToString(rdr.GetValue(39));
+                    if (!rdr.IsDBNull(40)) obj.Namespace = Convert.ToString(rdr.GetValue(40));
+                    if (!rdr.IsDBNull(41)) obj.Readonly = Convert.ToString(rdr.GetValue(41));
+                    if (!rdr.IsDBNull(42)) obj.Partial = Convert.ToString(rdr.GetValue(42));
+                    if (!rdr.IsDBNull(43)) obj.Const = Convert.ToString(rdr.GetValue(43));
+                    if (!rdr.IsDBNull(44)) obj.Using = Convert.ToString(rdr.GetValue(44));
+                    if (!rdr.IsDBNull(45)) obj.ColLast = Convert.ToString(rdr.GetValue(45));
                     __ret.Add(obj);
                     if (optionalMaxNumberRowsToReadFromAnyCursor != null && __ret.Count >= optionalMaxNumberRowsToReadFromAnyCursor) break;
                 }
@@ -3980,6 +4016,15 @@ namespace Schema.Odpt.Odpt.Package {
             Byte[] ColBlob { set; }
             String ColClob { set; }
             String ColNclob { set; }
+            String Abstract { set; }
+            String Base { set; }
+            String Void { set; }
+            String Class { set; }
+            String Namespace { set; }
+            String Readonly { set; }
+            String Partial { set; }
+            String Const { set; }
+            String Using { set; }
             String ColLast { set; }
         } // IFltrPkgRecUsedTTableBigFltUsed
 
@@ -4059,6 +4104,24 @@ namespace Schema.Odpt.Odpt.Package {
             [DataMember(Order=35, IsRequired=false)][XmlElement(Order=35, IsNullable=true)]
             public virtual String ColNclob { get; set; }
             [DataMember(Order=36, IsRequired=false)][XmlElement(Order=36, IsNullable=true)]
+            public virtual String Abstract { get; set; }
+            [DataMember(Order=37, IsRequired=false)][XmlElement(Order=37, IsNullable=true)]
+            public virtual String Base { get; set; }
+            [DataMember(Order=38, IsRequired=false)][XmlElement(Order=38, IsNullable=true)]
+            public virtual String Void { get; set; }
+            [DataMember(Order=39, IsRequired=false)][XmlElement(Order=39, IsNullable=true)]
+            public virtual String Class { get; set; }
+            [DataMember(Order=40, IsRequired=false)][XmlElement(Order=40, IsNullable=true)]
+            public virtual String Namespace { get; set; }
+            [DataMember(Order=41, IsRequired=false)][XmlElement(Order=41, IsNullable=true)]
+            public virtual String Readonly { get; set; }
+            [DataMember(Order=42, IsRequired=false)][XmlElement(Order=42, IsNullable=true)]
+            public virtual String Partial { get; set; }
+            [DataMember(Order=43, IsRequired=false)][XmlElement(Order=43, IsNullable=true)]
+            public virtual String Const { get; set; }
+            [DataMember(Order=44, IsRequired=false)][XmlElement(Order=44, IsNullable=true)]
+            public virtual String Using { get; set; }
+            [DataMember(Order=45, IsRequired=false)][XmlElement(Order=45, IsNullable=true)]
             public virtual String ColLast { get; set; }
         } // FltrPkgRecUsedTTableBigFltUsed
 
@@ -4104,7 +4167,16 @@ namespace Schema.Odpt.Odpt.Package {
                     if (!rdr.IsDBNull(33)) obj.ColBlob = rdr.GetOracleBlob(33).Value;
                     if (!rdr.IsDBNull(34)) obj.ColClob = rdr.GetOracleClob(34).Value;
                     if (!rdr.IsDBNull(35)) obj.ColNclob = rdr.GetOracleClob(35).Value;
-                    if (!rdr.IsDBNull(36)) obj.ColLast = Convert.ToString(rdr.GetValue(36));
+                    if (!rdr.IsDBNull(36)) obj.Abstract = Convert.ToString(rdr.GetValue(36));
+                    if (!rdr.IsDBNull(37)) obj.Base = Convert.ToString(rdr.GetValue(37));
+                    if (!rdr.IsDBNull(38)) obj.Void = Convert.ToString(rdr.GetValue(38));
+                    if (!rdr.IsDBNull(39)) obj.Class = Convert.ToString(rdr.GetValue(39));
+                    if (!rdr.IsDBNull(40)) obj.Namespace = Convert.ToString(rdr.GetValue(40));
+                    if (!rdr.IsDBNull(41)) obj.Readonly = Convert.ToString(rdr.GetValue(41));
+                    if (!rdr.IsDBNull(42)) obj.Partial = Convert.ToString(rdr.GetValue(42));
+                    if (!rdr.IsDBNull(43)) obj.Const = Convert.ToString(rdr.GetValue(43));
+                    if (!rdr.IsDBNull(44)) obj.Using = Convert.ToString(rdr.GetValue(44));
+                    if (!rdr.IsDBNull(45)) obj.ColLast = Convert.ToString(rdr.GetValue(45));
                     __ret.Add(obj);
                     if (optionalMaxNumberRowsToReadFromAnyCursor != null && __ret.Count >= optionalMaxNumberRowsToReadFromAnyCursor) break;
                 }
@@ -4149,6 +4221,15 @@ namespace Schema.Odpt.Odpt.Package {
             Byte[] ColBlob { set; }
             String ColClob { set; }
             String ColNclob { set; }
+            String Abstract { set; }
+            String Base { set; }
+            String Void { set; }
+            String Class { set; }
+            String Namespace { set; }
+            String Readonly { set; }
+            String Partial { set; }
+            String Const { set; }
+            String Using { set; }
             String ColLast { set; }
         } // ITTableBig
 
@@ -4228,6 +4309,24 @@ namespace Schema.Odpt.Odpt.Package {
             [DataMember(Order=35, IsRequired=false)][XmlElement(Order=35, IsNullable=true)]
             public virtual String ColNclob { get; set; }
             [DataMember(Order=36, IsRequired=false)][XmlElement(Order=36, IsNullable=true)]
+            public virtual String Abstract { get; set; }
+            [DataMember(Order=37, IsRequired=false)][XmlElement(Order=37, IsNullable=true)]
+            public virtual String Base { get; set; }
+            [DataMember(Order=38, IsRequired=false)][XmlElement(Order=38, IsNullable=true)]
+            public virtual String Void { get; set; }
+            [DataMember(Order=39, IsRequired=false)][XmlElement(Order=39, IsNullable=true)]
+            public virtual String Class { get; set; }
+            [DataMember(Order=40, IsRequired=false)][XmlElement(Order=40, IsNullable=true)]
+            public virtual String Namespace { get; set; }
+            [DataMember(Order=41, IsRequired=false)][XmlElement(Order=41, IsNullable=true)]
+            public virtual String Readonly { get; set; }
+            [DataMember(Order=42, IsRequired=false)][XmlElement(Order=42, IsNullable=true)]
+            public virtual String Partial { get; set; }
+            [DataMember(Order=43, IsRequired=false)][XmlElement(Order=43, IsNullable=true)]
+            public virtual String Const { get; set; }
+            [DataMember(Order=44, IsRequired=false)][XmlElement(Order=44, IsNullable=true)]
+            public virtual String Using { get; set; }
+            [DataMember(Order=45, IsRequired=false)][XmlElement(Order=45, IsNullable=true)]
             public virtual String ColLast { get; set; }
         } // TTableBig
 
@@ -4273,7 +4372,16 @@ namespace Schema.Odpt.Odpt.Package {
                     if (!rdr.IsDBNull(33)) obj.ColBlob = rdr.GetOracleBlob(33).Value;
                     if (!rdr.IsDBNull(34)) obj.ColClob = rdr.GetOracleClob(34).Value;
                     if (!rdr.IsDBNull(35)) obj.ColNclob = rdr.GetOracleClob(35).Value;
-                    if (!rdr.IsDBNull(36)) obj.ColLast = Convert.ToString(rdr.GetValue(36));
+                    if (!rdr.IsDBNull(36)) obj.Abstract = Convert.ToString(rdr.GetValue(36));
+                    if (!rdr.IsDBNull(37)) obj.Base = Convert.ToString(rdr.GetValue(37));
+                    if (!rdr.IsDBNull(38)) obj.Void = Convert.ToString(rdr.GetValue(38));
+                    if (!rdr.IsDBNull(39)) obj.Class = Convert.ToString(rdr.GetValue(39));
+                    if (!rdr.IsDBNull(40)) obj.Namespace = Convert.ToString(rdr.GetValue(40));
+                    if (!rdr.IsDBNull(41)) obj.Readonly = Convert.ToString(rdr.GetValue(41));
+                    if (!rdr.IsDBNull(42)) obj.Partial = Convert.ToString(rdr.GetValue(42));
+                    if (!rdr.IsDBNull(43)) obj.Const = Convert.ToString(rdr.GetValue(43));
+                    if (!rdr.IsDBNull(44)) obj.Using = Convert.ToString(rdr.GetValue(44));
+                    if (!rdr.IsDBNull(45)) obj.ColLast = Convert.ToString(rdr.GetValue(45));
                     __ret.Add(obj);
                     if (optionalMaxNumberRowsToReadFromAnyCursor != null && __ret.Count >= optionalMaxNumberRowsToReadFromAnyCursor) break;
                 }
@@ -5366,7 +5474,8 @@ namespace Schema.Odpt.Odpt.Package {
                 String pColNvarchar2Min, String pColNvarchar2Max, String pColCharMin, String pColCharMax, String pColNcharMin, String pColNcharMax, 
                 DateTime? pColDate, DateTime? pColTimestamp, DateTime? pColTimestampPrec0, DateTime? pColTimestampPrec9, DateTimeOffset? pColTimestampTZ, DateTimeOffset? pColTimestampTZPrec0, 
                 DateTimeOffset? pColTimestampTZPrec9, DateTime? pColTimestampLTZ, DateTime? pColTimestampLTZPrec0, DateTime? pColTimestampLTZPrec9, Byte[] pColBlob, String pColClob, 
-                String pColNclob, OracleConnection optionalPreexistingOpenConnection = null) {
+                String pColNclob, String @abstract, String @base, String @void, String @class, String @namespace, 
+                String @readonly, String @partial, String @const, String @using, OracleConnection optionalPreexistingOpenConnection = null) {
             Int64? __ret = null; 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
             try {
@@ -5409,6 +5518,15 @@ namespace Schema.Odpt.Odpt.Package {
                     __cmd.Parameters.Add(new OracleParameter("P_COL_BLOB", OracleDbType.Blob, pColBlob, ParameterDirection.Input));
                     __cmd.Parameters.Add(new OracleParameter("P_COL_CLOB", OracleDbType.Clob, pColClob, ParameterDirection.Input));
                     __cmd.Parameters.Add(new OracleParameter("P_COL_NCLOB", OracleDbType.NClob, pColNclob, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("ABSTRACT", OracleDbType.Varchar2, @abstract, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("BASE", OracleDbType.Varchar2, @base, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("VOID", OracleDbType.Varchar2, @void, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("CLASS", OracleDbType.Varchar2, @class, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("NAMESPACE", OracleDbType.Varchar2, @namespace, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("READONLY", OracleDbType.Varchar2, @readonly, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("PARTIAL", OracleDbType.Varchar2, @partial, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("CONST", OracleDbType.Varchar2, @const, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("USING", OracleDbType.Varchar2, @using, ParameterDirection.Input));
 
                     OracleCommandTrace __cmdTrace = IsTracing(__cmd) ? new OracleCommandTrace(__cmd) : null;
                     int __rowsAffected = __cmd.ExecuteNonQuery();

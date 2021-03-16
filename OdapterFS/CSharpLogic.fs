@@ -72,7 +72,8 @@ module internal CSharpVersion =
 [<RequireQualifiedAccess>]
 module internal Keyword = 
     let private unionCache = UtilUnion.getUnionCases<Keyword> |> Seq.cache
-    let isKeyword keywordCandidate = unionCache |> Seq.exists (fun kw -> toUpper kw.Name = toUpper keywordCandidate)
+    /// Case-sensitive compare to (all lower) C# keyword
+    let isKeyword keywordCandidate = unionCache |> Seq.exists (fun kw -> toLower kw.Name = keywordCandidate) 
 
 [<RequireQualifiedAccess>]
 module internal Namespace = 

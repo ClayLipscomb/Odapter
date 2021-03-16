@@ -25,7 +25,7 @@ namespace Schema.Odpt.Table {
         [DataMember(Order=4, IsRequired=true)][XmlElement(Order=4, IsNullable=true)]
         public virtual SByte? Severity { get; set; }
         [DataMember(Order=5, IsRequired=false)][XmlElement(Order=5, IsNullable=true)]
-        public virtual String @Interface { get; set; }
+        public virtual String Interface { get; set; }
         [DataMember(Order=6, IsRequired=true)][XmlElement(Order=6, IsNullable=true)]
         public virtual String Source { get; set; }
         [DataMember(Order=7, IsRequired=true)][XmlElement(Order=7, IsNullable=true)]
@@ -108,6 +108,24 @@ namespace Schema.Odpt.Table {
         [DataMember(Order=36, IsRequired=false)][XmlElement(Order=36, IsNullable=true)]
         public virtual String ColNclob { get; set; }
         [DataMember(Order=37, IsRequired=false)][XmlElement(Order=37, IsNullable=true)]
+        public virtual String Abstract { get; set; }
+        [DataMember(Order=38, IsRequired=false)][XmlElement(Order=38, IsNullable=true)]
+        public virtual String Base { get; set; }
+        [DataMember(Order=39, IsRequired=false)][XmlElement(Order=39, IsNullable=true)]
+        public virtual String Void { get; set; }
+        [DataMember(Order=40, IsRequired=false)][XmlElement(Order=40, IsNullable=true)]
+        public virtual String Class { get; set; }
+        [DataMember(Order=41, IsRequired=false)][XmlElement(Order=41, IsNullable=true)]
+        public virtual String Namespace { get; set; }
+        [DataMember(Order=42, IsRequired=false)][XmlElement(Order=42, IsNullable=true)]
+        public virtual String Readonly { get; set; }
+        [DataMember(Order=43, IsRequired=false)][XmlElement(Order=43, IsNullable=true)]
+        public virtual String Partial { get; set; }
+        [DataMember(Order=44, IsRequired=false)][XmlElement(Order=44, IsNullable=true)]
+        public virtual String Const { get; set; }
+        [DataMember(Order=45, IsRequired=false)][XmlElement(Order=45, IsNullable=true)]
+        public virtual String Using { get; set; }
+        [DataMember(Order=46, IsRequired=false)][XmlElement(Order=46, IsNullable=true)]
         public virtual String ColLast { get; set; }
     } // OdptTableBig
 

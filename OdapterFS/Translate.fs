@@ -50,7 +50,7 @@ module internal Naming =
     let private translateKeyword str = (if Keyword.isKeyword(str) then @"@" else emptyString) + str // prepend @ to C# keyword
 
     let internal snakeCaseOfOracleIdentifier = normalizeOracleSnakeCase >> SnakeCase.create
-    let internal pascalCaseOfOracleIdentifier = snakeCaseOfOracleIdentifier >> PascalCase.ofSnakeCase >> (PascalCase.map translateKeyword) 
+    let internal pascalCaseOfOracleIdentifier = snakeCaseOfOracleIdentifier >> PascalCase.ofSnakeCase 
     let internal camelCaseOfOracleIdentifier = snakeCaseOfOracleIdentifier >> CamelCase.ofSnakeCase >> (CamelCase.map translateKeyword) 
     let internal classNameOfOracleIdentifier = pascalCaseOfOracleIdentifier >> ClassName.ofPascalCase
     let internal propertyNameOfOracleIdentifier = pascalCaseOfOracleIdentifier >> PropertyName.ofPascalCase
