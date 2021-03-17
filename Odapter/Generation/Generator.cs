@@ -1023,7 +1023,7 @@ namespace Odapter {
             if (isPartial) classText.AppendLine(Tab(tabIndentCount + 1) + CS.AccessModifier.PRIVATE + " " + CS.TypeValue.Byte + " " + "propertyToEnsuresPartialClassNamesAreUniqueAtCompileTime" + " { get; set; }");
 
             foreach (IEntityAttribute attr in entity.Attributes) { // generate all attributes
-                string nonPublicMemberName = Trns.FieldNameProtectedOfOracleIdentifier(attr.AttrName).Code;
+                var nonPublicMemberName = Trns.FieldNameProtectedOfOracleIdentifier(attr.AttrName).Code;
                 var cSharpType = attr.Translater.CSharpType.ToString();
 
                 if (attr.AttrTypeOwner != null && !attr.AttrTypeOwner.Equals(entity.Owner) && !attr.AttrTypeOwner.Equals("SYS")) {
@@ -1042,7 +1042,7 @@ namespace Odapter {
                     + cSharpType + " " + Trns.PropertyNamePublicOfOracleIdentifier(attr.AttrName, attr.EntityName)
                     + (Parameter.Instance.IsUseAutoImplementedProperties 
                         ? " { get; set; }"
-                        : " { get { return " + nonPublicMemberName + "; } set { " + nonPublicMemberName + " = value; } }"));
+                        : " { get { return this." + nonPublicMemberName + "; } set { this." + nonPublicMemberName + " = value; } }"));
                 classText.AppendLine(Parameter.Instance.IsUseAutoImplementedProperties 
                     ? ""
                     : " protected " + (attr.ContainerClassName == null ? "" : attr.ContainerClassName + ".") + cSharpType + " " + nonPublicMemberName + ";");
