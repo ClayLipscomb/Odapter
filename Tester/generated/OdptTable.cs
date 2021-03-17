@@ -17,291 +17,291 @@ namespace Schema.Odpt.Table {
     public partial class OdptLogs : Schema.Odpt.OdptTable {
         private Byte propertyToEnsuresPartialClassNamesAreUniqueAtCompileTime { get; set; }
         [DataMember(Order=1, IsRequired=true)][XmlElement(Order=1, IsNullable=true)]
-        public virtual Int64? LogId { get { return logId; } set { logId = value; } } protected Int64? logId;
+        public virtual Int64? LogId { get { return this.logId; } set { this.logId = value; } } protected Int64? logId;
         [DataMember(Order=2, IsRequired=true)][XmlElement(Order=2, IsNullable=true)]
-        public virtual DateTime? LogDt { get { return logDt; } set { logDt = value; } } protected DateTime? logDt;
+        public virtual DateTime? LogDt { get { return this.logDt; } set { this.logDt = value; } } protected DateTime? logDt;
         [DataMember(Order=3, IsRequired=true)][XmlElement(Order=3, IsNullable=true)]
-        public virtual String UserName { get { return userName; } set { userName = value; } } protected String userName;
+        public virtual String UserName { get { return this.userName; } set { this.userName = value; } } protected String userName;
         [DataMember(Order=4, IsRequired=true)][XmlElement(Order=4, IsNullable=true)]
-        public virtual SByte? Severity { get { return severity; } set { severity = value; } } protected SByte? severity;
+        public virtual SByte? Severity { get { return this.severity; } set { this.severity = value; } } protected SByte? severity;
         [DataMember(Order=5, IsRequired=false)][XmlElement(Order=5, IsNullable=true)]
-        public virtual String Interface { get { return @interface; } set { @interface = value; } } protected String @interface;
+        public virtual String Interface { get { return this.@interface; } set { this.@interface = value; } } protected String @interface;
         [DataMember(Order=6, IsRequired=true)][XmlElement(Order=6, IsNullable=true)]
-        public virtual String Source { get { return source; } set { source = value; } } protected String source;
+        public virtual String Source { get { return this.source; } set { this.source = value; } } protected String source;
         [DataMember(Order=7, IsRequired=true)][XmlElement(Order=7, IsNullable=true)]
-        public virtual String Msg { get { return msg; } set { msg = value; } } protected String msg;
+        public virtual String Msg { get { return this.msg; } set { this.msg = value; } } protected String msg;
     } // OdptLogs
 
     [DataContract(Namespace="http://odpt.business.com")][Serializable()]
     public partial class OdptTableBig : Schema.Odpt.OdptTable {
         private Byte propertyToEnsuresPartialClassNamesAreUniqueAtCompileTime { get; set; }
         [DataMember(Order=1, IsRequired=true)][XmlElement(Order=1, IsNullable=true)]
-        public virtual Int64? Id { get { return id; } set { id = value; } } protected Int64? id;
+        public virtual Int64? Id { get { return this.id; } set { this.id = value; } } protected Int64? id;
         [DataMember(Order=2, IsRequired=false)][XmlElement(Order=2, IsNullable=true)]
-        public virtual Int64? ColNumberId { get { return colNumberId; } set { colNumberId = value; } } protected Int64? colNumberId;
+        public virtual Int64? ColNumberId { get { return this.colNumberId; } set { this.colNumberId = value; } } protected Int64? colNumberId;
         [DataMember(Order=3, IsRequired=false)][XmlElement(Order=3, IsNullable=true)]
-        public virtual Int64? ColInteger { get { return colInteger; } set { colInteger = value; } } protected Int64? colInteger;
+        public virtual Int64? ColInteger { get { return this.colInteger; } set { this.colInteger = value; } } protected Int64? colInteger;
         [DataMember(Order=4, IsRequired=false)][XmlElement(Order=4, IsNullable=true)]
-        public virtual Int64? ColInt { get { return colInt; } set { colInt = value; } } protected Int64? colInt;
+        public virtual Int64? ColInt { get { return this.colInt; } set { this.colInt = value; } } protected Int64? colInt;
         [DataMember(Order=5, IsRequired=false)][XmlElement(Order=5, IsNullable=true)]
-        public virtual Int64? ColSmallint { get { return colSmallint; } set { colSmallint = value; } } protected Int64? colSmallint;
+        public virtual Int64? ColSmallint { get { return this.colSmallint; } set { this.colSmallint = value; } } protected Int64? colSmallint;
         [DataMember(Order=6, IsRequired=false)][XmlElement(Order=6, IsNullable=true)]
-        public virtual Int64? ColNumeric { get { return colNumeric; } set { colNumeric = value; } } protected Int64? colNumeric;
+        public virtual Int64? ColNumeric { get { return this.colNumeric; } set { this.colNumeric = value; } } protected Int64? colNumeric;
         [DataMember(Order=7, IsRequired=false)][XmlElement(Order=7, IsNullable=true)]
-        public virtual Int64? ColDecimal { get { return colDecimal; } set { colDecimal = value; } } protected Int64? colDecimal;
+        public virtual Int64? ColDecimal { get { return this.colDecimal; } set { this.colDecimal = value; } } protected Int64? colDecimal;
         [DataMember(Order=8, IsRequired=false)][XmlElement(Order=8, IsNullable=true)]
-        public virtual Decimal? ColNumber { get { return colNumber; } set { colNumber = value; } } protected Decimal? colNumber;
+        public virtual Decimal? ColNumber { get { return this.colNumber; } set { this.colNumber = value; } } protected Decimal? colNumber;
         [DataMember(Order=9, IsRequired=false)][XmlElement(Order=9, IsNullable=true)]
-        public virtual Decimal? ColDoublePrecision { get { return colDoublePrecision; } set { colDoublePrecision = value; } } protected Decimal? colDoublePrecision;
+        public virtual Decimal? ColDoublePrecision { get { return this.colDoublePrecision; } set { this.colDoublePrecision = value; } } protected Decimal? colDoublePrecision;
         [DataMember(Order=10, IsRequired=false)][XmlElement(Order=10, IsNullable=true)]
-        public virtual Decimal? ColFloat { get { return colFloat; } set { colFloat = value; } } protected Decimal? colFloat;
+        public virtual Decimal? ColFloat { get { return this.colFloat; } set { this.colFloat = value; } } protected Decimal? colFloat;
         [DataMember(Order=11, IsRequired=false)][XmlElement(Order=11, IsNullable=true)]
-        public virtual Decimal? ColReal { get { return colReal; } set { colReal = value; } } protected Decimal? colReal;
+        public virtual Decimal? ColReal { get { return this.colReal; } set { this.colReal = value; } } protected Decimal? colReal;
         [DataMember(Order=12, IsRequired=false)][XmlElement(Order=12, IsNullable=true)]
-        public virtual Single? ColBinaryFloat { get { return colBinaryFloat; } set { colBinaryFloat = value; } } protected Single? colBinaryFloat;
+        public virtual Single? ColBinaryFloat { get { return this.colBinaryFloat; } set { this.colBinaryFloat = value; } } protected Single? colBinaryFloat;
         [DataMember(Order=13, IsRequired=false)][XmlElement(Order=13, IsNullable=true)]
-        public virtual Double? ColBinaryDouble { get { return colBinaryDouble; } set { colBinaryDouble = value; } } protected Double? colBinaryDouble;
+        public virtual Double? ColBinaryDouble { get { return this.colBinaryDouble; } set { this.colBinaryDouble = value; } } protected Double? colBinaryDouble;
         [DataMember(Order=14, IsRequired=false)][XmlElement(Order=14, IsNullable=true)]
-        public virtual String ColVarcharMin { get { return colVarcharMin; } set { colVarcharMin = value; } } protected String colVarcharMin;
+        public virtual String ColVarcharMin { get { return this.colVarcharMin; } set { this.colVarcharMin = value; } } protected String colVarcharMin;
         [DataMember(Order=15, IsRequired=false)][XmlElement(Order=15, IsNullable=true)]
-        public virtual String ColVarcharMax { get { return colVarcharMax; } set { colVarcharMax = value; } } protected String colVarcharMax;
+        public virtual String ColVarcharMax { get { return this.colVarcharMax; } set { this.colVarcharMax = value; } } protected String colVarcharMax;
         [DataMember(Order=16, IsRequired=false)][XmlElement(Order=16, IsNullable=true)]
-        public virtual String ColVarchar2Min { get { return colVarchar2Min; } set { colVarchar2Min = value; } } protected String colVarchar2Min;
+        public virtual String ColVarchar2Min { get { return this.colVarchar2Min; } set { this.colVarchar2Min = value; } } protected String colVarchar2Min;
         [DataMember(Order=17, IsRequired=false)][XmlElement(Order=17, IsNullable=true)]
-        public virtual String ColVarchar2Max { get { return colVarchar2Max; } set { colVarchar2Max = value; } } protected String colVarchar2Max;
+        public virtual String ColVarchar2Max { get { return this.colVarchar2Max; } set { this.colVarchar2Max = value; } } protected String colVarchar2Max;
         [DataMember(Order=18, IsRequired=false)][XmlElement(Order=18, IsNullable=true)]
-        public virtual String ColNvarchar2Min { get { return colNvarchar2Min; } set { colNvarchar2Min = value; } } protected String colNvarchar2Min;
+        public virtual String ColNvarchar2Min { get { return this.colNvarchar2Min; } set { this.colNvarchar2Min = value; } } protected String colNvarchar2Min;
         [DataMember(Order=19, IsRequired=false)][XmlElement(Order=19, IsNullable=true)]
-        public virtual String ColNvarchar2Max { get { return colNvarchar2Max; } set { colNvarchar2Max = value; } } protected String colNvarchar2Max;
+        public virtual String ColNvarchar2Max { get { return this.colNvarchar2Max; } set { this.colNvarchar2Max = value; } } protected String colNvarchar2Max;
         [DataMember(Order=20, IsRequired=false)][XmlElement(Order=20, IsNullable=true)]
-        public virtual String ColCharMin { get { return colCharMin; } set { colCharMin = value; } } protected String colCharMin;
+        public virtual String ColCharMin { get { return this.colCharMin; } set { this.colCharMin = value; } } protected String colCharMin;
         [DataMember(Order=21, IsRequired=false)][XmlElement(Order=21, IsNullable=true)]
-        public virtual String ColCharMax { get { return colCharMax; } set { colCharMax = value; } } protected String colCharMax;
+        public virtual String ColCharMax { get { return this.colCharMax; } set { this.colCharMax = value; } } protected String colCharMax;
         [DataMember(Order=22, IsRequired=false)][XmlElement(Order=22, IsNullable=true)]
-        public virtual String ColNcharMin { get { return colNcharMin; } set { colNcharMin = value; } } protected String colNcharMin;
+        public virtual String ColNcharMin { get { return this.colNcharMin; } set { this.colNcharMin = value; } } protected String colNcharMin;
         [DataMember(Order=23, IsRequired=false)][XmlElement(Order=23, IsNullable=true)]
-        public virtual String ColNcharMax { get { return colNcharMax; } set { colNcharMax = value; } } protected String colNcharMax;
+        public virtual String ColNcharMax { get { return this.colNcharMax; } set { this.colNcharMax = value; } } protected String colNcharMax;
         [DataMember(Order=24, IsRequired=false)][XmlElement(Order=24, IsNullable=true)]
-        public virtual DateTime? ColDate { get { return colDate; } set { colDate = value; } } protected DateTime? colDate;
+        public virtual DateTime? ColDate { get { return this.colDate; } set { this.colDate = value; } } protected DateTime? colDate;
         [DataMember(Order=25, IsRequired=false)][XmlElement(Order=25, IsNullable=true)]
-        public virtual DateTime? ColTimestamp { get { return colTimestamp; } set { colTimestamp = value; } } protected DateTime? colTimestamp;
+        public virtual DateTime? ColTimestamp { get { return this.colTimestamp; } set { this.colTimestamp = value; } } protected DateTime? colTimestamp;
         [DataMember(Order=26, IsRequired=false)][XmlElement(Order=26, IsNullable=true)]
-        public virtual DateTime? ColTimestampPrec0 { get { return colTimestampPrec0; } set { colTimestampPrec0 = value; } } protected DateTime? colTimestampPrec0;
+        public virtual DateTime? ColTimestampPrec0 { get { return this.colTimestampPrec0; } set { this.colTimestampPrec0 = value; } } protected DateTime? colTimestampPrec0;
         [DataMember(Order=27, IsRequired=false)][XmlElement(Order=27, IsNullable=true)]
-        public virtual DateTime? ColTimestampPrec9 { get { return colTimestampPrec9; } set { colTimestampPrec9 = value; } } protected DateTime? colTimestampPrec9;
+        public virtual DateTime? ColTimestampPrec9 { get { return this.colTimestampPrec9; } set { this.colTimestampPrec9 = value; } } protected DateTime? colTimestampPrec9;
         [DataMember(Order=28, IsRequired=false)][XmlElement(Order=28, IsNullable=true)]
-        public virtual DateTimeOffset? ColTimestampTZ { get { return colTimestampTZ; } set { colTimestampTZ = value; } } protected DateTimeOffset? colTimestampTZ;
+        public virtual DateTimeOffset? ColTimestampTZ { get { return this.colTimestampTZ; } set { this.colTimestampTZ = value; } } protected DateTimeOffset? colTimestampTZ;
         [DataMember(Order=29, IsRequired=false)][XmlElement(Order=29, IsNullable=true)]
-        public virtual DateTimeOffset? ColTimestampTZPrec0 { get { return colTimestampTZPrec0; } set { colTimestampTZPrec0 = value; } } protected DateTimeOffset? colTimestampTZPrec0;
+        public virtual DateTimeOffset? ColTimestampTZPrec0 { get { return this.colTimestampTZPrec0; } set { this.colTimestampTZPrec0 = value; } } protected DateTimeOffset? colTimestampTZPrec0;
         [DataMember(Order=30, IsRequired=false)][XmlElement(Order=30, IsNullable=true)]
-        public virtual DateTimeOffset? ColTimestampTZPrec9 { get { return colTimestampTZPrec9; } set { colTimestampTZPrec9 = value; } } protected DateTimeOffset? colTimestampTZPrec9;
+        public virtual DateTimeOffset? ColTimestampTZPrec9 { get { return this.colTimestampTZPrec9; } set { this.colTimestampTZPrec9 = value; } } protected DateTimeOffset? colTimestampTZPrec9;
         [DataMember(Order=31, IsRequired=false)][XmlElement(Order=31, IsNullable=true)]
-        public virtual DateTime? ColTimestampLTZ { get { return colTimestampLTZ; } set { colTimestampLTZ = value; } } protected DateTime? colTimestampLTZ;
+        public virtual DateTime? ColTimestampLTZ { get { return this.colTimestampLTZ; } set { this.colTimestampLTZ = value; } } protected DateTime? colTimestampLTZ;
         [DataMember(Order=32, IsRequired=false)][XmlElement(Order=32, IsNullable=true)]
-        public virtual DateTime? ColTimestampLTZPrec0 { get { return colTimestampLTZPrec0; } set { colTimestampLTZPrec0 = value; } } protected DateTime? colTimestampLTZPrec0;
+        public virtual DateTime? ColTimestampLTZPrec0 { get { return this.colTimestampLTZPrec0; } set { this.colTimestampLTZPrec0 = value; } } protected DateTime? colTimestampLTZPrec0;
         [DataMember(Order=33, IsRequired=false)][XmlElement(Order=33, IsNullable=true)]
-        public virtual DateTime? ColTimestampLTZPrec9 { get { return colTimestampLTZPrec9; } set { colTimestampLTZPrec9 = value; } } protected DateTime? colTimestampLTZPrec9;
+        public virtual DateTime? ColTimestampLTZPrec9 { get { return this.colTimestampLTZPrec9; } set { this.colTimestampLTZPrec9 = value; } } protected DateTime? colTimestampLTZPrec9;
         [DataMember(Order=34, IsRequired=false)][XmlElement(Order=34, IsNullable=true)]
-        public virtual Byte[] ColBlob { get { return colBlob; } set { colBlob = value; } } protected Byte[] colBlob;
+        public virtual Byte[] ColBlob { get { return this.colBlob; } set { this.colBlob = value; } } protected Byte[] colBlob;
         [DataMember(Order=35, IsRequired=false)][XmlElement(Order=35, IsNullable=true)]
-        public virtual String ColClob { get { return colClob; } set { colClob = value; } } protected String colClob;
+        public virtual String ColClob { get { return this.colClob; } set { this.colClob = value; } } protected String colClob;
         [DataMember(Order=36, IsRequired=false)][XmlElement(Order=36, IsNullable=true)]
-        public virtual String ColNclob { get { return colNclob; } set { colNclob = value; } } protected String colNclob;
+        public virtual String ColNclob { get { return this.colNclob; } set { this.colNclob = value; } } protected String colNclob;
         [DataMember(Order=37, IsRequired=false)][XmlElement(Order=37, IsNullable=true)]
-        public virtual String Abstract { get { return @abstract; } set { @abstract = value; } } protected String @abstract;
+        public virtual String Abstract { get { return this.@abstract; } set { this.@abstract = value; } } protected String @abstract;
         [DataMember(Order=38, IsRequired=false)][XmlElement(Order=38, IsNullable=true)]
-        public virtual String Base { get { return @base; } set { @base = value; } } protected String @base;
+        public virtual String Base { get { return this.@base; } set { this.@base = value; } } protected String @base;
         [DataMember(Order=39, IsRequired=false)][XmlElement(Order=39, IsNullable=true)]
-        public virtual String Void { get { return @void; } set { @void = value; } } protected String @void;
+        public virtual String Void { get { return this.@void; } set { this.@void = value; } } protected String @void;
         [DataMember(Order=40, IsRequired=false)][XmlElement(Order=40, IsNullable=true)]
-        public virtual String Class { get { return @class; } set { @class = value; } } protected String @class;
+        public virtual String Class { get { return this.@class; } set { this.@class = value; } } protected String @class;
         [DataMember(Order=41, IsRequired=false)][XmlElement(Order=41, IsNullable=true)]
-        public virtual String Namespace { get { return @namespace; } set { @namespace = value; } } protected String @namespace;
+        public virtual String Namespace { get { return this.@namespace; } set { this.@namespace = value; } } protected String @namespace;
         [DataMember(Order=42, IsRequired=false)][XmlElement(Order=42, IsNullable=true)]
-        public virtual String Readonly { get { return @readonly; } set { @readonly = value; } } protected String @readonly;
+        public virtual String Readonly { get { return this.@readonly; } set { this.@readonly = value; } } protected String @readonly;
         [DataMember(Order=43, IsRequired=false)][XmlElement(Order=43, IsNullable=true)]
-        public virtual String Partial { get { return @partial; } set { @partial = value; } } protected String @partial;
+        public virtual String Partial { get { return this.@partial; } set { this.@partial = value; } } protected String @partial;
         [DataMember(Order=44, IsRequired=false)][XmlElement(Order=44, IsNullable=true)]
-        public virtual String Const { get { return @const; } set { @const = value; } } protected String @const;
+        public virtual String Const { get { return this.@const; } set { this.@const = value; } } protected String @const;
         [DataMember(Order=45, IsRequired=false)][XmlElement(Order=45, IsNullable=true)]
-        public virtual String Using { get { return @using; } set { @using = value; } } protected String @using;
+        public virtual String Using { get { return this.@using; } set { this.@using = value; } } protected String @using;
         [DataMember(Order=46, IsRequired=false)][XmlElement(Order=46, IsNullable=true)]
-        public virtual String ColLast { get { return colLast; } set { colLast = value; } } protected String colLast;
+        public virtual String ColLast { get { return this.colLast; } set { this.colLast = value; } } protected String colLast;
     } // OdptTableBig
 
     [DataContract(Namespace="http://odpt.business.com")][Serializable()]
     public partial class OdptTableCsKeyword : Schema.Odpt.OdptTable {
         private Byte propertyToEnsuresPartialClassNamesAreUniqueAtCompileTime { get; set; }
         [DataMember(Order=1, IsRequired=false)][XmlElement(Order=1, IsNullable=true)]
-        public virtual String Abstract { get { return @abstract; } set { @abstract = value; } } protected String @abstract;
+        public virtual String Abstract { get { return this.@abstract; } set { this.@abstract = value; } } protected String @abstract;
         [DataMember(Order=2, IsRequired=false)][XmlElement(Order=2, IsNullable=true)]
-        public virtual String Event { get { return @event; } set { @event = value; } } protected String @event;
+        public virtual String Event { get { return this.@event; } set { this.@event = value; } } protected String @event;
         [DataMember(Order=3, IsRequired=false)][XmlElement(Order=3, IsNullable=true)]
-        public virtual String New { get { return @new; } set { @new = value; } } protected String @new;
+        public virtual String New { get { return this.@new; } set { this.@new = value; } } protected String @new;
         [DataMember(Order=4, IsRequired=false)][XmlElement(Order=4, IsNullable=true)]
-        public virtual String Struct { get { return @struct; } set { @struct = value; } } protected String @struct;
+        public virtual String Struct { get { return this.@struct; } set { this.@struct = value; } } protected String @struct;
         [DataMember(Order=5, IsRequired=false)][XmlElement(Order=5, IsNullable=true)]
-        public virtual String As { get { return @as; } set { @as = value; } } protected String @as;
+        public virtual String As { get { return this.@as; } set { this.@as = value; } } protected String @as;
         [DataMember(Order=6, IsRequired=false)][XmlElement(Order=6, IsNullable=true)]
-        public virtual String Explicit { get { return @explicit; } set { @explicit = value; } } protected String @explicit;
+        public virtual String Explicit { get { return this.@explicit; } set { this.@explicit = value; } } protected String @explicit;
         [DataMember(Order=7, IsRequired=false)][XmlElement(Order=7, IsNullable=true)]
-        public virtual String Null { get { return @null; } set { @null = value; } } protected String @null;
+        public virtual String Null { get { return this.@null; } set { this.@null = value; } } protected String @null;
         [DataMember(Order=8, IsRequired=false)][XmlElement(Order=8, IsNullable=true)]
-        public virtual String Switch { get { return @switch; } set { @switch = value; } } protected String @switch;
+        public virtual String Switch { get { return this.@switch; } set { this.@switch = value; } } protected String @switch;
         [DataMember(Order=9, IsRequired=false)][XmlElement(Order=9, IsNullable=true)]
-        public virtual String Base { get { return @base; } set { @base = value; } } protected String @base;
+        public virtual String Base { get { return this.@base; } set { this.@base = value; } } protected String @base;
         [DataMember(Order=10, IsRequired=false)][XmlElement(Order=10, IsNullable=true)]
-        public virtual String Extern { get { return @extern; } set { @extern = value; } } protected String @extern;
+        public virtual String Extern { get { return this.@extern; } set { this.@extern = value; } } protected String @extern;
         [DataMember(Order=11, IsRequired=false)][XmlElement(Order=11, IsNullable=true)]
-        public virtual String Object { get { return @object; } set { @object = value; } } protected String @object;
+        public virtual String Object { get { return this.@object; } set { this.@object = value; } } protected String @object;
         [DataMember(Order=12, IsRequired=false)][XmlElement(Order=12, IsNullable=true)]
-        public virtual String This { get { return @this; } set { @this = value; } } protected String @this;
+        public virtual String This { get { return this.@this; } set { this.@this = value; } } protected String @this;
         [DataMember(Order=13, IsRequired=false)][XmlElement(Order=13, IsNullable=true)]
-        public virtual String Bool { get { return @bool; } set { @bool = value; } } protected String @bool;
+        public virtual String Bool { get { return this.@bool; } set { this.@bool = value; } } protected String @bool;
         [DataMember(Order=14, IsRequired=false)][XmlElement(Order=14, IsNullable=true)]
-        public virtual String False { get { return @false; } set { @false = value; } } protected String @false;
+        public virtual String False { get { return this.@false; } set { this.@false = value; } } protected String @false;
         [DataMember(Order=15, IsRequired=false)][XmlElement(Order=15, IsNullable=true)]
-        public virtual String Operator { get { return @operator; } set { @operator = value; } } protected String @operator;
+        public virtual String Operator { get { return this.@operator; } set { this.@operator = value; } } protected String @operator;
         [DataMember(Order=16, IsRequired=false)][XmlElement(Order=16, IsNullable=true)]
-        public virtual String Throw { get { return @throw; } set { @throw = value; } } protected String @throw;
+        public virtual String Throw { get { return this.@throw; } set { this.@throw = value; } } protected String @throw;
         [DataMember(Order=17, IsRequired=false)][XmlElement(Order=17, IsNullable=true)]
-        public virtual String Break { get { return @break; } set { @break = value; } } protected String @break;
+        public virtual String Break { get { return this.@break; } set { this.@break = value; } } protected String @break;
         [DataMember(Order=18, IsRequired=false)][XmlElement(Order=18, IsNullable=true)]
-        public virtual String Finally { get { return @finally; } set { @finally = value; } } protected String @finally;
+        public virtual String Finally { get { return this.@finally; } set { this.@finally = value; } } protected String @finally;
         [DataMember(Order=19, IsRequired=false)][XmlElement(Order=19, IsNullable=true)]
-        public virtual String Out { get { return @out; } set { @out = value; } } protected String @out;
+        public virtual String Out { get { return this.@out; } set { this.@out = value; } } protected String @out;
         [DataMember(Order=20, IsRequired=false)][XmlElement(Order=20, IsNullable=true)]
-        public virtual String True { get { return @true; } set { @true = value; } } protected String @true;
+        public virtual String True { get { return this.@true; } set { this.@true = value; } } protected String @true;
         [DataMember(Order=21, IsRequired=false)][XmlElement(Order=21, IsNullable=true)]
-        public virtual String Byte { get { return @byte; } set { @byte = value; } } protected String @byte;
+        public virtual String Byte { get { return this.@byte; } set { this.@byte = value; } } protected String @byte;
         [DataMember(Order=22, IsRequired=false)][XmlElement(Order=22, IsNullable=true)]
-        public virtual String Fixed { get { return @fixed; } set { @fixed = value; } } protected String @fixed;
+        public virtual String Fixed { get { return this.@fixed; } set { this.@fixed = value; } } protected String @fixed;
         [DataMember(Order=23, IsRequired=false)][XmlElement(Order=23, IsNullable=true)]
-        public virtual String Override { get { return @override; } set { @override = value; } } protected String @override;
+        public virtual String Override { get { return this.@override; } set { this.@override = value; } } protected String @override;
         [DataMember(Order=24, IsRequired=false)][XmlElement(Order=24, IsNullable=true)]
-        public virtual String Try { get { return @try; } set { @try = value; } } protected String @try;
+        public virtual String Try { get { return this.@try; } set { this.@try = value; } } protected String @try;
         [DataMember(Order=25, IsRequired=false)][XmlElement(Order=25, IsNullable=true)]
-        public virtual String Case { get { return @case; } set { @case = value; } } protected String @case;
+        public virtual String Case { get { return this.@case; } set { this.@case = value; } } protected String @case;
         [DataMember(Order=26, IsRequired=false)][XmlElement(Order=26, IsNullable=true)]
-        public virtual String Float { get { return @float; } set { @float = value; } } protected String @float;
+        public virtual String Float { get { return this.@float; } set { this.@float = value; } } protected String @float;
         [DataMember(Order=27, IsRequired=false)][XmlElement(Order=27, IsNullable=true)]
-        public virtual String Params { get { return @params; } set { @params = value; } } protected String @params;
+        public virtual String Params { get { return this.@params; } set { this.@params = value; } } protected String @params;
         [DataMember(Order=28, IsRequired=false)][XmlElement(Order=28, IsNullable=true)]
-        public virtual String Typeof { get { return @typeof; } set { @typeof = value; } } protected String @typeof;
+        public virtual String Typeof { get { return this.@typeof; } set { this.@typeof = value; } } protected String @typeof;
         [DataMember(Order=29, IsRequired=false)][XmlElement(Order=29, IsNullable=true)]
-        public virtual String Catch { get { return @catch; } set { @catch = value; } } protected String @catch;
+        public virtual String Catch { get { return this.@catch; } set { this.@catch = value; } } protected String @catch;
         [DataMember(Order=30, IsRequired=false)][XmlElement(Order=30, IsNullable=true)]
-        public virtual String For { get { return @for; } set { @for = value; } } protected String @for;
+        public virtual String For { get { return this.@for; } set { this.@for = value; } } protected String @for;
         [DataMember(Order=31, IsRequired=false)][XmlElement(Order=31, IsNullable=true)]
-        public virtual String Private { get { return @private; } set { @private = value; } } protected String @private;
+        public virtual String Private { get { return this.@private; } set { this.@private = value; } } protected String @private;
         [DataMember(Order=32, IsRequired=false)][XmlElement(Order=32, IsNullable=true)]
-        public virtual String Uint { get { return @uint; } set { @uint = value; } } protected String @uint;
+        public virtual String Uint { get { return this.@uint; } set { this.@uint = value; } } protected String @uint;
         [DataMember(Order=33, IsRequired=false)][XmlElement(Order=33, IsNullable=true)]
-        public virtual String Char { get { return @char; } set { @char = value; } } protected String @char;
+        public virtual String Char { get { return this.@char; } set { this.@char = value; } } protected String @char;
         [DataMember(Order=34, IsRequired=false)][XmlElement(Order=34, IsNullable=true)]
-        public virtual String Foreach { get { return @foreach; } set { @foreach = value; } } protected String @foreach;
+        public virtual String Foreach { get { return this.@foreach; } set { this.@foreach = value; } } protected String @foreach;
         [DataMember(Order=35, IsRequired=false)][XmlElement(Order=35, IsNullable=true)]
-        public virtual String Protected { get { return @protected; } set { @protected = value; } } protected String @protected;
+        public virtual String Protected { get { return this.@protected; } set { this.@protected = value; } } protected String @protected;
         [DataMember(Order=36, IsRequired=false)][XmlElement(Order=36, IsNullable=true)]
-        public virtual String Ulong { get { return @ulong; } set { @ulong = value; } } protected String @ulong;
+        public virtual String Ulong { get { return this.@ulong; } set { this.@ulong = value; } } protected String @ulong;
         [DataMember(Order=37, IsRequired=false)][XmlElement(Order=37, IsNullable=true)]
-        public virtual String Checked { get { return @checked; } set { @checked = value; } } protected String @checked;
+        public virtual String Checked { get { return this.@checked; } set { this.@checked = value; } } protected String @checked;
         [DataMember(Order=38, IsRequired=false)][XmlElement(Order=38, IsNullable=true)]
-        public virtual String Goto { get { return @goto; } set { @goto = value; } } protected String @goto;
+        public virtual String Goto { get { return this.@goto; } set { this.@goto = value; } } protected String @goto;
         [DataMember(Order=39, IsRequired=false)][XmlElement(Order=39, IsNullable=true)]
-        public virtual String Public { get { return @public; } set { @public = value; } } protected String @public;
+        public virtual String Public { get { return this.@public; } set { this.@public = value; } } protected String @public;
         [DataMember(Order=40, IsRequired=false)][XmlElement(Order=40, IsNullable=true)]
-        public virtual String Unchecked { get { return @unchecked; } set { @unchecked = value; } } protected String @unchecked;
+        public virtual String Unchecked { get { return this.@unchecked; } set { this.@unchecked = value; } } protected String @unchecked;
         [DataMember(Order=41, IsRequired=false)][XmlElement(Order=41, IsNullable=true)]
-        public virtual String Class { get { return @class; } set { @class = value; } } protected String @class;
+        public virtual String Class { get { return this.@class; } set { this.@class = value; } } protected String @class;
         [DataMember(Order=42, IsRequired=false)][XmlElement(Order=42, IsNullable=true)]
-        public virtual String If { get { return @if; } set { @if = value; } } protected String @if;
+        public virtual String If { get { return this.@if; } set { this.@if = value; } } protected String @if;
         [DataMember(Order=43, IsRequired=false)][XmlElement(Order=43, IsNullable=true)]
-        public virtual String Readonly { get { return @readonly; } set { @readonly = value; } } protected String @readonly;
+        public virtual String Readonly { get { return this.@readonly; } set { this.@readonly = value; } } protected String @readonly;
         [DataMember(Order=44, IsRequired=false)][XmlElement(Order=44, IsNullable=true)]
-        public virtual String Unsafe { get { return @unsafe; } set { @unsafe = value; } } protected String @unsafe;
+        public virtual String Unsafe { get { return this.@unsafe; } set { this.@unsafe = value; } } protected String @unsafe;
         [DataMember(Order=45, IsRequired=false)][XmlElement(Order=45, IsNullable=true)]
-        public virtual String Const { get { return @const; } set { @const = value; } } protected String @const;
+        public virtual String Const { get { return this.@const; } set { this.@const = value; } } protected String @const;
         [DataMember(Order=46, IsRequired=false)][XmlElement(Order=46, IsNullable=true)]
-        public virtual String Implicit { get { return @implicit; } set { @implicit = value; } } protected String @implicit;
+        public virtual String Implicit { get { return this.@implicit; } set { this.@implicit = value; } } protected String @implicit;
         [DataMember(Order=47, IsRequired=false)][XmlElement(Order=47, IsNullable=true)]
-        public virtual String Ref { get { return @ref; } set { @ref = value; } } protected String @ref;
+        public virtual String Ref { get { return this.@ref; } set { this.@ref = value; } } protected String @ref;
         [DataMember(Order=48, IsRequired=false)][XmlElement(Order=48, IsNullable=true)]
-        public virtual String Ushort { get { return @ushort; } set { @ushort = value; } } protected String @ushort;
+        public virtual String Ushort { get { return this.@ushort; } set { this.@ushort = value; } } protected String @ushort;
         [DataMember(Order=49, IsRequired=false)][XmlElement(Order=49, IsNullable=true)]
-        public virtual String Continue { get { return @continue; } set { @continue = value; } } protected String @continue;
+        public virtual String Continue { get { return this.@continue; } set { this.@continue = value; } } protected String @continue;
         [DataMember(Order=50, IsRequired=false)][XmlElement(Order=50, IsNullable=true)]
-        public virtual String In { get { return @in; } set { @in = value; } } protected String @in;
+        public virtual String In { get { return this.@in; } set { this.@in = value; } } protected String @in;
         [DataMember(Order=51, IsRequired=false)][XmlElement(Order=51, IsNullable=true)]
-        public virtual String Return { get { return @return; } set { @return = value; } } protected String @return;
+        public virtual String Return { get { return this.@return; } set { this.@return = value; } } protected String @return;
         [DataMember(Order=52, IsRequired=false)][XmlElement(Order=52, IsNullable=true)]
-        public virtual String Using { get { return @using; } set { @using = value; } } protected String @using;
+        public virtual String Using { get { return this.@using; } set { this.@using = value; } } protected String @using;
         [DataMember(Order=53, IsRequired=false)][XmlElement(Order=53, IsNullable=true)]
-        public virtual String Decimal { get { return @decimal; } set { @decimal = value; } } protected String @decimal;
+        public virtual String Decimal { get { return this.@decimal; } set { this.@decimal = value; } } protected String @decimal;
         [DataMember(Order=54, IsRequired=false)][XmlElement(Order=54, IsNullable=true)]
-        public virtual String Int { get { return @int; } set { @int = value; } } protected String @int;
+        public virtual String Int { get { return this.@int; } set { this.@int = value; } } protected String @int;
         [DataMember(Order=55, IsRequired=false)][XmlElement(Order=55, IsNullable=true)]
-        public virtual String Sbyte { get { return @sbyte; } set { @sbyte = value; } } protected String @sbyte;
+        public virtual String Sbyte { get { return this.@sbyte; } set { this.@sbyte = value; } } protected String @sbyte;
         [DataMember(Order=56, IsRequired=false)][XmlElement(Order=56, IsNullable=true)]
-        public virtual String Virtual { get { return @virtual; } set { @virtual = value; } } protected String @virtual;
+        public virtual String Virtual { get { return this.@virtual; } set { this.@virtual = value; } } protected String @virtual;
         [DataMember(Order=57, IsRequired=false)][XmlElement(Order=57, IsNullable=true)]
-        public virtual String Default { get { return @default; } set { @default = value; } } protected String @default;
+        public virtual String Default { get { return this.@default; } set { this.@default = value; } } protected String @default;
         [DataMember(Order=58, IsRequired=false)][XmlElement(Order=58, IsNullable=true)]
-        public virtual String Interface { get { return @interface; } set { @interface = value; } } protected String @interface;
+        public virtual String Interface { get { return this.@interface; } set { this.@interface = value; } } protected String @interface;
         [DataMember(Order=59, IsRequired=false)][XmlElement(Order=59, IsNullable=true)]
-        public virtual String Sealed { get { return @sealed; } set { @sealed = value; } } protected String @sealed;
+        public virtual String Sealed { get { return this.@sealed; } set { this.@sealed = value; } } protected String @sealed;
         [DataMember(Order=60, IsRequired=false)][XmlElement(Order=60, IsNullable=true)]
-        public virtual String Volatile { get { return @volatile; } set { @volatile = value; } } protected String @volatile;
+        public virtual String Volatile { get { return this.@volatile; } set { this.@volatile = value; } } protected String @volatile;
         [DataMember(Order=61, IsRequired=false)][XmlElement(Order=61, IsNullable=true)]
-        public virtual String Delegate { get { return @delegate; } set { @delegate = value; } } protected String @delegate;
+        public virtual String Delegate { get { return this.@delegate; } set { this.@delegate = value; } } protected String @delegate;
         [DataMember(Order=62, IsRequired=false)][XmlElement(Order=62, IsNullable=true)]
-        public virtual String Internal { get { return @internal; } set { @internal = value; } } protected String @internal;
+        public virtual String Internal { get { return this.@internal; } set { this.@internal = value; } } protected String @internal;
         [DataMember(Order=63, IsRequired=false)][XmlElement(Order=63, IsNullable=true)]
-        public virtual String Short { get { return @short; } set { @short = value; } } protected String @short;
+        public virtual String Short { get { return this.@short; } set { this.@short = value; } } protected String @short;
         [DataMember(Order=64, IsRequired=false)][XmlElement(Order=64, IsNullable=true)]
-        public virtual String Void { get { return @void; } set { @void = value; } } protected String @void;
+        public virtual String Void { get { return this.@void; } set { this.@void = value; } } protected String @void;
         [DataMember(Order=65, IsRequired=false)][XmlElement(Order=65, IsNullable=true)]
-        public virtual String Do { get { return @do; } set { @do = value; } } protected String @do;
+        public virtual String Do { get { return this.@do; } set { this.@do = value; } } protected String @do;
         [DataMember(Order=66, IsRequired=false)][XmlElement(Order=66, IsNullable=true)]
-        public virtual String Is { get { return @is; } set { @is = value; } } protected String @is;
+        public virtual String Is { get { return this.@is; } set { this.@is = value; } } protected String @is;
         [DataMember(Order=67, IsRequired=false)][XmlElement(Order=67, IsNullable=true)]
-        public virtual String Sizeof { get { return @sizeof; } set { @sizeof = value; } } protected String @sizeof;
+        public virtual String Sizeof { get { return this.@sizeof; } set { this.@sizeof = value; } } protected String @sizeof;
         [DataMember(Order=68, IsRequired=false)][XmlElement(Order=68, IsNullable=true)]
-        public virtual String While { get { return @while; } set { @while = value; } } protected String @while;
+        public virtual String While { get { return this.@while; } set { this.@while = value; } } protected String @while;
         [DataMember(Order=69, IsRequired=false)][XmlElement(Order=69, IsNullable=true)]
-        public virtual String Double { get { return @double; } set { @double = value; } } protected String @double;
+        public virtual String Double { get { return this.@double; } set { this.@double = value; } } protected String @double;
         [DataMember(Order=70, IsRequired=false)][XmlElement(Order=70, IsNullable=true)]
-        public virtual String Lock { get { return @lock; } set { @lock = value; } } protected String @lock;
+        public virtual String Lock { get { return this.@lock; } set { this.@lock = value; } } protected String @lock;
         [DataMember(Order=71, IsRequired=false)][XmlElement(Order=71, IsNullable=true)]
-        public virtual String Stackalloc { get { return @stackalloc; } set { @stackalloc = value; } } protected String @stackalloc;
+        public virtual String Stackalloc { get { return this.@stackalloc; } set { this.@stackalloc = value; } } protected String @stackalloc;
         [DataMember(Order=72, IsRequired=false)][XmlElement(Order=72, IsNullable=true)]
-        public virtual String Else { get { return @else; } set { @else = value; } } protected String @else;
+        public virtual String Else { get { return this.@else; } set { this.@else = value; } } protected String @else;
         [DataMember(Order=73, IsRequired=false)][XmlElement(Order=73, IsNullable=true)]
-        public virtual String Long { get { return @long; } set { @long = value; } } protected String @long;
+        public virtual String Long { get { return this.@long; } set { this.@long = value; } } protected String @long;
         [DataMember(Order=74, IsRequired=false)][XmlElement(Order=74, IsNullable=true)]
-        public virtual String Static { get { return @static; } set { @static = value; } } protected String @static;
+        public virtual String Static { get { return this.@static; } set { this.@static = value; } } protected String @static;
         [DataMember(Order=75, IsRequired=false)][XmlElement(Order=75, IsNullable=true)]
-        public virtual String Enum { get { return @enum; } set { @enum = value; } } protected String @enum;
+        public virtual String Enum { get { return this.@enum; } set { this.@enum = value; } } protected String @enum;
         [DataMember(Order=76, IsRequired=false)][XmlElement(Order=76, IsNullable=true)]
-        public virtual String Namespace { get { return @namespace; } set { @namespace = value; } } protected String @namespace;
+        public virtual String Namespace { get { return this.@namespace; } set { this.@namespace = value; } } protected String @namespace;
         [DataMember(Order=77, IsRequired=false)][XmlElement(Order=77, IsNullable=true)]
-        public virtual String String { get { return @string; } set { @string = value; } } protected String @string;
+        public virtual String String { get { return this.@string; } set { this.@string = value; } } protected String @string;
         [DataMember(Order=78, IsRequired=false)][XmlElement(Order=78, IsNullable=true)]
-        public virtual String Dynamic { get { return @dynamic; } set { @dynamic = value; } } protected String @dynamic;
+        public virtual String Dynamic { get { return this.@dynamic; } set { this.@dynamic = value; } } protected String @dynamic;
         [DataMember(Order=79, IsRequired=false)][XmlElement(Order=79, IsNullable=true)]
-        public virtual String Get { get { return @get; } set { @get = value; } } protected String @get;
+        public virtual String Get { get { return this.@get; } set { this.@get = value; } } protected String @get;
         [DataMember(Order=80, IsRequired=false)][XmlElement(Order=80, IsNullable=true)]
-        public virtual String Let { get { return @let; } set { @let = value; } } protected String @let;
+        public virtual String Let { get { return this.@let; } set { this.@let = value; } } protected String @let;
         [DataMember(Order=81, IsRequired=false)][XmlElement(Order=81, IsNullable=true)]
-        public virtual String Partial { get { return @partial; } set { @partial = value; } } protected String @partial;
+        public virtual String Partial { get { return this.@partial; } set { this.@partial = value; } } protected String @partial;
         [DataMember(Order=82, IsRequired=false)][XmlElement(Order=82, IsNullable=true)]
-        public virtual String Set { get { return @set; } set { @set = value; } } protected String @set;
+        public virtual String Set { get { return this.@set; } set { this.@set = value; } } protected String @set;
         [DataMember(Order=83, IsRequired=false)][XmlElement(Order=83, IsNullable=true)]
-        public virtual String Value { get { return @value; } set { this.@value = value; } } protected String @value;
+        public virtual String Value { get { return this.@value; } set { this.@value = value; } } protected String @value;
         [DataMember(Order=84, IsRequired=false)][XmlElement(Order=84, IsNullable=true)]
-        public virtual String Var { get { return @var; } set { @var = value; } } protected String @var;
+        public virtual String Var { get { return this.@var; } set { this.@var = value; } } protected String @var;
         [DataMember(Order=85, IsRequired=false)][XmlElement(Order=85, IsNullable=true)]
-        public virtual String Where { get { return @where; } set { @where = value; } } protected String @where;
+        public virtual String Where { get { return this.@where; } set { this.@where = value; } } protected String @where;
     } // OdptTableCsKeyword
 
     // **TABLE IGNORED** - ANYDATA type is not available in ODP.NET managed
@@ -311,92 +311,92 @@ namespace Schema.Odpt.Table {
     public partial class OdptTableNamingConflict : Schema.Odpt.OdptTable {
         private Byte propertyToEnsuresPartialClassNamesAreUniqueAtCompileTime { get; set; }
         [DataMember(Order=1, IsRequired=false)][XmlElement(Order=1, IsNullable=true)]
-        public virtual Decimal? NamingConflict { get { return namingConflict; } set { namingConflict = value; } } protected Decimal? namingConflict;
+        public virtual Decimal? NamingConflict { get { return this.namingConflict; } set { this.namingConflict = value; } } protected Decimal? namingConflict;
         [DataMember(Order=2, IsRequired=false)][XmlElement(Order=2, IsNullable=true)]
-        public virtual Decimal? NamingExtraunderscoreConflict { get { return namingExtraunderscoreConflict; } set { namingExtraunderscoreConflict = value; } } protected Decimal? namingExtraunderscoreConflict;
+        public virtual Decimal? NamingExtraunderscoreConflict { get { return this.namingExtraunderscoreConflict; } set { this.namingExtraunderscoreConflict = value; } } protected Decimal? namingExtraunderscoreConflict;
         [DataMember(Order=3, IsRequired=false)][XmlElement(Order=3, IsNullable=true)]
-        public virtual Decimal? NamingExtraunderscoreExtraunderscoreConflict { get { return namingExtraunderscoreExtraunderscoreConflict; } set { namingExtraunderscoreExtraunderscoreConflict = value; } } protected Decimal? namingExtraunderscoreExtraunderscoreConflict;
+        public virtual Decimal? NamingExtraunderscoreExtraunderscoreConflict { get { return this.namingExtraunderscoreExtraunderscoreConflict; } set { this.namingExtraunderscoreExtraunderscoreConflict = value; } } protected Decimal? namingExtraunderscoreExtraunderscoreConflict;
         [DataMember(Order=4, IsRequired=false)][XmlElement(Order=4, IsNullable=true)]
-        public virtual Decimal? NamingConflictExtraunderscore { get { return namingConflictExtraunderscore; } set { namingConflictExtraunderscore = value; } } protected Decimal? namingConflictExtraunderscore;
+        public virtual Decimal? NamingConflictExtraunderscore { get { return this.namingConflictExtraunderscore; } set { this.namingConflictExtraunderscore = value; } } protected Decimal? namingConflictExtraunderscore;
         [DataMember(Order=5, IsRequired=false)][XmlElement(Order=5, IsNullable=true)]
-        public virtual Decimal? NamingConflictExtraunderscoreExtraunderscore { get { return namingConflictExtraunderscoreExtraunderscore; } set { namingConflictExtraunderscoreExtraunderscore = value; } } protected Decimal? namingConflictExtraunderscoreExtraunderscore;
+        public virtual Decimal? NamingConflictExtraunderscoreExtraunderscore { get { return this.namingConflictExtraunderscoreExtraunderscore; } set { this.namingConflictExtraunderscoreExtraunderscore = value; } } protected Decimal? namingConflictExtraunderscoreExtraunderscore;
         [DataMember(Order=6, IsRequired=false)][XmlElement(Order=6, IsNullable=true)]
-        public virtual Decimal? NamingConflict123 { get { return namingConflict123; } set { namingConflict123 = value; } } protected Decimal? namingConflict123;
+        public virtual Decimal? NamingConflict123 { get { return this.namingConflict123; } set { this.namingConflict123 = value; } } protected Decimal? namingConflict123;
         [DataMember(Order=7, IsRequired=false)][XmlElement(Order=7, IsNullable=true)]
-        public virtual Decimal? NamingConflict123Extraunderscore { get { return namingConflict123Extraunderscore; } set { namingConflict123Extraunderscore = value; } } protected Decimal? namingConflict123Extraunderscore;
+        public virtual Decimal? NamingConflict123Extraunderscore { get { return this.namingConflict123Extraunderscore; } set { this.namingConflict123Extraunderscore = value; } } protected Decimal? namingConflict123Extraunderscore;
         [DataMember(Order=8, IsRequired=false)][XmlElement(Order=8, IsNullable=true)]
-        public virtual Decimal? NamingConflict123ExtraunderscoreExtraunderscore { get { return namingConflict123ExtraunderscoreExtraunderscore; } set { namingConflict123ExtraunderscoreExtraunderscore = value; } } protected Decimal? namingConflict123ExtraunderscoreExtraunderscore;
+        public virtual Decimal? NamingConflict123ExtraunderscoreExtraunderscore { get { return this.namingConflict123ExtraunderscoreExtraunderscore; } set { this.namingConflict123ExtraunderscoreExtraunderscore = value; } } protected Decimal? namingConflict123ExtraunderscoreExtraunderscore;
     } // OdptTableNamingConflict
 
     [DataContract(Namespace="http://odpt.business.com")][Serializable()]
     public partial class OdptTableNumber : Schema.Odpt.OdptTable {
         private Byte propertyToEnsuresPartialClassNamesAreUniqueAtCompileTime { get; set; }
         [DataMember(Order=1, IsRequired=true)][XmlElement(Order=1, IsNullable=true)]
-        public virtual Int64? Id { get { return id; } set { id = value; } } protected Int64? id;
+        public virtual Int64? Id { get { return this.id; } set { this.id = value; } } protected Int64? id;
         [DataMember(Order=2, IsRequired=false)][XmlElement(Order=2, IsNullable=true)]
-        public virtual Decimal? ColNumber { get { return colNumber; } set { colNumber = value; } } protected Decimal? colNumber;
+        public virtual Decimal? ColNumber { get { return this.colNumber; } set { this.colNumber = value; } } protected Decimal? colNumber;
         [DataMember(Order=3, IsRequired=false)][XmlElement(Order=3, IsNullable=true)]
-        public virtual SByte? ColNumber1 { get { return colNumber1; } set { colNumber1 = value; } } protected SByte? colNumber1;
+        public virtual SByte? ColNumber1 { get { return this.colNumber1; } set { this.colNumber1 = value; } } protected SByte? colNumber1;
         [DataMember(Order=4, IsRequired=false)][XmlElement(Order=4, IsNullable=true)]
-        public virtual SByte? ColNumber2 { get { return colNumber2; } set { colNumber2 = value; } } protected SByte? colNumber2;
+        public virtual SByte? ColNumber2 { get { return this.colNumber2; } set { this.colNumber2 = value; } } protected SByte? colNumber2;
         [DataMember(Order=5, IsRequired=false)][XmlElement(Order=5, IsNullable=true)]
-        public virtual Int16? ColNumber3 { get { return colNumber3; } set { colNumber3 = value; } } protected Int16? colNumber3;
+        public virtual Int16? ColNumber3 { get { return this.colNumber3; } set { this.colNumber3 = value; } } protected Int16? colNumber3;
         [DataMember(Order=6, IsRequired=false)][XmlElement(Order=6, IsNullable=true)]
-        public virtual Int16? ColNumber4 { get { return colNumber4; } set { colNumber4 = value; } } protected Int16? colNumber4;
+        public virtual Int16? ColNumber4 { get { return this.colNumber4; } set { this.colNumber4 = value; } } protected Int16? colNumber4;
         [DataMember(Order=7, IsRequired=false)][XmlElement(Order=7, IsNullable=true)]
-        public virtual Int32? ColNumber5 { get { return colNumber5; } set { colNumber5 = value; } } protected Int32? colNumber5;
+        public virtual Int32? ColNumber5 { get { return this.colNumber5; } set { this.colNumber5 = value; } } protected Int32? colNumber5;
         [DataMember(Order=8, IsRequired=false)][XmlElement(Order=8, IsNullable=true)]
-        public virtual Int32? ColNumber6 { get { return colNumber6; } set { colNumber6 = value; } } protected Int32? colNumber6;
+        public virtual Int32? ColNumber6 { get { return this.colNumber6; } set { this.colNumber6 = value; } } protected Int32? colNumber6;
         [DataMember(Order=9, IsRequired=false)][XmlElement(Order=9, IsNullable=true)]
-        public virtual Int32? ColNumber7 { get { return colNumber7; } set { colNumber7 = value; } } protected Int32? colNumber7;
+        public virtual Int32? ColNumber7 { get { return this.colNumber7; } set { this.colNumber7 = value; } } protected Int32? colNumber7;
         [DataMember(Order=10, IsRequired=false)][XmlElement(Order=10, IsNullable=true)]
-        public virtual Int32? ColNumber8 { get { return colNumber8; } set { colNumber8 = value; } } protected Int32? colNumber8;
+        public virtual Int32? ColNumber8 { get { return this.colNumber8; } set { this.colNumber8 = value; } } protected Int32? colNumber8;
         [DataMember(Order=11, IsRequired=false)][XmlElement(Order=11, IsNullable=true)]
-        public virtual Int32? ColNumber9 { get { return colNumber9; } set { colNumber9 = value; } } protected Int32? colNumber9;
+        public virtual Int32? ColNumber9 { get { return this.colNumber9; } set { this.colNumber9 = value; } } protected Int32? colNumber9;
         [DataMember(Order=12, IsRequired=false)][XmlElement(Order=12, IsNullable=true)]
-        public virtual Int64? ColNumber10 { get { return colNumber10; } set { colNumber10 = value; } } protected Int64? colNumber10;
+        public virtual Int64? ColNumber10 { get { return this.colNumber10; } set { this.colNumber10 = value; } } protected Int64? colNumber10;
         [DataMember(Order=13, IsRequired=false)][XmlElement(Order=13, IsNullable=true)]
-        public virtual Int64? ColNumber18 { get { return colNumber18; } set { colNumber18 = value; } } protected Int64? colNumber18;
+        public virtual Int64? ColNumber18 { get { return this.colNumber18; } set { this.colNumber18 = value; } } protected Int64? colNumber18;
         [DataMember(Order=14, IsRequired=false)][XmlElement(Order=14, IsNullable=true)]
-        public virtual Int64? ColNumber19 { get { return colNumber19; } set { colNumber19 = value; } } protected Int64? colNumber19;
+        public virtual Int64? ColNumber19 { get { return this.colNumber19; } set { this.colNumber19 = value; } } protected Int64? colNumber19;
         [DataMember(Order=15, IsRequired=false)][XmlElement(Order=15, IsNullable=true)]
-        public virtual Int64? ColNumber38 { get { return colNumber38; } set { colNumber38 = value; } } protected Int64? colNumber38;
+        public virtual Int64? ColNumber38 { get { return this.colNumber38; } set { this.colNumber38 = value; } } protected Int64? colNumber38;
         [DataMember(Order=16, IsRequired=false)][XmlElement(Order=16, IsNullable=true)]
-        public virtual SByte? ColNumber1Scale0 { get { return colNumber1Scale0; } set { colNumber1Scale0 = value; } } protected SByte? colNumber1Scale0;
+        public virtual SByte? ColNumber1Scale0 { get { return this.colNumber1Scale0; } set { this.colNumber1Scale0 = value; } } protected SByte? colNumber1Scale0;
         [DataMember(Order=17, IsRequired=false)][XmlElement(Order=17, IsNullable=true)]
-        public virtual SByte? ColNumber2Scale0 { get { return colNumber2Scale0; } set { colNumber2Scale0 = value; } } protected SByte? colNumber2Scale0;
+        public virtual SByte? ColNumber2Scale0 { get { return this.colNumber2Scale0; } set { this.colNumber2Scale0 = value; } } protected SByte? colNumber2Scale0;
         [DataMember(Order=18, IsRequired=false)][XmlElement(Order=18, IsNullable=true)]
-        public virtual Int16? ColNumber3Scale0 { get { return colNumber3Scale0; } set { colNumber3Scale0 = value; } } protected Int16? colNumber3Scale0;
+        public virtual Int16? ColNumber3Scale0 { get { return this.colNumber3Scale0; } set { this.colNumber3Scale0 = value; } } protected Int16? colNumber3Scale0;
         [DataMember(Order=19, IsRequired=false)][XmlElement(Order=19, IsNullable=true)]
-        public virtual Int16? ColNumber4Scale0 { get { return colNumber4Scale0; } set { colNumber4Scale0 = value; } } protected Int16? colNumber4Scale0;
+        public virtual Int16? ColNumber4Scale0 { get { return this.colNumber4Scale0; } set { this.colNumber4Scale0 = value; } } protected Int16? colNumber4Scale0;
         [DataMember(Order=20, IsRequired=false)][XmlElement(Order=20, IsNullable=true)]
-        public virtual Int32? ColNumber5Scale0 { get { return colNumber5Scale0; } set { colNumber5Scale0 = value; } } protected Int32? colNumber5Scale0;
+        public virtual Int32? ColNumber5Scale0 { get { return this.colNumber5Scale0; } set { this.colNumber5Scale0 = value; } } protected Int32? colNumber5Scale0;
         [DataMember(Order=21, IsRequired=false)][XmlElement(Order=21, IsNullable=true)]
-        public virtual Int32? ColNumber9Scale0 { get { return colNumber9Scale0; } set { colNumber9Scale0 = value; } } protected Int32? colNumber9Scale0;
+        public virtual Int32? ColNumber9Scale0 { get { return this.colNumber9Scale0; } set { this.colNumber9Scale0 = value; } } protected Int32? colNumber9Scale0;
         [DataMember(Order=22, IsRequired=false)][XmlElement(Order=22, IsNullable=true)]
-        public virtual Int64? ColNumber10Scale0 { get { return colNumber10Scale0; } set { colNumber10Scale0 = value; } } protected Int64? colNumber10Scale0;
+        public virtual Int64? ColNumber10Scale0 { get { return this.colNumber10Scale0; } set { this.colNumber10Scale0 = value; } } protected Int64? colNumber10Scale0;
         [DataMember(Order=23, IsRequired=false)][XmlElement(Order=23, IsNullable=true)]
-        public virtual Int64? ColNumber18Scale0 { get { return colNumber18Scale0; } set { colNumber18Scale0 = value; } } protected Int64? colNumber18Scale0;
+        public virtual Int64? ColNumber18Scale0 { get { return this.colNumber18Scale0; } set { this.colNumber18Scale0 = value; } } protected Int64? colNumber18Scale0;
         [DataMember(Order=24, IsRequired=false)][XmlElement(Order=24, IsNullable=true)]
-        public virtual Int64? ColNumber19Scale0 { get { return colNumber19Scale0; } set { colNumber19Scale0 = value; } } protected Int64? colNumber19Scale0;
+        public virtual Int64? ColNumber19Scale0 { get { return this.colNumber19Scale0; } set { this.colNumber19Scale0 = value; } } protected Int64? colNumber19Scale0;
         [DataMember(Order=25, IsRequired=false)][XmlElement(Order=25, IsNullable=true)]
-        public virtual Int64? ColNumber28Scale0 { get { return colNumber28Scale0; } set { colNumber28Scale0 = value; } } protected Int64? colNumber28Scale0;
+        public virtual Int64? ColNumber28Scale0 { get { return this.colNumber28Scale0; } set { this.colNumber28Scale0 = value; } } protected Int64? colNumber28Scale0;
         [DataMember(Order=26, IsRequired=false)][XmlElement(Order=26, IsNullable=true)]
-        public virtual Int64? ColNumber29Scale0 { get { return colNumber29Scale0; } set { colNumber29Scale0 = value; } } protected Int64? colNumber29Scale0;
+        public virtual Int64? ColNumber29Scale0 { get { return this.colNumber29Scale0; } set { this.colNumber29Scale0 = value; } } protected Int64? colNumber29Scale0;
         [DataMember(Order=27, IsRequired=false)][XmlElement(Order=27, IsNullable=true)]
-        public virtual Int64? ColNumber38Scale0 { get { return colNumber38Scale0; } set { colNumber38Scale0 = value; } } protected Int64? colNumber38Scale0;
+        public virtual Int64? ColNumber38Scale0 { get { return this.colNumber38Scale0; } set { this.colNumber38Scale0 = value; } } protected Int64? colNumber38Scale0;
         [DataMember(Order=28, IsRequired=false)][XmlElement(Order=28, IsNullable=true)]
-        public virtual Decimal? ColNumber2Scale1 { get { return colNumber2Scale1; } set { colNumber2Scale1 = value; } } protected Decimal? colNumber2Scale1;
+        public virtual Decimal? ColNumber2Scale1 { get { return this.colNumber2Scale1; } set { this.colNumber2Scale1 = value; } } protected Decimal? colNumber2Scale1;
         [DataMember(Order=29, IsRequired=false)][XmlElement(Order=29, IsNullable=true)]
-        public virtual Decimal? ColNumber5Scale3 { get { return colNumber5Scale3; } set { colNumber5Scale3 = value; } } protected Decimal? colNumber5Scale3;
+        public virtual Decimal? ColNumber5Scale3 { get { return this.colNumber5Scale3; } set { this.colNumber5Scale3 = value; } } protected Decimal? colNumber5Scale3;
         [DataMember(Order=30, IsRequired=false)][XmlElement(Order=30, IsNullable=true)]
-        public virtual Decimal? ColNumber15Scale11 { get { return colNumber15Scale11; } set { colNumber15Scale11 = value; } } protected Decimal? colNumber15Scale11;
+        public virtual Decimal? ColNumber15Scale11 { get { return this.colNumber15Scale11; } set { this.colNumber15Scale11 = value; } } protected Decimal? colNumber15Scale11;
         [DataMember(Order=31, IsRequired=false)][XmlElement(Order=31, IsNullable=true)]
-        public virtual Decimal? ColNumber31Scale21 { get { return colNumber31Scale21; } set { colNumber31Scale21 = value; } } protected Decimal? colNumber31Scale21;
+        public virtual Decimal? ColNumber31Scale21 { get { return this.colNumber31Scale21; } set { this.colNumber31Scale21 = value; } } protected Decimal? colNumber31Scale21;
         [DataMember(Order=32, IsRequired=false)][XmlElement(Order=32, IsNullable=true)]
-        public virtual Decimal? ColNumber38Scale37 { get { return colNumber38Scale37; } set { colNumber38Scale37 = value; } } protected Decimal? colNumber38Scale37;
+        public virtual Decimal? ColNumber38Scale37 { get { return this.colNumber38Scale37; } set { this.colNumber38Scale37 = value; } } protected Decimal? colNumber38Scale37;
         [DataMember(Order=33, IsRequired=false)][XmlElement(Order=33, IsNullable=true)]
-        public virtual Decimal? ColNumberLast { get { return colNumberLast; } set { colNumberLast = value; } } protected Decimal? colNumberLast;
+        public virtual Decimal? ColNumberLast { get { return this.colNumberLast; } set { this.colNumberLast = value; } } protected Decimal? colNumberLast;
     } // OdptTableNumber
 
     // **TABLE IGNORED** - OBJECT type is not available in ODP.NET managed
