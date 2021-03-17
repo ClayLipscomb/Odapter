@@ -32,7 +32,7 @@
 
 #define ODPT_FILTER_PREFIX          // "ODPT" as filter prefix of schema
 #define MAPPING_FOR_TYPED_CURSOR    // optional overloads for typed cursors methods are generated for mapping
-#define SEED_TABLES                 // seed all tables with test data
+//#define SEED_TABLES                 // seed all tables with test data
 
 //#define LARGE_LOB_SIZE
 
@@ -1545,6 +1545,13 @@ namespace Odapter.Tester {
             }
 
             private void TestMiscCalls() {
+                OdptPkgTableCsKeyword.Instance.Proc(null, null, null, null, null, null, null, null, null, null, null, null, null, null, 
+                                                    null, null, null, null, null, null, null, null, null, null, null, null, null, null,
+                                                    null, null, null, null, null, null, null, null, null, null, null, null, null, null,
+                                                    null, null, null, null, null, null, null, null, null, null, null, null, null, null,
+                                                    null, null, null, null, null, null, null, null, null, null, null, null, null, null, 
+                                                    null, null, null, null, null, null, null, null, null, null, null, null, null, null, 
+                                                    null );
                 OdptPkgMain.Instance.ProcUnderscoreSuffix(null);
                 OdptPkgMain.Instance.ProcUnderscoreSuffixExtraunderscore(null);
 

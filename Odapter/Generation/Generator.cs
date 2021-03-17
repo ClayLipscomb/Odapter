@@ -468,8 +468,8 @@ namespace Odapter {
                         sb.AppendLine(Tab(5) + LOCAL_VAR_NAME_COMMAND_PARAMS + "[\"" + FUNC_RETURN_PARAM_NAME + "\"].CollectionType = OracleCollectionType.PLSQLAssociativeArray;");
                         // for assoc array of variable length types, set the ArrayBindSize with the maximum length of the type
                         if (CSL.IsRequiresOutParmBindSize(cSharpArgSubType)) {
-                                sb.AppendLine(Tab(5) + LOCAL_VAR_NAME_COMMAND_PARAMS + "[\"" + FUNC_RETURN_PARAM_NAME + "\"].ArrayBindSize = new int[" + Parameter.Instance.MaxAssocArraySize.ToString() + "];");
-                            sb.AppendLine(Tab(5) 
+                            sb.AppendLine(Tab(5) + LOCAL_VAR_NAME_COMMAND_PARAMS + "[\"" + FUNC_RETURN_PARAM_NAME + "\"].ArrayBindSize = new int[" + Parameter.Instance.MaxAssocArraySize.ToString() + "];");
+                            sb.AppendLine(Tab(5)
                                 + "for (int _i = 0; _i < " + Parameter.Instance.MaxAssocArraySize.ToString() + "; _i++) { " + LOCAL_VAR_NAME_COMMAND_PARAMS + "[\"" + FUNC_RETURN_PARAM_NAME + "\"].ArrayBindSize[_i] = "
                                 + arg.NextArgument.CharLength + "; }");
                         }
@@ -482,7 +482,7 @@ namespace Odapter {
                     sb.AppendLine(Tab(5)
                         + (isCSharpParamOptional ? "if (" + cSharpArgName + " != null) " + (isAssocArray ? "{\r\n" + Tab(6) : "") : "")  // do not bind optional arg if not set
                         + LOCAL_VAR_NAME_COMMAND_PARAMS + ".Add(new OracleParameter("
-                        + "\"" + arg.ArgumentName + "\""
+                        + "\"" + (arg.ArgumentName.ToUpper() == arg.ArgumentName ? arg.ArgumentName : $"\\\"{arg.ArgumentName}\\\"") + "\""
                         + ", " + clientOracleDbType
                         + (isAssocArray ? ", " + (arg.InOut.EndsWith(Orcl.OUT.ToString()) ? Parameter.Instance.MaxAssocArraySize.ToString() : "(" + cSharpArgName + " == null ? 0 : " + cSharpArgName + ".Count)") : "")
                         + (arg.InOut.EndsWith(Orcl.OUT.ToString()) && CSL.IsRequiresOutParmBindSize(cSharpArgType) ? ", " + GetStringArgBindSize(arg.DataType).ToString() : "") // returning String requires size

@@ -123,6 +123,8 @@
     <None Include="schema\package\odpt_pkg_sql.pkb" />
     <None Include="schema\package\odpt_pkg_sql.pks" />
     <None Include="schema\package\fltr_pkg_rec_used.pkb" />
+    <None Include="schema\package\odpt_pkg_table_cs_keyword.pks" />
+    <None Include="schema\package\odpt_pkg_table_cs_keyword.pkb" />
     <None Include="schema\package\odpt_pkg_table_big.pkb" />
     <None Include="schema\package\odpt_pkg_table_big.pks" />
     <None Include="schema\package\odpt_pkg_table_number.pkb" />
@@ -157,6 +159,7 @@
     <Content Include="lib\Oracle.DataAccess.dll" />
     <Content Include="schema\create schema.sql" />
     <Content Include="schema\misc\odpt_sequences.sql" />
+    <Content Include="schema\table\odpt_table_cs_keyword.sql" />
     <Content Include="schema\table\odpt_table_naming_conflict.sql" />
     <Content Include="schema\table\odpt_table_ignore_any.sql" />
     <Content Include="schema\table\odpt_table_big.sql" />

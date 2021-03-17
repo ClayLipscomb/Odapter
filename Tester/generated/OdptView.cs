@@ -17,66 +17,66 @@ namespace Schema.Odpt.View {
     public partial class OdptViewBigV : Schema.Odpt.OdptView {
         private Byte propertyToEnsuresPartialClassNamesAreUniqueAtCompileTime { get; set; }
         [DataMember(Order=1, IsRequired=true)][XmlElement(Order=1, IsNullable=true)]
-        public virtual Int64? Id { get; set; }
+        public virtual Int64? Id { get { return id; } set { id = value; } } protected Int64? id;
         [DataMember(Order=2, IsRequired=false)][XmlElement(Order=2, IsNullable=true)]
-        public virtual Int64? ColNumberId { get; set; }
+        public virtual Int64? ColNumberId { get { return colNumberId; } set { colNumberId = value; } } protected Int64? colNumberId;
         [DataMember(Order=3, IsRequired=false)][XmlElement(Order=3, IsNullable=true)]
-        public virtual Int64? ColInteger { get; set; }
+        public virtual Int64? ColInteger { get { return colInteger; } set { colInteger = value; } } protected Int64? colInteger;
         [DataMember(Order=4, IsRequired=false)][XmlElement(Order=4, IsNullable=true)]
-        public virtual Int64? ColInt { get; set; }
+        public virtual Int64? ColInt { get { return colInt; } set { colInt = value; } } protected Int64? colInt;
         [DataMember(Order=5, IsRequired=false)][XmlElement(Order=5, IsNullable=true)]
-        public virtual Int64? ColSmallint { get; set; }
+        public virtual Int64? ColSmallint { get { return colSmallint; } set { colSmallint = value; } } protected Int64? colSmallint;
         [DataMember(Order=6, IsRequired=false)][XmlElement(Order=6, IsNullable=true)]
-        public virtual Int64? ColNumeric { get; set; }
+        public virtual Int64? ColNumeric { get { return colNumeric; } set { colNumeric = value; } } protected Int64? colNumeric;
         [DataMember(Order=7, IsRequired=false)][XmlElement(Order=7, IsNullable=true)]
-        public virtual Int64? ColDecimal { get; set; }
+        public virtual Int64? ColDecimal { get { return colDecimal; } set { colDecimal = value; } } protected Int64? colDecimal;
         [DataMember(Order=8, IsRequired=false)][XmlElement(Order=8, IsNullable=true)]
-        public virtual Decimal? ColNumber { get; set; }
+        public virtual Decimal? ColNumber { get { return colNumber; } set { colNumber = value; } } protected Decimal? colNumber;
         [DataMember(Order=9, IsRequired=false)][XmlElement(Order=9, IsNullable=true)]
-        public virtual Decimal? ColDoublePrecision { get; set; }
+        public virtual Decimal? ColDoublePrecision { get { return colDoublePrecision; } set { colDoublePrecision = value; } } protected Decimal? colDoublePrecision;
         [DataMember(Order=10, IsRequired=false)][XmlElement(Order=10, IsNullable=true)]
-        public virtual Decimal? ColFloat { get; set; }
+        public virtual Decimal? ColFloat { get { return colFloat; } set { colFloat = value; } } protected Decimal? colFloat;
         [DataMember(Order=11, IsRequired=false)][XmlElement(Order=11, IsNullable=true)]
-        public virtual Decimal? ColReal { get; set; }
+        public virtual Decimal? ColReal { get { return colReal; } set { colReal = value; } } protected Decimal? colReal;
         [DataMember(Order=12, IsRequired=false)][XmlElement(Order=12, IsNullable=true)]
-        public virtual Single? ColBinaryFloat { get; set; }
+        public virtual Single? ColBinaryFloat { get { return colBinaryFloat; } set { colBinaryFloat = value; } } protected Single? colBinaryFloat;
         [DataMember(Order=13, IsRequired=false)][XmlElement(Order=13, IsNullable=true)]
-        public virtual Double? ColBinaryDouble { get; set; }
+        public virtual Double? ColBinaryDouble { get { return colBinaryDouble; } set { colBinaryDouble = value; } } protected Double? colBinaryDouble;
         [DataMember(Order=14, IsRequired=false)][XmlElement(Order=14, IsNullable=true)]
-        public virtual String ColVarcharMin { get; set; }
+        public virtual String ColVarcharMin { get { return colVarcharMin; } set { colVarcharMin = value; } } protected String colVarcharMin;
         [DataMember(Order=15, IsRequired=false)][XmlElement(Order=15, IsNullable=true)]
-        public virtual String ColVarcharMax { get; set; }
+        public virtual String ColVarcharMax { get { return colVarcharMax; } set { colVarcharMax = value; } } protected String colVarcharMax;
         [DataMember(Order=16, IsRequired=false)][XmlElement(Order=16, IsNullable=true)]
-        public virtual String ColVarchar2Min { get; set; }
+        public virtual String ColVarchar2Min { get { return colVarchar2Min; } set { colVarchar2Min = value; } } protected String colVarchar2Min;
         [DataMember(Order=17, IsRequired=false)][XmlElement(Order=17, IsNullable=true)]
-        public virtual String ColVarchar2Max { get; set; }
+        public virtual String ColVarchar2Max { get { return colVarchar2Max; } set { colVarchar2Max = value; } } protected String colVarchar2Max;
         [DataMember(Order=18, IsRequired=false)][XmlElement(Order=18, IsNullable=true)]
-        public virtual String ColNvarchar2Min { get; set; }
+        public virtual String ColNvarchar2Min { get { return colNvarchar2Min; } set { colNvarchar2Min = value; } } protected String colNvarchar2Min;
         [DataMember(Order=19, IsRequired=false)][XmlElement(Order=19, IsNullable=true)]
-        public virtual String ColNvarchar2Max { get; set; }
+        public virtual String ColNvarchar2Max { get { return colNvarchar2Max; } set { colNvarchar2Max = value; } } protected String colNvarchar2Max;
         [DataMember(Order=20, IsRequired=false)][XmlElement(Order=20, IsNullable=true)]
-        public virtual String ColCharMin { get; set; }
+        public virtual String ColCharMin { get { return colCharMin; } set { colCharMin = value; } } protected String colCharMin;
         [DataMember(Order=21, IsRequired=false)][XmlElement(Order=21, IsNullable=true)]
-        public virtual String ColCharMax { get; set; }
+        public virtual String ColCharMax { get { return colCharMax; } set { colCharMax = value; } } protected String colCharMax;
         [DataMember(Order=22, IsRequired=false)][XmlElement(Order=22, IsNullable=true)]
-        public virtual String ColNcharMin { get; set; }
+        public virtual String ColNcharMin { get { return colNcharMin; } set { colNcharMin = value; } } protected String colNcharMin;
         [DataMember(Order=23, IsRequired=false)][XmlElement(Order=23, IsNullable=true)]
-        public virtual String ColNcharMax { get; set; }
+        public virtual String ColNcharMax { get { return colNcharMax; } set { colNcharMax = value; } } protected String colNcharMax;
         [DataMember(Order=24, IsRequired=false)][XmlElement(Order=24, IsNullable=true)]
-        public virtual DateTime? ColDate { get; set; }
+        public virtual DateTime? ColDate { get { return colDate; } set { colDate = value; } } protected DateTime? colDate;
         [DataMember(Order=25, IsRequired=false)][XmlElement(Order=25, IsNullable=true)]
-        public virtual DateTime? ColTimestamp { get; set; }
+        public virtual DateTime? ColTimestamp { get { return colTimestamp; } set { colTimestamp = value; } } protected DateTime? colTimestamp;
         [DataMember(Order=26, IsRequired=false)][XmlElement(Order=26, IsNullable=true)]
-        public virtual DateTime? ColTimestampPrec0 { get; set; }
+        public virtual DateTime? ColTimestampPrec0 { get { return colTimestampPrec0; } set { colTimestampPrec0 = value; } } protected DateTime? colTimestampPrec0;
         [DataMember(Order=27, IsRequired=false)][XmlElement(Order=27, IsNullable=true)]
-        public virtual DateTime? ColTimestampPrec9 { get; set; }
+        public virtual DateTime? ColTimestampPrec9 { get { return colTimestampPrec9; } set { colTimestampPrec9 = value; } } protected DateTime? colTimestampPrec9;
         [DataMember(Order=28, IsRequired=false)][XmlElement(Order=28, IsNullable=true)]
-        public virtual Byte[] ColBlob { get; set; }
+        public virtual Byte[] ColBlob { get { return colBlob; } set { colBlob = value; } } protected Byte[] colBlob;
         [DataMember(Order=29, IsRequired=false)][XmlElement(Order=29, IsNullable=true)]
-        public virtual String ColClob { get; set; }
+        public virtual String ColClob { get { return colClob; } set { colClob = value; } } protected String colClob;
         [DataMember(Order=30, IsRequired=false)][XmlElement(Order=30, IsNullable=true)]
-        public virtual String ColNclob { get; set; }
+        public virtual String ColNclob { get { return colNclob; } set { colNclob = value; } } protected String colNclob;
         [DataMember(Order=31, IsRequired=false)][XmlElement(Order=31, IsNullable=true)]
-        public virtual String ColLast { get; set; }
+        public virtual String ColLast { get { return colLast; } set { colLast = value; } } protected String colLast;
     } // OdptViewBigV
 } // Schema.Odpt.View

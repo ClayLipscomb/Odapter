@@ -5573,6 +5573,130 @@ namespace Schema.Odpt.Odpt.Package {
         } // TruncTable
     } // OdptPkgTableBig
 
+    public sealed partial class OdptPkgTableCsKeyword : Schema.Odpt.Odpt.OdptAdapter {
+        private OdptPkgTableCsKeyword() { }
+        private static readonly OdptPkgTableCsKeyword _instance = new OdptPkgTableCsKeyword();
+        public static OdptPkgTableCsKeyword Instance { get { return _instance; } }
+
+        public void Proc(String @abstract, String @event, String @new, String @struct, 
+                String @as, String @explicit, String @null, String @switch, String @base, String @extern, 
+                String @object, String @this, String @bool, String @false, String @operator, String @throw, 
+                String @break, String @finally, String @out, String @true, String @byte, String @fixed, 
+                String @override, String @try, String @case, String @float, String @params, String @typeof, 
+                String @catch, String @for, String @private, String @uint, String @char, String @foreach, 
+                String @protected, String @ulong, String @checked, String @goto, String @public, String @unchecked, 
+                String @class, String @if, String @readonly, String @unsafe, String @const, String @implicit, 
+                String @ref, String @ushort, String @continue, String @in, String @return, String @using, 
+                String @decimal, String @int, String @sbyte, String @virtual, String @default, String @interface, 
+                String @sealed, String @volatile, String @delegate, String @internal, String @short, String @void, 
+                String @do, String @is, String @sizeof, String @while, String @double, String @lock, 
+                String @stackalloc, String @else, String @long, String @static, String @enum, String @namespace, 
+                String @string, String @dynamic, String @get, String @let, String @partial, String @set, 
+                String @value, String @var, String @where, OracleConnection optionalPreexistingOpenConnection = null) {
+            OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
+            try {
+                using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_TABLE_CS_KEYWORD.PROC", __conn)) {
+                    __cmd.CommandType = CommandType.StoredProcedure;
+                    __cmd.BindByName = true;
+                    __cmd.Parameters.Add(new OracleParameter("ABSTRACT", OracleDbType.Varchar2, @abstract, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("EVENT", OracleDbType.Varchar2, @event, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("NEW", OracleDbType.Varchar2, @new, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("STRUCT", OracleDbType.Varchar2, @struct, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("\"as\"", OracleDbType.Varchar2, @as, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("EXPLICIT", OracleDbType.Varchar2, @explicit, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("\"null\"", OracleDbType.Varchar2, @null, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("SWITCH", OracleDbType.Varchar2, @switch, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("BASE", OracleDbType.Varchar2, @base, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("EXTERN", OracleDbType.Varchar2, @extern, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("OBJECT", OracleDbType.Varchar2, @object, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("THIS", OracleDbType.Varchar2, @this, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("BOOL", OracleDbType.Varchar2, @bool, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("FALSE", OracleDbType.Varchar2, @false, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("OPERATOR", OracleDbType.Varchar2, @operator, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("THROW", OracleDbType.Varchar2, @throw, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("BREAK", OracleDbType.Varchar2, @break, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("FINALLY", OracleDbType.Varchar2, @finally, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("OUT", OracleDbType.Varchar2, @out, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("TRUE", OracleDbType.Varchar2, @true, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("BYTE", OracleDbType.Varchar2, @byte, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("FIXED", OracleDbType.Varchar2, @fixed, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("OVERRIDE", OracleDbType.Varchar2, @override, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("TRY", OracleDbType.Varchar2, @try, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("\"case\"", OracleDbType.Varchar2, @case, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("\"float\"", OracleDbType.Varchar2, @float, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("PARAMS", OracleDbType.Varchar2, @params, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("TYPEOF", OracleDbType.Varchar2, @typeof, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("CATCH", OracleDbType.Varchar2, @catch, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("\"for\"", OracleDbType.Varchar2, @for, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("PRIVATE", OracleDbType.Varchar2, @private, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("UINT", OracleDbType.Varchar2, @uint, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("\"char\"", OracleDbType.Varchar2, @char, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("FOREACH", OracleDbType.Varchar2, @foreach, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("PROTECTED", OracleDbType.Varchar2, @protected, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("ULONG", OracleDbType.Varchar2, @ulong, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("CHECKED", OracleDbType.Varchar2, @checked, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("\"goto\"", OracleDbType.Varchar2, @goto, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("\"public\"", OracleDbType.Varchar2, @public, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("UNCHECKED", OracleDbType.Varchar2, @unchecked, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("CLASS", OracleDbType.Varchar2, @class, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("\"if\"", OracleDbType.Varchar2, @if, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("READONLY", OracleDbType.Varchar2, @readonly, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("UNSAFE", OracleDbType.Varchar2, @unsafe, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("CONST", OracleDbType.Varchar2, @const, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("IMPLICIT", OracleDbType.Varchar2, @implicit, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("REF", OracleDbType.Varchar2, @ref, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("USHORT", OracleDbType.Varchar2, @ushort, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("CONTINUE", OracleDbType.Varchar2, @continue, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("\"in\"", OracleDbType.Varchar2, @in, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("RETURN", OracleDbType.Varchar2, @return, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("USING", OracleDbType.Varchar2, @using, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("\"decimal\"", OracleDbType.Varchar2, @decimal, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("INT", OracleDbType.Varchar2, @int, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("SBYTE", OracleDbType.Varchar2, @sbyte, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("VIRTUAL", OracleDbType.Varchar2, @virtual, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("\"default\"", OracleDbType.Varchar2, @default, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("INTERFACE", OracleDbType.Varchar2, @interface, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("SEALED", OracleDbType.Varchar2, @sealed, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("VOLATILE", OracleDbType.Varchar2, @volatile, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("DELEGATE", OracleDbType.Varchar2, @delegate, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("INTERNAL", OracleDbType.Varchar2, @internal, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("SHORT", OracleDbType.Varchar2, @short, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("VOID", OracleDbType.Varchar2, @void, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("DO", OracleDbType.Varchar2, @do, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("\"is\"", OracleDbType.Varchar2, @is, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("SIZEOF", OracleDbType.Varchar2, @sizeof, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("WHILE", OracleDbType.Varchar2, @while, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("DOUBLE", OracleDbType.Varchar2, @double, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("\"lock\"", OracleDbType.Varchar2, @lock, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("STACKALLOC", OracleDbType.Varchar2, @stackalloc, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("\"else\"", OracleDbType.Varchar2, @else, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("\"long\"", OracleDbType.Varchar2, @long, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("STATIC", OracleDbType.Varchar2, @static, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("ENUM", OracleDbType.Varchar2, @enum, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("NAMESPACE", OracleDbType.Varchar2, @namespace, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("STRING", OracleDbType.Varchar2, @string, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("DYNAMIC", OracleDbType.Varchar2, @dynamic, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("GET", OracleDbType.Varchar2, @get, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("LET", OracleDbType.Varchar2, @let, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("PARTIAL", OracleDbType.Varchar2, @partial, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("\"set\"", OracleDbType.Varchar2, @set, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("VALUE", OracleDbType.Varchar2, @value, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("VAR", OracleDbType.Varchar2, @var, ParameterDirection.Input));
+                    __cmd.Parameters.Add(new OracleParameter("\"where\"", OracleDbType.Varchar2, @where, ParameterDirection.Input));
+
+                    OracleCommandTrace __cmdTrace = IsTracing(__cmd) ? new OracleCommandTrace(__cmd) : null;
+                    int __rowsAffected = __cmd.ExecuteNonQuery();
+                    if (__cmdTrace != null) TraceCompletion(__cmdTrace);
+                } // using OracleCommand
+            } finally {
+                if (optionalPreexistingOpenConnection == null) {
+                    __conn.Close();
+                    __conn.Dispose();
+                }
+            }
+        } // Proc
+    } // OdptPkgTableCsKeyword
+
     public sealed partial class OdptPkgTableNumber : Schema.Odpt.Odpt.OdptAdapter {
         private OdptPkgTableNumber() { }
         private static readonly OdptPkgTableNumber _instance = new OdptPkgTableNumber();
