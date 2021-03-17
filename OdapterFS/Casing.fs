@@ -80,8 +80,8 @@ module internal PascalCase =
     let create input = WrappedString.create (*canonicalize:*)singleLineTrimmed PascalCase input
     let value = WrappedString.value
     let map f (PascalCase pascalCaseStr) = pascalCaseStr |> f |> create
-    let private add pc1 pc2 = PascalCase (value pc1 + value pc2)
-    let concat seqPascalCase = Seq.reduce add seqPascalCase
+    let private concatPair pc1 pc2 = PascalCase (value pc1 + value pc2)
+    let concat seqPascalCase = Seq.reduce concatPair seqPascalCase
     let private fromSnakeCaseStrToPascalCaseStr str = 
         if str |> trim |> isNullOrWhiteSpace then 
             emptyString
@@ -91,7 +91,7 @@ module internal PascalCase =
 
 [<AutoOpen>]
 module internal CamelCase =
-    let private create input = WrappedString.create (*canonicalize:*)singleLineTrimmed CamelCase input
+    let create input = WrappedString.create (*canonicalize:*)singleLineTrimmed CamelCase input
     let value = WrappedString.value
     let map f (CamelCase camelCaseStr) = camelCaseStr |> f |> create
     let ofPascalCase (PascalCase pascalCaseStr) = pascalCaseStr |> deCapitalize |> create

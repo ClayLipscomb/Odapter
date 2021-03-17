@@ -19,6 +19,7 @@
 namespace Odapter.Translation
 
 open System
+open Odapter.CSharp;
 open Odapter.Casing;
 open Odapter.CSharp.Logic
 
@@ -47,18 +48,27 @@ module internal Naming =
         |> replace (@":", @"colon" + CHARACTER_ABBREV)
         |> replace (@";", @"semicolon" + CHARACTER_ABBREV)
     
-    let private translateKeyword str = (if Keyword.isKeyword(str) then @"@" else emptyString) + str // prepend @ to C# keyword
-
-    let internal snakeCaseOfOracleIdentifier = normalizeOracleSnakeCase >> SnakeCase.create
+    let private snakeCaseOfOracleIdentifier = normalizeOracleSnakeCase >> SnakeCase.create
     let internal pascalCaseOfOracleIdentifier = snakeCaseOfOracleIdentifier >> PascalCase.ofSnakeCase 
-    let internal camelCaseOfOracleIdentifier = snakeCaseOfOracleIdentifier >> CamelCase.ofSnakeCase >> (CamelCase.map translateKeyword) 
+    let internal camelCaseOfOracleIdentifier = snakeCaseOfOracleIdentifier >> CamelCase.ofSnakeCase 
+
     let internal classNameOfOracleIdentifier = pascalCaseOfOracleIdentifier >> ClassName.ofPascalCase
-    let internal propertyNameOfOracleIdentifier = pascalCaseOfOracleIdentifier >> PropertyName.ofPascalCase
+    let internal propertyNamePublicOfOracleIdentifier (identifier, identifierEntity) = 
+        let className = identifierEntity |> classNameOfOracleIdentifier
+        let propertyName = identifier |> pascalCaseOfOracleIdentifier |> PropertyNamePublic.ofPascalCase
+        if className.Value = propertyName.Value then PropertyNamePublic.doubleName propertyName else propertyName
+    let internal methodNameOfOracleIdentifier = pascalCaseOfOracleIdentifier >> MethodName.ofPascalCase
     let internal typeGenericNameOfOracleIdentifier = camelCaseOfOracleIdentifier >> TypeGenericName.ofCamelCase
+    let internal parameterNameOfOracleIdentifier = camelCaseOfOracleIdentifier >> Keyword.escapeKeyword >> ParameterName.ofCamelCase 
+    let internal fieldNameProtectedOfOracleIdentifier = camelCaseOfOracleIdentifier >> Keyword.escapeKeyword  >> FieldNameProtected.ofCamelCase
 
 module Api =
-    let ClassNameOfOracleIdentifier identifier = classNameOfOracleIdentifier identifier
-    let PropertyNameOfOracleIdentifier identifier = propertyNameOfOracleIdentifier identifier
-    let TypeGenericNameOfOracleIdentifier identifier = typeGenericNameOfOracleIdentifier identifier
     let PascalCaseOfOracleIdentifier identifier = pascalCaseOfOracleIdentifier identifier
     let CamelCaseOfOracleIdentifier identifier = camelCaseOfOracleIdentifier identifier
+
+    let ClassNameOfOracleIdentifier identifier = classNameOfOracleIdentifier identifier
+    let PropertyNamePublicOfOracleIdentifier (identifier, identifierEntity) = propertyNamePublicOfOracleIdentifier (identifier, identifierEntity)
+    let MethodNameOfOracleIdentifier identifier = methodNameOfOracleIdentifier identifier
+    let TypeGenericNameOfOracleIdentifier identifier = typeGenericNameOfOracleIdentifier identifier
+    let ParameterNameOfOracleIdentifier identifier = parameterNameOfOracleIdentifier identifier
+    let FieldNameProtectedOfOracleIdentifier identifier = fieldNameProtectedOfOracleIdentifier identifier

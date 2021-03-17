@@ -19,6 +19,7 @@
 using System;
 using CS = Odapter.CSharp;
 using CSL = Odapter.CSharp.Logic.Api;
+using Trns = Odapter.Translation.Api;
 
 namespace Odapter {
     /// <summary>
@@ -39,7 +40,7 @@ namespace Odapter {
         public string IgnoredReasonAsAttribute { get => TranslaterMessage.IgnoreNotImplemented(OrclType); }
         internal TranslaterNoneType(string dataTypeFull) {
             DataTypeFull = dataTypeFull;
-            CSharpType = String.IsNullOrWhiteSpace(dataTypeFull) ? CSL.TypeNone : TranslaterName.ClassNameOfOracleIdentifier(dataTypeFull) as CS.ITypeTargetable;
+            CSharpType = String.IsNullOrWhiteSpace(dataTypeFull) ? CSL.TypeNone : Trns.ClassNameOfOracleIdentifier(dataTypeFull) as CS.ITypeTargetable;
         }
         internal TranslaterNoneType() : this(String.Empty) { }
     }

@@ -200,7 +200,7 @@ namespace Odapter {
                            && !Parameter.Instance.IsUsingSchemaFilter
                            && !arg.PackageName.Equals(arg.NextArgument.TypeName)       // record not defined in this package
                            && !pack.ShouldGenerateRecordFromArgument(arg.NextArgument) // record not *generated* in this package adapter
-                        ? TranslaterName.ConvertToPascal(arg.NextArgument.TypeName)
+                        ? Trns.ClassNameOfOracleIdentifier(arg.NextArgument.TypeName).Code
                         : null;
                     if (!genericTypes.Exists(a => a.TypeGenericName.Equals(typeGenericName)))
                         genericTypes.Add(new GenericType(packageTypeName, typeGenericName, arg.IsUntypedCursor));
@@ -250,7 +250,8 @@ namespace Odapter {
                         + (excludeTypes
                             ? ""
                             : arg.Translater.CSharpType + " ")
-                        + TranslaterName.Convert(arg)
+                        + Trns.ParameterNameOfOracleIdentifier(arg.ArgumentName)
+                        //+ TranslaterName.Convert(arg)
                         + (optionalParamNamesInCSharp.Contains(arg.ArgumentName) ? " = null" : "") // an optional C# 4.0 param defaulted to null
                         );
                 }
@@ -391,8 +392,8 @@ namespace Odapter {
 
             foreach (IArgument arg in args) {
                 var cSharpArgType = arg.Translater.CSharpType;
-                String cSharpArgName = (arg.IsReturnArgument ? LOCAL_VAR_NAME_RETURN : TranslaterName.Convert(arg));
-                String oracleArgName = (arg.ArgumentName ?? FUNC_RETURN_PARAM_NAME);
+                String cSharpArgName = arg.IsReturnArgument ? LOCAL_VAR_NAME_RETURN : Trns.ParameterNameOfOracleIdentifier(arg.ArgumentName).Code;
+                String oracleArgName = arg.ArgumentName ?? FUNC_RETURN_PARAM_NAME;
 
                 // ignore argument if not an out or return parameter
                 if (arg.DataLevel != 0 || !arg.InOut.EndsWith(Orcl.OUT)) continue;
@@ -445,7 +446,7 @@ namespace Odapter {
 
             foreach (IArgument arg in args) {
                 isAssocArray = (arg.DataType == Orcl.ASSOCIATITVE_ARRAY);
-                string cSharpArgName = TranslaterName.Convert(arg);
+                string cSharpArgName = Trns.ParameterNameOfOracleIdentifier(arg.ArgumentName).Code;
                 var cSharpArgType = arg.Translater.CSharpType;
                 var cSharpArgSubType = CSL.GetSubType(cSharpArgType);
                 var clientOracleDbType = (isAssocArray ? arg.NextArgument : arg).Translater.CSharpOracleDbTypeEnum; 
@@ -521,7 +522,7 @@ namespace Odapter {
         /// <returns></returns>
         private string GenerateMethodCode(IProcedure proc, IPackage pack, bool forceDynamicMapping) {
             StringBuilder methodText = new StringBuilder("");
-            string methodName = TranslaterName.Convert(proc, pack);
+            var methodName = TranslaterName.MethodNameOf(proc, pack);
             var returnType = GenerateMethodReturnType(proc);
             List<GenericType> genericTypesUsed = new List<GenericType>();
 
@@ -542,7 +543,7 @@ namespace Odapter {
 
             // method header
             methodText.AppendLine();
-            methodText.Append(Tab(2) + CS.AccessModifier.PUBLIC + " " + returnType + " " + methodName);
+            methodText.Append(Tab(2) + CS.AccessModifier.PUBLIC + " " + returnType + " " + methodName.Code);
 
             // if the method is using generics for cursors, add all generic lists to sig
             if (genericTypesUsed.Count > 0) methodText.Append("<" + String.Join(", ", genericTypesUsed.Select(gt => gt.TypeGenericName).ToList())  + ">");
@@ -562,7 +563,7 @@ namespace Odapter {
                 foreach (IArgument arg in proc.Arguments) 
                     if (arg.IsReturnArgument || (arg.DataLevel == 0 && arg.InOut.Equals(Orcl.OUT))) {
                         var cSharpType = (arg.IsReturnArgument ? arg.Translater.CSharpType : arg.Translater.CSharpType.SansNullable);
-                        string cSharpName = arg.IsReturnArgument ? LOCAL_VAR_NAME_RETURN : TranslaterName.Convert(arg);
+                        string cSharpName = arg.IsReturnArgument ? LOCAL_VAR_NAME_RETURN : Trns.ParameterNameOfOracleIdentifier(arg.ArgumentName).Code;
                         methodText.Append((arg.IsReturnArgument ? cSharpType + " " : "") + cSharpName +
                              (CSL.IsTypeCollectionGeneric(cSharpType) 
                                 ? " = new " + CSL.TypeCollectionGeneric(CS.TypeCollection.List, CSL.GetSubType(cSharpType)) + "()"
@@ -625,7 +626,7 @@ namespace Odapter {
             if (proc.IsFunction()) methodText.AppendLine(Tab(3) + "return " + LOCAL_VAR_NAME_RETURN + ";");
 
             // close body
-            methodText.Append(Tab(2) + "} // " + methodName);
+            methodText.Append(Tab(2) + "} // " + methodName.Code);
 
             return methodText.ToString();
         }
@@ -697,7 +698,7 @@ namespace Odapter {
             classText.AppendLine(Tab(4) + "while (" + paramNameOracleReader + ".Read()) {"); 
             classText.AppendLine(Tab(5) + genericTypeParam + " obj = new " + genericTypeParam + "();");
             foreach (IField f in rec.Attributes) { // loop through all fields
-                classText.Append(Tab(5) + "if (!" + paramNameOracleReader + ".IsDBNull(" + f.MapPosition + ")) " + "obj." + TranslaterName.Convert(f) + " = "
+                classText.Append(Tab(5) + "if (!" + paramNameOracleReader + ".IsDBNull(" + f.MapPosition + ")) " + "obj." + Trns.PropertyNamePublicOfOracleIdentifier(f.AttrName, f.EntityName) + " = "
                     + CSL.CodeReadResultAssignmentValue(f.Translater.CSharpType, f.Translater.CSharpOdpNetSafeType, paramNameOracleReader, f.MapPosition));
                 //if (f.Translater.GetCSharpType(true).Equals(CSharp.DECIMAL)) {
                 //    classText.Append("(Decimal?)OracleDecimal.SetPrecision(" + paramNameOracleReader + ".GetOracleDecimal(" + f.MapPosition.ToString() + "), 28)");
@@ -893,7 +894,7 @@ namespace Odapter {
                 outFilePackage.WriteLine("namespace " + packageNamespace + " {");
 
                 foreach (IPackage pack in packages) {
-                    string className = TranslaterName.Convert(pack);
+                    string className = Trns.ClassNameOfOracleIdentifier(pack.PackageName).Code;
                     StringBuilder classText = new StringBuilder("");
     
                     // class definition
@@ -995,7 +996,7 @@ namespace Odapter {
 
             string classFirstLine = entity.Translater.CSharpAccessModifier + (entity.IsInstantiable ? "" : " abstract") + (isPartial ? " partial" : "") + " " + entity.Translater.CSharpType + " " + className
                 + (!String.IsNullOrEmpty(dbAncestorTypeName)
-                        ? " : " + TranslaterName.ConvertToPascal(dbAncestorTypeName) // Oracle ancestor gets precedence
+                        ? " : " + Trns.ClassNameOfOracleIdentifier(dbAncestorTypeName).Code // Oracle ancestor gets precedence
                         : (!String.IsNullOrEmpty(ancestorClassName)
                             ? " : " + Parameter.Instance.NamespaceSchema + "." + ancestorClassName + (isPackageRecord ? ", " + CSL.InterfaceNameOfClassName(className) : "")
                             : "")) // user defined ancestor
@@ -1022,7 +1023,7 @@ namespace Odapter {
             if (isPartial) classText.AppendLine(Tab(tabIndentCount + 1) + CS.AccessModifier.PRIVATE + " " + CS.TypeValue.Byte + " " + "propertyToEnsuresPartialClassNamesAreUniqueAtCompileTime" + " { get; set; }");
 
             foreach (IEntityAttribute attr in entity.Attributes) { // generate all attributes
-                string nonPublicMemberName = TranslaterName.ConvertToCamel(attr.AttrName);
+                string nonPublicMemberName = Trns.FieldNameProtectedOfOracleIdentifier(attr.AttrName).Code;
                 var cSharpType = attr.Translater.CSharpType.ToString();
 
                 if (attr.AttrTypeOwner != null && !attr.AttrTypeOwner.Equals(entity.Owner) && !attr.AttrTypeOwner.Equals("SYS")) {
@@ -1038,7 +1039,7 @@ namespace Odapter {
 
                 classText.Append(Tab(tabIndentCount + 1) + "public virtual "
                     + (attr.ContainerClassName == null ? "" : attr.ContainerClassName + ".")
-                    + cSharpType + " " + TranslaterName.Convert(attr)
+                    + cSharpType + " " + Trns.PropertyNamePublicOfOracleIdentifier(attr.AttrName, attr.EntityName)
                     + (Parameter.Instance.IsUseAutoImplementedProperties 
                         ? " { get; set; }"
                         : " { get { return " + nonPublicMemberName + "; } set { " + nonPublicMemberName + " = value; } }"));
@@ -1066,7 +1067,7 @@ namespace Odapter {
             foreach (IEntityAttribute attr in entity.Attributes) { // loop through all fields
                 var cSharpType = attr.Translater.CSharpType;
                 classText.AppendLine(Tab(tabIndentCount + 2) + (attr.ContainerClassName == null ? "" : attr.ContainerClassName + ".") + cSharpType 
-                    + " " + TranslaterName.Convert(attr)
+                    + " " + Trns.PropertyNamePublicOfOracleIdentifier(attr.AttrName, attr.EntityName)
                     + " { set; }");
             }
             classText.AppendLine(Tab(tabIndentCount + 1) + "} // " + interfaceName); // end record interface

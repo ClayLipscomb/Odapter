@@ -84,12 +84,22 @@ open Odapter.Casing;
         member this.Value = (this :> IWrappedString).Value
         interface ITypeComposable
     [<Struct>]
-    type PropertyName = internal PropertyName of PascalCase with
-        member this.Code = let (PropertyName pascalCase) = this in (pascalCase :> IWrappedString).Value
+    type PropertyNamePublic = internal PropertyNamePublic of PascalCase with
+        member this.Code = let (PropertyNamePublic pascalCase) = this in (pascalCase :> IWrappedString).Value
+        member this.Value = let (PropertyNamePublic pascalCase) = this in pascalCase
         override this.ToString() = this.Code
     [<Struct>]
     type MethodName = internal MethodName of PascalCase with
         member this.Code = let (MethodName pascalCase) = this in (pascalCase :> IWrappedString).Value
+        override this.ToString() = this.Code
+    [<Struct>]
+    type ParameterName = internal ParameterName of CamelCase with
+        member this.Code = let (ParameterName camelCase) = this in (camelCase :> IWrappedString).Value
+        member this.Value = let (ParameterName camelCase) = this in camelCase
+        override this.ToString() = this.Code
+    [<Struct>]
+    type FieldNameProtected = internal FieldNameProtected of CamelCase with
+        member this.Code = let (FieldNameProtected camelCase) = this in (camelCase :> IWrappedString).Value
         override this.ToString() = this.Code
     [<Struct>]
     type InterfaceName = internal InterfaceName of PascalCase with
@@ -263,13 +273,13 @@ open Odapter.Casing;
             | TargetGenericName _ | TargetValue _ | TargetReference _ | TargetClassName _ | TargetCollectionGeneric _ | TargetArray _ | TargetNone _ -> this 
 
     [<Struct>]
-    type internal Property = { PropertyName : PropertyName; PropertyType : TypeComposable }
+    type internal PropertyPublic = { PropertyName : PropertyNamePublic; PropertyType : TypeComposable }
     [<Struct>]
-    type internal TypeInterface = { InterfaceName : InterfaceName; Properties : Property seq }
+    type internal TypeInterface = { InterfaceName : InterfaceName; Properties : PropertyPublic seq }
     [<Struct>]
     type internal TypeClassDto = { 
         ClassName : ClassName; 
-        Properties : Property seq
+        Properties : PropertyPublic seq
         UseDataMemberAttribute : bool; 
         UseXmlElementAttribute : bool
         ExtendedClassName : ClassName; 

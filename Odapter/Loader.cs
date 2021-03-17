@@ -22,6 +22,7 @@ using System.Linq;
 using System.Data;
 using Oracle.ManagedDataAccess.Client;
 using Dapper;
+using Trns = Odapter.Translation.Api;
 
 namespace Odapter {
     internal sealed class Loader {
@@ -189,13 +190,13 @@ namespace Odapter {
                     // owned by another schema or owned by package that was filtered out 
                     && (!(arg.Owner ?? "").Equals(arg.TypeOwner)
                         || !Packages.Any(p => p.PackageName.Equals(arg.TypeName)))) {
-                    field.ContainerClassName = TranslaterName.ConvertToPascal(arg.TypeName);
+                    field.ContainerClassName = Trns.ClassNameOfOracleIdentifier(arg.TypeName).Code;
                 }
 
                 if (!(arg.TypeName ?? "").Equals(arg.PackageName)
                         && Packages.Any(p => p.PackageName.Equals(arg.TypeName)) // package of origin of record being created
                         && PackageRecordTypes.Exists(r => r.PackageName.Equals(arg.TypeName) && r.TypeSubName.Equals(arg.TypeSubname))) {
-                    field.ContainerClassName = TranslaterName.ConvertToPascal(arg.TypeName);
+                    field.ContainerClassName = Trns.ClassNameOfOracleIdentifier(arg.TypeName).Code;
                 }
             }
 

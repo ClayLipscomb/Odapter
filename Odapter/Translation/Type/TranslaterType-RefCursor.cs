@@ -19,6 +19,7 @@
 using System;
 using CS = Odapter.CSharp;
 using CSL = Odapter.CSharp.Logic.Api;
+using Trns = Odapter.Translation.Api;
 
 namespace Odapter {
     internal sealed class TranslaterRefCursorTyped : ITranslaterType {
@@ -74,7 +75,7 @@ namespace Odapter {
             DataTypeFull = dataTypeFull;
             _typeCollection = typeCollection;
             // create informative subtype name that is unique among multiple untyped(cursor) args in proc
-            _subTypeGeneric = TranslaterName.TypeGenericNameOfOracleIdentifier((dbDataType.DataTypeLabel ?? Orcl.RETURN) + @"_UNTYPED");
+            _subTypeGeneric = Trns.TypeGenericNameOfOracleIdentifier((dbDataType.DataTypeLabel ?? Orcl.RETURN) + @"_UNTYPED");
         }
         private TranslaterRefCursorUntyped() { }
         public override string ToString() { return DataTypeFull; }

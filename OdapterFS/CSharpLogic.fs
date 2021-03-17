@@ -74,6 +74,7 @@ module internal Keyword =
     let private unionCache = UtilUnion.getUnionCases<Keyword> |> Seq.cache
     /// Case-sensitive compare to (all lower) C# keyword
     let isKeyword keywordCandidate = unionCache |> Seq.exists (fun kw -> toLower kw.Name = keywordCandidate) 
+    let escapeKeyword = CamelCase.map (fun str -> (if isKeyword(str) then @"@" else emptyString) + str) // prepend @ to C# keyword
 
 [<RequireQualifiedAccess>]
 module internal Namespace = 
@@ -83,23 +84,23 @@ module internal Namespace =
     let toCodeUsing (nmspace:Namespace) = (toCodeSpaced [|USING;nmspace|]) + SEMICOLON
 
 [<RequireQualifiedAccess>]
-module internal PropertyName = 
-    let ofPascalCase pascalCase = PropertyName pascalCase
-    let private create = PascalCase.create >> PropertyName
-    let fromCode propertyNameCandidate = create propertyNameCandidate
-    let (|ValidCode|_|) typeStr = typeStr |> fromCode |> Some
-
-[<RequireQualifiedAccess>]
 module internal ClassName = 
     let ofPascalCase pascalCase = ClassName pascalCase
     let fromCode = PascalCase.create >> ClassName
-    let (|ValidCode|_|) typeStr = typeStr |> fromCode |> Some
+    let (|ValidCode|_|) = fromCode >> Some
     //let FromCodeOfInterfaceToCodeClass interfaceCode =
     //    interfaceCode 
     //    |> TypeInterface.createOfText 
     //    |> Option.map(fun i -> i |> TypeClass.createOfInterface) 
     //    |> Option.bind(fun c -> (c :> ICodeable).ToCode |> Some)
     //    |> Option.defaultValue emptyString
+[<RequireQualifiedAccess>]
+module internal PropertyNamePublic = 
+    let ofPascalCase pascalCase = PropertyNamePublic pascalCase
+    let private create = PascalCase.create >> PropertyNamePublic
+    let fromCode propertyNameCandidate = create propertyNameCandidate
+    let doubleName (PropertyNamePublic pascalCase) = PascalCase.concat [|pascalCase; pascalCase|] |> ofPascalCase
+    let (|ValidCode|_|) = fromCode >> Some
 
 [<RequireQualifiedAccess>]
 module internal InterfaceName = 
@@ -128,7 +129,7 @@ module internal TypeGenericName =
             tgCandidate |> removeGenericPrefix |> create |> Some
         else 
             None
-    let (|ValidCode|_|) typeStr = typeStr |> fromCode
+    let (|ValidCode|_|) = fromCode
     let createOfClassName (className: ClassName) = ofPascalCase className.Value
     let createOfTypeTarget (typeTarget: TypeTarget) = match typeTarget with | TargetClassName className -> createOfClassName className | _ -> create emptyString
 
@@ -137,12 +138,23 @@ module internal MethodName =
     let private create = PascalCase.create >> MethodName
     let ofPascalCase pascalCase = MethodName pascalCase
     let methodNameReadResult (interfaceName:InterfaceName) = create (CodeFrag.ReadResult.Code + interfaceName.Code);
+    let doubleName (MethodName pascalCase) = PascalCase.concat [|pascalCase; pascalCase|] |> ofPascalCase
+
+[<RequireQualifiedAccess>]
+module internal ParameterName = 
+    let private create = CamelCase.create >> ParameterName
+    let ofCamelCase camelCase = ParameterName camelCase
+
+[<RequireQualifiedAccess>]
+module internal FieldNameProtected = 
+    let private create = CamelCase.create >> FieldNameProtected
+    let ofCamelCase camelCase = FieldNameProtected camelCase
 
 [<RequireQualifiedAccess>]
 module internal TypeValue = 
     let private unionCache = UtilUnion.getUnionCases<TypeValue> |> Seq.cache 
     let fromCode tvCandidate = UtilUnion.createUnionCase<TypeValue> unionCache tvCandidate
-    let internal (|ValidCode|_|) typeStr = typeStr |> fromCode
+    let internal (|ValidCode|_|) = fromCode
 [<RequireQualifiedAccess>]
 module internal TypeValueNullable = 
     let create typeValue = ValueNullable typeValue 
@@ -154,12 +166,12 @@ module internal TypeValueNullable =
             | None -> None
         else 
             None
-    let (|ValidCode|_|) typeStr = typeStr |> fromCode
+    let (|ValidCode|_|) = fromCode
 [<RequireQualifiedAccess>]
 module internal TypeReference = 
     let private unionCache = UtilUnion.getUnionCases<TypeReference> |> Seq.cache 
     let fromCode trCandidate = UtilUnion.createUnionCase<TypeReference> unionCache trCandidate
-    let (|ValidCode|_|) typeStr = typeStr |> fromCode
+    let (|ValidCode|_|) = fromCode
 
 [<RequireQualifiedAccess>]
 module internal TypeArray = 
@@ -180,7 +192,7 @@ module internal TypeArray =
             | ClassName.ValidCode t         -> t |> ComposableClassName |> create |> Some
             | _ -> None
         | _ -> None
-    and (|ValidCode|_|) typeStr = fromCode typeStr
+    and (|ValidCode|_|) = fromCode
 
 [<RequireQualifiedAccess>]
 module internal TypeComposable =
@@ -222,7 +234,7 @@ module internal TypeComposable =
 module internal TypeCollection = 
     let private unionCache = UtilUnion.getUnionCases<TypeCollection> |> Seq.cache 
     let fromCode tcCandidate = (UtilUnion.createUnionCase<TypeCollection> unionCache tcCandidate) 
-    let (|ValidCode|_|) str = fromCode str
+    let (|ValidCode|_|) = fromCode
 [<RequireQualifiedAccess>]
 module internal TypeCollectionGeneric = 
     let create (typeCollection, subType) = { TypeCollection = typeCollection; SubType = subType }
@@ -249,7 +261,7 @@ module internal TypeCollectionGeneric =
                 | _ -> None
             | _ -> None
         | _ -> None
-    and (|ValidCode|_|) tcgCandidate = fromCode tcgCandidate
+    and (|ValidCode|_|) = fromCode 
     let ofTypeTarget (typeCollection, typeTarget) = 
         match typeTarget with 
         | TargetValueNullable t     -> create(typeCollection, t :> ITypeComposable |> TypeComposable.ofITypeComposable)

@@ -19,6 +19,7 @@
 using System;
 using CS = Odapter.CSharp;
 using CSL = Odapter.CSharp.Logic.Api;
+using Trns = Odapter.Translation.Api;
 
 namespace Odapter {
     [Obsolete]
@@ -37,7 +38,7 @@ namespace Odapter {
         public string IgnoredReasonAsAttribute { get => TranslaterMessage.IgnoreNotAvailableOdpNetMananged(OrclType); }
         internal TranslaterUndefinedType(string dataTypeFull) {
             DataTypeFull = dataTypeFull;
-            CSharpType = TranslaterName.ClassNameOfOracleIdentifier(dataTypeFull);
+            CSharpType = Trns.ClassNameOfOracleIdentifier(dataTypeFull);
         }
         private TranslaterUndefinedType() { 
         }

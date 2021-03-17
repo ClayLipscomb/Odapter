@@ -19,6 +19,7 @@
 using System;
 using Odapter.CSharp;
 using CSL = Odapter.CSharp.Logic.Api;
+using Trns = Odapter.Translation.Api;
 
 namespace Odapter {
     internal sealed class TranslaterView : ITranslaterEntity {
@@ -27,7 +28,7 @@ namespace Odapter {
 
         internal TranslaterView(string dataTypeFull) {
             DataTypeFull = dataTypeFull;
-            CSharpClassName = TranslaterName.ClassNameOfOracleIdentifier(dataTypeFull);
+            CSharpClassName = Trns.ClassNameOfOracleIdentifier(dataTypeFull);
         }
         public ClassName CSharpClassName { get; private set; }
         public AccessModifier CSharpAccessModifier { get => AccessModifier.PUBLIC; }

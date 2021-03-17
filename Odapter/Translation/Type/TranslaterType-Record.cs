@@ -19,6 +19,7 @@
 using System;
 using CS = Odapter.CSharp;
 using CSL = Odapter.CSharp.Logic.Api;
+using Trns = Odapter.Translation.Api;
 
 namespace Odapter {
     internal sealed class TranslaterRecordType : ITranslaterType {
@@ -38,7 +39,7 @@ namespace Odapter {
 
         internal TranslaterRecordType(string dataTypeFull) {
             DataTypeFull = dataTypeFull;
-            CSharpType = TranslaterName.ClassNameOfOracleIdentifier(dataTypeFull);
+            CSharpType = Trns.ClassNameOfOracleIdentifier(dataTypeFull);
         }
 
         public override string ToString() { return DataTypeFull; }
