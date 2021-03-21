@@ -16,9 +16,10 @@
 //    along with this program. If not, see<http://www.gnu.org/licenses/>.
 //------------------------------------------------------------------------------
 
-namespace Odapter.CSharp
+namespace Odapter.CSharp.Logic
 
 open System
+open Odapter.CSharp
 
 [<AutoOpen>]
 module internal Coder =
@@ -29,19 +30,26 @@ module internal Coder =
     //    let splitNewLine str = (split NEWLINE str) |> Array.toSeq
     //    let joinNewLine strings = join NEWLINE strings
     //    codeable.Code |> splitNewLine |> Seq.map(fun s -> (if isNullOrWhiteSpace s then emptyString else codeTab tabCnt) + s) |> joinNewLine
-    let codeTabbed (object: Object, tabCnt) =
+    let codeTabbed tabCnt (object: Object) =
         let splitNewLine str = (split NEWLINE str) |> Array.toSeq
         let joinNewLine strings = join NEWLINE strings
         object.ToString() |> splitNewLine |> Seq.map(fun s -> (if isNullOrWhiteSpace s then emptyString else codeTab tabCnt) + s) |> joinNewLine
         // Before: abc NL def NL ghi NL ""
         // Split: abc def ghi ""
         // After: TABBEDabc NL TABBEDdef NL TABBEDghi NL ""
-    let codeTabbed1 object = codeTabbed (object, 1u)
-    let codeTabbed2 object = codeTabbed (object, 2u)
-    let codeTabbed3 object = codeTabbed (object, 3u)
-    let codeTabbed4 object = codeTabbed (object, 4u)
-    let codeTabbed5 object = codeTabbed (object, 5u)
-    let codeTabbed6 object = codeTabbed (object, 6u)
+
+    let codeTabbedLines(objects, tabCnt) =
+        let codeLinesPair (pc1: Object) (pc2: Object) = (pc1.ToString() + NEWLINE + pc2.ToString()) :> Object
+        objects |> Seq.map (fun x -> x :> Object)
+        |> Seq.reduce codeLinesPair
+        |> codeTabbed tabCnt
+
+    let codeTabbed1 object = codeTabbed 1u object
+    let codeTabbed2 object = codeTabbed 2u object
+    let codeTabbed3 object = codeTabbed 3u object
+    let codeTabbed4 object = codeTabbed 4u object
+    let codeTabbed5 object = codeTabbed 5u object
+    let codeTabbed6 object = codeTabbed 6u object
 
     let private codeDelimited delimiter (objects: Object seq) = join delimiter (objects |> Seq.map(fun x -> x.ToString()))
     /// Code a collection of codeables as space delimited

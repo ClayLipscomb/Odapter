@@ -10,6 +10,7 @@
     <Compile Include="WrappedString.fs" />
     <Compile Include="Casing.fs" />
     <Compile Include="CSharpLiteral.fs" />
+    <Compile Include="CSharpCoder.fs" />
     <Compile Include="CSharpDomain.fs" />
     <Compile Include="CSharpLogic.fs" />
     <Compile Include="Translate.fs" />

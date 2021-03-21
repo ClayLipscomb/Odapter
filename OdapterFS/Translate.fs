@@ -53,10 +53,10 @@ module internal Naming =
     let internal camelCaseOfOracleIdentifier = snakeCaseOfOracleIdentifier >> CamelCase.ofSnakeCase 
 
     let internal classNameOfOracleIdentifier = pascalCaseOfOracleIdentifier >> ClassName.ofPascalCase
-    let internal propertyNamePublicOfOracleIdentifier (identifier, identifierEntity) = 
+    let internal propertyNameOfOracleIdentifier (identifier, identifierEntity) = 
         let className = identifierEntity |> classNameOfOracleIdentifier
-        let propertyName = identifier |> pascalCaseOfOracleIdentifier |> PropertyNamePublic.ofPascalCase
-        if className.Value = propertyName.Value then PropertyNamePublic.doubleName propertyName else propertyName
+        let propertyName = identifier |> pascalCaseOfOracleIdentifier |> PropertyName.ofPascalCase
+        if className.Value = propertyName.Value then PropertyName.doubleName propertyName else propertyName
     let internal methodNameOfOracleIdentifier = pascalCaseOfOracleIdentifier >> MethodName.ofPascalCase
     let internal typeGenericNameOfOracleIdentifier = camelCaseOfOracleIdentifier >> TypeGenericName.ofCamelCase
     let internal parameterNameOfOracleIdentifier = camelCaseOfOracleIdentifier >> Keyword.escapeKeyword >> ParameterName.ofCamelCase 
@@ -67,7 +67,7 @@ module Api =
     let CamelCaseOfOracleIdentifier identifier = camelCaseOfOracleIdentifier identifier
 
     let ClassNameOfOracleIdentifier identifier = classNameOfOracleIdentifier identifier
-    let PropertyNamePublicOfOracleIdentifier (identifier, identifierEntity) = propertyNamePublicOfOracleIdentifier (identifier, identifierEntity)
+    let PropertyNameOfOracleIdentifier (identifier, identifierEntity) = propertyNameOfOracleIdentifier (identifier, identifierEntity)
     let MethodNameOfOracleIdentifier identifier = methodNameOfOracleIdentifier identifier
     let TypeGenericNameOfOracleIdentifier identifier = typeGenericNameOfOracleIdentifier identifier
     let ParameterNameOfOracleIdentifier identifier = parameterNameOfOracleIdentifier identifier

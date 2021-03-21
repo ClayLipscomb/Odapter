@@ -21,24 +21,20 @@ namespace Odapter.CSharp
 
 open System
 open Odapter.Casing;
+open Odapter.CSharp.Logic;
 
     type Undefined = exn
        
-    ///// A C# type that can be a translation target
-    [<NoComparison;NoEquality>]
+    /// A C# type that can be a translation target
     type ITypeTargetable = 
         /// Type can be turned to code
         abstract member Code : string
         /// Ensures type is not an explicitly nullable type (removes any suffix "?" in code)
         abstract member SansNullable : ITypeTargetable
-        //inherit ICodeable 
     /// A C# type that can be used to compose a more complex C# type
     type ITypeComposable = 
         inherit ITypeTargetable
     
-    //type ToCode = ICodeable -> string
-    type ToCodeTabbed = Object * uint32 -> string
-
     [<Struct>]
     type CSharpVersion = | FourZero with //| FiveZero
         member this.ToString = this |> UtilUnion.fromDuCaseToString
@@ -46,12 +42,12 @@ open Odapter.Casing;
     [<Struct>]
     type CodeFrag =
         | ReadResult | T_ | CommandType | StoredProcedure | BindByName | Rows | Count | CollectionType | Get | Set 
-        | GetOracle  | OracleCollectionType | PLSQLAssociativeArray | OracleDbType | ArrayBindSize
+        | GetOracle  | OracleCollectionType | PLSQLAssociativeArray | OracleDbType | ArrayBindSize | Value | Convert | To
         member this.Code = this |> UtilUnion.fromDuCaseToString
         override this.ToString() = this.Code
     [<Struct>]
     type CodeMethod =
-        | ExecuteNonQuery | Close | Dispose | Read | ToArray | GetDataReader | GetValue | GetOracleValue | SetPrecision | Parse
+        | ExecuteNonQuery | Close | Dispose | Read | ToArray | GetDataReader | GetValue | GetOracleValue | SetPrecision | Parse | IsDBNull
         member this.Code = this |> UtilUnion.fromDuCaseToString
         override this.ToString() = this.Code
     //[<Struct>] ?? using a struct causes a "CLR detected an invalid program" error
@@ -84,9 +80,9 @@ open Odapter.Casing;
         member this.Value = (this :> IWrappedString).Value
         interface ITypeComposable
     [<Struct>]
-    type PropertyNamePublic = internal PropertyNamePublic of PascalCase with
-        member this.Code = let (PropertyNamePublic pascalCase) = this in (pascalCase :> IWrappedString).Value
-        member this.Value = let (PropertyNamePublic pascalCase) = this in pascalCase
+    type PropertyName = internal PropertyName of PascalCase with
+        member this.Code = let (PropertyName pascalCase) = this in (pascalCase :> IWrappedString).Value
+        member this.Value = let (PropertyName pascalCase) = this in pascalCase
         override this.ToString() = this.Code
     [<Struct>]
     type MethodName = internal MethodName of PascalCase with
@@ -273,16 +269,35 @@ open Odapter.Casing;
             | TargetGenericName _ | TargetValue _ | TargetReference _ | TargetClassName _ | TargetCollectionGeneric _ | TargetArray _ | TargetNone _ -> this 
 
     [<Struct>]
-    type internal PropertyPublic = { PropertyName : PropertyNamePublic; PropertyType : TypeComposable }
+    type FieldProtected = { FieldName: FieldNameProtected; FieldType: TypeComposable } with
+        member this.Code = codeSpaced[|PROTECTED; this.FieldType; this.FieldName|] + SEMICOLON
+        override this.ToString() = this.Code
+
     [<Struct>]
-    type internal TypeInterface = { InterfaceName : InterfaceName; Properties : PropertyPublic seq }
+    type PropertyGetSet = | GetOnly | SetOnly | Both
+    [<Struct>]
+    type Property = { PropertyName: PropertyName; PropertyType: TypeComposable; ContainerType: TypeComposable option; 
+                        AccessModifier: AccessModifier option; GetSet: PropertyGetSet; BackingField: FieldProtected option;
+                        IsVirtual: bool; IsDataMember: bool; IsXmlElement: bool } with
+        member this.Code = 
+            (match this.AccessModifier with | Some am -> am.Code + SPACE | None _ -> emptyString)
+            + (match this.ContainerType with | Some ct -> ct.Code + PERIOD | None _ -> emptyString) + this.PropertyType.ToString() + SPACE
+            + codeSpaced[|this.PropertyName; @"{"; (match this.GetSet with | Both _ -> @"get; set;" | GetOnly _ -> @"get;" | SetOnly _ -> @"set;"); @"}"|]
+        override this.ToString() = this.Code
+
+    [<Struct>]
+    type AccessModifierInterface = | PUBLIC | INTERNAL with
+        member this.Code = this |> UtilUnion.fromDuCaseToString |> toLower
+        override this.ToString() = this.Code
+    [<Struct>]
+    type TypeInterface = { AccessModifier: AccessModifierInterface; InterfaceName: InterfaceName; Properties: Property seq }
+
+    [<Struct>]
+    type internal Generic = { GenericName: TypeGenericName; ImplementedInterfaceName: InterfaceName; IsClassConstraint: bool; HasConstructorConstraint: bool }
     [<Struct>]
     type internal TypeClassDto = { 
-        ClassName : ClassName; 
-        Properties : PropertyPublic seq
-        UseDataMemberAttribute : bool; 
-        UseXmlElementAttribute : bool
-        ExtendedClassName : ClassName; 
-        ExtendedClassNameNamespace : Namespace; 
-        ImplementedInterfaceName : InterfaceName
-}
+        AccessModifier: AccessModifier; ClassName: ClassName; 
+        Properties: Property seq; IsAutoImplementedProperties: bool; Fields: FieldProtected seq option;
+        IsPartial: bool; IsDataContract: bool; IsSerializable: bool
+        ExtendedClassName: ClassName; ExtendedClassNameNamespace: Namespace; ImplementedInterfaceName: InterfaceName
+    }

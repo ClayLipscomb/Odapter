@@ -18,6 +18,7 @@
 
 namespace Odapter.CSharp
 
+open System;
 [<AutoOpen>]
 module Attribute =
     let [<Literal>] SERIALIZABLE = @"[Serializable()]"
@@ -29,7 +30,7 @@ module Literal =
     let [<Literal>] COLON = @":"
     let [<Literal>] internal SEMICOLON = @";"
     let [<Literal>] internal SPACE = @" "
-    let [<Literal>] internal NEWLINE = @"\r\n"
+    let internal NEWLINE = Environment.NewLine// @"\r\n"
 
     // code constants
     let [<Literal>] internal BRACKETS = @"[]"
@@ -38,3 +39,4 @@ module Literal =
     let [<Literal>] internal GT = @">"
     let [<Literal>] internal CURLY_OPEN = @"{"
     let [<Literal>] internal CURLY_CLOSE = @"}"
+    let [<Literal>] internal EQUALS = @"="

@@ -66,8 +66,8 @@ module CSharpTest =
         let arrayObjects : obj[] = [|kw ; typeValue; typeReference; typeValueNullale; className; typeGeneric|] 
         let listObjects : obj list = [kw ; typeValue; typeReference; typeValueNullale; className; typeGeneric] 
         let iTypeTargetableList : ITypeTargetable list = [typeValue; typeReference; typeValueNullale] 
-        let someCode = toCodeSpaced [|kw ; typeValue; typeReference; typeValueNullale; className; typeGeneric|] 
-        let someCode2 = toCodeCommaSpaced [kw ; typeValue; typeReference; typeValueNullale; className; typeGeneric] 
+        let someCode = codeSpaced [|kw ; typeValue; typeReference; typeValueNullale; className; typeGeneric|] 
+        let someCode2 = codeCommaSpaced [kw ; typeValue; typeReference; typeValueNullale; className; typeGeneric] 
         //let someCode3 = toCodeSpaced [| typeReference ; typeValueNullale|]
 
         let x = ValueNullable TypeValue.Byte

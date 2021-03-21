@@ -164,17 +164,6 @@ namespace Odapter {
         public static string GenerateBaseViewClassName(string schema) {
             return String.IsNullOrEmpty(schema) ? String.Empty : $"{ Trns.PascalCaseOfOracleIdentifier(schema).Value}View";
         }
-
-        //private string GetEntityNamespace<TEntity>() {
-        //    if (typeof(TEntity).Equals(typeof(ObjectType))) {
-        //        return ObjectTypeNamespace;
-        //    } else if (typeof(TEntity).Equals(typeof(Table))) {
-        //        return TableNamespace;
-        //    } else if (typeof(TEntity).Equals(typeof(View))) {
-        //        return ViewNamespace;
-        //    }
-        //    return "Undefined_namespace_for_type_" + typeof(TEntity).Name;
-        //}
         #endregion
 
         #region Package Method Generation
@@ -678,7 +667,6 @@ namespace Odapter {
         private string GenerateRecordTypeReadResultMethod(IPackageRecord rec) {
             var className = rec.Translater.CSharpClassName;
 
-
             StringBuilder classText = new StringBuilder("");
             var interfaceName = CSL.InterfaceNameOfClassName(className);
             var methodName = CSL.MethodNameReadResult(interfaceName);
@@ -695,23 +683,14 @@ namespace Odapter {
             classText.AppendLine(Tab(3) + returnType + " " + LOCAL_VAR_NAME_RETURN + " = new " + CSL.TypeCollectionGeneric(CS.TypeCollection.List, genericTypeParam) + "();");
 
             classText.AppendLine(Tab(3) + "if (" + paramNameOracleReader + " != " + CS.Keyword.NULL + " && " + paramNameOracleReader + ".HasRows) {");
-            classText.AppendLine(Tab(4) + "while (" + paramNameOracleReader + ".Read()) {"); 
-            classText.AppendLine(Tab(5) + genericTypeParam + " obj = new " + genericTypeParam + "();");
+            classText.AppendLine(Tab(4) + "while (" + paramNameOracleReader + ".Read()) {");
+            var objVarName = @"obj";
+            classText.AppendLine(Tab(5) + genericTypeParam + " " + objVarName + " = new " + genericTypeParam + "();");
             foreach (IField f in rec.Attributes) { // loop through all fields
-                classText.Append(Tab(5) + "if (!" + paramNameOracleReader + ".IsDBNull(" + f.MapPosition + ")) " + "obj." + Trns.PropertyNamePublicOfOracleIdentifier(f.AttrName, f.EntityName) + " = "
-                    + CSL.CodeReadResultAssignmentValue(f.Translater.CSharpType, f.Translater.CSharpOdpNetSafeType, paramNameOracleReader, f.MapPosition));
-                //if (f.Translater.GetCSharpType(true).Equals(CSharp.DECIMAL)) {
-                //    classText.Append("(Decimal?)OracleDecimal.SetPrecision(" + paramNameOracleReader + ".GetOracleDecimal(" + f.MapPosition.ToString() + "), 28)");
-                //} else if (CSharp.IsOdpNetType(f.Translater.GetCSharpType())) {
-                //    classText.Append("(" + f.Translater.GetCSharpType() + ")" + paramNameOracleReader + ".GetOracleValue(" + f.MapPosition.ToString() + ")"); // ODP.NET
-                //} else if ((new List<string> { Orcl.BLOB, Orcl.CLOB, Orcl.NCLOB }).Contains(f.DataType)) {
-                //    classText.Append(paramNameOracleReader + "." + CSharp.GET_ORACLE + CaseConverter.ConvertToCapitalized(f.DataType.Substring(f.DataType.Length - 4, 4)) + "(" + f.MapPosition.ToString() + ").Value");
-                //} else if ((new List<string> { CSharp.DATE_TIME_OFFSET }).Contains(f.Translater.GetCSharpType(true))) {
-                //    classText.Append(f.Translater.GetCSharpType(true) + ".Parse" + "(" + paramNameOracleReader + ".GetValue(" + f.MapPosition.ToString() + ").ToString())"); // primitive
-                //} else {
-                //    classText.Append("Convert.To" + f.Translater.GetCSharpType(true) + "(" + paramNameOracleReader + ".GetValue(" + f.MapPosition.ToString() + "))"); // primitive
-                //}
-                classText.AppendLine(";");
+                classText.Append(Tab(5)
+                    + CSL.CodeReadResultAssignment(f.Translater.CSharpType, f.Translater.CSharpOdpNetSafeType, paramNameOracleReader, f.MapPosition,
+                        objVarName, Trns.PropertyNameOfOracleIdentifier(f.AttrName, f.EntityName)));
+                classText.AppendLine();
             }
             classText.AppendLine(Tab(5) + LOCAL_VAR_NAME_RETURN + ".Add(obj);");
             classText.AppendLine(Tab(5) + "if (" + PARAM_NAME_MAXIMUM_ROWS_CURSOR + " != " + CS.Keyword.NULL + " && " + LOCAL_VAR_NAME_RETURN + ".Count >= " + PARAM_NAME_MAXIMUM_ROWS_CURSOR + ") break;");
@@ -939,6 +918,7 @@ namespace Odapter {
                             // create interface for record class
                             classText.AppendLine();
                             classText.Append(GenerateEntityInterface(rec, 1));
+                            classText.AppendLine();
                         }
 
                         // create DTO 
@@ -1024,8 +1004,8 @@ namespace Odapter {
 
             foreach (IEntityAttribute attr in entity.Attributes) { // generate all attributes
                 var nonPublicMemberName = Trns.FieldNameProtectedOfOracleIdentifier(attr.AttrName).Code;
-                var cSharpType = attr.Translater.CSharpType.ToString();
 
+                var cSharpType = attr.Translater.CSharpType.ToString();
                 if (attr.AttrTypeOwner != null && !attr.AttrTypeOwner.Equals(entity.Owner) && !attr.AttrTypeOwner.Equals("SYS")) {
                     cSharpType = GenerateNamespaceObjectType(_baseNamespace, attr.AttrTypeOwner, GetFilterValueIfUsedInNaming()) + "." + cSharpType;
                 }
@@ -1037,9 +1017,9 @@ namespace Odapter {
                 if (isXmlElement) classText.Append("[XmlElement(Order=" + attr.Position.ToString() + ", IsNullable=true)]");
                 if (isDataContract || isXmlElement) classText.AppendLine();
 
-                classText.Append(Tab(tabIndentCount + 1) + "public virtual "
-                    + (attr.ContainerClassName == null ? "" : attr.ContainerClassName + ".")
-                    + cSharpType + " " + Trns.PropertyNamePublicOfOracleIdentifier(attr.AttrName, attr.EntityName)
+                classText.Append(Tab(tabIndentCount + 1) 
+                    + CSL.CodeSpaced(new object[]{ CS.Keyword.PUBLIC, CS.Keyword.VIRTUAL, (attr.ContainerClassName == null ? "" : attr.ContainerClassName + ".") })
+                    + cSharpType + " " + Trns.PropertyNameOfOracleIdentifier(attr.AttrName, attr.EntityName)
                     + (Parameter.Instance.IsUseAutoImplementedProperties 
                         ? " { get; set; }"
                         : " { get { return this." + nonPublicMemberName + "; } set { this." + nonPublicMemberName + " = value; } }"));
@@ -1058,20 +1038,12 @@ namespace Odapter {
         /// <param name="entity"></param>
         /// <param name="tabIndentCount">number of tabs to indent</param>
         /// <returns></returns>
-        private string GenerateEntityInterface(IEntity entity, int tabIndentCount) {
-
-            var interfaceName = CSL.InterfaceNameOfClassName(entity.Translater.CSharpClassName);
-
-            StringBuilder classText = new StringBuilder("");
-            classText.AppendLine(Tab(tabIndentCount + 1) + entity.Translater.CSharpAccessModifier + " interface " + interfaceName + " {"); // start record interface
-            foreach (IEntityAttribute attr in entity.Attributes) { // loop through all fields
-                var cSharpType = attr.Translater.CSharpType;
-                classText.AppendLine(Tab(tabIndentCount + 2) + (attr.ContainerClassName == null ? "" : attr.ContainerClassName + ".") + cSharpType 
-                    + " " + Trns.PropertyNamePublicOfOracleIdentifier(attr.AttrName, attr.EntityName)
-                    + " { set; }");
-            }
-            classText.AppendLine(Tab(tabIndentCount + 1) + "} // " + interfaceName); // end record interface
-            return classText.ToString();
+        private string GenerateEntityInterface(IEntity entity, UInt32 tabIndentCount) {
+            var typeInterface = CSL.TypeInterface(
+                CS.AccessModifierInterface.PUBLIC,
+                CSL.InterfaceNameOfClassName(entity.Translater.CSharpClassName),
+                entity.Attributes.Select(a => CSL.PropertyInterface(Trns.PropertyNameOfOracleIdentifier(a.AttrName, a.EntityName), a.Translater.CSharpType, CSL.TypeNone, CS.PropertyGetSet.SetOnly)));
+            return CSL.CodeInterface(tabIndentCount + 1, typeInterface);
         }
 
         private void WriteNonPackagedEntityClasses<I_Entity>(List<IEntity> entities, string entityNamespace, string ancestorClassName, 
