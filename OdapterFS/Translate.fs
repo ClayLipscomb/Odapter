@@ -58,7 +58,7 @@ module internal Naming =
         let propertyName = identifier |> pascalCaseOfOracleIdentifier |> PropertyName.ofPascalCase
         if className.Value = propertyName.Value then PropertyName.doubleName propertyName else propertyName
     let internal methodNameOfOracleIdentifier = pascalCaseOfOracleIdentifier >> MethodName.ofPascalCase
-    let internal typeGenericNameOfOracleIdentifier = camelCaseOfOracleIdentifier >> TypeGenericName.ofCamelCase
+    let internal typeGenericNameOfOracleIdentifier = pascalCaseOfOracleIdentifier >> TypeGenericName.ofPascalCase
     let internal parameterNameOfOracleIdentifier = camelCaseOfOracleIdentifier >> Keyword.escapeKeyword >> ParameterName.ofCamelCase 
     let internal fieldNameProtectedOfOracleIdentifier = camelCaseOfOracleIdentifier >> Keyword.escapeKeyword  >> FieldNameProtected.ofCamelCase
 

@@ -72,14 +72,13 @@ namespace Odapter {
 
         #region Nested Classes
         private class GenericType {
-            internal string PackageTypeName { get; private set; }
-            internal CS.ITypeTargetable TypeGenericName { get; private set; }
-            internal CS.InterfaceName InterfaceName { get; private set; }
+            [Obsolete]
+            internal string InterfaceClassNameCode { get; private set; } 
+            internal CS.TypeGenericParameter TypeGeneric { get; private set; }
             internal bool Untyped { get; private set; }
-            internal GenericType(string packageTypeName, CS.ITypeTargetable typeGenericName, bool untyped) {
-                PackageTypeName = packageTypeName;
-                TypeGenericName = typeGenericName;
-                InterfaceName = CSL.InterfaceNameOfTypeGenericName(typeGenericName);
+            internal GenericType(string interfaceClassNameCode, CS.TypeGenericParameter typeGeneric, bool untyped) {
+                InterfaceClassNameCode = interfaceClassNameCode;    // transitional
+                TypeGeneric = typeGeneric;
                 Untyped = untyped;
             }
         }
@@ -184,15 +183,16 @@ namespace Odapter {
             foreach (IArgument arg in proc.Arguments) {
                 if (arg.DataLevel != 0) continue; // all signature arguments are initially found at 0 data level
                 if (arg.OrclType is OrclRefCursor && arg.InOut.Equals(Orcl.OUT)) { // only out cursor args use generics
-                    var typeGenericName = arg.Translater.CSharpSubType;
-                    string packageTypeName = arg.NextArgument != null && arg.NextArgument.OrclType is OrclRecord
+                    if (arg.Translater.CSharpSubType is CS.TypeGenericParameter == false) continue;
+                    var typeGeneric = (CS.TypeGenericParameter)arg.Translater.CSharpSubType;
+                    var packageTypeName = arg.NextArgument != null && arg.NextArgument.OrclType is OrclRecord
                            && !Parameter.Instance.IsUsingSchemaFilter
                            && !arg.PackageName.Equals(arg.NextArgument.TypeName)       // record not defined in this package
                            && !pack.ShouldGenerateRecordFromArgument(arg.NextArgument) // record not *generated* in this package adapter
                         ? Trns.ClassNameOfOracleIdentifier(arg.NextArgument.TypeName).Code
                         : null;
-                    if (!genericTypes.Exists(a => a.TypeGenericName.Equals(typeGenericName)))
-                        genericTypes.Add(new GenericType(packageTypeName, typeGenericName, arg.IsUntypedCursor));
+                    if (!genericTypes.Exists(a => a.TypeGeneric.Equals(typeGeneric)))
+                        genericTypes.Add(new GenericType(packageTypeName, typeGeneric, arg.IsUntypedCursor));
                 }
             }
             return genericTypes;
@@ -240,7 +240,6 @@ namespace Odapter {
                             ? ""
                             : arg.Translater.CSharpType + " ")
                         + Trns.ParameterNameOfOracleIdentifier(arg.ArgumentName)
-                        //+ TranslaterName.Convert(arg)
                         + (optionalParamNamesInCSharp.Contains(arg.ArgumentName) ? " = null" : "") // an optional C# 4.0 param defaulted to null
                         );
                 }
@@ -285,17 +284,19 @@ namespace Odapter {
         /// </summary>
         /// <param name="genericTypes"></param>
         /// <returns></returns>
-        private string GenerateMethodConstraintsCode(List<GenericType> genericTypes, bool dynamicMapping) {
+        private string GenerateMethodConstraintsCode(List<GenericType> genericTypes, bool forceDynamicMapping) {
             StringBuilder sb = new StringBuilder("");
             foreach (GenericType gt in genericTypes) {
                 sb.AppendLine();
-                sb.Append(Tab(4) + "where " + gt.TypeGenericName + " : " + CS.Keyword.CLASS
-                    + (dynamicMapping || gt.Untyped 
-                        ? "" 
-                        : ", " 
-                            + (gt.PackageTypeName == null ? "" : gt.PackageTypeName + ".")
-                            + gt.InterfaceName) 
-                    + ", new()");
+                if (gt.Untyped)
+                    sb.Append(Tab(4) + gt.TypeGeneric.Constraint.Code);
+                else if (forceDynamicMapping)
+                    sb.Append(Tab(4) + CSL.CodeSpaced(new Object[] { CS.Keyword.WHERE, gt.TypeGeneric, ":", (CS.Keyword.CLASS + ",")
+                        , CS.Keyword.NEW }) + @"()");
+                else
+                    sb.Append(Tab(4) + CSL.CodeSpaced(new Object[] { CS.Keyword.WHERE, gt.TypeGeneric, ":", (CS.Keyword.CLASS + ","),
+                        ((gt.InterfaceClassNameCode == null ? "" : gt.InterfaceClassNameCode + ".") + gt.TypeGeneric.CodeInterface + ",")
+                        , CS.Keyword.NEW }) + @"()");
             }
             return sb.ToString();
         }
@@ -307,8 +308,8 @@ namespace Odapter {
             string returnListSubTypeFullyQualifiedPackageTypeName = null;
             var subType = CSL.GetSubType(cSharpArgType);
             if (genericTypesUsed.Count > 0) {
-                var genericType = genericTypesUsed.Find(g => g.TypeGenericName.Equals(subType) && g.PackageTypeName != null);
-                if (genericType != null) returnListSubTypeFullyQualifiedPackageTypeName = genericType.PackageTypeName;
+                var genericType = genericTypesUsed.Find(g => g.TypeGeneric.Equals(subType) && g.InterfaceClassNameCode != null);
+                if (genericType != null) returnListSubTypeFullyQualifiedPackageTypeName = genericType.InterfaceClassNameCode;
             }
 
             StringBuilder sb = new StringBuilder("");
@@ -325,9 +326,9 @@ namespace Odapter {
                                     + ", " + PARAM_NAME_MAXIMUM_ROWS_CURSOR // max rows to read
                     + ");");
             } else {
-                var genericType = genericTypesUsed.Find(g => g.TypeGenericName.Equals(subType));
+                var genericType = genericTypesUsed.Find(g => g.TypeGeneric.Equals(subType));
                 sb.AppendLine((returnListSubTypeFullyQualifiedPackageTypeName == null ? String.Empty : returnListSubTypeFullyQualifiedPackageTypeName + ".Instance.")
-                    + CS.CodeFrag.ReadResult + genericType?.InterfaceName 
+                    + CS.CodeFrag.ReadResult + genericType?.TypeGeneric.CodeInterface
                     + "<" + subType + ">"
                     + "(" + LOCAL_VAR_NAME_READER
                     + ", " + PARAM_NAME_MAXIMUM_ROWS_CURSOR // max rows to read
@@ -525,7 +526,7 @@ namespace Odapter {
                 methodText.AppendLine();
                 methodText.AppendLine(Tab(2) + "// **PROC IGNORED** - " + ignoreReason);
                 methodText.Append(Tab(2) + CSL.CodeSpaced(new object[]{ @"//", CS.AccessModifier.PUBLIC, returnType, methodName }));
-                if (genericTypesUsed.Count > 0) methodText.Append("<" + String.Join(", ", genericTypesUsed.Select(gt => gt.TypeGenericName).ToList()) + ">");
+                if (genericTypesUsed.Count > 0) methodText.Append("<" + String.Join(", ", genericTypesUsed.Select(gt => gt.TypeGeneric.GenericName).ToList()) + ">");
                 methodText.Append("(" + GenerateMethodArgumentsCommaDelimited(proc.Arguments, genericTypesUsed.Count > 0, forceDynamicMapping, true, false) + ")");
                 return methodText.ToString();
             }
@@ -535,7 +536,7 @@ namespace Odapter {
             methodText.Append(Tab(2) + CS.AccessModifier.PUBLIC + " " + returnType + " " + methodName.Code);
 
             // if the method is using generics for cursors, add all generic lists to sig
-            if (genericTypesUsed.Count > 0) methodText.Append("<" + String.Join(", ", genericTypesUsed.Select(gt => gt.TypeGenericName).ToList())  + ">");
+            if (genericTypesUsed.Count > 0) methodText.Append("<" + String.Join(", ", genericTypesUsed.Select(gt => gt.TypeGeneric.GenericName).ToList())  + ">");
 
             // arguments
             methodText.Append("(" + GenerateMethodArgumentsCommaDelimited(proc.Arguments, genericTypesUsed.Count > 0, forceDynamicMapping, false, false) + ")");
@@ -665,27 +666,25 @@ namespace Odapter {
 
         #region Package Record Type Generation
         private string GenerateRecordTypeReadResultMethod(IPackageRecord rec) {
-            var className = rec.Translater.CSharpClassName;
-
-            StringBuilder classText = new StringBuilder("");
-            var interfaceName = CSL.InterfaceNameOfClassName(className);
+            StringBuilder classText = new StringBuilder(String.Empty);
+            var interfaceName = CSL.InterfaceNameOfClassName(rec.Translater.CSharpClassName);
+            var genericTypeParam = CSL.TypeGenericParameterOfInterface(interfaceName);
             var methodName = CSL.MethodNameReadResult(interfaceName);
-            var genericTypeParam = CSL.TypeGenericNameOfClassName(className);
             string paramNameOracleReader = "rdr"; // Oracle clash not possible
             var returnType = CSL.TypeCollectionGeneric(Parameter.Instance.TypeTargetForOracleRefCursor, genericTypeParam);
 
             // signature
-            classText.AppendLine(Tab(2) + CSL.CodeSpaced(new object[]{CS.AccessModifier.PUBLIC, returnType, methodName }) + "<" + genericTypeParam + ">"
-                + "(OracleDataReader " + paramNameOracleReader + "" 
+            classText.AppendLine(Tab(2) + CSL.CodeSpaced(new object[] { CS.AccessModifier.PUBLIC, returnType, methodName }) + "<" + genericTypeParam.GenericName + ">"
+                + "(OracleDataReader " + paramNameOracleReader + ""
                 + ", " + CS.TypeValue.UInt32 + "? " + PARAM_NAME_MAXIMUM_ROWS_CURSOR + " = " + CS.Keyword.NULL + ")");
-            classText.AppendLine(Tab(4) + "where " + genericTypeParam + " : class, " + interfaceName + ", new()  " + " {");
+            classText.AppendLine(Tab(4) + CSL.CodeSpaced(new Object[] { genericTypeParam.Constraint, "{" }) );
 
             classText.AppendLine(Tab(3) + returnType + " " + LOCAL_VAR_NAME_RETURN + " = new " + CSL.TypeCollectionGeneric(CS.TypeCollection.List, genericTypeParam) + "();");
 
             classText.AppendLine(Tab(3) + "if (" + paramNameOracleReader + " != " + CS.Keyword.NULL + " && " + paramNameOracleReader + ".HasRows) {");
             classText.AppendLine(Tab(4) + "while (" + paramNameOracleReader + ".Read()) {");
             var objVarName = @"obj";
-            classText.AppendLine(Tab(5) + genericTypeParam + " " + objVarName + " = new " + genericTypeParam + "();");
+            classText.AppendLine(Tab(5) + CSL.CodeSpaced(new Object[] { genericTypeParam.GenericName, objVarName, "=", CS.Keyword.NEW, genericTypeParam.GenericName } ) + "();");
             foreach (IField f in rec.Attributes) { // loop through all fields
                 classText.Append(Tab(5)
                     + CSL.CodeReadResultAssignment(f.Translater.CSharpType, f.Translater.CSharpOdpNetSafeType, paramNameOracleReader, f.MapPosition,
@@ -1018,8 +1017,8 @@ namespace Odapter {
                 if (isDataContract || isXmlElement) classText.AppendLine();
 
                 classText.Append(Tab(tabIndentCount + 1) 
-                    + CSL.CodeSpaced(new object[]{ CS.Keyword.PUBLIC, CS.Keyword.VIRTUAL, (attr.ContainerClassName == null ? "" : attr.ContainerClassName + ".") })
-                    + cSharpType + " " + Trns.PropertyNameOfOracleIdentifier(attr.AttrName, attr.EntityName)
+                    + CSL.CodeSpaced(new object[] { CS.Keyword.PUBLIC, CS.Keyword.VIRTUAL, (attr.ContainerClassName == null ? String.Empty : attr.ContainerClassName + "."), cSharpType, 
+                                    Trns.PropertyNameOfOracleIdentifier(attr.AttrName, attr.EntityName) })
                     + (Parameter.Instance.IsUseAutoImplementedProperties 
                         ? " { get; set; }"
                         : " { get { return this." + nonPublicMemberName + "; } set { this." + nonPublicMemberName + " = value; } }"));

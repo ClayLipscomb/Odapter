@@ -51,7 +51,7 @@ module internal Coder =
     let codeTabbed5 object = codeTabbed 5u object
     let codeTabbed6 object = codeTabbed 6u object
 
-    let private codeDelimited delimiter (objects: Object seq) = join delimiter (objects |> Seq.map(fun x -> x.ToString()))
+    let private codeDelimited delimiter (objects: Object seq) = join delimiter (objects |> Seq.filter(fun x -> x.ToString() |> isNullOrWhiteSpace |> not) |> Seq.map(fun x -> x.ToString() ) )
     /// Code a collection of codeables as space delimited
     let codeAdjacent (objects: Object seq) = codeDelimited emptyString objects
     /// Code a collection of codeables as space delimited

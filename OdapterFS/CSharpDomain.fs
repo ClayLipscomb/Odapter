@@ -41,8 +41,8 @@ open Odapter.CSharp.Logic;
 
     [<Struct>]
     type CodeFrag =
-        | ReadResult | T_ | CommandType | StoredProcedure | BindByName | Rows | Count | CollectionType | Get | Set 
-        | GetOracle  | OracleCollectionType | PLSQLAssociativeArray | OracleDbType | ArrayBindSize | Value | Convert | To
+        | ReadResult | CommandType | StoredProcedure | BindByName | Rows | Count | CollectionType | Get | Set 
+        | GetOracle  | OracleCollectionType | PLSQLAssociativeArray | OracleDbType | ArrayBindSize | Value | Convert | To | Oracle
         member this.Code = this |> UtilUnion.fromDuCaseToString
         override this.ToString() = this.Code
     [<Struct>]
@@ -69,16 +69,10 @@ open Odapter.CSharp.Logic;
         member this.Code = let (Namespace pascalCase) = this in (pascalCase :> IWrappedString).Value
         override this.ToString() = this.Code
     [<Struct>]
-    type TypeGenericName = internal GenericName of string with // change to PascalCase in future
-        member this.Code = Literal.GENERIC_PREFIX + (this :> IWrappedString).Value
+    type TypeGenericName = internal GenericName of PascalCase with 
+        member this.Code = let (GenericName pascalCase) = this in Literal.GENERIC_PREFIX + (pascalCase :> IWrappedString).Value
         override this.ToString() = this.Code
-        interface IWrappedString with
-            member this.Value = let (GenericName s) = this in s
-        interface ITypeTargetable with
-            member this.Code = this.Code
-            member this.SansNullable = this :> ITypeTargetable
-        member this.Value = (this :> IWrappedString).Value
-        interface ITypeComposable
+        member this.Value = let (GenericName pascalCase) = this in pascalCase
     [<Struct>]
     type PropertyName = internal PropertyName of PascalCase with
         member this.Code = let (PropertyName pascalCase) = this in (pascalCase :> IWrappedString).Value
@@ -100,11 +94,31 @@ open Odapter.CSharp.Logic;
     [<Struct>]
     type InterfaceName = internal InterfaceName of PascalCase with
         member this.Code = let (InterfaceName pascalCase) = this in (pascalCase :> IWrappedString).Value
+        member this.Value = let (InterfaceName pascalCase) = this in pascalCase
         override this.ToString() = this.Code
     [<Struct>]
     type ClassName = internal ClassName of PascalCase with
         member this.Code = let (ClassName pascalCase) = this in (pascalCase :> IWrappedString).Value
         member this.Value = let (ClassName pascalCase) = this in pascalCase
+        override this.ToString() = this.Code
+        interface ITypeTargetable with
+            member this.Code = this.Code
+            member this.SansNullable = this :> ITypeTargetable
+        interface ITypeComposable
+
+    [<Struct>]
+    type TypeGenericParameterConstraint = { GenericName: TypeGenericName; InterfaceName: InterfaceName option; IsClass: bool; HasConstructor: bool } with
+        member this.Code = // Ex: where TypeITTableNumberDec : class, ITTableNumberDec, new()
+            codeSpaced [ WHERE ; this.GenericName ; COLON ] + SPACE
+            + codeCommaSpaced [ (if this.IsClass then CLASS.Code else emptyString)
+                                ; (match this.InterfaceName with | Some i -> i.Code | None -> emptyString)
+                                ; (if this.HasConstructor then NEW.Code + "()" else emptyString) ]
+        override this.ToString() = this.Code
+
+    [<Struct>]
+    type TypeGenericParameter = { GenericName: TypeGenericName; Constraint: TypeGenericParameterConstraint } with
+        member this.Code = this.GenericName.Code 
+        [<Obsolete>] member this.CodeInterface = match this.Constraint.InterfaceName with | Some i -> i.Code | None -> emptyString 
         override this.ToString() = this.Code
         interface ITypeTargetable with
             member this.Code = this.Code
@@ -182,7 +196,7 @@ open Odapter.CSharp.Logic;
         member this.GetTypeCollection with get() = this.TypeCollection 
         member this.GetSubType with get() = 
             match this.SubType with
-            | ComposableGeneric t           -> t :> ITypeTargetable
+            | ComposableGenericParameter t  -> t :> ITypeTargetable
             | ComposableValueNullable t     -> t :> ITypeTargetable
             | ComposableValue t             -> t :> ITypeTargetable
             | ComposableReference t         -> t :> ITypeTargetable
@@ -200,7 +214,7 @@ open Odapter.CSharp.Logic;
     /// Type used to compose other types
     and TypeComposable = 
         internal 
-        | ComposableGeneric of TypeGenericName:TypeGenericName
+        | ComposableGenericParameter of TypeGenericParameter:TypeGenericParameter
         | ComposableReference of TypeReference:TypeReference
         | ComposableValue of TypeValue:TypeValue
         | ComposableValueNullable of TypeValueNullable:TypeValueNullable
@@ -209,7 +223,7 @@ open Odapter.CSharp.Logic;
         | ComposableCollectionGeneric of TypeCollectionGeneric:TypeCollectionGeneric
         member this.Code = 
             match this with
-            | ComposableGeneric t           -> t.Code
+            | ComposableGenericParameter t  -> t.Code
             | ComposableValueNullable t     -> t.Code
             | ComposableValue t             -> t.Code
             | ComposableReference t         -> t.Code
@@ -219,7 +233,8 @@ open Odapter.CSharp.Logic;
         override this.ToString() = this.Code
         member this.AsITypeComposable =
             match this with
-            | ComposableGeneric t           -> t :> ITypeComposable
+            | ComposableGenericParameter t  -> t :> ITypeComposable
+            ///| ComposableGeneric t           -> t :> ITypeComposable
             | ComposableValueNullable t     -> t :> ITypeComposable
             | ComposableValue t             -> t :> ITypeComposable
             | ComposableReference t         -> t :> ITypeComposable
@@ -229,7 +244,7 @@ open Odapter.CSharp.Logic;
         member this.ValueNullableToValue = 
             match this with
             | ComposableValueNullable t -> ComposableValue t.TypeValue
-            | ComposableGeneric _ | ComposableValue _ | ComposableReference _ | ComposableClassName _ | ComposableArray _ | ComposableCollectionGeneric _ -> this
+            | ComposableGenericParameter _ | ComposableValue _ | ComposableReference _ | ComposableClassName _ | ComposableArray _ | ComposableCollectionGeneric _ -> this
 
     [<Struct>]
     type TypeTarget = 
@@ -237,7 +252,7 @@ open Odapter.CSharp.Logic;
         | TargetValueNullable of TypeValueNullable:TypeValueNullable
         | TargetValue of TypeValue:TypeValue
         | TargetReference of TypeReference:TypeReference
-        | TargetGenericName of TypeGenericName:TypeGenericName
+        | TargetGenericParameter of TypeGenericParameter:TypeGenericParameter
         | TargetClassName of ClassName:ClassName
         | TargetCollectionGeneric of TypeCollectionGeneric:TypeCollectionGeneric
         | TargetArray of TypeArray:TypeArray
@@ -247,7 +262,7 @@ open Odapter.CSharp.Logic;
             | TargetValueNullable t     -> t :> ITypeTargetable
             | TargetValue t             -> t :> ITypeTargetable
             | TargetReference t         -> t :> ITypeTargetable
-            | TargetGenericName t       -> t :> ITypeTargetable
+            | TargetGenericParameter t  -> t :> ITypeTargetable
             | TargetClassName t         -> t :> ITypeTargetable
             | TargetCollectionGeneric t -> t :> ITypeTargetable
             | TargetArray t             -> t :> ITypeTargetable
@@ -257,7 +272,7 @@ open Odapter.CSharp.Logic;
             | TargetValueNullable t     -> t.Code
             | TargetValue t             -> t.Code
             | TargetReference t         -> t.Code
-            | TargetGenericName t       -> t.Code
+            | TargetGenericParameter t  -> t.Code
             | TargetClassName t         -> t.Code
             | TargetCollectionGeneric t -> t.Code
             | TargetArray t             -> t.Code
@@ -266,7 +281,7 @@ open Odapter.CSharp.Logic;
         member this.SansNullable =
             match this with
             | TargetValueNullable t -> t.TypeValue |> TargetValue
-            | TargetGenericName _ | TargetValue _ | TargetReference _ | TargetClassName _ | TargetCollectionGeneric _ | TargetArray _ | TargetNone _ -> this 
+            | TargetGenericParameter _ | TargetValue _ | TargetReference _ | TargetClassName _ | TargetCollectionGeneric _ | TargetArray _ | TargetNone _ -> this 
 
     [<Struct>]
     type FieldProtected = { FieldName: FieldNameProtected; FieldType: TypeComposable } with
@@ -292,8 +307,6 @@ open Odapter.CSharp.Logic;
     [<Struct>]
     type TypeInterface = { AccessModifier: AccessModifierInterface; InterfaceName: InterfaceName; Properties: Property seq }
 
-    [<Struct>]
-    type internal Generic = { GenericName: TypeGenericName; ImplementedInterfaceName: InterfaceName; IsClassConstraint: bool; HasConstructorConstraint: bool }
     [<Struct>]
     type internal TypeClassDto = { 
         AccessModifier: AccessModifier; ClassName: ClassName; 

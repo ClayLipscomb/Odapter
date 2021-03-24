@@ -25,7 +25,7 @@ module Attribute =
     let [<Literal>] DATA_CONTRACT = @"DataContract"
 [<AutoOpen>]
 module Literal =
-    let [<Literal>] internal GENERIC_PREFIX = @"T_"
+    let [<Literal>] internal GENERIC_PREFIX = @"Type"
     let [<Literal>] internal PERIOD = @"."
     let [<Literal>] COLON = @":"
     let [<Literal>] internal SEMICOLON = @";"
