@@ -46,6 +46,17 @@ CREATE OR REPLACE PACKAGE ODPT.fltr_pkg_rec_used AS
 			col_clob odpt_table_big.col_clob%TYPE,
 			col_nclob odpt_table_big.col_nclob%TYPE,
 
+			-- C# keywords
+			abstract							odpt_table_big.abstract%TYPE,
+			base								odpt_table_big.base%TYPE,
+			void								odpt_table_big.void%TYPE,
+			class								odpt_table_big.class%TYPE,
+			namespace 							odpt_table_big.namespace%TYPE,
+			readonly 							odpt_table_big.readonly%TYPE,
+			partial  							odpt_table_big.partial%TYPE,
+			const   							odpt_table_big.const%TYPE,
+			using   							odpt_table_big.using%TYPE,
+
 			col_last odpt_table_big.col_last%TYPE);
 	TYPE t_ref_cursor_table_big IS REF CURSOR RETURN t_table_big_flt_used;
 

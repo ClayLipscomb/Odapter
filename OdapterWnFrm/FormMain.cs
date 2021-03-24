@@ -13,7 +13,7 @@
 //    GNU General Public License for more details.
 //
 //    You should have received a copy of the GNU General Public License
-//    along with this program.If not, see<http://www.gnu.org/licenses/>.
+//    along with this program. If not, see<http://www.gnu.org/licenses/>.
 //------------------------------------------------------------------------------
 
 using System;
@@ -24,6 +24,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Text;
 using Odapter;
+using Odapter.CSharp;
 
 namespace OdapterWnFrm {
     public partial class FormMain : Form {
@@ -94,12 +95,20 @@ namespace OdapterWnFrm {
 
 #region Validations
         private bool ValidateFieldValues() {
+            bool validationErrorsFound = false;
             int maxAssocArraySize = Convert.ToInt32(txtMaxAssocArraySize.Text);
-            if (maxAssocArraySize < 1 || maxAssocArraySize > UInt16.MaxValue) {
-                DisplayMessage($"Max Size Assoc Array range is 1-{UInt16.MaxValue}.");
-                return false;
+            if (maxAssocArraySize < 1 || maxAssocArraySize > ushort.MaxValue) {
+                DisplayMessage($"Max Size Assoc Array range is 1-{ushort.MaxValue}.");
+                validationErrorsFound = true;
             }
-            return true;
+
+            int maxReturnArgStringSize = Convert.ToInt32(txtMaxReturnArgStringSize.Text);
+            if (maxReturnArgStringSize < 1 || maxReturnArgStringSize > short.MaxValue) {
+                DisplayMessage($"Max Length VARCHAR2 range is 1-{short.MaxValue}.");
+                validationErrorsFound = true;
+            }
+
+            return !validationErrorsFound;
         }
         private bool ValidateRequiredFields() {
             bool missingRequiredFields = false;
@@ -368,10 +377,12 @@ namespace OdapterWnFrm {
             cmbClientHome.ValueMember = @"Value";
             List<OracleHome> oraHomes = new List<OracleHome>();
             oraHomes = tnsNamesReader.GetOracleHomes();
-            oraHomes.Insert(0, new OracleHome("", ""));
-            if (oraHomes == null || oraHomes.Count == 0) DisplayMessage("Warning: Client homes not found.");
-            //oraHomes.Add(new OracleHome("OraHomeValue", "OraHomeDescription"));
+            oraHomes.Insert(0, new OracleHome(String.Empty, String.Empty)); // a valid selection for when no homes are used/found
             cmbClientHome.DataSource = oraHomes;
+            if (oraHomes == null || oraHomes.Count == 1)
+                DisplayMessage("Warning: Client homes not found.");
+            else
+                cmbClientHome.SelectedIndex = 1;    // assume the first home found is approriate and default to it
         }
 
         private void BindTnsNames() {
@@ -391,7 +402,6 @@ namespace OdapterWnFrm {
         }
 
         private void SetFromParameters() {
-            cmbClientHome.SelectedValue = Parameter.Instance.OracleHome;
             DbInstance = Parameter.Instance.DatabaseInstance;
             txtSchema.Text = Parameter.Instance.Schema;
             txtFilter.Text = Parameter.Instance.Filter;
@@ -400,7 +410,7 @@ namespace OdapterWnFrm {
             cbIsSavePassword.Checked = Parameter.Instance.IsSavePassword;
 
             txtOutputPath.Text = Parameter.Instance.OutputPath;
-            cmbCSharpVersion.SelectedValue = Parameter.Instance.CSharpVersion;
+            cmbCSharpVersion.SelectedValue = Parameter.Instance.TargetCSharpVersion;
 
             txtBaseNamespace.Text = Parameter.Instance.NamespaceBase;
             txtPackageNamespace.Text = Parameter.Instance.NamespacePackage;
@@ -453,9 +463,9 @@ namespace OdapterWnFrm {
             cmbCSharpTypeUsedForOracleInteger.SelectedValue = Parameter.Instance.CSharpTypeUsedForOracleInteger;
             cmbCSharpTypeUsedForOracleNumber.SelectedValue = Parameter.Instance.CSharpTypeUsedForOracleNumber;
             cmbCSharpTypeUsedForOracleDate.SelectedValue = Parameter.Instance.CSharpTypeUsedForOracleDate;
-            cmbCSharpTypeUsedForOracleTimestamp.SelectedValue = Parameter.Instance.CSharpTypeUsedForOracleTimeStamp;
-            cmbCSharpTypeUsedForOracleTimestampTZ.SelectedValue = Parameter.Instance.CSharpTypeUsedForOracleTimeStampTZ;
-            cmbCSharpTypeUsedForOracleTimestampLTZ.SelectedValue = Parameter.Instance.CSharpTypeUsedForOracleTimeStampLTZ;
+            cmbCSharpTypeUsedForOracleTimestamp.SelectedValue = Parameter.Instance.CSharpTypeUsedForOracleTimestamp;
+            cmbCSharpTypeUsedForOracleTimestampTZ.SelectedValue = Parameter.Instance.CSharpTypeUsedForOracleTimestampTZ;
+            cmbCSharpTypeUsedForOracleTimestampLTZ.SelectedValue = Parameter.Instance.CSharpTypeUsedForOracleTimestampLTZ;
             cmbCSharpTypeUsedForOracleIntervalDayToSecond.SelectedValue = Parameter.Instance.CSharpTypeUsedForOracleIntervalDayToSecond;
             cmbCSharpTypeUsedForOracleBlob.SelectedValue = Parameter.Instance.CSharpTypeUsedForOracleBlob;
             cmbCSharpTypeUsedForOracleClob.SelectedValue = Parameter.Instance.CSharpTypeUsedForOracleClob;
@@ -470,7 +480,6 @@ namespace OdapterWnFrm {
         }
 
         private void ExtractToParameters() {
-            Parameter.Instance.OracleHome = cmbClientHome.SelectedValue.ToString();
             Parameter.Instance.DatabaseInstance = DbInstance;
             Parameter.Instance.Schema = txtSchema.Text;
             Parameter.Instance.Filter = txtFilter.Text;
@@ -480,7 +489,7 @@ namespace OdapterWnFrm {
             Parameter.Instance.OutputPath = txtOutputPath.Text;
 
             Parameter.Instance.OutputPath = txtOutputPath.Text;
-            Parameter.Instance.CSharpVersion = cmbCSharpVersion.SelectedValue.ToString() == CSharpVersion.ThreeZero.ToString() ? CSharpVersion.ThreeZero: CSharpVersion.FourZero;
+            Parameter.Instance.TargetCSharpVersion = CSharpVersion.FourZero;
 
             Parameter.Instance.NamespaceBase = txtBaseNamespace.Text;
             Parameter.Instance.NamespacePackage = txtPackageNamespace.Text;
@@ -503,9 +512,9 @@ namespace OdapterWnFrm {
             Parameter.Instance.CSharpTypeUsedForOracleInteger = cmbCSharpTypeUsedForOracleInteger.SelectedValue.ToString();
             Parameter.Instance.CSharpTypeUsedForOracleNumber = cmbCSharpTypeUsedForOracleNumber.SelectedValue.ToString();
             Parameter.Instance.CSharpTypeUsedForOracleDate = cmbCSharpTypeUsedForOracleDate.SelectedValue.ToString();
-            Parameter.Instance.CSharpTypeUsedForOracleTimeStamp = cmbCSharpTypeUsedForOracleTimestamp.SelectedValue.ToString();
-            Parameter.Instance.CSharpTypeUsedForOracleTimeStampTZ = cmbCSharpTypeUsedForOracleTimestampTZ.SelectedValue.ToString();
-            Parameter.Instance.CSharpTypeUsedForOracleTimeStampLTZ = cmbCSharpTypeUsedForOracleTimestampLTZ.SelectedValue.ToString();
+            Parameter.Instance.CSharpTypeUsedForOracleTimestamp = cmbCSharpTypeUsedForOracleTimestamp.SelectedValue.ToString();
+            Parameter.Instance.CSharpTypeUsedForOracleTimestampTZ = cmbCSharpTypeUsedForOracleTimestampTZ.SelectedValue.ToString();
+            Parameter.Instance.CSharpTypeUsedForOracleTimestampLTZ = cmbCSharpTypeUsedForOracleTimestampLTZ.SelectedValue.ToString();
 
             Parameter.Instance.CSharpTypeUsedForOracleIntervalDayToSecond = cmbCSharpTypeUsedForOracleIntervalDayToSecond.SelectedValue.ToString();
             Parameter.Instance.CSharpTypeUsedForOracleBlob = cmbCSharpTypeUsedForOracleBlob.SelectedValue.ToString();

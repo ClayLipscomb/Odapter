@@ -72,6 +72,7 @@ namespace Odapter {
                 new OrclRecord(),
                 new OrclRef(),
                 new OrclRefCursor(),
+                new OrclRowtype(),
                 new OrclRowid(),
                 new OrclSmallint(),
                 new OrclString(),
@@ -138,6 +139,8 @@ namespace Odapter {
         /// <returns></returns>
         private static string NormalizeDataTypeUndefined(string dataType, ITyped type) => dataType == Orcl.UNDEFINED ? type.DataTypeProperName : dataType;
 
+        private static string NormalizeDataTypeRowtype(string dataType, ITyped type) => dataType == Orcl.RECORD && type.DataTypeProperName == null ? Orcl.ROWTYPE : dataType;
+
         private static string NormalizeDataTypeFromTypeCode(string dataType, ITyped type) {
             if ( !(type is Argument) && !OrclUtil.IsExistsType(dataType) )
                 switch (type.Typecode) {   // Typecode only used for table, view, object attributes (not argument)
@@ -175,6 +178,7 @@ namespace Odapter {
             dataType = OU.NormalizeDataTypeTimestamp(dataType);
             dataType = OU.NormalizeDataTypeAggregated(dataType);
             dataType = OU.NormalizeDataTypeUndefined(dataType, type);
+            dataType = OU.NormalizeDataTypeRowtype(dataType, type);
             dataType = OU.NormalizeDataTypeFromTypeCode(dataType, type);
             return dataType;
         }
@@ -200,7 +204,7 @@ namespace Odapter {
                 } else {
                     return type.DataType + "(" + type.DataPrecision + (type.DataScale > 0 ? "," + type.DataScale : "") + ")"; // a number
                 }
-            } else if (type.DataType == Orcl.RECORD) {
+            } else if (type.DataType == Orcl.RECORD || type.DataType == Orcl.ROWTYPE) {
                 return type.OrclType.BuildDataTypeFullName(type);
             } else {
                 return type.DataType;

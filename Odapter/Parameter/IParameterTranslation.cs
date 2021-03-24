@@ -16,20 +16,22 @@
 //    along with this program.If not, see<http://www.gnu.org/licenses/>.
 //------------------------------------------------------------------------------
 
+using CS = Odapter.CSharp;
+
 namespace Odapter {
     public interface IParameterTranslation {
-        string CSharpTypeUsedForOracleAssociativeArray { get; set; }
-        string CSharpTypeUsedForOracleBFile { get; set; }
-        string CSharpTypeUsedForOracleBlob { get; set; }
-        string CSharpTypeUsedForOracleClob { get; set; }
-        string CSharpTypeUsedForOracleDate { get; set; }
-        string CSharpTypeUsedForOracleInteger { get; set; }
+        CS.TypeCollection TypeTargetForOracleAssociativeArray { get; set; }
+        string CSharpTypeUsedForOracleBfile { get; set; }
+        CS.ITypeTargetable TypeTargetForOracleBlob { get; set; }
+        CS.TypeReference TypeTargetForOracleClob { get; set; }
+        CS.TypeValue TypeTargetForOracleDate { get; set; }
+        CS.TypeValue TypeTargetForOracleInteger { get; set; }
         bool IsConvertOracleNumberToIntegerIfColumnNameIsId { get; set; }
         string CSharpTypeUsedForOracleIntervalDayToSecond { get; set; }
-        string CSharpTypeUsedForOracleNumber { get; set; }
-        string CSharpTypeUsedForOracleRefCursor { get; set; }
-        string CSharpTypeUsedForOracleTimeStamp { get; set; }
-        string CSharpTypeUsedForOracleTimeStampTZ { get; set; }
-        string CSharpTypeUsedForOracleTimeStampLTZ { get; set; }
+        CS.TypeValue TypeTargetForOracleNumber { get; set; }
+        CS.TypeCollection TypeTargetForOracleRefCursor { get; set; }
+        CS.TypeValue TypeTargetForOracleTimestamp { get; set; }
+        CS.TypeValue TypeTargetForOracleTimestampTZ { get; set; }
+        CS.TypeValue TypeTargetForOracleTimestampLTZ { get; set; }
     }
 }

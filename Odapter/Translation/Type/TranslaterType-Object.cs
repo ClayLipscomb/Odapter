@@ -17,6 +17,9 @@
 //------------------------------------------------------------------------------
 
 using System;
+using CS = Odapter.CSharp;
+using CSL = Odapter.CSharp.Logic.Api;
+using Trns = Odapter.Translation.Api;
 
 namespace Odapter {
     internal sealed class TranslaterObjectType : ITranslaterType {
@@ -24,21 +27,20 @@ namespace Odapter {
         public IOrclType OrclType { get => OrclUtil.GetType(Orcl.OBJECT); }
 
         // translation to C#
-        public string GetCSharpType(bool typeNotNullable = false, bool nonInterfaceType = false) { return CSharpType; }
-        private string CSharpType { get; set; }
+        public CS.ITypeTargetable CSharpType { get; private set; }
+        public CS.ITypeTargetable CSharpSubType { get => CSL.TypeNone; }
         public bool IsValid(ITyped dataType) { return dataType.OrclType.BuildDataTypeFullName(dataType).Equals(DataTypeFull); }
-        public string CSharpOracleDbType { get => CSharp.ORACLEDBTYPE_OBJECT; }
-        public string CSharpOdpNetType { get => String.Empty; }
+        public CS.OdpNetOracleDbTypeEnum CSharpOracleDbTypeEnum { get => CS.OdpNetOracleDbTypeEnum.Byte; }    // undefined
+        public CS.ITypeTargetable CSharpOdpNetSafeType { get => CS.TypeValue.OracleBinary; }
         public bool IsIgnoredAsParameter { get => true; }
         public string IgnoredReasonAsParameter { get => TranslaterMessage.IgnoreNotAvailableOdpNetMananged(OrclType); }
         public bool IsIgnoredAsAttribute { get => true; }
         public string IgnoredReasonAsAttribute { get => TranslaterMessage.IgnoreNotAvailableOdpNetMananged(OrclType); }
-
         internal TranslaterObjectType(string dataTypeFull) {
             DataTypeFull = dataTypeFull;
-            CSharpType = TranslaterName.ConvertToPascal(dataTypeFull);
+            CSharpType = Trns.ClassNameOfOracleIdentifier(dataTypeFull);
         }
-
+        private TranslaterObjectType() { }
         public override string ToString() { return DataTypeFull; }
     }
 }

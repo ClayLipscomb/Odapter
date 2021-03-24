@@ -21,12 +21,13 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 
-namespace Odapter {
+namespace Odapter.Obsolete {
     public enum CSharpVersion { ThreeZero, FourZero }
 
     /// <summary>
     /// C# specific types and logic
     /// </summary>
+    [Obsolete]
     internal sealed class CSharp {
         #region C# Types
         public const string SBYTE = "SByte";

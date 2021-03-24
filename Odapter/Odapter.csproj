@@ -142,6 +142,7 @@
     <Compile Include="Oracle\Entity\OrclEntity-Table.cs" />
     <Compile Include="Oracle\Type\OrclType-ProcedureReturn.cs" />
     <Compile Include="Oracle\Type\OrclType-Null.cs" />
+    <Compile Include="Oracle\Type\OrclType-Rowtype.cs" />
     <Compile Include="Oracle\Type\OrclType-XML.cs" />
     <Compile Include="Oracle\Type\OrclType-Undefined.cs" />
     <Compile Include="Oracle\Type\OrclType-RowId.cs" />
@@ -171,6 +172,7 @@
     <Compile Include="Translation\Type\TranslaterType-Numeric.cs" />
     <Compile Include="Translation\Type\TranslaterType-Collection.cs" />
     <Compile Include="Translation\Type\TranslaterType-Boolean.cs" />
+    <Compile Include="Translation\Type\TranslaterType-Rowtype.cs" />
     <Compile Include="Translation\Type\TranslaterType-Record.cs" />
     <Compile Include="Translation\Type\TranslaterType-Object.cs" />
     <Compile Include="Translation\Type\TranslaterType-Date.cs" />
@@ -180,6 +182,7 @@
     <Compile Include="Translation\Type\TranslaterType-RowId.cs" />
     <Compile Include="Translation\Type\TranslaterType-Ref.cs" />
     <Compile Include="Translation\Type\TranslaterType-ProcedureReturn.cs" />
+    <Compile Include="Translation\Type\TranslaterType-None.cs" />
     <Compile Include="Translation\Type\TranslaterType-Undefined.cs" />
     <Compile Include="Translation\Type\TranslaterType-XML.cs" />
     <Compile Include="Oracle\Orcl.cs" />
@@ -233,7 +236,12 @@
     <Content Include="Dapper\License.txt" />
     <Content Include="FodyWeavers.xml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\OdapterFS\OdapterFS.fsproj">
+      <Project>{1fb7e445-e788-4fb6-bbf2-c88126f646ad}</Project>
+      <Name>OdapterFS</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

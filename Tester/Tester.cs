@@ -175,7 +175,7 @@ namespace Odapter.Tester {
                 oracleNClob.Append(new char[] { ' ' }, 0, 1);
 #endif
                 OdptPkgTableBig.Instance.InsertRow(0, 0, 0, 0, 0, 0, 0.0M, 0.0M, 0.0M, 0.0M, Single.NaN, Double.NaN, "", "", "", "", "", "", "", "", "", "", 
-                    null, null, null, null, null, null, null, null, null, null,
+                    null, null, null, null, null, null, null, null, null, null, 
 #if SAFETYPE_BLOB
                     oracleBlob,
 #else
@@ -191,11 +191,12 @@ namespace Odapter.Tester {
 #else
                     "",
 #endif
+                    null, null, null, null, null, null, null, null, null,
                     conn);
 
                 // all explicitly null values
                 OdptPkgTableBig.Instance.InsertRow(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null,
-                    null, null, null, null, null, null, null, null, null, null, conn);
+                    null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, conn);
 
                 // min values for INTEGER, NUMBER, DATE, TIMESTAMP, LOB 
 #if SAFETYPE_BLOB
@@ -292,6 +293,7 @@ namespace Odapter.Tester {
 #else
                     oracleNClob,
 #endif
+                    null, null, null, null, null, null, null, null, null,
                     conn);
 
                 // max values 
@@ -391,6 +393,7 @@ namespace Odapter.Tester {
 #else
                     oracleNClob,
 #endif
+                    null, null, null, null, null, null, null, null, null,
                     conn);
 
                 // filler values
@@ -474,6 +477,7 @@ namespace Odapter.Tester {
 #else
                         oracleNClob,
 #endif
+                        null, null, null, null, null, null, null, null, null,
                         conn);
                 }
 
@@ -1541,6 +1545,13 @@ namespace Odapter.Tester {
             }
 
             private void TestMiscCalls() {
+                OdptPkgTableCsKeyword.Instance.Proc(null, null, null, null, null, null, null, null, null, null, null, null, null, null, 
+                                                    null, null, null, null, null, null, null, null, null, null, null, null, null, null,
+                                                    null, null, null, null, null, null, null, null, null, null, null, null, null, null,
+                                                    null, null, null, null, null, null, null, null, null, null, null, null, null, null,
+                                                    null, null, null, null, null, null, null, null, null, null, null, null, null, null, 
+                                                    null, null, null, null, null, null, null, null, null, null, null, null, null, null, 
+                                                    null );
                 OdptPkgMain.Instance.ProcUnderscoreSuffix(null);
                 OdptPkgMain.Instance.ProcUnderscoreSuffixExtraunderscore(null);
 
@@ -2066,7 +2077,27 @@ namespace Odapter.Tester {
                             String
 #endif
                                 ColNclob { get; set; }
+
             [HydratorMapAttribute(Position = 36)]
+            public virtual String Abstract { get; set; }
+            [HydratorMapAttribute(Position = 37)]
+            public virtual String Base { get; set; }
+            [HydratorMapAttribute(Position = 38)]
+            public virtual String Void { get; set; }
+            [HydratorMapAttribute(Position = 39)]
+            public virtual String Class { get; set; }
+            [HydratorMapAttribute(Position = 40)]
+            public virtual String Namespace { get; set; }
+            [HydratorMapAttribute(Position = 41)]
+            public virtual String Readonly { get; set; }
+            [HydratorMapAttribute(Position = 42)]
+            public virtual String Partial { get; set; }
+            [HydratorMapAttribute(Position = 43)]
+            public virtual String Const { get; set; }
+            [HydratorMapAttribute(Position = 44)]
+            public virtual String Using { get; set; }
+
+            [HydratorMapAttribute(Position = 45)]
             public virtual String ColLast { get; set; }
         } // TTableBig
 
@@ -2474,7 +2505,7 @@ namespace Odapter.Tester {
                             Decimal?
 #endif
                                     ColNumberLast { get; set; }
-        } // TTableBig
+        } // TTableNumberDecMapByPositionAll
 
         public class TTableNumberDecMapByPositionPartial : TTableNumberDecMapByPositionAll {
             public override

@@ -55,6 +55,18 @@ CREATE TABLE ODPT.odpt_table_big (
 	col_nclob							NCLOB,
 --	col_long							LONG,			-- deprecated by Oracle
 --	col_long_raw						LONG RAW,		-- deprecated by Oracle
+
+	-- C# keywords
+	abstract							VARCHAR2(4000),
+	base								VARCHAR2(4000),
+	void								VARCHAR2(4000),
+	class								VARCHAR2(4000),
+	namespace 							VARCHAR2(4000),
+	readonly 							VARCHAR2(4000),
+	partial  							VARCHAR2(4000),
+	const   							VARCHAR2(4000),
+	using   							VARCHAR2(4000),
+
 	col_last							VARCHAR2(4000)
 );
 

@@ -17,6 +17,8 @@
 //------------------------------------------------------------------------------
 
 using System;
+using CS = Odapter.CSharp;
+using CSL = Odapter.CSharp.Logic.Api;
 
 namespace Odapter {
     internal sealed class TranslaterProcedureReturn : ITranslaterType {
@@ -24,11 +26,11 @@ namespace Odapter {
         public IOrclType OrclType { get => OrclUtil.GetType(Orcl.PROCEDURE_RETURN); }
 
         // translation to C#
-        public string GetCSharpType(bool typeNotNullable = false, bool nonInterfaceType = false) { return CSharpType; }
-        private string CSharpType { get => CSharp.VOID; }
+        public CS.ITypeTargetable CSharpType => CS.TypeReference.Void;
+        public CS.ITypeTargetable CSharpSubType { get => CSL.TypeNone; }
         public bool IsValid(ITyped dataType) { return dataType.OrclType.BuildDataTypeFullName(dataType).Equals(DataTypeFull); }
-        public string CSharpOracleDbType { get => String.Empty; }
-        public string CSharpOdpNetType { get => String.Empty; }
+        public CS.OdpNetOracleDbTypeEnum CSharpOracleDbTypeEnum => CS.OdpNetOracleDbTypeEnum.Byte; // unused
+        public CS.ITypeTargetable CSharpOdpNetSafeType => CSL.TypeNone; 
         public bool IsIgnoredAsParameter { get => false; }
         public string IgnoredReasonAsParameter { get => String.Empty; }
         public bool IsIgnoredAsAttribute { get => false; }

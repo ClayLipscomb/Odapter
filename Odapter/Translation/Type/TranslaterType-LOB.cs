@@ -17,6 +17,8 @@
 //------------------------------------------------------------------------------
 
 using System;
+using CS = Odapter.CSharp;
+using CSL = Odapter.CSharp.Logic.Api;
 
 namespace Odapter {
     internal class TranslaterBfile : ITranslaterType {
@@ -24,11 +26,11 @@ namespace Odapter {
         public IOrclType OrclType { get => OrclUtil.GetType(Orcl.BFILE); }
 
         // translation to C#
-        public string GetCSharpType(bool typeNotNullable = false, bool nonInterfaceType = false) { return CSharpType; }
-        private string CSharpType { get => CSharp.AsNullable(_cSharpType); } private readonly string _cSharpType = CSharp.BYTE_ARRAY;
+        public CS.ITypeTargetable CSharpType { get => CSL.TypeArrayOf(CS.TypeValue.Byte); }
+        public CS.ITypeTargetable CSharpSubType { get => CSL.TypeNone; }
         public bool IsValid(ITyped dataType) { return dataType.OrclType.BuildDataTypeFullName(dataType).Equals(DataTypeFull); }
-        public string CSharpOracleDbType { get => CSharp.ORACLEDBTYPE_BFILE; }
-        public string CSharpOdpNetType { get => CSharp.ODP_NET_SAFE_TYPE_BFILE; }
+        public CS.OdpNetOracleDbTypeEnum CSharpOracleDbTypeEnum { get => CS.OdpNetOracleDbTypeEnum.BFile; }
+        public CS.ITypeTargetable CSharpOdpNetSafeType { get => CS.TypeReference.OracleBFile; }
         public bool IsIgnoredAsParameter { get => true; }
         public string IgnoredReasonAsParameter { get => TranslaterMessage.IgnoreNotImplemented(OrclType); }
         public bool IsIgnoredAsAttribute { get => true; }
@@ -40,36 +42,34 @@ namespace Odapter {
         public IOrclType OrclType { get => OrclUtil.GetType(Orcl.BLOB); }
 
         // translation to C#
-        public string GetCSharpType(bool typeNotNullable = false, bool nonInterfaceType = false) { return CSharpType; }
-        private string CSharpType { get => CSharp.AsNullable(_cSharpType); } private readonly string _cSharpType;
+        public CS.ITypeTargetable CSharpType { get; private set; }
+        public CS.ITypeTargetable CSharpSubType { get => CSL.TypeNone; }
         public bool IsValid(ITyped dataType) { return dataType.OrclType.BuildDataTypeFullName(dataType).Equals(DataTypeFull); }
-        public string CSharpOracleDbType { get => CSharp.ORACLEDBTYPE_BLOB; }
-        public string CSharpOdpNetType { get => CSharp.ODP_NET_SAFE_TYPE_BLOB; }
+        public CS.OdpNetOracleDbTypeEnum CSharpOracleDbTypeEnum { get => CS.OdpNetOracleDbTypeEnum.Blob; }
+        public CS.ITypeTargetable CSharpOdpNetSafeType { get => CS.TypeReference.OracleBlob; }
         public bool IsIgnoredAsParameter { get => false; }
         public string IgnoredReasonAsParameter { get => String.Empty; }
         public bool IsIgnoredAsAttribute { get => false; }
         public string IgnoredReasonAsAttribute { get => String.Empty; }
-
-        internal TranslaterBlob(string cSharpType) { _cSharpType = cSharpType; }
+//        internal TranslaterBlob(CS.ITypeTargetable typeTargetable) { CSharpType = CSL.AsNullable(typeTargetable); }
+        internal TranslaterBlob(CS.ITypeTargetable typeTargetable) { CSharpType = typeTargetable; }
         private TranslaterBlob() { }
     }
 
     internal class TranslaterClob : ITranslaterType {
         public string DataTypeFull { get => OrclType.DataType; }
         public IOrclType OrclType { get => OrclUtil.GetType(Orcl.CLOB); }
-
         // translation to C#
-        public string GetCSharpType(bool typeNotNullable = false, bool nonInterfaceType = false) { return CSharpType; }
-        private string CSharpType { get => CSharp.AsNullable(_cSharpType); } private readonly string _cSharpType;
+        public CS.ITypeTargetable CSharpType { get; private set; }
+        public CS.ITypeTargetable CSharpSubType { get => CSL.TypeNone; }
         public bool IsValid(ITyped dataType) { return dataType.OrclType.BuildDataTypeFullName(dataType).Equals(DataTypeFull); }
-        public string CSharpOracleDbType { get => CSharp.ORACLEDBTYPE_CLOB; }
-        public string CSharpOdpNetType { get => CSharp.ODP_NET_SAFE_TYPE_CLOB; }
+        public CS.OdpNetOracleDbTypeEnum CSharpOracleDbTypeEnum { get => CS.OdpNetOracleDbTypeEnum.Clob; }
+        public CS.ITypeTargetable CSharpOdpNetSafeType { get => CS.TypeReference.OracleClob; }
         public bool IsIgnoredAsParameter { get => false; }
         public string IgnoredReasonAsParameter { get => String.Empty; }
         public bool IsIgnoredAsAttribute { get => false; }
         public string IgnoredReasonAsAttribute { get => String.Empty; }
-
-        internal TranslaterClob(string cSharpType) { _cSharpType = cSharpType; }
+        internal TranslaterClob(CS.TypeReference typeReference) { CSharpType = typeReference; }
         private TranslaterClob() { }
     }
 
@@ -78,11 +78,11 @@ namespace Odapter {
         public IOrclType OrclType { get => OrclUtil.GetType(Orcl.LONG_RAW); }
 
         // translation to C#
-        public string GetCSharpType(bool typeNotNullable = false, bool nonInterfaceType = false) { return CSharpType; }
-        private string CSharpType { get => CSharp.AsNullable(CSharp.BYTE_ARRAY); }
+        public CS.ITypeTargetable CSharpType { get => CSL.TypeArrayOf(CS.TypeValue.Byte); }
+        public CS.ITypeTargetable CSharpSubType { get => CSL.TypeNone; }
         public bool IsValid(ITyped dataType) { return dataType.OrclType.BuildDataTypeFullName(dataType).Equals(DataTypeFull); }
-        public string CSharpOracleDbType { get => CSharp.ORACLEDBTYPE_LONGRAW; }
-        public string CSharpOdpNetType { get => String.Empty; }
+        public CS.OdpNetOracleDbTypeEnum CSharpOracleDbTypeEnum { get => CS.OdpNetOracleDbTypeEnum.LongRaw; }
+        public CS.ITypeTargetable CSharpOdpNetSafeType { get => CS.TypeValue.OracleBinary; }
         public bool IsIgnoredAsParameter { get => true; }
         public string IgnoredReasonAsParameter { get => TranslaterMessage.IgnoreOracleDeprecation(OrclType); }
         public bool IsIgnoredAsAttribute { get => true; }
@@ -94,17 +94,16 @@ namespace Odapter {
         public IOrclType OrclType { get => OrclUtil.GetType(Orcl.NCLOB); }
 
         // translation to C#
-        public string GetCSharpType(bool typeNotNullable = false, bool nonInterfaceType = false) { return CSharpType; }
-        private string CSharpType { get => CSharp.AsNullable(_cSharpType); } private readonly string _cSharpType;
+        public CS.ITypeTargetable CSharpType { get; private set; }
+        public CS.ITypeTargetable CSharpSubType { get => CSL.TypeNone; }
         public bool IsValid(ITyped dataType) { return dataType.OrclType.BuildDataTypeFullName(dataType).Equals(DataTypeFull); }
-        public string CSharpOracleDbType { get => CSharp.ORACLEDBTYPE_NCLOB; }
-        public string CSharpOdpNetType { get => CSharp.ODP_NET_SAFE_TYPE_CLOB; }
+        public CS.OdpNetOracleDbTypeEnum CSharpOracleDbTypeEnum { get => CS.OdpNetOracleDbTypeEnum.NClob; }
+        public CS.ITypeTargetable CSharpOdpNetSafeType { get => CS.TypeReference.OracleClob; }
         public bool IsIgnoredAsParameter { get => false; }
         public string IgnoredReasonAsParameter { get => String.Empty; }
         public bool IsIgnoredAsAttribute { get => false; }
         public string IgnoredReasonAsAttribute { get => String.Empty; }
-
-        internal TranslaterNclob(string cSharpType) { _cSharpType = cSharpType; }
+        internal TranslaterNclob(CS.TypeReference typeReference) { CSharpType = typeReference; }
         private TranslaterNclob() { }
     }
 
@@ -113,11 +112,11 @@ namespace Odapter {
         public IOrclType OrclType { get => OrclUtil.GetType(Orcl.RAW); }
 
         // translation to C#
-        public string GetCSharpType(bool typeNotNullable = false, bool nonInterfaceType = false) { return CSharpType; }
-        private string CSharpType { get => CSharp.AsNullable(CSharp.BYTE_ARRAY); }
+        public CS.ITypeTargetable CSharpType { get => CSL.TypeArrayOf(CS.TypeValue.Byte); }
+        public CS.ITypeTargetable CSharpSubType { get => CSL.TypeNone; }
         public bool IsValid(ITyped dataType) { return dataType.OrclType.BuildDataTypeFullName(dataType).Equals(DataTypeFull); }
-        public string CSharpOracleDbType { get => CSharp.ORACLEDBTYPE_RAW; }
-        public string CSharpOdpNetType { get => String.Empty; }
+        public CS.OdpNetOracleDbTypeEnum CSharpOracleDbTypeEnum { get => CS.OdpNetOracleDbTypeEnum.Raw; }
+        public CS.ITypeTargetable CSharpOdpNetSafeType { get => CS.TypeValue.OracleBinary; }
         public bool IsIgnoredAsParameter { get => true; }
         public string IgnoredReasonAsParameter { get => TranslaterMessage.IgnoreNotImplemented(OrclType); }
         public bool IsIgnoredAsAttribute { get => true; }

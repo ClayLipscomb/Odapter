@@ -16,20 +16,24 @@
 //    along with this program. If not, see<http://www.gnu.org/licenses/>.
 //------------------------------------------------------------------------------
 
+using System;
+using Odapter.CSharp;
+
 namespace Odapter {
     internal interface ITranslaterEntity  {
         /// <summary>
         /// The fully qualified effective data type that is unique to instance of any translater.
         /// </summary>
         string DataTypeFull { get; }
-
         /// <summary>
         /// The base Oracle data type. Any attributes such as precision or subtype are excluded.
         /// </summary>
         IOrclType OrclType { get; }
-
-        string CSharpAccessModifier { get; }
-        string CSharpName { get; }
+        /// <summary>
+        /// Translated C# class name
+        /// </summary>
+        ClassName CSharpClassName { get; }
+        AccessModifier CSharpAccessModifier { get; }
         string CSharpType { get; }
     }
 }
