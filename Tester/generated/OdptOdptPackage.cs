@@ -126,11 +126,11 @@ namespace Schema.Odpt.Odpt.Package {
             }
         } // GetDistinctCriteria
 
-        public ICollection<T_returnUntyped> GetLog<T_returnUntyped>(DateTime? pLogDtFrom = null, DateTime? pLogDtTo = null, String pUserName = null, String pInterface = null, 
+        public ICollection<TypeReturnUntyped> GetLog<TypeReturnUntyped>(DateTime? pLogDtFrom = null, DateTime? pLogDtTo = null, String pUserName = null, String pInterface = null, 
                 SByte? pSeverity = null, String pSource = null, 
                 bool mapColumnToObjectPropertyByPosition = false, bool allowUnmappedColumnsToBeExcluded = false, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
-                where T_returnUntyped : class, new() {
-            ICollection<T_returnUntyped> __ret = new List<T_returnUntyped>(); 
+                where TypeReturnUntyped : class, new() {
+            ICollection<TypeReturnUntyped> __ret = new List<TypeReturnUntyped>(); 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
             try {
                 using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_LOG.GET_LOG", __conn)) {
@@ -148,7 +148,7 @@ namespace Schema.Odpt.Odpt.Package {
                     int __rowsAffected = __cmd.ExecuteNonQuery();
                     if (!((OracleRefCursor)__cmd.Parameters["!RETURN"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["!RETURN"].Value).GetDataReader()) {
-                            __ret = Hydrator.ReadResult<T_returnUntyped>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
+                            __ret = Hydrator.ReadResult<TypeReturnUntyped>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     if (__cmdTrace != null) TraceCompletion(__cmdTrace, __ret.Count);
                 } // using OracleCommand
@@ -563,12 +563,12 @@ namespace Schema.Odpt.Odpt.Package {
             public virtual Decimal? TRecFldSameNameTRecFldSameName { get; set; }
         } // TRecFldSameName
 
-        public ICollection<T_TRecFldSameName> ReadResultITRecFldSameName<T_TRecFldSameName>(OracleDataReader rdr, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null)
-                where T_TRecFldSameName : class, ITRecFldSameName, new()   {
-            ICollection<T_TRecFldSameName> __ret = new List<T_TRecFldSameName>();
+        public ICollection<TypeITRecFldSameName> ReadResultITRecFldSameName<TypeITRecFldSameName>(OracleDataReader rdr, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null)
+                where TypeITRecFldSameName : class, ITRecFldSameName, new() {
+            ICollection<TypeITRecFldSameName> __ret = new List<TypeITRecFldSameName>();
             if (rdr != null && rdr.HasRows) {
                 while (rdr.Read()) {
-                    T_TRecFldSameName obj = new T_TRecFldSameName();
+                    TypeITRecFldSameName obj = new TypeITRecFldSameName();
                     if (!rdr.IsDBNull(0)) obj.FNumber = (Decimal?)OracleDecimal.SetPrecision(rdr.GetOracleDecimal(0), 28);
                     if (!rdr.IsDBNull(1)) obj.TRecFldSameNameTRecFldSameName = (Decimal?)OracleDecimal.SetPrecision(rdr.GetOracleDecimal(1), 28);
                     __ret.Add(obj);
@@ -2117,13 +2117,13 @@ namespace Schema.Odpt.Odpt.Package {
         } // FuncAaVarchar2InCnt
 
         // **PROC IGNORED** - ANYDATA type is not available in ODP.NET managed
-        // public  FuncAnydata( pIn, ref  pInOut, out  pOut, OracleConnection optionalPreexistingOpenConnection = null)
+        // public FuncAnydata( pIn, ref  pInOut, out  pOut, OracleConnection optionalPreexistingOpenConnection = null)
 
         // **PROC IGNORED** - ANYDATASET type is not available in ODP.NET managed
-        // public  FuncAnydataset( pIn, ref  pInOut, out  pOut, OracleConnection optionalPreexistingOpenConnection = null)
+        // public FuncAnydataset( pIn, ref  pInOut, out  pOut, OracleConnection optionalPreexistingOpenConnection = null)
 
         // **PROC IGNORED** - ANYTYPE type is not available in ODP.NET managed
-        // public  FuncAnytype( pIn, ref  pInOut, out  pOut, OracleConnection optionalPreexistingOpenConnection = null)
+        // public FuncAnytype( pIn, ref  pInOut, out  pOut, OracleConnection optionalPreexistingOpenConnection = null)
 
         // **PROC IGNORED** - Code generation for BFILE type has not been implemented
         // public Byte[] FuncBfile(Byte[] pIn, ref Byte[] pInOut, out Byte[] pOut, OracleConnection optionalPreexistingOpenConnection = null)
@@ -2336,67 +2336,67 @@ namespace Schema.Odpt.Odpt.Package {
         } // FuncClob
 
         // **PROC IGNORED** - .NET cannot send/receive an associative array type field in a record
-        // public ICollection<T_TIgnoreAaInteger> FuncCursorIgnoreAaInteger<T_TIgnoreAaInteger>(
+        // public ICollection<TypeITIgnoreAaInteger> FuncCursorIgnoreAaInteger<TypeITIgnoreAaInteger>(
         //        bool mapColumnToObjectPropertyByPosition = false, bool allowUnmappedColumnsToBeExcluded = false, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
 
         // **PROC IGNORED** - .NET cannot send/receive an associative array type field in a record
-        // public ICollection<T_TIgnoreAaInteger> FuncCursorIgnoreAaInteger<T_TIgnoreAaInteger>(UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
+        // public ICollection<TypeITIgnoreAaInteger> FuncCursorIgnoreAaInteger<TypeITIgnoreAaInteger>(UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
 
         // **PROC IGNORED** - Code generation for BFILE type has not been implemented
-        // public ICollection<T_TIgnoreBfile> FuncCursorIgnoreBfile<T_TIgnoreBfile>(
+        // public ICollection<TypeITIgnoreBfile> FuncCursorIgnoreBfile<TypeITIgnoreBfile>(
         //        bool mapColumnToObjectPropertyByPosition = false, bool allowUnmappedColumnsToBeExcluded = false, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
 
         // **PROC IGNORED** - Code generation for BFILE type has not been implemented
-        // public ICollection<T_TIgnoreBfile> FuncCursorIgnoreBfile<T_TIgnoreBfile>(UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
+        // public ICollection<TypeITIgnoreBfile> FuncCursorIgnoreBfile<TypeITIgnoreBfile>(UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
 
         // **PROC IGNORED** - .NET cannot send/receive a PL/SQL BOOLEAN type
-        // public ICollection<T_TIgnoreBoolean> FuncCursorIgnoreBoolean<T_TIgnoreBoolean>(
+        // public ICollection<TypeITIgnoreBoolean> FuncCursorIgnoreBoolean<TypeITIgnoreBoolean>(
         //        bool mapColumnToObjectPropertyByPosition = false, bool allowUnmappedColumnsToBeExcluded = false, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
 
         // **PROC IGNORED** - .NET cannot send/receive a PL/SQL BOOLEAN type
-        // public ICollection<T_TIgnoreBoolean> FuncCursorIgnoreBoolean<T_TIgnoreBoolean>(UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
+        // public ICollection<TypeITIgnoreBoolean> FuncCursorIgnoreBoolean<TypeITIgnoreBoolean>(UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
 
         // **PROC IGNORED** - Code generation for LONG type will not be implemented due to Oracle deprecation
-        // public ICollection<T_TIgnoreLong> FuncCursorIgnoreLong<T_TIgnoreLong>(
+        // public ICollection<TypeITIgnoreLong> FuncCursorIgnoreLong<TypeITIgnoreLong>(
         //        bool mapColumnToObjectPropertyByPosition = false, bool allowUnmappedColumnsToBeExcluded = false, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
 
         // **PROC IGNORED** - Code generation for LONG type will not be implemented due to Oracle deprecation
-        // public ICollection<T_TIgnoreLong> FuncCursorIgnoreLong<T_TIgnoreLong>(UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
+        // public ICollection<TypeITIgnoreLong> FuncCursorIgnoreLong<TypeITIgnoreLong>(UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
 
         // **PROC IGNORED** - Code generation for LONG RAW type will not be implemented due to Oracle deprecation
-        // public ICollection<T_TIgnoreLongRaw> FuncCursorIgnoreLongRaw<T_TIgnoreLongRaw>(
+        // public ICollection<TypeITIgnoreLongRaw> FuncCursorIgnoreLongRaw<TypeITIgnoreLongRaw>(
         //        bool mapColumnToObjectPropertyByPosition = false, bool allowUnmappedColumnsToBeExcluded = false, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
 
         // **PROC IGNORED** - Code generation for LONG RAW type will not be implemented due to Oracle deprecation
-        // public ICollection<T_TIgnoreLongRaw> FuncCursorIgnoreLongRaw<T_TIgnoreLongRaw>(UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
+        // public ICollection<TypeITIgnoreLongRaw> FuncCursorIgnoreLongRaw<TypeITIgnoreLongRaw>(UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
 
         // **PROC IGNORED** - Code generation for RAW type has not been implemented
-        // public ICollection<T_TIgnoreRaw> FuncCursorIgnoreRaw<T_TIgnoreRaw>(
+        // public ICollection<TypeITIgnoreRaw> FuncCursorIgnoreRaw<TypeITIgnoreRaw>(
         //        bool mapColumnToObjectPropertyByPosition = false, bool allowUnmappedColumnsToBeExcluded = false, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
 
         // **PROC IGNORED** - Code generation for RAW type has not been implemented
-        // public ICollection<T_TIgnoreRaw> FuncCursorIgnoreRaw<T_TIgnoreRaw>(UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
+        // public ICollection<TypeITIgnoreRaw> FuncCursorIgnoreRaw<TypeITIgnoreRaw>(UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
 
         // **PROC IGNORED** - Code generation for ROWID type has not been implemented
-        // public ICollection<T_TIgnoreRowid> FuncCursorIgnoreRowid<T_TIgnoreRowid>(
+        // public ICollection<TypeITIgnoreRowid> FuncCursorIgnoreRowid<TypeITIgnoreRowid>(
         //        bool mapColumnToObjectPropertyByPosition = false, bool allowUnmappedColumnsToBeExcluded = false, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
 
         // **PROC IGNORED** - Code generation for ROWID type has not been implemented
-        // public ICollection<T_TIgnoreRowid> FuncCursorIgnoreRowid<T_TIgnoreRowid>(UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
+        // public ICollection<TypeITIgnoreRowid> FuncCursorIgnoreRowid<TypeITIgnoreRowid>(UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
 
         // **PROC IGNORED** - Code generation for UROWID type has not been implemented
-        // public ICollection<T_TIgnoreUrowid> FuncCursorIgnoreUrowid<T_TIgnoreUrowid>(
+        // public ICollection<TypeITIgnoreUrowid> FuncCursorIgnoreUrowid<TypeITIgnoreUrowid>(
         //        bool mapColumnToObjectPropertyByPosition = false, bool allowUnmappedColumnsToBeExcluded = false, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
 
         // **PROC IGNORED** - Code generation for UROWID type has not been implemented
-        // public ICollection<T_TIgnoreUrowid> FuncCursorIgnoreUrowid<T_TIgnoreUrowid>(UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
+        // public ICollection<TypeITIgnoreUrowid> FuncCursorIgnoreUrowid<TypeITIgnoreUrowid>(UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
 
         // **PROC IGNORED** - XMLTYPE type is not available in ODP.NET managed
-        // public ICollection<T_TIgnoreXmltype> FuncCursorIgnoreXmltype<T_TIgnoreXmltype>(
+        // public ICollection<TypeITIgnoreXmltype> FuncCursorIgnoreXmltype<TypeITIgnoreXmltype>(
         //        bool mapColumnToObjectPropertyByPosition = false, bool allowUnmappedColumnsToBeExcluded = false, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
 
         // **PROC IGNORED** - XMLTYPE type is not available in ODP.NET managed
-        // public ICollection<T_TIgnoreXmltype> FuncCursorIgnoreXmltype<T_TIgnoreXmltype>(UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
+        // public ICollection<TypeITIgnoreXmltype> FuncCursorIgnoreXmltype<TypeITIgnoreXmltype>(UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
 
         public DateTime? FuncDate(DateTime? pIn, ref DateTime? pInOut, out DateTime? pOut, OracleConnection optionalPreexistingOpenConnection = null) {
             DateTime? __ret = null; pOut = null; 
@@ -3347,10 +3347,10 @@ namespace Schema.Odpt.Odpt.Package {
         // **PROC IGNORED** - XMLTYPE type is not available in ODP.NET managed
         // public XmlDocument FuncXmltype(XmlDocument pIn, ref XmlDocument pInOut, out XmlDocument pOut, OracleConnection optionalPreexistingOpenConnection = null)
 
-        public ICollection<T_TRecFldSameName> GetRefCurRecFldSameName<T_TRecFldSameName>(
+        public ICollection<TypeITRecFldSameName> GetRefCurRecFldSameName<TypeITRecFldSameName>(
                 bool mapColumnToObjectPropertyByPosition = false, bool allowUnmappedColumnsToBeExcluded = false, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
-                where T_TRecFldSameName : class, new() {
-            ICollection<T_TRecFldSameName> __ret = new List<T_TRecFldSameName>(); 
+                where TypeITRecFldSameName : class, new() {
+            ICollection<TypeITRecFldSameName> __ret = new List<TypeITRecFldSameName>(); 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
             try {
                 using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_MAIN.GET_REF_CUR_REC_FLD_SAME_NAME", __conn)) {
@@ -3362,7 +3362,7 @@ namespace Schema.Odpt.Odpt.Package {
                     int __rowsAffected = __cmd.ExecuteNonQuery();
                     if (!((OracleRefCursor)__cmd.Parameters["!RETURN"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["!RETURN"].Value).GetDataReader()) {
-                            __ret = Hydrator.ReadResult<T_TRecFldSameName>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
+                            __ret = Hydrator.ReadResult<TypeITRecFldSameName>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     if (__cmdTrace != null) TraceCompletion(__cmdTrace, __ret.Count);
                 } // using OracleCommand
@@ -3375,9 +3375,9 @@ namespace Schema.Odpt.Odpt.Package {
             return __ret;
         } // GetRefCurRecFldSameName
 
-        public ICollection<T_TRecFldSameName> GetRefCurRecFldSameName<T_TRecFldSameName>(UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
-                where T_TRecFldSameName : class, ITRecFldSameName, new() {
-            ICollection<T_TRecFldSameName> __ret = new List<T_TRecFldSameName>(); 
+        public ICollection<TypeITRecFldSameName> GetRefCurRecFldSameName<TypeITRecFldSameName>(UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
+                where TypeITRecFldSameName : class, ITRecFldSameName, new() {
+            ICollection<TypeITRecFldSameName> __ret = new List<TypeITRecFldSameName>(); 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
             try {
                 using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_MAIN.GET_REF_CUR_REC_FLD_SAME_NAME", __conn)) {
@@ -3389,7 +3389,7 @@ namespace Schema.Odpt.Odpt.Package {
                     int __rowsAffected = __cmd.ExecuteNonQuery();
                     if (!((OracleRefCursor)__cmd.Parameters["!RETURN"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["!RETURN"].Value).GetDataReader()) {
-                            __ret = ReadResultITRecFldSameName<T_TRecFldSameName>(__rdr, optionalMaxNumberRowsToReadFromAnyCursor);
+                            __ret = ReadResultITRecFldSameName<TypeITRecFldSameName>(__rdr, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     if (__cmdTrace != null) TraceCompletion(__cmdTrace, __ret.Count);
                 } // using OracleCommand
@@ -3920,12 +3920,12 @@ namespace Schema.Odpt.Odpt.Package {
             public virtual String ColLast { get; set; }
         } // FltrPkgRecUnusedTTableBigFltUnused
 
-        public ICollection<T_FltrPkgRecUnusedTTableBigFltUnused> ReadResultIFltrPkgRecUnusedTTableBigFltUnused<T_FltrPkgRecUnusedTTableBigFltUnused>(OracleDataReader rdr, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null)
-                where T_FltrPkgRecUnusedTTableBigFltUnused : class, IFltrPkgRecUnusedTTableBigFltUnused, new()   {
-            ICollection<T_FltrPkgRecUnusedTTableBigFltUnused> __ret = new List<T_FltrPkgRecUnusedTTableBigFltUnused>();
+        public ICollection<TypeIFltrPkgRecUnusedTTableBigFltUnused> ReadResultIFltrPkgRecUnusedTTableBigFltUnused<TypeIFltrPkgRecUnusedTTableBigFltUnused>(OracleDataReader rdr, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null)
+                where TypeIFltrPkgRecUnusedTTableBigFltUnused : class, IFltrPkgRecUnusedTTableBigFltUnused, new() {
+            ICollection<TypeIFltrPkgRecUnusedTTableBigFltUnused> __ret = new List<TypeIFltrPkgRecUnusedTTableBigFltUnused>();
             if (rdr != null && rdr.HasRows) {
                 while (rdr.Read()) {
-                    T_FltrPkgRecUnusedTTableBigFltUnused obj = new T_FltrPkgRecUnusedTTableBigFltUnused();
+                    TypeIFltrPkgRecUnusedTTableBigFltUnused obj = new TypeIFltrPkgRecUnusedTTableBigFltUnused();
                     if (!rdr.IsDBNull(0)) obj.Id = Convert.ToInt64(rdr.GetValue(0));
                     if (!rdr.IsDBNull(1)) obj.ColNumberId = Convert.ToInt64(rdr.GetValue(1));
                     if (!rdr.IsDBNull(2)) obj.ColInteger = Convert.ToInt64(rdr.GetValue(2));
@@ -4125,12 +4125,12 @@ namespace Schema.Odpt.Odpt.Package {
             public virtual String ColLast { get; set; }
         } // FltrPkgRecUsedTTableBigFltUsed
 
-        public ICollection<T_FltrPkgRecUsedTTableBigFltUsed> ReadResultIFltrPkgRecUsedTTableBigFltUsed<T_FltrPkgRecUsedTTableBigFltUsed>(OracleDataReader rdr, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null)
-                where T_FltrPkgRecUsedTTableBigFltUsed : class, IFltrPkgRecUsedTTableBigFltUsed, new()   {
-            ICollection<T_FltrPkgRecUsedTTableBigFltUsed> __ret = new List<T_FltrPkgRecUsedTTableBigFltUsed>();
+        public ICollection<TypeIFltrPkgRecUsedTTableBigFltUsed> ReadResultIFltrPkgRecUsedTTableBigFltUsed<TypeIFltrPkgRecUsedTTableBigFltUsed>(OracleDataReader rdr, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null)
+                where TypeIFltrPkgRecUsedTTableBigFltUsed : class, IFltrPkgRecUsedTTableBigFltUsed, new() {
+            ICollection<TypeIFltrPkgRecUsedTTableBigFltUsed> __ret = new List<TypeIFltrPkgRecUsedTTableBigFltUsed>();
             if (rdr != null && rdr.HasRows) {
                 while (rdr.Read()) {
-                    T_FltrPkgRecUsedTTableBigFltUsed obj = new T_FltrPkgRecUsedTTableBigFltUsed();
+                    TypeIFltrPkgRecUsedTTableBigFltUsed obj = new TypeIFltrPkgRecUsedTTableBigFltUsed();
                     if (!rdr.IsDBNull(0)) obj.Id = Convert.ToInt64(rdr.GetValue(0));
                     if (!rdr.IsDBNull(1)) obj.ColNumberId = Convert.ToInt64(rdr.GetValue(1));
                     if (!rdr.IsDBNull(2)) obj.ColInteger = Convert.ToInt64(rdr.GetValue(2));
@@ -4330,12 +4330,12 @@ namespace Schema.Odpt.Odpt.Package {
             public virtual String ColLast { get; set; }
         } // TTableBig
 
-        public ICollection<T_TTableBig> ReadResultITTableBig<T_TTableBig>(OracleDataReader rdr, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null)
-                where T_TTableBig : class, ITTableBig, new()   {
-            ICollection<T_TTableBig> __ret = new List<T_TTableBig>();
+        public ICollection<TypeITTableBig> ReadResultITTableBig<TypeITTableBig>(OracleDataReader rdr, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null)
+                where TypeITTableBig : class, ITTableBig, new() {
+            ICollection<TypeITTableBig> __ret = new List<TypeITTableBig>();
             if (rdr != null && rdr.HasRows) {
                 while (rdr.Read()) {
-                    T_TTableBig obj = new T_TTableBig();
+                    TypeITTableBig obj = new TypeITTableBig();
                     if (!rdr.IsDBNull(0)) obj.Id = Convert.ToInt64(rdr.GetValue(0));
                     if (!rdr.IsDBNull(1)) obj.ColNumberId = Convert.ToInt64(rdr.GetValue(1));
                     if (!rdr.IsDBNull(2)) obj.ColInteger = Convert.ToInt64(rdr.GetValue(2));
@@ -4433,12 +4433,12 @@ namespace Schema.Odpt.Odpt.Package {
             public virtual String ColLast { get; set; }
         } // TTableBigChar
 
-        public ICollection<T_TTableBigChar> ReadResultITTableBigChar<T_TTableBigChar>(OracleDataReader rdr, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null)
-                where T_TTableBigChar : class, ITTableBigChar, new()   {
-            ICollection<T_TTableBigChar> __ret = new List<T_TTableBigChar>();
+        public ICollection<TypeITTableBigChar> ReadResultITTableBigChar<TypeITTableBigChar>(OracleDataReader rdr, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null)
+                where TypeITTableBigChar : class, ITTableBigChar, new() {
+            ICollection<TypeITTableBigChar> __ret = new List<TypeITTableBigChar>();
             if (rdr != null && rdr.HasRows) {
                 while (rdr.Read()) {
-                    T_TTableBigChar obj = new T_TTableBigChar();
+                    TypeITTableBigChar obj = new TypeITTableBigChar();
                     if (!rdr.IsDBNull(0)) obj.Id = Convert.ToInt64(rdr.GetValue(0));
                     if (!rdr.IsDBNull(1)) obj.ColVarcharMin = Convert.ToString(rdr.GetValue(1));
                     if (!rdr.IsDBNull(2)) obj.ColVarcharMax = Convert.ToString(rdr.GetValue(2));
@@ -4478,11 +4478,11 @@ namespace Schema.Odpt.Odpt.Package {
             }
         } // DeleteRow
 
-        public ICollection<T_FltrPkgRecUnusedTTableBigFltUnused> GetRowsTypedFltrUnused<T_FltrPkgRecUnusedTTableBigFltUnused>(out ICollection<T_FltrPkgRecUnusedTTableBigFltUnused> pRefCursor, out ICollection<T_FltrPkgRecUnusedTTableBigFltUnused> pRefCursor2, 
+        public ICollection<TypeIFltrPkgRecUnusedTTableBigFltUnused> GetRowsTypedFltrUnused<TypeIFltrPkgRecUnusedTTableBigFltUnused>(out ICollection<TypeIFltrPkgRecUnusedTTableBigFltUnused> pRefCursor, out ICollection<TypeIFltrPkgRecUnusedTTableBigFltUnused> pRefCursor2, 
                 bool mapColumnToObjectPropertyByPosition = false, bool allowUnmappedColumnsToBeExcluded = false, 
                 UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
-                where T_FltrPkgRecUnusedTTableBigFltUnused : class, new() {
-            ICollection<T_FltrPkgRecUnusedTTableBigFltUnused> __ret = new List<T_FltrPkgRecUnusedTTableBigFltUnused>(); pRefCursor = new List<T_FltrPkgRecUnusedTTableBigFltUnused>(); pRefCursor2 = new List<T_FltrPkgRecUnusedTTableBigFltUnused>(); 
+                where TypeIFltrPkgRecUnusedTTableBigFltUnused : class, new() {
+            ICollection<TypeIFltrPkgRecUnusedTTableBigFltUnused> __ret = new List<TypeIFltrPkgRecUnusedTTableBigFltUnused>(); pRefCursor = new List<TypeIFltrPkgRecUnusedTTableBigFltUnused>(); pRefCursor2 = new List<TypeIFltrPkgRecUnusedTTableBigFltUnused>(); 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
             try {
                 using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_TABLE_BIG.GET_ROWS_TYPED_FLTR_UNUSED", __conn)) {
@@ -4496,15 +4496,15 @@ namespace Schema.Odpt.Odpt.Package {
                     int __rowsAffected = __cmd.ExecuteNonQuery();
                     if (!((OracleRefCursor)__cmd.Parameters["!RETURN"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["!RETURN"].Value).GetDataReader()) {
-                            __ret = Hydrator.ReadResult<T_FltrPkgRecUnusedTTableBigFltUnused>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
+                            __ret = Hydrator.ReadResult<TypeIFltrPkgRecUnusedTTableBigFltUnused>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     if (!((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR"].Value).GetDataReader()) {
-                            pRefCursor = Hydrator.ReadResult<T_FltrPkgRecUnusedTTableBigFltUnused>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
+                            pRefCursor = Hydrator.ReadResult<TypeIFltrPkgRecUnusedTTableBigFltUnused>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     if (!((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR2"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR2"].Value).GetDataReader()) {
-                            pRefCursor2 = Hydrator.ReadResult<T_FltrPkgRecUnusedTTableBigFltUnused>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
+                            pRefCursor2 = Hydrator.ReadResult<TypeIFltrPkgRecUnusedTTableBigFltUnused>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     if (__cmdTrace != null) TraceCompletion(__cmdTrace, __ret.Count);
                 } // using OracleCommand
@@ -4517,9 +4517,9 @@ namespace Schema.Odpt.Odpt.Package {
             return __ret;
         } // GetRowsTypedFltrUnused
 
-        public ICollection<T_FltrPkgRecUnusedTTableBigFltUnused> GetRowsTypedFltrUnused<T_FltrPkgRecUnusedTTableBigFltUnused>(out ICollection<T_FltrPkgRecUnusedTTableBigFltUnused> pRefCursor, out ICollection<T_FltrPkgRecUnusedTTableBigFltUnused> pRefCursor2, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
-                where T_FltrPkgRecUnusedTTableBigFltUnused : class, IFltrPkgRecUnusedTTableBigFltUnused, new() {
-            ICollection<T_FltrPkgRecUnusedTTableBigFltUnused> __ret = new List<T_FltrPkgRecUnusedTTableBigFltUnused>(); pRefCursor = new List<T_FltrPkgRecUnusedTTableBigFltUnused>(); pRefCursor2 = new List<T_FltrPkgRecUnusedTTableBigFltUnused>(); 
+        public ICollection<TypeIFltrPkgRecUnusedTTableBigFltUnused> GetRowsTypedFltrUnused<TypeIFltrPkgRecUnusedTTableBigFltUnused>(out ICollection<TypeIFltrPkgRecUnusedTTableBigFltUnused> pRefCursor, out ICollection<TypeIFltrPkgRecUnusedTTableBigFltUnused> pRefCursor2, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
+                where TypeIFltrPkgRecUnusedTTableBigFltUnused : class, IFltrPkgRecUnusedTTableBigFltUnused, new() {
+            ICollection<TypeIFltrPkgRecUnusedTTableBigFltUnused> __ret = new List<TypeIFltrPkgRecUnusedTTableBigFltUnused>(); pRefCursor = new List<TypeIFltrPkgRecUnusedTTableBigFltUnused>(); pRefCursor2 = new List<TypeIFltrPkgRecUnusedTTableBigFltUnused>(); 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
             try {
                 using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_TABLE_BIG.GET_ROWS_TYPED_FLTR_UNUSED", __conn)) {
@@ -4533,15 +4533,15 @@ namespace Schema.Odpt.Odpt.Package {
                     int __rowsAffected = __cmd.ExecuteNonQuery();
                     if (!((OracleRefCursor)__cmd.Parameters["!RETURN"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["!RETURN"].Value).GetDataReader()) {
-                            __ret = ReadResultIFltrPkgRecUnusedTTableBigFltUnused<T_FltrPkgRecUnusedTTableBigFltUnused>(__rdr, optionalMaxNumberRowsToReadFromAnyCursor);
+                            __ret = ReadResultIFltrPkgRecUnusedTTableBigFltUnused<TypeIFltrPkgRecUnusedTTableBigFltUnused>(__rdr, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     if (!((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR"].Value).GetDataReader()) {
-                            pRefCursor = ReadResultIFltrPkgRecUnusedTTableBigFltUnused<T_FltrPkgRecUnusedTTableBigFltUnused>(__rdr, optionalMaxNumberRowsToReadFromAnyCursor);
+                            pRefCursor = ReadResultIFltrPkgRecUnusedTTableBigFltUnused<TypeIFltrPkgRecUnusedTTableBigFltUnused>(__rdr, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     if (!((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR2"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR2"].Value).GetDataReader()) {
-                            pRefCursor2 = ReadResultIFltrPkgRecUnusedTTableBigFltUnused<T_FltrPkgRecUnusedTTableBigFltUnused>(__rdr, optionalMaxNumberRowsToReadFromAnyCursor);
+                            pRefCursor2 = ReadResultIFltrPkgRecUnusedTTableBigFltUnused<TypeIFltrPkgRecUnusedTTableBigFltUnused>(__rdr, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     if (__cmdTrace != null) TraceCompletion(__cmdTrace, __ret.Count);
                 } // using OracleCommand
@@ -4554,11 +4554,11 @@ namespace Schema.Odpt.Odpt.Package {
             return __ret;
         } // GetRowsTypedFltrUnused
 
-        public ICollection<T_FltrPkgRecUsedTTableBigFltUsed> GetRowsTypedFltrUsed<T_FltrPkgRecUsedTTableBigFltUsed>(out ICollection<T_FltrPkgRecUsedTTableBigFltUsed> pRefCursor, out ICollection<T_FltrPkgRecUsedTTableBigFltUsed> pRefCursor2, 
+        public ICollection<TypeIFltrPkgRecUsedTTableBigFltUsed> GetRowsTypedFltrUsed<TypeIFltrPkgRecUsedTTableBigFltUsed>(out ICollection<TypeIFltrPkgRecUsedTTableBigFltUsed> pRefCursor, out ICollection<TypeIFltrPkgRecUsedTTableBigFltUsed> pRefCursor2, 
                 bool mapColumnToObjectPropertyByPosition = false, bool allowUnmappedColumnsToBeExcluded = false, 
                 UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
-                where T_FltrPkgRecUsedTTableBigFltUsed : class, new() {
-            ICollection<T_FltrPkgRecUsedTTableBigFltUsed> __ret = new List<T_FltrPkgRecUsedTTableBigFltUsed>(); pRefCursor = new List<T_FltrPkgRecUsedTTableBigFltUsed>(); pRefCursor2 = new List<T_FltrPkgRecUsedTTableBigFltUsed>(); 
+                where TypeIFltrPkgRecUsedTTableBigFltUsed : class, new() {
+            ICollection<TypeIFltrPkgRecUsedTTableBigFltUsed> __ret = new List<TypeIFltrPkgRecUsedTTableBigFltUsed>(); pRefCursor = new List<TypeIFltrPkgRecUsedTTableBigFltUsed>(); pRefCursor2 = new List<TypeIFltrPkgRecUsedTTableBigFltUsed>(); 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
             try {
                 using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_TABLE_BIG.GET_ROWS_TYPED_FLTR_USED", __conn)) {
@@ -4572,15 +4572,15 @@ namespace Schema.Odpt.Odpt.Package {
                     int __rowsAffected = __cmd.ExecuteNonQuery();
                     if (!((OracleRefCursor)__cmd.Parameters["!RETURN"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["!RETURN"].Value).GetDataReader()) {
-                            __ret = Hydrator.ReadResult<T_FltrPkgRecUsedTTableBigFltUsed>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
+                            __ret = Hydrator.ReadResult<TypeIFltrPkgRecUsedTTableBigFltUsed>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     if (!((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR"].Value).GetDataReader()) {
-                            pRefCursor = Hydrator.ReadResult<T_FltrPkgRecUsedTTableBigFltUsed>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
+                            pRefCursor = Hydrator.ReadResult<TypeIFltrPkgRecUsedTTableBigFltUsed>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     if (!((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR2"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR2"].Value).GetDataReader()) {
-                            pRefCursor2 = Hydrator.ReadResult<T_FltrPkgRecUsedTTableBigFltUsed>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
+                            pRefCursor2 = Hydrator.ReadResult<TypeIFltrPkgRecUsedTTableBigFltUsed>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     if (__cmdTrace != null) TraceCompletion(__cmdTrace, __ret.Count);
                 } // using OracleCommand
@@ -4593,9 +4593,9 @@ namespace Schema.Odpt.Odpt.Package {
             return __ret;
         } // GetRowsTypedFltrUsed
 
-        public ICollection<T_FltrPkgRecUsedTTableBigFltUsed> GetRowsTypedFltrUsed<T_FltrPkgRecUsedTTableBigFltUsed>(out ICollection<T_FltrPkgRecUsedTTableBigFltUsed> pRefCursor, out ICollection<T_FltrPkgRecUsedTTableBigFltUsed> pRefCursor2, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
-                where T_FltrPkgRecUsedTTableBigFltUsed : class, IFltrPkgRecUsedTTableBigFltUsed, new() {
-            ICollection<T_FltrPkgRecUsedTTableBigFltUsed> __ret = new List<T_FltrPkgRecUsedTTableBigFltUsed>(); pRefCursor = new List<T_FltrPkgRecUsedTTableBigFltUsed>(); pRefCursor2 = new List<T_FltrPkgRecUsedTTableBigFltUsed>(); 
+        public ICollection<TypeIFltrPkgRecUsedTTableBigFltUsed> GetRowsTypedFltrUsed<TypeIFltrPkgRecUsedTTableBigFltUsed>(out ICollection<TypeIFltrPkgRecUsedTTableBigFltUsed> pRefCursor, out ICollection<TypeIFltrPkgRecUsedTTableBigFltUsed> pRefCursor2, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
+                where TypeIFltrPkgRecUsedTTableBigFltUsed : class, IFltrPkgRecUsedTTableBigFltUsed, new() {
+            ICollection<TypeIFltrPkgRecUsedTTableBigFltUsed> __ret = new List<TypeIFltrPkgRecUsedTTableBigFltUsed>(); pRefCursor = new List<TypeIFltrPkgRecUsedTTableBigFltUsed>(); pRefCursor2 = new List<TypeIFltrPkgRecUsedTTableBigFltUsed>(); 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
             try {
                 using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_TABLE_BIG.GET_ROWS_TYPED_FLTR_USED", __conn)) {
@@ -4609,15 +4609,15 @@ namespace Schema.Odpt.Odpt.Package {
                     int __rowsAffected = __cmd.ExecuteNonQuery();
                     if (!((OracleRefCursor)__cmd.Parameters["!RETURN"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["!RETURN"].Value).GetDataReader()) {
-                            __ret = ReadResultIFltrPkgRecUsedTTableBigFltUsed<T_FltrPkgRecUsedTTableBigFltUsed>(__rdr, optionalMaxNumberRowsToReadFromAnyCursor);
+                            __ret = ReadResultIFltrPkgRecUsedTTableBigFltUsed<TypeIFltrPkgRecUsedTTableBigFltUsed>(__rdr, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     if (!((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR"].Value).GetDataReader()) {
-                            pRefCursor = ReadResultIFltrPkgRecUsedTTableBigFltUsed<T_FltrPkgRecUsedTTableBigFltUsed>(__rdr, optionalMaxNumberRowsToReadFromAnyCursor);
+                            pRefCursor = ReadResultIFltrPkgRecUsedTTableBigFltUsed<TypeIFltrPkgRecUsedTTableBigFltUsed>(__rdr, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     if (!((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR2"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR2"].Value).GetDataReader()) {
-                            pRefCursor2 = ReadResultIFltrPkgRecUsedTTableBigFltUsed<T_FltrPkgRecUsedTTableBigFltUsed>(__rdr, optionalMaxNumberRowsToReadFromAnyCursor);
+                            pRefCursor2 = ReadResultIFltrPkgRecUsedTTableBigFltUsed<TypeIFltrPkgRecUsedTTableBigFltUsed>(__rdr, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     if (__cmdTrace != null) TraceCompletion(__cmdTrace, __ret.Count);
                 } // using OracleCommand
@@ -4630,11 +4630,11 @@ namespace Schema.Odpt.Odpt.Package {
             return __ret;
         } // GetRowsTypedFltrUsed
 
-        public Int64? GetRowsTypedOut<T_TTableBig>(out ICollection<T_TTableBig> pRefCursor, 
+        public Int64? GetRowsTypedOut<TypeITTableBig>(out ICollection<TypeITTableBig> pRefCursor, 
                 bool mapColumnToObjectPropertyByPosition = false, bool allowUnmappedColumnsToBeExcluded = false, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, 
                 OracleConnection optionalPreexistingOpenConnection = null)
-                where T_TTableBig : class, new() {
-            Int64? __ret = null; pRefCursor = new List<T_TTableBig>(); 
+                where TypeITTableBig : class, new() {
+            Int64? __ret = null; pRefCursor = new List<TypeITTableBig>(); 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
             try {
                 using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_TABLE_BIG.GET_ROWS_TYPED_OUT", __conn)) {
@@ -4650,7 +4650,7 @@ namespace Schema.Odpt.Odpt.Package {
                         : Convert.ToInt64(__cmd.Parameters["!RETURN"].Value.ToString());
                     if (!((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR"].Value).GetDataReader()) {
-                            pRefCursor = Hydrator.ReadResult<T_TTableBig>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
+                            pRefCursor = Hydrator.ReadResult<TypeITTableBig>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     if (__cmdTrace != null) TraceCompletion(__cmdTrace);
                 } // using OracleCommand
@@ -4663,9 +4663,9 @@ namespace Schema.Odpt.Odpt.Package {
             return __ret;
         } // GetRowsTypedOut
 
-        public Int64? GetRowsTypedOut<T_TTableBig>(out ICollection<T_TTableBig> pRefCursor, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
-                where T_TTableBig : class, ITTableBig, new() {
-            Int64? __ret = null; pRefCursor = new List<T_TTableBig>(); 
+        public Int64? GetRowsTypedOut<TypeITTableBig>(out ICollection<TypeITTableBig> pRefCursor, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
+                where TypeITTableBig : class, ITTableBig, new() {
+            Int64? __ret = null; pRefCursor = new List<TypeITTableBig>(); 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
             try {
                 using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_TABLE_BIG.GET_ROWS_TYPED_OUT", __conn)) {
@@ -4681,7 +4681,7 @@ namespace Schema.Odpt.Odpt.Package {
                         : Convert.ToInt64(__cmd.Parameters["!RETURN"].Value.ToString());
                     if (!((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR"].Value).GetDataReader()) {
-                            pRefCursor = ReadResultITTableBig<T_TTableBig>(__rdr, optionalMaxNumberRowsToReadFromAnyCursor);
+                            pRefCursor = ReadResultITTableBig<TypeITTableBig>(__rdr, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     if (__cmdTrace != null) TraceCompletion(__cmdTrace);
                 } // using OracleCommand
@@ -4694,12 +4694,12 @@ namespace Schema.Odpt.Odpt.Package {
             return __ret;
         } // GetRowsTypedOut
 
-        public Int64? GetRowsTypedOut2<T_TTableBig, T_TTableBigChar>(out ICollection<T_TTableBig> pRefCursor, out ICollection<T_TTableBigChar> pRefCursor2, 
+        public Int64? GetRowsTypedOut2<TypeITTableBig, TypeITTableBigChar>(out ICollection<TypeITTableBig> pRefCursor, out ICollection<TypeITTableBigChar> pRefCursor2, 
                 bool mapColumnToObjectPropertyByPosition = false, bool allowUnmappedColumnsToBeExcluded = false, 
                 UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
-                where T_TTableBig : class, new()
-                where T_TTableBigChar : class, new() {
-            Int64? __ret = null; pRefCursor = new List<T_TTableBig>(); pRefCursor2 = new List<T_TTableBigChar>(); 
+                where TypeITTableBig : class, new()
+                where TypeITTableBigChar : class, new() {
+            Int64? __ret = null; pRefCursor = new List<TypeITTableBig>(); pRefCursor2 = new List<TypeITTableBigChar>(); 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
             try {
                 using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_TABLE_BIG.GET_ROWS_TYPED_OUT2", __conn)) {
@@ -4716,11 +4716,11 @@ namespace Schema.Odpt.Odpt.Package {
                         : Convert.ToInt64(__cmd.Parameters["!RETURN"].Value.ToString());
                     if (!((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR"].Value).GetDataReader()) {
-                            pRefCursor = Hydrator.ReadResult<T_TTableBig>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
+                            pRefCursor = Hydrator.ReadResult<TypeITTableBig>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     if (!((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR2"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR2"].Value).GetDataReader()) {
-                            pRefCursor2 = Hydrator.ReadResult<T_TTableBigChar>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
+                            pRefCursor2 = Hydrator.ReadResult<TypeITTableBigChar>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     if (__cmdTrace != null) TraceCompletion(__cmdTrace);
                 } // using OracleCommand
@@ -4733,10 +4733,10 @@ namespace Schema.Odpt.Odpt.Package {
             return __ret;
         } // GetRowsTypedOut2
 
-        public Int64? GetRowsTypedOut2<T_TTableBig, T_TTableBigChar>(out ICollection<T_TTableBig> pRefCursor, out ICollection<T_TTableBigChar> pRefCursor2, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
-                where T_TTableBig : class, ITTableBig, new()
-                where T_TTableBigChar : class, ITTableBigChar, new() {
-            Int64? __ret = null; pRefCursor = new List<T_TTableBig>(); pRefCursor2 = new List<T_TTableBigChar>(); 
+        public Int64? GetRowsTypedOut2<TypeITTableBig, TypeITTableBigChar>(out ICollection<TypeITTableBig> pRefCursor, out ICollection<TypeITTableBigChar> pRefCursor2, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
+                where TypeITTableBig : class, ITTableBig, new()
+                where TypeITTableBigChar : class, ITTableBigChar, new() {
+            Int64? __ret = null; pRefCursor = new List<TypeITTableBig>(); pRefCursor2 = new List<TypeITTableBigChar>(); 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
             try {
                 using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_TABLE_BIG.GET_ROWS_TYPED_OUT2", __conn)) {
@@ -4753,11 +4753,11 @@ namespace Schema.Odpt.Odpt.Package {
                         : Convert.ToInt64(__cmd.Parameters["!RETURN"].Value.ToString());
                     if (!((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR"].Value).GetDataReader()) {
-                            pRefCursor = ReadResultITTableBig<T_TTableBig>(__rdr, optionalMaxNumberRowsToReadFromAnyCursor);
+                            pRefCursor = ReadResultITTableBig<TypeITTableBig>(__rdr, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     if (!((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR2"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR2"].Value).GetDataReader()) {
-                            pRefCursor2 = ReadResultITTableBigChar<T_TTableBigChar>(__rdr, optionalMaxNumberRowsToReadFromAnyCursor);
+                            pRefCursor2 = ReadResultITTableBigChar<TypeITTableBigChar>(__rdr, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     if (__cmdTrace != null) TraceCompletion(__cmdTrace);
                 } // using OracleCommand
@@ -4770,12 +4770,12 @@ namespace Schema.Odpt.Odpt.Package {
             return __ret;
         } // GetRowsTypedOut2
 
-        public ICollection<T_TTableBig> GetRowsTypedOut2Ret<T_TTableBig, T_TTableBigChar>(out ICollection<T_TTableBig> pRefCursor, out ICollection<T_TTableBigChar> pRefCursor2, 
+        public ICollection<TypeITTableBig> GetRowsTypedOut2Ret<TypeITTableBig, TypeITTableBigChar>(out ICollection<TypeITTableBig> pRefCursor, out ICollection<TypeITTableBigChar> pRefCursor2, 
                 bool mapColumnToObjectPropertyByPosition = false, bool allowUnmappedColumnsToBeExcluded = false, 
                 UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
-                where T_TTableBig : class, new()
-                where T_TTableBigChar : class, new() {
-            ICollection<T_TTableBig> __ret = new List<T_TTableBig>(); pRefCursor = new List<T_TTableBig>(); pRefCursor2 = new List<T_TTableBigChar>(); 
+                where TypeITTableBig : class, new()
+                where TypeITTableBigChar : class, new() {
+            ICollection<TypeITTableBig> __ret = new List<TypeITTableBig>(); pRefCursor = new List<TypeITTableBig>(); pRefCursor2 = new List<TypeITTableBigChar>(); 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
             try {
                 using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_TABLE_BIG.GET_ROWS_TYPED_OUT2_RET", __conn)) {
@@ -4789,15 +4789,15 @@ namespace Schema.Odpt.Odpt.Package {
                     int __rowsAffected = __cmd.ExecuteNonQuery();
                     if (!((OracleRefCursor)__cmd.Parameters["!RETURN"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["!RETURN"].Value).GetDataReader()) {
-                            __ret = Hydrator.ReadResult<T_TTableBig>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
+                            __ret = Hydrator.ReadResult<TypeITTableBig>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     if (!((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR"].Value).GetDataReader()) {
-                            pRefCursor = Hydrator.ReadResult<T_TTableBig>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
+                            pRefCursor = Hydrator.ReadResult<TypeITTableBig>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     if (!((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR2"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR2"].Value).GetDataReader()) {
-                            pRefCursor2 = Hydrator.ReadResult<T_TTableBigChar>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
+                            pRefCursor2 = Hydrator.ReadResult<TypeITTableBigChar>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     if (__cmdTrace != null) TraceCompletion(__cmdTrace, __ret.Count);
                 } // using OracleCommand
@@ -4810,10 +4810,10 @@ namespace Schema.Odpt.Odpt.Package {
             return __ret;
         } // GetRowsTypedOut2Ret
 
-        public ICollection<T_TTableBig> GetRowsTypedOut2Ret<T_TTableBig, T_TTableBigChar>(out ICollection<T_TTableBig> pRefCursor, out ICollection<T_TTableBigChar> pRefCursor2, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
-                where T_TTableBig : class, ITTableBig, new()
-                where T_TTableBigChar : class, ITTableBigChar, new() {
-            ICollection<T_TTableBig> __ret = new List<T_TTableBig>(); pRefCursor = new List<T_TTableBig>(); pRefCursor2 = new List<T_TTableBigChar>(); 
+        public ICollection<TypeITTableBig> GetRowsTypedOut2Ret<TypeITTableBig, TypeITTableBigChar>(out ICollection<TypeITTableBig> pRefCursor, out ICollection<TypeITTableBigChar> pRefCursor2, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
+                where TypeITTableBig : class, ITTableBig, new()
+                where TypeITTableBigChar : class, ITTableBigChar, new() {
+            ICollection<TypeITTableBig> __ret = new List<TypeITTableBig>(); pRefCursor = new List<TypeITTableBig>(); pRefCursor2 = new List<TypeITTableBigChar>(); 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
             try {
                 using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_TABLE_BIG.GET_ROWS_TYPED_OUT2_RET", __conn)) {
@@ -4827,15 +4827,15 @@ namespace Schema.Odpt.Odpt.Package {
                     int __rowsAffected = __cmd.ExecuteNonQuery();
                     if (!((OracleRefCursor)__cmd.Parameters["!RETURN"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["!RETURN"].Value).GetDataReader()) {
-                            __ret = ReadResultITTableBig<T_TTableBig>(__rdr, optionalMaxNumberRowsToReadFromAnyCursor);
+                            __ret = ReadResultITTableBig<TypeITTableBig>(__rdr, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     if (!((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR"].Value).GetDataReader()) {
-                            pRefCursor = ReadResultITTableBig<T_TTableBig>(__rdr, optionalMaxNumberRowsToReadFromAnyCursor);
+                            pRefCursor = ReadResultITTableBig<TypeITTableBig>(__rdr, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     if (!((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR2"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR2"].Value).GetDataReader()) {
-                            pRefCursor2 = ReadResultITTableBigChar<T_TTableBigChar>(__rdr, optionalMaxNumberRowsToReadFromAnyCursor);
+                            pRefCursor2 = ReadResultITTableBigChar<TypeITTableBigChar>(__rdr, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     if (__cmdTrace != null) TraceCompletion(__cmdTrace, __ret.Count);
                 } // using OracleCommand
@@ -4848,11 +4848,11 @@ namespace Schema.Odpt.Odpt.Package {
             return __ret;
         } // GetRowsTypedOut2Ret
 
-        public ICollection<T_TTableBig> GetRowsTypedOutRet<T_TTableBig>(out ICollection<T_TTableBig> pRefCursor, 
+        public ICollection<TypeITTableBig> GetRowsTypedOutRet<TypeITTableBig>(out ICollection<TypeITTableBig> pRefCursor, 
                 bool mapColumnToObjectPropertyByPosition = false, bool allowUnmappedColumnsToBeExcluded = false, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, 
                 OracleConnection optionalPreexistingOpenConnection = null)
-                where T_TTableBig : class, new() {
-            ICollection<T_TTableBig> __ret = new List<T_TTableBig>(); pRefCursor = new List<T_TTableBig>(); 
+                where TypeITTableBig : class, new() {
+            ICollection<TypeITTableBig> __ret = new List<TypeITTableBig>(); pRefCursor = new List<TypeITTableBig>(); 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
             try {
                 using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_TABLE_BIG.GET_ROWS_TYPED_OUT_RET", __conn)) {
@@ -4865,11 +4865,11 @@ namespace Schema.Odpt.Odpt.Package {
                     int __rowsAffected = __cmd.ExecuteNonQuery();
                     if (!((OracleRefCursor)__cmd.Parameters["!RETURN"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["!RETURN"].Value).GetDataReader()) {
-                            __ret = Hydrator.ReadResult<T_TTableBig>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
+                            __ret = Hydrator.ReadResult<TypeITTableBig>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     if (!((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR"].Value).GetDataReader()) {
-                            pRefCursor = Hydrator.ReadResult<T_TTableBig>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
+                            pRefCursor = Hydrator.ReadResult<TypeITTableBig>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     if (__cmdTrace != null) TraceCompletion(__cmdTrace, __ret.Count);
                 } // using OracleCommand
@@ -4882,9 +4882,9 @@ namespace Schema.Odpt.Odpt.Package {
             return __ret;
         } // GetRowsTypedOutRet
 
-        public ICollection<T_TTableBig> GetRowsTypedOutRet<T_TTableBig>(out ICollection<T_TTableBig> pRefCursor, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
-                where T_TTableBig : class, ITTableBig, new() {
-            ICollection<T_TTableBig> __ret = new List<T_TTableBig>(); pRefCursor = new List<T_TTableBig>(); 
+        public ICollection<TypeITTableBig> GetRowsTypedOutRet<TypeITTableBig>(out ICollection<TypeITTableBig> pRefCursor, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
+                where TypeITTableBig : class, ITTableBig, new() {
+            ICollection<TypeITTableBig> __ret = new List<TypeITTableBig>(); pRefCursor = new List<TypeITTableBig>(); 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
             try {
                 using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_TABLE_BIG.GET_ROWS_TYPED_OUT_RET", __conn)) {
@@ -4897,11 +4897,11 @@ namespace Schema.Odpt.Odpt.Package {
                     int __rowsAffected = __cmd.ExecuteNonQuery();
                     if (!((OracleRefCursor)__cmd.Parameters["!RETURN"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["!RETURN"].Value).GetDataReader()) {
-                            __ret = ReadResultITTableBig<T_TTableBig>(__rdr, optionalMaxNumberRowsToReadFromAnyCursor);
+                            __ret = ReadResultITTableBig<TypeITTableBig>(__rdr, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     if (!((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR"].Value).GetDataReader()) {
-                            pRefCursor = ReadResultITTableBig<T_TTableBig>(__rdr, optionalMaxNumberRowsToReadFromAnyCursor);
+                            pRefCursor = ReadResultITTableBig<TypeITTableBig>(__rdr, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     if (__cmdTrace != null) TraceCompletion(__cmdTrace, __ret.Count);
                 } // using OracleCommand
@@ -4914,10 +4914,10 @@ namespace Schema.Odpt.Odpt.Package {
             return __ret;
         } // GetRowsTypedOutRet
 
-        public ICollection<T_TTableBig> GetRowsTypedRet<T_TTableBig>(
+        public ICollection<TypeITTableBig> GetRowsTypedRet<TypeITTableBig>(
                 bool mapColumnToObjectPropertyByPosition = false, bool allowUnmappedColumnsToBeExcluded = false, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
-                where T_TTableBig : class, new() {
-            ICollection<T_TTableBig> __ret = new List<T_TTableBig>(); 
+                where TypeITTableBig : class, new() {
+            ICollection<TypeITTableBig> __ret = new List<TypeITTableBig>(); 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
             try {
                 using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_TABLE_BIG.GET_ROWS_TYPED_RET", __conn)) {
@@ -4929,7 +4929,7 @@ namespace Schema.Odpt.Odpt.Package {
                     int __rowsAffected = __cmd.ExecuteNonQuery();
                     if (!((OracleRefCursor)__cmd.Parameters["!RETURN"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["!RETURN"].Value).GetDataReader()) {
-                            __ret = Hydrator.ReadResult<T_TTableBig>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
+                            __ret = Hydrator.ReadResult<TypeITTableBig>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     if (__cmdTrace != null) TraceCompletion(__cmdTrace, __ret.Count);
                 } // using OracleCommand
@@ -4942,9 +4942,9 @@ namespace Schema.Odpt.Odpt.Package {
             return __ret;
         } // GetRowsTypedRet
 
-        public ICollection<T_TTableBig> GetRowsTypedRet<T_TTableBig>(UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
-                where T_TTableBig : class, ITTableBig, new() {
-            ICollection<T_TTableBig> __ret = new List<T_TTableBig>(); 
+        public ICollection<TypeITTableBig> GetRowsTypedRet<TypeITTableBig>(UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
+                where TypeITTableBig : class, ITTableBig, new() {
+            ICollection<TypeITTableBig> __ret = new List<TypeITTableBig>(); 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
             try {
                 using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_TABLE_BIG.GET_ROWS_TYPED_RET", __conn)) {
@@ -4956,7 +4956,7 @@ namespace Schema.Odpt.Odpt.Package {
                     int __rowsAffected = __cmd.ExecuteNonQuery();
                     if (!((OracleRefCursor)__cmd.Parameters["!RETURN"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["!RETURN"].Value).GetDataReader()) {
-                            __ret = ReadResultITTableBig<T_TTableBig>(__rdr, optionalMaxNumberRowsToReadFromAnyCursor);
+                            __ret = ReadResultITTableBig<TypeITTableBig>(__rdr, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     if (__cmdTrace != null) TraceCompletion(__cmdTrace, __ret.Count);
                 } // using OracleCommand
@@ -4970,19 +4970,19 @@ namespace Schema.Odpt.Odpt.Package {
         } // GetRowsTypedRet
 
         // **PROC IGNORED** - Code generation for REF CURSOR OF ROWTYPE type has not been implemented
-        // public ICollection<T_GetRowsTypedTableRowTypeSomeRowType> GetRowsTypedTableRowType<T_GetRowsTypedTableRowTypeSomeRowType>(
+        // public ICollection<TypeIGetRowsTypedTableRowTypeSomeRowType> GetRowsTypedTableRowType<TypeIGetRowsTypedTableRowTypeSomeRowType>(
         //        bool mapColumnToObjectPropertyByPosition = false, bool allowUnmappedColumnsToBeExcluded = false, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
 
         // **PROC IGNORED** - Code generation for REF CURSOR OF ROWTYPE type has not been implemented
-        // public ICollection<T_GetRowsTypedTableRowTypeSomeRowType> GetRowsTypedTableRowType<T_GetRowsTypedTableRowTypeSomeRowType>(UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
+        // public ICollection<TypeIGetRowsTypedTableRowTypeSomeRowType> GetRowsTypedTableRowType<TypeIGetRowsTypedTableRowTypeSomeRowType>(UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
 
-        public ICollection<T_returnUntyped> GetRowsUntypedFltrUnused<T_returnUntyped, T_pRefCursorUntyped, T_pRefCursor2Untyped>(out ICollection<T_pRefCursorUntyped> pRefCursor, out ICollection<T_pRefCursor2Untyped> pRefCursor2, 
+        public ICollection<TypeReturnUntyped> GetRowsUntypedFltrUnused<TypeReturnUntyped, TypeOutPRefCursorUntyped, TypeOutPRefCursor2Untyped>(out ICollection<TypeOutPRefCursorUntyped> pRefCursor, out ICollection<TypeOutPRefCursor2Untyped> pRefCursor2, 
                 bool mapColumnToObjectPropertyByPosition = false, bool allowUnmappedColumnsToBeExcluded = false, 
                 UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
-                where T_returnUntyped : class, new()
-                where T_pRefCursorUntyped : class, new()
-                where T_pRefCursor2Untyped : class, new() {
-            ICollection<T_returnUntyped> __ret = new List<T_returnUntyped>(); pRefCursor = new List<T_pRefCursorUntyped>(); pRefCursor2 = new List<T_pRefCursor2Untyped>(); 
+                where TypeReturnUntyped : class, new()
+                where TypeOutPRefCursorUntyped : class, new()
+                where TypeOutPRefCursor2Untyped : class, new() {
+            ICollection<TypeReturnUntyped> __ret = new List<TypeReturnUntyped>(); pRefCursor = new List<TypeOutPRefCursorUntyped>(); pRefCursor2 = new List<TypeOutPRefCursor2Untyped>(); 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
             try {
                 using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_TABLE_BIG.GET_ROWS_UNTYPED_FLTR_UNUSED", __conn)) {
@@ -4996,15 +4996,15 @@ namespace Schema.Odpt.Odpt.Package {
                     int __rowsAffected = __cmd.ExecuteNonQuery();
                     if (!((OracleRefCursor)__cmd.Parameters["!RETURN"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["!RETURN"].Value).GetDataReader()) {
-                            __ret = Hydrator.ReadResult<T_returnUntyped>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
+                            __ret = Hydrator.ReadResult<TypeReturnUntyped>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     if (!((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR"].Value).GetDataReader()) {
-                            pRefCursor = Hydrator.ReadResult<T_pRefCursorUntyped>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
+                            pRefCursor = Hydrator.ReadResult<TypeOutPRefCursorUntyped>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     if (!((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR2"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR2"].Value).GetDataReader()) {
-                            pRefCursor2 = Hydrator.ReadResult<T_pRefCursor2Untyped>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
+                            pRefCursor2 = Hydrator.ReadResult<TypeOutPRefCursor2Untyped>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     if (__cmdTrace != null) TraceCompletion(__cmdTrace, __ret.Count);
                 } // using OracleCommand
@@ -5054,13 +5054,13 @@ namespace Schema.Odpt.Odpt.Package {
             return __ret;
         } // GetRowsUntypedFltrUnused
 
-        public ICollection<T_returnUntyped> GetRowsUntypedFltrUsed<T_returnUntyped, T_pRefCursorUntyped, T_pRefCursor2Untyped>(out ICollection<T_pRefCursorUntyped> pRefCursor, out ICollection<T_pRefCursor2Untyped> pRefCursor2, 
+        public ICollection<TypeReturnUntyped> GetRowsUntypedFltrUsed<TypeReturnUntyped, TypeOutPRefCursorUntyped, TypeOutPRefCursor2Untyped>(out ICollection<TypeOutPRefCursorUntyped> pRefCursor, out ICollection<TypeOutPRefCursor2Untyped> pRefCursor2, 
                 bool mapColumnToObjectPropertyByPosition = false, bool allowUnmappedColumnsToBeExcluded = false, 
                 UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
-                where T_returnUntyped : class, new()
-                where T_pRefCursorUntyped : class, new()
-                where T_pRefCursor2Untyped : class, new() {
-            ICollection<T_returnUntyped> __ret = new List<T_returnUntyped>(); pRefCursor = new List<T_pRefCursorUntyped>(); pRefCursor2 = new List<T_pRefCursor2Untyped>(); 
+                where TypeReturnUntyped : class, new()
+                where TypeOutPRefCursorUntyped : class, new()
+                where TypeOutPRefCursor2Untyped : class, new() {
+            ICollection<TypeReturnUntyped> __ret = new List<TypeReturnUntyped>(); pRefCursor = new List<TypeOutPRefCursorUntyped>(); pRefCursor2 = new List<TypeOutPRefCursor2Untyped>(); 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
             try {
                 using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_TABLE_BIG.GET_ROWS_UNTYPED_FLTR_USED", __conn)) {
@@ -5074,15 +5074,15 @@ namespace Schema.Odpt.Odpt.Package {
                     int __rowsAffected = __cmd.ExecuteNonQuery();
                     if (!((OracleRefCursor)__cmd.Parameters["!RETURN"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["!RETURN"].Value).GetDataReader()) {
-                            __ret = Hydrator.ReadResult<T_returnUntyped>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
+                            __ret = Hydrator.ReadResult<TypeReturnUntyped>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     if (!((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR"].Value).GetDataReader()) {
-                            pRefCursor = Hydrator.ReadResult<T_pRefCursorUntyped>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
+                            pRefCursor = Hydrator.ReadResult<TypeOutPRefCursorUntyped>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     if (!((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR2"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR2"].Value).GetDataReader()) {
-                            pRefCursor2 = Hydrator.ReadResult<T_pRefCursor2Untyped>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
+                            pRefCursor2 = Hydrator.ReadResult<TypeOutPRefCursor2Untyped>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     if (__cmdTrace != null) TraceCompletion(__cmdTrace, __ret.Count);
                 } // using OracleCommand
@@ -5132,11 +5132,11 @@ namespace Schema.Odpt.Odpt.Package {
             return __ret;
         } // GetRowsUntypedFltrUsed
 
-        public Int64? GetRowsUntypedOut<T_pRefCursorUntyped>(out ICollection<T_pRefCursorUntyped> pRefCursor, 
+        public Int64? GetRowsUntypedOut<TypeOutPRefCursorUntyped>(out ICollection<TypeOutPRefCursorUntyped> pRefCursor, 
                 bool mapColumnToObjectPropertyByPosition = false, bool allowUnmappedColumnsToBeExcluded = false, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, 
                 OracleConnection optionalPreexistingOpenConnection = null)
-                where T_pRefCursorUntyped : class, new() {
-            Int64? __ret = null; pRefCursor = new List<T_pRefCursorUntyped>(); 
+                where TypeOutPRefCursorUntyped : class, new() {
+            Int64? __ret = null; pRefCursor = new List<TypeOutPRefCursorUntyped>(); 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
             try {
                 using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_TABLE_BIG.GET_ROWS_UNTYPED_OUT", __conn)) {
@@ -5152,7 +5152,7 @@ namespace Schema.Odpt.Odpt.Package {
                         : Convert.ToInt64(__cmd.Parameters["!RETURN"].Value.ToString());
                     if (!((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR"].Value).GetDataReader()) {
-                            pRefCursor = Hydrator.ReadResult<T_pRefCursorUntyped>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
+                            pRefCursor = Hydrator.ReadResult<TypeOutPRefCursorUntyped>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     if (__cmdTrace != null) TraceCompletion(__cmdTrace);
                 } // using OracleCommand
@@ -5195,12 +5195,12 @@ namespace Schema.Odpt.Odpt.Package {
             return __ret;
         } // GetRowsUntypedOut
 
-        public Int64? GetRowsUntypedOut2<T_pRefCursorUntyped, T_pRefCursor2Untyped>(out ICollection<T_pRefCursorUntyped> pRefCursor, out ICollection<T_pRefCursor2Untyped> pRefCursor2, 
+        public Int64? GetRowsUntypedOut2<TypeOutPRefCursorUntyped, TypeOutPRefCursor2Untyped>(out ICollection<TypeOutPRefCursorUntyped> pRefCursor, out ICollection<TypeOutPRefCursor2Untyped> pRefCursor2, 
                 bool mapColumnToObjectPropertyByPosition = false, bool allowUnmappedColumnsToBeExcluded = false, 
                 UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
-                where T_pRefCursorUntyped : class, new()
-                where T_pRefCursor2Untyped : class, new() {
-            Int64? __ret = null; pRefCursor = new List<T_pRefCursorUntyped>(); pRefCursor2 = new List<T_pRefCursor2Untyped>(); 
+                where TypeOutPRefCursorUntyped : class, new()
+                where TypeOutPRefCursor2Untyped : class, new() {
+            Int64? __ret = null; pRefCursor = new List<TypeOutPRefCursorUntyped>(); pRefCursor2 = new List<TypeOutPRefCursor2Untyped>(); 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
             try {
                 using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_TABLE_BIG.GET_ROWS_UNTYPED_OUT2", __conn)) {
@@ -5217,11 +5217,11 @@ namespace Schema.Odpt.Odpt.Package {
                         : Convert.ToInt64(__cmd.Parameters["!RETURN"].Value.ToString());
                     if (!((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR"].Value).GetDataReader()) {
-                            pRefCursor = Hydrator.ReadResult<T_pRefCursorUntyped>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
+                            pRefCursor = Hydrator.ReadResult<TypeOutPRefCursorUntyped>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     if (!((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR2"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR2"].Value).GetDataReader()) {
-                            pRefCursor2 = Hydrator.ReadResult<T_pRefCursor2Untyped>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
+                            pRefCursor2 = Hydrator.ReadResult<TypeOutPRefCursor2Untyped>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     if (__cmdTrace != null) TraceCompletion(__cmdTrace);
                 } // using OracleCommand
@@ -5270,13 +5270,13 @@ namespace Schema.Odpt.Odpt.Package {
             return __ret;
         } // GetRowsUntypedOut2
 
-        public ICollection<T_returnUntyped> GetRowsUntypedOut2Ret<T_returnUntyped, T_pRefCursorUntyped, T_pRefCursor2Untyped>(out ICollection<T_pRefCursorUntyped> pRefCursor, out ICollection<T_pRefCursor2Untyped> pRefCursor2, 
+        public ICollection<TypeReturnUntyped> GetRowsUntypedOut2Ret<TypeReturnUntyped, TypeOutPRefCursorUntyped, TypeOutPRefCursor2Untyped>(out ICollection<TypeOutPRefCursorUntyped> pRefCursor, out ICollection<TypeOutPRefCursor2Untyped> pRefCursor2, 
                 bool mapColumnToObjectPropertyByPosition = false, bool allowUnmappedColumnsToBeExcluded = false, 
                 UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
-                where T_returnUntyped : class, new()
-                where T_pRefCursorUntyped : class, new()
-                where T_pRefCursor2Untyped : class, new() {
-            ICollection<T_returnUntyped> __ret = new List<T_returnUntyped>(); pRefCursor = new List<T_pRefCursorUntyped>(); pRefCursor2 = new List<T_pRefCursor2Untyped>(); 
+                where TypeReturnUntyped : class, new()
+                where TypeOutPRefCursorUntyped : class, new()
+                where TypeOutPRefCursor2Untyped : class, new() {
+            ICollection<TypeReturnUntyped> __ret = new List<TypeReturnUntyped>(); pRefCursor = new List<TypeOutPRefCursorUntyped>(); pRefCursor2 = new List<TypeOutPRefCursor2Untyped>(); 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
             try {
                 using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_TABLE_BIG.GET_ROWS_UNTYPED_OUT2_RET", __conn)) {
@@ -5290,15 +5290,15 @@ namespace Schema.Odpt.Odpt.Package {
                     int __rowsAffected = __cmd.ExecuteNonQuery();
                     if (!((OracleRefCursor)__cmd.Parameters["!RETURN"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["!RETURN"].Value).GetDataReader()) {
-                            __ret = Hydrator.ReadResult<T_returnUntyped>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
+                            __ret = Hydrator.ReadResult<TypeReturnUntyped>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     if (!((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR"].Value).GetDataReader()) {
-                            pRefCursor = Hydrator.ReadResult<T_pRefCursorUntyped>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
+                            pRefCursor = Hydrator.ReadResult<TypeOutPRefCursorUntyped>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     if (!((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR2"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR2"].Value).GetDataReader()) {
-                            pRefCursor2 = Hydrator.ReadResult<T_pRefCursor2Untyped>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
+                            pRefCursor2 = Hydrator.ReadResult<TypeOutPRefCursor2Untyped>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     if (__cmdTrace != null) TraceCompletion(__cmdTrace, __ret.Count);
                 } // using OracleCommand
@@ -5348,12 +5348,12 @@ namespace Schema.Odpt.Odpt.Package {
             return __ret;
         } // GetRowsUntypedOut2Ret
 
-        public ICollection<T_returnUntyped> GetRowsUntypedOutRet<T_returnUntyped, T_pRefCursorUntyped>(out ICollection<T_pRefCursorUntyped> pRefCursor, 
+        public ICollection<TypeReturnUntyped> GetRowsUntypedOutRet<TypeReturnUntyped, TypeOutPRefCursorUntyped>(out ICollection<TypeOutPRefCursorUntyped> pRefCursor, 
                 bool mapColumnToObjectPropertyByPosition = false, bool allowUnmappedColumnsToBeExcluded = false, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, 
                 OracleConnection optionalPreexistingOpenConnection = null)
-                where T_returnUntyped : class, new()
-                where T_pRefCursorUntyped : class, new() {
-            ICollection<T_returnUntyped> __ret = new List<T_returnUntyped>(); pRefCursor = new List<T_pRefCursorUntyped>(); 
+                where TypeReturnUntyped : class, new()
+                where TypeOutPRefCursorUntyped : class, new() {
+            ICollection<TypeReturnUntyped> __ret = new List<TypeReturnUntyped>(); pRefCursor = new List<TypeOutPRefCursorUntyped>(); 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
             try {
                 using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_TABLE_BIG.GET_ROWS_UNTYPED_OUT_RET", __conn)) {
@@ -5366,11 +5366,11 @@ namespace Schema.Odpt.Odpt.Package {
                     int __rowsAffected = __cmd.ExecuteNonQuery();
                     if (!((OracleRefCursor)__cmd.Parameters["!RETURN"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["!RETURN"].Value).GetDataReader()) {
-                            __ret = Hydrator.ReadResult<T_returnUntyped>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
+                            __ret = Hydrator.ReadResult<TypeReturnUntyped>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     if (!((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR"].Value).GetDataReader()) {
-                            pRefCursor = Hydrator.ReadResult<T_pRefCursorUntyped>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
+                            pRefCursor = Hydrator.ReadResult<TypeOutPRefCursorUntyped>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     if (__cmdTrace != null) TraceCompletion(__cmdTrace, __ret.Count);
                 } // using OracleCommand
@@ -5414,10 +5414,10 @@ namespace Schema.Odpt.Odpt.Package {
             return __ret;
         } // GetRowsUntypedOutRet
 
-        public ICollection<T_returnUntyped> GetRowsUntypedRet<T_returnUntyped>(
+        public ICollection<TypeReturnUntyped> GetRowsUntypedRet<TypeReturnUntyped>(
                 bool mapColumnToObjectPropertyByPosition = false, bool allowUnmappedColumnsToBeExcluded = false, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
-                where T_returnUntyped : class, new() {
-            ICollection<T_returnUntyped> __ret = new List<T_returnUntyped>(); 
+                where TypeReturnUntyped : class, new() {
+            ICollection<TypeReturnUntyped> __ret = new List<TypeReturnUntyped>(); 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
             try {
                 using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_TABLE_BIG.GET_ROWS_UNTYPED_RET", __conn)) {
@@ -5429,7 +5429,7 @@ namespace Schema.Odpt.Odpt.Package {
                     int __rowsAffected = __cmd.ExecuteNonQuery();
                     if (!((OracleRefCursor)__cmd.Parameters["!RETURN"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["!RETURN"].Value).GetDataReader()) {
-                            __ret = Hydrator.ReadResult<T_returnUntyped>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
+                            __ret = Hydrator.ReadResult<TypeReturnUntyped>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     if (__cmdTrace != null) TraceCompletion(__cmdTrace, __ret.Count);
                 } // using OracleCommand
@@ -5548,10 +5548,10 @@ namespace Schema.Odpt.Odpt.Package {
         // public Int64? InsertRow(InsertRowPRowRowType pRow, OracleConnection optionalPreexistingOpenConnection = null)
 
         // **PROC IGNORED** - .NET cannot send a REF CURSOR type
-        // public void ProcTypedCursorIn(ICollection<T_TTableBig> pRefCursor, OracleConnection optionalPreexistingOpenConnection = null)
+        // public void ProcTypedCursorIn(ICollection<TypeITTableBig> pRefCursor, OracleConnection optionalPreexistingOpenConnection = null)
 
         // **PROC IGNORED** - .NET cannot send a REF CURSOR type
-        // public void ProcTypedCursorInOut(ref ICollection<T_TTableBig> pRefCursor, OracleConnection optionalPreexistingOpenConnection = null)
+        // public void ProcTypedCursorInOut(ref ICollection<TypeITTableBig> pRefCursor, OracleConnection optionalPreexistingOpenConnection = null)
 
         public void TruncTable(OracleConnection optionalPreexistingOpenConnection = null) {
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
@@ -5809,12 +5809,12 @@ namespace Schema.Odpt.Odpt.Package {
             public virtual Decimal? ColNumberLast { get; set; }
         } // TTableNumber
 
-        public ICollection<T_TTableNumber> ReadResultITTableNumber<T_TTableNumber>(OracleDataReader rdr, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null)
-                where T_TTableNumber : class, ITTableNumber, new()   {
-            ICollection<T_TTableNumber> __ret = new List<T_TTableNumber>();
+        public ICollection<TypeITTableNumber> ReadResultITTableNumber<TypeITTableNumber>(OracleDataReader rdr, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null)
+                where TypeITTableNumber : class, ITTableNumber, new() {
+            ICollection<TypeITTableNumber> __ret = new List<TypeITTableNumber>();
             if (rdr != null && rdr.HasRows) {
                 while (rdr.Read()) {
-                    T_TTableNumber obj = new T_TTableNumber();
+                    TypeITTableNumber obj = new TypeITTableNumber();
                     if (!rdr.IsDBNull(0)) obj.Id = Convert.ToInt64(rdr.GetValue(0));
                     if (!rdr.IsDBNull(1)) obj.ColNumber = (Decimal?)OracleDecimal.SetPrecision(rdr.GetOracleDecimal(1), 28);
                     if (!rdr.IsDBNull(2)) obj.ColNumber1 = Convert.ToSByte(rdr.GetValue(2));
@@ -5887,12 +5887,12 @@ namespace Schema.Odpt.Odpt.Package {
             public virtual Decimal? ColNumberLast { get; set; }
         } // TTableNumberDec
 
-        public ICollection<T_TTableNumberDec> ReadResultITTableNumberDec<T_TTableNumberDec>(OracleDataReader rdr, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null)
-                where T_TTableNumberDec : class, ITTableNumberDec, new()   {
-            ICollection<T_TTableNumberDec> __ret = new List<T_TTableNumberDec>();
+        public ICollection<TypeITTableNumberDec> ReadResultITTableNumberDec<TypeITTableNumberDec>(OracleDataReader rdr, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null)
+                where TypeITTableNumberDec : class, ITTableNumberDec, new() {
+            ICollection<TypeITTableNumberDec> __ret = new List<TypeITTableNumberDec>();
             if (rdr != null && rdr.HasRows) {
                 while (rdr.Read()) {
-                    T_TTableNumberDec obj = new T_TTableNumberDec();
+                    TypeITTableNumberDec obj = new TypeITTableNumberDec();
                     if (!rdr.IsDBNull(0)) obj.Id = Convert.ToInt64(rdr.GetValue(0));
                     if (!rdr.IsDBNull(1)) obj.ColNumber = (Decimal?)OracleDecimal.SetPrecision(rdr.GetOracleDecimal(1), 28);
                     if (!rdr.IsDBNull(2)) obj.ColNumber2Scale1 = (Decimal?)OracleDecimal.SetPrecision(rdr.GetOracleDecimal(2), 28);
@@ -5928,11 +5928,11 @@ namespace Schema.Odpt.Odpt.Package {
             }
         } // DeleteRow
 
-        public Int64? GetRowsTypedOut<T_TTableNumber>(out ICollection<T_TTableNumber> pRefCursor, 
+        public Int64? GetRowsTypedOut<TypeITTableNumber>(out ICollection<TypeITTableNumber> pRefCursor, 
                 bool mapColumnToObjectPropertyByPosition = false, bool allowUnmappedColumnsToBeExcluded = false, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, 
                 OracleConnection optionalPreexistingOpenConnection = null)
-                where T_TTableNumber : class, new() {
-            Int64? __ret = null; pRefCursor = new List<T_TTableNumber>(); 
+                where TypeITTableNumber : class, new() {
+            Int64? __ret = null; pRefCursor = new List<TypeITTableNumber>(); 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
             try {
                 using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_TABLE_NUMBER.GET_ROWS_TYPED_OUT", __conn)) {
@@ -5948,7 +5948,7 @@ namespace Schema.Odpt.Odpt.Package {
                         : Convert.ToInt64(__cmd.Parameters["!RETURN"].Value.ToString());
                     if (!((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR"].Value).GetDataReader()) {
-                            pRefCursor = Hydrator.ReadResult<T_TTableNumber>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
+                            pRefCursor = Hydrator.ReadResult<TypeITTableNumber>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     if (__cmdTrace != null) TraceCompletion(__cmdTrace);
                 } // using OracleCommand
@@ -5961,9 +5961,9 @@ namespace Schema.Odpt.Odpt.Package {
             return __ret;
         } // GetRowsTypedOut
 
-        public Int64? GetRowsTypedOut<T_TTableNumber>(out ICollection<T_TTableNumber> pRefCursor, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
-                where T_TTableNumber : class, ITTableNumber, new() {
-            Int64? __ret = null; pRefCursor = new List<T_TTableNumber>(); 
+        public Int64? GetRowsTypedOut<TypeITTableNumber>(out ICollection<TypeITTableNumber> pRefCursor, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
+                where TypeITTableNumber : class, ITTableNumber, new() {
+            Int64? __ret = null; pRefCursor = new List<TypeITTableNumber>(); 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
             try {
                 using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_TABLE_NUMBER.GET_ROWS_TYPED_OUT", __conn)) {
@@ -5979,7 +5979,7 @@ namespace Schema.Odpt.Odpt.Package {
                         : Convert.ToInt64(__cmd.Parameters["!RETURN"].Value.ToString());
                     if (!((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR"].Value).GetDataReader()) {
-                            pRefCursor = ReadResultITTableNumber<T_TTableNumber>(__rdr, optionalMaxNumberRowsToReadFromAnyCursor);
+                            pRefCursor = ReadResultITTableNumber<TypeITTableNumber>(__rdr, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     if (__cmdTrace != null) TraceCompletion(__cmdTrace);
                 } // using OracleCommand
@@ -5992,12 +5992,12 @@ namespace Schema.Odpt.Odpt.Package {
             return __ret;
         } // GetRowsTypedOut
 
-        public Int64? GetRowsTypedOut2<T_TTableNumber, T_TTableNumberDec>(out ICollection<T_TTableNumber> pRefCursor, out ICollection<T_TTableNumberDec> pRefCursor2, 
+        public Int64? GetRowsTypedOut2<TypeITTableNumber, TypeITTableNumberDec>(out ICollection<TypeITTableNumber> pRefCursor, out ICollection<TypeITTableNumberDec> pRefCursor2, 
                 bool mapColumnToObjectPropertyByPosition = false, bool allowUnmappedColumnsToBeExcluded = false, 
                 UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
-                where T_TTableNumber : class, new()
-                where T_TTableNumberDec : class, new() {
-            Int64? __ret = null; pRefCursor = new List<T_TTableNumber>(); pRefCursor2 = new List<T_TTableNumberDec>(); 
+                where TypeITTableNumber : class, new()
+                where TypeITTableNumberDec : class, new() {
+            Int64? __ret = null; pRefCursor = new List<TypeITTableNumber>(); pRefCursor2 = new List<TypeITTableNumberDec>(); 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
             try {
                 using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_TABLE_NUMBER.GET_ROWS_TYPED_OUT2", __conn)) {
@@ -6014,11 +6014,11 @@ namespace Schema.Odpt.Odpt.Package {
                         : Convert.ToInt64(__cmd.Parameters["!RETURN"].Value.ToString());
                     if (!((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR"].Value).GetDataReader()) {
-                            pRefCursor = Hydrator.ReadResult<T_TTableNumber>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
+                            pRefCursor = Hydrator.ReadResult<TypeITTableNumber>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     if (!((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR2"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR2"].Value).GetDataReader()) {
-                            pRefCursor2 = Hydrator.ReadResult<T_TTableNumberDec>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
+                            pRefCursor2 = Hydrator.ReadResult<TypeITTableNumberDec>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     if (__cmdTrace != null) TraceCompletion(__cmdTrace);
                 } // using OracleCommand
@@ -6031,10 +6031,10 @@ namespace Schema.Odpt.Odpt.Package {
             return __ret;
         } // GetRowsTypedOut2
 
-        public Int64? GetRowsTypedOut2<T_TTableNumber, T_TTableNumberDec>(out ICollection<T_TTableNumber> pRefCursor, out ICollection<T_TTableNumberDec> pRefCursor2, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
-                where T_TTableNumber : class, ITTableNumber, new()
-                where T_TTableNumberDec : class, ITTableNumberDec, new() {
-            Int64? __ret = null; pRefCursor = new List<T_TTableNumber>(); pRefCursor2 = new List<T_TTableNumberDec>(); 
+        public Int64? GetRowsTypedOut2<TypeITTableNumber, TypeITTableNumberDec>(out ICollection<TypeITTableNumber> pRefCursor, out ICollection<TypeITTableNumberDec> pRefCursor2, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
+                where TypeITTableNumber : class, ITTableNumber, new()
+                where TypeITTableNumberDec : class, ITTableNumberDec, new() {
+            Int64? __ret = null; pRefCursor = new List<TypeITTableNumber>(); pRefCursor2 = new List<TypeITTableNumberDec>(); 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
             try {
                 using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_TABLE_NUMBER.GET_ROWS_TYPED_OUT2", __conn)) {
@@ -6051,11 +6051,11 @@ namespace Schema.Odpt.Odpt.Package {
                         : Convert.ToInt64(__cmd.Parameters["!RETURN"].Value.ToString());
                     if (!((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR"].Value).GetDataReader()) {
-                            pRefCursor = ReadResultITTableNumber<T_TTableNumber>(__rdr, optionalMaxNumberRowsToReadFromAnyCursor);
+                            pRefCursor = ReadResultITTableNumber<TypeITTableNumber>(__rdr, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     if (!((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR2"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR2"].Value).GetDataReader()) {
-                            pRefCursor2 = ReadResultITTableNumberDec<T_TTableNumberDec>(__rdr, optionalMaxNumberRowsToReadFromAnyCursor);
+                            pRefCursor2 = ReadResultITTableNumberDec<TypeITTableNumberDec>(__rdr, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     if (__cmdTrace != null) TraceCompletion(__cmdTrace);
                 } // using OracleCommand
@@ -6068,12 +6068,12 @@ namespace Schema.Odpt.Odpt.Package {
             return __ret;
         } // GetRowsTypedOut2
 
-        public ICollection<T_TTableNumber> GetRowsTypedOut2Ret<T_TTableNumber, T_TTableNumberDec>(out ICollection<T_TTableNumber> pRefCursor, out ICollection<T_TTableNumberDec> pRefCursor2, 
+        public ICollection<TypeITTableNumber> GetRowsTypedOut2Ret<TypeITTableNumber, TypeITTableNumberDec>(out ICollection<TypeITTableNumber> pRefCursor, out ICollection<TypeITTableNumberDec> pRefCursor2, 
                 bool mapColumnToObjectPropertyByPosition = false, bool allowUnmappedColumnsToBeExcluded = false, 
                 UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
-                where T_TTableNumber : class, new()
-                where T_TTableNumberDec : class, new() {
-            ICollection<T_TTableNumber> __ret = new List<T_TTableNumber>(); pRefCursor = new List<T_TTableNumber>(); pRefCursor2 = new List<T_TTableNumberDec>(); 
+                where TypeITTableNumber : class, new()
+                where TypeITTableNumberDec : class, new() {
+            ICollection<TypeITTableNumber> __ret = new List<TypeITTableNumber>(); pRefCursor = new List<TypeITTableNumber>(); pRefCursor2 = new List<TypeITTableNumberDec>(); 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
             try {
                 using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_TABLE_NUMBER.GET_ROWS_TYPED_OUT2_RET", __conn)) {
@@ -6087,15 +6087,15 @@ namespace Schema.Odpt.Odpt.Package {
                     int __rowsAffected = __cmd.ExecuteNonQuery();
                     if (!((OracleRefCursor)__cmd.Parameters["!RETURN"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["!RETURN"].Value).GetDataReader()) {
-                            __ret = Hydrator.ReadResult<T_TTableNumber>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
+                            __ret = Hydrator.ReadResult<TypeITTableNumber>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     if (!((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR"].Value).GetDataReader()) {
-                            pRefCursor = Hydrator.ReadResult<T_TTableNumber>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
+                            pRefCursor = Hydrator.ReadResult<TypeITTableNumber>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     if (!((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR2"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR2"].Value).GetDataReader()) {
-                            pRefCursor2 = Hydrator.ReadResult<T_TTableNumberDec>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
+                            pRefCursor2 = Hydrator.ReadResult<TypeITTableNumberDec>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     if (__cmdTrace != null) TraceCompletion(__cmdTrace, __ret.Count);
                 } // using OracleCommand
@@ -6108,10 +6108,10 @@ namespace Schema.Odpt.Odpt.Package {
             return __ret;
         } // GetRowsTypedOut2Ret
 
-        public ICollection<T_TTableNumber> GetRowsTypedOut2Ret<T_TTableNumber, T_TTableNumberDec>(out ICollection<T_TTableNumber> pRefCursor, out ICollection<T_TTableNumberDec> pRefCursor2, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
-                where T_TTableNumber : class, ITTableNumber, new()
-                where T_TTableNumberDec : class, ITTableNumberDec, new() {
-            ICollection<T_TTableNumber> __ret = new List<T_TTableNumber>(); pRefCursor = new List<T_TTableNumber>(); pRefCursor2 = new List<T_TTableNumberDec>(); 
+        public ICollection<TypeITTableNumber> GetRowsTypedOut2Ret<TypeITTableNumber, TypeITTableNumberDec>(out ICollection<TypeITTableNumber> pRefCursor, out ICollection<TypeITTableNumberDec> pRefCursor2, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
+                where TypeITTableNumber : class, ITTableNumber, new()
+                where TypeITTableNumberDec : class, ITTableNumberDec, new() {
+            ICollection<TypeITTableNumber> __ret = new List<TypeITTableNumber>(); pRefCursor = new List<TypeITTableNumber>(); pRefCursor2 = new List<TypeITTableNumberDec>(); 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
             try {
                 using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_TABLE_NUMBER.GET_ROWS_TYPED_OUT2_RET", __conn)) {
@@ -6125,15 +6125,15 @@ namespace Schema.Odpt.Odpt.Package {
                     int __rowsAffected = __cmd.ExecuteNonQuery();
                     if (!((OracleRefCursor)__cmd.Parameters["!RETURN"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["!RETURN"].Value).GetDataReader()) {
-                            __ret = ReadResultITTableNumber<T_TTableNumber>(__rdr, optionalMaxNumberRowsToReadFromAnyCursor);
+                            __ret = ReadResultITTableNumber<TypeITTableNumber>(__rdr, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     if (!((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR"].Value).GetDataReader()) {
-                            pRefCursor = ReadResultITTableNumber<T_TTableNumber>(__rdr, optionalMaxNumberRowsToReadFromAnyCursor);
+                            pRefCursor = ReadResultITTableNumber<TypeITTableNumber>(__rdr, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     if (!((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR2"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR2"].Value).GetDataReader()) {
-                            pRefCursor2 = ReadResultITTableNumberDec<T_TTableNumberDec>(__rdr, optionalMaxNumberRowsToReadFromAnyCursor);
+                            pRefCursor2 = ReadResultITTableNumberDec<TypeITTableNumberDec>(__rdr, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     if (__cmdTrace != null) TraceCompletion(__cmdTrace, __ret.Count);
                 } // using OracleCommand
@@ -6146,11 +6146,11 @@ namespace Schema.Odpt.Odpt.Package {
             return __ret;
         } // GetRowsTypedOut2Ret
 
-        public ICollection<T_TTableNumber> GetRowsTypedOutRet<T_TTableNumber>(out ICollection<T_TTableNumber> pRefCursor, 
+        public ICollection<TypeITTableNumber> GetRowsTypedOutRet<TypeITTableNumber>(out ICollection<TypeITTableNumber> pRefCursor, 
                 bool mapColumnToObjectPropertyByPosition = false, bool allowUnmappedColumnsToBeExcluded = false, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, 
                 OracleConnection optionalPreexistingOpenConnection = null)
-                where T_TTableNumber : class, new() {
-            ICollection<T_TTableNumber> __ret = new List<T_TTableNumber>(); pRefCursor = new List<T_TTableNumber>(); 
+                where TypeITTableNumber : class, new() {
+            ICollection<TypeITTableNumber> __ret = new List<TypeITTableNumber>(); pRefCursor = new List<TypeITTableNumber>(); 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
             try {
                 using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_TABLE_NUMBER.GET_ROWS_TYPED_OUT_RET", __conn)) {
@@ -6163,11 +6163,11 @@ namespace Schema.Odpt.Odpt.Package {
                     int __rowsAffected = __cmd.ExecuteNonQuery();
                     if (!((OracleRefCursor)__cmd.Parameters["!RETURN"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["!RETURN"].Value).GetDataReader()) {
-                            __ret = Hydrator.ReadResult<T_TTableNumber>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
+                            __ret = Hydrator.ReadResult<TypeITTableNumber>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     if (!((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR"].Value).GetDataReader()) {
-                            pRefCursor = Hydrator.ReadResult<T_TTableNumber>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
+                            pRefCursor = Hydrator.ReadResult<TypeITTableNumber>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     if (__cmdTrace != null) TraceCompletion(__cmdTrace, __ret.Count);
                 } // using OracleCommand
@@ -6180,9 +6180,9 @@ namespace Schema.Odpt.Odpt.Package {
             return __ret;
         } // GetRowsTypedOutRet
 
-        public ICollection<T_TTableNumber> GetRowsTypedOutRet<T_TTableNumber>(out ICollection<T_TTableNumber> pRefCursor, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
-                where T_TTableNumber : class, ITTableNumber, new() {
-            ICollection<T_TTableNumber> __ret = new List<T_TTableNumber>(); pRefCursor = new List<T_TTableNumber>(); 
+        public ICollection<TypeITTableNumber> GetRowsTypedOutRet<TypeITTableNumber>(out ICollection<TypeITTableNumber> pRefCursor, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
+                where TypeITTableNumber : class, ITTableNumber, new() {
+            ICollection<TypeITTableNumber> __ret = new List<TypeITTableNumber>(); pRefCursor = new List<TypeITTableNumber>(); 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
             try {
                 using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_TABLE_NUMBER.GET_ROWS_TYPED_OUT_RET", __conn)) {
@@ -6195,11 +6195,11 @@ namespace Schema.Odpt.Odpt.Package {
                     int __rowsAffected = __cmd.ExecuteNonQuery();
                     if (!((OracleRefCursor)__cmd.Parameters["!RETURN"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["!RETURN"].Value).GetDataReader()) {
-                            __ret = ReadResultITTableNumber<T_TTableNumber>(__rdr, optionalMaxNumberRowsToReadFromAnyCursor);
+                            __ret = ReadResultITTableNumber<TypeITTableNumber>(__rdr, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     if (!((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR"].Value).GetDataReader()) {
-                            pRefCursor = ReadResultITTableNumber<T_TTableNumber>(__rdr, optionalMaxNumberRowsToReadFromAnyCursor);
+                            pRefCursor = ReadResultITTableNumber<TypeITTableNumber>(__rdr, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     if (__cmdTrace != null) TraceCompletion(__cmdTrace, __ret.Count);
                 } // using OracleCommand
@@ -6212,10 +6212,10 @@ namespace Schema.Odpt.Odpt.Package {
             return __ret;
         } // GetRowsTypedOutRet
 
-        public ICollection<T_TTableNumber> GetRowsTypedRet<T_TTableNumber>(
+        public ICollection<TypeITTableNumber> GetRowsTypedRet<TypeITTableNumber>(
                 bool mapColumnToObjectPropertyByPosition = false, bool allowUnmappedColumnsToBeExcluded = false, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
-                where T_TTableNumber : class, new() {
-            ICollection<T_TTableNumber> __ret = new List<T_TTableNumber>(); 
+                where TypeITTableNumber : class, new() {
+            ICollection<TypeITTableNumber> __ret = new List<TypeITTableNumber>(); 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
             try {
                 using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_TABLE_NUMBER.GET_ROWS_TYPED_RET", __conn)) {
@@ -6227,7 +6227,7 @@ namespace Schema.Odpt.Odpt.Package {
                     int __rowsAffected = __cmd.ExecuteNonQuery();
                     if (!((OracleRefCursor)__cmd.Parameters["!RETURN"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["!RETURN"].Value).GetDataReader()) {
-                            __ret = Hydrator.ReadResult<T_TTableNumber>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
+                            __ret = Hydrator.ReadResult<TypeITTableNumber>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     if (__cmdTrace != null) TraceCompletion(__cmdTrace, __ret.Count);
                 } // using OracleCommand
@@ -6240,9 +6240,9 @@ namespace Schema.Odpt.Odpt.Package {
             return __ret;
         } // GetRowsTypedRet
 
-        public ICollection<T_TTableNumber> GetRowsTypedRet<T_TTableNumber>(UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
-                where T_TTableNumber : class, ITTableNumber, new() {
-            ICollection<T_TTableNumber> __ret = new List<T_TTableNumber>(); 
+        public ICollection<TypeITTableNumber> GetRowsTypedRet<TypeITTableNumber>(UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
+                where TypeITTableNumber : class, ITTableNumber, new() {
+            ICollection<TypeITTableNumber> __ret = new List<TypeITTableNumber>(); 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
             try {
                 using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_TABLE_NUMBER.GET_ROWS_TYPED_RET", __conn)) {
@@ -6254,7 +6254,7 @@ namespace Schema.Odpt.Odpt.Package {
                     int __rowsAffected = __cmd.ExecuteNonQuery();
                     if (!((OracleRefCursor)__cmd.Parameters["!RETURN"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["!RETURN"].Value).GetDataReader()) {
-                            __ret = ReadResultITTableNumber<T_TTableNumber>(__rdr, optionalMaxNumberRowsToReadFromAnyCursor);
+                            __ret = ReadResultITTableNumber<TypeITTableNumber>(__rdr, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     if (__cmdTrace != null) TraceCompletion(__cmdTrace, __ret.Count);
                 } // using OracleCommand
@@ -6267,11 +6267,11 @@ namespace Schema.Odpt.Odpt.Package {
             return __ret;
         } // GetRowsTypedRet
 
-        public Int64? GetRowsUntypedOut<T_pRefCursorUntyped>(out ICollection<T_pRefCursorUntyped> pRefCursor, 
+        public Int64? GetRowsUntypedOut<TypeOutPRefCursorUntyped>(out ICollection<TypeOutPRefCursorUntyped> pRefCursor, 
                 bool mapColumnToObjectPropertyByPosition = false, bool allowUnmappedColumnsToBeExcluded = false, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, 
                 OracleConnection optionalPreexistingOpenConnection = null)
-                where T_pRefCursorUntyped : class, new() {
-            Int64? __ret = null; pRefCursor = new List<T_pRefCursorUntyped>(); 
+                where TypeOutPRefCursorUntyped : class, new() {
+            Int64? __ret = null; pRefCursor = new List<TypeOutPRefCursorUntyped>(); 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
             try {
                 using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_TABLE_NUMBER.GET_ROWS_UNTYPED_OUT", __conn)) {
@@ -6287,7 +6287,7 @@ namespace Schema.Odpt.Odpt.Package {
                         : Convert.ToInt64(__cmd.Parameters["!RETURN"].Value.ToString());
                     if (!((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR"].Value).GetDataReader()) {
-                            pRefCursor = Hydrator.ReadResult<T_pRefCursorUntyped>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
+                            pRefCursor = Hydrator.ReadResult<TypeOutPRefCursorUntyped>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     if (__cmdTrace != null) TraceCompletion(__cmdTrace);
                 } // using OracleCommand
@@ -6330,12 +6330,12 @@ namespace Schema.Odpt.Odpt.Package {
             return __ret;
         } // GetRowsUntypedOut
 
-        public Int64? GetRowsUntypedOut2<T_pRefCursorUntyped, T_pRefCursor2Untyped>(out ICollection<T_pRefCursorUntyped> pRefCursor, out ICollection<T_pRefCursor2Untyped> pRefCursor2, 
+        public Int64? GetRowsUntypedOut2<TypeOutPRefCursorUntyped, TypeOutPRefCursor2Untyped>(out ICollection<TypeOutPRefCursorUntyped> pRefCursor, out ICollection<TypeOutPRefCursor2Untyped> pRefCursor2, 
                 bool mapColumnToObjectPropertyByPosition = false, bool allowUnmappedColumnsToBeExcluded = false, 
                 UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
-                where T_pRefCursorUntyped : class, new()
-                where T_pRefCursor2Untyped : class, new() {
-            Int64? __ret = null; pRefCursor = new List<T_pRefCursorUntyped>(); pRefCursor2 = new List<T_pRefCursor2Untyped>(); 
+                where TypeOutPRefCursorUntyped : class, new()
+                where TypeOutPRefCursor2Untyped : class, new() {
+            Int64? __ret = null; pRefCursor = new List<TypeOutPRefCursorUntyped>(); pRefCursor2 = new List<TypeOutPRefCursor2Untyped>(); 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
             try {
                 using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_TABLE_NUMBER.GET_ROWS_UNTYPED_OUT2", __conn)) {
@@ -6352,11 +6352,11 @@ namespace Schema.Odpt.Odpt.Package {
                         : Convert.ToInt64(__cmd.Parameters["!RETURN"].Value.ToString());
                     if (!((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR"].Value).GetDataReader()) {
-                            pRefCursor = Hydrator.ReadResult<T_pRefCursorUntyped>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
+                            pRefCursor = Hydrator.ReadResult<TypeOutPRefCursorUntyped>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     if (!((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR2"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR2"].Value).GetDataReader()) {
-                            pRefCursor2 = Hydrator.ReadResult<T_pRefCursor2Untyped>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
+                            pRefCursor2 = Hydrator.ReadResult<TypeOutPRefCursor2Untyped>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     if (__cmdTrace != null) TraceCompletion(__cmdTrace);
                 } // using OracleCommand
@@ -6405,13 +6405,13 @@ namespace Schema.Odpt.Odpt.Package {
             return __ret;
         } // GetRowsUntypedOut2
 
-        public ICollection<T_returnUntyped> GetRowsUntypedOut2Ret<T_returnUntyped, T_pRefCursorUntyped, T_pRefCursor2Untyped>(out ICollection<T_pRefCursorUntyped> pRefCursor, out ICollection<T_pRefCursor2Untyped> pRefCursor2, 
+        public ICollection<TypeReturnUntyped> GetRowsUntypedOut2Ret<TypeReturnUntyped, TypeOutPRefCursorUntyped, TypeOutPRefCursor2Untyped>(out ICollection<TypeOutPRefCursorUntyped> pRefCursor, out ICollection<TypeOutPRefCursor2Untyped> pRefCursor2, 
                 bool mapColumnToObjectPropertyByPosition = false, bool allowUnmappedColumnsToBeExcluded = false, 
                 UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
-                where T_returnUntyped : class, new()
-                where T_pRefCursorUntyped : class, new()
-                where T_pRefCursor2Untyped : class, new() {
-            ICollection<T_returnUntyped> __ret = new List<T_returnUntyped>(); pRefCursor = new List<T_pRefCursorUntyped>(); pRefCursor2 = new List<T_pRefCursor2Untyped>(); 
+                where TypeReturnUntyped : class, new()
+                where TypeOutPRefCursorUntyped : class, new()
+                where TypeOutPRefCursor2Untyped : class, new() {
+            ICollection<TypeReturnUntyped> __ret = new List<TypeReturnUntyped>(); pRefCursor = new List<TypeOutPRefCursorUntyped>(); pRefCursor2 = new List<TypeOutPRefCursor2Untyped>(); 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
             try {
                 using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_TABLE_NUMBER.GET_ROWS_UNTYPED_OUT2_RET", __conn)) {
@@ -6425,15 +6425,15 @@ namespace Schema.Odpt.Odpt.Package {
                     int __rowsAffected = __cmd.ExecuteNonQuery();
                     if (!((OracleRefCursor)__cmd.Parameters["!RETURN"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["!RETURN"].Value).GetDataReader()) {
-                            __ret = Hydrator.ReadResult<T_returnUntyped>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
+                            __ret = Hydrator.ReadResult<TypeReturnUntyped>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     if (!((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR"].Value).GetDataReader()) {
-                            pRefCursor = Hydrator.ReadResult<T_pRefCursorUntyped>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
+                            pRefCursor = Hydrator.ReadResult<TypeOutPRefCursorUntyped>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     if (!((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR2"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR2"].Value).GetDataReader()) {
-                            pRefCursor2 = Hydrator.ReadResult<T_pRefCursor2Untyped>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
+                            pRefCursor2 = Hydrator.ReadResult<TypeOutPRefCursor2Untyped>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     if (__cmdTrace != null) TraceCompletion(__cmdTrace, __ret.Count);
                 } // using OracleCommand
@@ -6483,12 +6483,12 @@ namespace Schema.Odpt.Odpt.Package {
             return __ret;
         } // GetRowsUntypedOut2Ret
 
-        public ICollection<T_returnUntyped> GetRowsUntypedOutRet<T_returnUntyped, T_pRefCursorUntyped>(out ICollection<T_pRefCursorUntyped> pRefCursor, 
+        public ICollection<TypeReturnUntyped> GetRowsUntypedOutRet<TypeReturnUntyped, TypeOutPRefCursorUntyped>(out ICollection<TypeOutPRefCursorUntyped> pRefCursor, 
                 bool mapColumnToObjectPropertyByPosition = false, bool allowUnmappedColumnsToBeExcluded = false, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, 
                 OracleConnection optionalPreexistingOpenConnection = null)
-                where T_returnUntyped : class, new()
-                where T_pRefCursorUntyped : class, new() {
-            ICollection<T_returnUntyped> __ret = new List<T_returnUntyped>(); pRefCursor = new List<T_pRefCursorUntyped>(); 
+                where TypeReturnUntyped : class, new()
+                where TypeOutPRefCursorUntyped : class, new() {
+            ICollection<TypeReturnUntyped> __ret = new List<TypeReturnUntyped>(); pRefCursor = new List<TypeOutPRefCursorUntyped>(); 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
             try {
                 using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_TABLE_NUMBER.GET_ROWS_UNTYPED_OUT_RET", __conn)) {
@@ -6501,11 +6501,11 @@ namespace Schema.Odpt.Odpt.Package {
                     int __rowsAffected = __cmd.ExecuteNonQuery();
                     if (!((OracleRefCursor)__cmd.Parameters["!RETURN"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["!RETURN"].Value).GetDataReader()) {
-                            __ret = Hydrator.ReadResult<T_returnUntyped>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
+                            __ret = Hydrator.ReadResult<TypeReturnUntyped>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     if (!((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR"].Value).GetDataReader()) {
-                            pRefCursor = Hydrator.ReadResult<T_pRefCursorUntyped>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
+                            pRefCursor = Hydrator.ReadResult<TypeOutPRefCursorUntyped>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     if (__cmdTrace != null) TraceCompletion(__cmdTrace, __ret.Count);
                 } // using OracleCommand
@@ -6549,10 +6549,10 @@ namespace Schema.Odpt.Odpt.Package {
             return __ret;
         } // GetRowsUntypedOutRet
 
-        public ICollection<T_returnUntyped> GetRowsUntypedRet<T_returnUntyped>(
+        public ICollection<TypeReturnUntyped> GetRowsUntypedRet<TypeReturnUntyped>(
                 bool mapColumnToObjectPropertyByPosition = false, bool allowUnmappedColumnsToBeExcluded = false, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
-                where T_returnUntyped : class, new() {
-            ICollection<T_returnUntyped> __ret = new List<T_returnUntyped>(); 
+                where TypeReturnUntyped : class, new() {
+            ICollection<TypeReturnUntyped> __ret = new List<TypeReturnUntyped>(); 
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
             try {
                 using (OracleCommand __cmd = new OracleCommand("ODPT.ODPT_PKG_TABLE_NUMBER.GET_ROWS_UNTYPED_RET", __conn)) {
@@ -6564,7 +6564,7 @@ namespace Schema.Odpt.Odpt.Package {
                     int __rowsAffected = __cmd.ExecuteNonQuery();
                     if (!((OracleRefCursor)__cmd.Parameters["!RETURN"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["!RETURN"].Value).GetDataReader()) {
-                            __ret = Hydrator.ReadResult<T_returnUntyped>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
+                            __ret = Hydrator.ReadResult<TypeReturnUntyped>(__rdr, mapColumnToObjectPropertyByPosition, allowUnmappedColumnsToBeExcluded, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     if (__cmdTrace != null) TraceCompletion(__cmdTrace, __ret.Count);
                 } // using OracleCommand
