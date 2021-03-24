@@ -910,7 +910,8 @@ namespace Odapter {
                         // do not create record from an instance of the record referenced in a different package
                         if (rec.IsDefinedExternally && (rec.TypeName ?? "").Equals(pack.PackageName)) continue;
 
-                        pack.RecordsToGenerate.Add(rec); // record included in this package's generation (unless ignored due to implementation issue)
+                        // prevent creating duplicate entity/interface/reader
+                        if (pack.RecordsToGenerate.Exists(r => r.EntityName == rec.EntityName)) continue;
 
                         string reasonMsg;
                         if (!rec.IsIgnoredDueToOracleTypes(out reasonMsg)) {
@@ -924,13 +925,15 @@ namespace Odapter {
                         classText.AppendLine();
                         classText.Append(GenerateEntityClass(rec, ancestorRecordTypeClassName, 
                             Parameter.Instance.IsSerializablePackageRecord, Parameter.Instance.IsPartialPackage,
-                            Parameter.Instance.IsDataContractPackageRecord, Parameter.Instance.IsXmlElementPackageRecord, 2));
+                            Parameter.Instance.IsDataContractPackageRecord, Parameter.Instance.IsXmlElementPackageRecord, 2, out bool ignored));
 
                         if (!rec.IsIgnoredDueToOracleTypes(out reasonMsg)) {
                             // create custom reader
                             classText.AppendLine();
                             classText.Append(GenerateRecordTypeReadResultMethod(rec));
                         }
+                        
+                        if (!ignored) pack.RecordsToGenerate.Add(rec); // track records included in this package's generation 
                     }
 
                     // create method for each package proc
@@ -964,7 +967,7 @@ namespace Odapter {
         /// <param name="tabIndentCount"></param>
         /// <returns></returns>
         private string GenerateEntityClass(IEntity entity, string ancestorClassName, bool isSerializable, bool isPartial, 
-            bool isDataContract, bool isXmlElement, int tabIndentCount) {
+            bool isDataContract, bool isXmlElement, int tabIndentCount, out bool ignored) {
 
             var className = entity.Translater.CSharpClassName;
             bool isPackageRecord = entity is IPackageRecord;
@@ -988,6 +991,7 @@ namespace Odapter {
                 int tab = isPackageRecord ? 2 : 1;
                 classText.AppendLine(Tab(tab) + $"// **{entityType} IGNORED** - {ignoreReason}");
                 classText.AppendLine(Tab(tab) + "// " + classFirstLine);
+                ignored = true;
                 return classText.ToString();
             }
 
@@ -1028,6 +1032,7 @@ namespace Odapter {
             }
 
             classText.AppendLine(Tab(tabIndentCount) + "} // " + className); // end entity type class
+            ignored = false;
             return classText.ToString();
         }
 
@@ -1076,7 +1081,7 @@ namespace Odapter {
 
                 foreach (IEntity entity in entities) {
                     if (entities.IndexOf(entity) != 0) outFile.WriteLine();
-                    outFile.Write(GenerateEntityClass(entity, ancestorClassName, isSerializable, isPartial, isDataMember, isXmlElement, 1));
+                    outFile.Write(GenerateEntityClass(entity, ancestorClassName, isSerializable, isPartial, isDataMember, isXmlElement, 1, out bool ignore));
                 }
 
                 // close class and namespace for package
