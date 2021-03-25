@@ -168,7 +168,7 @@ namespace Odapter {
         #region File Name Generation
         private static string GenerateFileNameBase(string schema, string filter) => $"{Trns.PascalCaseOfOracleIdentifier(schema).Value}{Trns.PascalCaseOfOracleIdentifier(filter).Value}";
         public static string GenerateFileNamePackage(string schema, string filter) => $"{GenerateFileNameBase(schema, filter)}Package.cs";
-        public static string GenerateFileNameObject(string schema, string filter) => $"{GenerateFileNameBase(schema, filter)}ObjectType.cs";
+        public static string GenerateFileNameObject(string schema, string filter) => $"{GenerateFileNameBase(schema, filter)}Object.cs";
         public static string GenerateFileNameTable(string schema, string filter) => $"{GenerateFileNameBase(schema, filter)}Table.cs";
         public static string GenerateFileNameView(string schema, string filter) => $"{GenerateFileNameBase(schema, filter)}View.cs";
         #endregion
