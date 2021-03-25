@@ -85,6 +85,7 @@ namespace Odapter {
             NamespaceDataContract = String.Empty;
 
             AncestorClassNamePackage = AncestorClassNamePackageRecord = AncestorClassNameObjectType = AncestorClassNameTable = AncestorClassNameView = String.Empty;
+            FileNamePackage = FileNameObject = FileNameTable = FileNameView = String.Empty;
 
             MaxAssocArraySize = UInt16.MaxValue;
             MaxReturnAndOutArgStringSize = Int16.MaxValue;
@@ -166,6 +167,12 @@ namespace Odapter {
         public string AncestorClassNameObjectType { get; set; }
         public string AncestorClassNameTable { get; set; }
         public string AncestorClassNameView { get; set; }
+
+        // file names
+        public string FileNamePackage { get; set; }
+        public string FileNameObject { get; set; }
+        public string FileNameTable { get; set; }
+        public string FileNameView { get; set; }
 
         // code to generate
         private string _outputPath;

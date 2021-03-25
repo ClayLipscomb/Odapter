@@ -20,11 +20,11 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using System.Drawing;
 using System.Windows.Forms;
 using System.Text;
 using Odapter;
 using Odapter.CSharp;
+using Trns = Odapter.Translation.Api;
 
 namespace OdapterWnFrm {
     public partial class FormMain : Form {
@@ -108,6 +108,16 @@ namespace OdapterWnFrm {
                 validationErrorsFound = true;
             }
 
+            // 2. check required text box fields that have respectively named label
+            var fileNameTexBoxes = new List<TextBox> { txtFileNamePackage, txtFileNameObject, txtFileNameTable, txtFileNameView };
+            foreach (TextBox tb in fileNameTexBoxes) {
+                if (!tb.Text.EndsWith(@".cs")) {
+                    DisplayMessage(@"All generated files must end in "".cs.""");
+                    validationErrorsFound = true;
+                    break;
+                }
+            }
+
             return !validationErrorsFound;
         }
         private bool ValidateRequiredFields() {
@@ -151,6 +161,25 @@ namespace OdapterWnFrm {
                 }
             }
 
+            // 5. check required file names
+            var labelText = lblFileName.Text;
+            if (cbGeneratePackage.Checked && String.IsNullOrWhiteSpace(txtFileNamePackage.Text)) {
+                DisplayMessage($"{labelText} for package is required.");
+                missingRequiredFields = true;
+            }
+            if (cbGenerateObjectType.Checked && String.IsNullOrWhiteSpace(txtFileNameObject.Text)) {
+                DisplayMessage($"{labelText} for object  is required.");
+                missingRequiredFields = true;
+            }
+            if (cbGenerateTable.Checked && String.IsNullOrWhiteSpace(txtFileNameTable.Text)) {
+                DisplayMessage($"{labelText} for table is required.");
+                missingRequiredFields = true;
+            }
+            if (cbGenerateView.Checked && String.IsNullOrWhiteSpace(txtFileNameView.Text)) {
+                DisplayMessage($"{labelText} for view is required.");
+                missingRequiredFields = true;
+            }
+
             return !missingRequiredFields;
         }
 #endregion
@@ -174,6 +203,12 @@ namespace OdapterWnFrm {
             txtBaseObjectTypeClass.Text = Generator.GenerateBaseObjectTypeClassName(schema);
             txtBaseTableClass.Text = Generator.GenerateBaseTableClassName(schema);
             txtBaseViewClass.Text = Generator.GenerateBaseViewClassName(schema);
+
+            // file names
+            txtFileNamePackage.Text = Generator.GenerateFileNamePackage(schema, filterInName);
+            txtFileNameObject.Text = Generator.GenerateFileNameObject(schema, filterInName);
+            txtFileNameTable.Text = Generator.GenerateFileNameTable(schema, filterInName);
+            txtFileNameView.Text = Generator.GenerateFileNameView(schema, filterInName);
         }
 
 #region Enable/Disable
@@ -272,10 +307,8 @@ namespace OdapterWnFrm {
         }
 
         private void cbGeneratePackage_CheckedChanged(object sender, EventArgs e) {
-            cbGenerateRecordType.Checked = txtPackageNamespace.Enabled = txtBasePackageClass.Enabled = txtBaseRecordTypeClass.Enabled = cbGeneratePackage.Checked;
-            if (cbGeneratePackage.Checked) {
-                cbGenerateBaseAdapterClass.Checked = cbGenerateBaseDtoClasses.Checked = true;
-            }
+            cbGenerateRecordType.Checked = txtPackageNamespace.Enabled = txtBasePackageClass.Enabled = txtBaseRecordTypeClass.Enabled = txtFileNamePackage.Enabled = cbGeneratePackage.Checked;
+            if (cbGeneratePackage.Checked) cbGenerateBaseAdapterClass.Checked = cbGenerateBaseDtoClasses.Checked = true;
         }
 
         private void cbPartialPackage_CheckedChanged(object sender, EventArgs e) {
@@ -291,17 +324,17 @@ namespace OdapterWnFrm {
         }
 
         private void cbGenerateTable_CheckedChanged(object sender, EventArgs e) {
-            txtTableNamespace.Enabled = txtBaseTableClass.Enabled = cbGenerateTable.Checked;
-            if (cbGenerateTable.Checked) cbGenerateObjectType.Checked = txtObjectTypeNamespace.Enabled = true;
+            txtTableNamespace.Enabled = txtBaseTableClass.Enabled = txtFileNameTable.Enabled = cbGenerateTable.Checked;
+            if (cbGenerateTable.Checked) cbGenerateObjectType.Checked = txtObjectTypeNamespace.Enabled = txtFileNameObject.Enabled = true;
         }
 
         private void cbGenerateView_CheckedChanged(object sender, EventArgs e) {
-            txtViewNamespace.Enabled = txtBaseViewClass.Enabled = cbGenerateView.Checked;
-            if (cbGenerateView.Checked) cbGenerateObjectType.Checked = txtObjectTypeNamespace.Enabled = true;
+            txtViewNamespace.Enabled = txtBaseViewClass.Enabled = txtFileNameView.Enabled = cbGenerateView.Checked;
+            if (cbGenerateView.Checked) cbGenerateObjectType.Checked = txtObjectTypeNamespace.Enabled = txtFileNameObject.Enabled = true;
         }
 
         private void cbGenerateObjectType_CheckedChanged(object sender, EventArgs e) {
-            txtObjectTypeNamespace.Enabled = txtBaseObjectTypeClass.Enabled = cbGenerateObjectType.Checked;
+            txtObjectTypeNamespace.Enabled = txtBaseObjectTypeClass.Enabled = txtFileNameObject.Enabled = cbGenerateObjectType.Checked;
         }
 
         private void txtBaseConnectionClass_TextChanged(object sender, EventArgs e) {
@@ -401,6 +434,8 @@ namespace OdapterWnFrm {
             }
         }
 
+        private static string GetFilterValueIfUsedInNaming() => Parameter.Instance.IsIncludeFilterPrefixInNaming ? Parameter.Instance.Filter : String.Empty;
+
         private void SetFromParameters() {
             DbInstance = Parameter.Instance.DatabaseInstance;
             txtSchema.Text = Parameter.Instance.Schema;
@@ -424,6 +459,21 @@ namespace OdapterWnFrm {
             txtBaseObjectTypeClass.Text = Parameter.Instance.AncestorClassNameObjectType;
             txtBaseTableClass.Text = Parameter.Instance.AncestorClassNameTable;
             txtBaseViewClass.Text = Parameter.Instance.AncestorClassNameView;
+
+            // set file name fields for backward compatibility 
+            var filter = GetFilterValueIfUsedInNaming();
+            txtFileNamePackage.Text = String.IsNullOrWhiteSpace(Parameter.Instance.FileNamePackage) 
+                ? Generator.GenerateFileNamePackage(Parameter.Instance.Schema, filter)
+                : Parameter.Instance.FileNamePackage;
+            txtFileNameObject.Text = String.IsNullOrWhiteSpace(Parameter.Instance.FileNameObject)
+                ? Generator.GenerateFileNameObject(Parameter.Instance.Schema, filter)
+                : Parameter.Instance.FileNameObject;
+            txtFileNameTable.Text = String.IsNullOrWhiteSpace(Parameter.Instance.FileNameTable)
+                ? Generator.GenerateFileNameTable(Parameter.Instance.Schema, filter)
+                : Parameter.Instance.FileNameTable;
+            txtFileNameView.Text = String.IsNullOrWhiteSpace(Parameter.Instance.FileNameView)
+                ? Generator.GenerateFileNameView(Parameter.Instance.Schema, filter)
+                : Parameter.Instance.FileNameView;
 
             cbGeneratePackage.Checked = Parameter.Instance.IsGeneratePackage;
             cbGenerateObjectType.Checked = Parameter.Instance.IsGenerateObjectType;
@@ -503,6 +553,11 @@ namespace OdapterWnFrm {
             Parameter.Instance.AncestorClassNameObjectType = txtBaseObjectTypeClass.Text;
             Parameter.Instance.AncestorClassNameTable = txtBaseTableClass.Text;
             Parameter.Instance.AncestorClassNameView = txtBaseViewClass.Text;
+
+            Parameter.Instance.FileNamePackage = txtFileNamePackage.Text;
+            Parameter.Instance.FileNameObject = txtFileNameObject.Text;
+            Parameter.Instance.FileNameTable = txtFileNameTable.Text;
+            Parameter.Instance.FileNameView = txtFileNameView.Text;
 
             Parameter.Instance.MaxAssocArraySize = Convert.ToInt32(txtMaxAssocArraySize.Text);
             Parameter.Instance.MaxReturnAndOutArgStringSize = Convert.ToInt16(txtMaxReturnArgStringSize.Text);

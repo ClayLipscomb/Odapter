@@ -165,6 +165,14 @@ namespace Odapter {
         }
         #endregion
 
+        #region File Name Generation
+        private static string GenerateFileNameBase(string schema, string filter) => $"{Trns.PascalCaseOfOracleIdentifier(schema).Value}{Trns.PascalCaseOfOracleIdentifier(filter).Value}";
+        public static string GenerateFileNamePackage(string schema, string filter) => $"{GenerateFileNameBase(schema, filter)}Package.cs";
+        public static string GenerateFileNameObject(string schema, string filter) => $"{GenerateFileNameBase(schema, filter)}ObjectType.cs";
+        public static string GenerateFileNameTable(string schema, string filter) => $"{GenerateFileNameBase(schema, filter)}Table.cs";
+        public static string GenerateFileNameView(string schema, string filter) => $"{GenerateFileNameBase(schema, filter)}View.cs";
+        #endregion
+
         #region Package Method Generation
         /// <summary>
         /// create C# return type for the method that wraps a procedure
@@ -837,7 +845,7 @@ namespace Odapter {
 
             if (packages.Count == 0) return;
 
-            string fileName = $"{_outputPath}\\{Trns.PascalCaseOfOracleIdentifier(_schema).Value}{Trns.PascalCaseOfOracleIdentifier(GetFilterValueIfUsedInNaming()).Value}Package.cs";
+            string fileName = $"{_outputPath}\\{Parameter.Instance.FileNamePackage}";
             DisplayMessage("Coding packages (" + fileName.Substring(fileName.LastIndexOf('\\') + 1) + ")...");
 
             try {
@@ -1051,11 +1059,11 @@ namespace Odapter {
         }
 
         private void WriteNonPackagedEntityClasses<I_Entity>(List<IEntity> entities, string entityNamespace, string ancestorClassName, 
-            bool isSerializable, bool isPartial, bool isDataMember, bool isXmlElement)
+            bool isSerializable, bool isPartial, bool isDataMember, bool isXmlElement, string fileNameEntity)
             where I_Entity : IEntity {
 
             string entityTypeName = typeof(I_Entity).Name.TrimStart(@"I".ToCharArray());
-            string fileName = $"{_outputPath}\\{Trns.PascalCaseOfOracleIdentifier(_schema).Value}{Trns.PascalCaseOfOracleIdentifier(GetFilterValueIfUsedInNaming()).Value}{entityTypeName}.cs";
+            string fileName = $"{_outputPath}\\{fileNameEntity}";
 
             DisplayMessage("Coding " + entityTypeName.ToLower() + "s (" + fileName.Substring(fileName.LastIndexOf('\\') + 1) + ")...");
 
@@ -1138,13 +1146,16 @@ namespace Odapter {
                     Parameter.Instance.IsPartialPackage, Parameter.Instance.AncestorClassNamePackageRecord);
             if (Parameter.Instance.IsGenerateObjectType)
                 generator.WriteNonPackagedEntityClasses<IObjectType>(loader.ObjectTypes, Parameter.Instance.NamespaceObjectType, Generator.GenerateBaseObjectTypeClassName(Parameter.Instance.Schema),
-                    Parameter.Instance.IsSerializableObjectType, Parameter.Instance.IsPartialObjectType, Parameter.Instance.IsDataContractObjectType, Parameter.Instance.IsXmlElementObjectType);
+                    Parameter.Instance.IsSerializableObjectType, Parameter.Instance.IsPartialObjectType, Parameter.Instance.IsDataContractObjectType, Parameter.Instance.IsXmlElementObjectType,
+                    Parameter.Instance.FileNameObject);
             if (Parameter.Instance.IsGenerateTable)
                 generator.WriteNonPackagedEntityClasses<ITable>(loader.Tables, Parameter.Instance.NamespaceTable, Generator.GenerateBaseTableClassName(Parameter.Instance.Schema),
-                    Parameter.Instance.IsSerializableTable, Parameter.Instance.IsPartialTable, Parameter.Instance.IsDataContractTable, Parameter.Instance.IsXmlElementTable);
+                    Parameter.Instance.IsSerializableTable, Parameter.Instance.IsPartialTable, Parameter.Instance.IsDataContractTable, Parameter.Instance.IsXmlElementTable,
+                    Parameter.Instance.FileNameTable);
             if (Parameter.Instance.IsGenerateView)
                 generator.WriteNonPackagedEntityClasses<IView>(loader.Views, Parameter.Instance.NamespaceView, Generator.GenerateBaseViewClassName(Parameter.Instance.Schema),
-                    Parameter.Instance.IsSerializableView, Parameter.Instance.IsPartialView, Parameter.Instance.IsDataContractView, Parameter.Instance.IsXmlElementView);
+                    Parameter.Instance.IsSerializableView, Parameter.Instance.IsPartialView, Parameter.Instance.IsDataContractView, Parameter.Instance.IsXmlElementView,
+                    Parameter.Instance.FileNameView);
 
             generator.DeployUtilityClasses(Parameter.Instance.IsDeployResources);
             displayMessageMethod(Message.GENERATION_COMPLETE);
