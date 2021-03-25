@@ -727,21 +727,21 @@ namespace Odapter {
                 outFile.Write(headerText);
 
                 // namespace should be at schema level to avoid class name clashes
-                outFile.WriteLine("namespace " + Parameter.Instance.NamespaceSchema + " {");
+                outFile.WriteLine("namespace " + Parameter.Instance.NamespaceBaseEntity + " {");
 
                 // determine the class name of the base entity
                 string baseEntityClassName = $"{Trns.PascalCaseOfOracleIdentifier(_schema).Value}Entity";
 
                 // create all base entity classes
                 var schemaPascalCase = Trns.PascalCaseOfOracleIdentifier(_schema);
-                outFile.WriteLine(GenerateBaseEntityClass(baseEntityClassName, Parameter.Instance.NamespaceSchema, null));
-                outFile.WriteLine(GenerateBaseEntityClass($"{schemaPascalCase.Value}PackageRecord", Parameter.Instance.NamespaceSchema, baseEntityClassName));
-                outFile.WriteLine(GenerateBaseEntityClass($"{schemaPascalCase.Value}Table", Parameter.Instance.NamespaceSchema,  baseEntityClassName));
-                outFile.WriteLine(GenerateBaseEntityClass($"{schemaPascalCase.Value}View", Parameter.Instance.NamespaceSchema, baseEntityClassName));
-                outFile.WriteLine(GenerateBaseEntityClass($"{schemaPascalCase.Value}ObjectType", Parameter.Instance.NamespaceSchema, baseEntityClassName));
+                outFile.WriteLine(GenerateBaseEntityClass(baseEntityClassName, Parameter.Instance.NamespaceBaseEntity, null));
+                outFile.WriteLine(GenerateBaseEntityClass($"{schemaPascalCase.Value}PackageRecord", Parameter.Instance.NamespaceBaseEntity, baseEntityClassName));
+                outFile.WriteLine(GenerateBaseEntityClass($"{schemaPascalCase.Value}Table", Parameter.Instance.NamespaceBaseEntity,  baseEntityClassName));
+                outFile.WriteLine(GenerateBaseEntityClass($"{schemaPascalCase.Value}View", Parameter.Instance.NamespaceBaseEntity, baseEntityClassName));
+                outFile.WriteLine(GenerateBaseEntityClass($"{schemaPascalCase.Value}ObjectType", Parameter.Instance.NamespaceBaseEntity, baseEntityClassName));
 
                 // close namespace 
-                outFile.Write("" + "} // " + Parameter.Instance.NamespaceSchema);
+                outFile.Write("" + "} // " + Parameter.Instance.NamespaceBaseEntity);
 
                 outFile.Close();
             } catch (UnauthorizedAccessException) {
@@ -826,13 +826,13 @@ namespace Odapter {
                 outFile.Write(headerText);
 
                 // namespace should be at schema level
-                outFile.WriteLine("namespace " + Parameter.Instance.NamespaceSchema + " {");
+                outFile.WriteLine("namespace " + Parameter.Instance.NamespaceBaseAdapter + " {");
 
                 // create base package manager class
                 outFile.WriteLine(GenerateBasePackageClass(baseClassName));
 
                 // close namespace for 
-                outFile.Write("" + "} // " + Parameter.Instance.NamespaceSchema);
+                outFile.Write("" + "} // " + Parameter.Instance.NamespaceBaseAdapter);
 
                 outFile.Close();
             } catch (UnauthorizedAccessException) {
@@ -887,7 +887,7 @@ namespace Odapter {
     
                     // class definition
                     classText.AppendLine();
-                    classText.AppendLine(Tab() + "public sealed " + (partialPackage ? "partial " : "") + "class " + className + " : " + Parameter.Instance.NamespaceSchema + "." + ancestorAdapterClassName + " {");
+                    classText.AppendLine(Tab() + "public sealed " + (partialPackage ? "partial " : "") + "class " + className + " : " + Parameter.Instance.NamespaceBaseAdapter + "." + ancestorAdapterClassName + " {");
 
                     // created as Singleton
                     classText.AppendLine(Tab(2) + "private " + className + "() { }");
@@ -990,7 +990,7 @@ namespace Odapter {
                 + (!String.IsNullOrEmpty(dbAncestorTypeName)
                         ? " : " + Trns.ClassNameOfOracleIdentifier(dbAncestorTypeName).Code // Oracle ancestor gets precedence
                         : (!String.IsNullOrEmpty(ancestorClassName)
-                            ? " : " + Parameter.Instance.NamespaceSchema + "." + ancestorClassName + (isPackageRecord ? ", " + CSL.InterfaceNameOfClassName(className) : "")
+                            ? " : " + Parameter.Instance.NamespaceBaseEntity + "." + ancestorClassName + (isPackageRecord ? ", " + CSL.InterfaceNameOfClassName(className) : "")
                             : "")) // user defined ancestor
                 + " {"; // start entity type class;
 

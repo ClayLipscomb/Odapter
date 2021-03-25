@@ -24,7 +24,6 @@ using System.Windows.Forms;
 using System.Text;
 using Odapter;
 using Odapter.CSharp;
-using Trns = Odapter.Translation.Api;
 
 namespace OdapterWnFrm {
     public partial class FormMain : Form {
@@ -50,9 +49,9 @@ namespace OdapterWnFrm {
             AcceptButton = this.BtnStart;
         }
 
-#region Messaging
+        #region Messaging
         private void InitMessageConsole() {
-            ListViewMessage.Clear() ;
+            ListViewMessage.Clear();
             ListViewMessage.Refresh();
 
             ColumnHeader columnHeader = new ColumnHeader();
@@ -73,9 +72,9 @@ namespace OdapterWnFrm {
         }
 
         public Action<string> DisplayMessageMethod;
-#endregion
+        #endregion
 
-#region Utility
+        #region Utility
         /// <summary>
         /// find any control recursively given an id
         /// </summary>
@@ -93,7 +92,7 @@ namespace OdapterWnFrm {
         }
         #endregion
 
-#region Validations
+        #region Validations
         private bool ValidateFieldValues() {
             bool validationErrorsFound = false;
             int maxAssocArraySize = Convert.ToInt32(txtMaxAssocArraySize.Text);
@@ -109,9 +108,10 @@ namespace OdapterWnFrm {
             }
 
             // 2. check required text box fields that have respectively named label
-            var fileNameTexBoxes = new List<TextBox> { txtFileNamePackage, txtFileNameObject, txtFileNameTable, txtFileNameView };
-            foreach (TextBox tb in fileNameTexBoxes) {
-                if (!tb.Text.EndsWith(@".cs")) {
+            var fileNameTextBoxes = new List<TextBox> { txtPackageFileName, txtObjectFileName, txtTableFileName, txtViewFileName, txtBaseAdapterFileName, txtBaseEntityFileName };
+            foreach (TextBox tb in fileNameTextBoxes) {
+                CheckBox cb = (CheckBox)FindControl(this, "cbGenerate" + tb.Name.Substring(3, tb.Name.Length - 11));
+                if (cb.Checked && !tb.Text.EndsWith(@".cs")) {
                     DisplayMessage(@"All generated files must end in "".cs.""");
                     validationErrorsFound = true;
                     break;
@@ -142,55 +142,57 @@ namespace OdapterWnFrm {
 
             // 3. check required namespace text box fields that have respective check box
             List<TextBox> reqTexBoxesWithCheckBox =
-                new List<TextBox> { txtPackageNamespace, txtObjectTypeNamespace, txtTableNamespace, txtViewNamespace };
+                new List<TextBox> { txtPackageNamespace, txtObjectNamespace, txtTableNamespace, txtViewNamespace, txtBaseAdapterNamespace, txtBaseEntityNamespace };
+            var labelNamespace = this.lblNamespace.Text;
             foreach (TextBox tb in reqTexBoxesWithCheckBox) {
-                if (String.IsNullOrEmpty(tb.Text)) {
-                    CheckBox cb = (CheckBox)FindControl(this, "cbGenerate" + tb.Name.Substring(3, tb.Name.Length - 12));
-                    DisplayMessage(cb.Text.TrimEnd(new char[] { '?' }) + " Namespace is required.");
+                CheckBox cb = (CheckBox)FindControl(this, "cbGenerate" + tb.Name.Substring(3, tb.Name.Length - 12));
+                if (cb.Checked && String.IsNullOrEmpty(tb.Text)) {
+                    DisplayMessage($"{labelNamespace} for {cb.Text.TrimEnd(new char[] { '?' })} is required.");
                     missingRequiredFields = true;
                 }
             }
 
             // 4. check required class name text box fields that have respective check box
-            reqTexBoxesWithCheckBox = new List<TextBox> { txtBasePackageClass, txtBaseRecordTypeClass, txtBaseObjectTypeClass, txtBaseTableClass, txtBaseViewClass};
+            reqTexBoxesWithCheckBox = new List<TextBox> { txtPackageAncestorClass, txtRecordTypeAncestorClass, txtObjectAncestorClass, txtTableAncestorClass, txtViewAncestorClass };
+            var labelAncestorClass = this.lblAncestorClass.Text;
             foreach (TextBox tb in reqTexBoxesWithCheckBox) {
-                if (String.IsNullOrEmpty(tb.Text)) {
-                    CheckBox cb = (CheckBox)FindControl(this, "cbGenerate" + tb.Name.Substring(7, tb.Name.Length - 12));
-                    DisplayMessage(cb.Text.TrimEnd(new char[] { '?' }) + " Ancestor Class is required.");
+                CheckBox cb = (CheckBox)FindControl(this, "cbGenerate" + tb.Name.Substring(3, tb.Name.Length - 16));
+                if (cb.Checked && String.IsNullOrEmpty(tb.Text)) {
+                    DisplayMessage($"{labelAncestorClass} for {cb.Text.TrimEnd(new char[] { '?' })} is required.");
                     missingRequiredFields = true;
                 }
             }
 
             // 5. check required file names
             var labelText = lblFileName.Text;
-            if (cbGeneratePackage.Checked && String.IsNullOrWhiteSpace(txtFileNamePackage.Text)) {
-                DisplayMessage($"{labelText} for package is required.");
+            if (cbGeneratePackage.Checked && String.IsNullOrWhiteSpace(txtPackageFileName.Text)) {
+                DisplayMessage($"{labelText} for Package Adapter is required.");
                 missingRequiredFields = true;
             }
-            if (cbGenerateObjectType.Checked && String.IsNullOrWhiteSpace(txtFileNameObject.Text)) {
-                DisplayMessage($"{labelText} for object  is required.");
+            if (cbGenerateObject.Checked && String.IsNullOrWhiteSpace(txtObjectFileName.Text)) {
+                DisplayMessage($"{labelText} for Object DTOs is required.");
                 missingRequiredFields = true;
             }
-            if (cbGenerateTable.Checked && String.IsNullOrWhiteSpace(txtFileNameTable.Text)) {
-                DisplayMessage($"{labelText} for table is required.");
+            if (cbGenerateTable.Checked && String.IsNullOrWhiteSpace(txtTableFileName.Text)) {
+                DisplayMessage($"{labelText} for Table DTOs is required.");
                 missingRequiredFields = true;
             }
-            if (cbGenerateView.Checked && String.IsNullOrWhiteSpace(txtFileNameView.Text)) {
-                DisplayMessage($"{labelText} for view is required.");
+            if (cbGenerateView.Checked && String.IsNullOrWhiteSpace(txtViewFileName.Text)) {
+                DisplayMessage($"{labelText} for View DTOs is required.");
                 missingRequiredFields = true;
             }
-            if (cbGenerateBaseAdapterClass.Checked && String.IsNullOrWhiteSpace(txtFileNameBaseAdapter.Text)) {
-                DisplayMessage($"{labelText} for base adapter is required.");
+            if (cbGenerateBaseAdapter.Checked && String.IsNullOrWhiteSpace(txtBaseAdapterFileName.Text)) {
+                DisplayMessage($"{labelText} for Base Adapter is required.");
                 missingRequiredFields = true;
             }
-            if (cbGenerateBaseDtoClasses.Checked && String.IsNullOrWhiteSpace(txtFileNameBaseEntity.Text)) {
-                DisplayMessage($"{labelText} for base DTOs is required.");
+            if (cbGenerateBaseEntity.Checked && String.IsNullOrWhiteSpace(txtBaseEntityFileName.Text)) {
+                DisplayMessage($"{labelText} for Base DTOs is required.");
                 missingRequiredFields = true;
             }
 
             return !missingRequiredFields;
         }
-#endregion
+        #endregion
 
         private void GenerateNamespacesAndBaseClassNames() {
             String schema = String.IsNullOrEmpty(txtSchema.Text) ? null : txtSchema.Text;
@@ -198,42 +200,44 @@ namespace OdapterWnFrm {
             String filterInName = (cbIncludeFilterPrefixInNaming.Checked && !String.IsNullOrWhiteSpace(txtFilter.Text)) ? txtFilter.Text.Trim() : String.Empty;
 
             // namespaces
-            Parameter.Instance.NamespaceSchema = Generator.GenerateNamespaceSchema(baseNamespace, schema, filterInName); // immediately store because UI has no field
+            //Parameter.Instance.NamespaceSchema = Generator.GenerateNamespaceSchema(baseNamespace, schema, filterInName); // immediately store because UI has no field
             txtPackageNamespace.Text = Generator.GenerateNamespacePackage(baseNamespace, schema, filterInName);
             txtRecordTypeNamespace.Text = Generator.GenerateNamespacePackage(baseNamespace, schema, filterInName);
-            txtObjectTypeNamespace.Text = Generator.GenerateNamespaceObjectType(baseNamespace, schema, filterInName);
+            txtObjectNamespace.Text = Generator.GenerateNamespaceObjectType(baseNamespace, schema, filterInName);
             txtTableNamespace.Text = Generator.GenerateNamespaceTable(baseNamespace, schema, filterInName);
             txtViewNamespace.Text = Generator.GenerateNamespaceView(baseNamespace, schema, filterInName);
+            txtBaseAdapterNamespace.Text = Generator.GenerateNamespaceSchema(baseNamespace, schema, filterInName);
+            txtBaseEntityNamespace.Text = Generator.GenerateNamespaceSchema(baseNamespace, schema, filterInName);
 
             // base classes
-            txtBasePackageClass.Text = Generator.GenerateBaseAdapterClassName(schema);
-            txtBaseRecordTypeClass.Text = Generator.GenerateBaseRecordClassName(schema);
-            txtBaseObjectTypeClass.Text = Generator.GenerateBaseObjectTypeClassName(schema);
-            txtBaseTableClass.Text = Generator.GenerateBaseTableClassName(schema);
-            txtBaseViewClass.Text = Generator.GenerateBaseViewClassName(schema);
+            txtPackageAncestorClass.Text = Generator.GenerateBaseAdapterClassName(schema);
+            txtRecordTypeAncestorClass.Text = Generator.GenerateBaseRecordClassName(schema);
+            txtObjectAncestorClass.Text = Generator.GenerateBaseObjectTypeClassName(schema);
+            txtTableAncestorClass.Text = Generator.GenerateBaseTableClassName(schema);
+            txtViewAncestorClass.Text = Generator.GenerateBaseViewClassName(schema);
 
             // file names
-            txtFileNamePackage.Text = Generator.GenerateFileNamePackage(schema, filterInName);
-            txtFileNameObject.Text = Generator.GenerateFileNameObject(schema, filterInName);
-            txtFileNameTable.Text = Generator.GenerateFileNameTable(schema, filterInName);
-            txtFileNameView.Text = Generator.GenerateFileNameView(schema, filterInName);
-            txtFileNameBaseAdapter.Text = Generator.GenerateFileNameBaseAdapter(schema, filterInName);
-            txtFileNameBaseEntity.Text = Generator.GenerateFileNameBaseEntity(schema, filterInName);
+            txtPackageFileName.Text = Generator.GenerateFileNamePackage(schema, filterInName);
+            txtObjectFileName.Text = Generator.GenerateFileNameObject(schema, filterInName);
+            txtTableFileName.Text = Generator.GenerateFileNameTable(schema, filterInName);
+            txtViewFileName.Text = Generator.GenerateFileNameView(schema, filterInName);
+            txtBaseAdapterFileName.Text = Generator.GenerateFileNameBaseAdapter(schema, filterInName);
+            txtBaseEntityFileName.Text = Generator.GenerateFileNameBaseEntity(schema, filterInName);
         }
 
-#region Enable/Disable
+        #region Enable/Disable
         private void SetEnabledDisabled() {
             SetEnabledDisabledbFilterRelatedFields();
             cmbCSharpTypeUsedForOracleIntervalDayToSecond.Enabled = false; // pending implementation
         }
 
         private void SetEnabledDisabledbFilterRelatedFields() {
-            cbDuplicatePackageRecordOriginatingOutsideFilterAndSchema.Enabled = cbIncludeFilterPrefixInNaming.Enabled 
+            cbDuplicatePackageRecordOriginatingOutsideFilterAndSchema.Enabled = cbIncludeFilterPrefixInNaming.Enabled
                 = !String.IsNullOrEmpty(txtFilter.Text);
         }
-#endregion
+        #endregion
 
-#region Events
+        #region Events
         private void cbGeneratePOCOExtension_CheckStateChanged(object sender, EventArgs e) {
             //SetEnabledGenerateExtensionControls(cbGeneratePOCOExtension.Checked);
         }
@@ -243,7 +247,7 @@ namespace OdapterWnFrm {
 
         private void txtSchema_Leave(object sender, EventArgs e) {
             if (String.IsNullOrEmpty(txtLogin.Text)) txtLogin.Text = txtSchema.Text;
-            if (String.IsNullOrEmpty(txtBasePackageClass.Text)) txtBasePackageClass.Text = Generator.GenerateBaseAdapterClassName(txtSchema.Text);
+            if (String.IsNullOrEmpty(txtPackageAncestorClass.Text)) txtPackageAncestorClass.Text = Generator.GenerateBaseAdapterClassName(txtSchema.Text);
         }
 
         private void btnSelectPath_Click(object sender, EventArgs e) {
@@ -265,9 +269,7 @@ namespace OdapterWnFrm {
             }
         }
 
-        private void btnRestoreDefaults_Click(object sender, EventArgs e) {
-            RestoreDefaultParamters();
-        }
+        private void btnRestoreDefaults_Click(object sender, EventArgs e) => RestoreDefaultParamters();
 
         private void btnSaveCurrentSettings_Click(object sender, EventArgs e) {
             if (cmbSettingsFile.SelectedIndex <= 0) {
@@ -282,11 +284,10 @@ namespace OdapterWnFrm {
             BindSettingsFiles(); // refreshes list to reflect new file, if any
         }
 
-        private void txtDBInstance_TextChanged(object sender, EventArgs e) {
-        }
+        private void txtDBInstance_TextChanged(object sender, EventArgs e) { }
 
-        private void cmbDBInstance_KeyPress(object sender, KeyPressEventArgs e) {
-            if (Char.IsLetter(e.KeyChar)) e.KeyChar = Char.ToUpper(e.KeyChar);
+        private void cmbDBInstance_KeyPress(object sender, KeyPressEventArgs e) { 
+            if (Char.IsLetter(e.KeyChar)) e.KeyChar = Char.ToUpper(e.KeyChar); 
         }
 
         private void btnStart_Clicked(object sender, EventArgs e) {
@@ -303,9 +304,7 @@ namespace OdapterWnFrm {
             GenerateNamespacesAndBaseClassNames();
         }
 
-        private void txtBaseNamespace_TextChanged(object sender, EventArgs e) {
-            GenerateNamespacesAndBaseClassNames();
-        }
+        private void txtBaseNamespace_TextChanged(object sender, EventArgs e) => GenerateNamespacesAndBaseClassNames();
 
         private void txtFilter_TextChanged(object sender, EventArgs e) {
             GenerateNamespacesAndBaseClassNames();
@@ -317,56 +316,60 @@ namespace OdapterWnFrm {
         }
 
         private void cbGeneratePackage_CheckedChanged(object sender, EventArgs e) {
-            cbGenerateRecordType.Checked = txtPackageNamespace.Enabled = txtBasePackageClass.Enabled = txtBaseRecordTypeClass.Enabled = txtFileNamePackage.Enabled = cbGeneratePackage.Checked;
-            if (cbGeneratePackage.Checked) cbGenerateBaseAdapterClass.Checked = cbGenerateBaseDtoClasses.Checked = true;
+            txtPackageNamespace.Enabled = txtPackageAncestorClass.Enabled = txtPackageFileName.Enabled =
+                cbGenerateRecordType.Checked = txtRecordTypeAncestorClass.Enabled =
+                cbGenerateBaseAdapter.Checked = txtBaseAdapterFileName.Enabled = txtBaseAdapterNamespace.Enabled =
+                cbGenerateBaseEntity.Checked =
+                cbGeneratePackage.Checked;
+            if (cbGeneratePackage.Checked) cbGenerateBaseAdapter.Checked = cbGenerateBaseEntity.Checked = true;
         }
 
         private void cbPartialPackage_CheckedChanged(object sender, EventArgs e) {
             cbPartialPOCOs.Checked = cbPartialPackageClasses.Checked;
         }
 
-        private void cmbClientHome_SelectedIndexChanged(object sender, EventArgs e) {
-            BindTnsNames();
-        }
+        private void cmbClientHome_SelectedIndexChanged(object sender, EventArgs e) => BindTnsNames();
 
         private void cbPartialPOCOs_CheckedChanged(object sender, EventArgs e) {
             if (cbPartialPOCOs.Checked) cbPartialPackageClasses.Checked = true;
         }
 
         private void cbGenerateTable_CheckedChanged(object sender, EventArgs e) {
-            txtTableNamespace.Enabled = txtBaseTableClass.Enabled = txtFileNameTable.Enabled = cbGenerateTable.Checked;
-            if (cbGenerateTable.Checked) cbGenerateObjectType.Checked = txtObjectTypeNamespace.Enabled = txtFileNameObject.Enabled = true;
+            txtTableNamespace.Enabled = txtTableAncestorClass.Enabled = txtTableFileName.Enabled = cbGenerateTable.Checked;
+            if (cbGenerateTable.Checked) cbGenerateObject.Checked = txtObjectNamespace.Enabled = txtObjectFileName.Enabled = cbGenerateBaseEntity.Checked = true;
         }
 
         private void cbGenerateView_CheckedChanged(object sender, EventArgs e) {
-            txtViewNamespace.Enabled = txtBaseViewClass.Enabled = txtFileNameView.Enabled = cbGenerateView.Checked;
-            if (cbGenerateView.Checked) cbGenerateObjectType.Checked = txtObjectTypeNamespace.Enabled = txtFileNameObject.Enabled = true;
+            txtViewNamespace.Enabled = txtViewAncestorClass.Enabled = txtViewFileName.Enabled = cbGenerateView.Checked;
+            if (cbGenerateView.Checked) cbGenerateObject.Checked = txtObjectNamespace.Enabled = txtObjectFileName.Enabled = cbGenerateBaseEntity.Checked = true;
         }
 
         private void cbGenerateObjectType_CheckedChanged(object sender, EventArgs e) {
-            txtObjectTypeNamespace.Enabled = txtBaseObjectTypeClass.Enabled = txtFileNameObject.Enabled = cbGenerateObjectType.Checked;
+            txtObjectNamespace.Enabled = txtObjectAncestorClass.Enabled = txtObjectFileName.Enabled = cbGenerateObject.Checked;
+            if (cbGenerateObject.Checked) cbGenerateBaseEntity.Checked = true;
         }
-
+        private void cbGenerateBaseAdapterClass_CheckedChanged(object sender, EventArgs e) {
+            txtBaseAdapterNamespace.Enabled = txtBaseAdapterFileName.Enabled = cbGenerateBaseAdapter.Checked;
+        }
+        private void cbGenerateBaseEntity_CheckedChanged(object sender, EventArgs e) {
+            txtBaseEntityNamespace.Enabled = txtBaseEntityFileName.Enabled = cbGenerateBaseEntity.Checked;
+        }
         private void txtBaseConnectionClass_TextChanged(object sender, EventArgs e) {
-            txtBaseConnectionClassFunction.Text = txtBasePackageClass.Text;
-            txtBaseConnectionClassProcedure.Text = txtBasePackageClass.Text;
+            txtBaseConnectionClassFunction.Text = txtPackageAncestorClass.Text;
+            txtBaseConnectionClassProcedure.Text = txtPackageAncestorClass.Text;
         }
 
         private void cbExcludeObjectNamesWithSpecificChars_CheckedChanged(object sender, EventArgs e) {
             txtExcludeChars.Enabled = cbExcludeObjectNamesWithSpecificChars.Checked;
         }
 
-        private void cbXmlElementPackageRecord_CheckedChanged(object sender, EventArgs e) {
-        }
+        private void cbXmlElementPackageRecord_CheckedChanged(object sender, EventArgs e) { }
 
-        private void cbXmlElementObjectType_CheckedChanged(object sender, EventArgs e) {
-        }
+        private void cbXmlElementObjectType_CheckedChanged(object sender, EventArgs e) { }
 
-        private void cbXmlElementView_CheckedChanged(object sender, EventArgs e) {
-        }
+        private void cbXmlElementView_CheckedChanged(object sender, EventArgs e) { }
 
-        private void cbXmlElementTable_CheckedChanged(object sender, EventArgs e) {
-        }
+        private void cbXmlElementTable_CheckedChanged(object sender, EventArgs e) { }
 #endregion
 
 #region Binding
@@ -459,42 +462,50 @@ namespace OdapterWnFrm {
 
             txtBaseNamespace.Text = Parameter.Instance.NamespaceBase;
             txtPackageNamespace.Text = Parameter.Instance.NamespacePackage;
-            txtObjectTypeNamespace.Text = Parameter.Instance.NamespaceObjectType;
+            txtObjectNamespace.Text = Parameter.Instance.NamespaceObjectType;
             txtTableNamespace.Text = Parameter.Instance.NamespaceTable;
             txtViewNamespace.Text = Parameter.Instance.NamespaceView;
-            txtDataContractNamespace.Text = Parameter.Instance.NamespaceDataContract;
+            // set new namespaces for backward compatibility
+            txtBaseAdapterNamespace.Text = String.IsNullOrWhiteSpace(Parameter.Instance.NamespaceBaseAdapter)
+                ? Generator.GenerateNamespaceSchema(Parameter.Instance.NamespaceBase, Parameter.Instance.Schema, Parameter.Instance.Filter)
+                : Parameter.Instance.NamespaceBaseAdapter;
+            txtBaseEntityNamespace.Text = String.IsNullOrWhiteSpace(Parameter.Instance.NamespaceBaseEntity)
+                ? Generator.GenerateNamespaceSchema(Parameter.Instance.NamespaceBase, Parameter.Instance.Schema, Parameter.Instance.Filter)
+                : Parameter.Instance.NamespaceBaseEntity;
 
-            txtBasePackageClass.Text = Parameter.Instance.AncestorClassNamePackage;
-            txtBaseRecordTypeClass.Text = Parameter.Instance.AncestorClassNamePackageRecord;
-            txtBaseObjectTypeClass.Text = Parameter.Instance.AncestorClassNameObjectType;
-            txtBaseTableClass.Text = Parameter.Instance.AncestorClassNameTable;
-            txtBaseViewClass.Text = Parameter.Instance.AncestorClassNameView;
+            txtPackageAncestorClass.Text = Parameter.Instance.AncestorClassNamePackage;
+            txtRecordTypeAncestorClass.Text = Parameter.Instance.AncestorClassNamePackageRecord;
+            txtObjectAncestorClass.Text = Parameter.Instance.AncestorClassNameObjectType;
+            txtTableAncestorClass.Text = Parameter.Instance.AncestorClassNameTable;
+            txtViewAncestorClass.Text = Parameter.Instance.AncestorClassNameView;
 
             // set file name fields for backward compatibility 
             var filter = GetFilterValueIfUsedInNaming();
-            txtFileNamePackage.Text = String.IsNullOrWhiteSpace(Parameter.Instance.FileNamePackage) 
+            txtPackageFileName.Text = String.IsNullOrWhiteSpace(Parameter.Instance.FileNamePackage) 
                 ? Generator.GenerateFileNamePackage(Parameter.Instance.Schema, filter)
                 : Parameter.Instance.FileNamePackage;
-            txtFileNameObject.Text = String.IsNullOrWhiteSpace(Parameter.Instance.FileNameObject)
+            txtObjectFileName.Text = String.IsNullOrWhiteSpace(Parameter.Instance.FileNameObject)
                 ? Generator.GenerateFileNameObject(Parameter.Instance.Schema, filter)
                 : Parameter.Instance.FileNameObject;
-            txtFileNameTable.Text = String.IsNullOrWhiteSpace(Parameter.Instance.FileNameTable)
+            txtTableFileName.Text = String.IsNullOrWhiteSpace(Parameter.Instance.FileNameTable)
                 ? Generator.GenerateFileNameTable(Parameter.Instance.Schema, filter)
                 : Parameter.Instance.FileNameTable;
-            txtFileNameView.Text = String.IsNullOrWhiteSpace(Parameter.Instance.FileNameView)
+            txtViewFileName.Text = String.IsNullOrWhiteSpace(Parameter.Instance.FileNameView)
                 ? Generator.GenerateFileNameView(Parameter.Instance.Schema, filter)
                 : Parameter.Instance.FileNameView;
-            txtFileNameBaseAdapter.Text = String.IsNullOrWhiteSpace(Parameter.Instance.FileNameBaseAdapter)
+            txtBaseAdapterFileName.Text = String.IsNullOrWhiteSpace(Parameter.Instance.FileNameBaseAdapter)
                 ? Generator.GenerateFileNameBaseAdapter(Parameter.Instance.Schema, filter)
                 : Parameter.Instance.FileNameBaseAdapter;
-            txtFileNameBaseEntity.Text = String.IsNullOrWhiteSpace(Parameter.Instance.FileNameBaseEntity)
+            txtBaseEntityFileName.Text = String.IsNullOrWhiteSpace(Parameter.Instance.FileNameBaseEntity)
                 ? Generator.GenerateFileNameBaseEntity(Parameter.Instance.Schema, filter)
                 : Parameter.Instance.FileNameBaseEntity;
 
             cbGeneratePackage.Checked = Parameter.Instance.IsGeneratePackage;
-            cbGenerateObjectType.Checked = Parameter.Instance.IsGenerateObjectType;
+            cbGenerateObject.Checked = Parameter.Instance.IsGenerateObjectType;
             cbGenerateTable.Checked = Parameter.Instance.IsGenerateTable;
             cbGenerateView.Checked = Parameter.Instance.IsGenerateView;
+            cbGenerateBaseAdapter.Checked = Parameter.Instance.IsGenerateBaseAdapter;
+            cbGenerateBaseEntity.Checked = Parameter.Instance.IsGenerateBaseEntities;
 
             cbDataContractPackageRecord.Checked = Parameter.Instance.IsDataContractPackageRecord;
             cbDataContractObjectType.Checked = Parameter.Instance.IsDataContractObjectType;
@@ -521,8 +532,6 @@ namespace OdapterWnFrm {
             txtMaxAssocArraySize.Text = Parameter.Instance.MaxAssocArraySize.ToString();
             txtMaxReturnArgStringSize.Text = Parameter.Instance.MaxReturnAndOutArgStringSize.ToString();
             cbDeployResources.Checked = Parameter.Instance.IsDeployResources;
-            cbGenerateBaseAdapterClass.Checked = Parameter.Instance.IsGenerateBaseAdapter;
-            cbGenerateBaseDtoClasses.Checked = Parameter.Instance.IsGenerateBaseEntities;
 
             cmbCSharpTypeUsedForOracleRefCursor.SelectedValue = Parameter.Instance.CSharpTypeUsedForOracleRefCursor;
             cmbCSharpTypeUsedForOracleAssociativeArray.SelectedValue = Parameter.Instance.CSharpTypeUsedForOracleAssociativeArray;
@@ -543,6 +552,7 @@ namespace OdapterWnFrm {
             cbGeneratedDynamicMethodForTypedCursor.Checked = Parameter.Instance.IsGenerateDynamicMappingMethodForTypedCursor;
             cbUseAutoImplementedProperties.Checked = Parameter.Instance.IsUseAutoImplementedProperties;
             txtLocalVariableNameSuffix.Text = Parameter.Instance.LocalVariableNameSuffix ?? "";
+            txtDataContractNamespace.Text = Parameter.Instance.NamespaceDataContract;
         }
 
         private void ExtractToParameters() {
@@ -559,23 +569,24 @@ namespace OdapterWnFrm {
 
             Parameter.Instance.NamespaceBase = txtBaseNamespace.Text;
             Parameter.Instance.NamespacePackage = txtPackageNamespace.Text;
-            Parameter.Instance.NamespaceObjectType = txtObjectTypeNamespace.Text;
+            Parameter.Instance.NamespaceObjectType = txtObjectNamespace.Text;
             Parameter.Instance.NamespaceTable = txtTableNamespace.Text;
             Parameter.Instance.NamespaceView = txtViewNamespace.Text;
-            Parameter.Instance.NamespaceDataContract = txtDataContractNamespace.Text;
+            Parameter.Instance.NamespaceBaseAdapter = txtBaseAdapterNamespace.Text;
+            Parameter.Instance.NamespaceBaseEntity = txtBaseEntityNamespace.Text;
 
-            Parameter.Instance.AncestorClassNamePackage = txtBasePackageClass.Text;
-            Parameter.Instance.AncestorClassNamePackageRecord = txtBaseRecordTypeClass.Text;
-            Parameter.Instance.AncestorClassNameObjectType = txtBaseObjectTypeClass.Text;
-            Parameter.Instance.AncestorClassNameTable = txtBaseTableClass.Text;
-            Parameter.Instance.AncestorClassNameView = txtBaseViewClass.Text;
+            Parameter.Instance.AncestorClassNamePackage = txtPackageAncestorClass.Text;
+            Parameter.Instance.AncestorClassNamePackageRecord = txtRecordTypeAncestorClass.Text;
+            Parameter.Instance.AncestorClassNameObjectType = txtObjectAncestorClass.Text;
+            Parameter.Instance.AncestorClassNameTable = txtTableAncestorClass.Text;
+            Parameter.Instance.AncestorClassNameView = txtViewAncestorClass.Text;
 
-            Parameter.Instance.FileNamePackage = txtFileNamePackage.Text;
-            Parameter.Instance.FileNameObject = txtFileNameObject.Text;
-            Parameter.Instance.FileNameTable = txtFileNameTable.Text;
-            Parameter.Instance.FileNameView = txtFileNameView.Text;
-            Parameter.Instance.FileNameBaseAdapter = txtFileNameBaseAdapter.Text;
-            Parameter.Instance.FileNameBaseEntity = txtFileNameBaseEntity.Text;
+            Parameter.Instance.FileNamePackage = txtPackageFileName.Text;
+            Parameter.Instance.FileNameObject = txtObjectFileName.Text;
+            Parameter.Instance.FileNameTable = txtTableFileName.Text;
+            Parameter.Instance.FileNameView = txtViewFileName.Text;
+            Parameter.Instance.FileNameBaseAdapter = txtBaseAdapterFileName.Text;
+            Parameter.Instance.FileNameBaseEntity = txtBaseEntityFileName.Text;
 
             Parameter.Instance.MaxAssocArraySize = Convert.ToInt32(txtMaxAssocArraySize.Text);
             Parameter.Instance.MaxReturnAndOutArgStringSize = Convert.ToInt16(txtMaxReturnArgStringSize.Text);
@@ -596,12 +607,11 @@ namespace OdapterWnFrm {
             Parameter.Instance.IsConvertOracleNumberToIntegerIfColumnNameIsId = cbConvertOracleNumberToIntegerIfColumnNameIsId.Checked;
 
             Parameter.Instance.IsGeneratePackage = cbGeneratePackage.Checked;
-            Parameter.Instance.IsGenerateObjectType = cbGenerateObjectType.Checked;
+            Parameter.Instance.IsGenerateObjectType = cbGenerateObject.Checked;
             Parameter.Instance.IsGenerateTable = cbGenerateTable.Checked;
             Parameter.Instance.IsGenerateView = cbGenerateView.Checked;
-
-            Parameter.Instance.IsGenerateBaseAdapter = cbGenerateBaseAdapterClass.Checked;
-            Parameter.Instance.IsGenerateBaseEntities = cbGenerateBaseDtoClasses.Checked;
+            Parameter.Instance.IsGenerateBaseAdapter = cbGenerateBaseAdapter.Checked;
+            Parameter.Instance.IsGenerateBaseEntities = cbGenerateBaseEntity.Checked;
 
             Parameter.Instance.IsDataContractPackageRecord = cbDataContractPackageRecord.Checked;
             Parameter.Instance.IsDataContractObjectType = cbDataContractObjectType.Checked;
@@ -625,9 +635,10 @@ namespace OdapterWnFrm {
 
             Parameter.Instance.IsIncludeFilterPrefixInNaming = cbIncludeFilterPrefixInNaming.Checked;
             Parameter.Instance.IsDeployResources = cbDeployResources.Checked;
-            Parameter.Instance.IsGenerateBaseAdapter = cbGenerateBaseAdapterClass.Checked;
-            Parameter.Instance.IsGenerateBaseEntities = cbGenerateBaseDtoClasses.Checked;
+            Parameter.Instance.IsGenerateBaseAdapter = cbGenerateBaseAdapter.Checked;
+            Parameter.Instance.IsGenerateBaseEntities = cbGenerateBaseEntity.Checked;
 
+            Parameter.Instance.NamespaceDataContract = txtDataContractNamespace.Text;
             Parameter.Instance.IsDuplicatePackageRecordOriginatingOutsideFilterAndSchema = cbDuplicatePackageRecordOriginatingOutsideFilterAndSchema.Checked;
             Parameter.Instance.IsExcludeObjectsNamesWithSpecificChars = cbExcludeObjectNamesWithSpecificChars.Checked;
             Parameter.Instance.ObjectNameCharsToExcludeAsString = txtExcludeChars.Text;
@@ -657,44 +668,14 @@ namespace OdapterWnFrm {
             }
         }
 
-        private void txtPassword_TextChanged(object sender, EventArgs e) {
-
-        }
-
-        private void cbGenerateBaseAdapterClass_CheckedChanged(object sender, EventArgs e) {
-
-        }
-
-        private void cbDeployResources_CheckedChanged(object sender, EventArgs e) {
-
-        }
-
-        private void lblMaxReturnArgStringSize_Click(object sender, EventArgs e) {
-
-        }
-
-        private void cbGeneratedDynamicMethodForTypedCursor_CheckedChanged(object sender, EventArgs e) {
-
-        }
-
-        private void txtLocalVariableNameSuffix_TextChanged(object sender, EventArgs e) {
-
-        }
-
-        private void cbSerializablePOCOs_CheckedChanged(object sender, EventArgs e) {
-
-        }
-
-        private void cbDataContractPackageRecord_CheckedChanged(object sender, EventArgs e) {
-
-        }
-
-        private void cbDuplicatePackageRecordOriginatingOutsideFilterAndSchema_CheckedChanged(object sender, EventArgs e) {
-
-        }
-
-        private void cbUseAutoImplementedProperties_CheckedChanged(object sender, EventArgs e) {
-
-        }
+        private void txtPassword_TextChanged(object sender, EventArgs e) { }
+        private void cbDeployResources_CheckedChanged(object sender, EventArgs e) { }
+        private void lblMaxReturnArgStringSize_Click(object sender, EventArgs e) { }
+        private void cbGeneratedDynamicMethodForTypedCursor_CheckedChanged(object sender, EventArgs e) { }
+        private void txtLocalVariableNameSuffix_TextChanged(object sender, EventArgs e) { }
+        private void cbSerializablePOCOs_CheckedChanged(object sender, EventArgs e) { }
+        private void cbDataContractPackageRecord_CheckedChanged(object sender, EventArgs e) { }
+        private void cbDuplicatePackageRecordOriginatingOutsideFilterAndSchema_CheckedChanged(object sender, EventArgs e) { }
+        private void cbUseAutoImplementedProperties_CheckedChanged(object sender, EventArgs e) { }
     }
 }

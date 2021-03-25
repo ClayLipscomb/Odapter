@@ -67,7 +67,6 @@ namespace Odapter {
         #endregion
 
         public void RestoreDefaults() {
-            //OracleHome = 
             DatabaseInstance = Filter = Schema = UserLogin = Password =  OutputPath = String.Empty;
 
             IsSavePassword = false;
@@ -80,8 +79,7 @@ namespace Odapter {
             IsIncludeFilterPrefixInNaming = true;
 
             NamespaceBase = "Schema";
-            NamespacePackage = NamespaceObjectType = NamespaceTable = NamespaceView = String.Empty;
-            NamespaceSchema = String.Empty;
+            NamespacePackage = NamespaceObjectType = NamespaceTable = NamespaceView = NamespaceBaseAdapter = NamespaceBaseEntity = String.Empty;
             NamespaceDataContract = String.Empty;
 
             AncestorClassNamePackage = AncestorClassNamePackageRecord = AncestorClassNameObjectType = AncestorClassNameTable = AncestorClassNameView = String.Empty;
@@ -158,8 +156,9 @@ namespace Odapter {
         public string NamespaceObjectType { get; set; } // must have internally in order to generate "using" for other entity types
         public string NamespaceTable { get; set; }
         public string NamespaceView { get; set; }
+        public string NamespaceBaseAdapter { get; set; }
+        public string NamespaceBaseEntity { get; set; }
         public string NamespaceDataContract { get; set; }
-        public string NamespaceSchema { get; set; } // de facto full namespace for schema (includes filter, if any)
 
         // ancestor class names
         public string AncestorClassNamePackage { get; set; }
@@ -187,6 +186,8 @@ namespace Odapter {
         public bool IsGenerateObjectType { get; set; }
         public bool IsGenerateTable { get; set; }
         public bool IsGenerateView { get; set; }
+        public bool IsGenerateBaseAdapter { get; set; }  // will not overwrite existing file
+        public bool IsGenerateBaseEntities { get; set; } // will not overwrite existing file
 
         public bool IsDataContractPackageRecord { get; set; }
         public bool IsDataContractObjectType { get; set; }
@@ -300,8 +301,6 @@ namespace Odapter {
 
         // miscellaneous
         public bool IsDeployResources { get; set; }  // will overwrite existing file
-        public bool IsGenerateBaseAdapter { get; set; }  // will not overwrite existing file
-        public bool IsGenerateBaseEntities { get; set; } // will not overwrite existing file
         [XmlIgnore]
         public IList<string> ConfigFileNames { get { return GetLocalConfigFileNames(); }  }
 

@@ -60,11 +60,21 @@ namespace Odapter {
 
         string NamespaceBase { get; set; }
         string NamespaceDataContract { get; set; }
-        //string NamespaceObjectType { get; set; }
+        string NamespaceObjectType { get; set; }
         string NamespacePackage { get; set; }
-        string NamespaceSchema { get; set; }
+        //string NamespaceSchema { get; set; }
         string NamespaceTable { get; set; }
         string NamespaceView { get; set; }
+        string NamespaceBaseAdapter { get; set; }
+        string NamespaceBaseEntity { get; set; }
+
+        string FileNamePackage { get; set; }
+        string FileNameObject { get; set; }
+        string FileNameTable { get; set; }
+        string FileNameView { get; set; }
+        string FileNameBaseAdapter { get; set; }
+        string FileNameBaseEntity { get; set; }
+
 
         bool IsDuplicatePackageRecordOriginatingOutsideFilterAndSchema { get; set; }
         bool IsGenerateDynamicMappingMethodForTypedCursor { get; set; }
