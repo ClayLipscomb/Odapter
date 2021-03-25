@@ -179,6 +179,14 @@ namespace OdapterWnFrm {
                 DisplayMessage($"{labelText} for view is required.");
                 missingRequiredFields = true;
             }
+            if (cbGenerateBaseAdapterClass.Checked && String.IsNullOrWhiteSpace(txtFileNameBaseAdapter.Text)) {
+                DisplayMessage($"{labelText} for base adapter is required.");
+                missingRequiredFields = true;
+            }
+            if (cbGenerateBaseDtoClasses.Checked && String.IsNullOrWhiteSpace(txtFileNameBaseEntity.Text)) {
+                DisplayMessage($"{labelText} for base DTOs is required.");
+                missingRequiredFields = true;
+            }
 
             return !missingRequiredFields;
         }
@@ -209,6 +217,8 @@ namespace OdapterWnFrm {
             txtFileNameObject.Text = Generator.GenerateFileNameObject(schema, filterInName);
             txtFileNameTable.Text = Generator.GenerateFileNameTable(schema, filterInName);
             txtFileNameView.Text = Generator.GenerateFileNameView(schema, filterInName);
+            txtFileNameBaseAdapter.Text = Generator.GenerateFileNameBaseAdapter(schema, filterInName);
+            txtFileNameBaseEntity.Text = Generator.GenerateFileNameBaseEntity(schema, filterInName);
         }
 
 #region Enable/Disable
@@ -474,6 +484,12 @@ namespace OdapterWnFrm {
             txtFileNameView.Text = String.IsNullOrWhiteSpace(Parameter.Instance.FileNameView)
                 ? Generator.GenerateFileNameView(Parameter.Instance.Schema, filter)
                 : Parameter.Instance.FileNameView;
+            txtFileNameBaseAdapter.Text = String.IsNullOrWhiteSpace(Parameter.Instance.FileNameBaseAdapter)
+                ? Generator.GenerateFileNameBaseAdapter(Parameter.Instance.Schema, filter)
+                : Parameter.Instance.FileNameBaseAdapter;
+            txtFileNameBaseEntity.Text = String.IsNullOrWhiteSpace(Parameter.Instance.FileNameBaseEntity)
+                ? Generator.GenerateFileNameBaseEntity(Parameter.Instance.Schema, filter)
+                : Parameter.Instance.FileNameBaseEntity;
 
             cbGeneratePackage.Checked = Parameter.Instance.IsGeneratePackage;
             cbGenerateObjectType.Checked = Parameter.Instance.IsGenerateObjectType;
@@ -558,6 +574,8 @@ namespace OdapterWnFrm {
             Parameter.Instance.FileNameObject = txtFileNameObject.Text;
             Parameter.Instance.FileNameTable = txtFileNameTable.Text;
             Parameter.Instance.FileNameView = txtFileNameView.Text;
+            Parameter.Instance.FileNameBaseAdapter = txtFileNameBaseAdapter.Text;
+            Parameter.Instance.FileNameBaseEntity = txtFileNameBaseEntity.Text;
 
             Parameter.Instance.MaxAssocArraySize = Convert.ToInt32(txtMaxAssocArraySize.Text);
             Parameter.Instance.MaxReturnAndOutArgStringSize = Convert.ToInt16(txtMaxReturnArgStringSize.Text);

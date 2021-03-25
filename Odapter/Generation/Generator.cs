@@ -171,6 +171,8 @@ namespace Odapter {
         public static string GenerateFileNameObject(string schema, string filter) => $"{GenerateFileNameBase(schema, filter)}Object.cs";
         public static string GenerateFileNameTable(string schema, string filter) => $"{GenerateFileNameBase(schema, filter)}Table.cs";
         public static string GenerateFileNameView(string schema, string filter) => $"{GenerateFileNameBase(schema, filter)}View.cs";
+        public static string GenerateFileNameBaseAdapter(string schema, string filter) => $"{GenerateFileNameBase(schema, filter)}BaseAdapter.cs";
+        public static string GenerateFileNameBaseEntity(string schema, string filter) => $"{GenerateFileNameBase(schema, filter)}BaseEntity.cs";
         #endregion
 
         #region Package Method Generation
@@ -709,8 +711,8 @@ namespace Odapter {
             return classText.ToString();
         }
 
-        private void WriteBaseEntityClasses(string baseClassName) {
-            string fileName = $"{_outputPath}\\{Trns.PascalCaseOfOracleIdentifier(_schema).Value}{Trns.PascalCaseOfOracleIdentifier(GetFilterValueIfUsedInNaming()).Value}BaseEntity.cs";
+        private void WriteBaseEntityClasses(string fileNameBaseEntity) {
+            string fileName = $"{_outputPath}\\{fileNameBaseEntity}";
 
             try {
                 StreamWriter outFile = new StreamWriter(fileName);
@@ -809,8 +811,8 @@ namespace Odapter {
             return classText.ToString();
         }
 
-        private void WriteBasePackageClass(string baseClassName) {
-            string fileName = $"{_outputPath}\\{Trns.PascalCaseOfOracleIdentifier(_schema).Value}{Trns.PascalCaseOfOracleIdentifier(GetFilterValueIfUsedInNaming()).Value}BaseAdapter.cs";
+        private void WriteBasePackageClass(string fileNameBaseAdapter, string baseClassName) {
+            string fileName = $"{_outputPath}\\{fileNameBaseAdapter}";
 
             try {
                 StreamWriter outFile = new StreamWriter(fileName);
@@ -1136,8 +1138,8 @@ namespace Odapter {
 
             ////////////////////////
             // generate base classes
-            if (Parameter.Instance.IsGenerateBaseAdapter) generator.WriteBasePackageClass(Parameter.Instance.AncestorClassNamePackage);
-            if (Parameter.Instance.IsGenerateBaseEntities) generator.WriteBaseEntityClasses(Parameter.Instance.AncestorClassNamePackageRecord);
+            if (Parameter.Instance.IsGenerateBaseAdapter) generator.WriteBasePackageClass(Parameter.Instance.FileNameBaseAdapter, Parameter.Instance.AncestorClassNamePackage);
+            if (Parameter.Instance.IsGenerateBaseEntities) generator.WriteBaseEntityClasses(Parameter.Instance.FileNameBaseEntity);
 
             //////////////////////////////////
             // generate schema-derived classes

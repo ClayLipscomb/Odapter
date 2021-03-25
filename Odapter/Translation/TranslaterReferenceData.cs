@@ -36,7 +36,7 @@ namespace Odapter {
         }
 
         public static readonly IList<CSharpVersionOption> CSharpOptions = new List<CSharpVersionOption> {
-            new CSharpVersionOption(CSharpVersion.FourZero , @"4.0 (.NET 4.0 minimum, managed ODP.NET)")
+            new CSharpVersionOption(CSharpVersion.FourZero , @"4.0 (.NET 4.0) minimum")
         };
 
         public class CustomTranslatedCSharpType {
