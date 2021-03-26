@@ -95,6 +95,12 @@
     <Compile Include="generated\OdptOdptBaseEntity.cs" />
     <Compile Include="generated\OdptOdptObjectType.cs" />
     <Compile Include="generated\OdptOdptPackage.cs" />
+    <Compile Include="generated\OdptOdptSafeBaseAdapter.cs" />
+    <Compile Include="generated\OdptOdptSafeBaseEntity.cs" />
+    <Compile Include="generated\OdptOdptSafeObject.cs" />
+    <Compile Include="generated\OdptOdptSafePackage.cs" />
+    <Compile Include="generated\OdptOdptSafeTable.cs" />
+    <Compile Include="generated\OdptOdptSafeView.cs" />
     <Compile Include="generated\OdptOdptTable.cs" />
     <Compile Include="generated\OdptOdptView.cs" />
     <Compile Include="generated\OdptPackage.cs" />

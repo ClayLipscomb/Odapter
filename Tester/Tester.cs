@@ -21,6 +21,7 @@
 
 #define DATE_TIME                   // DATE as DateTime
 
+//#define SAFETYPE
 //#define SAFETYPE_INTEGER            // INTEGER as safe type OracleDecimal
 //#define SAFETYPE_NUMBER             // NUMBER as safe type OracleDecimal
 //#define SAFETYPE_DATE               // DATE as safe type OracleDate
@@ -33,7 +34,6 @@
 #define ODPT_FILTER_PREFIX          // "ODPT" as filter prefix of schema
 #define MAPPING_FOR_TYPED_CURSOR    // optional overloads for typed cursors methods are generated for mapping
 //#define SEED_TABLES                 // seed all tables with test data
-
 //#define LARGE_LOB_SIZE
 
 using System;
@@ -41,13 +41,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Data;
 using System.Diagnostics;
-using System.Threading;
 using System.Threading.Tasks;
 
 using Oracle.ManagedDataAccess.Client;
 using Oracle.ManagedDataAccess.Types;
 
-#if ODPT_FILTER_PREFIX
+#if SAFETYPE
+using Schema.Odpt.Odpt.Safe;
+using Schema.Odpt.Odpt.Safe.Package;
+using Schema.Odpt.Odpt.Safe.Table;
+using Schema.Odpt.Odpt.Safe.Type.Object;
+using Schema.Odpt.Odpt.Safe.View;
+#elif ODPT_FILTER_PREFIX
 using Schema.Odpt.Odpt;
 using Schema.Odpt.Odpt.Package;
 using Schema.Odpt.Odpt.Table;
