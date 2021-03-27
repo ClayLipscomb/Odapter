@@ -167,7 +167,7 @@ namespace OdapterWnFrm {
             this.ListViewMessage.Location = new System.Drawing.Point(923, 10);
             this.ListViewMessage.Margin = new System.Windows.Forms.Padding(4);
             this.ListViewMessage.Name = "ListViewMessage";
-            this.ListViewMessage.Size = new System.Drawing.Size(354, 413);
+            this.ListViewMessage.Size = new System.Drawing.Size(354, 436);
             this.ListViewMessage.TabIndex = 7;
             this.ListViewMessage.UseCompatibleStateImageBehavior = false;
             this.ListViewMessage.View = System.Windows.Forms.View.Details;
@@ -371,6 +371,7 @@ namespace OdapterWnFrm {
             this.gbCodeToGenerate.Controls.Add(this.txtBaseConnectionClassFunction);
             this.gbCodeToGenerate.Controls.Add(this.txtBaseConnectionClassProcedure);
             this.gbCodeToGenerate.Controls.Add(this.txtFunctionNamespace);
+            this.gbCodeToGenerate.Controls.Add(this.cbIncludeFilterPrefixInNaming);
             this.gbCodeToGenerate.Controls.Add(this.cbDataContractView);
             this.gbCodeToGenerate.Controls.Add(this.cbDataContractTable);
             this.gbCodeToGenerate.Controls.Add(this.cbDataContractObjectType);
@@ -426,7 +427,7 @@ namespace OdapterWnFrm {
             this.gbCodeToGenerate.Margin = new System.Windows.Forms.Padding(4);
             this.gbCodeToGenerate.Name = "gbCodeToGenerate";
             this.gbCodeToGenerate.Padding = new System.Windows.Forms.Padding(4);
-            this.gbCodeToGenerate.Size = new System.Drawing.Size(899, 257);
+            this.gbCodeToGenerate.Size = new System.Drawing.Size(899, 280);
             this.gbCodeToGenerate.TabIndex = 2;
             this.gbCodeToGenerate.TabStop = false;
             this.gbCodeToGenerate.Text = "Code to Generate";
@@ -452,7 +453,7 @@ namespace OdapterWnFrm {
             // txtBaseEntityFileName
             // 
             this.txtBaseEntityFileName.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtBaseEntityFileName.Location = new System.Drawing.Point(723, 223);
+            this.txtBaseEntityFileName.Location = new System.Drawing.Point(724, 223);
             this.txtBaseEntityFileName.Margin = new System.Windows.Forms.Padding(4);
             this.txtBaseEntityFileName.Name = "txtBaseEntityFileName";
             this.txtBaseEntityFileName.Size = new System.Drawing.Size(167, 23);
@@ -461,7 +462,7 @@ namespace OdapterWnFrm {
             // txtBaseAdapterFileName
             // 
             this.txtBaseAdapterFileName.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtBaseAdapterFileName.Location = new System.Drawing.Point(723, 93);
+            this.txtBaseAdapterFileName.Location = new System.Drawing.Point(724, 93);
             this.txtBaseAdapterFileName.Margin = new System.Windows.Forms.Padding(4);
             this.txtBaseAdapterFileName.Name = "txtBaseAdapterFileName";
             this.txtBaseAdapterFileName.Size = new System.Drawing.Size(167, 23);
@@ -470,7 +471,7 @@ namespace OdapterWnFrm {
             // txtViewFileName
             // 
             this.txtViewFileName.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtViewFileName.Location = new System.Drawing.Point(723, 197);
+            this.txtViewFileName.Location = new System.Drawing.Point(724, 197);
             this.txtViewFileName.Margin = new System.Windows.Forms.Padding(4);
             this.txtViewFileName.Name = "txtViewFileName";
             this.txtViewFileName.Size = new System.Drawing.Size(167, 23);
@@ -479,7 +480,7 @@ namespace OdapterWnFrm {
             // txtTableFileName
             // 
             this.txtTableFileName.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtTableFileName.Location = new System.Drawing.Point(723, 171);
+            this.txtTableFileName.Location = new System.Drawing.Point(724, 171);
             this.txtTableFileName.Margin = new System.Windows.Forms.Padding(4);
             this.txtTableFileName.Name = "txtTableFileName";
             this.txtTableFileName.Size = new System.Drawing.Size(167, 23);
@@ -488,7 +489,7 @@ namespace OdapterWnFrm {
             // txtObjectFileName
             // 
             this.txtObjectFileName.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtObjectFileName.Location = new System.Drawing.Point(723, 145);
+            this.txtObjectFileName.Location = new System.Drawing.Point(724, 145);
             this.txtObjectFileName.Margin = new System.Windows.Forms.Padding(4);
             this.txtObjectFileName.Name = "txtObjectFileName";
             this.txtObjectFileName.Size = new System.Drawing.Size(167, 23);
@@ -1122,7 +1123,7 @@ namespace OdapterWnFrm {
             // 
             this.lblCSharpVersion.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblCSharpVersion.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.lblCSharpVersion.Location = new System.Drawing.Point(160, 287);
+            this.lblCSharpVersion.Location = new System.Drawing.Point(160, 261);
             this.lblCSharpVersion.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblCSharpVersion.Name = "lblCSharpVersion";
             this.lblCSharpVersion.Size = new System.Drawing.Size(309, 17);
@@ -1136,7 +1137,7 @@ namespace OdapterWnFrm {
             this.cmbCSharpVersion.Enabled = false;
             this.cmbCSharpVersion.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbCSharpVersion.FormattingEnabled = true;
-            this.cmbCSharpVersion.Location = new System.Drawing.Point(473, 284);
+            this.cmbCSharpVersion.Location = new System.Drawing.Point(473, 260);
             this.cmbCSharpVersion.Margin = new System.Windows.Forms.Padding(4);
             this.cmbCSharpVersion.Name = "cmbCSharpVersion";
             this.cmbCSharpVersion.Size = new System.Drawing.Size(187, 25);
@@ -1145,7 +1146,7 @@ namespace OdapterWnFrm {
             // txtDataContractNamespace
             // 
             this.txtDataContractNamespace.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtDataContractNamespace.Location = new System.Drawing.Point(473, 259);
+            this.txtDataContractNamespace.Location = new System.Drawing.Point(473, 233);
             this.txtDataContractNamespace.Margin = new System.Windows.Forms.Padding(4);
             this.txtDataContractNamespace.Name = "txtDataContractNamespace";
             this.txtDataContractNamespace.Size = new System.Drawing.Size(187, 23);
@@ -1155,7 +1156,7 @@ namespace OdapterWnFrm {
             // 
             this.lblDataContractNamespace.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblDataContractNamespace.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.lblDataContractNamespace.Location = new System.Drawing.Point(223, 261);
+            this.lblDataContractNamespace.Location = new System.Drawing.Point(223, 235);
             this.lblDataContractNamespace.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblDataContractNamespace.Name = "lblDataContractNamespace";
             this.lblDataContractNamespace.Size = new System.Drawing.Size(246, 17);
@@ -1170,7 +1171,7 @@ namespace OdapterWnFrm {
             this.cbDeployResources.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cbDeployResources.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbDeployResources.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.cbDeployResources.Location = new System.Drawing.Point(160, 17);
+            this.cbDeployResources.Location = new System.Drawing.Point(160, 16);
             this.cbDeployResources.Margin = new System.Windows.Forms.Padding(4);
             this.cbDeployResources.Name = "cbDeployResources";
             this.cbDeployResources.RightToLeft = System.Windows.Forms.RightToLeft.No;
@@ -1190,13 +1191,13 @@ namespace OdapterWnFrm {
             this.cbIncludeFilterPrefixInNaming.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cbIncludeFilterPrefixInNaming.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbIncludeFilterPrefixInNaming.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.cbIncludeFilterPrefixInNaming.Location = new System.Drawing.Point(9, 70);
+            this.cbIncludeFilterPrefixInNaming.Location = new System.Drawing.Point(257, 251);
             this.cbIncludeFilterPrefixInNaming.Margin = new System.Windows.Forms.Padding(4);
             this.cbIncludeFilterPrefixInNaming.Name = "cbIncludeFilterPrefixInNaming";
             this.cbIncludeFilterPrefixInNaming.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.cbIncludeFilterPrefixInNaming.Size = new System.Drawing.Size(480, 21);
+            this.cbIncludeFilterPrefixInNaming.Size = new System.Drawing.Size(633, 21);
             this.cbIncludeFilterPrefixInNaming.TabIndex = 1;
-            this.cbIncludeFilterPrefixInNaming.Text = "Include Filter Prefix in Namespace and Generated File Name?";
+            this.cbIncludeFilterPrefixInNaming.Text = "Automatically Include Filter Prefix in Namespace and Generated File Naming?";
             this.cbIncludeFilterPrefixInNaming.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.toolTip1.SetToolTip(this.cbIncludeFilterPrefixInNaming, "Incorporate the Filter Prefix value into namespaces and generated file names. Thi" +
         "s is \r\nuseful in cases where packages of multiple projects exists in the same sc" +
@@ -1206,7 +1207,7 @@ namespace OdapterWnFrm {
             // txtMaxReturnArgStringSize
             // 
             this.txtMaxReturnArgStringSize.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtMaxReturnArgStringSize.Location = new System.Drawing.Point(473, 205);
+            this.txtMaxReturnArgStringSize.Location = new System.Drawing.Point(473, 179);
             this.txtMaxReturnArgStringSize.Margin = new System.Windows.Forms.Padding(4);
             this.txtMaxReturnArgStringSize.Name = "txtMaxReturnArgStringSize";
             this.txtMaxReturnArgStringSize.Size = new System.Drawing.Size(99, 23);
@@ -1218,12 +1219,12 @@ namespace OdapterWnFrm {
             this.lblMaxReturnArgStringSize.BackColor = System.Drawing.Color.Transparent;
             this.lblMaxReturnArgStringSize.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMaxReturnArgStringSize.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.lblMaxReturnArgStringSize.Location = new System.Drawing.Point(27, 205);
+            this.lblMaxReturnArgStringSize.Location = new System.Drawing.Point(27, 179);
             this.lblMaxReturnArgStringSize.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblMaxReturnArgStringSize.Name = "lblMaxReturnArgStringSize";
             this.lblMaxReturnArgStringSize.Size = new System.Drawing.Size(440, 21);
             this.lblMaxReturnArgStringSize.TabIndex = 8;
-            this.lblMaxReturnArgStringSize.Text = "* Max Length of VARCHAR2 Returned Arg";
+            this.lblMaxReturnArgStringSize.Text = "* Max Length of VARCHAR2 Returned Argument";
             this.lblMaxReturnArgStringSize.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.toolTip1.SetToolTip(this.lblMaxReturnArgStringSize, "Maximum length of VARCHAR2 for OUT, IN/OUT arguments or function return.");
             this.lblMaxReturnArgStringSize.Click += new System.EventHandler(this.lblMaxReturnArgStringSize_Click);
@@ -1231,7 +1232,7 @@ namespace OdapterWnFrm {
             // txtMaxAssocArraySize
             // 
             this.txtMaxAssocArraySize.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtMaxAssocArraySize.Location = new System.Drawing.Point(473, 232);
+            this.txtMaxAssocArraySize.Location = new System.Drawing.Point(473, 206);
             this.txtMaxAssocArraySize.Margin = new System.Windows.Forms.Padding(4);
             this.txtMaxAssocArraySize.Name = "txtMaxAssocArraySize";
             this.txtMaxAssocArraySize.Size = new System.Drawing.Size(99, 23);
@@ -1243,12 +1244,12 @@ namespace OdapterWnFrm {
             this.lblMaxAssocArraySize.BackColor = System.Drawing.Color.Transparent;
             this.lblMaxAssocArraySize.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMaxAssocArraySize.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.lblMaxAssocArraySize.Location = new System.Drawing.Point(30, 232);
+            this.lblMaxAssocArraySize.Location = new System.Drawing.Point(30, 206);
             this.lblMaxAssocArraySize.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblMaxAssocArraySize.Name = "lblMaxAssocArraySize";
             this.lblMaxAssocArraySize.Size = new System.Drawing.Size(439, 20);
             this.lblMaxAssocArraySize.TabIndex = 10;
-            this.lblMaxAssocArraySize.Text = "* Max Size of Associative Array Returned Arg";
+            this.lblMaxAssocArraySize.Text = "* Max Size of Associative Array Returned Argument";
             this.lblMaxAssocArraySize.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.toolTip1.SetToolTip(this.lblMaxAssocArraySize, "Maximum size of associative array for OUT, IN/OUT arguments or function return.");
             // 
@@ -1283,7 +1284,7 @@ namespace OdapterWnFrm {
             this.cbConvertOracleNumberToIntegerIfColumnNameIsId.BackColor = System.Drawing.Color.Transparent;
             this.cbConvertOracleNumberToIntegerIfColumnNameIsId.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbConvertOracleNumberToIntegerIfColumnNameIsId.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.cbConvertOracleNumberToIntegerIfColumnNameIsId.Location = new System.Drawing.Point(239, 124);
+            this.cbConvertOracleNumberToIntegerIfColumnNameIsId.Location = new System.Drawing.Point(237, 125);
             this.cbConvertOracleNumberToIntegerIfColumnNameIsId.Margin = new System.Windows.Forms.Padding(4);
             this.cbConvertOracleNumberToIntegerIfColumnNameIsId.Name = "cbConvertOracleNumberToIntegerIfColumnNameIsId";
             this.cbConvertOracleNumberToIntegerIfColumnNameIsId.Size = new System.Drawing.Size(330, 21);
@@ -1384,7 +1385,7 @@ namespace OdapterWnFrm {
             this.cbDuplicatePackageRecordOriginatingOutsideFilterAndSchema.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cbDuplicatePackageRecordOriginatingOutsideFilterAndSchema.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbDuplicatePackageRecordOriginatingOutsideFilterAndSchema.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.cbDuplicatePackageRecordOriginatingOutsideFilterAndSchema.Location = new System.Drawing.Point(9, 44);
+            this.cbDuplicatePackageRecordOriginatingOutsideFilterAndSchema.Location = new System.Drawing.Point(9, 43);
             this.cbDuplicatePackageRecordOriginatingOutsideFilterAndSchema.Margin = new System.Windows.Forms.Padding(4);
             this.cbDuplicatePackageRecordOriginatingOutsideFilterAndSchema.Name = "cbDuplicatePackageRecordOriginatingOutsideFilterAndSchema";
             this.cbDuplicatePackageRecordOriginatingOutsideFilterAndSchema.RightToLeft = System.Windows.Forms.RightToLeft.No;
@@ -1430,7 +1431,7 @@ namespace OdapterWnFrm {
             this.cbExcludeObjectNamesWithSpecificChars.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cbExcludeObjectNamesWithSpecificChars.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbExcludeObjectNamesWithSpecificChars.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.cbExcludeObjectNamesWithSpecificChars.Location = new System.Drawing.Point(26, 96);
+            this.cbExcludeObjectNamesWithSpecificChars.Location = new System.Drawing.Point(26, 70);
             this.cbExcludeObjectNamesWithSpecificChars.Margin = new System.Windows.Forms.Padding(4);
             this.cbExcludeObjectNamesWithSpecificChars.Name = "cbExcludeObjectNamesWithSpecificChars";
             this.cbExcludeObjectNamesWithSpecificChars.RightToLeft = System.Windows.Forms.RightToLeft.No;
@@ -1451,7 +1452,7 @@ namespace OdapterWnFrm {
             this.cbGeneratedDynamicMethodForTypedCursor.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbGeneratedDynamicMethodForTypedCursor.ForeColor = System.Drawing.SystemColors.HotTrack;
             this.cbGeneratedDynamicMethodForTypedCursor.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.cbGeneratedDynamicMethodForTypedCursor.Location = new System.Drawing.Point(25, 124);
+            this.cbGeneratedDynamicMethodForTypedCursor.Location = new System.Drawing.Point(25, 98);
             this.cbGeneratedDynamicMethodForTypedCursor.Margin = new System.Windows.Forms.Padding(4);
             this.cbGeneratedDynamicMethodForTypedCursor.Name = "cbGeneratedDynamicMethodForTypedCursor";
             this.cbGeneratedDynamicMethodForTypedCursor.RightToLeft = System.Windows.Forms.RightToLeft.No;
@@ -1471,7 +1472,7 @@ namespace OdapterWnFrm {
             this.cbUseAutoImplementedProperties.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbUseAutoImplementedProperties.ForeColor = System.Drawing.SystemColors.HotTrack;
             this.cbUseAutoImplementedProperties.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.cbUseAutoImplementedProperties.Location = new System.Drawing.Point(25, 151);
+            this.cbUseAutoImplementedProperties.Location = new System.Drawing.Point(25, 125);
             this.cbUseAutoImplementedProperties.Margin = new System.Windows.Forms.Padding(4);
             this.cbUseAutoImplementedProperties.Name = "cbUseAutoImplementedProperties";
             this.cbUseAutoImplementedProperties.RightToLeft = System.Windows.Forms.RightToLeft.No;
@@ -1542,7 +1543,7 @@ namespace OdapterWnFrm {
             // 
             this.lblLocalVariableNameSuffix.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblLocalVariableNameSuffix.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.lblLocalVariableNameSuffix.Location = new System.Drawing.Point(27, 179);
+            this.lblLocalVariableNameSuffix.Location = new System.Drawing.Point(27, 153);
             this.lblLocalVariableNameSuffix.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblLocalVariableNameSuffix.Name = "lblLocalVariableNameSuffix";
             this.lblLocalVariableNameSuffix.Size = new System.Drawing.Size(441, 20);
@@ -1715,7 +1716,7 @@ namespace OdapterWnFrm {
             this.gbOracleToCSharpCustomTranslation.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.gbOracleToCSharpCustomTranslation.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.gbOracleToCSharpCustomTranslation.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.gbOracleToCSharpCustomTranslation.Location = new System.Drawing.Point(16, 431);
+            this.gbOracleToCSharpCustomTranslation.Location = new System.Drawing.Point(16, 450);
             this.gbOracleToCSharpCustomTranslation.Margin = new System.Windows.Forms.Padding(4);
             this.gbOracleToCSharpCustomTranslation.Name = "gbOracleToCSharpCustomTranslation";
             this.gbOracleToCSharpCustomTranslation.Padding = new System.Windows.Forms.Padding(4);
@@ -1810,7 +1811,7 @@ namespace OdapterWnFrm {
             // 
             this.cmbCSharpTypeUsedForOracleDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbCSharpTypeUsedForOracleDate.FormattingEnabled = true;
-            this.cmbCSharpTypeUsedForOracleDate.Location = new System.Drawing.Point(237, 149);
+            this.cmbCSharpTypeUsedForOracleDate.Location = new System.Drawing.Point(236, 149);
             this.cmbCSharpTypeUsedForOracleDate.Margin = new System.Windows.Forms.Padding(4);
             this.cmbCSharpTypeUsedForOracleDate.Name = "cmbCSharpTypeUsedForOracleDate";
             this.cmbCSharpTypeUsedForOracleDate.Size = new System.Drawing.Size(337, 25);
@@ -1852,14 +1853,13 @@ namespace OdapterWnFrm {
             this.gbAdvancedProcOptions.Controls.Add(this.lblMaxReturnArgStringSize);
             this.gbAdvancedProcOptions.Controls.Add(this.cmbCSharpVersion);
             this.gbAdvancedProcOptions.Controls.Add(this.txtMaxReturnArgStringSize);
-            this.gbAdvancedProcOptions.Controls.Add(this.cbIncludeFilterPrefixInNaming);
             this.gbAdvancedProcOptions.Controls.Add(this.cbDeployResources);
             this.gbAdvancedProcOptions.Controls.Add(this.txtDataContractNamespace);
             this.gbAdvancedProcOptions.Controls.Add(this.lblDataContractNamespace);
             this.gbAdvancedProcOptions.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.gbAdvancedProcOptions.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.gbAdvancedProcOptions.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.gbAdvancedProcOptions.Location = new System.Drawing.Point(607, 431);
+            this.gbAdvancedProcOptions.Location = new System.Drawing.Point(607, 450);
             this.gbAdvancedProcOptions.Margin = new System.Windows.Forms.Padding(4);
             this.gbAdvancedProcOptions.Name = "gbAdvancedProcOptions";
             this.gbAdvancedProcOptions.Padding = new System.Windows.Forms.Padding(4);
@@ -1871,7 +1871,7 @@ namespace OdapterWnFrm {
             // txtLocalVariableNameSuffix
             // 
             this.txtLocalVariableNameSuffix.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtLocalVariableNameSuffix.Location = new System.Drawing.Point(473, 178);
+            this.txtLocalVariableNameSuffix.Location = new System.Drawing.Point(473, 152);
             this.txtLocalVariableNameSuffix.Margin = new System.Windows.Forms.Padding(4);
             this.txtLocalVariableNameSuffix.Name = "txtLocalVariableNameSuffix";
             this.txtLocalVariableNameSuffix.Size = new System.Drawing.Size(99, 23);
@@ -1881,7 +1881,7 @@ namespace OdapterWnFrm {
             // txtExcludeChars
             // 
             this.txtExcludeChars.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtExcludeChars.Location = new System.Drawing.Point(506, 95);
+            this.txtExcludeChars.Location = new System.Drawing.Point(506, 69);
             this.txtExcludeChars.Margin = new System.Windows.Forms.Padding(4);
             this.txtExcludeChars.Name = "txtExcludeChars";
             this.txtExcludeChars.Size = new System.Drawing.Size(72, 23);
@@ -1893,7 +1893,7 @@ namespace OdapterWnFrm {
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Silver;
-            this.ClientSize = new System.Drawing.Size(1290, 756);
+            this.ClientSize = new System.Drawing.Size(1290, 777);
             this.Controls.Add(this.gbAdvancedProcOptions);
             this.Controls.Add(this.gbOracleToCSharpCustomTranslation);
             this.Controls.Add(this.gbSettings);
