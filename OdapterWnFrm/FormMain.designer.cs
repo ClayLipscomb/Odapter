@@ -1122,12 +1122,12 @@ namespace OdapterWnFrm {
             // 
             this.lblCSharpVersion.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblCSharpVersion.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.lblCSharpVersion.Location = new System.Drawing.Point(318, 287);
+            this.lblCSharpVersion.Location = new System.Drawing.Point(160, 287);
             this.lblCSharpVersion.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblCSharpVersion.Name = "lblCSharpVersion";
-            this.lblCSharpVersion.Size = new System.Drawing.Size(151, 17);
+            this.lblCSharpVersion.Size = new System.Drawing.Size(309, 17);
             this.lblCSharpVersion.TabIndex = 39;
-            this.lblCSharpVersion.Text = "C# Version";
+            this.lblCSharpVersion.Text = "C# Version Generated";
             this.lblCSharpVersion.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // cmbCSharpVersion
