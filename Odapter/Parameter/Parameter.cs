@@ -71,7 +71,7 @@ namespace Odapter {
 
             IsSavePassword = false;
             IsGeneratePackage = true;
-            IsGenerateRecord = IsGenerateObjectType = IsGenerateTable = IsGenerateView = false;
+            IsGenerateRecord = IsGenerateObjectType = IsGenerateTable = IsGenerateView = IsGenerateBaseEntities = false;
             IsPartialPackage = IsPartialObjectType = IsPartialTable = IsPartialView = false;
             IsSerializablePackageRecord = IsSerializableObjectType = IsSerializableTable = IsSerializableView = false;
             IsXmlElementPackageRecord = IsXmlElementObjectType = IsXmlElementTable = IsXmlElementView = false;
@@ -109,7 +109,7 @@ namespace Odapter {
             TypeTargetForOracleClob = TypeTargetForOracleClobDefault;
             TypeTargetForOracleBfile = TypeTargetForOracleBfileDefault;
 
-            IsDeployResources = IsGenerateBaseAdapter = IsGenerateBaseEntities = true;
+            IsDeployResources = IsGenerateBaseAdapter = true;
         }
 
         #region Properties
