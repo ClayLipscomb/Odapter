@@ -1069,6 +1069,7 @@ namespace OdapterWnFrm {
             this.cbGenerateRecordType.Text = "Record DTOs";
             this.cbGenerateRecordType.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.cbGenerateRecordType.UseVisualStyleBackColor = false;
+            this.cbGenerateRecordType.CheckedChanged += new System.EventHandler(this.cbGenerateRecordType_CheckedChanged);
             // 
             // cbGenerateTable
             // 

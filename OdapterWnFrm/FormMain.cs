@@ -680,5 +680,9 @@ namespace OdapterWnFrm {
         private void cbDataContractPackageRecord_CheckedChanged(object sender, EventArgs e) { }
         private void cbDuplicatePackageRecordOriginatingOutsideFilterAndSchema_CheckedChanged(object sender, EventArgs e) { }
         private void cbUseAutoImplementedProperties_CheckedChanged(object sender, EventArgs e) { }
+
+        private void cbGenerateRecordType_CheckedChanged(object sender, EventArgs e) {
+            this.cbDuplicatePackageRecordOriginatingOutsideFilterAndSchema.Enabled = cbGenerateRecordType.Checked;
+        }
     }
 }
