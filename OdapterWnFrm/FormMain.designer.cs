@@ -1059,7 +1059,6 @@ namespace OdapterWnFrm {
             // 
             this.cbGenerateRecordType.BackColor = System.Drawing.Color.Transparent;
             this.cbGenerateRecordType.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.cbGenerateRecordType.Enabled = false;
             this.cbGenerateRecordType.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbGenerateRecordType.ForeColor = System.Drawing.SystemColors.HotTrack;
             this.cbGenerateRecordType.Location = new System.Drawing.Point(1, 121);

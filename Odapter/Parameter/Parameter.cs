@@ -71,7 +71,7 @@ namespace Odapter {
 
             IsSavePassword = false;
             IsGeneratePackage = true;
-            IsGenerateObjectType = IsGenerateTable = IsGenerateView = false;
+            IsGenerateRecord = IsGenerateObjectType = IsGenerateTable = IsGenerateView = false;
             IsPartialPackage = IsPartialObjectType = IsPartialTable = IsPartialView = false;
             IsSerializablePackageRecord = IsSerializableObjectType = IsSerializableTable = IsSerializableView = false;
             IsXmlElementPackageRecord = IsXmlElementObjectType = IsXmlElementTable = IsXmlElementView = false;
@@ -183,11 +183,12 @@ namespace Odapter {
         }
 
         public bool IsGeneratePackage { get; set; }
+        public bool IsGenerateRecord { get; set; }
         public bool IsGenerateObjectType { get; set; }
         public bool IsGenerateTable { get; set; }
         public bool IsGenerateView { get; set; }
-        public bool IsGenerateBaseAdapter { get; set; }  // will not overwrite existing file
-        public bool IsGenerateBaseEntities { get; set; } // will not overwrite existing file
+        public bool IsGenerateBaseAdapter { get; set; } 
+        public bool IsGenerateBaseEntities { get; set; }
 
         public bool IsDataContractPackageRecord { get; set; }
         public bool IsDataContractObjectType { get; set; }

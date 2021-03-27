@@ -896,8 +896,8 @@ namespace Odapter {
 
                     // for each possible record type in this package
                     foreach (IPackageRecord rec in records
-                        .Where(r => (r.PackageName ?? "").Equals(pack.PackageName) || (r.TypeName ?? "").Equals(pack.PackageName) ) // either referenced by package or owned by package
-                        .GroupBy(r => new { r.PackageName, r.TypeName, r.EntityName})
+                        .Where(r => (r.PackageName ?? "").Equals(pack.PackageName) || (r.TypeName ?? "").Equals(pack.PackageName)) // either referenced by package or owned by package
+                        .GroupBy(r => new { r.PackageName, r.TypeName, r.EntityName })
                         .Select(g => g.First())
                         .ToList()) {
 
@@ -913,7 +913,7 @@ namespace Odapter {
                         // always skip record creation if owned and used by another package *within* both the filter and schema
                         if (!(rec.TypeName ?? "").Equals(pack.PackageName) // if rec does not exist in this package
                             && packages.Exists(p => p.PackageName.Equals(rec.TypeName ?? "")                    // package owns record
-                                                && p.HasProcedureWithRecordArgument(rec.RecordArgument)) ) {    // package uses record as argument
+                                                && p.HasProcedureWithRecordArgument(rec.RecordArgument))) {    // package uses record as argument
                             continue;
                         }
 
@@ -923,8 +923,7 @@ namespace Odapter {
                         // prevent creating duplicate entity/interface/reader
                         if (pack.RecordsToGenerate.Exists(r => r.EntityName == rec.EntityName)) continue;
 
-                        string reasonMsg;
-                        if (!rec.IsIgnoredDueToOracleTypes(out reasonMsg)) {
+                        if (!rec.IsIgnoredDueToOracleTypes(out string reasonMsg)) {
                             // create interface for record class
                             classText.AppendLine();
                             classText.Append(GenerateEntityInterface(rec, 1));
@@ -932,17 +931,19 @@ namespace Odapter {
                         }
 
                         // create DTO 
-                        classText.AppendLine();
-                        classText.Append(GenerateEntityClass(rec, ancestorRecordTypeClassName, 
-                            Parameter.Instance.IsSerializablePackageRecord, Parameter.Instance.IsPartialPackage,
-                            Parameter.Instance.IsDataContractPackageRecord, Parameter.Instance.IsXmlElementPackageRecord, 2, out bool ignored));
+                        bool ignored = false;
+                        if (Parameter.Instance.IsGenerateRecord) {
+                            classText.AppendLine();
+                            classText.Append(GenerateEntityClass(rec, ancestorRecordTypeClassName,
+                                Parameter.Instance.IsSerializablePackageRecord, Parameter.Instance.IsPartialPackage,
+                                Parameter.Instance.IsDataContractPackageRecord, Parameter.Instance.IsXmlElementPackageRecord, 2, out ignored));
+                        }
 
                         if (!rec.IsIgnoredDueToOracleTypes(out reasonMsg)) {
                             // create custom reader
                             classText.AppendLine();
                             classText.Append(GenerateRecordTypeReadResultMethod(rec));
                         }
-                        
                         if (!ignored) pack.RecordsToGenerate.Add(rec); // track records included in this package's generation 
                     }
 

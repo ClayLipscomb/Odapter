@@ -321,6 +321,7 @@ namespace OdapterWnFrm {
                 cbGenerateBaseAdapter.Checked = txtBaseAdapterFileName.Enabled = txtBaseAdapterNamespace.Enabled =
                 cbGenerateBaseEntity.Checked =
                 cbGeneratePackage.Checked;
+            cbGenerateRecordType.Enabled = cbGeneratePackage.Checked;
             if (cbGeneratePackage.Checked) cbGenerateBaseAdapter.Checked = cbGenerateBaseEntity.Checked = true;
         }
 
@@ -501,6 +502,7 @@ namespace OdapterWnFrm {
                 : Parameter.Instance.FileNameBaseEntity;
 
             cbGeneratePackage.Checked = Parameter.Instance.IsGeneratePackage;
+            cbGenerateRecordType.Checked = Parameter.Instance.IsGenerateRecord;
             cbGenerateObject.Checked = Parameter.Instance.IsGenerateObjectType;
             cbGenerateTable.Checked = Parameter.Instance.IsGenerateTable;
             cbGenerateView.Checked = Parameter.Instance.IsGenerateView;
@@ -607,6 +609,7 @@ namespace OdapterWnFrm {
             Parameter.Instance.IsConvertOracleNumberToIntegerIfColumnNameIsId = cbConvertOracleNumberToIntegerIfColumnNameIsId.Checked;
 
             Parameter.Instance.IsGeneratePackage = cbGeneratePackage.Checked;
+            Parameter.Instance.IsGenerateRecord = cbGenerateRecordType.Checked;
             Parameter.Instance.IsGenerateObjectType = cbGenerateObject.Checked;
             Parameter.Instance.IsGenerateTable = cbGenerateTable.Checked;
             Parameter.Instance.IsGenerateView = cbGenerateView.Checked;
