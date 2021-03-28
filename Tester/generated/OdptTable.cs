@@ -399,6 +399,16 @@ namespace Schema.Odpt.Table {
         public virtual Decimal? ColNumberLast { get { return this.colNumberLast; } set { this.colNumberLast = value; } } protected Decimal? colNumberLast;
     } // OdptTableNumber
 
-    // **TABLE IGNORED** - OBJECT type is not available in ODP.NET managed
-    // public partial class OdptTableObject : Schema.Odpt.OdptTable {
+    [DataContract(Namespace="http://odpt.business.com")][Serializable()]
+    public partial class OdptTableObject : Schema.Odpt.OdptTable {
+        private Byte propertyToEnsuresPartialClassNamesAreUniqueAtCompileTime { get; set; }
+        [DataMember(Order=1, IsRequired=true)][XmlElement(Order=1, IsNullable=true)]
+        public virtual Int64? Id { get { return this.id; } set { this.id = value; } } protected Int64? id;
+        [DataMember(Order=2, IsRequired=false)][XmlElement(Order=2, IsNullable=true)]
+        public virtual OdptBigOt ColObject { get { return this.colObject; } set { this.colObject = value; } } protected OdptBigOt colObject;
+        [DataMember(Order=3, IsRequired=false)][XmlElement(Order=3, IsNullable=true)]
+        public virtual OdptBigOt ColRefObject { get { return this.colRefObject; } set { this.colRefObject = value; } } protected OdptBigOt colRefObject;
+        [DataMember(Order=4, IsRequired=false)][XmlElement(Order=4, IsNullable=true)]
+        public virtual Int64? ColLast { get { return this.colLast; } set { this.colLast = value; } } protected Int64? colLast;
+    } // OdptTableObject
 } // Schema.Odpt.Table
