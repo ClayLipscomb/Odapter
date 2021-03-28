@@ -18,6 +18,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.ComponentModel;
 using System.Data;
 using System.Windows.Forms;
@@ -26,8 +27,8 @@ using Odapter;
 using Odapter.CSharp;
 
 namespace OdapterWnFrm {
-    public partial class FormMain : Form {
-        private TnsNamesReader tnsNamesReader = new TnsNamesReader();
+    public partial class FormMain : Form {        
+        private readonly TnsNamesReader tnsNamesReader = new TnsNamesReader();
 
         public FormMain() {
             this.Text = Generator.GetAppNameVersionLabel();
@@ -47,6 +48,7 @@ namespace OdapterWnFrm {
 
             SetEnabledDisabled();
             AcceptButton = this.BtnStart;
+            this.BackColor = Color.FromArgb(12, 12, 12);
         }
 
         #region Messaging
@@ -54,9 +56,10 @@ namespace OdapterWnFrm {
             ListViewMessage.Clear();
             ListViewMessage.Refresh();
 
-            ColumnHeader columnHeader = new ColumnHeader();
-            columnHeader.Text = @"Status";
-            columnHeader.Width = ListViewMessage.Width - 30;
+            ColumnHeader columnHeader = new ColumnHeader {
+                Text = @"Status",
+                Width = ListViewMessage.Width - 30
+            };
             this.ListViewMessage.Columns.AddRange(new ColumnHeader[] { columnHeader });
             // this.ListViewMessage.Colum .ColumnHeadersDefaultCellStyle.Font = new Font(this.dataGridView1.ColumnHeadersDefaultCellStyle.Font, FontStyle.Bold);
         }
