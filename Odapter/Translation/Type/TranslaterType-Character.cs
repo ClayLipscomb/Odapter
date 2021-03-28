@@ -33,6 +33,7 @@ namespace Odapter {
         public CS.ITypeTargetable CSharpOdpNetSafeType { get => CS.TypeValue.OracleString; }
         public bool IsIgnoredAsParameter { get => false; }
         public string IgnoredReasonAsParameter { get => String.Empty; }
+        public (bool isIgnored, string reasonMsg) IsIgnoredAsRecordField() => (false, String.Empty);
         public bool IsIgnoredAsAttribute { get => false; }
         public string IgnoredReasonAsAttribute { get => String.Empty; }
     }
@@ -49,6 +50,7 @@ namespace Odapter {
         public CS.ITypeTargetable CSharpOdpNetSafeType { get => CS.TypeValue.OracleString; }
         public bool IsIgnoredAsParameter { get => true; }
         public string IgnoredReasonAsParameter { get => TranslaterMessage.IgnoreOracleDeprecation(OrclType); }
+        public (bool isIgnored, string reasonMsg) IsIgnoredAsRecordField() => (true, TranslaterMessage.IgnoreOracleDeprecation(OrclType));
         public bool IsIgnoredAsAttribute { get => true; }
         public string IgnoredReasonAsAttribute { get => TranslaterMessage.IgnoreOracleDeprecation(OrclType); }
     }
@@ -65,6 +67,7 @@ namespace Odapter {
         public CS.ITypeTargetable CSharpOdpNetSafeType { get => CS.TypeValue.OracleString; }
         public bool IsIgnoredAsParameter { get => false; }
         public string IgnoredReasonAsParameter { get => String.Empty; }
+        public (bool isIgnored, string reasonMsg) IsIgnoredAsRecordField() => (false, String.Empty);
         public bool IsIgnoredAsAttribute { get => false; }
         public string IgnoredReasonAsAttribute { get => String.Empty; }
     }
@@ -81,6 +84,7 @@ namespace Odapter {
         public CS.ITypeTargetable CSharpOdpNetSafeType { get => CS.TypeValue.OracleString; }
         public bool IsIgnoredAsParameter { get => false; }
         public string IgnoredReasonAsParameter { get => String.Empty; }
+        public (bool isIgnored, string reasonMsg) IsIgnoredAsRecordField() => (false, String.Empty);
         public bool IsIgnoredAsAttribute { get => false; }
         public string IgnoredReasonAsAttribute { get => String.Empty; }
     }
@@ -97,6 +101,7 @@ namespace Odapter {
         public CS.ITypeTargetable CSharpOdpNetSafeType { get => CS.TypeValue.OracleString; }
         public bool IsIgnoredAsParameter { get => false; }
         public string IgnoredReasonAsParameter { get => String.Empty; }
+        public (bool isIgnored, string reasonMsg) IsIgnoredAsRecordField() => (false, String.Empty);
         public bool IsIgnoredAsAttribute { get => false; }
         public string IgnoredReasonAsAttribute { get => String.Empty; }
     }
@@ -113,6 +118,7 @@ namespace Odapter {
         public CS.ITypeTargetable CSharpOdpNetSafeType { get => CS.TypeValue.OracleString; }
         public bool IsIgnoredAsParameter { get => false; }
         public string IgnoredReasonAsParameter { get => String.Empty; }
+        public (bool isIgnored, string reasonMsg) IsIgnoredAsRecordField() => (false, String.Empty);
         public bool IsIgnoredAsAttribute { get => false; }
         public string IgnoredReasonAsAttribute { get => String.Empty; }
     }
@@ -129,6 +135,7 @@ namespace Odapter {
         public CS.ITypeTargetable CSharpOdpNetSafeType { get => CS.TypeValue.OracleString; }
         public bool IsIgnoredAsParameter { get => false; }
         public string IgnoredReasonAsParameter { get => String.Empty; }
+        public (bool isIgnored, string reasonMsg) IsIgnoredAsRecordField() => (false, String.Empty);
         public bool IsIgnoredAsAttribute { get => false; }
         public string IgnoredReasonAsAttribute { get => String.Empty; }
     }

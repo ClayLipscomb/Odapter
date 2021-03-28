@@ -130,9 +130,10 @@ namespace Odapter {
                         && !(arg.DataType.Equals(Orcl.RECORD) && arg.DataLevel > 0)) {  // record of cursor argument
                         reasonMsg = arg.Translater.IgnoredReasonAsParameter;
                         return true;
-                    } else if (arg.Translater.IsIgnoredAsAttribute && arg.DataLevel > 1) {
-                        reasonMsg = arg.Translater.IgnoredReasonAsAttribute;
-                        return true;
+                    } else {
+                        bool isIgnored;
+                        (isIgnored, reasonMsg) = arg.Translater.IsIgnoredAsRecordField();
+                        if (isIgnored && arg.DataLevel > 1) return true;
                     }
                 }
             }

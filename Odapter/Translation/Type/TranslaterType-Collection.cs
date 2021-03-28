@@ -39,6 +39,7 @@ namespace Odapter {
         public CS.ITypeTargetable CSharpOdpNetSafeType => CSL.TypeNone;
         public bool IsIgnoredAsParameter { get => false; }
         public string IgnoredReasonAsParameter { get => String.Empty; }
+        public (bool isIgnored, string reasonMsg) IsIgnoredAsRecordField() => (true, TranslaterMessage.IgnoreNoSendReceiveRecordFieldTyped(OrclType));
         /// <summary>
         /// Associative array attribute only possible for record type field (not table, view or object)
         /// </summary>
@@ -79,6 +80,7 @@ namespace Odapter {
         public CS.ITypeTargetable CSharpOdpNetSafeType => CSL.TypeNone;
         public bool IsIgnoredAsParameter { get => true; }
         public string IgnoredReasonAsParameter { get => TranslaterMessage.IgnoreNotImplemented($"NESTED {Orcl.NESTED_TABLE}"); }
+        public (bool isIgnored, string reasonMsg) IsIgnoredAsRecordField() => (true, TranslaterMessage.IgnoreNotImplemented($"NESTED {Orcl.NESTED_TABLE}"));
         public bool IsIgnoredAsAttribute { get => true; }
         public string IgnoredReasonAsAttribute { get => TranslaterMessage.IgnoreNotImplemented($"NESTED {Orcl.NESTED_TABLE}"); }
 
@@ -105,6 +107,7 @@ namespace Odapter {
         public CS.ITypeTargetable CSharpOdpNetSafeType => CSL.TypeNone;
         public bool IsIgnoredAsParameter { get => true; }
         public string IgnoredReasonAsParameter { get => TranslaterMessage.IgnoreNotImplemented(OrclType); }
+        public (bool isIgnored, string reasonMsg) IsIgnoredAsRecordField() => (true, TranslaterMessage.IgnoreNotImplemented(OrclType));
         public bool IsIgnoredAsAttribute { get => true; }
         public string IgnoredReasonAsAttribute { get => TranslaterMessage.IgnoreNotImplemented(OrclType); }
         internal TranslaterVarray(string dataTypeFull, CS.TypeCollection typeCollection, ITyped dbDataType) {

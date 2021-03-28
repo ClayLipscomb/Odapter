@@ -35,6 +35,7 @@ namespace Odapter {
         public CS.ITypeTargetable CSharpOdpNetSafeType { get => CS.TypeReference.OracleRefCursor; }
         public bool IsIgnoredAsParameter { get => false; }
         public string IgnoredReasonAsParameter { get => String.Empty; }
+        public (bool isIgnored, string reasonMsg) IsIgnoredAsRecordField() => (false, String.Empty);
         public bool IsIgnoredAsAttribute { get => false; }
         public string IgnoredReasonAsAttribute { get => String.Empty; }
         internal TranslaterRefCursorTyped(string dataTypeFull, CS.TypeCollection typeCollection, ITyped dbDataType) {
@@ -64,6 +65,7 @@ namespace Odapter {
         public CS.ITypeTargetable CSharpOdpNetSafeType { get => CS.TypeReference.OracleRefCursor; }
         public bool IsIgnoredAsParameter { get => false; }
         public string IgnoredReasonAsParameter { get => String.Empty; }
+        public (bool isIgnored, string reasonMsg) IsIgnoredAsRecordField() => (false, String.Empty);
         public bool IsIgnoredAsAttribute { get => false; }
         public string IgnoredReasonAsAttribute { get => String.Empty; }
         internal TranslaterRefCursorUntyped(string dataTypeFull, CS.TypeCollection typeCollection, ITyped dbDataType) {

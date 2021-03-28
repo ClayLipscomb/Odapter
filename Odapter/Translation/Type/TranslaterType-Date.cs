@@ -32,6 +32,7 @@ namespace Odapter {
         public CS.ITypeTargetable CSharpOdpNetSafeType { get => CS.TypeValue.OracleDate; }
         public bool IsIgnoredAsParameter { get => false; }
         public string IgnoredReasonAsParameter { get => String.Empty; }
+        public (bool isIgnored, string reasonMsg) IsIgnoredAsRecordField() => (false, String.Empty);
         public bool IsIgnoredAsAttribute { get => false; }
         public string IgnoredReasonAsAttribute { get => String.Empty; }
         internal TranslaterDate(CS.TypeValue typeValue) { CSharpType = typeValue.Nullable; } 
@@ -49,6 +50,7 @@ namespace Odapter {
         public CS.ITypeTargetable CSharpOdpNetSafeType { get => CS.TypeValue.OracleIntervalDS; }
         public bool IsIgnoredAsParameter { get => true; }
         public string IgnoredReasonAsParameter { get => TranslaterMessage.IgnoreNotImplemented(OrclType); }
+        public (bool isIgnored, string reasonMsg) IsIgnoredAsRecordField() => (true, TranslaterMessage.IgnoreNotImplemented(OrclType));
         public bool IsIgnoredAsAttribute { get => true; }
         public string IgnoredReasonAsAttribute { get => TranslaterMessage.IgnoreNotImplemented(OrclType); }
     }
@@ -64,6 +66,7 @@ namespace Odapter {
         public CS.ITypeTargetable CSharpOdpNetSafeType { get => CS.TypeValue.OracleIntervalYM; }
         public bool IsIgnoredAsParameter { get => true; }
         public string IgnoredReasonAsParameter { get => TranslaterMessage.IgnoreNotImplemented(OrclType); }
+        public (bool isIgnored, string reasonMsg) IsIgnoredAsRecordField() => (true, TranslaterMessage.IgnoreNotImplemented(OrclType));
         public bool IsIgnoredAsAttribute { get => true; }
         public string IgnoredReasonAsAttribute { get => TranslaterMessage.IgnoreNotImplemented(OrclType); }
     }
@@ -79,6 +82,7 @@ namespace Odapter {
         public CS.ITypeTargetable CSharpOdpNetSafeType { get => CS.TypeValue.OracleTimeStamp; }
         public bool IsIgnoredAsParameter { get => false; }
         public string IgnoredReasonAsParameter { get => String.Empty; }
+        public (bool isIgnored, string reasonMsg) IsIgnoredAsRecordField() => (false, String.Empty);
         public bool IsIgnoredAsAttribute { get => false; }
         public string IgnoredReasonAsAttribute { get => String.Empty; }
         internal TranslaterTimestamp(CS.TypeValue typeValue) { CSharpType = typeValue.Nullable; }
@@ -96,6 +100,7 @@ namespace Odapter {
         public CS.ITypeTargetable CSharpOdpNetSafeType { get => CS.TypeValue.OracleTimeStampLTZ; }
         public bool IsIgnoredAsParameter { get => false; }
         public string IgnoredReasonAsParameter { get => String.Empty; }
+        public (bool isIgnored, string reasonMsg) IsIgnoredAsRecordField() => (false, String.Empty);
         public bool IsIgnoredAsAttribute { get => false; }
         public string IgnoredReasonAsAttribute { get => String.Empty; }
         internal TranslaterTimestampLTZ(CS.TypeValue typeValue) { CSharpType = typeValue.Nullable; }
@@ -113,6 +118,7 @@ namespace Odapter {
         public CS.ITypeTargetable CSharpOdpNetSafeType { get => CS.TypeValue.OracleTimeStampTZ; }
         public bool IsIgnoredAsParameter { get => false; }
         public string IgnoredReasonAsParameter { get => String.Empty; }
+        public (bool isIgnored, string reasonMsg) IsIgnoredAsRecordField() => (false, String.Empty);
         public bool IsIgnoredAsAttribute { get => false; }
         public string IgnoredReasonAsAttribute { get => String.Empty; }
         internal TranslaterTimestampTZ(CS.TypeValue typeValue) { CSharpType = typeValue.Nullable; }

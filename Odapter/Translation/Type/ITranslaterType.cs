@@ -53,11 +53,17 @@ namespace Odapter {
         /// </summary>
         string IgnoredReasonAsParameter { get; }
         /// <summary>
-        /// Should type be ignored during translation as an entity attribute
+        /// Should type be ignored as package record field?
+        /// </summary>
+        /// <param name="reasonMsg"></param>
+        /// <returns></returns>
+        (bool isIgnored, string reasonMsg) IsIgnoredAsRecordField();
+        /// <summary>
+        /// Should type be ignored during translation as an non-record entity attribute
         /// </summary>
         bool IsIgnoredAsAttribute { get; }
         /// <summary>
-        /// Reason if ignored during translation as an entity attribute
+        /// Reason if ignored during translation as an non-record entity attribute
         /// </summary>
         string IgnoredReasonAsAttribute { get; }
     }

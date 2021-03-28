@@ -33,6 +33,7 @@ namespace Odapter {
         public CS.ITypeTargetable CSharpOdpNetSafeType => CSL.TypeNone; 
         public bool IsIgnoredAsParameter { get => false; }
         public string IgnoredReasonAsParameter { get => String.Empty; }
+        public (bool isIgnored, string reasonMsg) IsIgnoredAsRecordField() => (false, String.Empty);
         public bool IsIgnoredAsAttribute { get => false; }
         public string IgnoredReasonAsAttribute { get => String.Empty; }
     }

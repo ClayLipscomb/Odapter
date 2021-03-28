@@ -34,6 +34,7 @@ namespace Odapter {
         public CS.ITypeTargetable CSharpOdpNetSafeType => CSL.TypeNone;
         public bool IsIgnoredAsParameter { get => true; }  // refers only to stand-alone record
         public string IgnoredReasonAsParameter { get => TranslaterMessage.IgnoreNoSendReceiveRecord(); }
+        public (bool isIgnored, string reasonMsg) IsIgnoredAsRecordField() => (true, TranslaterMessage.IgnoreNoSendReceiveRecord());
         public bool IsIgnoredAsAttribute { get => true; }  // refers only to stand-alone record
         public string IgnoredReasonAsAttribute { get => TranslaterMessage.IgnoreNoSendReceiveRecord(); }
 
