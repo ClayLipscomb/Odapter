@@ -9,6 +9,9 @@
     <Compile Include="Util.fs" />
     <Compile Include="WrappedString.fs" />
     <Compile Include="Casing.fs" />
+    <Compile Include="OracleLiteral.fs" />
+    <Compile Include="OracleDomain.fs" />
+    <Compile Include="OracleLogic.fs" />
     <Compile Include="CSharpLiteral.fs" />
     <Compile Include="CSharpCoder.fs" />
     <Compile Include="CSharpDomain.fs" />
