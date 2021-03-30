@@ -317,6 +317,3 @@ __pycache__/
 /OdapterFS
 *.zip
 *.xml
-/OdapterFSharp/CSharp - Copy.fs
-/Tester/schema/type/odpt_xmltype_ot.tps
-/Tester/generated/OdptOdptPackage - Copy.cs
