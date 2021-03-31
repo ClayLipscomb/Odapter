@@ -326,7 +326,8 @@ namespace OdapterWnFrm {
             // 
             this.cbGeneratePackage.BackColor = System.Drawing.Color.Transparent;
             this.cbGeneratePackage.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.cbGeneratePackage.FlatAppearance.CheckedBackColor = System.Drawing.Color.Transparent;
+            this.cbGeneratePackage.FlatAppearance.CheckedBackColor = System.Drawing.Color.Black;
+            this.cbGeneratePackage.FlatAppearance.MouseDownBackColor = System.Drawing.Color.DeepSkyBlue;
             this.cbGeneratePackage.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbGeneratePackage.ForeColor = System.Drawing.Color.DeepSkyBlue;
             this.cbGeneratePackage.Location = new System.Drawing.Point(1, 69);
@@ -1208,6 +1209,7 @@ namespace OdapterWnFrm {
             // cmbCSharpVersion
             // 
             this.cmbCSharpVersion.BackColor = System.Drawing.Color.Black;
+            this.cmbCSharpVersion.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cmbCSharpVersion.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbCSharpVersion.ForeColor = System.Drawing.Color.Yellow;
             this.cmbCSharpVersion.FormattingEnabled = true;
@@ -1344,7 +1346,7 @@ namespace OdapterWnFrm {
             // 
             // cbConvertOracleNumberToIntegerIfColumnNameIsId
             // 
-            this.cbConvertOracleNumberToIntegerIfColumnNameIsId.BackColor = System.Drawing.Color.Black;
+            this.cbConvertOracleNumberToIntegerIfColumnNameIsId.BackColor = System.Drawing.Color.Transparent;
             this.cbConvertOracleNumberToIntegerIfColumnNameIsId.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbConvertOracleNumberToIntegerIfColumnNameIsId.ForeColor = System.Drawing.Color.DeepSkyBlue;
             this.cbConvertOracleNumberToIntegerIfColumnNameIsId.Location = new System.Drawing.Point(237, 125);
@@ -1402,6 +1404,7 @@ namespace OdapterWnFrm {
             // cmbDBInstance
             // 
             this.cmbDBInstance.BackColor = System.Drawing.Color.Black;
+            this.cmbDBInstance.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cmbDBInstance.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbDBInstance.ForeColor = System.Drawing.Color.Yellow;
             this.cmbDBInstance.FormattingEnabled = true;
@@ -1415,6 +1418,7 @@ namespace OdapterWnFrm {
             // cmbClientHome
             // 
             this.cmbClientHome.BackColor = System.Drawing.Color.Black;
+            this.cmbClientHome.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cmbClientHome.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbClientHome.ForeColor = System.Drawing.Color.Yellow;
             this.cmbClientHome.FormattingEnabled = true;
@@ -1736,6 +1740,7 @@ namespace OdapterWnFrm {
             // cmbSettingsFile
             // 
             this.cmbSettingsFile.BackColor = System.Drawing.Color.Black;
+            this.cmbSettingsFile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cmbSettingsFile.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbSettingsFile.ForeColor = System.Drawing.Color.Yellow;
             this.cmbSettingsFile.FormattingEnabled = true;
@@ -1801,6 +1806,7 @@ namespace OdapterWnFrm {
             // cmbCSharpTypeUsedForOracleTimestampLTZ
             // 
             this.cmbCSharpTypeUsedForOracleTimestampLTZ.BackColor = System.Drawing.Color.Black;
+            this.cmbCSharpTypeUsedForOracleTimestampLTZ.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cmbCSharpTypeUsedForOracleTimestampLTZ.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbCSharpTypeUsedForOracleTimestampLTZ.ForeColor = System.Drawing.Color.Yellow;
             this.cmbCSharpTypeUsedForOracleTimestampLTZ.FormattingEnabled = true;
@@ -1813,6 +1819,7 @@ namespace OdapterWnFrm {
             // cmbCSharpTypeUsedForOracleTimestampTZ
             // 
             this.cmbCSharpTypeUsedForOracleTimestampTZ.BackColor = System.Drawing.Color.Black;
+            this.cmbCSharpTypeUsedForOracleTimestampTZ.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cmbCSharpTypeUsedForOracleTimestampTZ.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbCSharpTypeUsedForOracleTimestampTZ.ForeColor = System.Drawing.Color.Yellow;
             this.cmbCSharpTypeUsedForOracleTimestampTZ.FormattingEnabled = true;
@@ -1825,6 +1832,7 @@ namespace OdapterWnFrm {
             // cmbCSharpTypeUsedForOracleAssociativeArray
             // 
             this.cmbCSharpTypeUsedForOracleAssociativeArray.BackColor = System.Drawing.Color.Black;
+            this.cmbCSharpTypeUsedForOracleAssociativeArray.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cmbCSharpTypeUsedForOracleAssociativeArray.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbCSharpTypeUsedForOracleAssociativeArray.ForeColor = System.Drawing.Color.Yellow;
             this.cmbCSharpTypeUsedForOracleAssociativeArray.FormattingEnabled = true;
@@ -1837,6 +1845,7 @@ namespace OdapterWnFrm {
             // cmbCSharpTypeUsedForOracleRefCursor
             // 
             this.cmbCSharpTypeUsedForOracleRefCursor.BackColor = System.Drawing.Color.Black;
+            this.cmbCSharpTypeUsedForOracleRefCursor.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cmbCSharpTypeUsedForOracleRefCursor.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbCSharpTypeUsedForOracleRefCursor.ForeColor = System.Drawing.Color.Yellow;
             this.cmbCSharpTypeUsedForOracleRefCursor.FormattingEnabled = true;
@@ -1849,6 +1858,7 @@ namespace OdapterWnFrm {
             // cmbCSharpTypeUsedForOracleClob
             // 
             this.cmbCSharpTypeUsedForOracleClob.BackColor = System.Drawing.Color.Black;
+            this.cmbCSharpTypeUsedForOracleClob.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cmbCSharpTypeUsedForOracleClob.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbCSharpTypeUsedForOracleClob.ForeColor = System.Drawing.Color.LightYellow;
             this.cmbCSharpTypeUsedForOracleClob.FormattingEnabled = true;
@@ -1861,6 +1871,7 @@ namespace OdapterWnFrm {
             // cmbCSharpTypeUsedForOracleBlob
             // 
             this.cmbCSharpTypeUsedForOracleBlob.BackColor = System.Drawing.Color.Black;
+            this.cmbCSharpTypeUsedForOracleBlob.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cmbCSharpTypeUsedForOracleBlob.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbCSharpTypeUsedForOracleBlob.ForeColor = System.Drawing.Color.Yellow;
             this.cmbCSharpTypeUsedForOracleBlob.FormattingEnabled = true;
@@ -1885,6 +1896,7 @@ namespace OdapterWnFrm {
             // cmbCSharpTypeUsedForOracleTimestamp
             // 
             this.cmbCSharpTypeUsedForOracleTimestamp.BackColor = System.Drawing.Color.Black;
+            this.cmbCSharpTypeUsedForOracleTimestamp.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cmbCSharpTypeUsedForOracleTimestamp.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbCSharpTypeUsedForOracleTimestamp.ForeColor = System.Drawing.Color.Yellow;
             this.cmbCSharpTypeUsedForOracleTimestamp.FormattingEnabled = true;
@@ -1897,6 +1909,7 @@ namespace OdapterWnFrm {
             // cmbCSharpTypeUsedForOracleDate
             // 
             this.cmbCSharpTypeUsedForOracleDate.BackColor = System.Drawing.Color.Black;
+            this.cmbCSharpTypeUsedForOracleDate.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cmbCSharpTypeUsedForOracleDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbCSharpTypeUsedForOracleDate.ForeColor = System.Drawing.Color.Yellow;
             this.cmbCSharpTypeUsedForOracleDate.FormattingEnabled = true;
@@ -1909,6 +1922,7 @@ namespace OdapterWnFrm {
             // cmbCSharpTypeUsedForOracleNumber
             // 
             this.cmbCSharpTypeUsedForOracleNumber.BackColor = System.Drawing.Color.Black;
+            this.cmbCSharpTypeUsedForOracleNumber.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cmbCSharpTypeUsedForOracleNumber.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbCSharpTypeUsedForOracleNumber.ForeColor = System.Drawing.Color.Yellow;
             this.cmbCSharpTypeUsedForOracleNumber.FormattingEnabled = true;
@@ -1921,6 +1935,7 @@ namespace OdapterWnFrm {
             // cmbCSharpTypeUsedForOracleInteger
             // 
             this.cmbCSharpTypeUsedForOracleInteger.BackColor = System.Drawing.Color.Black;
+            this.cmbCSharpTypeUsedForOracleInteger.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cmbCSharpTypeUsedForOracleInteger.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbCSharpTypeUsedForOracleInteger.ForeColor = System.Drawing.Color.Yellow;
             this.cmbCSharpTypeUsedForOracleInteger.FormattingEnabled = true;

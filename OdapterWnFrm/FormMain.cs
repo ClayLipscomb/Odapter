@@ -49,7 +49,8 @@ namespace OdapterWnFrm {
 
             SetEnabledDisabled();
             AcceptButton = this.BtnStart;
-            this.BackColor = BackgroundColor;
+            this.BackColor = this.BtnStart.BackColor = this.btnRestoreDefaults.BackColor = this.btnSaveSettings.BackColor 
+                = BackgroundColor;
         }
 
         #region Messaging
