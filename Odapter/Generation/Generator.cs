@@ -849,6 +849,7 @@ namespace Odapter {
 
             string fileName = $"{_outputPath}\\{Parameter.Instance.FileNamePackage}";
             DisplayMessage("Coding packages (" + fileName.Substring(fileName.LastIndexOf('\\') + 1) + ")...");
+            if (Parameter.Instance.IsGenerateRecord) DisplayMessage(@"** WARNING: Record DTOs Deprecated **");
 
             try {
                 StreamWriter outFilePackage = new StreamWriter(fileName);
