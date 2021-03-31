@@ -317,3 +317,4 @@ __pycache__/
 /OdapterFS
 *.zip
 *.xml
+/Tester/schema/table/odpt_table_ignore_nested_table.sql
