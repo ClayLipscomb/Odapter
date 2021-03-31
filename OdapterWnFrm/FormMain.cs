@@ -29,6 +29,7 @@ using Odapter.CSharp;
 namespace OdapterWnFrm {
     public partial class FormMain : Form {        
         private readonly TnsNamesReader tnsNamesReader = new TnsNamesReader();
+        private readonly Color BackgroundColor = Color.FromArgb(36, 36, 36);
 
         public FormMain() {
             this.Text = Generator.GetAppNameVersionLabel();
@@ -48,7 +49,7 @@ namespace OdapterWnFrm {
 
             SetEnabledDisabled();
             AcceptButton = this.BtnStart;
-            this.BackColor = Color.FromArgb(12, 12, 12);
+            this.BackColor = BackgroundColor;
         }
 
         #region Messaging
@@ -57,8 +58,8 @@ namespace OdapterWnFrm {
             ListViewMessage.Refresh();
 
             ColumnHeader columnHeader = new ColumnHeader {
-                Text = @"Status",
-                Width = ListViewMessage.Width - 30
+                Text = String.Empty, Width = ListViewMessage.Width - 32               
+                
             };
             this.ListViewMessage.Columns.AddRange(new ColumnHeader[] { columnHeader });
             // this.ListViewMessage.Colum .ColumnHeadersDefaultCellStyle.Font = new Font(this.dataGridView1.ColumnHeadersDefaultCellStyle.Font, FontStyle.Bold);
@@ -686,6 +687,21 @@ namespace OdapterWnFrm {
 
         private void cbGenerateRecordType_CheckedChanged(object sender, EventArgs e) {
             this.cbDuplicatePackageRecordOriginatingOutsideFilterAndSchema.Enabled = cbGenerateRecordType.Checked;
+        }
+
+        private void ListViewMessage_DrawColumnHeader(object sender, DrawListViewColumnHeaderEventArgs e) {
+            e.Graphics.FillRectangle(new SolidBrush(Color.Black), e.Bounds);
+            //using (var sf = new StringFormat()) {
+            //    sf.Alignment = StringAlignment.Center;
+            //    using (var headerFont = new Font("Microsoft Sans Serif", 9, FontStyle.Bold)) {
+            //        e.Graphics.DrawString(e.Header.Text, headerFont, Brushes.DeepSkyBlue, e.Bounds, sf);
+            //    }
+            //}
+            e.DrawText();
+        }
+
+        private void ListViewMessage_DrawItem(object sender, DrawListViewItemEventArgs e) {
+            e.DrawDefault = true;
         }
     }
 }

@@ -152,6 +152,7 @@ namespace OdapterWnFrm {
             this.gbAdvancedProcOptions = new System.Windows.Forms.GroupBox();
             this.txtLocalVariableNameSuffix = new System.Windows.Forms.TextBox();
             this.txtExcludeChars = new System.Windows.Forms.TextBox();
+            this.lblGenerateStatus = new System.Windows.Forms.Label();
             this.gbCodeToGenerate.SuspendLayout();
             this.gbDatabase.SuspendLayout();
             this.gbSettings.SuspendLayout();
@@ -168,10 +169,13 @@ namespace OdapterWnFrm {
             this.ListViewMessage.Location = new System.Drawing.Point(923, 10);
             this.ListViewMessage.Margin = new System.Windows.Forms.Padding(4);
             this.ListViewMessage.Name = "ListViewMessage";
-            this.ListViewMessage.Size = new System.Drawing.Size(354, 436);
+            this.ListViewMessage.OwnerDraw = true;
+            this.ListViewMessage.Size = new System.Drawing.Size(368, 436);
             this.ListViewMessage.TabIndex = 7;
             this.ListViewMessage.UseCompatibleStateImageBehavior = false;
             this.ListViewMessage.View = System.Windows.Forms.View.Details;
+            this.ListViewMessage.DrawColumnHeader += new System.Windows.Forms.DrawListViewColumnHeaderEventHandler(this.ListViewMessage_DrawColumnHeader);
+            this.ListViewMessage.DrawItem += new System.Windows.Forms.DrawListViewItemEventHandler(this.ListViewMessage_DrawItem);
             // 
             // BtnStart
             // 
@@ -1952,7 +1956,7 @@ namespace OdapterWnFrm {
             this.gbAdvancedProcOptions.Margin = new System.Windows.Forms.Padding(4);
             this.gbAdvancedProcOptions.Name = "gbAdvancedProcOptions";
             this.gbAdvancedProcOptions.Padding = new System.Windows.Forms.Padding(4);
-            this.gbAdvancedProcOptions.Size = new System.Drawing.Size(670, 317);
+            this.gbAdvancedProcOptions.Size = new System.Drawing.Size(684, 317);
             this.gbAdvancedProcOptions.TabIndex = 4;
             this.gbAdvancedProcOptions.TabStop = false;
             this.gbAdvancedProcOptions.Text = "Advanced Options";
@@ -1980,6 +1984,19 @@ namespace OdapterWnFrm {
             this.txtExcludeChars.Size = new System.Drawing.Size(72, 23);
             this.txtExcludeChars.TabIndex = 3;
             // 
+            // lblGenerateStatus
+            // 
+            this.lblGenerateStatus.BackColor = System.Drawing.Color.Black;
+            this.lblGenerateStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblGenerateStatus.ForeColor = System.Drawing.Color.DeepSkyBlue;
+            this.lblGenerateStatus.Location = new System.Drawing.Point(924, 11);
+            this.lblGenerateStatus.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblGenerateStatus.Name = "lblGenerateStatus";
+            this.lblGenerateStatus.Size = new System.Drawing.Size(366, 32);
+            this.lblGenerateStatus.TabIndex = 69;
+            this.lblGenerateStatus.Text = "Generate Status";
+            this.lblGenerateStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // FormMain
             // 
             this.AcceptButton = this.BtnStart;
@@ -1987,7 +2004,8 @@ namespace OdapterWnFrm {
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.ClientSize = new System.Drawing.Size(1290, 777);
+            this.ClientSize = new System.Drawing.Size(1304, 777);
+            this.Controls.Add(this.lblGenerateStatus);
             this.Controls.Add(this.gbAdvancedProcOptions);
             this.Controls.Add(this.gbOracleToCSharpCustomTranslation);
             this.Controls.Add(this.gbSettings);
@@ -2143,6 +2161,7 @@ namespace OdapterWnFrm {
         private System.Windows.Forms.TextBox txtBaseEntityFileName;
         private System.Windows.Forms.TextBox txtBaseEntityNamespace;
         private System.Windows.Forms.TextBox txtBaseAdapterNamespace;
+        private System.Windows.Forms.Label lblGenerateStatus;
     }
 }
 
