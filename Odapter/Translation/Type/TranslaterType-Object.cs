@@ -36,7 +36,7 @@ namespace Odapter {
         public string IgnoredReasonAsParameter { get => TranslaterMessage.IgnoreNotAvailableOdpNetMananged(OrclType); }
         public (bool isIgnored, string reasonMsg) IsIgnoredAsRecordField() => (true, TranslaterMessage.IgnoreNotAvailableOdpNetMananged(OrclType));
         public bool IsIgnoredAsAttribute { get => true; }
-        public string IgnoredReasonAsAttribute { get => TranslaterMessage.IgnoreNotAvailableOdpNetMananged(OrclType); }
+        public string IgnoredReasonAsAttribute { get => TranslaterMessage.IgnoreNotImplemented(OrclType); }
         internal TranslaterObjectType(string dataTypeFull) {
             DataTypeFull = dataTypeFull;
             CSharpType = Trns.ClassNameOfOracleIdentifier(dataTypeFull);
