@@ -144,12 +144,8 @@ namespace Schema.Odpt.Type.Object {
     // **OBJECT IGNORED** - Code generation for NESTED TABLE type has not been implemented
     // public partial class OdptNestedTableOt : Schema.Odpt.OdptObjectType {
 
-    [DataContract(Namespace="http://odpt.business.com")][Serializable()]
-    public partial class OdptObjectOt : Schema.Odpt.OdptObjectType {
-        private Byte propertyToEnsuresPartialClassNamesAreUniqueAtCompileTime { get; set; }
-        [DataMember(Order=1, IsRequired=false)][XmlElement(Order=1, IsNullable=true)]
-        public virtual OdptBigOt AttrOdptBigOt { get { return this.attrOdptBigOt; } set { this.attrOdptBigOt = value; } } protected OdptBigOt attrOdptBigOt;
-    } // OdptObjectOt
+    // **OBJECT IGNORED** - OBJECT type is not available in ODP.NET managed
+    // public partial class OdptObjectOt : Schema.Odpt.OdptObjectType {
 
     [DataContract(Namespace="http://odpt.business.com")][Serializable()]
     public partial class OdptPoVendorOt : OdptScTtTblUniqueOt {

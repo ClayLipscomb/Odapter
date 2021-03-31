@@ -399,16 +399,6 @@ namespace Schema.Odpt.Odpt.Safe.Table {
         public virtual OracleDecimal? ColNumberLast { get; set; }
     } // OdptTableNumber
 
-    [DataContract(Namespace="http://odpt.business.com")][Serializable()]
-    public partial class OdptTableObject : Schema.Odpt.Odpt.Safe.OdptTable {
-        private Byte propertyToEnsuresPartialClassNamesAreUniqueAtCompileTime { get; set; }
-        [DataMember(Order=1, IsRequired=true)][XmlElement(Order=1, IsNullable=true)]
-        public virtual OracleDecimal? Id { get; set; }
-        [DataMember(Order=2, IsRequired=false)][XmlElement(Order=2, IsNullable=true)]
-        public virtual OdptBigOt ColObject { get; set; }
-        [DataMember(Order=3, IsRequired=false)][XmlElement(Order=3, IsNullable=true)]
-        public virtual OdptBigOt ColRefObject { get; set; }
-        [DataMember(Order=4, IsRequired=false)][XmlElement(Order=4, IsNullable=true)]
-        public virtual OracleDecimal? ColLast { get; set; }
-    } // OdptTableObject
+    // **TABLE IGNORED** - OBJECT type is not available in ODP.NET managed
+    // public partial class OdptTableObject : Schema.Odpt.Odpt.Safe.OdptTable {
 } // Schema.Odpt.Odpt.Safe.Table
