@@ -1,7 +1,7 @@
 Odapter - a C# code generator for Oracle packages
 ========================================
 
-Odapter is a [single executable](/OdapterWnFrm/bin/x64/Release) that generates C# adapter classes to provide integration with Oracle packages. An adapter class handles the invocation of a package's procedures and the hydration of DTO collections from returned cursor results sets, both typed (record type based) and untyped (simple REF CURSOR). From within the IDE, the generated C# provides the developer de facto compile-time resolution with the packages. Optionally, standalone C# DTOs can be generated from Oracle objects, tables and views. 
+Odapter is a [single executable](/OdapterWnFrm/bin/x64/Release) that generates C# adapter classes to provide integration with Oracle packages. An adapter class handles the invocation of a package's procedures and the hydration of DTO collections from returned cursor results sets, both typed (record based) and untyped (simple REF CURSOR). From within the IDE, the generated C# provides the developer de facto compile-time resolution with the packages. Optionally, standalone C# DTOs can be generated from Oracle objects, tables and views. 
 
 ### Minimum System Requirements
 
@@ -19,8 +19,8 @@ Odapter is a [single executable](/OdapterWnFrm/bin/x64/Release) that generates C
 | --------------------------------------------------- | -------- |
 | Case insensitive                                    | Case sensitive | 
 | snake_case naming 		                          | PascalCase & camelCase naming     |
-| Package Record Type Field                           | Property     |
-| Package Record Type                                 | Interface of setters; nested abstract getter/setter class    |
+| Package Record Field                                | Property     |
+| Package Record                                      | Interface of setters; nested abstract getter/setter class    |
 | Function or Stored Procedure (packaged)             | Method    |
 | Package                                             | Singleton class of methods, interfaces and nested classes    |
 | Schema                                              | Namespace (with nesting)    |
@@ -29,34 +29,35 @@ Odapter is a [single executable](/OdapterWnFrm/bin/x64/Release) that generates C
 ### Code Generation Features
 
 * Generates adapter class for each package with respective method for each procedure/function
-* Generates nested abstract DTO class and interface for each record type
+* Generates nested interface for each record (DEPRECATED)
+* Generates nested abstract DTO class for each record 
 * Translates all common Oracle data types to C#
-* Configurable translation of Oracle REF CURSROR (typed and untyped) to IList<T>, ICollection<T>, or List<T>
-* Configurable translation of Oracle integer-indexed associative array type to IList<T> or List<T> of value type
+* Configurable translation of Oracle REF CURSROR (typed and untyped) to IList, ICollection, or List
+* Configurable translation of Oracle integer-indexed associative array type to IList or List of value type
 * Configurable translation of Oracle INTEGER, NUMBER, DATE, TIMESTAMP types, including options for ODP.NET safe types (OracleDecimal, OracleDate, OracleTimestamp)
 * Configurable translation of Oracle BLOB and CLOB/NCLOB types, including options for ODP.NET safe types (OracleBlob, OracleClob)
 * Translates Oracle IN, OUT and IN OUT parameters to C#
 * Translates Oracle optional (defaulted) parameters to C#
-* Generates standalone DTO class for each object type, table, and view
+* Generates standalone DTO class for each object, table, and view
 * Configurable for either auto-implemented, or protected field wrapped, DTO properties
 * Generates ancestor adapter class and DTO classes for customization
 * Generates default database connection logic for customization
-* Configurable C# namespaces and ancestor class names
+* Configurable C# namespaces, ancestor class names and file names
 * Generates post hook for profiling a package procedure invoked from C#
 * Optionally filters schema objects via prefix and/or special characters
-* Optionally generates C# classes as partial for packages, package record types, object types, tables and views
+* Optionally generates C# classes as partial for packages, package records , objects, tables and views
 * Optionally generates C# DTOs with Serializable, DataContract/DataMember (incl. namespace) or XmlElementAttribute attributes for package record types, object types, tables and views
-* Generates C# 4.0 code (.NET 4.0+)
+* Generates C# 4.0 compatible code (.NET 4.0+)
 * Generates single C# file for all packages, object types, tables and views, respectively
 * Handles package referencing a record type defined in a different package (including filtered)
 * Easily adaptable to legacy .NET projects and Oracle schemas
 * Locates and parses local TNSNAMES.ORA for Oracle instances
-* Persists generation settings to config file for multiple projects or schemas
+* Persists code generation settings to config file for handling multiple projects/schemas
 
 ### Run Time Features - Packages
 
 * Invokes packaged functions and stored procedures
-* Hydrates a List of (record type derived) DTOs from a returned (incl. OUT param) typed cursor result set
+* Hydrates a List of (record derived) DTOs from a returned (incl. OUT param) typed cursor result set
 * Hydrates a List of DTOs from a returned untyped cursor result set using configurable mapping:
     - Mapping by name: column name to property name (snake_case column translated to public PascalCase, protected camelCase or private underscore prefixed camelCase property)
     - Mapping by position: column position to property position via attribute
