@@ -49,7 +49,7 @@ namespace OdapterWnFrm {
 
             SetEnabledDisabled();
             AcceptButton = this.BtnStart;
-            this.BackColor = this.BtnStart.BackColor = this.btnRestoreDefaults.BackColor = this.btnSaveSettings.BackColor 
+            this.BackColor = this.BtnStart.BackColor = this.btnRestoreDefaults.BackColor = this.btnSaveSettings.BackColor = this.lblGenerateStatus.BackColor
                 = BackgroundColor;
         }
 
