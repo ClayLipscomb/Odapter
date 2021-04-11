@@ -25,11 +25,16 @@ using System.Windows.Forms;
 using System.Text;
 using Odapter;
 using Odapter.CSharp;
+using System.IO;
+using System.Reflection;
 
 namespace OdapterWnFrm {
     public partial class FormMain : Form {        
         private readonly TnsNamesReader tnsNamesReader = new TnsNamesReader();
         private readonly Color BackgroundColor = Color.FromArgb(36, 36, 36);
+        private readonly Color BackgroundColorInput = Color.Black;
+        private readonly Color ForeColorInput = Color.Yellow;
+        private readonly Color LabelColor = Color.DeepSkyBlue;
 
         public FormMain() {
             this.Text = Generator.GetAppNameVersionLabel();
@@ -255,13 +260,49 @@ namespace OdapterWnFrm {
             if (String.IsNullOrEmpty(txtPackageAncestorClass.Text)) txtPackageAncestorClass.Text = Generator.GenerateBaseAdapterClassName(txtSchema.Text);
         }
 
+        /// <summary>
+        /// Creates a relative path from one file or folder to another.
+        /// </summary>
+        /// <param name="fromPath">Contains the directory that defines the start of the relative path.</param>
+        /// <param name="toPath">Contains the path that defines the endpoint of the relative path.</param>
+        /// <returns>The relative path from the start directory to the end path.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="fromPath"/> or <paramref name="toPath"/> is <c>null</c>.</exception>
+        /// <exception cref="UriFormatException"></exception>
+        /// <exception cref="InvalidOperationException"></exception>
+        private string GetRelativePath(string fromPath, string toPath) {
+            if (string.IsNullOrEmpty(fromPath)) throw new ArgumentNullException("fromPath");
+            if (string.IsNullOrEmpty(toPath)) throw new ArgumentNullException("toPath");
+
+            Uri fromUri = new Uri(AppendDirectorySeparatorChar(fromPath));
+            Uri toUri = new Uri(AppendDirectorySeparatorChar(toPath));
+            if (fromUri.Scheme != toUri.Scheme) return toPath;
+
+            Uri relativeUri = fromUri.MakeRelativeUri(toUri);
+            string relativePath = Uri.UnescapeDataString(relativeUri.ToString());
+            if (string.Equals(toUri.Scheme, Uri.UriSchemeFile, StringComparison.OrdinalIgnoreCase)) 
+                relativePath = relativePath.Replace(Path.AltDirectorySeparatorChar, Path.DirectorySeparatorChar);            
+
+            return relativePath;
+        }
+
+        private string AppendDirectorySeparatorChar(string path) {
+            if (!Path.HasExtension(path) && !path.EndsWith(Path.DirectorySeparatorChar.ToString())) 
+                return path + Path.DirectorySeparatorChar; // Append a slash only if the path is a directory and does not have a slash.
+            else
+                return path;
+        }
+
         private void btnSelectPath_Click(object sender, EventArgs e) {
             FolderBrowserDialog dialog = new FolderBrowserDialog();
             dialog.Description = "Select the output path.";
             dialog.RootFolder = Environment.SpecialFolder.Desktop;
-            if (!String.IsNullOrEmpty(txtOutputPath.Text)) dialog.SelectedPath = txtOutputPath.Text;
-            DialogResult result = dialog.ShowDialog(this);
-            if (result == DialogResult.OK) txtOutputPath.Text = dialog.SelectedPath;
+            if (!String.IsNullOrEmpty(txtOutputPath.Text)) dialog.SelectedPath = Path.GetFullPath(txtOutputPath.Text);
+            if (dialog.ShowDialog(this) == DialogResult.OK) {
+                var relativePathSelected = GetRelativePath(
+                    Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
+                    Path.GetFullPath(dialog.SelectedPath));
+                txtOutputPath.Text = relativePathSelected;
+            }
         }
 
         private void cmbSettingsFile_SelectedIndexChanged(object sender, EventArgs e) {
@@ -691,7 +732,7 @@ namespace OdapterWnFrm {
         }
 
         private void ListViewMessage_DrawColumnHeader(object sender, DrawListViewColumnHeaderEventArgs e) {
-            e.Graphics.FillRectangle(new SolidBrush(Color.Black), e.Bounds);
+            e.Graphics.FillRectangle(new SolidBrush(BackgroundColorInput), e.Bounds);
             //using (var sf = new StringFormat()) {
             //    sf.Alignment = StringAlignment.Center;
             //    using (var headerFont = new Font("Microsoft Sans Serif", 9, FontStyle.Bold)) {
