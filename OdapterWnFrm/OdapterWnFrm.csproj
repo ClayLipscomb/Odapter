@@ -143,7 +143,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="bin\Release\" />
     <Folder Include="Icons\" />
     <Folder Include="lib\" />
     <Folder Include="Resources\" />
@@ -156,6 +155,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="bin\Release\Odapter.exe" />
     <Content Include="bin\x64\Release\Odapter.exe" />
     <Content Include="FodyWeavers.xml" />
   </ItemGroup>

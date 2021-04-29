@@ -320,3 +320,5 @@ __pycache__/
 /Tester/schema/table/odpt_table_ignore_nested_table.sql
 /OdapterWnFrm/bin/Debug/Odapter.exe.config
 /OdapterWnFrm/bin/Debug/OdapterCore.dll.config
+/OdapterWnFrm/bin/Release/Odapter.exe.config
+/OdapterWnFrm/bin/Release/OdapterCore.dll.config
