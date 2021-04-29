@@ -31,11 +31,6 @@ using System.Reflection;
 namespace OdapterWnFrm {
     public partial class FormMain : Form {        
         private readonly TnsNamesReader tnsNamesReader = new TnsNamesReader();
-        private readonly Color BackgroundColor = Color.FromArgb(36, 36, 36);
-        private readonly Color BackgroundColorInput = Color.Black;
-        private readonly Color ForeColorInput = Color.Yellow;
-        private readonly Color LabelColor = Color.DeepSkyBlue;
-
         public FormMain() {
             this.Text = Generator.GetAppNameVersionLabel();
 
@@ -55,7 +50,7 @@ namespace OdapterWnFrm {
             SetEnabledDisabled();
             AcceptButton = this.BtnStart;
             this.BackColor = this.BtnStart.BackColor = this.btnRestoreDefaults.BackColor = this.btnSaveSettings.BackColor = this.lblGenerateStatus.BackColor
-                = BackgroundColor;
+                = ColorWnFrm.BackgroundColor;
         }
 
         #region Messaging
@@ -740,7 +735,7 @@ namespace OdapterWnFrm {
         }
 
         private void ListViewMessage_DrawColumnHeader(object sender, DrawListViewColumnHeaderEventArgs e) {
-            e.Graphics.FillRectangle(new SolidBrush(BackgroundColorInput), e.Bounds);
+            e.Graphics.FillRectangle(new SolidBrush(ColorWnFrm.BackgroundColorInput), e.Bounds);
             //using (var sf = new StringFormat()) {
             //    sf.Alignment = StringAlignment.Center;
             //    using (var headerFont = new Font("Microsoft Sans Serif", 9, FontStyle.Bold)) {

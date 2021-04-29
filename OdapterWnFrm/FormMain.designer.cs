@@ -37,12 +37,20 @@ namespace OdapterWnFrm {
             this.txtLogin = new System.Windows.Forms.TextBox();
             this.txtPassword = new System.Windows.Forms.TextBox();
             this.txtOutputPath = new System.Windows.Forms.TextBox();
-            this.cbPartialPOCOs = new System.Windows.Forms.CheckBox();
-            this.cbGeneratePackage = new System.Windows.Forms.CheckBox();
-            this.cbGenerateProcedure = new System.Windows.Forms.CheckBox();
-            this.cbGenerateFunction = new System.Windows.Forms.CheckBox();
+            this.cbPartialPOCOs = new OdapterWnFrm.Controls.OdatperCheckBox();
+            this.cbGeneratePackage = new OdapterWnFrm.Controls.OdatperCheckBox();
+            this.cbGenerateProcedure = new OdapterWnFrm.Controls.OdatperCheckBox();
+            this.cbGenerateFunction = new OdapterWnFrm.Controls.OdatperCheckBox();
             this.gbCodeToGenerate = new System.Windows.Forms.GroupBox();
+            this.lblBaseDto = new System.Windows.Forms.Label();
+            this.lblBaseAdapter = new System.Windows.Forms.Label();
+            this.lblViewDto = new System.Windows.Forms.Label();
+            this.lblPackageAdapter = new System.Windows.Forms.Label();
+            this.lblTableDto = new System.Windows.Forms.Label();
+            this.lblIncludeFilterPrefixInNaming = new System.Windows.Forms.Label();
+            this.lblObjectDto = new System.Windows.Forms.Label();
             this.txtBaseAdapterNamespace = new System.Windows.Forms.TextBox();
+            this.lblRecordDto = new System.Windows.Forms.Label();
             this.txtBaseEntityNamespace = new System.Windows.Forms.TextBox();
             this.txtBaseEntityFileName = new System.Windows.Forms.TextBox();
             this.txtBaseAdapterFileName = new System.Windows.Forms.TextBox();
@@ -55,15 +63,15 @@ namespace OdapterWnFrm {
             this.txtBaseConnectionClassFunction = new System.Windows.Forms.TextBox();
             this.txtBaseConnectionClassProcedure = new System.Windows.Forms.TextBox();
             this.txtFunctionNamespace = new System.Windows.Forms.TextBox();
-            this.cbIncludeFilterPrefixInNaming = new System.Windows.Forms.CheckBox();
-            this.cbDataContractView = new System.Windows.Forms.CheckBox();
-            this.cbDataContractTable = new System.Windows.Forms.CheckBox();
-            this.cbDataContractObjectType = new System.Windows.Forms.CheckBox();
-            this.cbDataContractPackageRecord = new System.Windows.Forms.CheckBox();
-            this.cbXmlElementView = new System.Windows.Forms.CheckBox();
-            this.cbXmlElementTable = new System.Windows.Forms.CheckBox();
-            this.cbXmlElementPackageRecord = new System.Windows.Forms.CheckBox();
-            this.cbXmlElementObjectType = new System.Windows.Forms.CheckBox();
+            this.cbIncludeFilterPrefixInNaming = new OdapterWnFrm.Controls.OdatperCheckBox();
+            this.cbDataContractView = new OdapterWnFrm.Controls.OdatperCheckBox();
+            this.cbDataContractTable = new OdapterWnFrm.Controls.OdatperCheckBox();
+            this.cbDataContractObjectType = new OdapterWnFrm.Controls.OdatperCheckBox();
+            this.cbDataContractPackageRecord = new OdapterWnFrm.Controls.OdatperCheckBox();
+            this.cbXmlElementView = new OdapterWnFrm.Controls.OdatperCheckBox();
+            this.cbXmlElementTable = new OdapterWnFrm.Controls.OdatperCheckBox();
+            this.cbXmlElementPackageRecord = new OdapterWnFrm.Controls.OdatperCheckBox();
+            this.cbXmlElementObjectType = new OdapterWnFrm.Controls.OdatperCheckBox();
             this.btnSelectPath = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -73,55 +81,55 @@ namespace OdapterWnFrm {
             this.txtViewAncestorClass = new System.Windows.Forms.TextBox();
             this.txtTableAncestorClass = new System.Windows.Forms.TextBox();
             this.txtObjectAncestorClass = new System.Windows.Forms.TextBox();
-            this.cbGenerateBaseEntity = new System.Windows.Forms.CheckBox();
-            this.cbGenerateBaseAdapter = new System.Windows.Forms.CheckBox();
+            this.cbGenerateBaseEntity = new OdapterWnFrm.Controls.OdatperCheckBox();
+            this.cbGenerateBaseAdapter = new OdapterWnFrm.Controls.OdatperCheckBox();
             this.txtPackageAncestorClass = new System.Windows.Forms.TextBox();
             this.txtRecordTypeAncestorClass = new System.Windows.Forms.TextBox();
-            this.cbPartialObjectTypes = new System.Windows.Forms.CheckBox();
-            this.cbPartialViews = new System.Windows.Forms.CheckBox();
-            this.cbPartialTables = new System.Windows.Forms.CheckBox();
+            this.cbPartialObjectTypes = new OdapterWnFrm.Controls.OdatperCheckBox();
+            this.cbPartialViews = new OdapterWnFrm.Controls.OdatperCheckBox();
+            this.cbPartialTables = new OdapterWnFrm.Controls.OdatperCheckBox();
             this.lblAncestorClass = new System.Windows.Forms.Label();
             this.lblPartial = new System.Windows.Forms.Label();
             this.lblSerializable = new System.Windows.Forms.Label();
             this.txtViewNamespace = new System.Windows.Forms.TextBox();
             this.txtTableNamespace = new System.Windows.Forms.TextBox();
-            this.cbPartialPackageClasses = new System.Windows.Forms.CheckBox();
+            this.cbPartialPackageClasses = new OdapterWnFrm.Controls.OdatperCheckBox();
             this.txtObjectNamespace = new System.Windows.Forms.TextBox();
             this.txtPackageNamespace = new System.Windows.Forms.TextBox();
             this.txtRecordTypeNamespace = new System.Windows.Forms.TextBox();
             this.lblNamespace = new System.Windows.Forms.Label();
-            this.cbSerializableViews = new System.Windows.Forms.CheckBox();
-            this.cbSerializableTables = new System.Windows.Forms.CheckBox();
-            this.cbSerializableObjectTypes = new System.Windows.Forms.CheckBox();
-            this.cbGenerateView = new System.Windows.Forms.CheckBox();
-            this.cbGenerateRecordType = new System.Windows.Forms.CheckBox();
-            this.cbGenerateTable = new System.Windows.Forms.CheckBox();
-            this.cbSerializablePOCOs = new System.Windows.Forms.CheckBox();
-            this.cbGenerateObject = new System.Windows.Forms.CheckBox();
+            this.cbSerializableViews = new OdapterWnFrm.Controls.OdatperCheckBox();
+            this.cbSerializableTables = new OdapterWnFrm.Controls.OdatperCheckBox();
+            this.cbSerializableObjectTypes = new OdapterWnFrm.Controls.OdatperCheckBox();
+            this.cbGenerateView = new OdapterWnFrm.Controls.OdatperCheckBox();
+            this.cbGenerateRecordType = new OdapterWnFrm.Controls.OdatperCheckBox();
+            this.cbGenerateTable = new OdapterWnFrm.Controls.OdatperCheckBox();
+            this.cbSerializablePOCOs = new OdapterWnFrm.Controls.OdatperCheckBox();
+            this.cbGenerateObject = new OdapterWnFrm.Controls.OdatperCheckBox();
             this.lblCSharpVersion = new System.Windows.Forms.Label();
             this.cmbCSharpVersion = new System.Windows.Forms.ComboBox();
             this.txtDataContractNamespace = new System.Windows.Forms.TextBox();
             this.lblDataContractNamespace = new System.Windows.Forms.Label();
-            this.cbDeployResources = new System.Windows.Forms.CheckBox();
+            this.cbDeployResources = new OdapterWnFrm.Controls.OdatperCheckBox();
             this.txtMaxReturnArgStringSize = new System.Windows.Forms.TextBox();
             this.lblMaxReturnArgStringSize = new System.Windows.Forms.Label();
             this.txtMaxAssocArraySize = new System.Windows.Forms.TextBox();
             this.lblMaxAssocArraySize = new System.Windows.Forms.Label();
             this.lblFilter = new System.Windows.Forms.Label();
             this.txtFilter = new System.Windows.Forms.TextBox();
-            this.cbConvertOracleNumberToIntegerIfColumnNameIsId = new System.Windows.Forms.CheckBox();
+            this.cbConvertOracleNumberToIntegerIfColumnNameIsId = new OdapterWnFrm.Controls.OdatperCheckBox();
             this.gbDatabase = new System.Windows.Forms.GroupBox();
-            this.cbIsSavePassword = new System.Windows.Forms.CheckBox();
+            this.lblSavePassword = new System.Windows.Forms.Label();
+            this.cbIsSavePassword = new OdapterWnFrm.Controls.OdatperCheckBox();
             this.cmbDBInstance = new System.Windows.Forms.ComboBox();
             this.cmbClientHome = new System.Windows.Forms.ComboBox();
             this.lblClientHome = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.cbDuplicatePackageRecordOriginatingOutsideFilterAndSchema = new System.Windows.Forms.CheckBox();
             this.lblCSharpTypeUsedForOracleNumber = new System.Windows.Forms.Label();
             this.lblCSharpTypeUsedForOracleInteger = new System.Windows.Forms.Label();
-            this.cbExcludeObjectNamesWithSpecificChars = new System.Windows.Forms.CheckBox();
-            this.cbGeneratedDynamicMethodForTypedCursor = new System.Windows.Forms.CheckBox();
-            this.cbUseAutoImplementedProperties = new System.Windows.Forms.CheckBox();
+            this.cbExcludeObjectNamesWithSpecificChars = new OdapterWnFrm.Controls.OdatperCheckBox();
+            this.cbGeneratedDynamicMethodForTypedCursor = new OdapterWnFrm.Controls.OdatperCheckBox();
+            this.cbUseAutoImplementedProperties = new OdapterWnFrm.Controls.OdatperCheckBox();
             this.btnSaveSettings = new System.Windows.Forms.Button();
             this.lblCSharpTypeUsedForOracleTimestamp = new System.Windows.Forms.Label();
             this.lblCSharpUsedForOracleIntervalDayToSecond = new System.Windows.Forms.Label();
@@ -134,6 +142,13 @@ namespace OdapterWnFrm {
             this.lblCSharpTypeUsedForOracleAssociativeArray = new System.Windows.Forms.Label();
             this.lblCSharpTypeUsedForOracleTimestampTZ = new System.Windows.Forms.Label();
             this.lblCSharpTypeUsedForOracleTimestampLTZ = new System.Windows.Forms.Label();
+            this.lblDeployResources = new System.Windows.Forms.Label();
+            this.lblDuplicatePackageRecordOriginatingOutsideFilterAndSchema = new System.Windows.Forms.Label();
+            this.lblExcludeObjectNamesWithSpecificChars = new System.Windows.Forms.Label();
+            this.lblGeneratedDynamicMethodForTypedCursor = new System.Windows.Forms.Label();
+            this.lblUseAutoImplementedProperties = new System.Windows.Forms.Label();
+            this.lblConvertOracleNumberToIntegerIfColumnNameIsId = new System.Windows.Forms.Label();
+            this.cbDuplicatePackageRecordOriginatingOutsideFilterAndSchema = new OdapterWnFrm.Controls.OdatperCheckBox();
             this.gbSettings = new System.Windows.Forms.GroupBox();
             this.cmbSettingsFile = new System.Windows.Forms.ComboBox();
             this.btnRestoreDefaults = new System.Windows.Forms.Button();
@@ -153,21 +168,6 @@ namespace OdapterWnFrm {
             this.txtLocalVariableNameSuffix = new System.Windows.Forms.TextBox();
             this.txtExcludeChars = new System.Windows.Forms.TextBox();
             this.lblGenerateStatus = new System.Windows.Forms.Label();
-            this.lblSavePassword = new System.Windows.Forms.Label();
-            this.lblDeployResources = new System.Windows.Forms.Label();
-            this.lblDuplicatePackageRecordOriginatingOutsideFilterAndSchema = new System.Windows.Forms.Label();
-            this.lblExcludeObjectNamesWithSpecificChars = new System.Windows.Forms.Label();
-            this.lblGeneratedDynamicMethodForTypedCursor = new System.Windows.Forms.Label();
-            this.lblUseAutoImplementedProperties = new System.Windows.Forms.Label();
-            this.lblConvertOracleNumberToIntegerIfColumnNameIsId = new System.Windows.Forms.Label();
-            this.lblIncludeFilterPrefixInNaming = new System.Windows.Forms.Label();
-            this.lblPackageAdapter = new System.Windows.Forms.Label();
-            this.lblBaseAdapter = new System.Windows.Forms.Label();
-            this.lblRecordDto = new System.Windows.Forms.Label();
-            this.lblObjectDto = new System.Windows.Forms.Label();
-            this.lblTableDto = new System.Windows.Forms.Label();
-            this.lblViewDto = new System.Windows.Forms.Label();
-            this.lblBaseDto = new System.Windows.Forms.Label();
             this.gbCodeToGenerate.SuspendLayout();
             this.gbDatabase.SuspendLayout();
             this.gbSettings.SuspendLayout();
@@ -324,15 +324,15 @@ namespace OdapterWnFrm {
             // 
             // cbPartialPOCOs
             // 
-            this.cbPartialPOCOs.AutoSize = true;
             this.cbPartialPOCOs.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.cbPartialPOCOs.Enabled = false;
+            this.cbPartialPOCOs.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbPartialPOCOs.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbPartialPOCOs.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.cbPartialPOCOs.Location = new System.Drawing.Point(418, 123);
+            this.cbPartialPOCOs.Location = new System.Drawing.Point(418, 121);
             this.cbPartialPOCOs.Margin = new System.Windows.Forms.Padding(4);
             this.cbPartialPOCOs.Name = "cbPartialPOCOs";
-            this.cbPartialPOCOs.Size = new System.Drawing.Size(18, 17);
+            this.cbPartialPOCOs.Size = new System.Drawing.Size(17, 21);
             this.cbPartialPOCOs.TabIndex = 8;
             this.cbPartialPOCOs.UseVisualStyleBackColor = true;
             this.cbPartialPOCOs.CheckedChanged += new System.EventHandler(this.cbPartialPOCOs_CheckedChanged);
@@ -343,6 +343,7 @@ namespace OdapterWnFrm {
             this.cbGeneratePackage.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.cbGeneratePackage.FlatAppearance.CheckedBackColor = System.Drawing.Color.Black;
             this.cbGeneratePackage.FlatAppearance.MouseDownBackColor = System.Drawing.Color.DeepSkyBlue;
+            this.cbGeneratePackage.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbGeneratePackage.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbGeneratePackage.ForeColor = System.Drawing.Color.DeepSkyBlue;
             this.cbGeneratePackage.Location = new System.Drawing.Point(157, 69);
@@ -358,12 +359,13 @@ namespace OdapterWnFrm {
             // 
             this.cbGenerateProcedure.AutoSize = true;
             this.cbGenerateProcedure.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.cbGenerateProcedure.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbGenerateProcedure.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbGenerateProcedure.ForeColor = System.Drawing.SystemColors.HotTrack;
             this.cbGenerateProcedure.Location = new System.Drawing.Point(17, 780);
             this.cbGenerateProcedure.Margin = new System.Windows.Forms.Padding(4);
             this.cbGenerateProcedure.Name = "cbGenerateProcedure";
-            this.cbGenerateProcedure.Size = new System.Drawing.Size(175, 21);
+            this.cbGenerateProcedure.Size = new System.Drawing.Size(171, 21);
             this.cbGenerateProcedure.TabIndex = 4;
             this.cbGenerateProcedure.Text = "Procedures Adapter";
             this.cbGenerateProcedure.UseVisualStyleBackColor = true;
@@ -373,12 +375,13 @@ namespace OdapterWnFrm {
             this.cbGenerateFunction.AutoSize = true;
             this.cbGenerateFunction.BackColor = System.Drawing.Color.Transparent;
             this.cbGenerateFunction.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.cbGenerateFunction.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbGenerateFunction.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbGenerateFunction.ForeColor = System.Drawing.SystemColors.HotTrack;
             this.cbGenerateFunction.Location = new System.Drawing.Point(29, 807);
             this.cbGenerateFunction.Margin = new System.Windows.Forms.Padding(4);
             this.cbGenerateFunction.Name = "cbGenerateFunction";
-            this.cbGenerateFunction.Size = new System.Drawing.Size(162, 21);
+            this.cbGenerateFunction.Size = new System.Drawing.Size(158, 21);
             this.cbGenerateFunction.TabIndex = 5;
             this.cbGenerateFunction.Text = "Functions Adapter";
             this.cbGenerateFunction.UseVisualStyleBackColor = false;
@@ -468,6 +471,97 @@ namespace OdapterWnFrm {
             this.gbCodeToGenerate.TabStop = false;
             this.gbCodeToGenerate.Text = "Code to Generate";
             // 
+            // lblBaseDto
+            // 
+            this.lblBaseDto.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblBaseDto.ForeColor = System.Drawing.Color.DeepSkyBlue;
+            this.lblBaseDto.Location = new System.Drawing.Point(14, 226);
+            this.lblBaseDto.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblBaseDto.Name = "lblBaseDto";
+            this.lblBaseDto.Size = new System.Drawing.Size(140, 17);
+            this.lblBaseDto.TabIndex = 79;
+            this.lblBaseDto.Text = "Base DTOs";
+            this.lblBaseDto.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.toolTip1.SetToolTip(this.lblBaseDto, "Ancestor classes for package record type, object type, table and view DTOs. Only " +
+        "needs to be deployed once.");
+            // 
+            // lblBaseAdapter
+            // 
+            this.lblBaseAdapter.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblBaseAdapter.ForeColor = System.Drawing.Color.DeepSkyBlue;
+            this.lblBaseAdapter.Location = new System.Drawing.Point(14, 94);
+            this.lblBaseAdapter.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblBaseAdapter.Name = "lblBaseAdapter";
+            this.lblBaseAdapter.Size = new System.Drawing.Size(140, 17);
+            this.lblBaseAdapter.TabIndex = 74;
+            this.lblBaseAdapter.Text = "Base Adapter";
+            this.lblBaseAdapter.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.toolTip1.SetToolTip(this.lblBaseAdapter, "Ancestor class for all package adapters. Only needs to be deployed once.");
+            // 
+            // lblViewDto
+            // 
+            this.lblViewDto.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblViewDto.ForeColor = System.Drawing.Color.DeepSkyBlue;
+            this.lblViewDto.Location = new System.Drawing.Point(14, 201);
+            this.lblViewDto.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblViewDto.Name = "lblViewDto";
+            this.lblViewDto.Size = new System.Drawing.Size(140, 17);
+            this.lblViewDto.TabIndex = 78;
+            this.lblViewDto.Text = "View DTOs";
+            this.lblViewDto.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // lblPackageAdapter
+            // 
+            this.lblPackageAdapter.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPackageAdapter.ForeColor = System.Drawing.Color.DeepSkyBlue;
+            this.lblPackageAdapter.Location = new System.Drawing.Point(14, 69);
+            this.lblPackageAdapter.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblPackageAdapter.Name = "lblPackageAdapter";
+            this.lblPackageAdapter.Size = new System.Drawing.Size(140, 17);
+            this.lblPackageAdapter.TabIndex = 69;
+            this.lblPackageAdapter.Text = "Package Adapters";
+            this.lblPackageAdapter.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // lblTableDto
+            // 
+            this.lblTableDto.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTableDto.ForeColor = System.Drawing.Color.DeepSkyBlue;
+            this.lblTableDto.Location = new System.Drawing.Point(14, 175);
+            this.lblTableDto.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblTableDto.Name = "lblTableDto";
+            this.lblTableDto.Size = new System.Drawing.Size(140, 17);
+            this.lblTableDto.TabIndex = 77;
+            this.lblTableDto.Text = "Table DTOs";
+            this.lblTableDto.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // lblIncludeFilterPrefixInNaming
+            // 
+            this.lblIncludeFilterPrefixInNaming.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblIncludeFilterPrefixInNaming.ForeColor = System.Drawing.Color.DeepSkyBlue;
+            this.lblIncludeFilterPrefixInNaming.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.lblIncludeFilterPrefixInNaming.Location = new System.Drawing.Point(244, 251);
+            this.lblIncludeFilterPrefixInNaming.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblIncludeFilterPrefixInNaming.Name = "lblIncludeFilterPrefixInNaming";
+            this.lblIncludeFilterPrefixInNaming.Size = new System.Drawing.Size(622, 18);
+            this.lblIncludeFilterPrefixInNaming.TabIndex = 72;
+            this.lblIncludeFilterPrefixInNaming.Text = "Automatically Include Filter Prefix in Namespace and Generated File Naming?";
+            this.lblIncludeFilterPrefixInNaming.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.toolTip1.SetToolTip(this.lblIncludeFilterPrefixInNaming, "Incorporate the Filter Prefix value into namespaces and generated file names. Thi" +
+        "s is \r\nuseful in cases where packages of multiple projects exists in the same sc" +
+        "hema (e.g., APPS).");
+            // 
+            // lblObjectDto
+            // 
+            this.lblObjectDto.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblObjectDto.ForeColor = System.Drawing.Color.DeepSkyBlue;
+            this.lblObjectDto.Location = new System.Drawing.Point(14, 148);
+            this.lblObjectDto.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblObjectDto.Name = "lblObjectDto";
+            this.lblObjectDto.Size = new System.Drawing.Size(140, 17);
+            this.lblObjectDto.TabIndex = 76;
+            this.lblObjectDto.Text = "Object DTOs";
+            this.lblObjectDto.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
             // txtBaseAdapterNamespace
             // 
             this.txtBaseAdapterNamespace.BackColor = System.Drawing.Color.Black;
@@ -478,6 +572,18 @@ namespace OdapterWnFrm {
             this.txtBaseAdapterNamespace.Name = "txtBaseAdapterNamespace";
             this.txtBaseAdapterNamespace.Size = new System.Drawing.Size(225, 23);
             this.txtBaseAdapterNamespace.TabIndex = 73;
+            // 
+            // lblRecordDto
+            // 
+            this.lblRecordDto.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblRecordDto.ForeColor = System.Drawing.Color.DeepSkyBlue;
+            this.lblRecordDto.Location = new System.Drawing.Point(14, 122);
+            this.lblRecordDto.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblRecordDto.Name = "lblRecordDto";
+            this.lblRecordDto.Size = new System.Drawing.Size(140, 17);
+            this.lblRecordDto.TabIndex = 75;
+            this.lblRecordDto.Text = "Record DTOs";
+            this.lblRecordDto.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // txtBaseEntityNamespace
             // 
@@ -617,6 +723,7 @@ namespace OdapterWnFrm {
             this.cbIncludeFilterPrefixInNaming.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.cbIncludeFilterPrefixInNaming.Checked = true;
             this.cbIncludeFilterPrefixInNaming.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbIncludeFilterPrefixInNaming.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbIncludeFilterPrefixInNaming.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbIncludeFilterPrefixInNaming.ForeColor = System.Drawing.Color.DeepSkyBlue;
             this.cbIncludeFilterPrefixInNaming.Location = new System.Drawing.Point(871, 251);
@@ -630,56 +737,56 @@ namespace OdapterWnFrm {
             // 
             // cbDataContractView
             // 
-            this.cbDataContractView.AutoSize = true;
             this.cbDataContractView.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.cbDataContractView.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbDataContractView.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbDataContractView.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.cbDataContractView.Location = new System.Drawing.Point(502, 201);
+            this.cbDataContractView.Location = new System.Drawing.Point(502, 200);
             this.cbDataContractView.Margin = new System.Windows.Forms.Padding(4);
             this.cbDataContractView.Name = "cbDataContractView";
-            this.cbDataContractView.Size = new System.Drawing.Size(18, 17);
+            this.cbDataContractView.Size = new System.Drawing.Size(17, 21);
             this.cbDataContractView.TabIndex = 31;
             this.cbDataContractView.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.cbDataContractView.UseVisualStyleBackColor = true;
             // 
             // cbDataContractTable
             // 
-            this.cbDataContractTable.AutoSize = true;
             this.cbDataContractTable.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.cbDataContractTable.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbDataContractTable.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbDataContractTable.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.cbDataContractTable.Location = new System.Drawing.Point(502, 175);
+            this.cbDataContractTable.Location = new System.Drawing.Point(502, 174);
             this.cbDataContractTable.Margin = new System.Windows.Forms.Padding(4);
             this.cbDataContractTable.Name = "cbDataContractTable";
-            this.cbDataContractTable.Size = new System.Drawing.Size(18, 17);
+            this.cbDataContractTable.Size = new System.Drawing.Size(17, 21);
             this.cbDataContractTable.TabIndex = 24;
             this.cbDataContractTable.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.cbDataContractTable.UseVisualStyleBackColor = true;
             // 
             // cbDataContractObjectType
             // 
-            this.cbDataContractObjectType.AutoSize = true;
             this.cbDataContractObjectType.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.cbDataContractObjectType.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbDataContractObjectType.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbDataContractObjectType.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.cbDataContractObjectType.Location = new System.Drawing.Point(502, 149);
+            this.cbDataContractObjectType.Location = new System.Drawing.Point(502, 147);
             this.cbDataContractObjectType.Margin = new System.Windows.Forms.Padding(4);
             this.cbDataContractObjectType.Name = "cbDataContractObjectType";
-            this.cbDataContractObjectType.Size = new System.Drawing.Size(18, 17);
+            this.cbDataContractObjectType.Size = new System.Drawing.Size(17, 21);
             this.cbDataContractObjectType.TabIndex = 17;
             this.cbDataContractObjectType.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.cbDataContractObjectType.UseVisualStyleBackColor = true;
             // 
             // cbDataContractPackageRecord
             // 
-            this.cbDataContractPackageRecord.AutoSize = true;
             this.cbDataContractPackageRecord.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.cbDataContractPackageRecord.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbDataContractPackageRecord.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbDataContractPackageRecord.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.cbDataContractPackageRecord.Location = new System.Drawing.Point(502, 123);
+            this.cbDataContractPackageRecord.Location = new System.Drawing.Point(502, 121);
             this.cbDataContractPackageRecord.Margin = new System.Windows.Forms.Padding(4);
             this.cbDataContractPackageRecord.Name = "cbDataContractPackageRecord";
-            this.cbDataContractPackageRecord.Size = new System.Drawing.Size(18, 17);
+            this.cbDataContractPackageRecord.Size = new System.Drawing.Size(17, 21);
             this.cbDataContractPackageRecord.TabIndex = 10;
             this.cbDataContractPackageRecord.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.cbDataContractPackageRecord.UseVisualStyleBackColor = true;
@@ -687,14 +794,14 @@ namespace OdapterWnFrm {
             // 
             // cbXmlElementView
             // 
-            this.cbXmlElementView.AutoSize = true;
             this.cbXmlElementView.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.cbXmlElementView.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbXmlElementView.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbXmlElementView.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.cbXmlElementView.Location = new System.Drawing.Point(542, 201);
+            this.cbXmlElementView.Location = new System.Drawing.Point(542, 200);
             this.cbXmlElementView.Margin = new System.Windows.Forms.Padding(4);
             this.cbXmlElementView.Name = "cbXmlElementView";
-            this.cbXmlElementView.Size = new System.Drawing.Size(18, 17);
+            this.cbXmlElementView.Size = new System.Drawing.Size(17, 21);
             this.cbXmlElementView.TabIndex = 32;
             this.cbXmlElementView.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.cbXmlElementView.UseVisualStyleBackColor = true;
@@ -702,14 +809,14 @@ namespace OdapterWnFrm {
             // 
             // cbXmlElementTable
             // 
-            this.cbXmlElementTable.AutoSize = true;
             this.cbXmlElementTable.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.cbXmlElementTable.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbXmlElementTable.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbXmlElementTable.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.cbXmlElementTable.Location = new System.Drawing.Point(542, 175);
+            this.cbXmlElementTable.Location = new System.Drawing.Point(542, 174);
             this.cbXmlElementTable.Margin = new System.Windows.Forms.Padding(4);
             this.cbXmlElementTable.Name = "cbXmlElementTable";
-            this.cbXmlElementTable.Size = new System.Drawing.Size(18, 17);
+            this.cbXmlElementTable.Size = new System.Drawing.Size(17, 21);
             this.cbXmlElementTable.TabIndex = 25;
             this.cbXmlElementTable.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.cbXmlElementTable.UseVisualStyleBackColor = true;
@@ -717,14 +824,14 @@ namespace OdapterWnFrm {
             // 
             // cbXmlElementPackageRecord
             // 
-            this.cbXmlElementPackageRecord.AutoSize = true;
             this.cbXmlElementPackageRecord.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.cbXmlElementPackageRecord.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbXmlElementPackageRecord.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbXmlElementPackageRecord.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.cbXmlElementPackageRecord.Location = new System.Drawing.Point(542, 123);
+            this.cbXmlElementPackageRecord.Location = new System.Drawing.Point(542, 121);
             this.cbXmlElementPackageRecord.Margin = new System.Windows.Forms.Padding(4);
             this.cbXmlElementPackageRecord.Name = "cbXmlElementPackageRecord";
-            this.cbXmlElementPackageRecord.Size = new System.Drawing.Size(18, 17);
+            this.cbXmlElementPackageRecord.Size = new System.Drawing.Size(17, 21);
             this.cbXmlElementPackageRecord.TabIndex = 11;
             this.cbXmlElementPackageRecord.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.cbXmlElementPackageRecord.UseVisualStyleBackColor = true;
@@ -732,14 +839,14 @@ namespace OdapterWnFrm {
             // 
             // cbXmlElementObjectType
             // 
-            this.cbXmlElementObjectType.AutoSize = true;
             this.cbXmlElementObjectType.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.cbXmlElementObjectType.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbXmlElementObjectType.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbXmlElementObjectType.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.cbXmlElementObjectType.Location = new System.Drawing.Point(542, 149);
+            this.cbXmlElementObjectType.Location = new System.Drawing.Point(542, 147);
             this.cbXmlElementObjectType.Margin = new System.Windows.Forms.Padding(4);
             this.cbXmlElementObjectType.Name = "cbXmlElementObjectType";
-            this.cbXmlElementObjectType.Size = new System.Drawing.Size(18, 17);
+            this.cbXmlElementObjectType.Size = new System.Drawing.Size(17, 21);
             this.cbXmlElementObjectType.TabIndex = 18;
             this.cbXmlElementObjectType.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.cbXmlElementObjectType.UseVisualStyleBackColor = true;
@@ -866,6 +973,7 @@ namespace OdapterWnFrm {
             // cbGenerateBaseEntity
             // 
             this.cbGenerateBaseEntity.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.cbGenerateBaseEntity.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbGenerateBaseEntity.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbGenerateBaseEntity.ForeColor = System.Drawing.Color.DeepSkyBlue;
             this.cbGenerateBaseEntity.Location = new System.Drawing.Point(157, 225);
@@ -880,6 +988,7 @@ namespace OdapterWnFrm {
             // cbGenerateBaseAdapter
             // 
             this.cbGenerateBaseAdapter.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.cbGenerateBaseAdapter.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbGenerateBaseAdapter.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbGenerateBaseAdapter.ForeColor = System.Drawing.Color.DeepSkyBlue;
             this.cbGenerateBaseAdapter.Location = new System.Drawing.Point(157, 94);
@@ -918,40 +1027,40 @@ namespace OdapterWnFrm {
             // 
             // cbPartialObjectTypes
             // 
-            this.cbPartialObjectTypes.AutoSize = true;
             this.cbPartialObjectTypes.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.cbPartialObjectTypes.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbPartialObjectTypes.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbPartialObjectTypes.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.cbPartialObjectTypes.Location = new System.Drawing.Point(418, 149);
+            this.cbPartialObjectTypes.Location = new System.Drawing.Point(418, 147);
             this.cbPartialObjectTypes.Margin = new System.Windows.Forms.Padding(4);
             this.cbPartialObjectTypes.Name = "cbPartialObjectTypes";
-            this.cbPartialObjectTypes.Size = new System.Drawing.Size(18, 17);
+            this.cbPartialObjectTypes.Size = new System.Drawing.Size(17, 21);
             this.cbPartialObjectTypes.TabIndex = 15;
             this.cbPartialObjectTypes.UseVisualStyleBackColor = true;
             // 
             // cbPartialViews
             // 
-            this.cbPartialViews.AutoSize = true;
             this.cbPartialViews.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.cbPartialViews.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbPartialViews.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbPartialViews.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.cbPartialViews.Location = new System.Drawing.Point(418, 201);
+            this.cbPartialViews.Location = new System.Drawing.Point(418, 200);
             this.cbPartialViews.Margin = new System.Windows.Forms.Padding(4);
             this.cbPartialViews.Name = "cbPartialViews";
-            this.cbPartialViews.Size = new System.Drawing.Size(18, 17);
+            this.cbPartialViews.Size = new System.Drawing.Size(17, 21);
             this.cbPartialViews.TabIndex = 29;
             this.cbPartialViews.UseVisualStyleBackColor = true;
             // 
             // cbPartialTables
             // 
-            this.cbPartialTables.AutoSize = true;
             this.cbPartialTables.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.cbPartialTables.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbPartialTables.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbPartialTables.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.cbPartialTables.Location = new System.Drawing.Point(418, 175);
+            this.cbPartialTables.Location = new System.Drawing.Point(418, 174);
             this.cbPartialTables.Margin = new System.Windows.Forms.Padding(4);
             this.cbPartialTables.Name = "cbPartialTables";
-            this.cbPartialTables.Size = new System.Drawing.Size(18, 17);
+            this.cbPartialTables.Size = new System.Drawing.Size(17, 21);
             this.cbPartialTables.TabIndex = 22;
             this.cbPartialTables.UseVisualStyleBackColor = true;
             // 
@@ -1024,14 +1133,14 @@ namespace OdapterWnFrm {
             // 
             // cbPartialPackageClasses
             // 
-            this.cbPartialPackageClasses.AutoSize = true;
             this.cbPartialPackageClasses.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.cbPartialPackageClasses.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbPartialPackageClasses.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbPartialPackageClasses.ForeColor = System.Drawing.SystemColors.HotTrack;
             this.cbPartialPackageClasses.Location = new System.Drawing.Point(418, 70);
             this.cbPartialPackageClasses.Margin = new System.Windows.Forms.Padding(4);
             this.cbPartialPackageClasses.Name = "cbPartialPackageClasses";
-            this.cbPartialPackageClasses.Size = new System.Drawing.Size(18, 17);
+            this.cbPartialPackageClasses.Size = new System.Drawing.Size(17, 21);
             this.cbPartialPackageClasses.TabIndex = 4;
             this.cbPartialPackageClasses.UseVisualStyleBackColor = true;
             this.cbPartialPackageClasses.CheckedChanged += new System.EventHandler(this.cbPartialPackage_CheckedChanged);
@@ -1088,42 +1197,42 @@ namespace OdapterWnFrm {
             // 
             // cbSerializableViews
             // 
-            this.cbSerializableViews.AutoSize = true;
             this.cbSerializableViews.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.cbSerializableViews.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbSerializableViews.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbSerializableViews.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.cbSerializableViews.Location = new System.Drawing.Point(460, 201);
+            this.cbSerializableViews.Location = new System.Drawing.Point(460, 200);
             this.cbSerializableViews.Margin = new System.Windows.Forms.Padding(4);
             this.cbSerializableViews.Name = "cbSerializableViews";
-            this.cbSerializableViews.Size = new System.Drawing.Size(18, 17);
+            this.cbSerializableViews.Size = new System.Drawing.Size(17, 21);
             this.cbSerializableViews.TabIndex = 30;
             this.cbSerializableViews.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.cbSerializableViews.UseVisualStyleBackColor = true;
             // 
             // cbSerializableTables
             // 
-            this.cbSerializableTables.AutoSize = true;
             this.cbSerializableTables.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.cbSerializableTables.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbSerializableTables.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbSerializableTables.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.cbSerializableTables.Location = new System.Drawing.Point(460, 175);
+            this.cbSerializableTables.Location = new System.Drawing.Point(460, 174);
             this.cbSerializableTables.Margin = new System.Windows.Forms.Padding(4);
             this.cbSerializableTables.Name = "cbSerializableTables";
-            this.cbSerializableTables.Size = new System.Drawing.Size(18, 17);
+            this.cbSerializableTables.Size = new System.Drawing.Size(17, 21);
             this.cbSerializableTables.TabIndex = 23;
             this.cbSerializableTables.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.cbSerializableTables.UseVisualStyleBackColor = true;
             // 
             // cbSerializableObjectTypes
             // 
-            this.cbSerializableObjectTypes.AutoSize = true;
             this.cbSerializableObjectTypes.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.cbSerializableObjectTypes.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbSerializableObjectTypes.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbSerializableObjectTypes.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.cbSerializableObjectTypes.Location = new System.Drawing.Point(460, 149);
+            this.cbSerializableObjectTypes.Location = new System.Drawing.Point(460, 147);
             this.cbSerializableObjectTypes.Margin = new System.Windows.Forms.Padding(4);
             this.cbSerializableObjectTypes.Name = "cbSerializableObjectTypes";
-            this.cbSerializableObjectTypes.Size = new System.Drawing.Size(18, 17);
+            this.cbSerializableObjectTypes.Size = new System.Drawing.Size(17, 21);
             this.cbSerializableObjectTypes.TabIndex = 16;
             this.cbSerializableObjectTypes.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.cbSerializableObjectTypes.UseVisualStyleBackColor = true;
@@ -1132,6 +1241,7 @@ namespace OdapterWnFrm {
             // 
             this.cbGenerateView.BackColor = System.Drawing.Color.Transparent;
             this.cbGenerateView.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.cbGenerateView.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbGenerateView.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbGenerateView.ForeColor = System.Drawing.Color.DeepSkyBlue;
             this.cbGenerateView.Location = new System.Drawing.Point(157, 200);
@@ -1147,6 +1257,7 @@ namespace OdapterWnFrm {
             // 
             this.cbGenerateRecordType.BackColor = System.Drawing.Color.Transparent;
             this.cbGenerateRecordType.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.cbGenerateRecordType.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbGenerateRecordType.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbGenerateRecordType.ForeColor = System.Drawing.Color.DeepSkyBlue;
             this.cbGenerateRecordType.Location = new System.Drawing.Point(157, 121);
@@ -1162,6 +1273,7 @@ namespace OdapterWnFrm {
             // 
             this.cbGenerateTable.BackColor = System.Drawing.Color.Transparent;
             this.cbGenerateTable.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.cbGenerateTable.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbGenerateTable.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbGenerateTable.ForeColor = System.Drawing.Color.DeepSkyBlue;
             this.cbGenerateTable.Location = new System.Drawing.Point(157, 174);
@@ -1175,14 +1287,14 @@ namespace OdapterWnFrm {
             // 
             // cbSerializablePOCOs
             // 
-            this.cbSerializablePOCOs.AutoSize = true;
             this.cbSerializablePOCOs.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.cbSerializablePOCOs.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbSerializablePOCOs.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbSerializablePOCOs.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.cbSerializablePOCOs.Location = new System.Drawing.Point(460, 123);
+            this.cbSerializablePOCOs.Location = new System.Drawing.Point(460, 121);
             this.cbSerializablePOCOs.Margin = new System.Windows.Forms.Padding(4);
             this.cbSerializablePOCOs.Name = "cbSerializablePOCOs";
-            this.cbSerializablePOCOs.Size = new System.Drawing.Size(18, 17);
+            this.cbSerializablePOCOs.Size = new System.Drawing.Size(17, 21);
             this.cbSerializablePOCOs.TabIndex = 9;
             this.cbSerializablePOCOs.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.cbSerializablePOCOs.UseVisualStyleBackColor = true;
@@ -1192,6 +1304,7 @@ namespace OdapterWnFrm {
             // 
             this.cbGenerateObject.BackColor = System.Drawing.Color.Transparent;
             this.cbGenerateObject.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.cbGenerateObject.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbGenerateObject.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbGenerateObject.ForeColor = System.Drawing.Color.DeepSkyBlue;
             this.cbGenerateObject.Location = new System.Drawing.Point(157, 147);
@@ -1257,13 +1370,14 @@ namespace OdapterWnFrm {
             this.cbDeployResources.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.cbDeployResources.Checked = true;
             this.cbDeployResources.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbDeployResources.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbDeployResources.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbDeployResources.ForeColor = System.Drawing.Color.DeepSkyBlue;
-            this.cbDeployResources.Location = new System.Drawing.Point(101, 16);
+            this.cbDeployResources.Location = new System.Drawing.Point(473, 18);
             this.cbDeployResources.Margin = new System.Windows.Forms.Padding(4);
             this.cbDeployResources.Name = "cbDeployResources";
             this.cbDeployResources.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.cbDeployResources.Size = new System.Drawing.Size(388, 21);
+            this.cbDeployResources.Size = new System.Drawing.Size(17, 21);
             this.cbDeployResources.TabIndex = 40;
             this.cbDeployResources.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.cbDeployResources.UseVisualStyleBackColor = false;
@@ -1353,6 +1467,8 @@ namespace OdapterWnFrm {
             // cbConvertOracleNumberToIntegerIfColumnNameIsId
             // 
             this.cbConvertOracleNumberToIntegerIfColumnNameIsId.BackColor = System.Drawing.Color.Transparent;
+            this.cbConvertOracleNumberToIntegerIfColumnNameIsId.CheckAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.cbConvertOracleNumberToIntegerIfColumnNameIsId.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbConvertOracleNumberToIntegerIfColumnNameIsId.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbConvertOracleNumberToIntegerIfColumnNameIsId.ForeColor = System.Drawing.Color.DeepSkyBlue;
             this.cbConvertOracleNumberToIntegerIfColumnNameIsId.Location = new System.Drawing.Point(237, 125);
@@ -1391,9 +1507,24 @@ namespace OdapterWnFrm {
             this.gbDatabase.TabStop = false;
             this.gbDatabase.Text = "Oracle Database";
             // 
+            // lblSavePassword
+            // 
+            this.lblSavePassword.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSavePassword.ForeColor = System.Drawing.Color.DeepSkyBlue;
+            this.lblSavePassword.Location = new System.Drawing.Point(698, 75);
+            this.lblSavePassword.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblSavePassword.Name = "lblSavePassword";
+            this.lblSavePassword.Size = new System.Drawing.Size(176, 17);
+            this.lblSavePassword.TabIndex = 64;
+            this.lblSavePassword.Text = "Save? (unencrypted)";
+            this.lblSavePassword.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.toolTip1.SetToolTip(this.lblSavePassword, "Save unencryped password to settings file?");
+            // 
             // cbIsSavePassword
             // 
             this.cbIsSavePassword.BackColor = System.Drawing.Color.Transparent;
+            this.cbIsSavePassword.CheckAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.cbIsSavePassword.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbIsSavePassword.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbIsSavePassword.ForeColor = System.Drawing.Color.DeepSkyBlue;
             this.cbIsSavePassword.Location = new System.Drawing.Point(676, 74);
@@ -1450,24 +1581,6 @@ namespace OdapterWnFrm {
             this.toolTip1.InitialDelay = 500;
             this.toolTip1.ReshowDelay = 100;
             // 
-            // cbDuplicatePackageRecordOriginatingOutsideFilterAndSchema
-            // 
-            this.cbDuplicatePackageRecordOriginatingOutsideFilterAndSchema.BackColor = System.Drawing.Color.Transparent;
-            this.cbDuplicatePackageRecordOriginatingOutsideFilterAndSchema.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.cbDuplicatePackageRecordOriginatingOutsideFilterAndSchema.Checked = true;
-            this.cbDuplicatePackageRecordOriginatingOutsideFilterAndSchema.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbDuplicatePackageRecordOriginatingOutsideFilterAndSchema.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbDuplicatePackageRecordOriginatingOutsideFilterAndSchema.ForeColor = System.Drawing.Color.DeepSkyBlue;
-            this.cbDuplicatePackageRecordOriginatingOutsideFilterAndSchema.Location = new System.Drawing.Point(473, 45);
-            this.cbDuplicatePackageRecordOriginatingOutsideFilterAndSchema.Margin = new System.Windows.Forms.Padding(4);
-            this.cbDuplicatePackageRecordOriginatingOutsideFilterAndSchema.Name = "cbDuplicatePackageRecordOriginatingOutsideFilterAndSchema";
-            this.cbDuplicatePackageRecordOriginatingOutsideFilterAndSchema.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.cbDuplicatePackageRecordOriginatingOutsideFilterAndSchema.Size = new System.Drawing.Size(16, 19);
-            this.cbDuplicatePackageRecordOriginatingOutsideFilterAndSchema.TabIndex = 0;
-            this.cbDuplicatePackageRecordOriginatingOutsideFilterAndSchema.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.cbDuplicatePackageRecordOriginatingOutsideFilterAndSchema.UseVisualStyleBackColor = false;
-            this.cbDuplicatePackageRecordOriginatingOutsideFilterAndSchema.CheckedChanged += new System.EventHandler(this.cbDuplicatePackageRecordOriginatingOutsideFilterAndSchema_CheckedChanged);
-            // 
             // lblCSharpTypeUsedForOracleNumber
             // 
             this.lblCSharpTypeUsedForOracleNumber.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -1501,6 +1614,7 @@ namespace OdapterWnFrm {
             this.cbExcludeObjectNamesWithSpecificChars.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.cbExcludeObjectNamesWithSpecificChars.Checked = true;
             this.cbExcludeObjectNamesWithSpecificChars.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbExcludeObjectNamesWithSpecificChars.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbExcludeObjectNamesWithSpecificChars.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbExcludeObjectNamesWithSpecificChars.ForeColor = System.Drawing.Color.DeepSkyBlue;
             this.cbExcludeObjectNamesWithSpecificChars.Location = new System.Drawing.Point(473, 70);
@@ -1521,6 +1635,7 @@ namespace OdapterWnFrm {
             this.cbGeneratedDynamicMethodForTypedCursor.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.cbGeneratedDynamicMethodForTypedCursor.Checked = true;
             this.cbGeneratedDynamicMethodForTypedCursor.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbGeneratedDynamicMethodForTypedCursor.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbGeneratedDynamicMethodForTypedCursor.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbGeneratedDynamicMethodForTypedCursor.ForeColor = System.Drawing.Color.DeepSkyBlue;
             this.cbGeneratedDynamicMethodForTypedCursor.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -1541,6 +1656,7 @@ namespace OdapterWnFrm {
             this.cbUseAutoImplementedProperties.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.cbUseAutoImplementedProperties.Checked = true;
             this.cbUseAutoImplementedProperties.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbUseAutoImplementedProperties.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbUseAutoImplementedProperties.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbUseAutoImplementedProperties.ForeColor = System.Drawing.Color.DeepSkyBlue;
             this.cbUseAutoImplementedProperties.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -1714,6 +1830,108 @@ namespace OdapterWnFrm {
             this.lblCSharpTypeUsedForOracleTimestampLTZ.Text = "TIMESTAMP WITH LTZ";
             this.lblCSharpTypeUsedForOracleTimestampLTZ.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.toolTip1.SetToolTip(this.lblCSharpTypeUsedForOracleTimestampLTZ, "An Oracle TIMESTAMP WITH LOCAL TIME ZONE");
+            // 
+            // lblDeployResources
+            // 
+            this.lblDeployResources.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDeployResources.ForeColor = System.Drawing.Color.DeepSkyBlue;
+            this.lblDeployResources.Location = new System.Drawing.Point(66, 18);
+            this.lblDeployResources.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblDeployResources.Name = "lblDeployResources";
+            this.lblDeployResources.Size = new System.Drawing.Size(400, 17);
+            this.lblDeployResources.TabIndex = 64;
+            this.lblDeployResources.Text = "Deploy/Update Utility Classes?";
+            this.lblDeployResources.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.toolTip1.SetToolTip(this.lblDeployResources, "OrclPower.cs and CaseConversion.cs need to be deployed once for each new version " +
+        "of generator.");
+            // 
+            // lblDuplicatePackageRecordOriginatingOutsideFilterAndSchema
+            // 
+            this.lblDuplicatePackageRecordOriginatingOutsideFilterAndSchema.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDuplicatePackageRecordOriginatingOutsideFilterAndSchema.ForeColor = System.Drawing.Color.DeepSkyBlue;
+            this.lblDuplicatePackageRecordOriginatingOutsideFilterAndSchema.Location = new System.Drawing.Point(8, 41);
+            this.lblDuplicatePackageRecordOriginatingOutsideFilterAndSchema.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblDuplicatePackageRecordOriginatingOutsideFilterAndSchema.Name = "lblDuplicatePackageRecordOriginatingOutsideFilterAndSchema";
+            this.lblDuplicatePackageRecordOriginatingOutsideFilterAndSchema.Size = new System.Drawing.Size(458, 24);
+            this.lblDuplicatePackageRecordOriginatingOutsideFilterAndSchema.TabIndex = 65;
+            this.lblDuplicatePackageRecordOriginatingOutsideFilterAndSchema.Text = "Duplicate Referenced Record Types Outside Filter Prefix?";
+            this.lblDuplicatePackageRecordOriginatingOutsideFilterAndSchema.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.toolTip1.SetToolTip(this.lblDuplicatePackageRecordOriginatingOutsideFilterAndSchema, resources.GetString("lblDuplicatePackageRecordOriginatingOutsideFilterAndSchema.ToolTip"));
+            // 
+            // lblExcludeObjectNamesWithSpecificChars
+            // 
+            this.lblExcludeObjectNamesWithSpecificChars.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblExcludeObjectNamesWithSpecificChars.ForeColor = System.Drawing.Color.DeepSkyBlue;
+            this.lblExcludeObjectNamesWithSpecificChars.Location = new System.Drawing.Point(25, 72);
+            this.lblExcludeObjectNamesWithSpecificChars.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblExcludeObjectNamesWithSpecificChars.Name = "lblExcludeObjectNamesWithSpecificChars";
+            this.lblExcludeObjectNamesWithSpecificChars.Size = new System.Drawing.Size(441, 17);
+            this.lblExcludeObjectNamesWithSpecificChars.TabIndex = 66;
+            this.lblExcludeObjectNamesWithSpecificChars.Text = "Exclude Object Names With Specific Characters?";
+            this.lblExcludeObjectNamesWithSpecificChars.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.toolTip1.SetToolTip(this.lblExcludeObjectNamesWithSpecificChars, "Packages, object types, tables, and views with given characters in the name will " +
+        "be excluded from generation.\r\n");
+            // 
+            // lblGeneratedDynamicMethodForTypedCursor
+            // 
+            this.lblGeneratedDynamicMethodForTypedCursor.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblGeneratedDynamicMethodForTypedCursor.ForeColor = System.Drawing.Color.DeepSkyBlue;
+            this.lblGeneratedDynamicMethodForTypedCursor.Location = new System.Drawing.Point(26, 99);
+            this.lblGeneratedDynamicMethodForTypedCursor.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblGeneratedDynamicMethodForTypedCursor.Name = "lblGeneratedDynamicMethodForTypedCursor";
+            this.lblGeneratedDynamicMethodForTypedCursor.Size = new System.Drawing.Size(441, 17);
+            this.lblGeneratedDynamicMethodForTypedCursor.TabIndex = 67;
+            this.lblGeneratedDynamicMethodForTypedCursor.Text = "Generate Mapping Driven Method For Typed Cursor?";
+            this.lblGeneratedDynamicMethodForTypedCursor.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.toolTip1.SetToolTip(this.lblGeneratedDynamicMethodForTypedCursor, resources.GetString("lblGeneratedDynamicMethodForTypedCursor.ToolTip"));
+            // 
+            // lblUseAutoImplementedProperties
+            // 
+            this.lblUseAutoImplementedProperties.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblUseAutoImplementedProperties.ForeColor = System.Drawing.Color.DeepSkyBlue;
+            this.lblUseAutoImplementedProperties.Location = new System.Drawing.Point(24, 127);
+            this.lblUseAutoImplementedProperties.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblUseAutoImplementedProperties.Name = "lblUseAutoImplementedProperties";
+            this.lblUseAutoImplementedProperties.Size = new System.Drawing.Size(441, 17);
+            this.lblUseAutoImplementedProperties.TabIndex = 68;
+            this.lblUseAutoImplementedProperties.Text = "Use Auto-Implemented Properties for DTOs?";
+            this.lblUseAutoImplementedProperties.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.toolTip1.SetToolTip(this.lblUseAutoImplementedProperties, "Generate auto-implemented properties for DTO classes. Otherwise, properties will " +
+        "wrap protected fields.\r\n");
+            this.lblUseAutoImplementedProperties.UseCompatibleTextRendering = true;
+            // 
+            // lblConvertOracleNumberToIntegerIfColumnNameIsId
+            // 
+            this.lblConvertOracleNumberToIntegerIfColumnNameIsId.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblConvertOracleNumberToIntegerIfColumnNameIsId.ForeColor = System.Drawing.Color.DeepSkyBlue;
+            this.lblConvertOracleNumberToIntegerIfColumnNameIsId.Location = new System.Drawing.Point(261, 125);
+            this.lblConvertOracleNumberToIntegerIfColumnNameIsId.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblConvertOracleNumberToIntegerIfColumnNameIsId.Name = "lblConvertOracleNumberToIntegerIfColumnNameIsId";
+            this.lblConvertOracleNumberToIntegerIfColumnNameIsId.Size = new System.Drawing.Size(312, 18);
+            this.lblConvertOracleNumberToIntegerIfColumnNameIsId.TabIndex = 69;
+            this.lblConvertOracleNumberToIntegerIfColumnNameIsId.Text = "Map \"ID\" NUMBER  as INTEGER?";
+            this.lblConvertOracleNumberToIntegerIfColumnNameIsId.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.toolTip1.SetToolTip(this.lblConvertOracleNumberToIntegerIfColumnNameIsId, "If column, attribute, or parameter type is NUMBER with no precision/scale, \r\nand " +
+        "its name is \"ID\" or ends with \"_ID\", then treat as an INTEGER.\r\n");
+            // 
+            // cbDuplicatePackageRecordOriginatingOutsideFilterAndSchema
+            // 
+            this.cbDuplicatePackageRecordOriginatingOutsideFilterAndSchema.BackColor = System.Drawing.Color.Transparent;
+            this.cbDuplicatePackageRecordOriginatingOutsideFilterAndSchema.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.cbDuplicatePackageRecordOriginatingOutsideFilterAndSchema.Checked = true;
+            this.cbDuplicatePackageRecordOriginatingOutsideFilterAndSchema.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbDuplicatePackageRecordOriginatingOutsideFilterAndSchema.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.cbDuplicatePackageRecordOriginatingOutsideFilterAndSchema.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbDuplicatePackageRecordOriginatingOutsideFilterAndSchema.ForeColor = System.Drawing.Color.DeepSkyBlue;
+            this.cbDuplicatePackageRecordOriginatingOutsideFilterAndSchema.Location = new System.Drawing.Point(473, 45);
+            this.cbDuplicatePackageRecordOriginatingOutsideFilterAndSchema.Margin = new System.Windows.Forms.Padding(4);
+            this.cbDuplicatePackageRecordOriginatingOutsideFilterAndSchema.Name = "cbDuplicatePackageRecordOriginatingOutsideFilterAndSchema";
+            this.cbDuplicatePackageRecordOriginatingOutsideFilterAndSchema.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.cbDuplicatePackageRecordOriginatingOutsideFilterAndSchema.Size = new System.Drawing.Size(17, 21);
+            this.cbDuplicatePackageRecordOriginatingOutsideFilterAndSchema.TabIndex = 0;
+            this.cbDuplicatePackageRecordOriginatingOutsideFilterAndSchema.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.cbDuplicatePackageRecordOriginatingOutsideFilterAndSchema.UseVisualStyleBackColor = false;
+            this.cbDuplicatePackageRecordOriginatingOutsideFilterAndSchema.CheckedChanged += new System.EventHandler(this.cbDuplicatePackageRecordOriginatingOutsideFilterAndSchema_CheckedChanged);
             // 
             // gbSettings
             // 
@@ -2015,205 +2233,6 @@ namespace OdapterWnFrm {
             this.lblGenerateStatus.Text = "Generate Status";
             this.lblGenerateStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // lblSavePassword
-            // 
-            this.lblSavePassword.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblSavePassword.ForeColor = System.Drawing.Color.DeepSkyBlue;
-            this.lblSavePassword.Location = new System.Drawing.Point(698, 75);
-            this.lblSavePassword.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblSavePassword.Name = "lblSavePassword";
-            this.lblSavePassword.Size = new System.Drawing.Size(176, 17);
-            this.lblSavePassword.TabIndex = 64;
-            this.lblSavePassword.Text = "Save? (unencrypted)";
-            this.lblSavePassword.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.toolTip1.SetToolTip(this.lblSavePassword, "Save unencryped password to settings file?");
-            // 
-            // lblDeployResources
-            // 
-            this.lblDeployResources.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDeployResources.ForeColor = System.Drawing.Color.DeepSkyBlue;
-            this.lblDeployResources.Location = new System.Drawing.Point(66, 18);
-            this.lblDeployResources.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblDeployResources.Name = "lblDeployResources";
-            this.lblDeployResources.Size = new System.Drawing.Size(400, 17);
-            this.lblDeployResources.TabIndex = 64;
-            this.lblDeployResources.Text = "Deploy/Update Utility Classes?";
-            this.lblDeployResources.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.toolTip1.SetToolTip(this.lblDeployResources, "OrclPower.cs and CaseConversion.cs need to be deployed once for each new version " +
-        "of generator.");
-            // 
-            // lblDuplicatePackageRecordOriginatingOutsideFilterAndSchema
-            // 
-            this.lblDuplicatePackageRecordOriginatingOutsideFilterAndSchema.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDuplicatePackageRecordOriginatingOutsideFilterAndSchema.ForeColor = System.Drawing.Color.DeepSkyBlue;
-            this.lblDuplicatePackageRecordOriginatingOutsideFilterAndSchema.Location = new System.Drawing.Point(8, 41);
-            this.lblDuplicatePackageRecordOriginatingOutsideFilterAndSchema.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblDuplicatePackageRecordOriginatingOutsideFilterAndSchema.Name = "lblDuplicatePackageRecordOriginatingOutsideFilterAndSchema";
-            this.lblDuplicatePackageRecordOriginatingOutsideFilterAndSchema.Size = new System.Drawing.Size(458, 24);
-            this.lblDuplicatePackageRecordOriginatingOutsideFilterAndSchema.TabIndex = 65;
-            this.lblDuplicatePackageRecordOriginatingOutsideFilterAndSchema.Text = "Duplicate Referenced Record Types Outside Filter Prefix?";
-            this.lblDuplicatePackageRecordOriginatingOutsideFilterAndSchema.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.toolTip1.SetToolTip(this.lblDuplicatePackageRecordOriginatingOutsideFilterAndSchema, resources.GetString("lblDuplicatePackageRecordOriginatingOutsideFilterAndSchema.ToolTip"));
-            // 
-            // lblExcludeObjectNamesWithSpecificChars
-            // 
-            this.lblExcludeObjectNamesWithSpecificChars.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblExcludeObjectNamesWithSpecificChars.ForeColor = System.Drawing.Color.DeepSkyBlue;
-            this.lblExcludeObjectNamesWithSpecificChars.Location = new System.Drawing.Point(25, 72);
-            this.lblExcludeObjectNamesWithSpecificChars.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblExcludeObjectNamesWithSpecificChars.Name = "lblExcludeObjectNamesWithSpecificChars";
-            this.lblExcludeObjectNamesWithSpecificChars.Size = new System.Drawing.Size(441, 17);
-            this.lblExcludeObjectNamesWithSpecificChars.TabIndex = 66;
-            this.lblExcludeObjectNamesWithSpecificChars.Text = "Exclude Object Names With Specific Characters?";
-            this.lblExcludeObjectNamesWithSpecificChars.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.toolTip1.SetToolTip(this.lblExcludeObjectNamesWithSpecificChars, "Packages, object types, tables, and views with given characters in the name will " +
-        "be excluded from generation.\r\n");
-            // 
-            // lblGeneratedDynamicMethodForTypedCursor
-            // 
-            this.lblGeneratedDynamicMethodForTypedCursor.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblGeneratedDynamicMethodForTypedCursor.ForeColor = System.Drawing.Color.DeepSkyBlue;
-            this.lblGeneratedDynamicMethodForTypedCursor.Location = new System.Drawing.Point(26, 99);
-            this.lblGeneratedDynamicMethodForTypedCursor.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblGeneratedDynamicMethodForTypedCursor.Name = "lblGeneratedDynamicMethodForTypedCursor";
-            this.lblGeneratedDynamicMethodForTypedCursor.Size = new System.Drawing.Size(441, 17);
-            this.lblGeneratedDynamicMethodForTypedCursor.TabIndex = 67;
-            this.lblGeneratedDynamicMethodForTypedCursor.Text = "Generate Mapping Driven Method For Typed Cursor?";
-            this.lblGeneratedDynamicMethodForTypedCursor.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.toolTip1.SetToolTip(this.lblGeneratedDynamicMethodForTypedCursor, resources.GetString("lblGeneratedDynamicMethodForTypedCursor.ToolTip"));
-            // 
-            // lblUseAutoImplementedProperties
-            // 
-            this.lblUseAutoImplementedProperties.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblUseAutoImplementedProperties.ForeColor = System.Drawing.Color.DeepSkyBlue;
-            this.lblUseAutoImplementedProperties.Location = new System.Drawing.Point(24, 127);
-            this.lblUseAutoImplementedProperties.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblUseAutoImplementedProperties.Name = "lblUseAutoImplementedProperties";
-            this.lblUseAutoImplementedProperties.Size = new System.Drawing.Size(441, 17);
-            this.lblUseAutoImplementedProperties.TabIndex = 68;
-            this.lblUseAutoImplementedProperties.Text = "Use Auto-Implemented Properties for DTOs?";
-            this.lblUseAutoImplementedProperties.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.toolTip1.SetToolTip(this.lblUseAutoImplementedProperties, "Generate auto-implemented properties for DTO classes. Otherwise, properties will " +
-        "wrap protected fields.\r\n");
-            this.lblUseAutoImplementedProperties.UseCompatibleTextRendering = true;
-            // 
-            // lblConvertOracleNumberToIntegerIfColumnNameIsId
-            // 
-            this.lblConvertOracleNumberToIntegerIfColumnNameIsId.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblConvertOracleNumberToIntegerIfColumnNameIsId.ForeColor = System.Drawing.Color.DeepSkyBlue;
-            this.lblConvertOracleNumberToIntegerIfColumnNameIsId.Location = new System.Drawing.Point(261, 125);
-            this.lblConvertOracleNumberToIntegerIfColumnNameIsId.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblConvertOracleNumberToIntegerIfColumnNameIsId.Name = "lblConvertOracleNumberToIntegerIfColumnNameIsId";
-            this.lblConvertOracleNumberToIntegerIfColumnNameIsId.Size = new System.Drawing.Size(312, 18);
-            this.lblConvertOracleNumberToIntegerIfColumnNameIsId.TabIndex = 69;
-            this.lblConvertOracleNumberToIntegerIfColumnNameIsId.Text = "Map \"ID\" NUMBER  as INTEGER?";
-            this.lblConvertOracleNumberToIntegerIfColumnNameIsId.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.toolTip1.SetToolTip(this.lblConvertOracleNumberToIntegerIfColumnNameIsId, "If column, attribute, or parameter type is NUMBER with no precision/scale, \r\nand " +
-        "its name is \"ID\" or ends with \"_ID\", then treat as an INTEGER.\r\n");
-            // 
-            // lblIncludeFilterPrefixInNaming
-            // 
-            this.lblIncludeFilterPrefixInNaming.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblIncludeFilterPrefixInNaming.ForeColor = System.Drawing.Color.DeepSkyBlue;
-            this.lblIncludeFilterPrefixInNaming.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.lblIncludeFilterPrefixInNaming.Location = new System.Drawing.Point(244, 251);
-            this.lblIncludeFilterPrefixInNaming.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblIncludeFilterPrefixInNaming.Name = "lblIncludeFilterPrefixInNaming";
-            this.lblIncludeFilterPrefixInNaming.Size = new System.Drawing.Size(622, 18);
-            this.lblIncludeFilterPrefixInNaming.TabIndex = 72;
-            this.lblIncludeFilterPrefixInNaming.Text = "Automatically Include Filter Prefix in Namespace and Generated File Naming?";
-            this.lblIncludeFilterPrefixInNaming.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.toolTip1.SetToolTip(this.lblIncludeFilterPrefixInNaming, "Incorporate the Filter Prefix value into namespaces and generated file names. Thi" +
-        "s is \r\nuseful in cases where packages of multiple projects exists in the same sc" +
-        "hema (e.g., APPS).");
-            // 
-            // lblPackageAdapter
-            // 
-            this.lblPackageAdapter.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPackageAdapter.ForeColor = System.Drawing.Color.DeepSkyBlue;
-            this.lblPackageAdapter.Location = new System.Drawing.Point(14, 69);
-            this.lblPackageAdapter.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblPackageAdapter.Name = "lblPackageAdapter";
-            this.lblPackageAdapter.Size = new System.Drawing.Size(140, 17);
-            this.lblPackageAdapter.TabIndex = 69;
-            this.lblPackageAdapter.Text = "Package Adapters";
-            this.lblPackageAdapter.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // lblBaseAdapter
-            // 
-            this.lblBaseAdapter.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblBaseAdapter.ForeColor = System.Drawing.Color.DeepSkyBlue;
-            this.lblBaseAdapter.Location = new System.Drawing.Point(14, 94);
-            this.lblBaseAdapter.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblBaseAdapter.Name = "lblBaseAdapter";
-            this.lblBaseAdapter.Size = new System.Drawing.Size(140, 17);
-            this.lblBaseAdapter.TabIndex = 74;
-            this.lblBaseAdapter.Text = "Base Adapter";
-            this.lblBaseAdapter.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.toolTip1.SetToolTip(this.lblBaseAdapter, "Ancestor class for all package adapters. Only needs to be deployed once.");
-            // 
-            // lblRecordDto
-            // 
-            this.lblRecordDto.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblRecordDto.ForeColor = System.Drawing.Color.DeepSkyBlue;
-            this.lblRecordDto.Location = new System.Drawing.Point(14, 122);
-            this.lblRecordDto.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblRecordDto.Name = "lblRecordDto";
-            this.lblRecordDto.Size = new System.Drawing.Size(140, 17);
-            this.lblRecordDto.TabIndex = 75;
-            this.lblRecordDto.Text = "Record DTOs";
-            this.lblRecordDto.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // lblObjectDto
-            // 
-            this.lblObjectDto.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblObjectDto.ForeColor = System.Drawing.Color.DeepSkyBlue;
-            this.lblObjectDto.Location = new System.Drawing.Point(14, 148);
-            this.lblObjectDto.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblObjectDto.Name = "lblObjectDto";
-            this.lblObjectDto.Size = new System.Drawing.Size(140, 17);
-            this.lblObjectDto.TabIndex = 76;
-            this.lblObjectDto.Text = "Object DTOs";
-            this.lblObjectDto.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // lblTableDto
-            // 
-            this.lblTableDto.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTableDto.ForeColor = System.Drawing.Color.DeepSkyBlue;
-            this.lblTableDto.Location = new System.Drawing.Point(14, 175);
-            this.lblTableDto.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblTableDto.Name = "lblTableDto";
-            this.lblTableDto.Size = new System.Drawing.Size(140, 17);
-            this.lblTableDto.TabIndex = 77;
-            this.lblTableDto.Text = "Table DTOs";
-            this.lblTableDto.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // lblViewDto
-            // 
-            this.lblViewDto.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblViewDto.ForeColor = System.Drawing.Color.DeepSkyBlue;
-            this.lblViewDto.Location = new System.Drawing.Point(14, 201);
-            this.lblViewDto.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblViewDto.Name = "lblViewDto";
-            this.lblViewDto.Size = new System.Drawing.Size(140, 17);
-            this.lblViewDto.TabIndex = 78;
-            this.lblViewDto.Text = "View DTOs";
-            this.lblViewDto.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // lblBaseDto
-            // 
-            this.lblBaseDto.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblBaseDto.ForeColor = System.Drawing.Color.DeepSkyBlue;
-            this.lblBaseDto.Location = new System.Drawing.Point(14, 226);
-            this.lblBaseDto.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblBaseDto.Name = "lblBaseDto";
-            this.lblBaseDto.Size = new System.Drawing.Size(140, 17);
-            this.lblBaseDto.TabIndex = 79;
-            this.lblBaseDto.Text = "Base DTOs";
-            this.lblBaseDto.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.toolTip1.SetToolTip(this.lblBaseDto, "Ancestor classes for package record type, object type, table and view DTOs. Only " +
-        "needs to be deployed once.");
-            // 
             // FormMain
             // 
             this.AcceptButton = this.BtnStart;
@@ -2263,14 +2282,14 @@ namespace OdapterWnFrm {
         private System.Windows.Forms.TextBox txtLogin;
         private System.Windows.Forms.TextBox txtPassword;
         private System.Windows.Forms.TextBox txtOutputPath;
-        private System.Windows.Forms.CheckBox cbPartialPOCOs;
-        private System.Windows.Forms.CheckBox cbGeneratePackage;
-        private System.Windows.Forms.CheckBox cbGenerateProcedure;
-        private System.Windows.Forms.CheckBox cbGenerateFunction;
+        private OdapterWnFrm.Controls.OdatperCheckBox cbPartialPOCOs;
+        private OdapterWnFrm.Controls.OdatperCheckBox cbGeneratePackage;
+        private OdapterWnFrm.Controls.OdatperCheckBox cbGenerateProcedure;
+        private OdapterWnFrm.Controls.OdatperCheckBox cbGenerateFunction;
         private System.Windows.Forms.GroupBox gbCodeToGenerate;
         private System.Windows.Forms.Button btnSelectPath;
-        private System.Windows.Forms.CheckBox cbSerializablePOCOs;
-        private System.Windows.Forms.CheckBox cbPartialPackageClasses;
+        private OdapterWnFrm.Controls.OdatperCheckBox cbSerializablePOCOs;
+        private OdapterWnFrm.Controls.OdatperCheckBox cbPartialPackageClasses;
         private System.Windows.Forms.TextBox txtPackageNamespace;
         private System.Windows.Forms.Label lblNamespace;
         private System.Windows.Forms.TextBox txtRecordTypeNamespace;
@@ -2280,34 +2299,34 @@ namespace OdapterWnFrm {
         private System.Windows.Forms.Label lblClientHome;
         private System.Windows.Forms.ComboBox cmbClientHome;
         private System.Windows.Forms.ComboBox cmbDBInstance;
-        private System.Windows.Forms.CheckBox cbGenerateRecordType;
+        private OdapterWnFrm.Controls.OdatperCheckBox cbGenerateRecordType;
         private System.Windows.Forms.Label lblAncestorClass;
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.TextBox txtObjectNamespace;
-        private System.Windows.Forms.CheckBox cbGenerateObject;
-        private System.Windows.Forms.CheckBox cbSerializableObjectTypes;
-        private System.Windows.Forms.CheckBox cbGenerateTable;
-        private System.Windows.Forms.CheckBox cbGenerateView;
+        private OdapterWnFrm.Controls.OdatperCheckBox cbGenerateObject;
+        private OdapterWnFrm.Controls.OdatperCheckBox cbSerializableObjectTypes;
+        private OdapterWnFrm.Controls.OdatperCheckBox cbGenerateTable;
+        private OdapterWnFrm.Controls.OdatperCheckBox cbGenerateView;
         private System.Windows.Forms.TextBox txtViewNamespace;
         private System.Windows.Forms.TextBox txtTableNamespace;
         private System.Windows.Forms.Label lblPartial;
         private System.Windows.Forms.Label lblSerializable;
-        private System.Windows.Forms.CheckBox cbPartialViews;
-        private System.Windows.Forms.CheckBox cbPartialTables;
-        private System.Windows.Forms.CheckBox cbSerializableTables;
-        private System.Windows.Forms.CheckBox cbSerializableViews;
-        private System.Windows.Forms.CheckBox cbPartialObjectTypes;
+        private OdapterWnFrm.Controls.OdatperCheckBox cbPartialViews;
+        private OdapterWnFrm.Controls.OdatperCheckBox cbPartialTables;
+        private OdapterWnFrm.Controls.OdatperCheckBox cbSerializableTables;
+        private OdapterWnFrm.Controls.OdatperCheckBox cbSerializableViews;
+        private OdapterWnFrm.Controls.OdatperCheckBox cbPartialObjectTypes;
         private System.Windows.Forms.TextBox txtRecordTypeAncestorClass;
         private System.Windows.Forms.TextBox txtPackageAncestorClass;
-        private System.Windows.Forms.CheckBox cbGenerateBaseEntity;
-        private System.Windows.Forms.CheckBox cbGenerateBaseAdapter;
+        private OdapterWnFrm.Controls.OdatperCheckBox cbGenerateBaseEntity;
+        private OdapterWnFrm.Controls.OdatperCheckBox cbGenerateBaseAdapter;
         private System.Windows.Forms.TextBox txtViewAncestorClass;
         private System.Windows.Forms.TextBox txtTableAncestorClass;
         private System.Windows.Forms.TextBox txtObjectAncestorClass;
         private System.Windows.Forms.TextBox txtBaseConnectionClassFunction;
         private System.Windows.Forms.TextBox txtBaseConnectionClassProcedure;
-        private System.Windows.Forms.CheckBox cbDeployResources;
-        private System.Windows.Forms.CheckBox cbConvertOracleNumberToIntegerIfColumnNameIsId;
+        private OdapterWnFrm.Controls.OdatperCheckBox cbDeployResources;
+        private OdapterWnFrm.Controls.OdatperCheckBox cbConvertOracleNumberToIntegerIfColumnNameIsId;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label lblFilter;
         private System.Windows.Forms.TextBox txtFilter;
@@ -2334,28 +2353,28 @@ namespace OdapterWnFrm {
         private System.Windows.Forms.GroupBox gbAdvancedProcOptions;
         private System.Windows.Forms.Button btnRestoreDefaults;
         private System.Windows.Forms.Button btnSaveSettings;
-        private System.Windows.Forms.CheckBox cbDuplicatePackageRecordOriginatingOutsideFilterAndSchema;
-        private System.Windows.Forms.CheckBox cbXmlElementPackageRecord;
-        private System.Windows.Forms.CheckBox cbXmlElementView;
-        private System.Windows.Forms.CheckBox cbXmlElementTable;
-        private System.Windows.Forms.CheckBox cbXmlElementObjectType;
-        private System.Windows.Forms.CheckBox cbDataContractView;
-        private System.Windows.Forms.CheckBox cbDataContractTable;
-        private System.Windows.Forms.CheckBox cbDataContractObjectType;
-        private System.Windows.Forms.CheckBox cbDataContractPackageRecord;
+        private OdapterWnFrm.Controls.OdatperCheckBox cbDuplicatePackageRecordOriginatingOutsideFilterAndSchema;
+        private OdapterWnFrm.Controls.OdatperCheckBox cbXmlElementPackageRecord;
+        private OdapterWnFrm.Controls.OdatperCheckBox cbXmlElementView;
+        private OdapterWnFrm.Controls.OdatperCheckBox cbXmlElementTable;
+        private OdapterWnFrm.Controls.OdatperCheckBox cbXmlElementObjectType;
+        private OdapterWnFrm.Controls.OdatperCheckBox cbDataContractView;
+        private OdapterWnFrm.Controls.OdatperCheckBox cbDataContractTable;
+        private OdapterWnFrm.Controls.OdatperCheckBox cbDataContractObjectType;
+        private OdapterWnFrm.Controls.OdatperCheckBox cbDataContractPackageRecord;
         private System.Windows.Forms.TextBox txtDataContractNamespace;
         private System.Windows.Forms.Label lblDataContractNamespace;
         private System.Windows.Forms.TextBox txtExcludeChars;
-        private System.Windows.Forms.CheckBox cbExcludeObjectNamesWithSpecificChars;
-        private System.Windows.Forms.CheckBox cbGeneratedDynamicMethodForTypedCursor;
-        private System.Windows.Forms.CheckBox cbUseAutoImplementedProperties;
+        private OdapterWnFrm.Controls.OdatperCheckBox cbExcludeObjectNamesWithSpecificChars;
+        private OdapterWnFrm.Controls.OdatperCheckBox cbGeneratedDynamicMethodForTypedCursor;
+        private OdapterWnFrm.Controls.OdatperCheckBox cbUseAutoImplementedProperties;
         private System.Windows.Forms.Label lblSettingsFile;
         private System.Windows.Forms.ComboBox cmbSettingsFile;
         private System.Windows.Forms.Label lblLocalVariableNameSuffix;
         private System.Windows.Forms.TextBox txtLocalVariableNameSuffix;
         private System.Windows.Forms.ComboBox cmbCSharpVersion;
         private System.Windows.Forms.Label lblCSharpVersion;
-        private System.Windows.Forms.CheckBox cbIncludeFilterPrefixInNaming;
+        private OdapterWnFrm.Controls.OdatperCheckBox cbIncludeFilterPrefixInNaming;
         private System.Windows.Forms.Label lblCSharpTypeUsedForOracleBlob;
         private System.Windows.Forms.ComboBox cmbCSharpTypeUsedForOracleBlob;
         private System.Windows.Forms.Label lblCSharpTypeUsedForOracleClob;
@@ -2364,7 +2383,7 @@ namespace OdapterWnFrm {
         private System.Windows.Forms.Label lblCSharpTypeUsedForOracleRefCursor;
         private System.Windows.Forms.ComboBox cmbCSharpTypeUsedForOracleAssociativeArray;
         private System.Windows.Forms.Label lblCSharpTypeUsedForOracleAssociativeArray;
-        private System.Windows.Forms.CheckBox cbIsSavePassword;
+        private OdapterWnFrm.Controls.OdatperCheckBox cbIsSavePassword;
         private System.Windows.Forms.ComboBox cmbCSharpTypeUsedForOracleTimestampLTZ;
         private System.Windows.Forms.ComboBox cmbCSharpTypeUsedForOracleTimestampTZ;
         private System.Windows.Forms.Label lblCSharpTypeUsedForOracleTimestampTZ;

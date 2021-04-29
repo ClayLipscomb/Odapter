@@ -123,9 +123,6 @@
   <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
-  <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
   <data name="cbGeneratedDynamicMethodForTypedCursor.ToolTip" xml:space="preserve">
     <value>An additional method overload that uses mapping to a cursor will be generated when the underlying procedure's cursors 
 are all typed. This overload can be advantageous when migrating a legacy application to generated code since its DTOs 
