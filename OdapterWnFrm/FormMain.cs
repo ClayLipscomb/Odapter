@@ -361,11 +361,9 @@ namespace OdapterWnFrm {
             // enable/disable
             txtPackageNamespace.Enabled = txtPackageAncestorClass.Enabled = txtPackageFileName.Enabled = cbPartialPackageClasses.Enabled =         
                 cbGenerateRecordType.Enabled = txtRecordTypeAncestorClass.Enabled = lblRecordDto.Enabled = cbSerializablePOCOs.Enabled = cbDataContractPackageRecord.Enabled = cbXmlElementPackageRecord.Enabled =
-                txtBaseAdapterFileName.Enabled = txtBaseAdapterNamespace.Enabled = //lblBaseAdapter.Enabled =
-                // set from:
+                cbGenerateBaseAdapter.Enabled = lblBaseAdapter.Enabled = txtBaseAdapterNamespace.Enabled = //lblBaseAdapter.Enabled =
+                // set above from:
                 cbGeneratePackage.Checked;
-
-            cbGenerateBaseAdapter.Enabled = false;  // always disabled since it must be same as cbGeneratePackage
 
             // check/uncheck
             cbGenerateRecordType.Checked = cbGenerateBaseAdapter.Checked = cbGeneratePackage.Checked;
