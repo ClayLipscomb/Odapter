@@ -318,3 +318,5 @@ __pycache__/
 *.zip
 *.xml
 /Tester/schema/table/odpt_table_ignore_nested_table.sql
+/OdapterWnFrm/Controls/OdatperCheckBox.cs
+/OdapterWnFrm/Controls/OdatperCheckBox.Designer.cs

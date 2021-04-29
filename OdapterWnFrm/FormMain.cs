@@ -242,7 +242,8 @@ namespace OdapterWnFrm {
         }
 
         private void SetEnabledDisabledbFilterRelatedFields() {
-            cbDuplicatePackageRecordOriginatingOutsideFilterAndSchema.Enabled = cbIncludeFilterPrefixInNaming.Enabled
+            cbDuplicatePackageRecordOriginatingOutsideFilterAndSchema.Enabled = lblDuplicatePackageRecordOriginatingOutsideFilterAndSchema.Enabled 
+                = cbIncludeFilterPrefixInNaming.Enabled = lblIncludeFilterPrefixInNaming.Enabled
                 = !String.IsNullOrEmpty(txtFilter.Text);
         }
         #endregion
@@ -362,13 +363,19 @@ namespace OdapterWnFrm {
         }
 
         private void cbGeneratePackage_CheckedChanged(object sender, EventArgs e) {
-            txtPackageNamespace.Enabled = txtPackageAncestorClass.Enabled = txtPackageFileName.Enabled =
-                cbGenerateRecordType.Checked = txtRecordTypeAncestorClass.Enabled =
-                cbGenerateBaseAdapter.Checked = txtBaseAdapterFileName.Enabled = txtBaseAdapterNamespace.Enabled =
-                cbGenerateBaseEntity.Checked =
+            // enable/disable
+            txtPackageNamespace.Enabled = txtPackageAncestorClass.Enabled = txtPackageFileName.Enabled = cbPartialPackageClasses.Enabled =         
+                cbGenerateRecordType.Enabled = txtRecordTypeAncestorClass.Enabled = lblRecordDto.Enabled = cbSerializablePOCOs.Enabled = cbDataContractPackageRecord.Enabled = cbXmlElementPackageRecord.Enabled =
+                txtBaseAdapterFileName.Enabled = txtBaseAdapterNamespace.Enabled = //lblBaseAdapter.Enabled =
+                // set from:
                 cbGeneratePackage.Checked;
-            cbGenerateRecordType.Enabled = cbGeneratePackage.Checked;
-            if (cbGeneratePackage.Checked) cbGenerateBaseAdapter.Checked = cbGenerateBaseEntity.Checked = true;
+
+            cbGenerateBaseAdapter.Enabled = false;  // always disabled since it must be same as cbGeneratePackage
+
+            // check/uncheck
+            cbGenerateRecordType.Checked = cbGenerateBaseAdapter.Checked = cbGeneratePackage.Checked;
+
+            if (cbGeneratePackage.Checked) cbGenerateBaseAdapter.Checked = true;
         }
 
         private void cbPartialPackage_CheckedChanged(object sender, EventArgs e) {
@@ -728,7 +735,8 @@ namespace OdapterWnFrm {
         private void cbUseAutoImplementedProperties_CheckedChanged(object sender, EventArgs e) { }
 
         private void cbGenerateRecordType_CheckedChanged(object sender, EventArgs e) {
-            this.cbDuplicatePackageRecordOriginatingOutsideFilterAndSchema.Enabled = cbGenerateRecordType.Checked;
+            this.cbDuplicatePackageRecordOriginatingOutsideFilterAndSchema.Enabled = lblDuplicatePackageRecordOriginatingOutsideFilterAndSchema.Enabled =
+                cbGenerateRecordType.Checked;
         }
 
         private void ListViewMessage_DrawColumnHeader(object sender, DrawListViewColumnHeaderEventArgs e) {
