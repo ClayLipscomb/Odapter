@@ -33,7 +33,7 @@
     </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>x86</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -110,6 +110,10 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="bin\Debug\_Odpt-Example.config" />
+    <None Include="bin\Debug\_Odpt-NoFilter.config" />
+    <None Include="bin\Debug\_Odpt-SafeType.config" />
+    <None Include="bin\Debug\_Odpt.config" />
     <None Include="bin\x64\Debug\_Odpt-Example.config" />
     <None Include="bin\x64\Debug\_Odpt-NoFilter.config" />
     <None Include="bin\x64\Debug\_Odpt-SafeType.config" />
@@ -139,6 +143,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="bin\Release\" />
     <Folder Include="Icons\" />
     <Folder Include="lib\" />
     <Folder Include="Resources\" />
