@@ -7,7 +7,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{49C03924-B453-43B4-9776-9B36B9A06047}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>OdapterWinFrm</RootNamespace>
+    <RootNamespace>OdapterWnFrm</RootNamespace>
     <AssemblyName>Odapter</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

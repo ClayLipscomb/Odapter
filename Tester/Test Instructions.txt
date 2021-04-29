@@ -4,9 +4,9 @@ The tests must be run in order below to avoid compiler errors.
 
 Initialization for C# 4.0 Tests
 ----------------------------
-a) Run /OdapterWinFrm/bin/x64/Debug/Odapter.exe and generate using _Odpt-NoFilter.config.
+a) Run /OdapterWnFrm/bin/x64/Debug/Odapter.exe and generate using _Odpt-NoFilter.config.
 
-b) Run /OdapterWinFrm/bin/x64/Debug/Odapter.exe and generate using _Odpt.config.
+b) Run /OdapterWnFrm/bin/x64/Debug/Odapter.exe and generate using _Odpt.config.
 
 c) Set Tester as starup project
 
@@ -14,7 +14,7 @@ c) Set Tester as starup project
 C# 4.0 No Filter Test
 ---------------------
 
-a) Run /OdapterWinFrm/bin/x64/Debug/Odapter.exe and generate using _Odpt-NoFilter.config.
+a) Run /OdapterWnFrm/bin/x64/Debug/Odapter.exe and generate using _Odpt-NoFilter.config.
 
 b) Comment out all Define directives in Tester.cs except:
 
@@ -27,7 +27,7 @@ c) Compile and run Tester project
 C# 4.0 Standard Test
 --------------------
 
-a) Run /OdapterWinFrm/bin/x64/Debug/Odapter.exe and generate using _Odpt.config.
+a) Run /OdapterWnFrm/bin/x64/Debug/Odapter.exe and generate using _Odpt.config.
 
 b) Comment out all Define directives in Tester.cs except:
 
@@ -41,7 +41,7 @@ c) Compile and run Tester project
 C# 4.0 Safe Type Test
 ---------------------
 
-a) Run /OdapterWinFrm/bin/x64/Debug/Odapter.exe and generate using _Odpt-SafeType.config.
+a) Run /OdapterWnFrm/bin/x64/Debug/Odapter.exe and generate using _Odpt-SafeType.config.
 
 b) Comment out all Define directives in Tester.cs except:
 
