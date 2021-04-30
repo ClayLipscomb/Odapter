@@ -82,6 +82,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ColorWnFrm.cs" />
+    <Compile Include="Controls\OdapterComboBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\OdapterComboBox.Designer.cs">
+      <DependentUpon>OdapterComboBox.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\OdatperCheckBox.cs">
       <SubType>Component</SubType>
     </Compile>
