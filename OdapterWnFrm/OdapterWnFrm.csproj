@@ -120,6 +120,7 @@
     <None Include="bin\Debug\_Odpt-NoFilter.config" />
     <None Include="bin\Debug\_Odpt-SafeType.config" />
     <None Include="bin\Debug\_Odpt.config" />
+    <None Include="bin\Release\_Odpt-Example.config" />
     <None Include="bin\x64\Debug\_Odpt-Example.config" />
     <None Include="bin\x64\Debug\_Odpt-NoFilter.config" />
     <None Include="bin\x64\Debug\_Odpt-SafeType.config" />
