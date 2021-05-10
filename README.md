@@ -29,8 +29,8 @@ Odapter is a [single executable](/OdapterWnFrm/bin/Release) that generates C# ad
 ### Code Generation Features
 
 * Generates adapter class for each package with respective method for each procedure/function
-* Generates nested interface for each record (DEPRECATED)
-* Generates nested abstract DTO class for each record 
+* Generates nested interface for each record 
+* Generates nested abstract DTO class for each record (DEPRECATED)
 * Translates all common Oracle data types to C#
 * Configurable translation of Oracle REF CURSROR (typed and untyped) to IList, ICollection, or List
 * Configurable translation of Oracle integer-indexed associative array type to IList or List of value type
