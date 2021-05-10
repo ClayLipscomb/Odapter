@@ -402,8 +402,6 @@ namespace OdapterWnFrm {
             txtBaseEntityNamespace.Enabled = txtBaseEntityFileName.Enabled = cbGenerateBaseEntity.Checked;
         }
         private void txtBaseConnectionClass_TextChanged(object sender, EventArgs e) {
-            txtBaseConnectionClassFunction.Text = txtPackageAncestorClass.Text;
-            txtBaseConnectionClassProcedure.Text = txtPackageAncestorClass.Text;
         }
 
         private void cbExcludeObjectNamesWithSpecificChars_CheckedChanged(object sender, EventArgs e) {
