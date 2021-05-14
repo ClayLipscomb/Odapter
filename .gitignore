@@ -9,8 +9,8 @@
 # x86
 Odapter/bin/Debug/
 Odapter/bin/Release/
-OdapterWnFrm/bin/Debug/
-OdapterWnFrm/bin/Release/
+#OdapterWnFrm/bin/Debug/
+#OdapterWnFrm/bin/Release/
 
 # Odapter - x64 config files
 Odapter/bin/x64/Debug/*.dll.config
@@ -22,8 +22,10 @@ OdapterWnFrm/bin/x64/Debug/*.exe.config
 OdapterWnFrm/bin/x64/Release/*.config
 
 # DLLs
-Odapter/bin/x64/Debug/*.dll
-Odapter/bin/x64/Release/*.dll
+#Odapter/bin/x64/Debug/*.dll
+#Odapter/bin/x64/Release/*.dll
+*.dll
+!**/Oracle.ManagedDataAccess.dll
 
 # executables
 *.exe
@@ -315,3 +317,9 @@ __pycache__/
 /OdapterFS
 *.zip
 *.xml
+/Tester/schema/table/odpt_table_ignore_nested_table.sql
+/OdapterWnFrm/bin/Debug/Odapter.exe.config
+/OdapterWnFrm/bin/Debug/OdapterCore.dll.config
+/OdapterWnFrm/bin/Release/Odapter.exe.config
+/OdapterWnFrm/bin/Release/OdapterCore.dll.config
+/OdapterWnFrm/bin/Release/_Odpt-Example.config

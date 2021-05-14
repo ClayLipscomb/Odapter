@@ -40,6 +40,8 @@ namespace Odapter {
         public int? DataScale { get; set; }
         public int? CharLength { get; set; }
         public string PlsType { get; set; }
+        public string Typecode { get; set; }
+
         public string TypeOwner { get; set; }       // schema containing of TypeSubName definition
         public string TypeName { get; set; }        // 1) package containing TypeSubName defintion or 2) proper name of object type
         public string TypeSubname { get; set; }     // proper name of DataType (e.g., record name)

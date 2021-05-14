@@ -17,20 +17,22 @@
 //------------------------------------------------------------------------------
 
 using System;
+using CS = Odapter.CSharp;
+using CSL = Odapter.CSharp.Logic.Api;
 
 namespace Odapter {
     internal class TranslaterBoolean : ITranslaterType {
         public string DataTypeFull { get => OrclType.DataType; }
         public IOrclType OrclType { get => OrclUtil.GetType(Orcl.BOOLEAN); }
-
         // translation to C#
-        public string GetCSharpType(bool typeNotNullable = false, bool nonInterfaceType = false) { return CSharpType; }
+        public CS.ITypeTargetable CSharpType { get => CS.TypeReference.Boolean; }
+        public CS.ITypeTargetable CSharpSubType { get => CSL.TypeNone; }
         public bool IsValid(ITyped dataType) { return dataType.OrclType.BuildDataTypeFullName(dataType).Equals(DataTypeFull); }
-        private string CSharpType { get => CSharp.BOOLEAN; }
-        public string CSharpOracleDbType { get => String.Empty; }
-        public string CSharpOdpNetType { get => String.Empty; }
+        public CS.OdpNetOracleDbTypeEnum CSharpOracleDbTypeEnum => CS.OdpNetOracleDbTypeEnum.Byte; // unused
+        public CS.ITypeTargetable CSharpOdpNetSafeType => CSL.TypeNone;
         public bool IsIgnoredAsParameter { get => true; }
         public string IgnoredReasonAsParameter { get => TranslaterMessage.IgnoreNoSendReceive(OrclType); }
+        public (bool isIgnored, string reasonMsg) IsIgnoredAsRecordField() => (true, TranslaterMessage.IgnoreNoSendReceive(OrclType));
         public bool IsIgnoredAsAttribute { get => true; }
         public string IgnoredReasonAsAttribute { get => TranslaterMessage.IgnoreNoSendReceive(OrclType); }
     }
@@ -38,15 +40,15 @@ namespace Odapter {
     internal class TranslaterPlsqlBoolean : ITranslaterType {
         public string DataTypeFull { get => OrclType.DataType; }
         public IOrclType OrclType { get => OrclUtil.GetType(Orcl.PLSQL_BOOLEAN); }
-
         // translation to C#
-        public string GetCSharpType(bool typeNotNullable = false, bool nonInterfaceType = false) { return CSharpType; }
+        public CS.ITypeTargetable CSharpType { get => CS.TypeReference.Boolean; }
+        public CS.ITypeTargetable CSharpSubType { get => CSL.TypeNone; }
         public bool IsValid(ITyped dataType) { return dataType.OrclType.BuildDataTypeFullName(dataType).Equals(DataTypeFull); }
-        private string CSharpType { get => CSharp.BOOLEAN; }
-        public string CSharpOracleDbType { get => String.Empty; }
-        public string CSharpOdpNetType { get => String.Empty; }
+        public CS.OdpNetOracleDbTypeEnum CSharpOracleDbTypeEnum => CS.OdpNetOracleDbTypeEnum.Byte; // unused
+        public CS.ITypeTargetable CSharpOdpNetSafeType => CSL.TypeNone;
         public bool IsIgnoredAsParameter { get => true; }
         public string IgnoredReasonAsParameter { get => TranslaterMessage.IgnoreNoSendReceive(OrclType); }
+        public (bool isIgnored, string reasonMsg) IsIgnoredAsRecordField() => (true, TranslaterMessage.IgnoreNoSendReceive(OrclType));
         public bool IsIgnoredAsAttribute { get => true; }
         public string IgnoredReasonAsAttribute { get => TranslaterMessage.IgnoreNoSendReceive(OrclType); }
     }

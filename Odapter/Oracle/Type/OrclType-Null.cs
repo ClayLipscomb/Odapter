@@ -19,6 +19,7 @@
 using System;
 
 namespace Odapter {
+    [Obsolete]
     internal sealed class OrclNullType: OrclTypeBase, IOrclType {
         public string DataType { get => Orcl.NULL; }
         public bool IsImplementedForAssociativeArray { get => false; }

@@ -4,19 +4,17 @@ The tests must be run in order below to avoid compiler errors.
 
 Initialization for C# 4.0 Tests
 ----------------------------
-a) Change target framework of Tester project to .NET Framework 4
+a) Run /OdapterWnFrm/bin/x64/Debug/Odapter.exe and generate using _Odpt-NoFilter.config.
 
-b) Run /OdapterWinFrm/bin/x64/Debug/Odapter.exe and generate using _Odpt-NoFilter.config.
+b) Run /OdapterWnFrm/bin/x64/Debug/Odapter.exe and generate using _Odpt.config.
 
-c) Run /OdapterWinFrm/bin/x64/Debug/Odapter.exe and generate using _Odpt.config.
-
-d) Set Tester as starup project
+c) Set Tester as starup project
 
 
 C# 4.0 No Filter Test
 ---------------------
 
-a) Run /OdapterWinFrm/bin/x64/Debug/Odapter.exe and generate using _Odpt-NoFilter.config.
+a) Run /OdapterWnFrm/bin/x64/Debug/Odapter.exe and generate using _Odpt-NoFilter.config.
 
 b) Comment out all Define directives in Tester.cs except:
 
@@ -29,7 +27,7 @@ c) Compile and run Tester project
 C# 4.0 Standard Test
 --------------------
 
-a) Run /OdapterWinFrm/bin/x64/Debug/Odapter.exe and generate using _Odpt.config.
+a) Run /OdapterWnFrm/bin/x64/Debug/Odapter.exe and generate using _Odpt.config.
 
 b) Comment out all Define directives in Tester.cs except:
 
@@ -43,7 +41,7 @@ c) Compile and run Tester project
 C# 4.0 Safe Type Test
 ---------------------
 
-a) Run /OdapterWinFrm/bin/x64/Debug/Odapter.exe and generate using _Odpt-SafeType.config.
+a) Run /OdapterWnFrm/bin/x64/Debug/Odapter.exe and generate using _Odpt-SafeType.config.
 
 b) Comment out all Define directives in Tester.cs except:
 
@@ -56,64 +54,5 @@ SAFETYPE_CLOB
 ODPT_FILTER_PREFIX
 MAPPING_FOR_TYPED_CURSOR
 SEED_TABLES
-
-c) Compile and run Tester project
-
-
-Initialization for C# 3.0 Tests
-----------------------------
-a) Change target framework of Tester project to .NET Framework 3.5
-
-b) Run /OdapterWinFrm/bin/x64/Debug/Odapter.exe and generate using _Odpt-NoFilter-3.0.config.
-
-c) Run /OdapterWinFrm/bin/x64/Debug/Odapter.exe and generate using _Odpt-3.0.config.
-
-
-C# 3.0 No Filter Test
----------------------
-
-a) Run /bin/x64/Debug/Odapter.exe and generate using _Odpt-NoFilter-3.0.config.
-
-b) Comment out all Define directives in Tester.cs except:
-
-MAPPING_FOR_TYPED_CURSOR
-SEED_TABLES
-CSHARP30
-
-c) Compile and run Tester project
-
-
-C# 3.0 Standard Test
---------------------
-
-a) Run /OdapterWinFrm/bin/x64/Debug/Odapter.exe and generate using _Odpt-3.0.config.
-
-b) Comment out all Define directives in Tester.cs except:
-
-ODPT_FILTER_PREFIX
-MAPPING_FOR_TYPED_CURSOR
-SEED_TABLES
-CSHARP30
-
-c) Compile and run Tester project
-
-
-C# 3.0 Safe Type Test
----------------------
-
-a) Run /OdapterWinFrm/bin/x64/Debug/Odapter.exe and generate using _Odpt-SafeType-3.0.config.
-
-b) Comment out all Define directives in Tester.cs except:
-
-SAFETYPE_INTEGER          
-SAFETYPE_NUMBER           
-SAFETYPE_DATE             
-SAFETYPE_TIMESTAMP        
-SAFETYPE_BLOB
-SAFETYPE_CLOB
-ODPT_FILTER_PREFIX
-MAPPING_FOR_TYPED_CURSOR
-SEED_TABLES
-CSHARP30
 
 c) Compile and run Tester project

@@ -53,22 +53,6 @@ CREATE OR REPLACE PACKAGE ODPT.odpt_pkg_main AS
 	-- varray types
 	TYPE t_va_number IS VARRAY(10) of NUMBER;
 
-	-- data types ignored (not implemented) in code generation
---	TYPE t_record_type_ignored IS RECORD (
---		f_boolean							BOOLEAN,	 -- .NET cannot handle PL/SQL BOOLEAN
---		f_rowid								ROWID,
---		f_urowid							UROWID,
---		f_timestamp_w_l_time_zone 			TIMESTAMP WITH LOCAL TIME ZONE, 
---		f_timestamp_w_time_zone				TIMESTAMP WITH TIME ZONE,	
---		f_raw								RAW(1),
---		f_bfile								BFILE,
---		f_xmltype							XMLTYPE,
---		f_long								LONG,				-- deprecated
---		f_long_raw							LONG RAW,			-- deprecated
---		f_last								NUMBER
---	);
---	TYPE t_cursor_typed_ignored IS REF CURSOR RETURN t_record_type_ignored;
-
     ---------------------------------------------------------------------
 	-- data types ignored (not implemented) in record type code generation
 	TYPE t_ignore_aa_integer IS RECORD (
@@ -90,16 +74,6 @@ CREATE OR REPLACE PACKAGE ODPT.odpt_pkg_main AS
 		f_urowid							UROWID
 	);
 	TYPE t_cursor_ignore_urowid IS REF CURSOR RETURN t_ignore_urowid;
-
-	TYPE t_ignore_ts_w_l_t_z IS RECORD (
-		f_timestamp_w_l_time_zone 			TIMESTAMP WITH LOCAL TIME ZONE
-	);
-	TYPE t_cursor_ignore_ts_w_l_t_z IS REF CURSOR RETURN t_ignore_ts_w_l_t_z;
-
-	TYPE t_ignore_ts_w_t_z IS RECORD (
-		f_timestamp_w_time_zone				TIMESTAMP WITH TIME ZONE
-	);
-	TYPE t_cursor_ignore_ts_w_t_z IS REF CURSOR RETURN t_ignore_ts_w_t_z;
 
 	TYPE t_ignore_raw IS RECORD (
 		f_raw								RAW(1)
@@ -146,23 +120,37 @@ CREATE OR REPLACE PACKAGE ODPT.odpt_pkg_main AS
     PROCEDURE proc_no_param;
     FUNCTION func_no_param RETURN NUMBER;
 
-    PROCEDURE duplicate_signature(p_param_in1 IN INTEGER, p_param_in_out1 IN OUT INTEGER, p_param_out1 OUT INTEGER);
-    PROCEDURE duplicate_signature(p_param_in2 IN INTEGER, p_param_in_out2 IN OUT INTEGER, p_param_out2 OUT INTEGER);
-    PROCEDURE duplicate_signature(p_param_in3 IN INTEGER, p_param_in_out3 IN OUT INTEGER, p_param_out3 OUT INTEGER);
-    FUNCTION duplicate_signature(p_param_in1 IN INTEGER, p_param_in_out1 IN OUT INTEGER, p_param_out1 OUT INTEGER) RETURN INTEGER;
-    FUNCTION duplicate_signature(p_param_in2 IN INTEGER, p_param_in_out2 IN OUT INTEGER, p_param_out2 OUT INTEGER) RETURN INTEGER;
-    FUNCTION duplicate_signature(p_param_in3 IN INTEGER, p_param_in_out3 IN OUT INTEGER, p_param_out3 OUT INTEGER) RETURN INTEGER;
+    PROCEDURE dup_signature(p_param_in1 IN INTEGER, p_param_in_out1 IN OUT INTEGER, p_param_out1 OUT INTEGER);
+    PROCEDURE dup_signature(p_param_in2 IN INTEGER, p_param_in_out2 IN OUT INTEGER, p_param_out2 OUT INTEGER);
+    PROCEDURE dup_signature(p_param_in3 IN INTEGER, p_param_in_out3 IN OUT INTEGER, p_param_out3 OUT INTEGER);
+    FUNCTION dup_signature(p_param_in1 IN INTEGER, p_param_in_out1 IN OUT INTEGER, p_param_out1 OUT INTEGER) RETURN INTEGER;
+    FUNCTION dup_signature(p_param_in2 IN INTEGER, p_param_in_out2 IN OUT INTEGER, p_param_out2 OUT INTEGER) RETURN INTEGER;
+    FUNCTION dup_signature(p_param_in3 IN INTEGER, p_param_in_out3 IN OUT INTEGER, p_param_out3 OUT INTEGER) RETURN INTEGER;
+
+    FUNCTION dup_signature_translated_str(p_param_in IN VARCHAR2, p_param_in_out IN OUT VARCHAR2, p_param_out OUT VARCHAR2) RETURN VARCHAR2;
+    FUNCTION dup_signature_translated_str(p_param_in IN NVARCHAR2, p_param_in_out IN OUT NVARCHAR2, p_param_out OUT NVARCHAR2) RETURN NVARCHAR2; 
+    FUNCTION dup_signature_translated_str(p_param_in IN CHAR, p_param_in_out IN OUT CHAR, p_param_out OUT CHAR) RETURN CHAR; 
+    FUNCTION dup_signature_translated_str(p_param_in IN NCHAR, p_param_in_out IN OUT NCHAR, p_param_out OUT NCHAR) RETURN NCHAR; 
+    FUNCTION dup_signature_translated_str(p_param_in IN CLOB, p_param_in_out IN OUT CLOB, p_param_out OUT CLOB) RETURN CLOB; 
+    FUNCTION dup_signature_translated_str(p_param_in IN NCLOB, p_param_in_out IN OUT NCLOB, p_param_out OUT NCLOB) RETURN NCLOB; 
+    
+    FUNCTION dup_signature_translated_date(p_param_in IN DATE, p_param_in_out IN OUT DATE, p_param_out OUT DATE) RETURN DATE;
+    FUNCTION dup_signature_translated_date(p_param_in IN TIMESTAMP, p_param_in_out IN OUT TIMESTAMP, p_param_out OUT TIMESTAMP) RETURN TIMESTAMP;
+
+    FUNCTION dup_sig_translated_byte_arr(p_param_in IN LONG, p_param_in_out IN OUT LONG, p_param_out OUT LONG) RETURN LONG; 
+    FUNCTION dup_sig_translated_byte_arr(p_param_in IN BFILE, p_param_in_out IN OUT BFILE, p_param_out OUT BFILE) RETURN BFILE; 
+    FUNCTION dup_sig_translated_byte_arr(p_param_in IN BLOB, p_param_in_out IN OUT BLOB, p_param_out OUT BLOB) RETURN BLOB;
+    FUNCTION dup_sig_translated_byte_arr(p_param_in IN RAW, p_param_in_out IN OUT RAW, p_param_out OUT RAW) RETURN RAW;
 
 	PROCEDURE proc_optional_param(p_in_number_required IN NUMBER, p_in_out_number_required IN OUT NUMBER, p_in_number_optional IN NUMBER DEFAULT 0, p_in_varchar2_optional IN VARCHAR2 DEFAULT 'TEST');
-	FUNCTION func_optional_param(p_in_number_required IN NUMBER, p_in_out_number_required IN OUT NUMBER, 
-		p_in_number_optional IN NUMBER DEFAULT 0, p_in_varchar2_optional IN VARCHAR2 DEFAULT 'TEST') RETURN NUMBER;
+	PROCEDURE proc_optional_param_reversed(p_in_number_optional IN NUMBER DEFAULT 0, p_in_varchar2_optional IN VARCHAR2 DEFAULT 'TEST', p_in_number_required IN NUMBER, p_in_out_number_required IN OUT NUMBER);
+	FUNCTION func_optional_param(p_in_number_required IN NUMBER, p_in_out_number_required IN OUT NUMBER, p_in_number_optional IN NUMBER DEFAULT 0, p_in_varchar2_optional IN VARCHAR2 DEFAULT 'TEST') RETURN NUMBER;
+	FUNCTION func_optional_param_reversed(p_in_number_optional IN NUMBER DEFAULT 0, p_in_varchar2_optional IN VARCHAR2 DEFAULT 'TEST', p_in_number_required IN NUMBER, p_in_out_number_required IN OUT NUMBER) RETURN NUMBER;
 
 	FUNCTION func_cursor_ignore_aa_integer RETURN t_cursor_ignore_aa_integer;
 	FUNCTION func_cursor_ignore_boolean RETURN t_cursor_ignore_boolean;
 	FUNCTION func_cursor_ignore_rowid RETURN t_cursor_ignore_rowid;
 	FUNCTION func_cursor_ignore_urowid RETURN t_cursor_ignore_urowid;
-	FUNCTION func_cursor_ignore_ts_w_l_t_z RETURN t_cursor_ignore_ts_w_l_t_z;
-	FUNCTION func_cursor_ignore_ts_w_t_z RETURN t_cursor_ignore_ts_w_t_z;
 	FUNCTION func_cursor_ignore_raw RETURN t_cursor_ignore_raw;
 	FUNCTION func_cursor_ignore_bfile RETURN t_cursor_ignore_bfile;
 	FUNCTION func_cursor_ignore_xmltype RETURN t_cursor_ignore_xmltype;
@@ -204,6 +192,8 @@ CREATE OR REPLACE PACKAGE ODPT.odpt_pkg_main AS
 
 	FUNCTION func_date(p_in IN DATE, p_in_out IN OUT DATE, p_out OUT DATE) RETURN DATE;
 	FUNCTION func_timestamp(p_in IN TIMESTAMP, p_in_out IN OUT TIMESTAMP, p_out OUT TIMESTAMP)	RETURN TIMESTAMP;
+	FUNCTION func_timestamp_w_l_time_zone(p_in IN TIMESTAMP WITH LOCAL TIME ZONE, p_in_out IN OUT TIMESTAMP WITH LOCAL TIME ZONE, p_out OUT TIMESTAMP WITH LOCAL TIME ZONE) RETURN TIMESTAMP WITH LOCAL TIME ZONE;
+	FUNCTION func_timestamp_w_time_zone(p_in IN TIMESTAMP WITH TIME ZONE, p_in_out IN OUT TIMESTAMP WITH TIME ZONE, p_out OUT TIMESTAMP WITH TIME ZONE) RETURN TIMESTAMP WITH TIME ZONE;
 
 	FUNCTION func_blob(p_in IN BLOB, p_in_out IN OUT BLOB, p_out OUT BLOB) RETURN BLOB;
 	FUNCTION func_clob(p_in IN CLOB, p_in_out IN OUT CLOB, p_out OUT CLOB) RETURN CLOB;
@@ -237,6 +227,9 @@ CREATE OR REPLACE PACKAGE ODPT.odpt_pkg_main AS
 	FUNCTION func_aa_clob (p_in IN t_assocarray_clob, p_in_out IN OUT t_assocarray_clob, p_out OUT t_assocarray_clob) RETURN t_assocarray_clob;
 	FUNCTION func_aa_nclob (p_in IN t_assocarray_nclob, p_in_out IN OUT t_assocarray_nclob, p_out OUT t_assocarray_nclob) RETURN t_assocarray_nclob;
 
+    FUNCTION func_aa_integer_in_cnt (p_in IN t_assocarray_integer) RETURN INTEGER;
+    FUNCTION func_aa_varchar2_in_cnt (p_in IN t_assocarray_varchar2) RETURN INTEGER;
+
 	-- nested table functions
 	FUNCTION func_nt_number (p_in IN t_nestedtable_number, p_in_out IN OUT t_nestedtable_number, p_out OUT t_nestedtable_number) RETURN t_nestedtable_number;
 
@@ -249,8 +242,6 @@ CREATE OR REPLACE PACKAGE ODPT.odpt_pkg_main AS
 	FUNCTION func_xmltype(p_in IN XMLTYPE, p_in_out IN OUT XMLTYPE, p_out OUT XMLTYPE) RETURN XMLTYPE;
 	FUNCTION func_rowid(p_in IN ROWID, p_in_out IN OUT ROWID, p_out OUT ROWID)	RETURN ROWID;
 	FUNCTION func_urowid(p_in IN UROWID, p_in_out IN OUT UROWID, p_out OUT UROWID) RETURN UROWID;
-	FUNCTION func_timestamp_w_l_time_zone(p_in IN TIMESTAMP WITH LOCAL TIME ZONE, p_in_out IN OUT TIMESTAMP WITH LOCAL TIME ZONE, p_out OUT TIMESTAMP WITH LOCAL TIME ZONE) RETURN TIMESTAMP WITH LOCAL TIME ZONE;
-	FUNCTION func_timestamp_w_time_zone(p_in IN TIMESTAMP WITH TIME ZONE, p_in_out IN OUT TIMESTAMP WITH TIME ZONE, p_out OUT TIMESTAMP WITH TIME ZONE) RETURN TIMESTAMP WITH TIME ZONE;
 	FUNCTION func_bfile(p_in IN BFILE, p_in_out IN OUT BFILE, p_out OUT BFILE) RETURN BFILE;
 	FUNCTION func_raw(p_in IN RAW, p_in_out IN OUT RAW, p_out OUT RAW) RETURN RAW;
 	FUNCTION func_interval_day_to_second(p_in IN INTERVAL DAY TO SECOND, p_in_out IN OUT INTERVAL DAY TO SECOND, p_out OUT INTERVAL DAY TO SECOND) RETURN INTERVAL DAY TO SECOND;
@@ -261,6 +252,9 @@ CREATE OR REPLACE PACKAGE ODPT.odpt_pkg_main AS
 	FUNCTION func_record(p_in IN odpt_pkg_table_big.t_table_big, p_in_out IN OUT odpt_pkg_table_big.t_table_big, p_out OUT odpt_pkg_table_big.t_table_big) RETURN odpt_pkg_table_big.t_table_big;
 	FUNCTION func_row(p_in IN odpt_table_big%ROWTYPE, p_in_out IN OUT odpt_table_big%ROWTYPE, p_out OUT odpt_table_big%ROWTYPE) RETURN odpt_table_big%ROWTYPE;
 	FUNCTION func_boolean(p_in IN BOOLEAN, p_in_out IN OUT BOOLEAN, p_out OUT BOOLEAN) RETURN BOOLEAN; -- impossible to bind in C#
+   	FUNCTION func_anydata(p_in IN ANYDATA, p_in_out IN OUT ANYDATA, p_out OUT ANYDATA) RETURN ANYDATA;
+   	FUNCTION func_anydataset(p_in IN ANYDATASET, p_in_out IN OUT ANYDATASET, p_out OUT ANYDATASET) RETURN ANYDATASET;
+   	FUNCTION func_anytype(p_in IN ANYTYPE, p_in_out IN OUT ANYTYPE, p_out OUT ANYTYPE) RETURN ANYTYPE;
 
 	FUNCTION func_aa_binary_integer (p_in IN t_assocarray_binary_integer, p_in_out IN OUT t_assocarray_binary_integer, p_out OUT t_assocarray_binary_integer) RETURN t_assocarray_binary_integer;
 	FUNCTION func_aa_pls_integer (p_in IN t_assocarray_pls_integer, p_in_out IN OUT t_assocarray_pls_integer, p_out OUT t_assocarray_pls_integer) RETURN t_assocarray_pls_integer;

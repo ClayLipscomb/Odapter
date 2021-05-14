@@ -13,7 +13,7 @@
 //    GNU General Public License for more details.
 //
 //    You should have received a copy of the GNU General Public License
-//    along with this program.If not, see<http://www.gnu.org/licenses/>.
+//    along with this program. If not, see<http://www.gnu.org/licenses/>.
 //------------------------------------------------------------------------------
 
 using System;
@@ -27,10 +27,16 @@ namespace Odapter {
     /// Oracle specific types and logic
     /// </summary>
     public static class OrclUtil {
-        private static readonly List<string> _complexDataTypes = new List<string> { Orcl.ASSOCIATITVE_ARRAY, Orcl.OBJECT, Orcl.RECORD, Orcl.REF_CURSOR, Orcl.VARRAY, Orcl.XMLTYPE };
+        private static readonly List<string> _complexDataTypes = 
+            new List<string> { Orcl.OBJECT, Orcl.NESTED_TABLE, Orcl.VARRAY, Orcl.XMLTYPE, Orcl.ANYDATA, Orcl.ANYDATASET, Orcl.ANYTYPE, Orcl.ASSOCIATITVE_ARRAY, Orcl.RECORD, Orcl.REF_CURSOR };
+        private static readonly List<string> _sqlComplexDataTypes =
+            new List<string> { Orcl.OBJECT, Orcl.NESTED_TABLE, Orcl.VARRAY, Orcl.XMLTYPE, Orcl.ANYDATA, Orcl.ANYDATASET, Orcl.ANYTYPE };
 
-        private static IList<IOrclType> OracleTypes = new List<IOrclType> {
+        private static readonly IEnumerable<IOrclType> OracleTypes = new HashSet<IOrclType> {
                 new OrclAssociativeArray(),
+                new OrclAnydata(),
+                new OrclAnydataset(),
+                new OrclAnytype(),
                 new OrclBinaryDouble(),
                 new OrclBinaryFloat(),
                 new OrclBinaryInteger(),
@@ -66,24 +72,29 @@ namespace Odapter {
                 new OrclRecord(),
                 new OrclRef(),
                 new OrclRefCursor(),
+                new OrclRowtype(),
                 new OrclRowid(),
                 new OrclSmallint(),
                 new OrclString(),
                 new OrclTimestamp(),
-                new OrclTimestampWithLocalTimeZone(),
-                new OrclTimestampWithTimeZone(),
+                new OrclTimestampLTZ(),
+                new OrclTimestampTZ(),
                 new OrclUndefinedType(),
                 new OrclUrowid(),
                 new OrclVarchar(),
                 new OrclVarchar2(),
                 new OrclVarray(),
-                new OrclNullType(),
-                new OrclXmltype()
+                new OrclXmltype(),
+
+                new OrclProcedureReturn()
         };
 
         internal static bool IsComplexDataType(string dataType) { return _complexDataTypes.Contains(dataType); }
-
-        internal static bool IsExistsType(string dataType) { return OracleTypes.Any(ot => ot.DataType.Equals(dataType)); }
+        internal static bool IsSqlComplexDataType(string dataType) { return _sqlComplexDataTypes.Contains(dataType); }
+        internal static String GetDataTypeProperName(IEntityAttribute entityAttribute) {
+            return (IsExistsType(entityAttribute.DataType) ? String.Empty : entityAttribute.DataType);
+        }
+        private static bool IsExistsType(string dataType) { return OracleTypes.Any(ot => ot.DataType.Equals(dataType)); }
 
         internal static bool IsWholeNumberOfPrecision(ITyped dataType, int precision) {
             return dataType.DataType == Orcl.NUMBER && dataType.DataPrecision == precision && (dataType.DataScale ?? 0) == 0;
@@ -101,64 +112,99 @@ namespace Odapter {
             return OracleTypes.SingleOrDefault(ot => ot.DataType.Equals(dataTypeSearch));
         }
 
-        private static ITyped NormalzeDataTypeNull(ITyped type) {
-            type.DataType = type.DataType == null ? Orcl.NULL : type.DataType; // procedure with *no parameters* will have a placeholder NULL-typed parameter representing no return
-            return type;
-        }
+        /// <summary>
+        /// Procedure with *no parameters* will have a placeholder NULL-typed parameter representing no return
+        /// </summary>
+        /// <param name="dataType"></param>
+        /// <returns></returns>
+        private static string NormalizeDataTypeProcedureReturn(string dataType) => dataType ?? Orcl.PROCEDURE_RETURN;
 
-        private static ITyped NormalzeDataTypeTimestamp(ITyped type) {
+        private static string NormalizeDataTypeTimestamp(string dataType) {
             var tzSuffix = @" TZ"; // object attributes use "TZ" instead of "TIME ZONE"!
-            type.DataType = type.DataType.StartsWith(Orcl.TIMESTAMP) && type.DataType.EndsWith(tzSuffix) ? type.DataType.Replace(tzSuffix, " TIME ZONE") : type.DataType;
-            return type;
+            return dataType.StartsWith(Orcl.TIMESTAMP) && dataType.EndsWith(tzSuffix) ? dataType.Replace(tzSuffix, " TIME ZONE") : dataType;
         }
 
-        private static ITyped NormalzeDataTypeAggregated(ITyped type) {
-            if (type.DataType.Contains("(")) { // strip any inline parentheses - columns can have this
-                int openParenIndex = type.DataType.IndexOf("(");
-                type.DataType = type.DataType.Remove(openParenIndex, type.DataType.IndexOf(")") - openParenIndex + 1);
+        private static string NormalizeDataTypeAggregated(string dataType) {
+            if (dataType.Contains("(")) { // strip any inline parentheses - columns can have this
+                int openParenIndex = dataType.IndexOf("(");
+                dataType = dataType.Remove(openParenIndex, dataType.IndexOf(")") - openParenIndex + 1);
             }
-            return type;
+            return dataType;
         }
 
-        private static ITyped NormalzeDataTypeXmlType(ITyped type) {
-            type.DataType = type.DataType == Orcl.UNDEFINED && type.DataTypeProperName == Orcl.XMLTYPE ? Orcl.XMLTYPE : type.DataType;
-            return type;
+        /// <summary>
+        /// Handle case when the DataType returned from Oracle view is "UNDEFINED"
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        private static string NormalizeDataTypeUndefined(string dataType, ITyped type) => dataType == Orcl.UNDEFINED ? type.DataTypeProperName : dataType;
+
+        private static string NormalizeDataTypeRowtype(string dataType, ITyped type) => dataType == Orcl.RECORD && type.DataTypeProperName == null ? Orcl.ROWTYPE : dataType;
+
+        private static string NormalizeDataTypeFromTypeCode(string dataType, ITyped type) {
+            if ( !(type is Argument) && !OrclUtil.IsExistsType(dataType) )
+                switch (type.Typecode) {   // Typecode only used for table, view, object attributes (not argument)
+                    case Orcl.TYPECODE_NESTED_TABLE:
+                        dataType = Orcl.NESTED_TABLE;
+                        break;
+                    case Orcl.TYPECODE_OBJECT:
+                        dataType = Orcl.OBJECT;
+                        break;
+                    case Orcl.TYPECODE_ANYDATA:
+                        dataType = Orcl.ANYDATA;
+                        break;
+                    case Orcl.TYPECODE_ANYDATASET:
+                        dataType = Orcl.ANYDATASET;
+                        break;
+                    case Orcl.TYPECODE_ANYTYPE:
+                        dataType = Orcl.ANYTYPE;
+                        break;
+                    //case Orcl.TYPECODE_LCR_DDL_RECORD:
+                    //case Orcl.TYPECODE_LCR_PROCEDURE_RECORD:
+                    //case Orcl.TYPECODE_LCR_ROW_RECORD:
+                    case Orcl.TYPECODE_XMLTYPE:
+                    default:
+                        dataType = Orcl.XMLTYPE;
+                        break;
+                    //default:
+                    //    break;
+                }
+            return dataType;
         }
 
-        private static string NormalizeDataType(ITyped type) {
-            var typeN = OU.NormalzeDataTypeNull(type);
-            typeN = OU.NormalzeDataTypeTimestamp(typeN);
-            typeN = OU.NormalzeDataTypeAggregated(typeN);
-            typeN = OU.NormalzeDataTypeXmlType(typeN);
-            return typeN.DataType;
+        internal static string NormalizeDataType(ITyped type) {
+            string dataType = type.DataType;
+            dataType = OU.NormalizeDataTypeProcedureReturn(dataType);
+            dataType = OU.NormalizeDataTypeTimestamp(dataType);
+            dataType = OU.NormalizeDataTypeAggregated(dataType);
+            dataType = OU.NormalizeDataTypeUndefined(dataType, type);
+            dataType = OU.NormalizeDataTypeRowtype(dataType, type);
+            dataType = OU.NormalizeDataTypeFromTypeCode(dataType, type);
+            return dataType;
         }
     
         internal static void Normalize(ITyped type) {
             type.PreNormalizedValues = String.Format("DataType: {0}, DataPrecison: {1}, DataScale: {2}, CharLength: {3}", 
                 type.DataType, type.DataPrecision.HasValue ? type.DataPrecision.ToString() : "null", type.DataScale.HasValue ? type.DataScale.ToString() : "null", type.CharLength.HasValue ? type.CharLength.ToString() : "null");
+            var dataTypeNormalized = NormalizeDataType(type);
+            type.OrclType = OrclUtil.GetType(dataTypeNormalized);
 
-            var dataTypeSearch = NormalizeDataType(type);
-            if (!OrclUtil.IsExistsType(dataTypeSearch)) dataTypeSearch = Orcl.OBJECT;
-            type.OrclType = OrclUtil.GetType(dataTypeSearch);
-            if (type.OrclType.DataType != Orcl.OBJECT) type.DataType = type.OrclType.DataType;
-
-            int? precision, scale;
-            type.OrclType.NormalizePrecisionScale(type, out precision, out scale);
+            type.OrclType.NormalizePrecisionScale(type, out int? precision, out int? scale);
             type.DataPrecision = precision;
             type.DataScale = scale;
             type.CharLength = type.OrclType.NormalizeCharLength(type);
         }
 
         internal static string BuildAggregateType(ITyped type) {
-            if (type.CharLength.HasValue) {
+            if (type.CharLength.HasValue && type.CharLength.Value != 0) {
                 return type.DataType + "(" + type.CharLength + ")";   // VARCHAR2, CHAR2, etc.
             } else if (type.DataPrecision.HasValue) {
-                if (type.DataType.StartsWith(Orcl.TIMESTAMP)) {  // TIMESTAMP, TIMESTAMP WITH TIME ZONE, etc.
+                if (type.DataType.StartsWith(Orcl.TIMESTAMP)) {  // TIMESTAMP, TIMESTAMP TZ, TIMESTAMP LTZ
                     return type.DataType.Insert(9, "(" + type.DataPrecision + ")");
                 } else {
                     return type.DataType + "(" + type.DataPrecision + (type.DataScale > 0 ? "," + type.DataScale : "") + ")"; // a number
                 }
-            } else if (type.DataType == Orcl.RECORD) {
+            } else if (type.DataType == Orcl.RECORD || type.DataType == Orcl.ROWTYPE) {
                 return type.OrclType.BuildDataTypeFullName(type);
             } else {
                 return type.DataType;

@@ -13,7 +13,7 @@
 //    GNU General Public License for more details.
 //
 //    You should have received a copy of the GNU General Public License
-//    along with this program.If not, see<http://www.gnu.org/licenses/>.
+//    along with this program. If not, see<http://www.gnu.org/licenses/>.
 //------------------------------------------------------------------------------
 
 using System;
@@ -22,6 +22,7 @@ using System.Linq;
 using System.Data;
 using Oracle.ManagedDataAccess.Client;
 using Dapper;
+using Trns = Odapter.Translation.Api;
 
 namespace Odapter {
     internal sealed class Loader {
@@ -189,13 +190,13 @@ namespace Odapter {
                     // owned by another schema or owned by package that was filtered out 
                     && (!(arg.Owner ?? "").Equals(arg.TypeOwner)
                         || !Packages.Any(p => p.PackageName.Equals(arg.TypeName)))) {
-                    field.ContainerClassName = TranslaterName.ConvertToPascal(arg.TypeName);
+                    field.ContainerClassName = Trns.ClassNameOfOracleIdentifier(arg.TypeName).Code;
                 }
 
                 if (!(arg.TypeName ?? "").Equals(arg.PackageName)
                         && Packages.Any(p => p.PackageName.Equals(arg.TypeName)) // package of origin of record being created
                         && PackageRecordTypes.Exists(r => r.PackageName.Equals(arg.TypeName) && r.TypeSubName.Equals(arg.TypeSubname))) {
-                    field.ContainerClassName = TranslaterName.ConvertToPascal(arg.TypeName);
+                    field.ContainerClassName = Trns.ClassNameOfOracleIdentifier(arg.TypeName).Code;
                 }
             }
 
@@ -284,7 +285,7 @@ namespace Odapter {
                         + " AND a.package_name = o.object_name "
                         + " AND UPPER(o.object_type) = :objectType "    // required to restrict to package spec only
                         +  (isFiltering ? " AND UPPER(a.package_name) LIKE :packageNamePrefix || '%' " : String.Empty)
-                        + " ORDER BY a.package_name, a.object_name, a.overload, a.sequence ";
+                        + " ORDER BY a.package_name, a.object_name, a.overload, a.defaulted, a.sequence ";  // moves all defaulted (defaulted="Y") past required (defaulted="N")
 
             var dynamicParameters = new DynamicParameters();
             dynamicParameters.Add("owner", Schema);
@@ -399,35 +400,45 @@ namespace Odapter {
             where T_EntityAttribute : class, IEntityAttribute, new() {
 
                 string sql = typeof(T_EntityAttribute).Equals(typeof(ObjectTypeAttribute))
-                    ? " SELECT type_name, "
-                            + " attr_name, "
-                            + " CAST(attr_no as NUMBER(9,0)) attr_no, "
-                            + " attr_type_name , "
-                            + " attr_type_owner , "
-                            + " attr_type_mod , "
-                            + " CAST(length as NUMBER(9,0)) length, "
-                            + " CAST(precision as NUMBER(9,0)) precision, "
-                            + " CAST(scale as NUMBER(9,0)) scale "
-                        + " FROM sys.all_type_attrs "
-                        + " WHERE inherited = 'NO' "
-                            + " AND UPPER(owner) = :owner "
-                            + " AND UPPER(type_name) LIKE :objectNamePrefix || '%'"
-                        + " ORDER BY type_name, attr_no "
-                    : " SELECT table_name "
-                            + ", column_name "
-                            + ", CAST(column_id as NUMBER(9,0)) column_id "
-                            + ", data_type "
-                            + ", data_type_owner "
-                            + ", data_type_mod "
-                            + ", CAST(data_length as NUMBER(9,0)) data_length "
-                            + ", CAST(data_precision as NUMBER(9,0)) data_precision "
-                            + ", CAST(data_scale as NUMBER(9,0)) data_scale "
-                            + ", nullable "
-                            + ", CAST(char_length as NUMBER(9,0)) char_length "
-                        + " FROM all_tab_columns "
-                        + " WHERE UPPER(owner) = :owner "
-                            + " AND UPPER(table_name) LIKE :objectNamePrefix || '%'"
-                        + " ORDER BY table_name, column_id ";
+                    ? " SELECT a.type_name, "
+                            + " a.attr_name, "
+                            + " CAST(a.attr_no as NUMBER(9,0)) attr_no, "
+                            //+ " a.attr_type_name , "
+                            // attribute type can be NULL when type is actually XMLTYPE; need better way to handle this
+                            + $" (CASE WHEN a.attr_type_name IS NULL THEN '{Orcl.XMLTYPE}' ELSE a.attr_type_name END) attr_type_name, "
+                            + " a.attr_type_owner , "
+                            + " a.attr_type_mod , "
+                            + " CAST(a.length as NUMBER(9,0)) length, "
+                            + " CAST(a.precision as NUMBER(9,0)) precision, "
+                            + " CAST(a.scale as NUMBER(9,0)) scale, "
+                            + " t.typecode "
+                        + " FROM sys.all_type_attrs a, sys.all_types t "
+                        + " WHERE a.inherited = 'NO' "
+                            + " AND UPPER(a.owner) = :owner "
+                            + " AND UPPER(a.type_name) LIKE :objectNamePrefix || '%'"
+                            //+ " AND a.attr_type_name = t.type_name(+) "
+                            // attribute type can be NULL when type is actually XMLTYPE; need better way to handle this
+                            + $" AND (CASE WHEN a.attr_type_name IS NULL THEN '{Orcl.XMLTYPE}' ELSE a.attr_type_name END) = t.type_name(+) "
+                            + " AND a.owner = t.owner(+) "
+                        + " ORDER BY a.type_name, a.attr_no "
+                    : " SELECT c.table_name "
+                            + ", c.column_name "
+                            + ", CAST(c.column_id as NUMBER(9,0)) column_id "
+                            + ", c.data_type "
+                            + ", c.data_type_owner "
+                            + ", c.data_type_mod "
+                            + ", CAST(c.data_length as NUMBER(9,0)) data_length "
+                            + ", CAST(c.data_precision as NUMBER(9,0)) data_precision "
+                            + ", CAST(c.data_scale as NUMBER(9,0)) data_scale "
+                            + ", c.nullable "
+                            + ", CAST(c.char_length as NUMBER(9,0)) char_length "
+                            + ",  t.typecode "
+                        + " FROM all_tab_columns c, all_types t "
+                        + " WHERE UPPER(c.owner) = :owner "
+                            + " AND UPPER(c.table_name) LIKE :objectNamePrefix || '%'"
+                            + " AND c.data_type = t.type_name(+) "
+                            + " AND c.owner = t.owner(+) "
+                        + " ORDER BY c.table_name, c.column_id ";
 
             string attribType = typeof(T_EntityAttribute).Name.ToLower();
             DisplayMessage("Reading "

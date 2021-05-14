@@ -38,47 +38,131 @@ CREATE OR REPLACE PACKAGE BODY ODPT.odpt_pkg_main AS
 		RETURN 0;
 	END;
 
-    PROCEDURE duplicate_signature(p_param_in1 IN INTEGER, p_param_in_out1 IN OUT INTEGER, p_param_out1 OUT INTEGER) IS
+    PROCEDURE dup_signature(p_param_in1 IN INTEGER, p_param_in_out1 IN OUT INTEGER, p_param_out1 OUT INTEGER) IS
     BEGIN
   		p_param_in_out1 := p_param_in1 + 1;
       	p_param_out1 := p_param_in1 + 1;    
         RETURN;
     END;
 
-    PROCEDURE duplicate_signature(p_param_in2 IN INTEGER, p_param_in_out2 IN OUT INTEGER, p_param_out2 OUT INTEGER) IS
+    PROCEDURE dup_signature(p_param_in2 IN INTEGER, p_param_in_out2 IN OUT INTEGER, p_param_out2 OUT INTEGER) IS
     BEGIN
   		p_param_in_out2 := p_param_in2 + 2;
       	p_param_out2 := p_param_in2 + 2;    
         RETURN;
     END;
 
-    PROCEDURE duplicate_signature(p_param_in3 IN INTEGER, p_param_in_out3 IN OUT INTEGER, p_param_out3 OUT INTEGER) IS
+    PROCEDURE dup_signature(p_param_in3 IN INTEGER, p_param_in_out3 IN OUT INTEGER, p_param_out3 OUT INTEGER) IS
     BEGIN
   		p_param_in_out3 := p_param_in3 + 3;
       	p_param_out3 := p_param_in3 + 3;    
         RETURN;
     END;
 
-    FUNCTION duplicate_signature(p_param_in1 IN INTEGER, p_param_in_out1 IN OUT INTEGER, p_param_out1 OUT INTEGER) RETURN INTEGER IS
+    FUNCTION dup_signature(p_param_in1 IN INTEGER, p_param_in_out1 IN OUT INTEGER, p_param_out1 OUT INTEGER) RETURN INTEGER IS
     BEGIN
   		p_param_in_out1 := p_param_in1 + 1;
       	p_param_out1 := p_param_in1 + 1;    
         RETURN p_param_in1 + 1;
     END;
 
-    FUNCTION duplicate_signature(p_param_in2 IN INTEGER, p_param_in_out2 IN OUT INTEGER, p_param_out2 OUT INTEGER) RETURN INTEGER IS
+    FUNCTION dup_signature(p_param_in2 IN INTEGER, p_param_in_out2 IN OUT INTEGER, p_param_out2 OUT INTEGER) RETURN INTEGER IS
     BEGIN
   		p_param_in_out2 := p_param_in2 + 2;
       	p_param_out2 := p_param_in2 + 2;    
         RETURN p_param_in2 + 2;
     END;
 
-    FUNCTION duplicate_signature(p_param_in3 IN INTEGER, p_param_in_out3 IN OUT INTEGER, p_param_out3 OUT INTEGER) RETURN INTEGER IS
+    FUNCTION dup_signature(p_param_in3 IN INTEGER, p_param_in_out3 IN OUT INTEGER, p_param_out3 OUT INTEGER) RETURN INTEGER IS
     BEGIN
   		p_param_in_out3 := p_param_in3 + 3;
-      	p_param_out3 := p_param_in3 + 3;    
+      	p_param_out3 := p_param_in3 + 3;   
         RETURN p_param_in3 + 3;    
-    END;   
+    END;       
+    
+    FUNCTION dup_signature_translated_str(p_param_in IN VARCHAR2, p_param_in_out IN OUT VARCHAR2, p_param_out OUT VARCHAR2) RETURN VARCHAR2 IS
+    BEGIN
+  		p_param_in_out := p_param_in;
+      	p_param_out := p_param_in;    
+        RETURN p_param_in;
+    END; 
+
+    FUNCTION dup_signature_translated_str(p_param_in IN NVARCHAR2, p_param_in_out IN OUT NVARCHAR2, p_param_out OUT NVARCHAR2) RETURN NVARCHAR2 IS
+    BEGIN
+  		p_param_in_out := p_param_in;
+      	p_param_out := p_param_in;    
+        RETURN p_param_in;   
+    END; 
+
+    FUNCTION dup_signature_translated_str(p_param_in IN CHAR, p_param_in_out IN OUT CHAR, p_param_out OUT CHAR) RETURN CHAR IS
+    BEGIN
+  		p_param_in_out := p_param_in;
+      	p_param_out := p_param_in;    
+        RETURN p_param_in;    
+    END; 
+
+    FUNCTION dup_signature_translated_str(p_param_in IN NCHAR, p_param_in_out IN OUT NCHAR, p_param_out OUT NCHAR) RETURN NCHAR IS
+    BEGIN
+  		p_param_in_out := p_param_in;
+      	p_param_out := p_param_in;    
+        RETURN p_param_in;    
+    END; 
+
+    FUNCTION dup_signature_translated_str(p_param_in IN CLOB, p_param_in_out IN OUT CLOB, p_param_out OUT CLOB) RETURN CLOB IS
+    BEGIN
+  		p_param_in_out := p_param_in;
+      	p_param_out := p_param_in;    
+        RETURN p_param_in;     
+    END; 
+
+    FUNCTION dup_signature_translated_str(p_param_in IN NCLOB, p_param_in_out IN OUT NCLOB, p_param_out OUT NCLOB) RETURN NCLOB IS
+    BEGIN
+  		p_param_in_out := p_param_in;
+      	p_param_out := p_param_in;    
+        RETURN p_param_in;     
+    END; 
+
+    FUNCTION dup_signature_translated_date(p_param_in IN DATE, p_param_in_out IN OUT DATE, p_param_out OUT DATE) RETURN DATE IS
+    BEGIN
+  		p_param_in_out := p_param_in;
+      	p_param_out := p_param_in;    
+        RETURN p_param_in;    
+    END; 
+
+    FUNCTION dup_signature_translated_date(p_param_in IN TIMESTAMP, p_param_in_out IN OUT TIMESTAMP, p_param_out OUT TIMESTAMP) RETURN TIMESTAMP IS
+    BEGIN
+  		p_param_in_out := p_param_in;
+      	p_param_out := p_param_in;    
+        RETURN p_param_in;  
+    END; 
+
+    FUNCTION dup_sig_translated_byte_arr(p_param_in IN LONG, p_param_in_out IN OUT LONG, p_param_out OUT LONG) RETURN LONG IS
+    BEGIN
+  		p_param_in_out := p_param_in;
+      	p_param_out := p_param_in;    
+        RETURN p_param_in;     
+    END; 
+
+    FUNCTION dup_sig_translated_byte_arr(p_param_in IN BFILE, p_param_in_out IN OUT BFILE, p_param_out OUT BFILE) RETURN BFILE IS
+    BEGIN
+  		p_param_in_out := p_param_in;
+      	p_param_out := p_param_in;    
+        RETURN p_param_in;     
+    END; 
+
+    FUNCTION dup_sig_translated_byte_arr(p_param_in IN BLOB, p_param_in_out IN OUT BLOB, p_param_out OUT BLOB) RETURN BLOB IS
+    BEGIN
+  		p_param_in_out := p_param_in;
+      	p_param_out := p_param_in;    
+        RETURN p_param_in;  
+    END; 
+
+    FUNCTION dup_sig_translated_byte_arr(p_param_in IN RAW, p_param_in_out IN OUT RAW, p_param_out OUT RAW) RETURN RAW IS
+    BEGIN
+  		p_param_in_out := p_param_in; 
+      	p_param_out := p_param_in;    
+        RETURN p_param_in;  
+    END; 
 
 	PROCEDURE proc_optional_param(p_in_number_required IN NUMBER, p_in_out_number_required IN OUT NUMBER, p_in_number_optional IN NUMBER DEFAULT 0, p_in_varchar2_optional IN VARCHAR2 DEFAULT 'TEST') IS
 	BEGIN
@@ -86,11 +170,43 @@ CREATE OR REPLACE PACKAGE BODY ODPT.odpt_pkg_main AS
 		RETURN;
 	END;
 
-	FUNCTION func_optional_param(p_in_number_required IN NUMBER, p_in_out_number_required IN OUT NUMBER, 
-		p_in_number_optional IN NUMBER DEFAULT 0, p_in_varchar2_optional IN VARCHAR2 DEFAULT 'TEST') RETURN NUMBER IS
+	PROCEDURE proc_optional_param_reversed(p_in_number_optional IN NUMBER DEFAULT 0, p_in_varchar2_optional IN VARCHAR2 DEFAULT 'TEST', p_in_number_required IN NUMBER, p_in_out_number_required IN OUT NUMBER) IS
+	BEGIN
+		p_in_out_number_required := p_in_number_required;
+		RETURN;
+	END;
+
+	FUNCTION func_optional_param(p_in_number_required IN NUMBER, p_in_out_number_required IN OUT NUMBER, p_in_number_optional IN NUMBER DEFAULT 0, p_in_varchar2_optional IN VARCHAR2 DEFAULT 'TEST') RETURN NUMBER IS
 	BEGIN
 		p_in_out_number_required := p_in_number_required;
 		RETURN p_in_out_number_required;
+	END;
+
+	FUNCTION func_optional_param_reversed(p_in_number_optional IN NUMBER DEFAULT 0, p_in_varchar2_optional IN VARCHAR2 DEFAULT 'TEST', p_in_number_required IN NUMBER, p_in_out_number_required IN OUT NUMBER) RETURN NUMBER IS
+	BEGIN
+		p_in_out_number_required := p_in_number_required;
+		RETURN p_in_out_number_required; 
+	END;
+
+   	FUNCTION func_anydata(p_in IN ANYDATA, p_in_out IN OUT ANYDATA, p_out OUT ANYDATA) RETURN ANYDATA IS
+	BEGIN
+		p_in_out := p_in;
+		p_out := p_in;
+		RETURN p_in;
+	END;
+
+   	FUNCTION func_anydataset(p_in IN ANYDATASET, p_in_out IN OUT ANYDATASET, p_out OUT ANYDATASET) RETURN ANYDATASET IS
+	BEGIN
+		p_in_out := p_in;
+		p_out := p_in;
+		RETURN p_in;
+	END;
+
+   	FUNCTION func_anytype(p_in IN ANYTYPE, p_in_out IN OUT ANYTYPE, p_out OUT ANYTYPE) RETURN ANYTYPE IS
+	BEGIN
+		p_in_out := p_in;
+		p_out := p_in;
+		RETURN p_in;
 	END;
 
 	FUNCTION func_integer(p_in IN INTEGER, p_in_out IN OUT INTEGER, p_out OUT INTEGER) RETURN INTEGER IS
@@ -423,17 +539,7 @@ CREATE OR REPLACE PACKAGE BODY ODPT.odpt_pkg_main AS
 	BEGIN
 		RETURN NULL;
 	END;
-    
-	FUNCTION func_cursor_ignore_ts_w_l_t_z RETURN t_cursor_ignore_ts_w_l_t_z IS
-	BEGIN
-		RETURN NULL;
-	END;
-    
-	FUNCTION func_cursor_ignore_ts_w_t_z RETURN t_cursor_ignore_ts_w_t_z IS
-	BEGIN
-		RETURN NULL; 
-	END;
-    
+  
 	FUNCTION func_cursor_ignore_raw RETURN t_cursor_ignore_raw IS
 	BEGIN
 		RETURN NULL;
@@ -754,6 +860,17 @@ CREATE OR REPLACE PACKAGE BODY ODPT.odpt_pkg_main AS
 		p_in_out := p_in;
 		p_out := p_in;
 		RETURN p_in;
+	END;
+
+   ---------------
+    FUNCTION func_aa_integer_in_cnt (p_in IN t_assocarray_integer) RETURN INTEGER IS
+    BEGIN 
+		RETURN p_in.COUNT;
+	END;
+
+    FUNCTION func_aa_varchar2_in_cnt (p_in IN t_assocarray_varchar2) RETURN INTEGER IS
+    BEGIN 
+		RETURN p_in.COUNT;
 	END;
 
    ---------------

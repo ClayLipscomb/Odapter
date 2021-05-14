@@ -13,7 +13,7 @@
 //    GNU General Public License for more details.
 //
 //    You should have received a copy of the GNU General Public License
-//    along with this program.If not, see<http://www.gnu.org/licenses/>.
+//    along with this program. If not, see<http://www.gnu.org/licenses/>.
 //------------------------------------------------------------------------------
 
 using System;
@@ -49,10 +49,11 @@ namespace Odapter {
         public string PreNormalizedValues { get; set; }
         public string Aggregated { get => OrclUtil.BuildAggregateType(this); }
         public string PlsType { get; set; }
+        public string Typecode { get; set; }
 
         // ITypedNameable specific
         public string DataTypeLabel { get => AttrName; }
-        public string DataTypeProperName { get => OrclUtil.IsExistsType(DataType) ? String.Empty : DataType; }
+        public string DataTypeProperName { get => OrclUtil.GetDataTypeProperName(this); }
         public string ContainerType { get => String.Empty; }
         public bool IsDefinedExternally { get => DataType.Equals(Orcl.OBJECT); }
         public string NamingHelpValue { get; }

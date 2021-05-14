@@ -39,12 +39,12 @@ CREATE TABLE ODPT.odpt_table_big (
 	col_timestamp						TIMESTAMP,
 	col_timestamp_prec0					TIMESTAMP(0),
 	col_timestamp_prec9					TIMESTAMP(9),
---	col_timestamp_t_z					TIMESTAMP WITH TIME ZONE,
---	col_timestamp_t_z_prec0				TIMESTAMP(0) WITH TIME ZONE,
---	col_timestamp_t_z_prec9				TIMESTAMP(9) WITH TIME ZONE,
---	col_timestamp_l_t_z					TIMESTAMP WITH TIME ZONE,
---	col_timestamp_l_t_z_prec0			TIMESTAMP(0) WITH TIME ZONE,
---	col_timestamp_l_t_z_prec9			TIMESTAMP(9) WITH TIME ZONE,
+	col_timestamp_t_z					TIMESTAMP WITH TIME ZONE,
+	col_timestamp_t_z_prec0				TIMESTAMP(0) WITH TIME ZONE,
+	col_timestamp_t_z_prec9				TIMESTAMP(9) WITH TIME ZONE,
+	col_timestamp_l_t_z					TIMESTAMP WITH LOCAL TIME ZONE,
+	col_timestamp_l_t_z_prec0			TIMESTAMP(0) WITH LOCAL TIME ZONE,
+	col_timestamp_l_t_z_prec9			TIMESTAMP(9) WITH LOCAL TIME ZONE,
 
 --	col_xmltype							XMLTYPE,
 --	col_mlslabel						MLSLABEL,
@@ -55,6 +55,18 @@ CREATE TABLE ODPT.odpt_table_big (
 	col_nclob							NCLOB,
 --	col_long							LONG,			-- deprecated by Oracle
 --	col_long_raw						LONG RAW,		-- deprecated by Oracle
+
+	-- C# keywords
+	abstract							VARCHAR2(4000),
+	base								VARCHAR2(4000),
+	void								VARCHAR2(4000),
+	class								VARCHAR2(4000),
+	namespace 							VARCHAR2(4000),
+	readonly 							VARCHAR2(4000),
+	partial  							VARCHAR2(4000),
+	const   							VARCHAR2(4000),
+	using   							VARCHAR2(4000),
+
 	col_last							VARCHAR2(4000)
 );
 

@@ -13,12 +13,14 @@
 //    GNU General Public License for more details.
 //
 //    You should have received a copy of the GNU General Public License
-//    along with this program.If not, see<http://www.gnu.org/licenses/>.
+//    along with this program. If not, see<http://www.gnu.org/licenses/>.
 //------------------------------------------------------------------------------
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using CS = Odapter.CSharp;
+using CSL = Odapter.CSharp.Logic.Api;
 
 namespace Odapter {
     /// <summary>
@@ -26,11 +28,12 @@ namespace Odapter {
     /// </summary>
     public static class TranslaterFactoryType {
 
+        private static int TypesInitializedCount;
         private static IList<ITranslaterType> OracleTypeTranslaters;
         private static void InitTypeTranslaters() {
             OracleTypeTranslaters = new List<ITranslaterType> { // *** Order of list matters. Modify with care. ***
                 // Keep these 10 specific cases at top of list in this order
-                new TranslaterInteger(CSharpTypeUsedForOracleInteger, IsConvertOracleNumberToIntegerIfColumnNameIsId),
+                new TranslaterInteger(TypeTargetForOracleInteger, IsConvertOracleNumberToIntegerIfColumnNameIsId),
                 new TranslaterNumber9(),
                 new TranslaterNumber8(),
                 new TranslaterNumber7(),
@@ -41,18 +44,21 @@ namespace Odapter {
                 new TranslaterNumber2(),
                 new TranslaterNumber1(),
 
+                new TranslaterAnydata(),
+                new TranslaterAnydataset(),
+                new TranslaterAnytype(),
                 new TranslaterBfile(),
                 new TranslaterBinaryDouble(),
                 new TranslaterBinaryFloat(),
                 new TranslaterBinaryInteger(),
-                new TranslaterBlob(CSharpTypeUsedForOracleBlob),
+                new TranslaterBlob(TypeTargetForOracleBlob),
                 new TranslaterBoolean(),
                 new TranslaterChar(),
-                new TranslaterClob(CSharpTypeUsedForOracleClob),
-                new TranslaterDate(CSharpTypeUsedForOracleDate),
+                new TranslaterClob(TypeTargetForOracleClob),
+                new TranslaterDate(TypeTargetForOracleDate),
                 new TranslaterDecimal(),
-                new TranslaterDoublePrecision(CSharpTypeUsedForOracleNumber),
-                new TranslaterFloat(CSharpTypeUsedForOracleNumber),
+                new TranslaterDoublePrecision(TypeTargetForOracleNumber),
+                new TranslaterFloat(TypeTargetForOracleNumber),
                 new TranslaterIntervalDayToSecond(),
                 new TranslaterIntervalYearToMonth(),
                 new TranslaterLong(),
@@ -60,57 +66,63 @@ namespace Odapter {
                 new TranslaterNatural(),
                 new TranslaterNaturaln(),
                 new TranslaterNchar(),
-                new TranslaterNclob(CSharpTypeUsedForOracleClob),
-                new TranslaterNvarchar2(),
-                new TranslaterNumber(CSharpTypeUsedForOracleNumber),
+                new TranslaterNclob(TypeTargetForOracleClob),
+                new TranslaterNumber(TypeTargetForOracleNumber),
                 new TranslaterNumeric(),
+                new TranslaterNvarchar2(),
                 new TranslaterPlsInteger(),
                 new TranslaterPlsqlBoolean(),
                 new TranslaterPositive(),
                 new TranslaterPositiven(),
                 new TranslaterRaw(),
+                new TranslaterReal(TypeTargetForOracleNumber),
                 new TranslaterRef(),
-                new TranslaterReal(CSharpTypeUsedForOracleNumber),
                 new TranslaterRowId(),
-                new TranslaterSmallint(CSharpTypeUsedForOracleInteger),
+                new TranslaterSmallint(TypeTargetForOracleInteger),
                 new TranslaterString(),
-                new TranslaterTimestamp(CSharpTypeUsedForOracleTimeStamp),
-                new TranslaterTimestampWithLocalTimeZone(),
-                new TranslaterTimestampWithTimeZone(),
+                new TranslaterTimestamp(TypeTargetForOracleTimestamp),
+                new TranslaterTimestampTZ(TypeTargetForOracleTimestampTZ),
+                new TranslaterTimestampLTZ(TypeTargetForOracleTimestampLTZ),
                 new TranslaterURowId(),
                 new TranslaterVarchar(),
                 new TranslaterVarchar2(),
-                new TranslaterNullType(),
-                new TranslaterXmltype()
+                new TranslaterXmltype(),
+
+                new TranslaterProcedureReturn()
             };
+            TypesInitializedCount = OracleTypeTranslaters.Count;
         }
 
         internal static void Initialize(IParameterTranslation param) {
-            CSharpTypeUsedForOracleRefCursor                = param.CSharpTypeUsedForOracleRefCursor;
-            CSharpTypeUsedForOracleAssociativeArray         = param.CSharpTypeUsedForOracleAssociativeArray;
-            CSharpTypeUsedForOracleInteger                  = param.CSharpTypeUsedForOracleInteger;
-            CSharpTypeUsedForOracleNumber                   = param.CSharpTypeUsedForOracleNumber;
-            IsConvertOracleNumberToIntegerIfColumnNameIsId  = param.IsConvertOracleNumberToIntegerIfColumnNameIsId;
-            CSharpTypeUsedForOracleDate                     = param.CSharpTypeUsedForOracleDate;
-            CSharpTypeUsedForOracleTimeStamp                = param.CSharpTypeUsedForOracleTimeStamp;
-            CSharpTypeUsedForOracleIntervalDayToSecond      = param.CSharpTypeUsedForOracleIntervalDayToSecond;
-            CSharpTypeUsedForOracleBlob                     = param.CSharpTypeUsedForOracleBlob;
-            CSharpTypeUsedForOracleClob                     = param.CSharpTypeUsedForOracleClob;
+            TypeTargetForOracleRefCursor                        = param.TypeTargetForOracleRefCursor;
+            TypeTargetForOracleAssociativeArray                 = param.TypeTargetForOracleAssociativeArray;
+            TypeTargetForOracleInteger                          = param.TypeTargetForOracleInteger;
+            TypeTargetForOracleNumber                           = param.TypeTargetForOracleNumber;
+            IsConvertOracleNumberToIntegerIfColumnNameIsId      = param.IsConvertOracleNumberToIntegerIfColumnNameIsId;
+            TypeTargetForOracleDate                             = param.TypeTargetForOracleDate;
+            TypeTargetForOracleTimestamp                        = param.TypeTargetForOracleTimestamp;
+            TypeTargetForOracleTimestampTZ                      = param.TypeTargetForOracleTimestampTZ;
+            TypeTargetForOracleTimestampLTZ                     = param.TypeTargetForOracleTimestampLTZ;
+            CSharpTypeUsedForOracleIntervalDayToSecond          = param.CSharpTypeUsedForOracleIntervalDayToSecond;
+            TypeTargetForOracleBlob                             = param.TypeTargetForOracleBlob;
+            TypeTargetForOracleClob                             = param.TypeTargetForOracleClob;
 
             InitTypeTranslaters();
         }
 
         #region Properties for Custom Type Translation
-        private static string CSharpTypeUsedForOracleRefCursor { get; set; }
-        private static string CSharpTypeUsedForOracleAssociativeArray { get; set; }
-        private static string CSharpTypeUsedForOracleInteger { get; set; }
-        private static string CSharpTypeUsedForOracleNumber { get; set; }
+        private static CS.TypeCollection TypeTargetForOracleRefCursor { get; set; }
+        private static CS.TypeCollection TypeTargetForOracleAssociativeArray { get; set; }
+        private static CS.TypeValue TypeTargetForOracleInteger { get; set; }
+        private static CS.TypeValue TypeTargetForOracleNumber { get; set; }
         private static bool IsConvertOracleNumberToIntegerIfColumnNameIsId;
-        private static string CSharpTypeUsedForOracleDate { get; set; }
-        private static string CSharpTypeUsedForOracleTimeStamp { get; set; }
+        private static CS.TypeValue TypeTargetForOracleDate { get; set; }
+        private static CS.TypeValue TypeTargetForOracleTimestamp { get; set; }
+        private static CS.TypeValue TypeTargetForOracleTimestampTZ { get; set; }
+        private static CS.TypeValue TypeTargetForOracleTimestampLTZ { get; set; }
         private static string CSharpTypeUsedForOracleIntervalDayToSecond { get; set; }
-        private static string CSharpTypeUsedForOracleBlob { get; set; }
-        private static string CSharpTypeUsedForOracleClob { get; set; }
+        private static CS.ITypeTargetable TypeTargetForOracleBlob { get; set; }
+        private static CS.TypeReference TypeTargetForOracleClob { get; set; }
         #endregion
 
         internal static ITranslaterType GetTranslater(ITyped dataType) {
@@ -120,15 +132,15 @@ namespace Odapter {
                 dataTypeFull = OracleTypeTranslaters.First(t => t.IsValid(dataType)).DataTypeFull;
             } else {
                 dataTypeFull = dataType.OrclType.BuildDataTypeFullName(dataType);
-                switch (dataType.DataType) { // dynamically create custom type translaters for complex types
+                switch (OrclUtil.NormalizeDataType(dataType)) { // dynamically create custom type translaters for complex types
                     case Orcl.ASSOCIATITVE_ARRAY:
-                        OracleTypeTranslaters.Add(new TranslaterAssociativeArray(dataTypeFull, CSharpTypeUsedForOracleAssociativeArray, dataType));
+                        OracleTypeTranslaters.Add(new TranslaterAssociativeArray(dataTypeFull, TypeTargetForOracleAssociativeArray, dataType));
                         break;
                     case Orcl.REF_CURSOR:
                         if (dataType.SubType == null)
-                            OracleTypeTranslaters.Add(new TranslaterRefCursorUntyped(dataTypeFull, CSharpTypeUsedForOracleRefCursor, dataType));
+                            OracleTypeTranslaters.Add(new TranslaterRefCursorUntyped(dataTypeFull, TypeTargetForOracleRefCursor, dataType));
                         else
-                            OracleTypeTranslaters.Add(new TranslaterRefCursorTyped(dataTypeFull, CSharpTypeUsedForOracleRefCursor, dataType));
+                            OracleTypeTranslaters.Add(new TranslaterRefCursorTyped(dataTypeFull, TypeTargetForOracleRefCursor, dataType));
                         break;
                     case Orcl.OBJECT:
                         OracleTypeTranslaters.Add(new TranslaterObjectType(dataTypeFull));
@@ -136,14 +148,17 @@ namespace Odapter {
                     case Orcl.RECORD:
                         OracleTypeTranslaters.Add(new TranslaterRecordType(dataTypeFull));
                         break;
+                    case Orcl.ROWTYPE:
+                        OracleTypeTranslaters.Add(new TranslaterRowtype(dataTypeFull));
+                        break;
                     case Orcl.NESTED_TABLE:
-                        OracleTypeTranslaters.Add(new TranslaterNestedTable(dataTypeFull, CSharpTypeUsedForOracleAssociativeArray, dataType));
+                        OracleTypeTranslaters.Add(new TranslaterNestedTable(dataTypeFull, TypeTargetForOracleAssociativeArray, dataType));
                         break;
                     case Orcl.VARRAY:
-                        OracleTypeTranslaters.Add(new TranslaterVarray(dataTypeFull, CSharpTypeUsedForOracleAssociativeArray, dataType));
+                        OracleTypeTranslaters.Add(new TranslaterVarray(dataTypeFull, TypeTargetForOracleAssociativeArray, dataType));
                         break;
                     default:
-                        OracleTypeTranslaters.Add(new TranslaterUndefinedType(dataTypeFull));
+                        OracleTypeTranslaters.Add(new TranslaterNoneType(dataTypeFull));
                         break;
                 }
             }
@@ -151,6 +166,8 @@ namespace Odapter {
             return OracleTypeTranslaters.First(t => t.DataTypeFull.Equals(dataTypeFull));
         }
 
-        internal static ITranslaterType GetTranslaterNull() { return OracleTypeTranslaters.First(t => t is TranslaterNullType); }
+        internal static ITranslaterType GetTranslaterProcedureReturn() { return OracleTypeTranslaters.First(t => t is TranslaterProcedureReturn); }
+        internal static long FactoryCountCustom { get => OracleTypeTranslaters.Count - TypesInitializedCount; }
+        internal static long FactoryCountStandard { get => TypesInitializedCount; }
     }
 }

@@ -70,10 +70,6 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Oracle.DataAccess, Version=2.122.1.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=AMD64">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>lib\Oracle.DataAccess.dll</HintPath>
-    </Reference>
     <Reference Include="Oracle.ManagedDataAccess, Version=4.122.1.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=MSIL">
       <HintPath>..\packages\Oracle.ManagedDataAccess.12.2.1100\lib\net40\Oracle.ManagedDataAccess.dll</HintPath>
     </Reference>
@@ -95,12 +91,19 @@
     <Compile Include="generated\OdptOdptBaseEntity.cs" />
     <Compile Include="generated\OdptOdptObjectType.cs" />
     <Compile Include="generated\OdptOdptPackage.cs" />
+    <Compile Include="generated\OdptOdptSafeBaseAdapter.cs" />
+    <Compile Include="generated\OdptOdptSafeBaseEntity.cs" />
+    <Compile Include="generated\OdptOdptSafeObject.cs" />
+    <Compile Include="generated\OdptOdptSafePackage.cs" />
+    <Compile Include="generated\OdptOdptSafeTable.cs" />
+    <Compile Include="generated\OdptOdptSafeView.cs" />
     <Compile Include="generated\OdptOdptTable.cs" />
     <Compile Include="generated\OdptOdptView.cs" />
     <Compile Include="generated\OdptPackage.cs" />
     <Compile Include="generated\OdptTable.cs" />
     <Compile Include="generated\OdptView.cs" />
     <Compile Include="generated\OrclPower.cs" />
+    <Compile Include="Util.cs" />
     <Compile Include="Tester.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -122,6 +125,8 @@
     <None Include="schema\package\odpt_pkg_sql.pkb" />
     <None Include="schema\package\odpt_pkg_sql.pks" />
     <None Include="schema\package\fltr_pkg_rec_used.pkb" />
+    <None Include="schema\package\odpt_pkg_table_cs_keyword.pks" />
+    <None Include="schema\package\odpt_pkg_table_cs_keyword.pkb" />
     <None Include="schema\package\odpt_pkg_table_big.pkb" />
     <None Include="schema\package\odpt_pkg_table_big.pks" />
     <None Include="schema\package\odpt_pkg_table_number.pkb" />
@@ -131,11 +136,14 @@
     <None Include="schema\package\xmpl_pkg_example.pks" />
     <None Include="schema\type\odpt_base_sc_trans_type_ot.tpb" />
     <None Include="schema\type\odpt_base_sc_trans_type_ot.tps" />
+    <None Include="schema\type\odpt_anydata_ot.tps" />
     <None Include="schema\type\odpt_big_ot.tps" />
+    <None Include="schema\type\odpt_object_ot.tps" />
     <None Include="schema\type\odpt_po_vendor_ot.tpb" />
     <None Include="schema\type\odpt_po_vendor_ot.tps" />
     <None Include="schema\type\odpt_sc_tt_tbl_unique_ot.tpb" />
     <None Include="schema\type\odpt_sc_tt_tbl_unique_ot.tps" />
+    <None Include="schema\type\odpt_xmltype_ot.tps" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">
@@ -153,10 +161,15 @@
     <Content Include="lib\Oracle.DataAccess.dll" />
     <Content Include="schema\create schema.sql" />
     <Content Include="schema\misc\odpt_sequences.sql" />
+    <Content Include="schema\table\odpt_table_cs_keyword.sql" />
+    <Content Include="schema\table\odpt_table_naming_conflict.sql" />
+    <Content Include="schema\table\odpt_table_ignore_any.sql" />
     <Content Include="schema\table\odpt_table_big.sql" />
     <Content Include="schema\table\odpt_table_logs.sql" />
     <Content Include="schema\table\odpt_table_number.sql" />
     <Content Include="schema\table\odpt_table_object.sql" />
+    <None Include="schema\type\odpt_nested_table_ot.tps" />
+    <Content Include="schema\type\odpt_varchar2_nt.sql" />
     <Content Include="schema\view\odpt_view_big.sql" />
     <Content Include="Test Instructions.txt" />
   </ItemGroup>

@@ -16,7 +16,17 @@
 //    along with this program. If not, see<http://www.gnu.org/licenses/>.
 //------------------------------------------------------------------------------
 
+using System;
+using CS = Odapter.CSharp;
+
 namespace Odapter {
+    /// <summary>
+    /// Translates a speciic Oracle type to a C# type.
+    /// Oracle types explicitly not implemented in ODP.NET managed: 
+    /// ARRAY (Varray, Nested Table), BOOLEAN, OBJECT, REF, XML_TYPE
+    /// https://docs.oracle.com/database/121/ODPNT/OracleDbTypeEnumerationType.htm#ODPNT2286
+    /// VARRAY, NESTED_TABLE, PLSQL_BOOLEAN, BOOLEAN, OBJECT_TYPE, REF, XMLTYPE,
+    /// </summary>
     internal interface ITranslaterType  {
         /// <summary>
         /// The fully qualified effective data type that is unique to instance of any translater.
@@ -29,10 +39,11 @@ namespace Odapter {
         IOrclType OrclType { get; }
 
         // translation to C#
-        string GetCSharpType(bool typeNotNullable = false, bool nonInterfaceType = false);
+        CS.ITypeTargetable CSharpType { get; }
+        CS.ITypeTargetable CSharpSubType { get; }
         bool IsValid(ITyped dataType);
-        string CSharpOracleDbType { get; }
-        string CSharpOdpNetType { get; }
+        CS.OdpNetOracleDbTypeEnum CSharpOracleDbTypeEnum { get; }
+        CS.ITypeTargetable CSharpOdpNetSafeType { get; }
         /// <summary>
         /// Should type be ignored during translation as a procedure parameter
         /// </summary>
@@ -42,16 +53,18 @@ namespace Odapter {
         /// </summary>
         string IgnoredReasonAsParameter { get; }
         /// <summary>
-        /// Should type be ignored during translation as an entity attribute
+        /// Should type be ignored as package record field?
+        /// </summary>
+        /// <param name="reasonMsg"></param>
+        /// <returns></returns>
+        (bool isIgnored, string reasonMsg) IsIgnoredAsRecordField();
+        /// <summary>
+        /// Should type be ignored during translation as an non-record entity attribute
         /// </summary>
         bool IsIgnoredAsAttribute { get; }
         /// <summary>
-        /// Reason if ignored during translation as an entity attribute
+        /// Reason if ignored during translation as an non-record entity attribute
         /// </summary>
         string IgnoredReasonAsAttribute { get; }
     }
-
-    // types explicitly not implemented in ODP.NET managed: ARRAY (Varray, Nested Table), BOOLEAN, OBJECT, REF, XML_TYPE
-    // https://docs.oracle.com/database/121/ODPNT/OracleDbTypeEnumerationType.htm#ODPNT2286
-    // VARRAY, NESTED_TABLE, PLSQL_BOOLEAN, BOOLEAN, OBJECT_TYPE, REF, XMLTYPE,
 }

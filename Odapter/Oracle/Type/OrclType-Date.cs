@@ -41,15 +41,15 @@ namespace Odapter {
         public OrclTimestamp() : base(new NormalizableTimestamp()) { }
     }
 
-    internal sealed class OrclTimestampWithLocalTimeZone : OrclTypeBase, IOrclType {
+    internal sealed class OrclTimestampLTZ : OrclTypeBase, IOrclType {
         public string DataType { get => Orcl.TIMESTAMP_WITH_LOCAL_TIME_ZONE; }
         public bool IsImplementedForAssociativeArray { get => false; }
-        public OrclTimestampWithLocalTimeZone() : base(new NormalizableTimestamp()) { }
+        public OrclTimestampLTZ() : base(new NormalizableTimestamp()) { }
     }
 
-    internal sealed class OrclTimestampWithTimeZone : OrclTypeBase, IOrclType {
+    internal sealed class OrclTimestampTZ : OrclTypeBase, IOrclType {
         public string DataType { get => Orcl.TIMESTAMP_WITH_TIME_ZONE; }
         public bool IsImplementedForAssociativeArray { get => false; }
-        public OrclTimestampWithTimeZone() : base(new NormalizableTimestamp()) { }
+        public OrclTimestampTZ() : base(new NormalizableTimestamp()) { }
     }
 }

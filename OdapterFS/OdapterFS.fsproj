@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net462</TargetFramework> 
+
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Extension.fs" />
+    <Compile Include="Util.fs" />
+    <Compile Include="WrappedString.fs" />
+    <Compile Include="Casing.fs" />
+    <Compile Include="OracleLiteral.fs" />
+    <Compile Include="OracleDomain.fs" />
+    <Compile Include="OracleLogic.fs" />
+    <Compile Include="CSharpLiteral.fs" />
+    <Compile Include="CSharpCoder.fs" />
+    <Compile Include="CSharpDomain.fs" />
+    <Compile Include="CSharpLogic.fs" />
+    <Compile Include="Translate.fs" />
+    <Compile Include="CSharpTest.fs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Update="FSharp.Core" Version="5.0.1" />
+    <PackageReference Update="System.ValueTuple" Version="4.5.0" />
+  </ItemGroup>
+</Project>

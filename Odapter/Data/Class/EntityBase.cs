@@ -13,7 +13,7 @@
 //    GNU General Public License for more details.
 //
 //    You should have received a copy of the GNU General Public License
-//    along with this program.If not, see<http://www.gnu.org/licenses/>.
+//    along with this program. If not, see<http://www.gnu.org/licenses/>.
 //------------------------------------------------------------------------------
 
 using System;
@@ -31,12 +31,21 @@ namespace Odapter {
         /// <param name="reasonMsg"></param>
         /// <returns></returns>
         public bool IsIgnoredDueToOracleTypes(out string reasonMsg) {
-            reasonMsg = "";
-            IEntityAttribute attr = this.Attributes.Find(a => a.Translater.IsIgnoredAsAttribute);
-            if (attr != null) {
-                reasonMsg = attr.Translater.IgnoredReasonAsAttribute;
-                return true;
+            if (this is PackageRecord) {
+                var attr = this.Attributes.Find(a => a.Translater.IsIgnoredAsRecordField().isIgnored);
+                if (attr != null) {
+                    reasonMsg = attr.Translater.IsIgnoredAsRecordField().reasonMsg;
+                    return true;
+                }
+            } else {
+                var attr = this.Attributes.Find(a => a.Translater.IsIgnoredAsAttribute);
+                if (attr != null) {
+                    reasonMsg = attr.Translater.IgnoredReasonAsAttribute;
+                    return true;
+                }
             }
+
+            reasonMsg = String.Empty;
             return false;
         }
     }

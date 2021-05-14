@@ -21,17 +21,18 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 
-namespace Odapter {
+namespace Odapter.Obsolete {
     public enum CSharpVersion { ThreeZero, FourZero }
 
     /// <summary>
     /// C# specific types and logic
     /// </summary>
+    [Obsolete]
     internal sealed class CSharp {
         #region C# Types
         public const string SBYTE = "SByte";
         public const string BYTE = "Byte";
-        public const string SBYTE_ARRAY = SBYTE + ARRAY_BRACKETS;
+        //public const string SBYTE_ARRAY = SBYTE + ARRAY_BRACKETS;
         public const string BYTE_ARRAY = BYTE + ARRAY_BRACKETS;
         public const string INT16 = "Int16";            // short
         public const string UINT16 = "UInt16";          // unsigned short
@@ -49,20 +50,16 @@ namespace Odapter {
         public const string FLOAT = "float";
         public const string DECIMAL = "Decimal";
         public const string STRING = "String";
-        public const string LIST_OF_STRING = LIST + "<" + STRING + ">";
+        //public const string LIST_OF_STRING = LIST + "<" + STRING + ">";
         public const string BOOLEAN = "Boolean";
         public const string OBJECT_TYPE = "Object";
         public const string XML_DOCUMENT = "XmlDocument";
         public const string DATATABLE = "DataTable";
-        private const string OF_T = "<T>";
         private const string INTERFACE_PREFIX = "I";
-        private const string LIST = "List";
-        private const string ILIST = INTERFACE_PREFIX + LIST;
+        internal const string LIST = "List";
+        internal const string ILIST = INTERFACE_PREFIX + LIST;
         private const string COLLECTION = "Collection";
-        private const string ICOLLECTION = INTERFACE_PREFIX + COLLECTION;
-        public const string LIST_OF_T = LIST + OF_T;
-        public const string ILIST_OF_T = ILIST + OF_T;
-        public const string ICOLLECTION_OF_T = ICOLLECTION + OF_T;
+        internal const string ICOLLECTION = INTERFACE_PREFIX + COLLECTION;
         public static readonly List<string> GENERIC_COLLECTION_BASE_TYPES = new List<string>() { LIST, ILIST, ICOLLECTION };  // implemented to date
         public const string VOID = "void";
         public const string GENERIC_TYPE_PREFIX = "T_";
@@ -74,8 +71,8 @@ namespace Odapter {
         public const string ODP_NET_SAFE_TYPE_DECIMAL       = ODP_NET_TYPE_PREFIX + "Decimal";
         public const string ODP_NET_SAFE_TYPE_DATE          = ODP_NET_TYPE_PREFIX + "Date";
         public const string ODP_NET_SAFE_TYPE_TIMESTAMP     = ODP_NET_TYPE_PREFIX + "TimeStamp";
-        public const string ODP_NET_SAFE_TYPE_TIMESTAMP_LTZ = ODP_NET_TYPE_PREFIX + "TimeStampLTZ";
         public const string ODP_NET_SAFE_TYPE_TMESTAMP_TZ   = ODP_NET_TYPE_PREFIX + "TimeStampTZ";
+        public const string ODP_NET_SAFE_TYPE_TIMESTAMP_LTZ = ODP_NET_TYPE_PREFIX + "TimeStampLTZ";
         public const string ODP_NET_SAFE_TYPE_INTERVAL_DS   = ODP_NET_TYPE_PREFIX + "IntervalDS";
         public const string ODP_NET_SAFE_TYPE_INTERVAL_YM   = ODP_NET_TYPE_PREFIX + "IntervalYM";
         public const string ODP_NET_SAFE_TYPE_STRING        = ODP_NET_TYPE_PREFIX + "String";
@@ -138,7 +135,7 @@ namespace Odapter {
         private const string ORACLEDBTYPE_INT32 = ORACLEDBTYPE + INT32;
         private const string ORACLEDBTYPE_INT64 = ORACLEDBTYPE + INT64;
         private const string ORACLEDBTYPE_DECIMAL = ORACLEDBTYPE + DECIMAL;
-        private const string ORACLEDBTYPE_DOUBLE = ORACLEDBTYPE + DOUBLE;
+        //private const string ORACLEDBTYPE_DOUBLE = ORACLEDBTYPE + DOUBLE;
         public const string ORACLEDBTYPE_DATE = ORACLEDBTYPE + "Date";
         public const string ORACLEDBTYPE_TIMESTAMP = ORACLEDBTYPE + "TimeStamp";
         public const string ORACLEDBTYPE_TIMESTAMP_TZ = ORACLEDBTYPE + "TimeStampTZ";
@@ -163,11 +160,6 @@ namespace Odapter {
         public const string ORACLEDBTYPE_INTERVAL_DAY_TO_SECOND = ORACLEDBTYPE + "IntervalDS";
         public const string ORACLEDBTYPE_INTERVAL_YEAR_TO_MONTH = ORACLEDBTYPE + "IntervalYM";
         #endregion
-
-        #region using
-        //public const string USING_ORACLE_DATAACCESS_CLIENT = USING + " " + "Oracle.ManagedDataAccess.Client";
-        //public const string USING_ORACLE_DATAACCESS_TYPES = USING + " " + "Oracle.ManagedDataAccess.Types";
-        #endregion 
 
         #region Keywords
         private enum Keyword {
@@ -214,9 +206,7 @@ namespace Odapter {
         /// </summary>
         /// <param name="word"></param>
         /// <returns></returns>
-        internal static bool IsKeyword(string word) {
-            return Enum.IsDefined(typeof(Keyword), word.ToUpper());
-        }
+        internal static bool IsKeyword(string word) => Enum.IsDefined(typeof(Keyword), word.ToUpper());
 
         /// <summary>
         /// Accepts generic collection type and returns its sub type
@@ -225,7 +215,6 @@ namespace Odapter {
         /// <param name="excludeNullableSymbol">Whether to exclude nullable symbol from returned subtype</param>
         /// <returns></returns>
         internal static string ExtractSubtypeFromGenericCollectionType(string genCollType, bool excludeNullableSymbol) {
-            if (!IsValidGenericCollectionType(genCollType)) return "InvalidTypeSentToExtractSubtypeFromGenericCollectionType:" + genCollType;
             string subType = genCollType.Substring(genCollType.IndexOf('<') + 1, genCollType.Length - genCollType.IndexOf('<') - 2);
             return (excludeNullableSymbol ? subType.TrimEnd(NULLABLE_SUFFIX.ToCharArray()) : subType);
         }
@@ -246,59 +235,16 @@ namespace Odapter {
         /// <param name="genCollectionBaseType">Base type of generic collection</param>
         /// <param name="subType">Subtype; the T type</param>
         /// <returns></returns>
-        internal static string GenericCollectionOf(string genCollectionBaseType, string subType) {
-            return genCollectionBaseType.Replace(OF_T, "") + "<" + subType + ">";
-        }
-
-        /// <summary>
-        /// For a valid interface name, return equivalent class name
-        /// </summary>
-        /// <param name="interfaceName"></param>
-        /// <returns></returns>
-        internal static string DeInterface(string interfaceName) {
-            if (!String.IsNullOrWhiteSpace(interfaceName) && interfaceName.StartsWith(INTERFACE_PREFIX) && interfaceName.Substring(0, 2).All(char.IsUpper)) {
-                return interfaceName.TrimStart(INTERFACE_PREFIX.ToCharArray());
-            } else {
-                return interfaceName;   // not an interface, return argument as-is
-            }
-        }
-
-        internal static string ToInterface(string className) {
-            if (String.IsNullOrWhiteSpace(className)) {
-                return className;
-            } else {
-                return INTERFACE_PREFIX + className;
-            }
-        }
+        internal static string GenericCollectionOf(string genCollectionBaseType, string subType) => $"{genCollectionBaseType}<{subType}>";
+        internal static string ToInterface(string className) => (String.IsNullOrWhiteSpace(className) ? String.Empty : INTERFACE_PREFIX) + className;
 
         /// <summary>
         /// Is C# type an ODP.NET type?
         /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>
-        internal static bool IsOdpNetType(string type) {
-            return !String.IsNullOrEmpty(type) && type.StartsWith(ODP_NET_TYPE_PREFIX);
-        }
-
-        internal static string AsNullable(string cSharpType) {
-            return cSharpType.Trim() + (StructTypes.Contains(cSharpType) ? NULLABLE_SUFFIX  : String.Empty);
-        }
-
-        /// <summary>
-        /// Is a C# type nullable
-        /// </summary>
-        /// <param name="type"></param>
-        /// <returns></returns>
-        internal static bool IsTypeNullable(string type) {
-            if (String.IsNullOrEmpty(type)) return false;
-
-            return type.EndsWith(NULLABLE_SUFFIX)
-                || type.Equals(STRING)
-                || type.Equals(DATATABLE)
-                || type.StartsWith(LIST)
-                || type.StartsWith(ILIST)
-                || type.StartsWith(ICOLLECTION);
-        }
+        internal static bool IsOdpNetType(string type) => !String.IsNullOrEmpty(type) && type.StartsWith(ODP_NET_TYPE_PREFIX);
+        internal static string AsNullable(string cSharpType) => cSharpType.Trim() + (StructTypes.Contains(cSharpType) ? NULLABLE_SUFFIX : String.Empty);
+        internal static string AsNonNullable(string cSharpType) => cSharpType.TrimEnd(NULLABLE_SUFFIX.ToCharArray());
     }
 }
-

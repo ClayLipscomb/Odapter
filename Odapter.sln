@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27130.2020
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Odapter", "Odapter\Odapter.csproj", "{AE981FB3-E1F7-48E2-8EC4-4BB8AF29293F}"
 EndProject
@@ -15,6 +15,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example", "Example\Example.csproj", "{FDE9C786-B020-4814-96AC-CE5B080F22BA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OdapterWnFrm", "OdapterWnFrm\OdapterWnFrm.csproj", "{49C03924-B453-43B4-9776-9B36B9A06047}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "OdapterFS", "OdapterFS\OdapterFS.fsproj", "{1FB7E445-E788-4FB6-BBF2-C88126F646AD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -72,6 +74,18 @@ Global
 		{49C03924-B453-43B4-9776-9B36B9A06047}.Release|x64.Build.0 = Release|x64
 		{49C03924-B453-43B4-9776-9B36B9A06047}.Release|x86.ActiveCfg = Release|Any CPU
 		{49C03924-B453-43B4-9776-9B36B9A06047}.Release|x86.Build.0 = Release|Any CPU
+		{1FB7E445-E788-4FB6-BBF2-C88126F646AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1FB7E445-E788-4FB6-BBF2-C88126F646AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1FB7E445-E788-4FB6-BBF2-C88126F646AD}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{1FB7E445-E788-4FB6-BBF2-C88126F646AD}.Debug|x64.Build.0 = Debug|Any CPU
+		{1FB7E445-E788-4FB6-BBF2-C88126F646AD}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{1FB7E445-E788-4FB6-BBF2-C88126F646AD}.Debug|x86.Build.0 = Debug|Any CPU
+		{1FB7E445-E788-4FB6-BBF2-C88126F646AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1FB7E445-E788-4FB6-BBF2-C88126F646AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1FB7E445-E788-4FB6-BBF2-C88126F646AD}.Release|x64.ActiveCfg = Release|Any CPU
+		{1FB7E445-E788-4FB6-BBF2-C88126F646AD}.Release|x64.Build.0 = Release|Any CPU
+		{1FB7E445-E788-4FB6-BBF2-C88126F646AD}.Release|x86.ActiveCfg = Release|Any CPU
+		{1FB7E445-E788-4FB6-BBF2-C88126F646AD}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

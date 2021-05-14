@@ -17,18 +17,21 @@
 //------------------------------------------------------------------------------
 
 using System;
+using Odapter.CSharp;
+using CSL = Odapter.CSharp.Logic.Api;
+using Trns = Odapter.Translation.Api;
 
 namespace Odapter {
     internal sealed class TranslaterUndefinedEntity : ITranslaterEntity {
         public string DataTypeFull { get; private set; }
         public IOrclType OrclType { get => OrclUtil.GetType(Orcl.UNDEFINED); }
 
-        internal TranslaterUndefinedEntity(string dataType) {
-            DataTypeFull = dataType;
+        internal TranslaterUndefinedEntity(string dataTypeFull) {
+            DataTypeFull = dataTypeFull;
+            CSharpClassName = Trns.ClassNameOfOracleIdentifier(dataTypeFull);
         }
-
-        public string CSharpAccessModifier { get => String.Empty; }
-        public string CSharpName { get => String.Empty; }
+        public ClassName CSharpClassName { get; private set; }
+        public AccessModifier CSharpAccessModifier { get => AccessModifier.PUBLIC; }
         public string CSharpType { get => String.Empty; }
 
         public override string ToString() { return DataTypeFull; }

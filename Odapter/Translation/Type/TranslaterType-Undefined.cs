@@ -17,25 +17,31 @@
 //------------------------------------------------------------------------------
 
 using System;
+using CS = Odapter.CSharp;
+using CSL = Odapter.CSharp.Logic.Api;
+using Trns = Odapter.Translation.Api;
 
 namespace Odapter {
+    [Obsolete]
     internal sealed class TranslaterUndefinedType : ITranslaterType {
         public string DataTypeFull { get; private set; }
         public IOrclType OrclType { get => OrclUtil.GetType(Orcl.UNDEFINED); }
-
         // translation to C#
-        public string GetCSharpType(bool typeNotNullable = false, bool nonInterfaceType = false) { return CSharpType; }
-        private string CSharpType { get => String.Empty; }
+        public CS.ITypeTargetable CSharpType { get; private set; }
+        public CS.ITypeTargetable CSharpSubType { get => CSL.TypeNone; }
         public bool IsValid(ITyped dataType) { return dataType.OrclType.BuildDataTypeFullName(dataType).Equals(DataTypeFull); }
-        public string CSharpOracleDbType { get => String.Empty; }
-        public string CSharpOdpNetType { get => String.Empty; }
+        public CS.OdpNetOracleDbTypeEnum CSharpOracleDbTypeEnum { get => CS.OdpNetOracleDbTypeEnum.Byte; } // undefined
+        public CS.ITypeTargetable CSharpOdpNetSafeType { get => CSL.TypeNone; }
         public bool IsIgnoredAsParameter { get => true; }
-        public string IgnoredReasonAsParameter { get => TranslaterMessage.IgnoreNotImplemented(OrclType); }
+        public string IgnoredReasonAsParameter { get => TranslaterMessage.IgnoreNotAvailableOdpNetMananged(OrclType); }
+        public (bool isIgnored, string reasonMsg) IsIgnoredAsRecordField() => (true, TranslaterMessage.IgnoreNotAvailableOdpNetMananged(OrclType));
         public bool IsIgnoredAsAttribute { get => true; }
-        public string IgnoredReasonAsAttribute { get => TranslaterMessage.IgnoreNotImplemented(OrclType); }
-
+        public string IgnoredReasonAsAttribute { get => TranslaterMessage.IgnoreNotAvailableOdpNetMananged(OrclType); }
         internal TranslaterUndefinedType(string dataTypeFull) {
             DataTypeFull = dataTypeFull;
+            CSharpType = Trns.ClassNameOfOracleIdentifier(dataTypeFull);
+        }
+        private TranslaterUndefinedType() { 
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\Costura.Fody.3.1.4\build\Costura.Fody.props" Condition="Exists('..\packages\Costura.Fody.3.1.4\build\Costura.Fody.props')" />
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Costura.Fody.4.1.0\build\Costura.Fody.props" Condition="Exists('..\packages\Costura.Fody.4.1.0\build\Costura.Fody.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
@@ -11,7 +11,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Odapter</RootNamespace>
     <AssemblyName>OdapterCore</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
@@ -34,7 +34,7 @@
     </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
-    <PlatformTarget>x86</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -42,6 +42,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -51,6 +52,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <DebugSymbols>true</DebugSymbols>
@@ -60,6 +62,7 @@
     <PlatformTarget>x64</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <OutputPath>bin\x64\Release\</OutputPath>
@@ -69,16 +72,23 @@
     <PlatformTarget>x64</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Costura, Version=4.1.0.0, Culture=neutral, PublicKeyToken=9919ef960d84173d, processorArchitecture=MSIL">
+      <HintPath>..\packages\Costura.Fody.4.1.0\lib\net40\Costura.dll</HintPath>
+    </Reference>
     <Reference Include="Oracle.ManagedDataAccess, Version=4.122.1.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=MSIL">
       <HintPath>..\packages\Oracle.ManagedDataAccess.12.2.1100\lib\net40\Oracle.ManagedDataAccess.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net461\System.ValueTuple.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -129,10 +139,13 @@
     <Compile Include="Data\Class\Procedure.cs" />
     <Compile Include="Data\Class\Table.cs" />
     <Compile Include="Data\Class\View.cs" />
+    <Compile Include="Oracle\Type\OrclType-Any.cs" />
     <Compile Include="Oracle\Type\OrclType-Boolean.cs" />
     <Compile Include="Oracle\Type\OrclType-LOB.cs" />
     <Compile Include="Oracle\Entity\OrclEntity-Table.cs" />
+    <Compile Include="Oracle\Type\OrclType-ProcedureReturn.cs" />
     <Compile Include="Oracle\Type\OrclType-Null.cs" />
+    <Compile Include="Oracle\Type\OrclType-Rowtype.cs" />
     <Compile Include="Oracle\Type\OrclType-XML.cs" />
     <Compile Include="Oracle\Type\OrclType-Undefined.cs" />
     <Compile Include="Oracle\Type\OrclType-RowId.cs" />
@@ -158,9 +171,11 @@
     <Compile Include="Translation\TranslaterName.cs" />
     <Compile Include="Translation\TranslaterMessage.cs" />
     <Compile Include="Oracle\Type\OrclType-Record.cs" />
+    <Compile Include="Translation\Type\TranslaterType-Any.cs" />
     <Compile Include="Translation\Type\TranslaterType-Numeric.cs" />
     <Compile Include="Translation\Type\TranslaterType-Collection.cs" />
     <Compile Include="Translation\Type\TranslaterType-Boolean.cs" />
+    <Compile Include="Translation\Type\TranslaterType-Rowtype.cs" />
     <Compile Include="Translation\Type\TranslaterType-Record.cs" />
     <Compile Include="Translation\Type\TranslaterType-Object.cs" />
     <Compile Include="Translation\Type\TranslaterType-Date.cs" />
@@ -169,7 +184,8 @@
     <Compile Include="Translation\Type\TranslaterType-Character.cs" />
     <Compile Include="Translation\Type\TranslaterType-RowId.cs" />
     <Compile Include="Translation\Type\TranslaterType-Ref.cs" />
-    <Compile Include="Translation\Type\TranslaterType-NullType.cs" />
+    <Compile Include="Translation\Type\TranslaterType-ProcedureReturn.cs" />
+    <Compile Include="Translation\Type\TranslaterType-None.cs" />
     <Compile Include="Translation\Type\TranslaterType-Undefined.cs" />
     <Compile Include="Translation\Type\TranslaterType-XML.cs" />
     <Compile Include="Oracle\Orcl.cs" />
@@ -223,18 +239,21 @@
     <Content Include="Dapper\License.txt" />
     <Content Include="FodyWeavers.xml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\OdapterFS\OdapterFS.fsproj">
+      <Project>{1fb7e445-e788-4fb6-bbf2-c88126f646ad}</Project>
+      <Name>OdapterFS</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\packages\Costura.Fody.3.1.4\build\Costura.Fody.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Costura.Fody.3.1.4\build\Costura.Fody.props'))" />
-    <Error Condition="!Exists('..\packages\Costura.Fody.3.1.4\build\Costura.Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Costura.Fody.3.1.4\build\Costura.Fody.targets'))" />
-    <Error Condition="!Exists('..\packages\Fody.3.2.9\build\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Fody.3.2.9\build\Fody.targets'))" />
+    <Error Condition="!Exists('..\packages\Fody.6.3.0\build\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Fody.6.3.0\build\Fody.targets'))" />
+    <Error Condition="!Exists('..\packages\Costura.Fody.4.1.0\build\Costura.Fody.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Costura.Fody.4.1.0\build\Costura.Fody.props'))" />
   </Target>
-  <Import Project="..\packages\Costura.Fody.3.1.4\build\Costura.Fody.targets" Condition="Exists('..\packages\Costura.Fody.3.1.4\build\Costura.Fody.targets')" />
-  <Import Project="..\packages\Fody.3.2.9\build\Fody.targets" Condition="Exists('..\packages\Fody.3.2.9\build\Fody.targets')" />
+  <Import Project="..\packages\Fody.6.3.0\build\Fody.targets" Condition="Exists('..\packages\Fody.6.3.0\build\Fody.targets')" />
   <!--Import Project="$(ProgramFiles)\MSBuild\StyleCop\v4.7\StyleCop.targets" /> -->
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -25,8 +25,8 @@ namespace Odapter {
     /// </summary>
     public static class TranslaterFactoryEntity {
 
-        private static IList<ITranslaterEntity> OracleEntityTranslaters;
-        private static void InitEntityTranslaters() { OracleEntityTranslaters = new List<ITranslaterEntity>(); }
+        private static ISet<ITranslaterEntity> OracleEntityTranslaters;
+        private static void InitEntityTranslaters() { OracleEntityTranslaters = new HashSet<ITranslaterEntity>(); }
         internal static void Initialize() { InitEntityTranslaters(); }
 
         internal static ITranslaterEntity GetTranslater(IEntity entity) {
@@ -54,5 +54,6 @@ namespace Odapter {
 
             return OracleEntityTranslaters.SingleOrDefault(t => t.DataTypeFull.Equals(dataTypeFull));
         }
+        internal static long FactoryCountCustom { get => OracleEntityTranslaters.Count; }
     }
 }

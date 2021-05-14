@@ -29,16 +29,33 @@ CREATE OR REPLACE PACKAGE BODY ODPT.odpt_pkg_table_big AS
 								p_col_timestamp IN odpt_table_big.col_timestamp%TYPE,
 								p_col_timestamp_prec0 IN odpt_table_big.col_timestamp_prec0%TYPE,								
 								p_col_timestamp_prec9 IN odpt_table_big.col_timestamp_prec9%TYPE,
+                                p_col_timestamp_t_z					IN odpt_table_big.col_timestamp_t_z%TYPE,
+                                p_col_timestamp_t_z_prec0			IN odpt_table_big.col_timestamp_t_z_prec0%TYPE,
+                                p_col_timestamp_t_z_prec9			IN odpt_table_big.col_timestamp_t_z_prec9%TYPE,
+                                p_col_timestamp_l_t_z				IN odpt_table_big.col_timestamp_l_t_z%TYPE,
+                                p_col_timestamp_l_t_z_prec0			IN odpt_table_big.col_timestamp_l_t_z_prec0%TYPE,
+                                p_col_timestamp_l_t_z_prec9			IN odpt_table_big.col_timestamp_l_t_z_prec9%TYPE,
 								
 								p_col_blob IN odpt_table_big.col_blob%TYPE,
 								p_col_clob IN odpt_table_big.col_clob%TYPE,
-								p_col_nclob IN odpt_table_big.col_nclob%TYPE
+								p_col_nclob IN odpt_table_big.col_nclob%TYPE,
+                                
+                    			-- C# keywords
+                                abstract							IN odpt_table_big.abstract%TYPE,
+                                base								IN odpt_table_big.base%TYPE,
+                                void								IN odpt_table_big.void%TYPE,
+                                class								IN odpt_table_big.class%TYPE,
+                                namespace 							IN odpt_table_big.namespace%TYPE,
+                                readonly 							IN odpt_table_big.readonly%TYPE,
+                                partial  							IN odpt_table_big.partial%TYPE,
+                                const   							IN odpt_table_big.const%TYPE,
+                                using   							IN odpt_table_big.using%TYPE                             
 								) RETURN INTEGER IS
       l_id			INTEGER;
    BEGIN
-      -- get primary key   
+      -- get primary key    
       SELECT odpt_big_s.NEXTVAL INTO l_id FROM dual;
-      
+ 
       INSERT INTO odpt_table_big (id,
 					col_number_id,
 					col_integer,
@@ -66,9 +83,26 @@ CREATE OR REPLACE PACKAGE BODY ODPT.odpt_pkg_table_big AS
 					col_timestamp,
 					col_timestamp_prec0,
 					col_timestamp_prec9,
+                    col_timestamp_t_z,
+                    col_timestamp_t_z_prec0,
+                    col_timestamp_t_z_prec9,
+                    col_timestamp_l_t_z,
+                    col_timestamp_l_t_z_prec0,
+                    col_timestamp_l_t_z_prec9,
 					col_blob,
 					col_clob,
 					col_nclob,
+                    
+                    abstract,
+                    base,
+	                void,
+    				class,
+					namespace,
+					readonly,
+					partial,
+					const,
+                    using,
+                    
 					col_last)
       VALUES (	l_id,
 					p_col_number_id,
@@ -97,9 +131,26 @@ CREATE OR REPLACE PACKAGE BODY ODPT.odpt_pkg_table_big AS
 					p_col_timestamp,
 					p_col_timestamp_prec0,
 					p_col_timestamp_prec9,
+                    p_col_timestamp_t_z,
+                    p_col_timestamp_t_z_prec0,
+                    p_col_timestamp_t_z_prec9,
+                    p_col_timestamp_l_t_z,
+                    p_col_timestamp_l_t_z_prec0,
+                    p_col_timestamp_l_t_z_prec9,
 					p_col_blob,
 					p_col_clob,
 					p_col_nclob,
+                    
+                    abstract,
+                    base,
+	                void,
+    				class,
+					namespace,
+					readonly,
+					partial,
+					const,
+                    using,
+                    
 					NULL);
 
 		RETURN l_id;
@@ -134,12 +185,28 @@ CREATE OR REPLACE PACKAGE BODY ODPT.odpt_pkg_table_big AS
 					p_row.col_timestamp,
 					p_row.col_timestamp_prec0,
 					p_row.col_timestamp_prec9,
+                    p_row.col_timestamp_t_z,
+                    p_row.col_timestamp_t_z_prec0,
+                    p_row.col_timestamp_t_z_prec9,
+                    p_row.col_timestamp_l_t_z,
+                    p_row.col_timestamp_l_t_z_prec0,
+                    p_row.col_timestamp_l_t_z_prec9,
 					p_row.col_blob,
 					p_row.col_clob,
-					p_row.col_nclob
+					p_row.col_nclob,
+                    
+                    p_row.abstract,
+                    p_row.base,
+	                p_row.void,
+    				p_row.class,
+					p_row.namespace,
+					p_row.readonly,
+					p_row.partial,
+					p_row.const,
+                    p_row.using
 		);		
 	END;
-	
+
 	PROCEDURE delete_row(p_id IN odpt_table_big.id%TYPE) IS 
 	BEGIN
 		DELETE 
@@ -152,7 +219,7 @@ CREATE OR REPLACE PACKAGE BODY ODPT.odpt_pkg_table_big AS
 		EXECUTE IMMEDIATE 'TRUNCATE TABLE odpt_table_big';
 		odpt_pkg_log.insert_log_info ('odpt_pkg_table_big.trunc_table', 'End of function', 'ODPT', NULL);
    END;
-   
+
 	PROCEDURE proc_typed_cursor_in(p_ref_cursor IN t_ref_cursor_table_big) IS
 	BEGIN
 		NULL;
@@ -182,7 +249,7 @@ CREATE OR REPLACE PACKAGE BODY ODPT.odpt_pkg_table_big AS
 		SELECT *
 		FROM  odpt_table_big
 		ORDER BY id;    
-	
+
 		OPEN p_ref_cursor FOR
 		SELECT *
 		FROM  odpt_table_big
@@ -192,10 +259,10 @@ CREATE OR REPLACE PACKAGE BODY ODPT.odpt_pkg_table_big AS
 		SELECT *
 		FROM  odpt_table_big
 		ORDER BY id;    
-		
+
 		RETURN l_cursor;
 	END;	
-	
+
 	FUNCTION get_rows_untyped_fltr_unused(p_ref_cursor OUT fltr_pkg_rec_unused.t_ref_cursor, p_ref_cursor2 OUT fltr_pkg_rec_unused.t_ref_cursor) RETURN fltr_pkg_rec_unused.t_ref_cursor IS
 		l_cursor	fltr_pkg_rec_unused.t_ref_cursor;
 	BEGIN
@@ -203,7 +270,7 @@ CREATE OR REPLACE PACKAGE BODY ODPT.odpt_pkg_table_big AS
 		SELECT *
 		FROM  odpt_table_big
 		ORDER BY id;    
-	
+
 		OPEN p_ref_cursor FOR
 		SELECT *
 		FROM  odpt_table_big
@@ -213,7 +280,7 @@ CREATE OR REPLACE PACKAGE BODY ODPT.odpt_pkg_table_big AS
 		SELECT *
 		FROM  odpt_table_big
 		ORDER BY id;    
-		
+
 		RETURN l_cursor;
 	END;		
 
@@ -224,7 +291,7 @@ CREATE OR REPLACE PACKAGE BODY ODPT.odpt_pkg_table_big AS
 		SELECT *
 		FROM  odpt_table_big
 		ORDER BY id;    
-	
+
 		OPEN p_ref_cursor FOR
 		SELECT *
 		FROM  odpt_table_big
@@ -234,10 +301,10 @@ CREATE OR REPLACE PACKAGE BODY ODPT.odpt_pkg_table_big AS
 		SELECT *
 		FROM  odpt_table_big
 		ORDER BY id;    
-		
+
 		RETURN l_cursor;
 	END;	
-	
+
 	FUNCTION get_rows_untyped_fltr_used(p_ref_cursor OUT fltr_pkg_rec_used.t_ref_cursor, p_ref_cursor2 OUT fltr_pkg_rec_used.t_ref_cursor) RETURN fltr_pkg_rec_used.t_ref_cursor IS
 		l_cursor	fltr_pkg_rec_used.t_ref_cursor;
 	BEGIN
@@ -245,7 +312,7 @@ CREATE OR REPLACE PACKAGE BODY ODPT.odpt_pkg_table_big AS
 		SELECT *
 		FROM  odpt_table_big
 		ORDER BY id;    
-	
+
 		OPEN p_ref_cursor FOR
 		SELECT *
 		FROM  odpt_table_big
@@ -255,13 +322,18 @@ CREATE OR REPLACE PACKAGE BODY ODPT.odpt_pkg_table_big AS
 		SELECT *
 		FROM  odpt_table_big
 		ORDER BY id;    
-		
+
 		RETURN l_cursor;
 	END;	
 
-
 	----------------
 	-- typed cursors
+	FUNCTION get_rows_typed_table_row_type RETURN t_ref_cursor_table_row_type IS
+		l_cursor	t_ref_cursor_table_row_type;
+    BEGIN
+        RETURN l_cursor;
+    END;
+    
 	FUNCTION get_rows_typed_ret RETURN t_ref_cursor_table_big IS
 		l_cursor	t_ref_cursor_table_big;
 	BEGIN
@@ -269,7 +341,7 @@ CREATE OR REPLACE PACKAGE BODY ODPT.odpt_pkg_table_big AS
 		SELECT *
 		FROM  odpt_table_big
 		ORDER BY id;    
-	
+
 		RETURN l_cursor;
 	END;	
 
@@ -279,7 +351,7 @@ CREATE OR REPLACE PACKAGE BODY ODPT.odpt_pkg_table_big AS
 		SELECT *
 		FROM  odpt_table_big
 		ORDER BY id;    
-		
+
 		RETURN 0;
 	END;	
 
@@ -310,7 +382,7 @@ CREATE OR REPLACE PACKAGE BODY ODPT.odpt_pkg_table_big AS
 		SELECT id, col_varchar_min, col_varchar_max, col_varchar2_min, col_varchar2_max, col_nvarchar2_min, col_nvarchar2_max, col_char_min, col_char_max, col_nchar_min, col_nchar_max, col_last		
 		FROM  odpt_table_big
 		ORDER BY id;    
-		
+
 		RETURN 0;
 	END;
 
@@ -331,10 +403,10 @@ CREATE OR REPLACE PACKAGE BODY ODPT.odpt_pkg_table_big AS
 		SELECT id, col_varchar_min, col_varchar_max, col_varchar2_min, col_varchar2_max, col_nvarchar2_min, col_nvarchar2_max, col_char_min, col_char_max, col_nchar_min, col_nchar_max, col_last		
 		FROM  odpt_table_big
 		ORDER BY id;    
-		
+
 		RETURN l_cursor;
 	END;		
-	
+
 	------------------
 	-- untyped cursors
 	FUNCTION get_rows_untyped_ret RETURN t_ref_cursor IS
@@ -344,17 +416,17 @@ CREATE OR REPLACE PACKAGE BODY ODPT.odpt_pkg_table_big AS
 		SELECT *
 		FROM  odpt_table_big
 		ORDER BY id;    
-		
+
 		RETURN l_cursor;
 	END;	
-   
+
 	FUNCTION get_rows_untyped_out(p_ref_cursor OUT t_ref_cursor) RETURN INTEGER IS
 	BEGIN
 		OPEN p_ref_cursor FOR
 		SELECT *
 		FROM  odpt_table_big
 		ORDER BY id;    
-		
+
 		RETURN 0;
 	END;	
 
@@ -365,12 +437,12 @@ CREATE OR REPLACE PACKAGE BODY ODPT.odpt_pkg_table_big AS
 		SELECT *
 		FROM  odpt_table_big
 		ORDER BY id;    
-	
+
 		OPEN p_ref_cursor FOR
 		SELECT *
 		FROM  odpt_table_big
 		ORDER BY id;    
-		
+
 		RETURN l_cursor;
 	END;		
 
@@ -385,10 +457,10 @@ CREATE OR REPLACE PACKAGE BODY ODPT.odpt_pkg_table_big AS
 		SELECT id, col_varchar_min, col_varchar_max, col_varchar2_min, col_varchar2_max, col_nvarchar2_min, col_nvarchar2_max, col_char_min, col_char_max, col_nchar_min, col_nchar_max, col_last		
 		FROM  odpt_table_big
 		ORDER BY id;    
-		
+
 		RETURN 0;
 	END;
-	
+
 	FUNCTION get_rows_untyped_out2_ret(p_ref_cursor OUT t_ref_cursor, p_ref_cursor2 OUT t_ref_cursor) RETURN t_ref_cursor IS
 		l_cursor	t_ref_cursor;
 	BEGIN
@@ -406,7 +478,7 @@ CREATE OR REPLACE PACKAGE BODY ODPT.odpt_pkg_table_big AS
 		SELECT id, col_varchar_min, col_varchar_max, col_varchar2_min, col_varchar2_max, col_nvarchar2_min, col_nvarchar2_max, col_char_min, col_char_max, col_nchar_min, col_nchar_max, col_last		
 		FROM  odpt_table_big
 		ORDER BY id;    
-		
+
 		RETURN l_cursor;
 	END;		
 END odpt_pkg_table_big;

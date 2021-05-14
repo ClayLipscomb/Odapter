@@ -20,7 +20,6 @@ using System.Collections.Generic;
 
 namespace Odapter {
     public interface IParameterDatabase {
-        string OracleHome { get; set; }
         string DatabaseInstance { get; set; }
         string Schema { get; set; }
         string Filter { get; set; }

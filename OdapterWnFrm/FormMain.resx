@@ -120,21 +120,26 @@
   <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
-  <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
-  <data name="cbDuplicatePackageRecordOriginatingOutsideFilterAndSchema.ToolTip" xml:space="preserve">
+  <data name="lblDuplicatePackageRecordOriginatingOutsideFilterAndSchema.ToolTip" xml:space="preserve">
     <value>Package record types may be defined by referencing another package's record. If the 
 referenced package lies outside the Filter Prefix, the generated package record code 
 will not compile unless that referenced package is generated separately. This can lead 
 to an unending cycle of uncompiled references. Simply generating a "duplicate" record 
 defintion in the package eliminates this possible issue.</value>
   </data>
+  <data name="lblGeneratedDynamicMethodForTypedCursor.ToolTip" xml:space="preserve">
+    <value>An additional method overload that uses mapping to a cursor will be generated when the underlying procedure's cursors 
+are all typed. This overload can be advantageous when migrating a legacy application to generated code since its DTOs 
+can preserve their public property names. Otherwise, only a standard (non-mapping) method is generated. Regardless, a 
+mapping driven method is always generated for a procedure that has an untyped cursor. 
+
+</value>
+  </data>
   <data name="cbGeneratedDynamicMethodForTypedCursor.ToolTip" xml:space="preserve">
     <value>An additional method overload that uses mapping to a cursor will be generated when the underlying procedure's cursors 
-are all strongly typed. This overload can be advantageous when migrating a legacy application to generated code since its DTOs 
-can preserve their public property names. Otherwise, only a standard non-mapping method is generated. Regardless, a 
-mapping driven method is always generated for a procedure that has a weakly typed cursor. </value>
+are all typed. This overload can be advantageous when migrating a legacy application to generated code since its DTOs 
+can preserve their public property names. Otherwise, only a standard (non-mapping) method is generated. Regardless, a 
+mapping driven method is always generated for a procedure that has an untyped cursor. </value>
   </data>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>25</value>

@@ -1,0 +1,1 @@
+﻿CREATE OR REPLACE TYPE odpt_varchar2_nt AS TABLE OF VARCHAR2(30);
