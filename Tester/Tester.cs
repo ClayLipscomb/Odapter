@@ -66,7 +66,7 @@ using Schema.Odpt.Type.Object;
 using Schema.Odpt.View;
 #endif
 
-namespace Odapter.Tester {
+namespace Odapter.Tester.NET4 {
     class Program {
         static void Main(string[] args) {
             Tester test = new Tester();
@@ -1801,12 +1801,261 @@ namespace Odapter.Tester {
 #endregion
         }
 
-#region DTOs
-        
+#region DTOs        
 #region Table Big
-        public class TTableBig : OdptPkgTableBig.TTableBig { }
+        public class TTableBig : OdptPkgTableBig.ITTableBig {
+            public
+#if SAFETYPE_INTEGER
+                            OracleDecimal?
+#elif DECIMAL_INTEGER
+                            Decimal?
+#elif SHORT_INTEGER
+                            Int32?
+#else
+                            Int64?
+#endif
+                Id { get; set; }
+            public
+#if SAFETYPE_INTEGER
+                            OracleDecimal?
+#elif DECIMAL_INTEGER
+                            Decimal?
+#elif SHORT_INTEGER
+                            Int32?
+#else
+                            Int64?
+#endif
+                ColNumberId { get; set; }
+            public
+#if SAFETYPE_INTEGER
+                            OracleDecimal?
+#elif DECIMAL_INTEGER
+                            Decimal?
+#elif SHORT_INTEGER
+                            Int32?
+#else
+                            Int64?
+#endif
+                ColInteger { get; set; }
+            public
+#if SAFETYPE_INTEGER
+                            OracleDecimal?
+#elif DECIMAL_INTEGER
+                            Decimal?
+#elif SHORT_INTEGER
+                            Int32?
+#else
+                            Int64?
+#endif
+                ColInt { get; set; }
+            public
+#if SAFETYPE_INTEGER
+                            OracleDecimal?
+#elif DECIMAL_INTEGER
+                            Decimal?
+#elif SHORT_INTEGER
+                            Int32?
+#else
+                            Int64?
+#endif
+                ColSmallint { get; set; }
+            public
+#if SAFETYPE_INTEGER
+                            OracleDecimal?
+#elif DECIMAL_INTEGER
+                            Decimal?
+#elif SHORT_INTEGER
+                            Int32?
+#else
+                            Int64?
+#endif
+                ColNumeric { get; set; }
+            public
+#if SAFETYPE_INTEGER
+                            OracleDecimal?
+#elif DECIMAL_INTEGER
+                            Decimal?
+#elif SHORT_INTEGER
+                            Int32?
+#else
+                            Int64?
+#endif
+                ColDecimal { get; set; }
+            public
+#if SAFETYPE_NUMBER
+                            OracleDecimal?
+#else
+                            Decimal?
+#endif
+                ColNumber { get; set; }
+            public
+#if SAFETYPE_NUMBER
+                            OracleDecimal?
+#else
+                            Decimal?
+#endif
+                ColDoublePrecision { get; set; }
+            public
+#if SAFETYPE_NUMBER
+                            OracleDecimal?
+#else
+                            Decimal?
+#endif
+                ColFloat { get; set; }
+            public
+#if SAFETYPE_NUMBER
+                            OracleDecimal?
+#else
+                            Decimal?
+#endif
+                ColReal { get; set; }
+            public Single? ColBinaryFloat { get; set; }
+            public Double? ColBinaryDouble { get; set; }
+            public String ColVarcharMin { get; set; }
+            public String ColVarcharMax { get; set; }
+            public String ColVarchar2Min { get; set; }
+            public String ColVarchar2Max { get; set; }
+            public String ColNvarchar2Min { get; set; }
+            public String ColNvarchar2Max { get; set; }
+            public String ColCharMin { get; set; }
+            public String ColCharMax { get; set; }
+            public String ColNcharMin { get; set; }
+            public String ColNcharMax { get; set; }
+            public
+#if SAFETYPE_DATE
+                            OracleDate?
+#elif DATE_TIME
+                            DateTime?
+#else
+                            DateTimeOffset?
+#endif
+                ColDate { get; set; }
+            public
+#if SAFETYPE_TIMESTAMP
+                            OracleTimeStamp?
+#elif DATE_TIME
+                            DateTime?
+#else
+                            DateTimeOffset?
+#endif
+                ColTimestamp { get; set; }
+            public
+#if SAFETYPE_TIMESTAMP
+                            OracleTimeStamp?
+#elif DATE_TIME
+                            DateTime?
+#else
+                            DateTimeOffset?
+#endif
+                ColTimestampPrec0 { get; set; }
+            public
+#if SAFETYPE_TIMESTAMP
+                            OracleTimeStamp?
+#elif DATE_TIME
+                            DateTime?
+#else
+                            DateTimeOffset?
+#endif
+                ColTimestampPrec9 { get; set; }
+            public
+#if SAFETYPE_TIMESTAMP_TZ
+                            OracleTimeStampTZ?
+#else
+                            DateTimeOffset?
+#endif
+                ColTimestampTZ { get; set; }
+            public
+#if SAFETYPE_TIMESTAMP_TZ
+                            OracleTimeStampTZ?
+#else
+                            DateTimeOffset?
+#endif
+                ColTimestampTZPrec0 { get; set; }
+            public
+#if SAFETYPE_TIMESTAMP_TZ
+                            OracleTimeStampTZ?
+#else
+                            DateTimeOffset?
+#endif
+                ColTimestampTZPrec9 { get; set; }
+            public
+#if SAFETYPE_TIMESTAMP_LTZ
+                            OracleTimeStampLTZ?
+#else
+                            DateTime?
+#endif
+                ColTimestampLTZ { get; set; }
+            public
+#if SAFETYPE_TIMESTAMP_LTZ
+                            OracleTimeStampLTZ?
+#else
+                            DateTime?
+#endif
+                ColTimestampLTZPrec0 { get; set; }
+            public
+#if SAFETYPE_TIMESTAMP_LTZ
+                            OracleTimeStampLTZ?
+#else
+                            DateTime?
+#endif
+                ColTimestampLTZPrec9 { get; set; }
+            public
+#if SAFETYPE_BLOB
+                            OracleBlob
+#else
+                            Byte[]
+#endif
+                ColBlob { get; set; }
+            public
+#if SAFETYPE_CLOB
+                            OracleClob
+#else
+                            String
+#endif
+                ColClob { get; set; }
+            public
+#if SAFETYPE_CLOB
+                            OracleClob
+#else
+                            String
+#endif
+                ColNclob { get; set; }
+            public String Abstract { get; set; }
+            public String Base { get; set; }
+            public String Void { get; set; }
+            public String Class { get; set; }
+            public String Namespace { get; set; }
+            public String Readonly { get; set; }
+            public String Partial { get; set; }
+            public String Const { get; set; }
+            public String Using { get; set; }
+            public String ColLast { get; set; }
+        } // TTableBig
 
-        public class TTableBigChar : OdptPkgTableBig.TTableBigChar { }
+        public class TTableBigChar : OdptPkgTableBig.ITTableBigChar {
+            public
+#if SAFETYPE_INTEGER
+                            OracleDecimal?
+#elif DECIMAL_INTEGER
+                            Decimal?
+#elif SHORT_INTEGER
+                            Int32?
+#else
+                            Int64?
+#endif
+                Id { get; set; }
+            public String ColVarcharMin { get; set; }
+            public String ColVarcharMax { get; set; }
+            public String ColVarchar2Min { get; set; }
+            public String ColVarchar2Max { get; set; }
+            public String ColNvarchar2Min { get; set; }
+            public String ColNvarchar2Max { get; set; }
+            public String ColCharMin { get; set; }
+            public String ColCharMax { get; set; }
+            public String ColNcharMin { get; set; }
+            public String ColNcharMax { get; set; }
+            public String ColLast { get; set; }
+        } // TTableBigChar
 
         public class TTableBigMapByPositionAll : OdptPkgTableBig.ITTableBig {
             [HydratorMapAttribute(Position = 0)]
@@ -2104,7 +2353,7 @@ namespace Odapter.Tester {
 
             [HydratorMapAttribute(Position = 45)]
             public virtual String ColLast { get; set; }
-        } // TTableBig
+        } // TTableBigMapByPositionAll
 
         public class TTableBigMapByPositionPartial : TTableBigMapByPositionAll {
             public override String ColLast { get; set; }
@@ -2145,24 +2394,579 @@ namespace Odapter.Tester {
             public virtual String ColNcharMax { get; set; }
             [HydratorMapAttribute(Position = 11)]
             public virtual String ColLast { get; set; }
-        } // TTableBig
+        } // TTableBigCharMapByPositionAll
 
         public class TTableBigCharMapByPositionPartial : TTableBigCharMapByPositionAll {
             public override String ColLast { get; set; }
         }
-#endregion
-#region Table Big filtered
+        #endregion
+        #region Table Big filtered
 #if ODPT_FILTER_PREFIX
-        public class FilteredPkgTTableBigFiltered : OdptPkgTableBig.FltrPkgRecUsedTTableBigFltUsed { }
+        public class FilteredPkgTTableBigFiltered : OdptPkgTableBig.IFltrPkgRecUsedTTableBigFltUsed {
+            public
+#if SAFETYPE_INTEGER
+                            OracleDecimal?
+#elif DECIMAL_INTEGER
+                            Decimal?
+#elif SHORT_INTEGER
+                            Int32?
 #else
-        public class TTableBigFiltered : FltrPkgRecUsed.TTableBigFltUsed { }
+                            Int64?
 #endif
-#endregion
-#region Table Number
-        public class TTableNumber : OdptPkgTableNumber.TTableNumber { }
+                Id { get; set; }
+            public
+#if SAFETYPE_INTEGER
+                            OracleDecimal?
+#elif DECIMAL_INTEGER
+                            Decimal?
+#elif SHORT_INTEGER
+                            Int32?
+#else
+                            Int64?
+#endif
+                ColNumberId { get; set; }
+            public
+#if SAFETYPE_INTEGER
+                            OracleDecimal?
+#elif DECIMAL_INTEGER
+                            Decimal?
+#elif SHORT_INTEGER
+                            Int32?
+#else
+                            Int64?
+#endif
+                ColInteger { get; set; }
+            public
+#if SAFETYPE_INTEGER
+                            OracleDecimal?
+#elif DECIMAL_INTEGER
+                            Decimal?
+#elif SHORT_INTEGER
+                            Int32?
+#else
+                            Int64?
+#endif
+                ColInt { get; set; }
+            public
+#if SAFETYPE_INTEGER
+                            OracleDecimal?
+#elif DECIMAL_INTEGER
+                            Decimal?
+#elif SHORT_INTEGER
+                            Int32?
+#else
+                            Int64?
+#endif
+                ColSmallint { get; set; }
+            public
+#if SAFETYPE_INTEGER
+                            OracleDecimal?
+#elif DECIMAL_INTEGER
+                            Decimal?
+#elif SHORT_INTEGER
+                            Int32?
+#else
+                            Int64?
+#endif
+                ColNumeric { get; set; }
+            public
+#if SAFETYPE_INTEGER
+                            OracleDecimal?
+#elif DECIMAL_INTEGER
+                            Decimal?
+#elif SHORT_INTEGER
+                            Int32?
+#else
+                            Int64?
+#endif
+                ColDecimal { get; set; }
+            public
+#if SAFETYPE_NUMBER
+                            OracleDecimal?
+#else
+                            Decimal?
+#endif
+                ColNumber { get; set; }
+            public
+#if SAFETYPE_NUMBER
+                            OracleDecimal?
+#else
+                            Decimal?
+#endif
+                ColDoublePrecision { get; set; }
+            public
+#if SAFETYPE_NUMBER
+                            OracleDecimal?
+#else
+                            Decimal?
+#endif
+                ColFloat { get; set; }
+            public
+#if SAFETYPE_NUMBER
+                            OracleDecimal?
+#else
+                            Decimal?
+#endif
+                ColReal { get; set; }
+            public 
+                Single? 
+                ColBinaryFloat { get; set; }
+            public 
+                Double? 
+                ColBinaryDouble { get; set; }
+            public String ColVarcharMin { get; set; }
+            public String ColVarcharMax { get; set; }
+            public String ColVarchar2Min { get; set; }
+            public String ColVarchar2Max { get; set; }
+            public String ColNvarchar2Min { get; set; }
+            public String ColNvarchar2Max { get; set; }
+            public String ColCharMin { get; set; }
+            public String ColCharMax { get; set; }
+            public String ColNcharMin { get; set; }
+            public String ColNcharMax { get; set; }
+            public
+#if SAFETYPE_DATE
+                            OracleDate?
+#elif DATE_TIME
+                            DateTime?
+#else
+                            DateTimeOffset?
+#endif
+                ColDate { get; set; }
+            public
+#if SAFETYPE_TIMESTAMP
+                            OracleTimeStamp?
+#elif DATE_TIME
+                            DateTime?
+#else
+                            DateTimeOffset?
+#endif
+                ColTimestamp { get; set; }
+            public
+#if SAFETYPE_TIMESTAMP
+                            OracleTimeStamp?
+#elif DATE_TIME
+                            DateTime?
+#else
+                            DateTimeOffset?
+#endif
+                ColTimestampPrec0 { get; set; }
+            public
+#if SAFETYPE_TIMESTAMP
+                            OracleTimeStamp?
+#elif DATE_TIME
+                            DateTime?
+#else
+                            DateTimeOffset?
+#endif
+                ColTimestampPrec9 { get; set; }
+            public
+#if SAFETYPE_TIMESTAMP_TZ
+                            OracleTimeStampTZ?
+#else
+                            DateTimeOffset?
+#endif
+                ColTimestampTZ { get; set; }
+            public
+#if SAFETYPE_TIMESTAMP_TZ
+                            OracleTimeStampTZ?
+#else
+                            DateTimeOffset?
+#endif
+                ColTimestampTZPrec0 { get; set; }
+            public
+#if SAFETYPE_TIMESTAMP_TZ
+                            OracleTimeStampTZ?
+#else
+                            DateTimeOffset?
+#endif
+                ColTimestampTZPrec9 { get; set; }
+            public
+#if SAFETYPE_TIMESTAMP_LTZ
+                            OracleTimeStampLTZ?
+#else
+                            DateTime?
+#endif
+                ColTimestampLTZ { get; set; }
+            public
+#if SAFETYPE_TIMESTAMP_LTZ
+                            OracleTimeStampLTZ?
+#else
+                            DateTime?
+#endif
+                ColTimestampLTZPrec0 { get; set; }
+            public
+#if SAFETYPE_TIMESTAMP_LTZ
+                            OracleTimeStampLTZ?
+#else
+                            DateTime?
+#endif
+                ColTimestampLTZPrec9 { get; set; }
+            public
+#if SAFETYPE_BLOB
+                            OracleBlob
+#else
+                            Byte[]
+#endif
+                ColBlob { get; set; }
+            public
+#if SAFETYPE_CLOB
+                            OracleClob
+#else
+                            String
+#endif
+                ColClob { get; set; }
+            public
+#if SAFETYPE_CLOB
+                            OracleClob
+#else
+                            String
+#endif
+                ColNclob { get; set; }
+            public String Abstract { get; set; }
+            public String Base { get; set; }
+            public String Void { get; set; }
+            public String Class { get; set; }
+            public String Namespace { get; set; }
+            public String Readonly { get; set; }
+            public String Partial { get; set; }
+            public String Const { get; set; }
+            public String Using { get; set; }
+            public String ColLast { get; set; }
+        } // FilteredPkgTTableBigFiltered
+#else
+        public class TTableBigFiltered : FltrPkgRecUsed.ITTableBigFltUsed {
+            public Int64? Id { get; set; }
+            public Int64? ColNumberId { get; set; }
+            public Int64? ColInteger { get; set; }
+            public Int64? ColInt { get; set; }
+            public Int64? ColSmallint { get; set; }
+            public Int64? ColNumeric { get; set; }
+            public Int64? ColDecimal { get; set; }
+            public Decimal? ColNumber { get; set; }
+            public Decimal? ColDoublePrecision { get; set; }
+            public Decimal? ColFloat { get; set; }
+            public Decimal? ColReal { get; set; }
+            public Single? ColBinaryFloat { get; set; }
+            public Double? ColBinaryDouble { get; set; }
+            public String ColVarcharMin { get; set; }
+            public String ColVarcharMax { get; set; }
+            public String ColVarchar2Min { get; set; }
+            public String ColVarchar2Max { get; set; }
+            public String ColNvarchar2Min { get; set; }
+            public String ColNvarchar2Max { get; set; }
+            public String ColCharMin { get; set; }
+            public String ColCharMax { get; set; }
+            public String ColNcharMin { get; set; }
+            public String ColNcharMax { get; set; }
+            public DateTime? ColDate { get; set; }
+            public DateTime? ColTimestamp { get; set; }
+            public DateTime? ColTimestampPrec0 { get; set; }
+            public DateTime? ColTimestampPrec9 { get; set; }
+            public DateTimeOffset? ColTimestampTZ { get; set; }
+            public DateTimeOffset? ColTimestampTZPrec0 { get; set; }
+            public DateTimeOffset? ColTimestampTZPrec9 { get; set; }
+            public DateTime? ColTimestampLTZ { get; set; }
+            public DateTime? ColTimestampLTZPrec0 { get; set; }
+            public DateTime? ColTimestampLTZPrec9 { get; set; }
+            public Byte[] ColBlob { get; set; }
+            public String ColClob { get; set; }
+            public String ColNclob { get; set; }
+            public String Abstract { get; set; }
+            public String Base { get; set; }
+            public String Void { get; set; }
+            public String Class { get; set; }
+            public String Namespace { get; set; }
+            public String Readonly { get; set; }
+            public String Partial { get; set; }
+            public String Const { get; set; }
+            public String Using { get; set; }
+            public String ColLast { get; set; }
+        } // TTableBigFiltered
+#endif
+        #endregion
+        #region Table Number
+        public class TTableNumber : OdptPkgTableNumber.ITTableNumber {
+            public
+#if SAFETYPE_INTEGER
+                            OracleDecimal?
+#elif DECIMAL_INTEGER
+                            Decimal?
+#elif SHORT_INTEGER
+                            Int32?
+#else
+                            Int64?
+#endif
+                Id { get; set; }
+            public
+#if SAFETYPE_NUMBER
+                            OracleDecimal?
+#else
+                            Decimal?
+#endif
+                ColNumber { get; set; }
+            public 
+                SByte? 
+                ColNumber1 { get; set; }
+            public 
+                SByte? 
+                ColNumber2 { get; set; }
+            public 
+                Int16? 
+                ColNumber3 { get; set; }
+            public 
+                Int16? 
+                ColNumber4 { get; set; }
+            public 
+                Int32? 
+                ColNumber5 { get; set; }
+            public 
+                Int32? 
+                ColNumber6 { get; set; }
+            public 
+                Int32? 
+                ColNumber7 { get; set; }
+            public 
+                Int32? 
+                ColNumber8 { get; set; }
+            public 
+                Int32? 
+                ColNumber9 { get; set; }
+            public
+#if SAFETYPE_INTEGER
+                            OracleDecimal?
+#elif DECIMAL_INTEGER
+                            Decimal?
+#elif SHORT_INTEGER
+                            Int32?
+#else
+                            Int64?
+#endif
+                ColNumber10 { get; set; }
+            public
+#if SAFETYPE_INTEGER
+                            OracleDecimal?
+#elif DECIMAL_INTEGER
+                            Decimal?
+#elif SHORT_INTEGER
+                            Int32?
+#else
+                            Int64?
+#endif
+                ColNumber18 { get; set; }
+            public
+#if SAFETYPE_INTEGER
+                            OracleDecimal?
+#elif DECIMAL_INTEGER
+                            Decimal?
+#elif SHORT_INTEGER
+                            Int32?
+#else
+                            Int64?
+#endif
+                ColNumber19 { get; set; }
+            public
+#if SAFETYPE_INTEGER
+                            OracleDecimal?
+#elif DECIMAL_INTEGER
+                            Decimal?
+#elif SHORT_INTEGER
+                            Int32?
+#else
+                            Int64?
+#endif
+                ColNumber38 { get; set; }
+            public 
+                SByte? 
+                ColNumber1Scale0 { get; set; }
+            public 
+                SByte? 
+                ColNumber2Scale0 { get; set; }
+            public 
+                Int16? 
+                ColNumber3Scale0 { get; set; }
+            public 
+                Int16? 
+                ColNumber4Scale0 { get; set; }
+            public 
+                Int32? 
+                ColNumber5Scale0 { get; set; }
+            public 
+                Int32? 
+                ColNumber9Scale0 { get; set; }
+            public
+#if SAFETYPE_INTEGER
+                            OracleDecimal?
+#elif DECIMAL_INTEGER
+                            Decimal?
+#elif SHORT_INTEGER
+                            Int32?
+#else
+                            Int64?
+#endif
+                ColNumber10Scale0 { get; set; }
+            public
+#if SAFETYPE_INTEGER
+                            OracleDecimal?
+#elif DECIMAL_INTEGER
+                            Decimal?
+#elif SHORT_INTEGER
+                            Int32?
+#else
+                            Int64?
+#endif
+                ColNumber18Scale0 { get; set; }
+            public
+#if SAFETYPE_INTEGER
+                            OracleDecimal?
+#elif DECIMAL_INTEGER
+                            Decimal?
+#elif SHORT_INTEGER
+                            Int32?
+#else
+                            Int64?
+#endif
+                ColNumber19Scale0 { get; set; }
+            public
+#if SAFETYPE_INTEGER
+                            OracleDecimal?
+#elif DECIMAL_INTEGER
+                            Decimal?
+#elif SHORT_INTEGER
+                            Int32?
+#else
+                            Int64?
+#endif
+                ColNumber28Scale0 { get; set; }
+            public
+#if SAFETYPE_INTEGER
+                            OracleDecimal?
+#elif DECIMAL_INTEGER
+                            Decimal?
+#elif SHORT_INTEGER
+                            Int32?
+#else
+                            Int64?
+#endif
+                ColNumber29Scale0 { get; set; }
+            public
+#if SAFETYPE_INTEGER
+                            OracleDecimal?
+#elif DECIMAL_INTEGER
+                            Decimal?
+#elif SHORT_INTEGER
+                            Int32?
+#else
+                            Int64?
+#endif
+                ColNumber38Scale0 { get; set; }
+            public
+#if SAFETYPE_NUMBER
+                            OracleDecimal?
+#else
+                            Decimal?
+#endif
+                ColNumber2Scale1 { get; set; }
+            public
+#if SAFETYPE_NUMBER
+                            OracleDecimal?
+#else
+                            Decimal?
+#endif
+                ColNumber5Scale3 { get; set; }
+            public
+#if SAFETYPE_NUMBER
+                            OracleDecimal?
+#else
+                            Decimal?
+#endif
+                ColNumber15Scale11 { get; set; }
+            public
+#if SAFETYPE_NUMBER
+                            OracleDecimal?
+#else
+                            Decimal?
+#endif
+                ColNumber31Scale21 { get; set; }
+            public
+#if SAFETYPE_NUMBER
+                            OracleDecimal?
+#else
+                            Decimal?
+#endif
+                ColNumber38Scale37 { get; set; }
+            public
+#if SAFETYPE_NUMBER
+                            OracleDecimal?
+#else
+                            Decimal?
+#endif
+                ColNumberLast { get; set; }
+        } // TTableNumber
 
-        public class TTableNumberDec : OdptPkgTableNumber.TTableNumberDec { }
-              
+        public class TTableNumberDec : OdptPkgTableNumber.ITTableNumberDec {
+            public
+#if SAFETYPE_INTEGER
+                            OracleDecimal?
+#elif DECIMAL_INTEGER
+                            Decimal?
+#elif SHORT_INTEGER
+                            Int32?
+#else
+                            Int64?
+#endif
+                Id { get; set; }
+            public
+#if SAFETYPE_NUMBER
+                            OracleDecimal?
+#else
+                            Decimal?
+#endif
+                ColNumber { get; set; }
+            public
+#if SAFETYPE_NUMBER
+                            OracleDecimal?
+#else
+                            Decimal?
+#endif
+                ColNumber2Scale1 { get; set; }
+            public
+#if SAFETYPE_NUMBER
+                            OracleDecimal?
+#else
+                            Decimal?
+#endif
+                ColNumber5Scale3 { get; set; }
+            public
+#if SAFETYPE_NUMBER
+                            OracleDecimal?
+#else
+                            Decimal?
+#endif
+                ColNumber15Scale11 { get; set; }
+            public
+#if SAFETYPE_NUMBER
+                            OracleDecimal?
+#else
+                            Decimal?
+#endif
+                ColNumber31Scale21 { get; set; }
+            public
+#if SAFETYPE_NUMBER
+                            OracleDecimal?
+#else
+                            Decimal?
+#endif
+                ColNumber38Scale37 { get; set; }
+            public
+#if SAFETYPE_NUMBER
+                            OracleDecimal?
+#else
+                            Decimal?
+#endif
+                ColNumberLast { get; set; }
+        } // TTableNumberDec
+
         public class TTableNumberMapByPositionAll : OdptPkgTableNumber.ITTableNumber {
             [HydratorMapAttribute(Position = 0)]
             public virtual
@@ -2428,7 +3232,7 @@ namespace Odapter.Tester {
 #endif
                                     ColNumberLast
             { get; set; }
-        }
+        } // TTableNumberMapByPositionAll
 
         public class TTableNumberMapByPositionPartial : TTableNumberMapByPositionAll {
             public override
@@ -2439,7 +3243,7 @@ namespace Odapter.Tester {
 #endif
                                     ColNumberLast
             { get; set; }
-        }
+        } // TTableNumberMapByPositionPartial
 
         public class TTableNumberDecMapByPositionAll : OdptPkgTableNumber.ITTableNumberDec {
             [HydratorMapAttribute(Position = 0)]
