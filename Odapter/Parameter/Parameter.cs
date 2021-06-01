@@ -143,7 +143,7 @@ namespace Odapter {
             set => TargetCSharpVersion = CSL.CSharpVersionOfStringWithDefault(value, CS.CSharpVersion.FourZero);
         }
         [XmlIgnore]
-        public bool IsCSharp40 { get => TargetCSharpVersion.Equals(CS.CSharpVersion.FourZero); }
+        public bool IsCSharp90 { get => TargetCSharpVersion.Equals(CS.CSharpVersion.NineZero); }
 
         // namespaces
         private string _namespaceBase;

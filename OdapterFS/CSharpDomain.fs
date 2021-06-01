@@ -36,7 +36,7 @@ open Odapter.CSharp.Logic;
         inherit ITypeTargetable
     
     [<Struct>]
-    type CSharpVersion = | FourZero with //| FiveZero
+    type CSharpVersion = | FourZero | NineZero with
         member this.ToString = this |> UtilUnion.fromDuCaseToString
 
     [<Struct>]

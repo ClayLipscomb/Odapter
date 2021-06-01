@@ -611,7 +611,7 @@ namespace OdapterWnFrm {
             Parameter.Instance.OutputPath = txtOutputPath.Text;
 
             Parameter.Instance.OutputPath = txtOutputPath.Text;
-            Parameter.Instance.TargetCSharpVersion = CSharpVersion.FourZero;
+            Parameter.Instance.CSharpVersion = cmbCSharpVersion.SelectedValue.ToString();
 
             Parameter.Instance.NamespaceBase = txtBaseNamespace.Text;
             Parameter.Instance.NamespacePackage = txtPackageNamespace.Text;
