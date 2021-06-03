@@ -33,6 +33,7 @@ namespace Odapter {
         string AncestorClassNameTable { get; set; }
         string AncestorClassNameView { get; set; }
 
+        CS.DtoInterfaceCategory TargetDtoInterfaceCategoryRecord { get; set; }
         CS.CSharpVersion TargetCSharpVersion { get; set; }
         bool IsCSharp90 { get; }
 

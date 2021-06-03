@@ -301,6 +301,10 @@ open Odapter.CSharp.Logic;
         override this.ToString() = this.Code
 
     [<Struct>]
+    type DtoInterfaceCategory =
+        | ClassMutable | RecordImmutable
+
+    [<Struct>]
     type AccessModifierInterface = | PUBLIC | INTERNAL with
         member this.Code = this |> UtilUnion.fromDuCaseToString |> toLower
         override this.ToString() = this.Code

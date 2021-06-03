@@ -87,6 +87,7 @@ namespace Odapter {
 
             MaxAssocArraySize = UInt16.MaxValue;
             MaxReturnAndOutArgStringSize = Int16.MaxValue;
+            TargetDtoInterfaceCategoryRecord = CS.DtoInterfaceCategory.ClassMutable;
             TargetCSharpVersion = CS.CSharpVersion.FourZero;
             IsDuplicatePackageRecordOriginatingOutsideFilterAndSchema = true;
             IsExcludeObjectsNamesWithSpecificChars = true;
@@ -134,6 +135,13 @@ namespace Odapter {
         public string UserLogin { get; set; }
         public string Password { get; set; }
         public bool IsSavePassword { get; set; }
+
+        [XmlIgnore]
+        public CS.DtoInterfaceCategory TargetDtoInterfaceCategoryRecord { get; set; }
+        public string DtoInterfaceCategoryRecord {
+            get => TargetDtoInterfaceCategoryRecord.ToString();
+            set => TargetDtoInterfaceCategoryRecord = CSL.DtoInterfaceCategoryOfStringWithDefault(value, CS.DtoInterfaceCategory.ClassMutable);
+        }
 
         // .NET/C# version
         [XmlIgnore]

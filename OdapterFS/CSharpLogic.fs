@@ -30,6 +30,11 @@ module internal CSharpVersion =
     let ofString str = (UtilUnion.createUnionCase<CSharpVersion> unionCache str) 
 
 [<RequireQualifiedAccess>]
+module internal DtoInterfaceCategory =
+    let private unionCache = UtilUnion.getUnionCases<DtoInterfaceCategory> |> Seq.cache
+    let ofString str = (UtilUnion.createUnionCase<DtoInterfaceCategory> unionCache str) 
+
+[<RequireQualifiedAccess>]
 module internal Keyword = 
     let private unionCache = UtilUnion.getUnionCases<Keyword> |> Seq.cache
     /// Case-sensitive compare to (lower case) C# keyword
@@ -427,6 +432,7 @@ module Api =
     let FromCodeTypeValueWithDefault str typeValueDefault = str |> TypeValue.fromCode |> (Option.defaultValue typeValueDefault)
     let FromCodeTypeReferenceWithDefault str typeReferenceDefault = str |> TypeReference.fromCode |> (Option.defaultValue typeReferenceDefault)
     let CSharpVersionOfStringWithDefault str cSharpVersionDefault = str |> CSharpVersion.ofString |> (Option.defaultValue cSharpVersionDefault)
+    let DtoInterfaceCategoryOfStringWithDefault str dtoInterfaceCategoryDefault = str |> DtoInterfaceCategory.ofString |> (Option.defaultValue dtoInterfaceCategoryDefault)
 
     // coding
     let CodeTab n = codeTab n

@@ -40,6 +40,23 @@ namespace Odapter {
             new CSharpVersionOption(CSharpVersion.NineZero , @"9.0 (.NET 5.0) minimum")
         };
 
+        public class DtoInterfaceCategoryOption {
+            public DtoInterfaceCategory Category { get; private set; }
+            public string DisplayDescription { get; private set; }
+            public DtoInterfaceCategoryOption(DtoInterfaceCategory category, string displayDescription) {
+                Category = category;
+                DisplayDescription = displayDescription;
+            }
+        }
+
+        public static IList<DtoInterfaceCategoryOption> GetDtoInterfaceCategoryOptions(bool isCSharpFourZero) {
+            var options = new List<DtoInterfaceCategoryOption> {
+                new DtoInterfaceCategoryOption(DtoInterfaceCategory.ClassMutable , @"class (mutable)")
+            };
+            //if (!isCSharpFourZero) options.Add(new DtoInterfaceCategoryOption(DtoInterfaceCategory.RecordImmutable, @"record (immutable)"));
+            return options;
+        }
+
         public class CustomTranslatedCSharpType {
             public string CSharpType { get; private set; }
             private string TranslationNote { get; set; }

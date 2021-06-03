@@ -120,6 +120,12 @@
   <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
+  <data name="lblDtoInterfaceCategory.ToolTip" xml:space="preserve">
+    <value>An interface is generated for each package record associated with a REF CURSOR. 
+In order to be used by generated code, a developer-created DTO must implement 
+the interface and adhere to generic constraints in respective method signatures. 
+This setting determines the nature of the interface (and contraints) generated.</value>
+  </data>
   <data name="lblDuplicatePackageRecordOriginatingOutsideFilterAndSchema.ToolTip" xml:space="preserve">
     <value>Package record types may be defined by referencing another package's record. If the 
 referenced package lies outside the Filter Prefix, the generated package record code 

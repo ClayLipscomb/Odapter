@@ -415,20 +415,29 @@ namespace OdapterWnFrm {
         private void cbXmlElementView_CheckedChanged(object sender, EventArgs e) { }
 
         private void cbXmlElementTable_CheckedChanged(object sender, EventArgs e) { }
-#endregion
+        #endregion
 
-#region Binding
+        #region Binding
+        private bool IsCSharpFourZero() => cmbCSharpVersion.Items.Count == 0 || ((CSharpVersion)cmbCSharpVersion.SelectedValue).Equals(CSharpVersion.FourZero);
+
         private void BindComboBoxes() {
             BindOracleHome();
             BindOracleToCSharpTypes();
             BindSettingsFiles();    // this triggers the setting of all param data if at least one file exists
             BindCSharpVersion();
+            BindDtoInterfaceCategoryRecord();
         }
 
         private void BindCSharpVersion() {
             cmbCSharpVersion.DisplayMember = "DisplayDescription";
             cmbCSharpVersion.ValueMember = "Version";
             cmbCSharpVersion.DataSource = TranslaterReferenceData.CSharpOptions;
+        }
+
+        private void BindDtoInterfaceCategoryRecord() {
+            cmbDtoInterfaceCategoryRecord.DisplayMember = "DisplayDescription";
+            cmbDtoInterfaceCategoryRecord.ValueMember = "Category";
+            cmbDtoInterfaceCategoryRecord.DataSource = TranslaterReferenceData.GetDtoInterfaceCategoryOptions(IsCSharpFourZero());
         }
 
         private void BindSettingsFiles() {
@@ -503,6 +512,7 @@ namespace OdapterWnFrm {
             cbIsSavePassword.Checked = Parameter.Instance.IsSavePassword;
 
             txtOutputPath.Text = Parameter.Instance.OutputPath;
+            cmbDtoInterfaceCategoryRecord.SelectedValue = Parameter.Instance.TargetDtoInterfaceCategoryRecord;
             cmbCSharpVersion.SelectedValue = Parameter.Instance.TargetCSharpVersion;
 
             txtBaseNamespace.Text = Parameter.Instance.NamespaceBase;
@@ -611,6 +621,7 @@ namespace OdapterWnFrm {
             Parameter.Instance.OutputPath = txtOutputPath.Text;
 
             Parameter.Instance.OutputPath = txtOutputPath.Text;
+            Parameter.Instance.DtoInterfaceCategoryRecord = cmbDtoInterfaceCategoryRecord.SelectedValue.ToString();
             Parameter.Instance.CSharpVersion = cmbCSharpVersion.SelectedValue.ToString();
 
             Parameter.Instance.NamespaceBase = txtBaseNamespace.Text;
@@ -744,5 +755,7 @@ namespace OdapterWnFrm {
         private void ListViewMessage_DrawItem(object sender, DrawListViewItemEventArgs e) {
             e.DrawDefault = true;
         }
+
+        private void cmbCSharpVersion_SelectedIndexChanged(object sender, EventArgs e) => BindDtoInterfaceCategoryRecord();
     }
 }
