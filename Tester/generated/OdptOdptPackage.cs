@@ -523,28 +523,55 @@ namespace Schema.Odpt.Odpt.Package {
         public static OdptPkgMain Instance { get { return _instance; } }
 
         // **RECORD IGNORED** - .NET cannot send/receive an associative array type field in a record
+        // public interface ITIgnoreAaInteger {
+
+        // **RECORD IGNORED** - .NET cannot send/receive an associative array type field in a record
         // public abstract partial class TIgnoreAaInteger : Schema.Odpt.Odpt.OdptPackageRecord, ITIgnoreAaInteger {
+
+        // **RECORD IGNORED** - Code generation for BFILE type has not been implemented
+        // public interface ITIgnoreBfile {
 
         // **RECORD IGNORED** - Code generation for BFILE type has not been implemented
         // public abstract partial class TIgnoreBfile : Schema.Odpt.Odpt.OdptPackageRecord, ITIgnoreBfile {
 
         // **RECORD IGNORED** - .NET cannot send/receive a PL/SQL BOOLEAN type
+        // public interface ITIgnoreBoolean {
+
+        // **RECORD IGNORED** - .NET cannot send/receive a PL/SQL BOOLEAN type
         // public abstract partial class TIgnoreBoolean : Schema.Odpt.Odpt.OdptPackageRecord, ITIgnoreBoolean {
+
+        // **RECORD IGNORED** - Code generation for LONG type will not be implemented due to Oracle deprecation
+        // public interface ITIgnoreLong {
 
         // **RECORD IGNORED** - Code generation for LONG type will not be implemented due to Oracle deprecation
         // public abstract partial class TIgnoreLong : Schema.Odpt.Odpt.OdptPackageRecord, ITIgnoreLong {
 
         // **RECORD IGNORED** - Code generation for LONG RAW type will not be implemented due to Oracle deprecation
+        // public interface ITIgnoreLongRaw {
+
+        // **RECORD IGNORED** - Code generation for LONG RAW type will not be implemented due to Oracle deprecation
         // public abstract partial class TIgnoreLongRaw : Schema.Odpt.Odpt.OdptPackageRecord, ITIgnoreLongRaw {
+
+        // **RECORD IGNORED** - Code generation for RAW type has not been implemented
+        // public interface ITIgnoreRaw {
 
         // **RECORD IGNORED** - Code generation for RAW type has not been implemented
         // public abstract partial class TIgnoreRaw : Schema.Odpt.Odpt.OdptPackageRecord, ITIgnoreRaw {
 
         // **RECORD IGNORED** - Code generation for ROWID type has not been implemented
+        // public interface ITIgnoreRowid {
+
+        // **RECORD IGNORED** - Code generation for ROWID type has not been implemented
         // public abstract partial class TIgnoreRowid : Schema.Odpt.Odpt.OdptPackageRecord, ITIgnoreRowid {
 
         // **RECORD IGNORED** - Code generation for UROWID type has not been implemented
+        // public interface ITIgnoreUrowid {
+
+        // **RECORD IGNORED** - Code generation for UROWID type has not been implemented
         // public abstract partial class TIgnoreUrowid : Schema.Odpt.Odpt.OdptPackageRecord, ITIgnoreUrowid {
+
+        // **RECORD IGNORED** - XMLTYPE type is not available in ODP.NET managed
+        // public interface ITIgnoreXmltype {
 
         // **RECORD IGNORED** - XMLTYPE type is not available in ODP.NET managed
         // public abstract partial class TIgnoreXmltype : Schema.Odpt.Odpt.OdptPackageRecord, ITIgnoreXmltype {

@@ -522,6 +522,33 @@ namespace Schema.Odpt.Odpt.Safe.Package {
         private static readonly OdptPkgMain _instance = new OdptPkgMain();
         public static OdptPkgMain Instance { get { return _instance; } }
 
+        // **RECORD IGNORED** - .NET cannot send/receive an associative array type field in a record
+        // public interface ITIgnoreAaInteger {
+
+        // **RECORD IGNORED** - Code generation for BFILE type has not been implemented
+        // public interface ITIgnoreBfile {
+
+        // **RECORD IGNORED** - .NET cannot send/receive a PL/SQL BOOLEAN type
+        // public interface ITIgnoreBoolean {
+
+        // **RECORD IGNORED** - Code generation for LONG type will not be implemented due to Oracle deprecation
+        // public interface ITIgnoreLong {
+
+        // **RECORD IGNORED** - Code generation for LONG RAW type will not be implemented due to Oracle deprecation
+        // public interface ITIgnoreLongRaw {
+
+        // **RECORD IGNORED** - Code generation for RAW type has not been implemented
+        // public interface ITIgnoreRaw {
+
+        // **RECORD IGNORED** - Code generation for ROWID type has not been implemented
+        // public interface ITIgnoreRowid {
+
+        // **RECORD IGNORED** - Code generation for UROWID type has not been implemented
+        // public interface ITIgnoreUrowid {
+
+        // **RECORD IGNORED** - XMLTYPE type is not available in ODP.NET managed
+        // public interface ITIgnoreXmltype {
+
         public interface ITRecFldSameName {
             OracleDecimal? FNumber { get; init; }
             OracleDecimal? TRecFldSameNameTRecFldSameName { get; init; }
