@@ -512,8 +512,8 @@ namespace OdapterWnFrm {
             cbIsSavePassword.Checked = Parameter.Instance.IsSavePassword;
 
             txtOutputPath.Text = Parameter.Instance.OutputPath;
-            cmbDtoInterfaceCategoryRecord.SelectedValue = Parameter.Instance.TargetDtoInterfaceCategoryRecord;
             cmbCSharpVersion.SelectedValue = Parameter.Instance.TargetCSharpVersion;
+            cmbDtoInterfaceCategoryRecord.SelectedValue = Parameter.Instance.TargetDtoInterfaceCategoryRecord;
 
             txtBaseNamespace.Text = Parameter.Instance.NamespaceBase;
             txtPackageNamespace.Text = Parameter.Instance.NamespacePackage;
@@ -756,6 +756,8 @@ namespace OdapterWnFrm {
             e.DrawDefault = true;
         }
 
-        private void cmbCSharpVersion_SelectedIndexChanged(object sender, EventArgs e) => BindDtoInterfaceCategoryRecord();
+        private void cmbCSharpVersion_SelectedIndexChanged(object sender, EventArgs e) {
+            BindDtoInterfaceCategoryRecord();
+        }
     }
 }

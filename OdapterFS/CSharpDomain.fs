@@ -56,7 +56,7 @@ open Odapter.CSharp.Logic;
         | BYTE | FIXED | OVERRIDE | TRY | CASE | FLOAT | PARAMS | TYPEOF | CATCH | FOR | PRIVATE | UINT | CHAR | FOREACH | PROTECTED | ULONG | CHECKED | GOTO | PUBLIC 
         | UNCHECKED | CLASS | IF | READONLY | UNSAFE | CONST | IMPLICIT | REF | USHORT | CONTINUE | IN | RETURN | USING | DECIMAL | INT | SBYTE | VIRTUAL | DEFAULT | INTERFACE 
         | SEALED | VOLATILE | DELEGATE | INTERNAL | SHORT | VOID | DO | IS | SIZEOF | WHILE | DOUBLE | LOCK | STACKALLOC | ELSE | LONG | STATIC | ENUM | NAMESPACE | STRING 
-        | DYNAMIC | GET | LET | PARTIAL | SET | VALUE | VAR | WHERE  // a few contextual keywords
+        | DYNAMIC | GET | LET | PARTIAL | SET | VALUE | VAR | WHERE | INIT // a few contextual keywords
         member this.Code = this |> UtilUnion.fromDuCaseToString |> toLower
         override this.ToString() = this.Code
     [<Struct>]
@@ -289,20 +289,28 @@ open Odapter.CSharp.Logic;
         override this.ToString() = this.Code
 
     [<Struct>]
-    type PropertyGetSet = | GetOnly | SetOnly | Both
+    type PropertyAccessor = | GetOnly | GetInit | SetOnly | GetSet with
+        member this.Code = 
+            match this with 
+            | GetSet _ -> codeSpaced[|GET.Code + SEMICOLON; SET.Code + SEMICOLON|]
+            | GetInit _ -> codeSpaced[|GET.Code + SEMICOLON; INIT.Code + SEMICOLON|]
+            | GetOnly _ -> GET.Code + SEMICOLON
+            | SetOnly _ -> SET.Code + SEMICOLON
+        override this.ToString() = this.Code
     [<Struct>]
     type Property = { PropertyName: PropertyName; PropertyType: TypeComposable; ContainerType: TypeComposable option; 
-                        AccessModifier: AccessModifier option; GetSet: PropertyGetSet; BackingField: FieldProtected option;
+                        AccessModifier: AccessModifier option; GetSet: PropertyAccessor; BackingField: FieldProtected option;
                         IsVirtual: bool; IsDataMember: bool; IsXmlElement: bool } with
-        member this.Code = 
-            (match this.AccessModifier with | Some am -> am.Code + SPACE | None _ -> emptyString)
-            + (match this.ContainerType with | Some ct -> ct.Code + PERIOD | None _ -> emptyString) + this.PropertyType.ToString() + SPACE
-            + codeSpaced[|this.PropertyName; @"{"; (match this.GetSet with | Both _ -> @"get; set;" | GetOnly _ -> @"get;" | SetOnly _ -> @"set;"); @"}"|]
+        member this.Code = codeSpaced [|
+            (match this.AccessModifier with | Some am -> am.Code + SPACE | None _ -> emptyString);
+            (match this.ContainerType with | Some ct -> ct.Code + PERIOD | None _ -> emptyString) + this.PropertyType.ToString();
+            this.PropertyName; 
+            CURLY_OPEN; this.GetSet; CURLY_CLOSE|]
         override this.ToString() = this.Code
 
     [<Struct>]
     type DtoInterfaceCategory =
-        | ClassMutable | RecordImmutable
+        | MutableSet | ImmutableGetInit
 
     [<Struct>]
     type AccessModifierInterface = | PUBLIC | INTERNAL with

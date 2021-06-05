@@ -311,11 +311,18 @@ module internal Property =
 
 [<RequireQualifiedAccess>]
 module internal TypeInterface = 
+    let create (accessModifier: AccessModifierInterface, interfaceName: InterfaceName, properties: Property seq) = 
+        { AccessModifier = accessModifier; InterfaceName = interfaceName; Properties = properties }
+    let dtoInterfacePropertyAccessor (dtoInterfaceCategory: DtoInterfaceCategory) = 
+        match dtoInterfaceCategory with
+        | DtoInterfaceCategory.MutableSet       -> PropertyAccessor.SetOnly
+        | DtoInterfaceCategory.ImmutableGetInit -> PropertyAccessor.GetInit
     let private code (typeInterface: TypeInterface) = 
         codeSpaced[|typeInterface.AccessModifier; INTERFACE; typeInterface.InterfaceName; CURLY_OPEN|] 
         + NEWLINE + codeTabbedLines (typeInterface.Properties, 1u)
         + NEWLINE + codeSpaced[|CURLY_CLOSE; @"//"; typeInterface.InterfaceName|]
-    let codeTabbed tabCnt (typeInterface: TypeInterface) = Coder.codeTabbed tabCnt (typeInterface |> code)
+    let codeTabbed tabCnt typeInterface = Coder.codeTabbed tabCnt (typeInterface |> code)
+
     //let toTypeClass interfaceName =
     //    let removeInterfacePrefix = replace(Ltrl_CODE_INTEFACE_PREFIX, emptyString)
     //    let startsWithInterfacePrefix str = startsWith Ltrl_CODE_INTEFACE_PREFIX str
@@ -328,8 +335,9 @@ module internal TypeInterface =
 
 [<RequireQualifiedAccess>]
 module internal OdpNetOracleDbTypeEnum =
-    /// <summary>Determines OracleDbTypeEnum for numeric C# type value nullable</summary>
-    /// <param name="t">Type value</param>
+    /// <summary>Determines OracleDbTypeEnum for a numeric C# nullable value type</summary>
+    /// <returns>Valid OracleDbTypeEnum. If parameter is non-numeric, a OdpNetOracleDbTypeEnum.Byte is 
+    /// returned to both avoid throwing an exception and forcing C# to handle with F# None.</returns>
     let fromTypeValueNullableNumeric (ValueNullable tv) = 
         match tv with
         | TypeValue.SByte | TypeValue.Byte              -> OdpNetOracleDbTypeEnum.Byte
@@ -467,9 +475,10 @@ module Api =
     let TypeCollectionGeneric (typeCollection: TypeCollection, iTypeTargetable: ITypeTargetable) = TypeCollectionGeneric.ofTypeTarget(typeCollection, iTypeTargetable |> TypeTarget.ofITypeTargetable)
     let GetSubType (iTypeTargetable: ITypeTargetable) = iTypeTargetable |> TypeTarget.ofITypeTargetable |> TypeTarget.getSubType
 
-    let TypeInterface (accessModifier: AccessModifierInterface, interfaceName: InterfaceName, properties: Property seq) = { AccessModifier = accessModifier; InterfaceName = interfaceName; Properties = properties }
+    let DtoInterfacePropertyAccessor (dtoInterfaceCategory: DtoInterfaceCategory) = TypeInterface.dtoInterfacePropertyAccessor  dtoInterfaceCategory
+    let TypeInterface (accessModifier: AccessModifierInterface, interfaceName: InterfaceName, properties: Property seq) = TypeInterface.create (accessModifier, interfaceName, properties)
 
-    let PropertyClass (propertyName: PropertyName, propertyType: ITypeTargetable, containerType: ITypeTargetable, getSet: PropertyGetSet, accessModifier: AccessModifier, isVirtual: bool, isDataMember: bool, isXmlElement: bool) = 
-        Property.create (propertyName, propertyType |> TypeComposable.ofITypeTargetable, containerType |> TypeComposable.ofITypeTargetableOption, getSet, Some accessModifier, None, isVirtual, isDataMember, isXmlElement)
-    let PropertyInterface (propertyName: PropertyName, propertyType: ITypeTargetable, containerType: ITypeTargetable, getSet: PropertyGetSet) =        
-        Property.createForInterface (propertyName, propertyType |> TypeComposable.ofITypeTargetable, containerType |> TypeComposable.ofITypeTargetableOption, getSet)
+    let PropertyClass (propertyName: PropertyName, propertyType: ITypeTargetable, containerType: ITypeTargetable, accessor: PropertyAccessor, accessModifier: AccessModifier, isVirtual: bool, isDataMember: bool, isXmlElement: bool) = 
+        Property.create (propertyName, propertyType |> TypeComposable.ofITypeTargetable, containerType |> TypeComposable.ofITypeTargetableOption, accessor, Some accessModifier, None, isVirtual, isDataMember, isXmlElement)
+    let PropertyInterface (propertyName: PropertyName, propertyType: ITypeTargetable, containerType: ITypeTargetable, accessor: PropertyAccessor) =        
+        Property.createForInterface (propertyName, propertyType |> TypeComposable.ofITypeTargetable, containerType |> TypeComposable.ofITypeTargetableOption, accessor)

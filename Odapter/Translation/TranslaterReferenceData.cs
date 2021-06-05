@@ -51,9 +51,9 @@ namespace Odapter {
 
         public static IList<DtoInterfaceCategoryOption> GetDtoInterfaceCategoryOptions(bool isCSharpFourZero) {
             var options = new List<DtoInterfaceCategoryOption> {
-                new DtoInterfaceCategoryOption(DtoInterfaceCategory.ClassMutable , @"class (mutable)")
+                new DtoInterfaceCategoryOption(DtoInterfaceCategory.MutableSet , @"mutable class")
             };
-            //if (!isCSharpFourZero) options.Add(new DtoInterfaceCategoryOption(DtoInterfaceCategory.RecordImmutable, @"record (immutable)"));
+            if (!isCSharpFourZero) options.Add(new DtoInterfaceCategoryOption(DtoInterfaceCategory.ImmutableGetInit, @"immutable record"));
             return options;
         }
 

@@ -179,8 +179,8 @@ namespace Odapter.Tester.NET5 {
                 oracleClob.Append(new char[] { ' ' }, 0, 1);
                 oracleNClob.Append(new char[] { ' ' }, 0, 1);
 #endif
-                OdptPkgTableBig.Instance.InsertRow(0, 0, 0, 0, 0, 0, 0.0M, 0.0M, 0.0M, 0.0M, Single.NaN, Double.NaN, "", "", "", "", "", "", "", "", "", "", 
-                    null, null, null, null, null, null, null, null, null, null, 
+                OdptPkgTableBig.Instance.InsertRow(0, 0, 0, 0, 0, 0, 0.0M, 0.0M, 0.0M, 0.0M, Single.NaN, Double.NaN, "", "", "", "", "", "", "", "", "", "",
+                    null, null, null, null, null, null, null, null, null, null,
 #if SAFETYPE_BLOB
                     oracleBlob,
 #else
@@ -743,10 +743,10 @@ namespace Odapter.Tester.NET5 {
 
             private void TestCursorUntypedTableBig() {
                 uint? rowLimit = TABLE_BIG_ROWS_TO_RETRIEVE;
-                ICollection<TTableBig> retTableBigList, outTableBigList;
+                ICollection<TTableBigPositionalRecord> retTableBigList, outTableBigList;
                 ICollection<TTableBigMapByPositionAll> retTableBigMapByPositionAllList, outTableBigMapByPositionAllList;
                 ICollection<TTableBigMapByPositionPartial> retTableBigMapByPositionPartialList, outTableBigMapByPositionPartialList;
-                ICollection<TTableBigChar> outTableBigCharList;
+                ICollection<TTableBigCharPositionalRecord> outTableBigCharList;
                 ICollection<TTableBigCharMapByPositionAll> outTableBigCharMapByPositionAllList;
                 ICollection<TTableBigCharMapByPositionPartial> outTableBigCharMapByPositionPartialList;
                 DataTable retTableBigDataTable, outTableBigDataTable, outTableBigDataTable2;
@@ -755,7 +755,7 @@ namespace Odapter.Tester.NET5 {
                 retTableBigDataTable = OdptPkgTableBig.Instance.GetRowsUntypedRet(true, rowLimit, null);
 
                 // list ret - mapping by name
-                retTableBigList = OdptPkgTableBig.Instance.GetRowsUntypedRet<TTableBig>(false, false, rowLimit, null);
+                retTableBigList = OdptPkgTableBig.Instance.GetRowsUntypedRet<TTableBigPositionalRecord>(false, false, rowLimit, null);
 
                 // list ret - mapping by position, NOT allowing unmapped columns
                 retTableBigMapByPositionAllList = OdptPkgTableBig.Instance.GetRowsUntypedRet<TTableBigMapByPositionAll>(true, false, rowLimit, null);
@@ -767,7 +767,7 @@ namespace Odapter.Tester.NET5 {
                 // all above cases using 1 out
                 outTableBigDataTable = null; outTableBigList = null; outTableBigMapByPositionAllList = null; outTableBigMapByPositionPartialList = null;
                 OdptPkgTableBig.Instance.GetRowsUntypedOut(out outTableBigDataTable, true, rowLimit, null);
-                OdptPkgTableBig.Instance.GetRowsUntypedOut<TTableBig>(out outTableBigList, false, false, rowLimit, null);
+                OdptPkgTableBig.Instance.GetRowsUntypedOut<TTableBigPositionalRecord>(out outTableBigList, false, false, rowLimit, null);
                 OdptPkgTableBig.Instance.GetRowsUntypedOut<TTableBigMapByPositionAll>(out outTableBigMapByPositionAllList, true, false, rowLimit, null);
                 OdptPkgTableBig.Instance.GetRowsUntypedOut<TTableBigMapByPositionPartial>(out outTableBigMapByPositionPartialList, true, true, rowLimit, null);
                 Debug.Assert(outTableBigDataTable.Rows.Count == rowLimit && outTableBigList.Count == rowLimit && outTableBigMapByPositionAllList.Count == rowLimit && outTableBigMapByPositionPartialList.Count == rowLimit);
@@ -775,7 +775,7 @@ namespace Odapter.Tester.NET5 {
                 // all above cases using ret and 1 out arg
                 outTableBigDataTable = null; outTableBigList = null; outTableBigMapByPositionAllList = null; outTableBigMapByPositionPartialList = null;
                 retTableBigDataTable = OdptPkgTableBig.Instance.GetRowsUntypedOutRet(out outTableBigDataTable, true, rowLimit, null);
-                retTableBigList = OdptPkgTableBig.Instance.GetRowsUntypedOutRet<TTableBig, TTableBig>(out outTableBigList, false, false, rowLimit, null);
+                retTableBigList = OdptPkgTableBig.Instance.GetRowsUntypedOutRet<TTableBigPositionalRecord, TTableBigPositionalRecord>(out outTableBigList, false, false, rowLimit, null);
                 retTableBigMapByPositionAllList = OdptPkgTableBig.Instance.GetRowsUntypedOutRet<TTableBigMapByPositionAll, TTableBigMapByPositionAll>(out outTableBigMapByPositionAllList, true, false, rowLimit, null);
                 retTableBigMapByPositionPartialList = OdptPkgTableBig.Instance.GetRowsUntypedOutRet<TTableBigMapByPositionPartial, TTableBigMapByPositionPartial>(out outTableBigMapByPositionPartialList, true, true, rowLimit, null);
                 Debug.Assert(retTableBigDataTable.Rows.Count == rowLimit && retTableBigList.Count == rowLimit && retTableBigMapByPositionAllList.Count == rowLimit && retTableBigMapByPositionPartialList.Count == rowLimit);
@@ -784,7 +784,7 @@ namespace Odapter.Tester.NET5 {
                 // all above cases using ret and 2 out args 
                 outTableBigDataTable = null; outTableBigList = null; outTableBigMapByPositionAllList = null; outTableBigMapByPositionPartialList = null;
                 retTableBigDataTable = OdptPkgTableBig.Instance.GetRowsUntypedOut2Ret(out outTableBigDataTable, out outTableBigDataTable2, true, rowLimit, null);
-                retTableBigList = OdptPkgTableBig.Instance.GetRowsUntypedOut2Ret<TTableBig, TTableBig, TTableBigChar>(out outTableBigList, out outTableBigCharList, false, false, rowLimit, null);
+                retTableBigList = OdptPkgTableBig.Instance.GetRowsUntypedOut2Ret<TTableBigPositionalRecord, TTableBigPositionalRecord, TTableBigCharPositionalRecord>(out outTableBigList, out outTableBigCharList, false, false, rowLimit, null);
                 retTableBigMapByPositionAllList = OdptPkgTableBig.Instance.GetRowsUntypedOut2Ret<TTableBigMapByPositionAll, TTableBigMapByPositionAll, TTableBigCharMapByPositionAll>(out outTableBigMapByPositionAllList, out outTableBigCharMapByPositionAllList, true, false, rowLimit, null);
                 retTableBigMapByPositionPartialList = OdptPkgTableBig.Instance.GetRowsUntypedOut2Ret<TTableBigMapByPositionPartial, TTableBigMapByPositionPartial, TTableBigCharMapByPositionPartial>(out outTableBigMapByPositionPartialList, out outTableBigCharMapByPositionPartialList, true, true, rowLimit, null);
                 Debug.Assert(retTableBigDataTable.Rows.Count == rowLimit && retTableBigList.Count == rowLimit && retTableBigMapByPositionAllList.Count == rowLimit && retTableBigMapByPositionPartialList.Count == rowLimit);
@@ -794,10 +794,10 @@ namespace Odapter.Tester.NET5 {
 
             private void TestCursorUntypedTableNumber() {
                 uint? rowLimit = null;
-                ICollection<TTableNumber> retTableNumberList, outTableNumberList;
+                ICollection<TTableNumberPositionalRecord> retTableNumberList, outTableNumberList;
                 ICollection<TTableNumberMapByPositionAll> retTableNumberMapByPositionAllList, outTableNumberMapByPositionAllList;
                 ICollection<TTableNumberMapByPositionPartial> retTableNumberMapByPositionPartialList, outTableNumberMapByPositionPartialList;
-                ICollection<TTableNumberDec> outTableNumberDecList;
+                ICollection<TTableNumberDecPositionalRecord> outTableNumberDecList;
                 ICollection<TTableNumberDecMapByPositionAll> outTableNumberDecMapByPositionAllList;
                 ICollection<TTableNumberDecMapByPositionPartial> outTableNumberDecMapByPositionPartialList;
                 DataTable retTableNumberDataTable, outTableNumberDataTable, outTableNumberDataTable2;
@@ -806,7 +806,7 @@ namespace Odapter.Tester.NET5 {
                 retTableNumberDataTable = OdptPkgTableNumber.Instance.GetRowsUntypedRet(true, rowLimit, null);
 
                 // list ret - mapping by name
-                retTableNumberList = OdptPkgTableNumber.Instance.GetRowsUntypedRet<TTableNumber>(false, false, rowLimit, null);
+                retTableNumberList = OdptPkgTableNumber.Instance.GetRowsUntypedRet<TTableNumberPositionalRecord>(false, false, rowLimit, null);
 
                 // list ret - mapping by position, NOT allowing unmapped columns
                 retTableNumberMapByPositionAllList = OdptPkgTableNumber.Instance.GetRowsUntypedRet<TTableNumberMapByPositionAll>(true, false, rowLimit, null);
@@ -818,7 +818,7 @@ namespace Odapter.Tester.NET5 {
                 // all above cases using 1 out
                 outTableNumberDataTable = null; outTableNumberList = null; outTableNumberMapByPositionAllList = null; outTableNumberMapByPositionPartialList = null;
                 OdptPkgTableNumber.Instance.GetRowsUntypedOut(out outTableNumberDataTable, true, rowLimit, null);
-                OdptPkgTableNumber.Instance.GetRowsUntypedOut<TTableNumber>(out outTableNumberList, false, false, rowLimit, null);
+                OdptPkgTableNumber.Instance.GetRowsUntypedOut<TTableNumberPositionalRecord>(out outTableNumberList, false, false, rowLimit, null);
                 OdptPkgTableNumber.Instance.GetRowsUntypedOut<TTableNumberMapByPositionAll>(out outTableNumberMapByPositionAllList, true, false, rowLimit, null);
                 OdptPkgTableNumber.Instance.GetRowsUntypedOut<TTableNumberMapByPositionPartial>(out outTableNumberMapByPositionPartialList, true, true, rowLimit, null);
                 Debug.Assert(outTableNumberDataTable.Rows.Count > 0 && outTableNumberList.Count > 0 && outTableNumberMapByPositionAllList.Count > 0 && outTableNumberMapByPositionPartialList.Count > 0);
@@ -826,7 +826,7 @@ namespace Odapter.Tester.NET5 {
                 // all above cases using ret and 1 out arg
                 outTableNumberDataTable = null; outTableNumberList = null; outTableNumberMapByPositionAllList = null; outTableNumberMapByPositionPartialList = null;
                 retTableNumberDataTable = OdptPkgTableNumber.Instance.GetRowsUntypedOutRet(out outTableNumberDataTable, true, rowLimit, null);
-                retTableNumberList = OdptPkgTableNumber.Instance.GetRowsUntypedOutRet<TTableNumber, TTableNumber>(out outTableNumberList, false, false, rowLimit, null);
+                retTableNumberList = OdptPkgTableNumber.Instance.GetRowsUntypedOutRet<TTableNumberPositionalRecord, TTableNumberPositionalRecord>(out outTableNumberList, false, false, rowLimit, null);
                 retTableNumberMapByPositionAllList = OdptPkgTableNumber.Instance.GetRowsUntypedOutRet<TTableNumberMapByPositionAll, TTableNumberMapByPositionAll>(out outTableNumberMapByPositionAllList, true, false, rowLimit, null);
                 retTableNumberMapByPositionPartialList = OdptPkgTableNumber.Instance.GetRowsUntypedOutRet<TTableNumberMapByPositionPartial, TTableNumberMapByPositionPartial>(out outTableNumberMapByPositionPartialList, true, true, rowLimit, null);
                 Debug.Assert(retTableNumberDataTable.Rows.Count > 0 && retTableNumberList.Count > 0 && retTableNumberMapByPositionAllList.Count > 0 && retTableNumberMapByPositionPartialList.Count > 0);
@@ -835,7 +835,7 @@ namespace Odapter.Tester.NET5 {
                 // all above cases using ret and 2 out args 
                 outTableNumberDataTable = null; outTableNumberList = null; outTableNumberMapByPositionAllList = null; outTableNumberMapByPositionPartialList = null;
                 retTableNumberDataTable = OdptPkgTableNumber.Instance.GetRowsUntypedOut2Ret(out outTableNumberDataTable, out outTableNumberDataTable2, true, rowLimit, null);
-                retTableNumberList = OdptPkgTableNumber.Instance.GetRowsUntypedOut2Ret<TTableNumber, TTableNumber, TTableNumberDec>(out outTableNumberList, out outTableNumberDecList, false, false, rowLimit, null);
+                retTableNumberList = OdptPkgTableNumber.Instance.GetRowsUntypedOut2Ret<TTableNumberPositionalRecord, TTableNumberPositionalRecord, TTableNumberDecPositionalRecord>(out outTableNumberList, out outTableNumberDecList, false, false, rowLimit, null);
                 retTableNumberMapByPositionAllList = OdptPkgTableNumber.Instance.GetRowsUntypedOut2Ret<TTableNumberMapByPositionAll, TTableNumberMapByPositionAll, TTableNumberDecMapByPositionAll>(out outTableNumberMapByPositionAllList, out outTableNumberDecMapByPositionAllList, true, false, rowLimit, null);
                 retTableNumberMapByPositionPartialList = OdptPkgTableNumber.Instance.GetRowsUntypedOut2Ret<TTableNumberMapByPositionPartial, TTableNumberMapByPositionPartial, TTableNumberDecMapByPositionPartial>(out outTableNumberMapByPositionPartialList, out outTableNumberDecMapByPositionPartialList, true, true, rowLimit, null);
                 Debug.Assert(retTableNumberDataTable.Rows.Count > 0 && retTableNumberList.Count > 0 && retTableNumberMapByPositionAllList.Count > 0 && retTableNumberMapByPositionPartialList.Count > 0);
@@ -1550,13 +1550,13 @@ namespace Odapter.Tester.NET5 {
             }
 
             private void TestMiscCalls() {
-                OdptPkgTableCsKeyword.Instance.Proc(null, null, null, null, null, null, null, null, null, null, null, null, null, null, 
+                OdptPkgTableCsKeyword.Instance.Proc(null, null, null, null, null, null, null, null, null, null, null, null, null, null,
                                                     null, null, null, null, null, null, null, null, null, null, null, null, null, null,
                                                     null, null, null, null, null, null, null, null, null, null, null, null, null, null,
                                                     null, null, null, null, null, null, null, null, null, null, null, null, null, null,
-                                                    null, null, null, null, null, null, null, null, null, null, null, null, null, null, 
-                                                    null, null, null, null, null, null, null, null, null, null, null, null, null, null, 
-                                                    null );
+                                                    null, null, null, null, null, null, null, null, null, null, null, null, null, null,
+                                                    null, null, null, null, null, null, null, null, null, null, null, null, null, null,
+                                                    null);
                 OdptPkgMain.Instance.ProcUnderscoreSuffix(null);
                 OdptPkgMain.Instance.ProcUnderscoreSuffixExtraunderscore(null);
 
@@ -1632,7 +1632,7 @@ namespace Odapter.Tester.NET5 {
                     Debug.Assert(pInClob.Value.Equals(pInOutClob.Value) && pInClob.Value.Equals(pOutClob.Value) && pInClob.Value.Equals(retClob.Value));
 #endif
                 }
-                
+
 
 #if SAFETYPE_DATE
                 OracleDate?
@@ -1760,7 +1760,7 @@ namespace Odapter.Tester.NET5 {
                     Debug.Assert(pInNumberRequired.Equals(pInOutNumberRequired));
                     OdptPkgMain.Instance.ProcOptionalParam(pInNumberRequired, ref pInOutNumberRequired);
                     Debug.Assert(pInNumberRequired.Equals(pInOutNumberRequired));
-                    OdptPkgMain.Instance.ProcOptionalParam(pInNumberRequired, ref pInOutNumberRequired, optionalPreexistingOpenConnection : null);
+                    OdptPkgMain.Instance.ProcOptionalParam(pInNumberRequired, ref pInOutNumberRequired, optionalPreexistingOpenConnection: null);
                     Debug.Assert(pInNumberRequired.Equals(pInOutNumberRequired));
 
                     OdptPkgMain.Instance.ProcOptionalParamReversed(pInNumberRequired, ref pInOutNumberRequired, pInNumberOptional, pInVarchar2Optional, null);
@@ -1783,7 +1783,7 @@ namespace Odapter.Tester.NET5 {
                     Debug.Assert(pInNumberRequired.Equals(pInOutNumberRequired) && pInNumberRequired.Equals(pRetNumber));
                     pRetNumber = OdptPkgMain.Instance.FuncOptionalParam(pInNumberRequired, ref pInOutNumberRequired);
                     Debug.Assert(pInNumberRequired.Equals(pInOutNumberRequired) && pInNumberRequired.Equals(pRetNumber));
-                    pRetNumber = OdptPkgMain.Instance.FuncOptionalParam(pInNumberRequired, ref pInOutNumberRequired, optionalPreexistingOpenConnection : null);
+                    pRetNumber = OdptPkgMain.Instance.FuncOptionalParam(pInNumberRequired, ref pInOutNumberRequired, optionalPreexistingOpenConnection: null);
                     Debug.Assert(pInNumberRequired.Equals(pInOutNumberRequired) && pInNumberRequired.Equals(pRetNumber));
 
                     pRetNumber = OdptPkgMain.Instance.FuncOptionalParamReversed(pInNumberRequired, ref pInOutNumberRequired, pInNumberOptional, pInVarchar2Optional, null);
@@ -1798,12 +1798,14 @@ namespace Odapter.Tester.NET5 {
                     Debug.Assert(pInNumberRequired.Equals(pInOutNumberRequired) && pInNumberRequired.Equals(pRetNumber));
                 }
             }
-#endregion
+            #endregion
         }
 
-#region DTOs        
-#region Table Big
-        public class TTableBig : OdptPkgTableBig.ITTableBig {
+        #region DTOs
+        public abstract record RecordMarker;
+
+        #region Table Big
+        public record TTableBig : RecordMarker, OdptPkgTableBig.ITTableBig {
             public
 #if SAFETYPE_INTEGER
                             OracleDecimal?
@@ -1814,7 +1816,7 @@ namespace Odapter.Tester.NET5 {
 #else
                             Int64?
 #endif
-                Id { get; set; }
+                Id { get; init; }
             public
 #if SAFETYPE_INTEGER
                             OracleDecimal?
@@ -1825,7 +1827,7 @@ namespace Odapter.Tester.NET5 {
 #else
                             Int64?
 #endif
-                ColNumberId { get; set; }
+                ColNumberId { get; init; }
             public
 #if SAFETYPE_INTEGER
                             OracleDecimal?
@@ -1836,7 +1838,7 @@ namespace Odapter.Tester.NET5 {
 #else
                             Int64?
 #endif
-                ColInteger { get; set; }
+                ColInteger { get; init; }
             public
 #if SAFETYPE_INTEGER
                             OracleDecimal?
@@ -1847,7 +1849,7 @@ namespace Odapter.Tester.NET5 {
 #else
                             Int64?
 #endif
-                ColInt { get; set; }
+                ColInt { get; init; }
             public
 #if SAFETYPE_INTEGER
                             OracleDecimal?
@@ -1858,7 +1860,7 @@ namespace Odapter.Tester.NET5 {
 #else
                             Int64?
 #endif
-                ColSmallint { get; set; }
+                ColSmallint { get; init; }
             public
 #if SAFETYPE_INTEGER
                             OracleDecimal?
@@ -1869,7 +1871,7 @@ namespace Odapter.Tester.NET5 {
 #else
                             Int64?
 #endif
-                ColNumeric { get; set; }
+                ColNumeric { get; init; }
             public
 #if SAFETYPE_INTEGER
                             OracleDecimal?
@@ -1880,47 +1882,47 @@ namespace Odapter.Tester.NET5 {
 #else
                             Int64?
 #endif
-                ColDecimal { get; set; }
+                ColDecimal { get; init; }
             public
 #if SAFETYPE_NUMBER
                             OracleDecimal?
 #else
                             Decimal?
 #endif
-                ColNumber { get; set; }
+                ColNumber { get; init; }
             public
 #if SAFETYPE_NUMBER
                             OracleDecimal?
 #else
                             Decimal?
 #endif
-                ColDoublePrecision { get; set; }
+                ColDoublePrecision { get; init; }
             public
 #if SAFETYPE_NUMBER
                             OracleDecimal?
 #else
                             Decimal?
 #endif
-                ColFloat { get; set; }
+                ColFloat { get; init; }
             public
 #if SAFETYPE_NUMBER
                             OracleDecimal?
 #else
                             Decimal?
 #endif
-                ColReal { get; set; }
-            public Single? ColBinaryFloat { get; set; }
-            public Double? ColBinaryDouble { get; set; }
-            public String ColVarcharMin { get; set; }
-            public String ColVarcharMax { get; set; }
-            public String ColVarchar2Min { get; set; }
-            public String ColVarchar2Max { get; set; }
-            public String ColNvarchar2Min { get; set; }
-            public String ColNvarchar2Max { get; set; }
-            public String ColCharMin { get; set; }
-            public String ColCharMax { get; set; }
-            public String ColNcharMin { get; set; }
-            public String ColNcharMax { get; set; }
+                ColReal { get; init; }
+            public Single? ColBinaryFloat { get; init; }
+            public Double? ColBinaryDouble { get; init; }
+            public String ColVarcharMin { get; init; }
+            public String ColVarcharMax { get; init; }
+            public String ColVarchar2Min { get; init; }
+            public String ColVarchar2Max { get; init; }
+            public String ColNvarchar2Min { get; init; }
+            public String ColNvarchar2Max { get; init; }
+            public String ColCharMin { get; init; }
+            public String ColCharMax { get; init; }
+            public String ColNcharMin { get; init; }
+            public String ColNcharMax { get; init; }
             public
 #if SAFETYPE_DATE
                             OracleDate?
@@ -1929,7 +1931,7 @@ namespace Odapter.Tester.NET5 {
 #else
                             DateTimeOffset?
 #endif
-                ColDate { get; set; }
+                ColDate { get; init; }
             public
 #if SAFETYPE_TIMESTAMP
                             OracleTimeStamp?
@@ -1938,7 +1940,7 @@ namespace Odapter.Tester.NET5 {
 #else
                             DateTimeOffset?
 #endif
-                ColTimestamp { get; set; }
+                ColTimestamp { get; init; }
             public
 #if SAFETYPE_TIMESTAMP
                             OracleTimeStamp?
@@ -1947,7 +1949,7 @@ namespace Odapter.Tester.NET5 {
 #else
                             DateTimeOffset?
 #endif
-                ColTimestampPrec0 { get; set; }
+                ColTimestampPrec0 { get; init; }
             public
 #if SAFETYPE_TIMESTAMP
                             OracleTimeStamp?
@@ -1956,83 +1958,294 @@ namespace Odapter.Tester.NET5 {
 #else
                             DateTimeOffset?
 #endif
-                ColTimestampPrec9 { get; set; }
+                ColTimestampPrec9 { get; init; }
             public
 #if SAFETYPE_TIMESTAMP_TZ
                             OracleTimeStampTZ?
 #else
                             DateTimeOffset?
 #endif
-                ColTimestampTZ { get; set; }
+                ColTimestampTZ { get; init; }
             public
 #if SAFETYPE_TIMESTAMP_TZ
                             OracleTimeStampTZ?
 #else
                             DateTimeOffset?
 #endif
-                ColTimestampTZPrec0 { get; set; }
+                ColTimestampTZPrec0 { get; init; }
             public
 #if SAFETYPE_TIMESTAMP_TZ
                             OracleTimeStampTZ?
 #else
                             DateTimeOffset?
 #endif
-                ColTimestampTZPrec9 { get; set; }
+                ColTimestampTZPrec9 { get; init; }
             public
 #if SAFETYPE_TIMESTAMP_LTZ
                             OracleTimeStampLTZ?
 #else
                             DateTime?
 #endif
-                ColTimestampLTZ { get; set; }
+                ColTimestampLTZ { get; init; }
             public
 #if SAFETYPE_TIMESTAMP_LTZ
                             OracleTimeStampLTZ?
 #else
                             DateTime?
 #endif
-                ColTimestampLTZPrec0 { get; set; }
+                ColTimestampLTZPrec0 { get; init; }
             public
 #if SAFETYPE_TIMESTAMP_LTZ
                             OracleTimeStampLTZ?
 #else
                             DateTime?
 #endif
-                ColTimestampLTZPrec9 { get; set; }
+                ColTimestampLTZPrec9 { get; init; }
             public
 #if SAFETYPE_BLOB
                             OracleBlob
 #else
                             Byte[]
 #endif
-                ColBlob { get; set; }
+                ColBlob { get; init; }
             public
 #if SAFETYPE_CLOB
                             OracleClob
 #else
                             String
 #endif
-                ColClob { get; set; }
+                ColClob { get; init; }
             public
 #if SAFETYPE_CLOB
                             OracleClob
 #else
                             String
 #endif
-                ColNclob { get; set; }
-            public String Abstract { get; set; }
-            public String Base { get; set; }
-            public String Void { get; set; }
-            public String Class { get; set; }
-            public String Namespace { get; set; }
-            public String Readonly { get; set; }
-            public String Partial { get; set; }
-            public String Const { get; set; }
-            public String Using { get; set; }
-            public String ColLast { get; set; }
+                ColNclob { get; init; }
+            public String Abstract { get; init; }
+            public String Base { get; init; }
+            public String Void { get; init; }
+            public String Class { get; init; }
+            public String Namespace { get; init; }
+            public String Readonly { get; init; }
+            public String Partial { get; init; }
+            public String Const { get; init; }
+            public String Using { get; init; }
+            public String ColLast { get; init; }
         } // TTableBig
 
-        public class TTableBigChar : OdptPkgTableBig.ITTableBigChar {
+        public record TTableBigPositionalRecord(
+#if SAFETYPE_INTEGER
+                            OracleDecimal?
+#elif DECIMAL_INTEGER
+                            Decimal?
+#elif SHORT_INTEGER
+                            Int32?
+#else
+                            Int64?
+#endif
+                Id,
+#if SAFETYPE_INTEGER
+                            OracleDecimal?
+#elif DECIMAL_INTEGER
+                            Decimal?
+#elif SHORT_INTEGER
+                            Int32?
+#else
+                            Int64?
+#endif
+                ColNumberId,
+#if SAFETYPE_INTEGER
+                            OracleDecimal?
+#elif DECIMAL_INTEGER
+                            Decimal?
+#elif SHORT_INTEGER
+                            Int32?
+#else
+                            Int64?
+#endif
+                ColInteger,
+#if SAFETYPE_INTEGER
+                            OracleDecimal?
+#elif DECIMAL_INTEGER
+                            Decimal?
+#elif SHORT_INTEGER
+                            Int32?
+#else
+                            Int64?
+#endif
+                ColInt,
+#if SAFETYPE_INTEGER
+                            OracleDecimal?
+#elif DECIMAL_INTEGER
+                            Decimal?
+#elif SHORT_INTEGER
+                            Int32?
+#else
+                            Int64?
+#endif
+                ColSmallint,
+#if SAFETYPE_INTEGER
+                            OracleDecimal?
+#elif DECIMAL_INTEGER
+                            Decimal?
+#elif SHORT_INTEGER
+                            Int32?
+#else
+                            Int64?
+#endif
+                ColNumeric,
+#if SAFETYPE_INTEGER
+                            OracleDecimal?
+#elif DECIMAL_INTEGER
+                            Decimal?
+#elif SHORT_INTEGER
+                            Int32?
+#else
+                            Int64?
+#endif
+                ColDecimal,
+#if SAFETYPE_NUMBER
+                            OracleDecimal?
+#else
+                            Decimal?
+#endif
+                ColNumber,
+#if SAFETYPE_NUMBER
+                            OracleDecimal?
+#else
+                            Decimal?
+#endif
+                ColDoublePrecision,
+#if SAFETYPE_NUMBER
+                            OracleDecimal?
+#else
+                            Decimal?
+#endif
+                ColFloat,
+#if SAFETYPE_NUMBER
+                            OracleDecimal?
+#else
+                            Decimal?
+#endif
+                ColReal,
+            Single? ColBinaryFloat,
+            Double? ColBinaryDouble,
+            String ColVarcharMin,
+            String ColVarcharMax,
+            String ColVarchar2Min,
+            String ColVarchar2Max,
+            String ColNvarchar2Min,
+            String ColNvarchar2Max,
+            String ColCharMin,
+            String ColCharMax,
+            String ColNcharMin,
+            String ColNcharMax,
+#if SAFETYPE_DATE
+                            OracleDate?
+#elif DATE_TIME
+                            DateTime?
+#else
+                            DateTimeOffset?
+#endif
+                ColDate,
+#if SAFETYPE_TIMESTAMP
+                            OracleTimeStamp?
+#elif DATE_TIME
+                            DateTime?
+#else
+                            DateTimeOffset?
+#endif
+                ColTimestamp,
+#if SAFETYPE_TIMESTAMP
+                            OracleTimeStamp?
+#elif DATE_TIME
+                            DateTime?
+#else
+                            DateTimeOffset?
+#endif
+                ColTimestampPrec0,
+#if SAFETYPE_TIMESTAMP
+                            OracleTimeStamp?
+#elif DATE_TIME
+                            DateTime?
+#else
+                            DateTimeOffset?
+#endif
+                ColTimestampPrec9,
+#if SAFETYPE_TIMESTAMP_TZ
+                            OracleTimeStampTZ?
+#else
+                            DateTimeOffset?
+#endif
+                ColTimestampTZ,
+#if SAFETYPE_TIMESTAMP_TZ
+                            OracleTimeStampTZ?
+#else
+                            DateTimeOffset?
+#endif
+                ColTimestampTZPrec0,
+#if SAFETYPE_TIMESTAMP_TZ
+                            OracleTimeStampTZ?
+#else
+                            DateTimeOffset?
+#endif
+                ColTimestampTZPrec9,
+#if SAFETYPE_TIMESTAMP_LTZ
+                            OracleTimeStampLTZ?
+#else
+                            DateTime?
+#endif
+                ColTimestampLTZ,
+#if SAFETYPE_TIMESTAMP_LTZ
+                            OracleTimeStampLTZ?
+#else
+                            DateTime?
+#endif
+                ColTimestampLTZPrec0,
+#if SAFETYPE_TIMESTAMP_LTZ
+                            OracleTimeStampLTZ?
+#else
+                            DateTime?
+#endif
+                ColTimestampLTZPrec9,
+#if SAFETYPE_BLOB
+                            OracleBlob
+#else
+                            Byte[]
+#endif
+                ColBlob,
+#if SAFETYPE_CLOB
+                            OracleClob
+#else
+                            String
+#endif
+                ColClob,
+#if SAFETYPE_CLOB
+                            OracleClob
+#else
+                            String
+#endif
+                ColNclob,
+            String Abstract,
+            String Base,
+            String Void,
+            String Class,
+            String Namespace,
+            String Readonly,
+            String Partial,
+            String Const,
+            String Using,
+            String ColLast
+        ) {
+            public TTableBigPositionalRecord() : this(  default, default, default, default, default, default, default, default, default, default,
+                                                        default, default, default, default, default, default, default, default, default, default,
+                                                        default, default, default, default, default, default, default, default, default, default,
+                                                        default, default, default, default, default, default, default, default, default, default,
+                                                        default, default, default, default, default, default) { }
+        } // TTableBigPositionalRecord
+
+        public record TTableBigChar : RecordMarker, OdptPkgTableBig.ITTableBigChar {
             public
 #if SAFETYPE_INTEGER
                             OracleDecimal?
@@ -2043,21 +2256,48 @@ namespace Odapter.Tester.NET5 {
 #else
                             Int64?
 #endif
-                Id { get; set; }
-            public String ColVarcharMin { get; set; }
-            public String ColVarcharMax { get; set; }
-            public String ColVarchar2Min { get; set; }
-            public String ColVarchar2Max { get; set; }
-            public String ColNvarchar2Min { get; set; }
-            public String ColNvarchar2Max { get; set; }
-            public String ColCharMin { get; set; }
-            public String ColCharMax { get; set; }
-            public String ColNcharMin { get; set; }
-            public String ColNcharMax { get; set; }
-            public String ColLast { get; set; }
+                Id { get; init; }
+            public String ColVarcharMin { get; init; }
+            public String ColVarcharMax { get; init; }
+            public String ColVarchar2Min { get; init; }
+            public String ColVarchar2Max { get; init; }
+            public String ColNvarchar2Min { get; init; }
+            public String ColNvarchar2Max { get; init; }
+            public String ColCharMin { get; init; }
+            public String ColCharMax { get; init; }
+            public String ColNcharMin { get; init; }
+            public String ColNcharMax { get; init; }
+            public String ColLast { get; init; }
         } // TTableBigChar
 
-        public class TTableBigMapByPositionAll : OdptPkgTableBig.ITTableBig {
+        public record TTableBigCharPositionalRecord(
+#if SAFETYPE_INTEGER
+                            OracleDecimal?
+#elif DECIMAL_INTEGER
+                            Decimal?
+#elif SHORT_INTEGER
+                            Int32?
+#else
+                            Int64?
+#endif
+                Id,
+            String ColVarcharMin,
+            String ColVarcharMax,
+            String ColVarchar2Min,
+            String ColVarchar2Max,
+            String ColNvarchar2Min,
+            String ColNvarchar2Max,
+            String ColCharMin,
+            String ColCharMax,
+            String ColNcharMin,
+            String ColNcharMax,
+            String ColLast
+        ) {
+            public TTableBigCharPositionalRecord() : this(  default, default, default, default, default, default, default, default, default, default, 
+                                                            default, default) { }
+        } // TTableBigCharPositionalRecord
+
+        public record TTableBigMapByPositionAll : RecordMarker {//: OdptPkgTableBig.ITTableBig {
             [HydratorMapAttribute(Position = 0)]
             public virtual
 #if SAFETYPE_INTEGER
@@ -2069,8 +2309,7 @@ namespace Odapter.Tester.NET5 {
 #else
                             Int64?
 #endif
-                                    Id
-            { get; set; }
+                                    Id { get; init; }
             [HydratorMapAttribute(Position = 1)]
             public virtual
 #if SAFETYPE_INTEGER
@@ -2082,8 +2321,7 @@ namespace Odapter.Tester.NET5 {
 #else
                             Int64?
 #endif
-                                    ColNumberId
-            { get; set; }
+                                    ColNumberId { get; init; }
             [HydratorMapAttribute(Position = 2)]
             public virtual
 #if SAFETYPE_INTEGER
@@ -2095,8 +2333,7 @@ namespace Odapter.Tester.NET5 {
 #else
                             Int64?
 #endif
-                                    ColInteger
-            { get; set; }
+                                    ColInteger { get; init; }
             [HydratorMapAttribute(Position = 3)]
             public virtual
 #if SAFETYPE_INTEGER
@@ -2108,8 +2345,7 @@ namespace Odapter.Tester.NET5 {
 #else
                             Int64?
 #endif
-                                    ColInt
-            { get; set; }
+                                    ColInt { get; init; }
             [HydratorMapAttribute(Position = 4)]
             public virtual
 #if SAFETYPE_INTEGER
@@ -2121,8 +2357,7 @@ namespace Odapter.Tester.NET5 {
 #else
                             Int64?
 #endif
-                                    ColSmallint
-            { get; set; }
+                                    ColSmallint { get; init; }
             [HydratorMapAttribute(Position = 5)]
             public virtual
 #if SAFETYPE_INTEGER
@@ -2134,7 +2369,7 @@ namespace Odapter.Tester.NET5 {
 #else
                             Int64?
 #endif
-                                    ColNumeric { get; set; }
+                                    ColNumeric { get; init; }
             [HydratorMapAttribute(Position = 6)]
             public virtual
 #if SAFETYPE_INTEGER
@@ -2146,7 +2381,7 @@ namespace Odapter.Tester.NET5 {
 #else
                             Int64?
 #endif
-                                    ColDecimal { get; set; }
+                                    ColDecimal { get; init; }
             [HydratorMapAttribute(Position = 7)]
             public virtual
 #if SAFETYPE_NUMBER
@@ -2154,7 +2389,7 @@ namespace Odapter.Tester.NET5 {
 #else
                             Decimal?
 #endif
-                                    ColNumber { get; set; }
+                                    ColNumber { get; init; }
             [HydratorMapAttribute(Position = 8)]
             public virtual
 #if SAFETYPE_NUMBER
@@ -2162,8 +2397,7 @@ namespace Odapter.Tester.NET5 {
 #else
                             Decimal?
 #endif
-                                    ColDoublePrecision
-            { get; set; }
+                                    ColDoublePrecision { get; init; }
             [HydratorMapAttribute(Position = 9)]
             public virtual
 #if SAFETYPE_NUMBER
@@ -2171,8 +2405,7 @@ namespace Odapter.Tester.NET5 {
 #else
                             Decimal?
 #endif
-                                    ColFloat
-            { get; set; }
+                                    ColFloat { get; init; }
             [HydratorMapAttribute(Position = 10)]
             public virtual
 #if SAFETYPE_NUMBER
@@ -2180,31 +2413,31 @@ namespace Odapter.Tester.NET5 {
 #else
                             Decimal?
 #endif
-                                    ColReal { get; set; }
+                                    ColReal { get; init; }
             [HydratorMapAttribute(Position = 11)]
-            public virtual Single? ColBinaryFloat { get; set; }
+            public virtual Single? ColBinaryFloat { get; init; }
             [HydratorMapAttribute(Position = 12)]
-            public virtual Double? ColBinaryDouble { get; set; }
+            public virtual Double? ColBinaryDouble { get; init; }
             [HydratorMapAttribute(Position = 13)]
-            public virtual String ColVarcharMin { get; set; }
+            public virtual String ColVarcharMin { get; init; }
             [HydratorMapAttribute(Position = 14)]
-            public virtual String ColVarcharMax { get; set; }
+            public virtual String ColVarcharMax { get; init; }
             [HydratorMapAttribute(Position = 15)]
-            public virtual String ColVarchar2Min { get; set; }
+            public virtual String ColVarchar2Min { get; init; }
             [HydratorMapAttribute(Position = 16)]
-            public virtual String ColVarchar2Max { get; set; }
+            public virtual String ColVarchar2Max { get; init; }
             [HydratorMapAttribute(Position = 17)]
-            public virtual String ColNvarchar2Min { get; set; }
+            public virtual String ColNvarchar2Min { get; init; }
             [HydratorMapAttribute(Position = 18)]
-            public virtual String ColNvarchar2Max { get; set; }
+            public virtual String ColNvarchar2Max { get; init; }
             [HydratorMapAttribute(Position = 19)]
-            public virtual String ColCharMin { get; set; }
+            public virtual String ColCharMin { get; init; }
             [HydratorMapAttribute(Position = 20)]
-            public virtual String ColCharMax { get; set; }
+            public virtual String ColCharMax { get; init; }
             [HydratorMapAttribute(Position = 21)]
-            public virtual String ColNcharMin { get; set; }
+            public virtual String ColNcharMin { get; init; }
             [HydratorMapAttribute(Position = 22)]
-            public virtual String ColNcharMax { get; set; }
+            public virtual String ColNcharMax { get; init; }
             [HydratorMapAttribute(Position = 23)]
             public virtual
 #if SAFETYPE_DATE
@@ -2214,8 +2447,7 @@ namespace Odapter.Tester.NET5 {
 #else
                             DateTimeOffset?
 #endif
-                                    ColDate
-            { get; set; }
+                                    ColDate { get; init; }
             [HydratorMapAttribute(Position = 24)]
             public virtual
 #if SAFETYPE_TIMESTAMP
@@ -2225,9 +2457,7 @@ namespace Odapter.Tester.NET5 {
 #else
                             DateTimeOffset?
 #endif
-            ColTimestamp
-            { get; set; }
-
+                                    ColTimestamp { get; init; }
             [HydratorMapAttribute(Position = 25)]
             public virtual
 #if SAFETYPE_TIMESTAMP
@@ -2237,9 +2467,7 @@ namespace Odapter.Tester.NET5 {
 #else
                             DateTimeOffset?
 #endif
-            ColTimestampPrec0
-            { get; set; }
-
+                                    ColTimestampPrec0 { get; init; }
             [HydratorMapAttribute(Position = 26)]
             public virtual
 #if SAFETYPE_TIMESTAMP
@@ -2249,9 +2477,7 @@ namespace Odapter.Tester.NET5 {
 #else
                             DateTimeOffset?
 #endif
-            ColTimestampPrec9
-            { get; set; }
-
+                                    ColTimestampPrec9 { get; init; }
             [HydratorMapAttribute(Position = 27)]
             public virtual
 #if SAFETYPE_TIMESTAMP_TZ
@@ -2259,8 +2485,7 @@ namespace Odapter.Tester.NET5 {
 #else
                             DateTimeOffset?
 #endif
-            ColTimestampTZ { get; set; }
-
+                                    ColTimestampTZ { get; init; }
             [HydratorMapAttribute(Position = 28)]
             public virtual
 #if SAFETYPE_TIMESTAMP_TZ
@@ -2268,8 +2493,7 @@ namespace Odapter.Tester.NET5 {
 #else
                             DateTimeOffset?
 #endif
-            ColTimestampTZPrec0 { get; set; }
-
+                                    ColTimestampTZPrec0 { get; init; }
             [HydratorMapAttribute(Position = 29)]
             public virtual
 #if SAFETYPE_TIMESTAMP_TZ
@@ -2277,8 +2501,7 @@ namespace Odapter.Tester.NET5 {
 #else
                             DateTimeOffset?
 #endif
-            ColTimestampTZPrec9 { get; set; }
-
+                                    ColTimestampTZPrec9 { get; init; }
             [HydratorMapAttribute(Position = 30)]
             public virtual
 #if SAFETYPE_TIMESTAMP_LTZ
@@ -2286,8 +2509,7 @@ namespace Odapter.Tester.NET5 {
 #else
                             DateTime?
 #endif
-            ColTimestampLTZ { get; set; }
-
+                                    ColTimestampLTZ { get; init; }
             [HydratorMapAttribute(Position = 31)]
             public virtual
 #if SAFETYPE_TIMESTAMP_LTZ
@@ -2295,9 +2517,7 @@ namespace Odapter.Tester.NET5 {
 #else
                             DateTime?
 #endif
-            ColTimestampLTZPrec0 { get; set; }
-
-
+                                ColTimestampLTZPrec0 { get; init; }
             [HydratorMapAttribute(Position = 32)]
             public virtual
 #if SAFETYPE_TIMESTAMP_LTZ
@@ -2305,8 +2525,7 @@ namespace Odapter.Tester.NET5 {
 #else
                             DateTime?
 #endif
-            ColTimestampLTZPrec9 { get; set; }
-
+                                ColTimestampLTZPrec9 { get; init; }
             [HydratorMapAttribute(Position = 33)]
             public virtual
 #if SAFETYPE_BLOB
@@ -2314,7 +2533,7 @@ namespace Odapter.Tester.NET5 {
 #else
                             Byte[]
 #endif
-                                ColBlob { get; set; }
+                                ColBlob { get; init; }
             [HydratorMapAttribute(Position = 34)]
             public virtual
 #if SAFETYPE_CLOB
@@ -2322,7 +2541,7 @@ namespace Odapter.Tester.NET5 {
 #else
                             String
 #endif
-                                ColClob { get; set; }
+                                ColClob { get; init; }
             [HydratorMapAttribute(Position = 35)]
             public virtual
 #if SAFETYPE_CLOB
@@ -2330,36 +2549,35 @@ namespace Odapter.Tester.NET5 {
 #else
                             String
 #endif
-                                ColNclob { get; set; }
-
+                                ColNclob { get; init; }
             [HydratorMapAttribute(Position = 36)]
-            public virtual String Abstract { get; set; }
+            public virtual String Abstract { get; init; }
             [HydratorMapAttribute(Position = 37)]
-            public virtual String Base { get; set; }
+            public virtual String Base { get; init; }
             [HydratorMapAttribute(Position = 38)]
-            public virtual String Void { get; set; }
+            public virtual String Void { get; init; }
             [HydratorMapAttribute(Position = 39)]
-            public virtual String Class { get; set; }
+            public virtual String Class { get; init; }
             [HydratorMapAttribute(Position = 40)]
-            public virtual String Namespace { get; set; }
+            public virtual String Namespace { get; init; }
             [HydratorMapAttribute(Position = 41)]
-            public virtual String Readonly { get; set; }
+            public virtual String Readonly { get; init; }
             [HydratorMapAttribute(Position = 42)]
-            public virtual String Partial { get; set; }
+            public virtual String Partial { get; init; }
             [HydratorMapAttribute(Position = 43)]
-            public virtual String Const { get; set; }
+            public virtual String Const { get; init; }
             [HydratorMapAttribute(Position = 44)]
-            public virtual String Using { get; set; }
-
+            public virtual String Using { get; init; }
             [HydratorMapAttribute(Position = 45)]
-            public virtual String ColLast { get; set; }
+            public virtual String ColLast { get; init; }
         } // TTableBigMapByPositionAll
 
-        public class TTableBigMapByPositionPartial : TTableBigMapByPositionAll {
-            public override String ColLast { get; set; }
+        public record TTableBigMapByPositionPartial : TTableBigMapByPositionAll {
+            // exclude Position attribute
+            public override String ColLast { get; init; }
         }
 
-        public class TTableBigCharMapByPositionAll : OdptPkgTableBig.ITTableBigChar {
+        public record TTableBigCharMapByPositionAll : RecordMarker {//: OdptPkgTableBig.ITTableBigChar {
             [HydratorMapAttribute(Position = 0)]
             public virtual
 #if SAFETYPE_INTEGER
@@ -2371,38 +2589,39 @@ namespace Odapter.Tester.NET5 {
 #else
                             Int64?
 #endif
-                                    Id { get; set; }
+                                    Id { get; init; }
             [HydratorMapAttribute(Position = 1)]
-            public virtual String ColVarcharMin { get; set; }
+            public virtual String ColVarcharMin { get; init; }
             [HydratorMapAttribute(Position = 2)]
-            public virtual String ColVarcharMax { get; set; }
+            public virtual String ColVarcharMax { get; init; }
             [HydratorMapAttribute(Position = 3)]
-            public virtual String ColVarchar2Min { get; set; }
+            public virtual String ColVarchar2Min { get; init; }
             [HydratorMapAttribute(Position = 4)]
-            public virtual String ColVarchar2Max { get; set; }
+            public virtual String ColVarchar2Max { get; init; }
             [HydratorMapAttribute(Position = 5)]
-            public virtual String ColNvarchar2Min { get; set; }
+            public virtual String ColNvarchar2Min { get; init; }
             [HydratorMapAttribute(Position = 6)]
-            public virtual String ColNvarchar2Max { get; set; }
+            public virtual String ColNvarchar2Max { get; init; }
             [HydratorMapAttribute(Position = 7)]
-            public virtual String ColCharMin { get; set; }
+            public virtual String ColCharMin { get; init; }
             [HydratorMapAttribute(Position = 8)]
-            public virtual String ColCharMax { get; set; }
+            public virtual String ColCharMax { get; init; }
             [HydratorMapAttribute(Position = 9)]
-            public virtual String ColNcharMin { get; set; }
+            public virtual String ColNcharMin { get; init; }
             [HydratorMapAttribute(Position = 10)]
-            public virtual String ColNcharMax { get; set; }
+            public virtual String ColNcharMax { get; init; }
             [HydratorMapAttribute(Position = 11)]
-            public virtual String ColLast { get; set; }
+            public virtual String ColLast { get; init; }
         } // TTableBigCharMapByPositionAll
 
-        public class TTableBigCharMapByPositionPartial : TTableBigCharMapByPositionAll {
-            public override String ColLast { get; set; }
+        public record TTableBigCharMapByPositionPartial : TTableBigCharMapByPositionAll {
+            // exclude Position attribute
+            public override String ColLast { get; init; }
         }
         #endregion
         #region Table Big filtered
 #if ODPT_FILTER_PREFIX
-        public class FilteredPkgTTableBigFiltered : OdptPkgTableBig.IFltrPkgRecUsedTTableBigFltUsed {
+        public record FilteredPkgTTableBigFiltered : RecordMarker, OdptPkgTableBig.IFltrPkgRecUsedTTableBigFltUsed {
             public
 #if SAFETYPE_INTEGER
                             OracleDecimal?
@@ -2413,7 +2632,7 @@ namespace Odapter.Tester.NET5 {
 #else
                             Int64?
 #endif
-                Id { get; set; }
+                                Id { get; init; }
             public
 #if SAFETYPE_INTEGER
                             OracleDecimal?
@@ -2424,7 +2643,7 @@ namespace Odapter.Tester.NET5 {
 #else
                             Int64?
 #endif
-                ColNumberId { get; set; }
+                                ColNumberId { get; init; }
             public
 #if SAFETYPE_INTEGER
                             OracleDecimal?
@@ -2435,7 +2654,7 @@ namespace Odapter.Tester.NET5 {
 #else
                             Int64?
 #endif
-                ColInteger { get; set; }
+                                ColInteger { get; init; }
             public
 #if SAFETYPE_INTEGER
                             OracleDecimal?
@@ -2446,7 +2665,7 @@ namespace Odapter.Tester.NET5 {
 #else
                             Int64?
 #endif
-                ColInt { get; set; }
+                                ColInt { get; init; }
             public
 #if SAFETYPE_INTEGER
                             OracleDecimal?
@@ -2457,7 +2676,7 @@ namespace Odapter.Tester.NET5 {
 #else
                             Int64?
 #endif
-                ColSmallint { get; set; }
+                                ColSmallint { get; init; }
             public
 #if SAFETYPE_INTEGER
                             OracleDecimal?
@@ -2468,7 +2687,7 @@ namespace Odapter.Tester.NET5 {
 #else
                             Int64?
 #endif
-                ColNumeric { get; set; }
+                                ColNumeric { get; init; }
             public
 #if SAFETYPE_INTEGER
                             OracleDecimal?
@@ -2479,51 +2698,47 @@ namespace Odapter.Tester.NET5 {
 #else
                             Int64?
 #endif
-                ColDecimal { get; set; }
+                                ColDecimal { get; init; }
             public
 #if SAFETYPE_NUMBER
                             OracleDecimal?
 #else
                             Decimal?
 #endif
-                ColNumber { get; set; }
+                                ColNumber { get; init; }
             public
 #if SAFETYPE_NUMBER
                             OracleDecimal?
 #else
                             Decimal?
 #endif
-                ColDoublePrecision { get; set; }
+                                ColDoublePrecision { get; init; }
             public
 #if SAFETYPE_NUMBER
                             OracleDecimal?
 #else
                             Decimal?
 #endif
-                ColFloat { get; set; }
+                                ColFloat { get; init; }
             public
 #if SAFETYPE_NUMBER
                             OracleDecimal?
 #else
                             Decimal?
 #endif
-                ColReal { get; set; }
-            public 
-                Single? 
-                ColBinaryFloat { get; set; }
-            public 
-                Double? 
-                ColBinaryDouble { get; set; }
-            public String ColVarcharMin { get; set; }
-            public String ColVarcharMax { get; set; }
-            public String ColVarchar2Min { get; set; }
-            public String ColVarchar2Max { get; set; }
-            public String ColNvarchar2Min { get; set; }
-            public String ColNvarchar2Max { get; set; }
-            public String ColCharMin { get; set; }
-            public String ColCharMax { get; set; }
-            public String ColNcharMin { get; set; }
-            public String ColNcharMax { get; set; }
+                                ColReal { get; init; }
+            public Single? ColBinaryFloat { get; init; }
+            public Double? ColBinaryDouble { get; init; }
+            public String ColVarcharMin { get; init; }
+            public String ColVarcharMax { get; init; }
+            public String ColVarchar2Min { get; init; }
+            public String ColVarchar2Max { get; init; }
+            public String ColNvarchar2Min { get; init; }
+            public String ColNvarchar2Max { get; init; }
+            public String ColCharMin { get; init; }
+            public String ColCharMax { get; init; }
+            public String ColNcharMin { get; init; }
+            public String ColNcharMax { get; init; }
             public
 #if SAFETYPE_DATE
                             OracleDate?
@@ -2532,7 +2747,7 @@ namespace Odapter.Tester.NET5 {
 #else
                             DateTimeOffset?
 #endif
-                ColDate { get; set; }
+                                ColDate { get; init; }
             public
 #if SAFETYPE_TIMESTAMP
                             OracleTimeStamp?
@@ -2541,7 +2756,7 @@ namespace Odapter.Tester.NET5 {
 #else
                             DateTimeOffset?
 #endif
-                ColTimestamp { get; set; }
+                                ColTimestamp { get; init; }
             public
 #if SAFETYPE_TIMESTAMP
                             OracleTimeStamp?
@@ -2550,7 +2765,7 @@ namespace Odapter.Tester.NET5 {
 #else
                             DateTimeOffset?
 #endif
-                ColTimestampPrec0 { get; set; }
+                                ColTimestampPrec0 { get; init; }
             public
 #if SAFETYPE_TIMESTAMP
                             OracleTimeStamp?
@@ -2559,134 +2774,134 @@ namespace Odapter.Tester.NET5 {
 #else
                             DateTimeOffset?
 #endif
-                ColTimestampPrec9 { get; set; }
+                                ColTimestampPrec9 { get; init; }
             public
 #if SAFETYPE_TIMESTAMP_TZ
                             OracleTimeStampTZ?
 #else
                             DateTimeOffset?
 #endif
-                ColTimestampTZ { get; set; }
+                                ColTimestampTZ { get; init; }
             public
 #if SAFETYPE_TIMESTAMP_TZ
                             OracleTimeStampTZ?
 #else
                             DateTimeOffset?
 #endif
-                ColTimestampTZPrec0 { get; set; }
+                                ColTimestampTZPrec0 { get; init; }
             public
 #if SAFETYPE_TIMESTAMP_TZ
                             OracleTimeStampTZ?
 #else
                             DateTimeOffset?
 #endif
-                ColTimestampTZPrec9 { get; set; }
+                                ColTimestampTZPrec9 { get; init; }
             public
 #if SAFETYPE_TIMESTAMP_LTZ
                             OracleTimeStampLTZ?
 #else
                             DateTime?
 #endif
-                ColTimestampLTZ { get; set; }
+                                ColTimestampLTZ { get; init; }
             public
 #if SAFETYPE_TIMESTAMP_LTZ
                             OracleTimeStampLTZ?
 #else
                             DateTime?
 #endif
-                ColTimestampLTZPrec0 { get; set; }
+                                ColTimestampLTZPrec0 { get; init; }
             public
 #if SAFETYPE_TIMESTAMP_LTZ
                             OracleTimeStampLTZ?
 #else
                             DateTime?
 #endif
-                ColTimestampLTZPrec9 { get; set; }
+                                ColTimestampLTZPrec9 { get; init; }
             public
 #if SAFETYPE_BLOB
                             OracleBlob
 #else
                             Byte[]
 #endif
-                ColBlob { get; set; }
+                                ColBlob { get; init; }
             public
 #if SAFETYPE_CLOB
                             OracleClob
 #else
                             String
 #endif
-                ColClob { get; set; }
+                                ColClob { get; init; }
             public
 #if SAFETYPE_CLOB
                             OracleClob
 #else
                             String
 #endif
-                ColNclob { get; set; }
-            public String Abstract { get; set; }
-            public String Base { get; set; }
-            public String Void { get; set; }
-            public String Class { get; set; }
-            public String Namespace { get; set; }
-            public String Readonly { get; set; }
-            public String Partial { get; set; }
-            public String Const { get; set; }
-            public String Using { get; set; }
-            public String ColLast { get; set; }
+                                ColNclob { get; init; }
+            public String Abstract { get; init; }
+            public String Base { get; init; }
+            public String Void { get; init; }
+            public String Class { get; init; }
+            public String Namespace { get; init; }
+            public String Readonly { get; init; }
+            public String Partial { get; init; }
+            public String Const { get; init; }
+            public String Using { get; init; }
+            public String ColLast { get; init; }
         } // FilteredPkgTTableBigFiltered
 #else
-        public class TTableBigFiltered : FltrPkgRecUsed.ITTableBigFltUsed {
-            public Int64? Id { get; set; }
-            public Int64? ColNumberId { get; set; }
-            public Int64? ColInteger { get; set; }
-            public Int64? ColInt { get; set; }
-            public Int64? ColSmallint { get; set; }
-            public Int64? ColNumeric { get; set; }
-            public Int64? ColDecimal { get; set; }
-            public Decimal? ColNumber { get; set; }
-            public Decimal? ColDoublePrecision { get; set; }
-            public Decimal? ColFloat { get; set; }
-            public Decimal? ColReal { get; set; }
-            public Single? ColBinaryFloat { get; set; }
-            public Double? ColBinaryDouble { get; set; }
-            public String ColVarcharMin { get; set; }
-            public String ColVarcharMax { get; set; }
-            public String ColVarchar2Min { get; set; }
-            public String ColVarchar2Max { get; set; }
-            public String ColNvarchar2Min { get; set; }
-            public String ColNvarchar2Max { get; set; }
-            public String ColCharMin { get; set; }
-            public String ColCharMax { get; set; }
-            public String ColNcharMin { get; set; }
-            public String ColNcharMax { get; set; }
-            public DateTime? ColDate { get; set; }
-            public DateTime? ColTimestamp { get; set; }
-            public DateTime? ColTimestampPrec0 { get; set; }
-            public DateTime? ColTimestampPrec9 { get; set; }
-            public DateTimeOffset? ColTimestampTZ { get; set; }
-            public DateTimeOffset? ColTimestampTZPrec0 { get; set; }
-            public DateTimeOffset? ColTimestampTZPrec9 { get; set; }
-            public DateTime? ColTimestampLTZ { get; set; }
-            public DateTime? ColTimestampLTZPrec0 { get; set; }
-            public DateTime? ColTimestampLTZPrec9 { get; set; }
-            public Byte[] ColBlob { get; set; }
-            public String ColClob { get; set; }
-            public String ColNclob { get; set; }
-            public String Abstract { get; set; }
-            public String Base { get; set; }
-            public String Void { get; set; }
-            public String Class { get; set; }
-            public String Namespace { get; set; }
-            public String Readonly { get; set; }
-            public String Partial { get; set; }
-            public String Const { get; set; }
-            public String Using { get; set; }
-            public String ColLast { get; set; }
+        public record TTableBigFiltered : RecordMarker, FltrPkgRecUsed.ITTableBigFltUsed {
+            public Int64? Id { get; init; }
+            public Int64? ColNumberId { get; init; }
+            public Int64? ColInteger { get; init; }
+            public Int64? ColInt { get; init; }
+            public Int64? ColSmallint { get; init; }
+            public Int64? ColNumeric { get; init; }
+            public Int64? ColDecimal { get; init; }
+            public Decimal? ColNumber { get; init; }
+            public Decimal? ColDoublePrecision { get; init; }
+            public Decimal? ColFloat { get; init; }
+            public Decimal? ColReal { get; init; }
+            public Single? ColBinaryFloat { get; init; }
+            public Double? ColBinaryDouble { get; init; }
+            public String ColVarcharMin { get; init; }
+            public String ColVarcharMax { get; init; }
+            public String ColVarchar2Min { get; init; }
+            public String ColVarchar2Max { get; init; }
+            public String ColNvarchar2Min { get; init; }
+            public String ColNvarchar2Max { get; init; }
+            public String ColCharMin { get; init; }
+            public String ColCharMax { get; init; }
+            public String ColNcharMin { get; init; }
+            public String ColNcharMax { get; init; }
+            public DateTime? ColDate { get; init; }
+            public DateTime? ColTimestamp { get; init; }
+            public DateTime? ColTimestampPrec0 { get; init; }
+            public DateTime? ColTimestampPrec9 { get; init; }
+            public DateTimeOffset? ColTimestampTZ { get; init; }
+            public DateTimeOffset? ColTimestampTZPrec0 { get; init; }
+            public DateTimeOffset? ColTimestampTZPrec9 { get; init; }
+            public DateTime? ColTimestampLTZ { get; init; }
+            public DateTime? ColTimestampLTZPrec0 { get; init; }
+            public DateTime? ColTimestampLTZPrec9 { get; init; }
+            public Byte[] ColBlob { get; init; }
+            public String ColClob { get; init; }
+            public String ColNclob { get; init; }
+            public String Abstract { get; init; }
+            public String Base { get; init; }
+            public String Void { get; init; }
+            public String Class { get; init; }
+            public String Namespace { get; init; }
+            public String Readonly { get; init; }
+            public String Partial { get; init; }
+            public String Const { get; init; }
+            public String Using { get; init; }
+            public String ColLast { get; init; }
         } // TTableBigFiltered
 #endif
         #endregion
         #region Table Number
-        public class TTableNumber : OdptPkgTableNumber.ITTableNumber {
+        public record TTableNumber : RecordMarker, OdptPkgTableNumber.ITTableNumber {
             public
 #if SAFETYPE_INTEGER
                             OracleDecimal?
@@ -2697,41 +2912,23 @@ namespace Odapter.Tester.NET5 {
 #else
                             Int64?
 #endif
-                Id { get; set; }
+                                Id { get; init; }
             public
 #if SAFETYPE_NUMBER
                             OracleDecimal?
 #else
                             Decimal?
 #endif
-                ColNumber { get; set; }
-            public 
-                SByte? 
-                ColNumber1 { get; set; }
-            public 
-                SByte? 
-                ColNumber2 { get; set; }
-            public 
-                Int16? 
-                ColNumber3 { get; set; }
-            public 
-                Int16? 
-                ColNumber4 { get; set; }
-            public 
-                Int32? 
-                ColNumber5 { get; set; }
-            public 
-                Int32? 
-                ColNumber6 { get; set; }
-            public 
-                Int32? 
-                ColNumber7 { get; set; }
-            public 
-                Int32? 
-                ColNumber8 { get; set; }
-            public 
-                Int32? 
-                ColNumber9 { get; set; }
+                                ColNumber { get; init; }
+            public SByte? ColNumber1 { get; init; }
+            public SByte? ColNumber2 { get; init; }
+            public Int16? ColNumber3 { get; init; }
+            public Int16? ColNumber4 { get; init; }
+            public Int32? ColNumber5 { get; init; }
+            public Int32? ColNumber6 { get; init; }
+            public Int32? ColNumber7 { get; init; }
+            public Int32? ColNumber8 { get; init; }
+            public Int32? ColNumber9 { get; init; }
             public
 #if SAFETYPE_INTEGER
                             OracleDecimal?
@@ -2742,7 +2939,7 @@ namespace Odapter.Tester.NET5 {
 #else
                             Int64?
 #endif
-                ColNumber10 { get; set; }
+                                ColNumber10 { get; init; }
             public
 #if SAFETYPE_INTEGER
                             OracleDecimal?
@@ -2753,7 +2950,7 @@ namespace Odapter.Tester.NET5 {
 #else
                             Int64?
 #endif
-                ColNumber18 { get; set; }
+                                ColNumber18 { get; init; }
             public
 #if SAFETYPE_INTEGER
                             OracleDecimal?
@@ -2764,7 +2961,7 @@ namespace Odapter.Tester.NET5 {
 #else
                             Int64?
 #endif
-                ColNumber19 { get; set; }
+                                ColNumber19 { get; init; }
             public
 #if SAFETYPE_INTEGER
                             OracleDecimal?
@@ -2775,25 +2972,13 @@ namespace Odapter.Tester.NET5 {
 #else
                             Int64?
 #endif
-                ColNumber38 { get; set; }
-            public 
-                SByte? 
-                ColNumber1Scale0 { get; set; }
-            public 
-                SByte? 
-                ColNumber2Scale0 { get; set; }
-            public 
-                Int16? 
-                ColNumber3Scale0 { get; set; }
-            public 
-                Int16? 
-                ColNumber4Scale0 { get; set; }
-            public 
-                Int32? 
-                ColNumber5Scale0 { get; set; }
-            public 
-                Int32? 
-                ColNumber9Scale0 { get; set; }
+                            ColNumber38 { get; init; }
+            public SByte? ColNumber1Scale0 { get; init; }
+            public SByte? ColNumber2Scale0 { get; init; }
+            public Int16? ColNumber3Scale0 { get; init; }
+            public Int16? ColNumber4Scale0 { get; init; }
+            public Int32? ColNumber5Scale0 { get; init; }
+            public Int32? ColNumber9Scale0 { get; init; }
             public
 #if SAFETYPE_INTEGER
                             OracleDecimal?
@@ -2804,7 +2989,7 @@ namespace Odapter.Tester.NET5 {
 #else
                             Int64?
 #endif
-                ColNumber10Scale0 { get; set; }
+                                ColNumber10Scale0 { get; init; }
             public
 #if SAFETYPE_INTEGER
                             OracleDecimal?
@@ -2815,7 +3000,7 @@ namespace Odapter.Tester.NET5 {
 #else
                             Int64?
 #endif
-                ColNumber18Scale0 { get; set; }
+                                ColNumber18Scale0 { get; init; }
             public
 #if SAFETYPE_INTEGER
                             OracleDecimal?
@@ -2826,7 +3011,7 @@ namespace Odapter.Tester.NET5 {
 #else
                             Int64?
 #endif
-                ColNumber19Scale0 { get; set; }
+                                ColNumber19Scale0 { get; init; }
             public
 #if SAFETYPE_INTEGER
                             OracleDecimal?
@@ -2837,7 +3022,7 @@ namespace Odapter.Tester.NET5 {
 #else
                             Int64?
 #endif
-                ColNumber28Scale0 { get; set; }
+                                ColNumber28Scale0 { get; init; }
             public
 #if SAFETYPE_INTEGER
                             OracleDecimal?
@@ -2848,7 +3033,7 @@ namespace Odapter.Tester.NET5 {
 #else
                             Int64?
 #endif
-                ColNumber29Scale0 { get; set; }
+                                ColNumber29Scale0 { get; init; }
             public
 #if SAFETYPE_INTEGER
                             OracleDecimal?
@@ -2859,52 +3044,227 @@ namespace Odapter.Tester.NET5 {
 #else
                             Int64?
 #endif
-                ColNumber38Scale0 { get; set; }
+                                ColNumber38Scale0 { get; init; }
             public
 #if SAFETYPE_NUMBER
                             OracleDecimal?
 #else
                             Decimal?
 #endif
-                ColNumber2Scale1 { get; set; }
+                                ColNumber2Scale1 { get; init; }
             public
 #if SAFETYPE_NUMBER
                             OracleDecimal?
 #else
                             Decimal?
 #endif
-                ColNumber5Scale3 { get; set; }
+                                ColNumber5Scale3 { get; init; }
             public
 #if SAFETYPE_NUMBER
                             OracleDecimal?
 #else
                             Decimal?
 #endif
-                ColNumber15Scale11 { get; set; }
+                                ColNumber15Scale11 { get; init; }
             public
 #if SAFETYPE_NUMBER
                             OracleDecimal?
 #else
                             Decimal?
 #endif
-                ColNumber31Scale21 { get; set; }
+                                ColNumber31Scale21 { get; init; }
             public
 #if SAFETYPE_NUMBER
                             OracleDecimal?
 #else
                             Decimal?
 #endif
-                ColNumber38Scale37 { get; set; }
+                                ColNumber38Scale37 { get; init; }
             public
 #if SAFETYPE_NUMBER
                             OracleDecimal?
 #else
                             Decimal?
 #endif
-                ColNumberLast { get; set; }
+                                ColNumberLast { get; init; }
         } // TTableNumber
 
-        public class TTableNumberDec : OdptPkgTableNumber.ITTableNumberDec {
+        public record TTableNumberPositionalRecord(
+#if SAFETYPE_INTEGER
+                            OracleDecimal?
+#elif DECIMAL_INTEGER
+                            Decimal?
+#elif SHORT_INTEGER
+                            Int32?
+#else
+                            Int64?
+#endif
+                                Id,
+#if SAFETYPE_NUMBER
+                            OracleDecimal?
+#else
+                            Decimal?
+#endif
+                                ColNumber,
+                SByte? ColNumber1,
+                SByte? ColNumber2,
+                Int16? ColNumber3,
+                Int16? ColNumber4,
+                Int32? ColNumber5,
+                Int32? ColNumber6,
+                Int32? ColNumber7,
+                Int32? ColNumber8,
+                Int32? ColNumber9,
+#if SAFETYPE_INTEGER
+                            OracleDecimal?
+#elif DECIMAL_INTEGER
+                            Decimal?
+#elif SHORT_INTEGER
+                            Int32?
+#else
+                            Int64?
+#endif
+                                ColNumber10,
+#if SAFETYPE_INTEGER
+                            OracleDecimal?
+#elif DECIMAL_INTEGER
+                            Decimal?
+#elif SHORT_INTEGER
+                            Int32?
+#else
+                            Int64?
+#endif
+                                ColNumber18,
+#if SAFETYPE_INTEGER
+                            OracleDecimal?
+#elif DECIMAL_INTEGER
+                            Decimal?
+#elif SHORT_INTEGER
+                            Int32?
+#else
+                            Int64?
+#endif
+                                ColNumber19,
+#if SAFETYPE_INTEGER
+                            OracleDecimal?
+#elif DECIMAL_INTEGER
+                            Decimal?
+#elif SHORT_INTEGER
+                            Int32?
+#else
+                            Int64?
+#endif
+                                ColNumber38,
+                SByte? ColNumber1Scale0,
+                SByte? ColNumber2Scale0,
+                Int16? ColNumber3Scale0,
+                Int16? ColNumber4Scale0,
+                Int32? ColNumber5Scale0,
+                Int32? ColNumber9Scale0,
+#if SAFETYPE_INTEGER
+                            OracleDecimal?
+#elif DECIMAL_INTEGER
+                            Decimal?
+#elif SHORT_INTEGER
+                            Int32?
+#else
+                            Int64?
+#endif
+                                ColNumber10Scale0,
+#if SAFETYPE_INTEGER
+                            OracleDecimal?
+#elif DECIMAL_INTEGER
+                            Decimal?
+#elif SHORT_INTEGER
+                            Int32?
+#else
+                            Int64?
+#endif
+                                ColNumber18Scale0,
+#if SAFETYPE_INTEGER
+                            OracleDecimal?
+#elif DECIMAL_INTEGER
+                            Decimal?
+#elif SHORT_INTEGER
+                            Int32?
+#else
+                            Int64?
+#endif
+                                ColNumber19Scale0,
+#if SAFETYPE_INTEGER
+                            OracleDecimal?
+#elif DECIMAL_INTEGER
+                            Decimal?
+#elif SHORT_INTEGER
+                            Int32?
+#else
+                            Int64?
+#endif
+                                ColNumber28Scale0,
+#if SAFETYPE_INTEGER
+                            OracleDecimal?
+#elif DECIMAL_INTEGER
+                            Decimal?
+#elif SHORT_INTEGER
+                            Int32?
+#else
+                            Int64?
+#endif
+                                ColNumber29Scale0,
+#if SAFETYPE_INTEGER
+                            OracleDecimal?
+#elif DECIMAL_INTEGER
+                            Decimal?
+#elif SHORT_INTEGER
+                            Int32?
+#else
+                            Int64?
+#endif
+                                ColNumber38Scale0,
+#if SAFETYPE_NUMBER
+                            OracleDecimal?
+#else
+                            Decimal?
+#endif
+                                ColNumber2Scale1,
+#if SAFETYPE_NUMBER
+                            OracleDecimal?
+#else
+                            Decimal?
+#endif
+                                ColNumber5Scale3,
+#if SAFETYPE_NUMBER
+                            OracleDecimal?
+#else
+                            Decimal?
+#endif
+                                ColNumber15Scale11,
+#if SAFETYPE_NUMBER
+                            OracleDecimal?
+#else
+                            Decimal?
+#endif
+                                ColNumber31Scale21,
+#if SAFETYPE_NUMBER
+                            OracleDecimal?
+#else
+                            Decimal?
+#endif
+                                ColNumber38Scale37,
+#if SAFETYPE_NUMBER
+                            OracleDecimal?
+#else
+                            Decimal?
+#endif
+                                ColNumberLast
+        ) {
+            public TTableNumberPositionalRecord() : this(   default, default, default, default, default, default, default, default, default, default,
+                                                            default, default, default, default, default, default, default, default, default, default,
+                                                            default, default, default, default, default, default, default, default, default, default,
+                                                            default, default, default) { }
+        } // TTableNumberPositionalRecord
+
+        public record TTableNumberDec : RecordMarker, OdptPkgTableNumber.ITTableNumberDec {
             public
 #if SAFETYPE_INTEGER
                             OracleDecimal?
@@ -2915,59 +3275,116 @@ namespace Odapter.Tester.NET5 {
 #else
                             Int64?
 #endif
-                Id { get; set; }
+                                Id { get; init; }
             public
 #if SAFETYPE_NUMBER
                             OracleDecimal?
 #else
                             Decimal?
 #endif
-                ColNumber { get; set; }
+                                ColNumber { get; init; }
             public
 #if SAFETYPE_NUMBER
                             OracleDecimal?
 #else
                             Decimal?
 #endif
-                ColNumber2Scale1 { get; set; }
+                                ColNumber2Scale1 { get; init; }
             public
 #if SAFETYPE_NUMBER
                             OracleDecimal?
 #else
                             Decimal?
 #endif
-                ColNumber5Scale3 { get; set; }
+                                ColNumber5Scale3 { get; init; }
             public
 #if SAFETYPE_NUMBER
                             OracleDecimal?
 #else
                             Decimal?
 #endif
-                ColNumber15Scale11 { get; set; }
+                                ColNumber15Scale11 { get; init; }
             public
 #if SAFETYPE_NUMBER
                             OracleDecimal?
 #else
                             Decimal?
 #endif
-                ColNumber31Scale21 { get; set; }
+                                ColNumber31Scale21 { get; init; }
             public
 #if SAFETYPE_NUMBER
                             OracleDecimal?
 #else
                             Decimal?
 #endif
-                ColNumber38Scale37 { get; set; }
+                                ColNumber38Scale37 { get; init; }
             public
 #if SAFETYPE_NUMBER
                             OracleDecimal?
 #else
                             Decimal?
 #endif
-                ColNumberLast { get; set; }
+                                ColNumberLast { get; init; }
         } // TTableNumberDec
 
-        public class TTableNumberMapByPositionAll : OdptPkgTableNumber.ITTableNumber {
+        public record TTableNumberDecPositionalRecord(
+#if SAFETYPE_INTEGER
+                            OracleDecimal?
+#elif DECIMAL_INTEGER
+                            Decimal?
+#elif SHORT_INTEGER
+                            Int32?
+#else
+                            Int64?
+#endif
+                                Id,
+#if SAFETYPE_NUMBER
+                            OracleDecimal?
+#else
+                            Decimal?
+#endif
+                                ColNumber,
+#if SAFETYPE_NUMBER
+                            OracleDecimal?
+#else
+                            Decimal?
+#endif
+                                ColNumber2Scale1,
+#if SAFETYPE_NUMBER
+                            OracleDecimal?
+#else
+                            Decimal?
+#endif
+                                ColNumber5Scale3,
+#if SAFETYPE_NUMBER
+                            OracleDecimal?
+#else
+                            Decimal?
+#endif
+                                ColNumber15Scale11,
+#if SAFETYPE_NUMBER
+                            OracleDecimal?
+#else
+                            Decimal?
+#endif
+                                ColNumber31Scale21,
+#if SAFETYPE_NUMBER
+                            OracleDecimal?
+#else
+                            Decimal?
+#endif
+                                ColNumber38Scale37,
+#if SAFETYPE_NUMBER
+                            OracleDecimal?
+#else
+                            Decimal?
+#endif
+                                ColNumberLast
+        ) {
+             public TTableNumberDecPositionalRecord() : this(default, default, default, default, default, default, default, default) { }
+        } // TTableNumberDecPositionalRecord
+
+        public record TTableNumberMapByPositionAll : RecordMarker { //: OdptPkgTableNumber.ITTableNumber {
             [HydratorMapAttribute(Position = 0)]
             public virtual
 #if SAFETYPE_INTEGER
@@ -2979,8 +3396,7 @@ namespace Odapter.Tester.NET5 {
 #else
                             Int64?
 #endif
-                                    Id
-            { get; set; }
+                                    Id { get; init; }
             [HydratorMapAttribute(Position = 1)]
             public virtual
 #if SAFETYPE_NUMBER
@@ -2988,44 +3404,43 @@ namespace Odapter.Tester.NET5 {
 #else
                             Decimal?
 #endif
-                                    ColNumber
-            { get; set; }
+                                    ColNumber { get; init; }
             [HydratorMapAttribute(Position = 2)]
             public virtual 
                             SByte? 
-                                    ColNumber1 { get; set; }
+                                    ColNumber1 { get; init; }
             [HydratorMapAttribute(Position = 3)]
             public virtual 
                             SByte? 
-                                    ColNumber2 { get; set; }
+                                    ColNumber2 { get; init; }
             [HydratorMapAttribute(Position = 4)]
             public virtual 
                             Int16? 
-                                    ColNumber3 { get; set; }
+                                    ColNumber3 { get; init; }
             [HydratorMapAttribute(Position = 5)]
             public virtual 
                             Int16? 
-                                    ColNumber4 { get; set; }
+                                    ColNumber4 { get; init; }
             [HydratorMapAttribute(Position = 6)]
             public virtual 
                             Int32? 
-                                    ColNumber5 { get; set; }
+                                    ColNumber5 { get; init; }
             [HydratorMapAttribute(Position = 7)]
             public virtual 
                             Int32? 
-                                    ColNumber6 { get; set; }
+                                    ColNumber6 { get; init; }
             [HydratorMapAttribute(Position = 8)]
             public virtual 
                             Int32? 
-                                    ColNumber7 { get; set; }
+                                    ColNumber7 { get; init; }
             [HydratorMapAttribute(Position = 9)]
             public virtual 
                             Int32? 
-                                    ColNumber8 { get; set; }
+                                    ColNumber8 { get; init; }
             [HydratorMapAttribute(Position = 10)]
             public virtual 
                             Int32? 
-                                    ColNumber9 { get; set; }
+                                    ColNumber9 { get; init; }
             [HydratorMapAttribute(Position = 11)]
             public virtual
 #if SAFETYPE_INTEGER
@@ -3037,7 +3452,7 @@ namespace Odapter.Tester.NET5 {
 #else
                             Int64?
 #endif
-                                    ColNumber10 { get; set; }
+                                    ColNumber10 { get; init; }
             [HydratorMapAttribute(Position = 12)]
             public virtual
 #if SAFETYPE_INTEGER
@@ -3049,8 +3464,7 @@ namespace Odapter.Tester.NET5 {
 #else
                             Int64?
 #endif
-                                    ColNumber18
-            { get; set; }
+                                    ColNumber18 { get; init; }
             [HydratorMapAttribute(Position = 13)]
             public virtual
 #if SAFETYPE_INTEGER
@@ -3062,7 +3476,7 @@ namespace Odapter.Tester.NET5 {
 #else
                             Int64?
 #endif
-                                    ColNumber19 { get; set; }
+                                    ColNumber19 { get; init; }
             [HydratorMapAttribute(Position = 14)]
             public virtual
 #if SAFETYPE_INTEGER
@@ -3074,32 +3488,31 @@ namespace Odapter.Tester.NET5 {
 #else
                             Int64?
 #endif
-                                    ColNumber38
-            { get; set; }
+                                    ColNumber38 { get; init; }
             [HydratorMapAttribute(Position = 15)]
             public virtual 
                             SByte? 
-                                    ColNumber1Scale0 { get; set; }
+                                    ColNumber1Scale0 { get; init; }
             [HydratorMapAttribute(Position = 16)]
             public virtual 
                             SByte? 
-                                    ColNumber2Scale0 { get; set; }
+                                    ColNumber2Scale0 { get; init; }
             [HydratorMapAttribute(Position = 17)]
             public virtual 
                             Int16? 
-                                    ColNumber3Scale0 { get; set; }
+                                    ColNumber3Scale0 { get; init; }
             [HydratorMapAttribute(Position = 18)]
             public virtual 
                             Int16? 
-                                    ColNumber4Scale0 { get; set; }
+                                    ColNumber4Scale0 { get; init; }
             [HydratorMapAttribute(Position = 19)]
             public virtual 
                             Int32? 
-                                    ColNumber5Scale0 { get; set; }
+                                    ColNumber5Scale0 { get; init; }
             [HydratorMapAttribute(Position = 20)]
             public virtual 
                             Int32? 
-                                    ColNumber9Scale0 { get; set; }
+                                    ColNumber9Scale0 { get; init; }
             [HydratorMapAttribute(Position = 21)]
             public virtual
 #if SAFETYPE_INTEGER
@@ -3111,8 +3524,7 @@ namespace Odapter.Tester.NET5 {
 #else
                             Int64?
 #endif
-                                    ColNumber10Scale0
-            { get; set; }
+                                    ColNumber10Scale0 { get; init; }
             [HydratorMapAttribute(Position = 22)]
             public virtual
 #if SAFETYPE_INTEGER
@@ -3124,8 +3536,7 @@ namespace Odapter.Tester.NET5 {
 #else
                             Int64?
 #endif
-                                    ColNumber18Scale0
-            { get; set; }
+                                    ColNumber18Scale0 { get; init; }
             [HydratorMapAttribute(Position = 23)]
             public virtual
 #if SAFETYPE_INTEGER
@@ -3137,8 +3548,7 @@ namespace Odapter.Tester.NET5 {
 #else
                             Int64?
 #endif
-                                    ColNumber19Scale0
-            { get; set; }
+                                    ColNumber19Scale0 { get; init; }
             [HydratorMapAttribute(Position = 24)]
             public virtual
 #if SAFETYPE_INTEGER
@@ -3150,8 +3560,7 @@ namespace Odapter.Tester.NET5 {
 #else
                             Int64?
 #endif
-                                    ColNumber28Scale0
-            { get; set; }
+                                    ColNumber28Scale0 { get; init; }
             [HydratorMapAttribute(Position = 25)]
             public virtual
 #if SAFETYPE_INTEGER
@@ -3163,8 +3572,7 @@ namespace Odapter.Tester.NET5 {
 #else
                             Int64?
 #endif
-                                    ColNumber29Scale0
-            { get; set; }
+                                    ColNumber29Scale0 { get; init; }
             [HydratorMapAttribute(Position = 26)]
             public virtual
 #if SAFETYPE_INTEGER
@@ -3176,8 +3584,7 @@ namespace Odapter.Tester.NET5 {
 #else
                             Int64?
 #endif
-                                    ColNumber38Scale0
-            { get; set; }
+                                    ColNumber38Scale0 { get; init; }
             [HydratorMapAttribute(Position = 27)]
             public virtual
 #if SAFETYPE_NUMBER
@@ -3185,8 +3592,7 @@ namespace Odapter.Tester.NET5 {
 #else
                             Decimal?
 #endif
-                                    ColNumber2Scale1
-            { get; set; }
+                                    ColNumber2Scale1 { get; init; }
             [HydratorMapAttribute(Position = 28)]
             public virtual
 #if SAFETYPE_NUMBER
@@ -3194,8 +3600,7 @@ namespace Odapter.Tester.NET5 {
 #else
                             Decimal?
 #endif
-                                    ColNumber5Scale3
-            { get; set; }
+                                    ColNumber5Scale3 { get; init; }
             [HydratorMapAttribute(Position = 29)]
             public virtual
 #if SAFETYPE_NUMBER
@@ -3203,8 +3608,7 @@ namespace Odapter.Tester.NET5 {
 #else
                             Decimal?
 #endif
-                                    ColNumber15Scale11
-            { get; set; }
+                                    ColNumber15Scale11 { get; init; }
             [HydratorMapAttribute(Position = 30)]
             public virtual
 #if SAFETYPE_NUMBER
@@ -3212,8 +3616,7 @@ namespace Odapter.Tester.NET5 {
 #else
                             Decimal?
 #endif
-                                    ColNumber31Scale21
-            { get; set; }
+                                    ColNumber31Scale21 { get; init; }
             [HydratorMapAttribute(Position = 31)]
             public virtual
 #if SAFETYPE_NUMBER
@@ -3221,8 +3624,7 @@ namespace Odapter.Tester.NET5 {
 #else
                             Decimal?
 #endif
-                                    ColNumber38Scale37
-            { get; set; }
+                                    ColNumber38Scale37 { get; init; }
             [HydratorMapAttribute(Position = 32)]
             public virtual
 #if SAFETYPE_NUMBER
@@ -3230,22 +3632,21 @@ namespace Odapter.Tester.NET5 {
 #else
                             Decimal?
 #endif
-                                    ColNumberLast
-            { get; set; }
+                                    ColNumberLast { get; init; }
         } // TTableNumberMapByPositionAll
 
-        public class TTableNumberMapByPositionPartial : TTableNumberMapByPositionAll {
+        public record TTableNumberMapByPositionPartial : TTableNumberMapByPositionAll {
+            // exclude Position attribute
             public override
 #if SAFETYPE_NUMBER
                             OracleDecimal?
 #else
                             Decimal?
 #endif
-                                    ColNumberLast
-            { get; set; }
+                                    ColNumberLast { get; init; }
         } // TTableNumberMapByPositionPartial
 
-        public class TTableNumberDecMapByPositionAll : OdptPkgTableNumber.ITTableNumberDec {
+        public record TTableNumberDecMapByPositionAll : RecordMarker { //: OdptPkgTableNumber.ITTableNumberDec {
             [HydratorMapAttribute(Position = 0)]
             public virtual
 #if SAFETYPE_INTEGER
@@ -3257,7 +3658,7 @@ namespace Odapter.Tester.NET5 {
 #else
                             Int64?
 #endif
-                                    Id { get; set; }
+                                    Id { get; init; }
             [HydratorMapAttribute(Position = 1)]
             public virtual
 #if SAFETYPE_NUMBER
@@ -3265,7 +3666,7 @@ namespace Odapter.Tester.NET5 {
 #else
                             Decimal?
 #endif
-                                    ColNumber { get; set; }
+                                    ColNumber { get; init; }
             [HydratorMapAttribute(Position = 2)]
             public virtual
 #if SAFETYPE_NUMBER
@@ -3273,7 +3674,7 @@ namespace Odapter.Tester.NET5 {
 #else
                             Decimal?
 #endif
-                                    ColNumber2Scale1 { get; set; }
+                                    ColNumber2Scale1 { get; init; }
             [HydratorMapAttribute(Position = 3)]
             public virtual
 #if SAFETYPE_NUMBER
@@ -3281,7 +3682,7 @@ namespace Odapter.Tester.NET5 {
 #else
                             Decimal?
 #endif
-                                    ColNumber5Scale3 { get; set; }
+                                    ColNumber5Scale3 { get; init; }
             [HydratorMapAttribute(Position = 4)]
             public virtual
 #if SAFETYPE_NUMBER
@@ -3289,7 +3690,7 @@ namespace Odapter.Tester.NET5 {
 #else
                             Decimal?
 #endif
-                                    ColNumber15Scale11 { get; set; }
+                                    ColNumber15Scale11 { get; init; }
             [HydratorMapAttribute(Position = 5)]
             public virtual
 #if SAFETYPE_NUMBER
@@ -3297,7 +3698,7 @@ namespace Odapter.Tester.NET5 {
 #else
                             Decimal?
 #endif
-                                    ColNumber31Scale21 { get; set; }
+                                    ColNumber31Scale21 { get; init; }
             [HydratorMapAttribute(Position = 6)]
             public virtual
 #if SAFETYPE_NUMBER
@@ -3305,7 +3706,7 @@ namespace Odapter.Tester.NET5 {
 #else
                             Decimal?
 #endif
-                                    ColNumber38Scale37 { get; set; }
+                                    ColNumber38Scale37 { get; init; }
             [HydratorMapAttribute(Position = 7)]
             public virtual
 #if SAFETYPE_NUMBER
@@ -3313,17 +3714,18 @@ namespace Odapter.Tester.NET5 {
 #else
                             Decimal?
 #endif
-                                    ColNumberLast { get; set; }
+                                    ColNumberLast { get; init; }
         } // TTableNumberDecMapByPositionAll
 
-        public class TTableNumberDecMapByPositionPartial : TTableNumberDecMapByPositionAll {
+        public record TTableNumberDecMapByPositionPartial : TTableNumberDecMapByPositionAll {
+            // exclude Position attribute
             public override
 #if SAFETYPE_NUMBER
                             OracleDecimal?
 #else
                             Decimal?
 #endif
-                                    ColNumberLast { get; set; }
+                                    ColNumberLast { get; init; }
         }
 #endregion
 #endregion DTOs

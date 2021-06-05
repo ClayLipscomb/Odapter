@@ -179,11 +179,11 @@ namespace OdapterWnFrm {
             this.ListViewMessage.BackColor = System.Drawing.Color.Black;
             this.ListViewMessage.ForeColor = System.Drawing.Color.Yellow;
             this.ListViewMessage.HideSelection = false;
-            this.ListViewMessage.Location = new System.Drawing.Point(975, 10);
+            this.ListViewMessage.Location = new System.Drawing.Point(958, 10);
             this.ListViewMessage.Margin = new System.Windows.Forms.Padding(4);
             this.ListViewMessage.Name = "ListViewMessage";
             this.ListViewMessage.OwnerDraw = true;
-            this.ListViewMessage.Size = new System.Drawing.Size(368, 463);
+            this.ListViewMessage.Size = new System.Drawing.Size(384, 463);
             this.ListViewMessage.TabIndex = 7;
             this.ListViewMessage.UseCompatibleStateImageBehavior = false;
             this.ListViewMessage.View = System.Windows.Forms.View.Details;
@@ -262,7 +262,7 @@ namespace OdapterWnFrm {
             // 
             this.lblOutputPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblOutputPath.ForeColor = System.Drawing.Color.DeepSkyBlue;
-            this.lblOutputPath.Location = new System.Drawing.Point(317, 20);
+            this.lblOutputPath.Location = new System.Drawing.Point(318, 20);
             this.lblOutputPath.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblOutputPath.Name = "lblOutputPath";
             this.lblOutputPath.Size = new System.Drawing.Size(117, 16);
@@ -314,10 +314,10 @@ namespace OdapterWnFrm {
             this.txtOutputPath.BackColor = System.Drawing.Color.Black;
             this.txtOutputPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtOutputPath.ForeColor = System.Drawing.Color.Yellow;
-            this.txtOutputPath.Location = new System.Drawing.Point(438, 16);
+            this.txtOutputPath.Location = new System.Drawing.Point(437, 16);
             this.txtOutputPath.Margin = new System.Windows.Forms.Padding(4);
             this.txtOutputPath.Name = "txtOutputPath";
-            this.txtOutputPath.Size = new System.Drawing.Size(448, 23);
+            this.txtOutputPath.Size = new System.Drawing.Size(437, 23);
             this.txtOutputPath.TabIndex = 1;
             // 
             // gbCodeToGenerate
@@ -398,7 +398,7 @@ namespace OdapterWnFrm {
             this.gbCodeToGenerate.Margin = new System.Windows.Forms.Padding(4);
             this.gbCodeToGenerate.Name = "gbCodeToGenerate";
             this.gbCodeToGenerate.Padding = new System.Windows.Forms.Padding(4);
-            this.gbCodeToGenerate.Size = new System.Drawing.Size(951, 307);
+            this.gbCodeToGenerate.Size = new System.Drawing.Size(933, 307);
             this.gbCodeToGenerate.TabIndex = 2;
             this.gbCodeToGenerate.TabStop = false;
             this.gbCodeToGenerate.Text = "Code to Generate";
@@ -416,7 +416,7 @@ namespace OdapterWnFrm {
             this.cmbDtoInterfaceCategoryRecord.Location = new System.Drawing.Point(444, 66);
             this.cmbDtoInterfaceCategoryRecord.Margin = new System.Windows.Forms.Padding(4);
             this.cmbDtoInterfaceCategoryRecord.Name = "cmbDtoInterfaceCategoryRecord";
-            this.cmbDtoInterfaceCategoryRecord.Size = new System.Drawing.Size(158, 25);
+            this.cmbDtoInterfaceCategoryRecord.Size = new System.Drawing.Size(143, 25);
             this.cmbDtoInterfaceCategoryRecord.TabIndex = 11;
             // 
             // lblDtoInterfaceCategory
@@ -501,7 +501,7 @@ namespace OdapterWnFrm {
             this.lblIncludeFilterPrefixInNaming.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblIncludeFilterPrefixInNaming.ForeColor = System.Drawing.Color.DeepSkyBlue;
             this.lblIncludeFilterPrefixInNaming.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.lblIncludeFilterPrefixInNaming.Location = new System.Drawing.Point(286, 278);
+            this.lblIncludeFilterPrefixInNaming.Location = new System.Drawing.Point(273, 278);
             this.lblIncludeFilterPrefixInNaming.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblIncludeFilterPrefixInNaming.Name = "lblIncludeFilterPrefixInNaming";
             this.lblIncludeFilterPrefixInNaming.Size = new System.Drawing.Size(622, 18);
@@ -563,7 +563,7 @@ namespace OdapterWnFrm {
             this.txtBaseEntityFileName.BackColor = System.Drawing.Color.Black;
             this.txtBaseEntityFileName.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtBaseEntityFileName.ForeColor = System.Drawing.Color.Yellow;
-            this.txtBaseEntityFileName.Location = new System.Drawing.Point(765, 248);
+            this.txtBaseEntityFileName.Location = new System.Drawing.Point(752, 248);
             this.txtBaseEntityFileName.Margin = new System.Windows.Forms.Padding(4);
             this.txtBaseEntityFileName.Name = "txtBaseEntityFileName";
             this.txtBaseEntityFileName.Size = new System.Drawing.Size(167, 23);
@@ -574,7 +574,7 @@ namespace OdapterWnFrm {
             this.txtBaseAdapterFileName.BackColor = System.Drawing.Color.Black;
             this.txtBaseAdapterFileName.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtBaseAdapterFileName.ForeColor = System.Drawing.Color.Yellow;
-            this.txtBaseAdapterFileName.Location = new System.Drawing.Point(765, 93);
+            this.txtBaseAdapterFileName.Location = new System.Drawing.Point(752, 93);
             this.txtBaseAdapterFileName.Margin = new System.Windows.Forms.Padding(4);
             this.txtBaseAdapterFileName.Name = "txtBaseAdapterFileName";
             this.txtBaseAdapterFileName.Size = new System.Drawing.Size(167, 23);
@@ -585,7 +585,7 @@ namespace OdapterWnFrm {
             this.txtViewFileName.BackColor = System.Drawing.Color.Black;
             this.txtViewFileName.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtViewFileName.ForeColor = System.Drawing.Color.Yellow;
-            this.txtViewFileName.Location = new System.Drawing.Point(765, 222);
+            this.txtViewFileName.Location = new System.Drawing.Point(752, 222);
             this.txtViewFileName.Margin = new System.Windows.Forms.Padding(4);
             this.txtViewFileName.Name = "txtViewFileName";
             this.txtViewFileName.Size = new System.Drawing.Size(167, 23);
@@ -596,7 +596,7 @@ namespace OdapterWnFrm {
             this.txtTableFileName.BackColor = System.Drawing.Color.Black;
             this.txtTableFileName.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtTableFileName.ForeColor = System.Drawing.Color.Yellow;
-            this.txtTableFileName.Location = new System.Drawing.Point(765, 196);
+            this.txtTableFileName.Location = new System.Drawing.Point(752, 196);
             this.txtTableFileName.Margin = new System.Windows.Forms.Padding(4);
             this.txtTableFileName.Name = "txtTableFileName";
             this.txtTableFileName.Size = new System.Drawing.Size(167, 23);
@@ -607,7 +607,7 @@ namespace OdapterWnFrm {
             this.txtObjectFileName.BackColor = System.Drawing.Color.Black;
             this.txtObjectFileName.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtObjectFileName.ForeColor = System.Drawing.Color.Yellow;
-            this.txtObjectFileName.Location = new System.Drawing.Point(765, 170);
+            this.txtObjectFileName.Location = new System.Drawing.Point(752, 170);
             this.txtObjectFileName.Margin = new System.Windows.Forms.Padding(4);
             this.txtObjectFileName.Name = "txtObjectFileName";
             this.txtObjectFileName.Size = new System.Drawing.Size(167, 23);
@@ -618,7 +618,7 @@ namespace OdapterWnFrm {
             this.txtPackageFileName.BackColor = System.Drawing.Color.Black;
             this.txtPackageFileName.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtPackageFileName.ForeColor = System.Drawing.Color.Yellow;
-            this.txtPackageFileName.Location = new System.Drawing.Point(765, 67);
+            this.txtPackageFileName.Location = new System.Drawing.Point(752, 67);
             this.txtPackageFileName.Margin = new System.Windows.Forms.Padding(4);
             this.txtPackageFileName.Name = "txtPackageFileName";
             this.txtPackageFileName.Size = new System.Drawing.Size(167, 23);
@@ -629,7 +629,7 @@ namespace OdapterWnFrm {
             this.lblFileName.AutoSize = true;
             this.lblFileName.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblFileName.ForeColor = System.Drawing.Color.DeepSkyBlue;
-            this.lblFileName.Location = new System.Drawing.Point(782, 48);
+            this.lblFileName.Location = new System.Drawing.Point(773, 48);
             this.lblFileName.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblFileName.Name = "lblFileName";
             this.lblFileName.Size = new System.Drawing.Size(127, 17);
@@ -668,7 +668,7 @@ namespace OdapterWnFrm {
             this.cbIncludeFilterPrefixInNaming.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbIncludeFilterPrefixInNaming.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbIncludeFilterPrefixInNaming.ForeColor = System.Drawing.Color.DeepSkyBlue;
-            this.cbIncludeFilterPrefixInNaming.Location = new System.Drawing.Point(913, 278);
+            this.cbIncludeFilterPrefixInNaming.Location = new System.Drawing.Point(900, 278);
             this.cbIncludeFilterPrefixInNaming.Margin = new System.Windows.Forms.Padding(4);
             this.cbIncludeFilterPrefixInNaming.Name = "cbIncludeFilterPrefixInNaming";
             this.cbIncludeFilterPrefixInNaming.RightToLeft = System.Windows.Forms.RightToLeft.No;
@@ -799,7 +799,7 @@ namespace OdapterWnFrm {
             this.btnSelectPath.BackColor = System.Drawing.Color.Black;
             this.btnSelectPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSelectPath.ForeColor = System.Drawing.Color.DeepSkyBlue;
-            this.btnSelectPath.Location = new System.Drawing.Point(893, 16);
+            this.btnSelectPath.Location = new System.Drawing.Point(877, 16);
             this.btnSelectPath.Margin = new System.Windows.Forms.Padding(4);
             this.btnSelectPath.Name = "btnSelectPath";
             this.btnSelectPath.Size = new System.Drawing.Size(35, 25);
@@ -882,7 +882,7 @@ namespace OdapterWnFrm {
             this.txtViewAncestorClass.Enabled = false;
             this.txtViewAncestorClass.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtViewAncestorClass.ForeColor = System.Drawing.Color.Yellow;
-            this.txtViewAncestorClass.Location = new System.Drawing.Point(610, 222);
+            this.txtViewAncestorClass.Location = new System.Drawing.Point(597, 222);
             this.txtViewAncestorClass.Margin = new System.Windows.Forms.Padding(4);
             this.txtViewAncestorClass.Name = "txtViewAncestorClass";
             this.txtViewAncestorClass.Size = new System.Drawing.Size(148, 23);
@@ -894,7 +894,7 @@ namespace OdapterWnFrm {
             this.txtTableAncestorClass.Enabled = false;
             this.txtTableAncestorClass.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtTableAncestorClass.ForeColor = System.Drawing.Color.Yellow;
-            this.txtTableAncestorClass.Location = new System.Drawing.Point(610, 196);
+            this.txtTableAncestorClass.Location = new System.Drawing.Point(597, 196);
             this.txtTableAncestorClass.Margin = new System.Windows.Forms.Padding(4);
             this.txtTableAncestorClass.Name = "txtTableAncestorClass";
             this.txtTableAncestorClass.Size = new System.Drawing.Size(148, 23);
@@ -906,7 +906,7 @@ namespace OdapterWnFrm {
             this.txtObjectAncestorClass.Enabled = false;
             this.txtObjectAncestorClass.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtObjectAncestorClass.ForeColor = System.Drawing.Color.Yellow;
-            this.txtObjectAncestorClass.Location = new System.Drawing.Point(610, 170);
+            this.txtObjectAncestorClass.Location = new System.Drawing.Point(597, 170);
             this.txtObjectAncestorClass.Margin = new System.Windows.Forms.Padding(4);
             this.txtObjectAncestorClass.Name = "txtObjectAncestorClass";
             this.txtObjectAncestorClass.Size = new System.Drawing.Size(148, 23);
@@ -948,7 +948,7 @@ namespace OdapterWnFrm {
             this.txtPackageAncestorClass.Enabled = false;
             this.txtPackageAncestorClass.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtPackageAncestorClass.ForeColor = System.Drawing.Color.Yellow;
-            this.txtPackageAncestorClass.Location = new System.Drawing.Point(610, 67);
+            this.txtPackageAncestorClass.Location = new System.Drawing.Point(597, 67);
             this.txtPackageAncestorClass.Margin = new System.Windows.Forms.Padding(4);
             this.txtPackageAncestorClass.Name = "txtPackageAncestorClass";
             this.txtPackageAncestorClass.Size = new System.Drawing.Size(148, 23);
@@ -961,7 +961,7 @@ namespace OdapterWnFrm {
             this.txtRecordTypeAncestorClass.Enabled = false;
             this.txtRecordTypeAncestorClass.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtRecordTypeAncestorClass.ForeColor = System.Drawing.Color.Yellow;
-            this.txtRecordTypeAncestorClass.Location = new System.Drawing.Point(610, 144);
+            this.txtRecordTypeAncestorClass.Location = new System.Drawing.Point(597, 144);
             this.txtRecordTypeAncestorClass.Margin = new System.Windows.Forms.Padding(4);
             this.txtRecordTypeAncestorClass.Name = "txtRecordTypeAncestorClass";
             this.txtRecordTypeAncestorClass.Size = new System.Drawing.Size(148, 23);
@@ -1011,7 +1011,7 @@ namespace OdapterWnFrm {
             this.lblAncestorClass.AutoSize = true;
             this.lblAncestorClass.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblAncestorClass.ForeColor = System.Drawing.Color.DeepSkyBlue;
-            this.lblAncestorClass.Location = new System.Drawing.Point(619, 47);
+            this.lblAncestorClass.Location = new System.Drawing.Point(606, 47);
             this.lblAncestorClass.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblAncestorClass.Name = "lblAncestorClass";
             this.lblAncestorClass.Size = new System.Drawing.Size(127, 17);
@@ -1431,7 +1431,7 @@ namespace OdapterWnFrm {
             this.gbDatabase.Margin = new System.Windows.Forms.Padding(4);
             this.gbDatabase.Name = "gbDatabase";
             this.gbDatabase.Padding = new System.Windows.Forms.Padding(4);
-            this.gbDatabase.Size = new System.Drawing.Size(951, 103);
+            this.gbDatabase.Size = new System.Drawing.Size(933, 103);
             this.gbDatabase.TabIndex = 1;
             this.gbDatabase.TabStop = false;
             this.gbDatabase.Text = "Oracle Database";

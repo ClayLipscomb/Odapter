@@ -87,7 +87,7 @@ namespace Odapter {
 
             MaxAssocArraySize = UInt16.MaxValue;
             MaxReturnAndOutArgStringSize = Int16.MaxValue;
-            TargetDtoInterfaceCategoryRecord = CS.DtoInterfaceCategory.ClassMutable;
+            TargetDtoInterfaceCategoryRecord = CS.DtoInterfaceCategory.MutableSet;
             TargetCSharpVersion = CS.CSharpVersion.FourZero;
             IsDuplicatePackageRecordOriginatingOutsideFilterAndSchema = true;
             IsExcludeObjectsNamesWithSpecificChars = true;
@@ -140,7 +140,7 @@ namespace Odapter {
         public CS.DtoInterfaceCategory TargetDtoInterfaceCategoryRecord { get; set; }
         public string DtoInterfaceCategoryRecord {
             get => TargetDtoInterfaceCategoryRecord.ToString();
-            set => TargetDtoInterfaceCategoryRecord = CSL.DtoInterfaceCategoryOfStringWithDefault(value, CS.DtoInterfaceCategory.ClassMutable);
+            set => TargetDtoInterfaceCategoryRecord = CSL.DtoInterfaceCategoryOfStringWithDefault(value, CS.DtoInterfaceCategory.MutableSet);
         }
 
         // .NET/C# version
@@ -152,6 +152,8 @@ namespace Odapter {
         }
         [XmlIgnore]
         public bool IsCSharp90 { get => TargetCSharpVersion.Equals(CS.CSharpVersion.NineZero); }
+        [XmlIgnore]
+        public bool IsRecordDtoInterfaceImmutable { get => TargetDtoInterfaceCategoryRecord.Equals(CS.DtoInterfaceCategory.ImmutableGetInit); }
 
         // namespaces
         private string _namespaceBase;

@@ -39,112 +39,53 @@ namespace Schema.Odpt.Package {
         public static FltrPkgRecUsed Instance { get { return _instance; } }
 
         public interface ITTableBigFltUsed {
-            Int64? Id { set; }
-            Int64? ColNumberId { set; }
-            Int64? ColInteger { set; }
-            Int64? ColInt { set; }
-            Int64? ColSmallint { set; }
-            Int64? ColNumeric { set; }
-            Int64? ColDecimal { set; }
-            Decimal? ColNumber { set; }
-            Decimal? ColDoublePrecision { set; }
-            Decimal? ColFloat { set; }
-            Decimal? ColReal { set; }
-            Single? ColBinaryFloat { set; }
-            Double? ColBinaryDouble { set; }
-            String ColVarcharMin { set; }
-            String ColVarcharMax { set; }
-            String ColVarchar2Min { set; }
-            String ColVarchar2Max { set; }
-            String ColNvarchar2Min { set; }
-            String ColNvarchar2Max { set; }
-            String ColCharMin { set; }
-            String ColCharMax { set; }
-            String ColNcharMin { set; }
-            String ColNcharMax { set; }
-            DateTime? ColDate { set; }
-            DateTime? ColTimestamp { set; }
-            DateTime? ColTimestampPrec0 { set; }
-            DateTime? ColTimestampPrec9 { set; }
-            DateTimeOffset? ColTimestampTZ { set; }
-            DateTimeOffset? ColTimestampTZPrec0 { set; }
-            DateTimeOffset? ColTimestampTZPrec9 { set; }
-            DateTime? ColTimestampLTZ { set; }
-            DateTime? ColTimestampLTZPrec0 { set; }
-            DateTime? ColTimestampLTZPrec9 { set; }
-            Byte[] ColBlob { set; }
-            String ColClob { set; }
-            String ColNclob { set; }
-            String Abstract { set; }
-            String Base { set; }
-            String Void { set; }
-            String Class { set; }
-            String Namespace { set; }
-            String Readonly { set; }
-            String Partial { set; }
-            String Const { set; }
-            String Using { set; }
-            String ColLast { set; }
+            Int64? Id { get; init; }
+            Int64? ColNumberId { get; init; }
+            Int64? ColInteger { get; init; }
+            Int64? ColInt { get; init; }
+            Int64? ColSmallint { get; init; }
+            Int64? ColNumeric { get; init; }
+            Int64? ColDecimal { get; init; }
+            Decimal? ColNumber { get; init; }
+            Decimal? ColDoublePrecision { get; init; }
+            Decimal? ColFloat { get; init; }
+            Decimal? ColReal { get; init; }
+            Single? ColBinaryFloat { get; init; }
+            Double? ColBinaryDouble { get; init; }
+            String ColVarcharMin { get; init; }
+            String ColVarcharMax { get; init; }
+            String ColVarchar2Min { get; init; }
+            String ColVarchar2Max { get; init; }
+            String ColNvarchar2Min { get; init; }
+            String ColNvarchar2Max { get; init; }
+            String ColCharMin { get; init; }
+            String ColCharMax { get; init; }
+            String ColNcharMin { get; init; }
+            String ColNcharMax { get; init; }
+            DateTime? ColDate { get; init; }
+            DateTime? ColTimestamp { get; init; }
+            DateTime? ColTimestampPrec0 { get; init; }
+            DateTime? ColTimestampPrec9 { get; init; }
+            DateTimeOffset? ColTimestampTZ { get; init; }
+            DateTimeOffset? ColTimestampTZPrec0 { get; init; }
+            DateTimeOffset? ColTimestampTZPrec9 { get; init; }
+            DateTime? ColTimestampLTZ { get; init; }
+            DateTime? ColTimestampLTZPrec0 { get; init; }
+            DateTime? ColTimestampLTZPrec9 { get; init; }
+            Byte[] ColBlob { get; init; }
+            String ColClob { get; init; }
+            String ColNclob { get; init; }
+            String Abstract { get; init; }
+            String Base { get; init; }
+            String Void { get; init; }
+            String Class { get; init; }
+            String Namespace { get; init; }
+            String Readonly { get; init; }
+            String Partial { get; init; }
+            String Const { get; init; }
+            String Using { get; init; }
+            String ColLast { get; init; }
         } // ITTableBigFltUsed
-
-        public ICollection<TypeITTableBigFltUsed> ReadResultITTableBigFltUsed<TypeITTableBigFltUsed>(OracleDataReader rdr, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null)
-                where TypeITTableBigFltUsed : class, ITTableBigFltUsed, new() {
-            ICollection<TypeITTableBigFltUsed> __ret = new List<TypeITTableBigFltUsed>();
-            if (rdr != null && rdr.HasRows) {
-                while (rdr.Read()) {
-                    TypeITTableBigFltUsed obj = new TypeITTableBigFltUsed();
-                    if (!rdr.IsDBNull(0)) obj.Id = Convert.ToInt64(rdr.GetValue(0));
-                    if (!rdr.IsDBNull(1)) obj.ColNumberId = Convert.ToInt64(rdr.GetValue(1));
-                    if (!rdr.IsDBNull(2)) obj.ColInteger = Convert.ToInt64(rdr.GetValue(2));
-                    if (!rdr.IsDBNull(3)) obj.ColInt = Convert.ToInt64(rdr.GetValue(3));
-                    if (!rdr.IsDBNull(4)) obj.ColSmallint = Convert.ToInt64(rdr.GetValue(4));
-                    if (!rdr.IsDBNull(5)) obj.ColNumeric = Convert.ToInt64(rdr.GetValue(5));
-                    if (!rdr.IsDBNull(6)) obj.ColDecimal = Convert.ToInt64(rdr.GetValue(6));
-                    if (!rdr.IsDBNull(7)) obj.ColNumber = (Decimal?)OracleDecimal.SetPrecision(rdr.GetOracleDecimal(7), 28);
-                    if (!rdr.IsDBNull(8)) obj.ColDoublePrecision = (Decimal?)OracleDecimal.SetPrecision(rdr.GetOracleDecimal(8), 28);
-                    if (!rdr.IsDBNull(9)) obj.ColFloat = (Decimal?)OracleDecimal.SetPrecision(rdr.GetOracleDecimal(9), 28);
-                    if (!rdr.IsDBNull(10)) obj.ColReal = (Decimal?)OracleDecimal.SetPrecision(rdr.GetOracleDecimal(10), 28);
-                    if (!rdr.IsDBNull(11)) obj.ColBinaryFloat = Convert.ToSingle(rdr.GetValue(11));
-                    if (!rdr.IsDBNull(12)) obj.ColBinaryDouble = Convert.ToDouble(rdr.GetValue(12));
-                    if (!rdr.IsDBNull(13)) obj.ColVarcharMin = Convert.ToString(rdr.GetValue(13));
-                    if (!rdr.IsDBNull(14)) obj.ColVarcharMax = Convert.ToString(rdr.GetValue(14));
-                    if (!rdr.IsDBNull(15)) obj.ColVarchar2Min = Convert.ToString(rdr.GetValue(15));
-                    if (!rdr.IsDBNull(16)) obj.ColVarchar2Max = Convert.ToString(rdr.GetValue(16));
-                    if (!rdr.IsDBNull(17)) obj.ColNvarchar2Min = Convert.ToString(rdr.GetValue(17));
-                    if (!rdr.IsDBNull(18)) obj.ColNvarchar2Max = Convert.ToString(rdr.GetValue(18));
-                    if (!rdr.IsDBNull(19)) obj.ColCharMin = Convert.ToString(rdr.GetValue(19));
-                    if (!rdr.IsDBNull(20)) obj.ColCharMax = Convert.ToString(rdr.GetValue(20));
-                    if (!rdr.IsDBNull(21)) obj.ColNcharMin = Convert.ToString(rdr.GetValue(21));
-                    if (!rdr.IsDBNull(22)) obj.ColNcharMax = Convert.ToString(rdr.GetValue(22));
-                    if (!rdr.IsDBNull(23)) obj.ColDate = Convert.ToDateTime(rdr.GetValue(23));
-                    if (!rdr.IsDBNull(24)) obj.ColTimestamp = Convert.ToDateTime(rdr.GetValue(24));
-                    if (!rdr.IsDBNull(25)) obj.ColTimestampPrec0 = Convert.ToDateTime(rdr.GetValue(25));
-                    if (!rdr.IsDBNull(26)) obj.ColTimestampPrec9 = Convert.ToDateTime(rdr.GetValue(26));
-                    if (!rdr.IsDBNull(27)) obj.ColTimestampTZ = DateTimeOffset.Parse(rdr.GetValue(27).ToString());
-                    if (!rdr.IsDBNull(28)) obj.ColTimestampTZPrec0 = DateTimeOffset.Parse(rdr.GetValue(28).ToString());
-                    if (!rdr.IsDBNull(29)) obj.ColTimestampTZPrec9 = DateTimeOffset.Parse(rdr.GetValue(29).ToString());
-                    if (!rdr.IsDBNull(30)) obj.ColTimestampLTZ = Convert.ToDateTime(rdr.GetValue(30));
-                    if (!rdr.IsDBNull(31)) obj.ColTimestampLTZPrec0 = Convert.ToDateTime(rdr.GetValue(31));
-                    if (!rdr.IsDBNull(32)) obj.ColTimestampLTZPrec9 = Convert.ToDateTime(rdr.GetValue(32));
-                    if (!rdr.IsDBNull(33)) obj.ColBlob = rdr.GetOracleBlob(33).Value;
-                    if (!rdr.IsDBNull(34)) obj.ColClob = rdr.GetOracleClob(34).Value;
-                    if (!rdr.IsDBNull(35)) obj.ColNclob = rdr.GetOracleClob(35).Value;
-                    if (!rdr.IsDBNull(36)) obj.Abstract = Convert.ToString(rdr.GetValue(36));
-                    if (!rdr.IsDBNull(37)) obj.Base = Convert.ToString(rdr.GetValue(37));
-                    if (!rdr.IsDBNull(38)) obj.Void = Convert.ToString(rdr.GetValue(38));
-                    if (!rdr.IsDBNull(39)) obj.Class = Convert.ToString(rdr.GetValue(39));
-                    if (!rdr.IsDBNull(40)) obj.Namespace = Convert.ToString(rdr.GetValue(40));
-                    if (!rdr.IsDBNull(41)) obj.Readonly = Convert.ToString(rdr.GetValue(41));
-                    if (!rdr.IsDBNull(42)) obj.Partial = Convert.ToString(rdr.GetValue(42));
-                    if (!rdr.IsDBNull(43)) obj.Const = Convert.ToString(rdr.GetValue(43));
-                    if (!rdr.IsDBNull(44)) obj.Using = Convert.ToString(rdr.GetValue(44));
-                    if (!rdr.IsDBNull(45)) obj.ColLast = Convert.ToString(rdr.GetValue(45));
-                    __ret.Add(obj);
-                    if (optionalMaxNumberRowsToReadFromAnyCursor != null && __ret.Count >= optionalMaxNumberRowsToReadFromAnyCursor) break;
-                }
-            }
-            return __ret;
-        } // ReadResultITTableBigFltUsed
 
         public ICollection<TypeITTableBigFltUsed> GetRowsTypedRet<TypeITTableBigFltUsed>(
                 bool mapColumnToObjectPropertyByPosition = false, bool allowUnmappedColumnsToBeExcluded = false, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
@@ -188,7 +129,7 @@ namespace Schema.Odpt.Package {
                     int __rowsAffected = __cmd.ExecuteNonQuery();
                     if (!((OracleRefCursor)__cmd.Parameters["!RETURN"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["!RETURN"].Value).GetDataReader()) {
-                            __ret = ReadResultITTableBigFltUsed<TypeITTableBigFltUsed>(__rdr, optionalMaxNumberRowsToReadFromAnyCursor);
+                            __ret = Hydrator.ReadResult<TypeITTableBigFltUsed>(__rdr, false, false, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     if (__cmdTrace != null) TraceCompletion(__cmdTrace, __ret.Count);
                 } // using OracleCommand
@@ -704,24 +645,9 @@ namespace Schema.Odpt.Package {
         public static OdptPkgMain Instance { get { return _instance; } }
 
         public interface ITRecFldSameName {
-            Decimal? FNumber { set; }
-            Decimal? TRecFldSameNameTRecFldSameName { set; }
+            Decimal? FNumber { get; init; }
+            Decimal? TRecFldSameNameTRecFldSameName { get; init; }
         } // ITRecFldSameName
-
-        public ICollection<TypeITRecFldSameName> ReadResultITRecFldSameName<TypeITRecFldSameName>(OracleDataReader rdr, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null)
-                where TypeITRecFldSameName : class, ITRecFldSameName, new() {
-            ICollection<TypeITRecFldSameName> __ret = new List<TypeITRecFldSameName>();
-            if (rdr != null && rdr.HasRows) {
-                while (rdr.Read()) {
-                    TypeITRecFldSameName obj = new TypeITRecFldSameName();
-                    if (!rdr.IsDBNull(0)) obj.FNumber = (Decimal?)OracleDecimal.SetPrecision(rdr.GetOracleDecimal(0), 28);
-                    if (!rdr.IsDBNull(1)) obj.TRecFldSameNameTRecFldSameName = (Decimal?)OracleDecimal.SetPrecision(rdr.GetOracleDecimal(1), 28);
-                    __ret.Add(obj);
-                    if (optionalMaxNumberRowsToReadFromAnyCursor != null && __ret.Count >= optionalMaxNumberRowsToReadFromAnyCursor) break;
-                }
-            }
-            return __ret;
-        } // ReadResultITRecFldSameName
 
         public void DupSignature1(Int64? pParamIn1, ref Int64? pParamInOut1, out Int64? pParamOut1, OracleConnection optionalPreexistingOpenConnection = null) {
             pParamOut1 = null; 
@@ -3534,7 +3460,7 @@ namespace Schema.Odpt.Package {
                     int __rowsAffected = __cmd.ExecuteNonQuery();
                     if (!((OracleRefCursor)__cmd.Parameters["!RETURN"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["!RETURN"].Value).GetDataReader()) {
-                            __ret = ReadResultITRecFldSameName<TypeITRecFldSameName>(__rdr, optionalMaxNumberRowsToReadFromAnyCursor);
+                            __ret = Hydrator.ReadResult<TypeITRecFldSameName>(__rdr, false, false, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     if (__cmdTrace != null) TraceCompletion(__cmdTrace, __ret.Count);
                 } // using OracleCommand
@@ -3920,260 +3846,117 @@ namespace Schema.Odpt.Package {
         public static OdptPkgTableBig Instance { get { return _instance; } }
 
         public interface ITTableBigFltUnused {
-            Int64? Id { set; }
-            Int64? ColNumberId { set; }
-            Int64? ColInteger { set; }
-            Int64? ColInt { set; }
-            Int64? ColSmallint { set; }
-            Int64? ColNumeric { set; }
-            Int64? ColDecimal { set; }
-            Decimal? ColNumber { set; }
-            Decimal? ColDoublePrecision { set; }
-            Decimal? ColFloat { set; }
-            Decimal? ColReal { set; }
-            Single? ColBinaryFloat { set; }
-            Double? ColBinaryDouble { set; }
-            String ColVarcharMin { set; }
-            String ColVarcharMax { set; }
-            String ColVarchar2Min { set; }
-            String ColVarchar2Max { set; }
-            String ColNvarchar2Min { set; }
-            String ColNvarchar2Max { set; }
-            String ColCharMin { set; }
-            String ColCharMax { set; }
-            String ColNcharMin { set; }
-            String ColNcharMax { set; }
-            DateTime? ColDate { set; }
-            DateTime? ColTimestamp { set; }
-            DateTime? ColTimestampPrec0 { set; }
-            DateTime? ColTimestampPrec9 { set; }
-            DateTimeOffset? ColTimestampTZ { set; }
-            DateTimeOffset? ColTimestampTZPrec0 { set; }
-            DateTimeOffset? ColTimestampTZPrec9 { set; }
-            DateTime? ColTimestampLTZ { set; }
-            DateTime? ColTimestampLTZPrec0 { set; }
-            DateTime? ColTimestampLTZPrec9 { set; }
-            Byte[] ColBlob { set; }
-            String ColClob { set; }
-            String ColNclob { set; }
-            String Abstract { set; }
-            String Base { set; }
-            String Void { set; }
-            String Class { set; }
-            String Namespace { set; }
-            String Readonly { set; }
-            String Partial { set; }
-            String Const { set; }
-            String Using { set; }
-            String ColLast { set; }
+            Int64? Id { get; init; }
+            Int64? ColNumberId { get; init; }
+            Int64? ColInteger { get; init; }
+            Int64? ColInt { get; init; }
+            Int64? ColSmallint { get; init; }
+            Int64? ColNumeric { get; init; }
+            Int64? ColDecimal { get; init; }
+            Decimal? ColNumber { get; init; }
+            Decimal? ColDoublePrecision { get; init; }
+            Decimal? ColFloat { get; init; }
+            Decimal? ColReal { get; init; }
+            Single? ColBinaryFloat { get; init; }
+            Double? ColBinaryDouble { get; init; }
+            String ColVarcharMin { get; init; }
+            String ColVarcharMax { get; init; }
+            String ColVarchar2Min { get; init; }
+            String ColVarchar2Max { get; init; }
+            String ColNvarchar2Min { get; init; }
+            String ColNvarchar2Max { get; init; }
+            String ColCharMin { get; init; }
+            String ColCharMax { get; init; }
+            String ColNcharMin { get; init; }
+            String ColNcharMax { get; init; }
+            DateTime? ColDate { get; init; }
+            DateTime? ColTimestamp { get; init; }
+            DateTime? ColTimestampPrec0 { get; init; }
+            DateTime? ColTimestampPrec9 { get; init; }
+            DateTimeOffset? ColTimestampTZ { get; init; }
+            DateTimeOffset? ColTimestampTZPrec0 { get; init; }
+            DateTimeOffset? ColTimestampTZPrec9 { get; init; }
+            DateTime? ColTimestampLTZ { get; init; }
+            DateTime? ColTimestampLTZPrec0 { get; init; }
+            DateTime? ColTimestampLTZPrec9 { get; init; }
+            Byte[] ColBlob { get; init; }
+            String ColClob { get; init; }
+            String ColNclob { get; init; }
+            String Abstract { get; init; }
+            String Base { get; init; }
+            String Void { get; init; }
+            String Class { get; init; }
+            String Namespace { get; init; }
+            String Readonly { get; init; }
+            String Partial { get; init; }
+            String Const { get; init; }
+            String Using { get; init; }
+            String ColLast { get; init; }
         } // ITTableBigFltUnused
 
-        public ICollection<TypeITTableBigFltUnused> ReadResultITTableBigFltUnused<TypeITTableBigFltUnused>(OracleDataReader rdr, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null)
-                where TypeITTableBigFltUnused : class, ITTableBigFltUnused, new() {
-            ICollection<TypeITTableBigFltUnused> __ret = new List<TypeITTableBigFltUnused>();
-            if (rdr != null && rdr.HasRows) {
-                while (rdr.Read()) {
-                    TypeITTableBigFltUnused obj = new TypeITTableBigFltUnused();
-                    if (!rdr.IsDBNull(0)) obj.Id = Convert.ToInt64(rdr.GetValue(0));
-                    if (!rdr.IsDBNull(1)) obj.ColNumberId = Convert.ToInt64(rdr.GetValue(1));
-                    if (!rdr.IsDBNull(2)) obj.ColInteger = Convert.ToInt64(rdr.GetValue(2));
-                    if (!rdr.IsDBNull(3)) obj.ColInt = Convert.ToInt64(rdr.GetValue(3));
-                    if (!rdr.IsDBNull(4)) obj.ColSmallint = Convert.ToInt64(rdr.GetValue(4));
-                    if (!rdr.IsDBNull(5)) obj.ColNumeric = Convert.ToInt64(rdr.GetValue(5));
-                    if (!rdr.IsDBNull(6)) obj.ColDecimal = Convert.ToInt64(rdr.GetValue(6));
-                    if (!rdr.IsDBNull(7)) obj.ColNumber = (Decimal?)OracleDecimal.SetPrecision(rdr.GetOracleDecimal(7), 28);
-                    if (!rdr.IsDBNull(8)) obj.ColDoublePrecision = (Decimal?)OracleDecimal.SetPrecision(rdr.GetOracleDecimal(8), 28);
-                    if (!rdr.IsDBNull(9)) obj.ColFloat = (Decimal?)OracleDecimal.SetPrecision(rdr.GetOracleDecimal(9), 28);
-                    if (!rdr.IsDBNull(10)) obj.ColReal = (Decimal?)OracleDecimal.SetPrecision(rdr.GetOracleDecimal(10), 28);
-                    if (!rdr.IsDBNull(11)) obj.ColBinaryFloat = Convert.ToSingle(rdr.GetValue(11));
-                    if (!rdr.IsDBNull(12)) obj.ColBinaryDouble = Convert.ToDouble(rdr.GetValue(12));
-                    if (!rdr.IsDBNull(13)) obj.ColVarcharMin = Convert.ToString(rdr.GetValue(13));
-                    if (!rdr.IsDBNull(14)) obj.ColVarcharMax = Convert.ToString(rdr.GetValue(14));
-                    if (!rdr.IsDBNull(15)) obj.ColVarchar2Min = Convert.ToString(rdr.GetValue(15));
-                    if (!rdr.IsDBNull(16)) obj.ColVarchar2Max = Convert.ToString(rdr.GetValue(16));
-                    if (!rdr.IsDBNull(17)) obj.ColNvarchar2Min = Convert.ToString(rdr.GetValue(17));
-                    if (!rdr.IsDBNull(18)) obj.ColNvarchar2Max = Convert.ToString(rdr.GetValue(18));
-                    if (!rdr.IsDBNull(19)) obj.ColCharMin = Convert.ToString(rdr.GetValue(19));
-                    if (!rdr.IsDBNull(20)) obj.ColCharMax = Convert.ToString(rdr.GetValue(20));
-                    if (!rdr.IsDBNull(21)) obj.ColNcharMin = Convert.ToString(rdr.GetValue(21));
-                    if (!rdr.IsDBNull(22)) obj.ColNcharMax = Convert.ToString(rdr.GetValue(22));
-                    if (!rdr.IsDBNull(23)) obj.ColDate = Convert.ToDateTime(rdr.GetValue(23));
-                    if (!rdr.IsDBNull(24)) obj.ColTimestamp = Convert.ToDateTime(rdr.GetValue(24));
-                    if (!rdr.IsDBNull(25)) obj.ColTimestampPrec0 = Convert.ToDateTime(rdr.GetValue(25));
-                    if (!rdr.IsDBNull(26)) obj.ColTimestampPrec9 = Convert.ToDateTime(rdr.GetValue(26));
-                    if (!rdr.IsDBNull(27)) obj.ColTimestampTZ = DateTimeOffset.Parse(rdr.GetValue(27).ToString());
-                    if (!rdr.IsDBNull(28)) obj.ColTimestampTZPrec0 = DateTimeOffset.Parse(rdr.GetValue(28).ToString());
-                    if (!rdr.IsDBNull(29)) obj.ColTimestampTZPrec9 = DateTimeOffset.Parse(rdr.GetValue(29).ToString());
-                    if (!rdr.IsDBNull(30)) obj.ColTimestampLTZ = Convert.ToDateTime(rdr.GetValue(30));
-                    if (!rdr.IsDBNull(31)) obj.ColTimestampLTZPrec0 = Convert.ToDateTime(rdr.GetValue(31));
-                    if (!rdr.IsDBNull(32)) obj.ColTimestampLTZPrec9 = Convert.ToDateTime(rdr.GetValue(32));
-                    if (!rdr.IsDBNull(33)) obj.ColBlob = rdr.GetOracleBlob(33).Value;
-                    if (!rdr.IsDBNull(34)) obj.ColClob = rdr.GetOracleClob(34).Value;
-                    if (!rdr.IsDBNull(35)) obj.ColNclob = rdr.GetOracleClob(35).Value;
-                    if (!rdr.IsDBNull(36)) obj.Abstract = Convert.ToString(rdr.GetValue(36));
-                    if (!rdr.IsDBNull(37)) obj.Base = Convert.ToString(rdr.GetValue(37));
-                    if (!rdr.IsDBNull(38)) obj.Void = Convert.ToString(rdr.GetValue(38));
-                    if (!rdr.IsDBNull(39)) obj.Class = Convert.ToString(rdr.GetValue(39));
-                    if (!rdr.IsDBNull(40)) obj.Namespace = Convert.ToString(rdr.GetValue(40));
-                    if (!rdr.IsDBNull(41)) obj.Readonly = Convert.ToString(rdr.GetValue(41));
-                    if (!rdr.IsDBNull(42)) obj.Partial = Convert.ToString(rdr.GetValue(42));
-                    if (!rdr.IsDBNull(43)) obj.Const = Convert.ToString(rdr.GetValue(43));
-                    if (!rdr.IsDBNull(44)) obj.Using = Convert.ToString(rdr.GetValue(44));
-                    if (!rdr.IsDBNull(45)) obj.ColLast = Convert.ToString(rdr.GetValue(45));
-                    __ret.Add(obj);
-                    if (optionalMaxNumberRowsToReadFromAnyCursor != null && __ret.Count >= optionalMaxNumberRowsToReadFromAnyCursor) break;
-                }
-            }
-            return __ret;
-        } // ReadResultITTableBigFltUnused
-
         public interface ITTableBig {
-            Int64? Id { set; }
-            Int64? ColNumberId { set; }
-            Int64? ColInteger { set; }
-            Int64? ColInt { set; }
-            Int64? ColSmallint { set; }
-            Int64? ColNumeric { set; }
-            Int64? ColDecimal { set; }
-            Decimal? ColNumber { set; }
-            Decimal? ColDoublePrecision { set; }
-            Decimal? ColFloat { set; }
-            Decimal? ColReal { set; }
-            Single? ColBinaryFloat { set; }
-            Double? ColBinaryDouble { set; }
-            String ColVarcharMin { set; }
-            String ColVarcharMax { set; }
-            String ColVarchar2Min { set; }
-            String ColVarchar2Max { set; }
-            String ColNvarchar2Min { set; }
-            String ColNvarchar2Max { set; }
-            String ColCharMin { set; }
-            String ColCharMax { set; }
-            String ColNcharMin { set; }
-            String ColNcharMax { set; }
-            DateTime? ColDate { set; }
-            DateTime? ColTimestamp { set; }
-            DateTime? ColTimestampPrec0 { set; }
-            DateTime? ColTimestampPrec9 { set; }
-            DateTimeOffset? ColTimestampTZ { set; }
-            DateTimeOffset? ColTimestampTZPrec0 { set; }
-            DateTimeOffset? ColTimestampTZPrec9 { set; }
-            DateTime? ColTimestampLTZ { set; }
-            DateTime? ColTimestampLTZPrec0 { set; }
-            DateTime? ColTimestampLTZPrec9 { set; }
-            Byte[] ColBlob { set; }
-            String ColClob { set; }
-            String ColNclob { set; }
-            String Abstract { set; }
-            String Base { set; }
-            String Void { set; }
-            String Class { set; }
-            String Namespace { set; }
-            String Readonly { set; }
-            String Partial { set; }
-            String Const { set; }
-            String Using { set; }
-            String ColLast { set; }
+            Int64? Id { get; init; }
+            Int64? ColNumberId { get; init; }
+            Int64? ColInteger { get; init; }
+            Int64? ColInt { get; init; }
+            Int64? ColSmallint { get; init; }
+            Int64? ColNumeric { get; init; }
+            Int64? ColDecimal { get; init; }
+            Decimal? ColNumber { get; init; }
+            Decimal? ColDoublePrecision { get; init; }
+            Decimal? ColFloat { get; init; }
+            Decimal? ColReal { get; init; }
+            Single? ColBinaryFloat { get; init; }
+            Double? ColBinaryDouble { get; init; }
+            String ColVarcharMin { get; init; }
+            String ColVarcharMax { get; init; }
+            String ColVarchar2Min { get; init; }
+            String ColVarchar2Max { get; init; }
+            String ColNvarchar2Min { get; init; }
+            String ColNvarchar2Max { get; init; }
+            String ColCharMin { get; init; }
+            String ColCharMax { get; init; }
+            String ColNcharMin { get; init; }
+            String ColNcharMax { get; init; }
+            DateTime? ColDate { get; init; }
+            DateTime? ColTimestamp { get; init; }
+            DateTime? ColTimestampPrec0 { get; init; }
+            DateTime? ColTimestampPrec9 { get; init; }
+            DateTimeOffset? ColTimestampTZ { get; init; }
+            DateTimeOffset? ColTimestampTZPrec0 { get; init; }
+            DateTimeOffset? ColTimestampTZPrec9 { get; init; }
+            DateTime? ColTimestampLTZ { get; init; }
+            DateTime? ColTimestampLTZPrec0 { get; init; }
+            DateTime? ColTimestampLTZPrec9 { get; init; }
+            Byte[] ColBlob { get; init; }
+            String ColClob { get; init; }
+            String ColNclob { get; init; }
+            String Abstract { get; init; }
+            String Base { get; init; }
+            String Void { get; init; }
+            String Class { get; init; }
+            String Namespace { get; init; }
+            String Readonly { get; init; }
+            String Partial { get; init; }
+            String Const { get; init; }
+            String Using { get; init; }
+            String ColLast { get; init; }
         } // ITTableBig
 
-        public ICollection<TypeITTableBig> ReadResultITTableBig<TypeITTableBig>(OracleDataReader rdr, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null)
-                where TypeITTableBig : class, ITTableBig, new() {
-            ICollection<TypeITTableBig> __ret = new List<TypeITTableBig>();
-            if (rdr != null && rdr.HasRows) {
-                while (rdr.Read()) {
-                    TypeITTableBig obj = new TypeITTableBig();
-                    if (!rdr.IsDBNull(0)) obj.Id = Convert.ToInt64(rdr.GetValue(0));
-                    if (!rdr.IsDBNull(1)) obj.ColNumberId = Convert.ToInt64(rdr.GetValue(1));
-                    if (!rdr.IsDBNull(2)) obj.ColInteger = Convert.ToInt64(rdr.GetValue(2));
-                    if (!rdr.IsDBNull(3)) obj.ColInt = Convert.ToInt64(rdr.GetValue(3));
-                    if (!rdr.IsDBNull(4)) obj.ColSmallint = Convert.ToInt64(rdr.GetValue(4));
-                    if (!rdr.IsDBNull(5)) obj.ColNumeric = Convert.ToInt64(rdr.GetValue(5));
-                    if (!rdr.IsDBNull(6)) obj.ColDecimal = Convert.ToInt64(rdr.GetValue(6));
-                    if (!rdr.IsDBNull(7)) obj.ColNumber = (Decimal?)OracleDecimal.SetPrecision(rdr.GetOracleDecimal(7), 28);
-                    if (!rdr.IsDBNull(8)) obj.ColDoublePrecision = (Decimal?)OracleDecimal.SetPrecision(rdr.GetOracleDecimal(8), 28);
-                    if (!rdr.IsDBNull(9)) obj.ColFloat = (Decimal?)OracleDecimal.SetPrecision(rdr.GetOracleDecimal(9), 28);
-                    if (!rdr.IsDBNull(10)) obj.ColReal = (Decimal?)OracleDecimal.SetPrecision(rdr.GetOracleDecimal(10), 28);
-                    if (!rdr.IsDBNull(11)) obj.ColBinaryFloat = Convert.ToSingle(rdr.GetValue(11));
-                    if (!rdr.IsDBNull(12)) obj.ColBinaryDouble = Convert.ToDouble(rdr.GetValue(12));
-                    if (!rdr.IsDBNull(13)) obj.ColVarcharMin = Convert.ToString(rdr.GetValue(13));
-                    if (!rdr.IsDBNull(14)) obj.ColVarcharMax = Convert.ToString(rdr.GetValue(14));
-                    if (!rdr.IsDBNull(15)) obj.ColVarchar2Min = Convert.ToString(rdr.GetValue(15));
-                    if (!rdr.IsDBNull(16)) obj.ColVarchar2Max = Convert.ToString(rdr.GetValue(16));
-                    if (!rdr.IsDBNull(17)) obj.ColNvarchar2Min = Convert.ToString(rdr.GetValue(17));
-                    if (!rdr.IsDBNull(18)) obj.ColNvarchar2Max = Convert.ToString(rdr.GetValue(18));
-                    if (!rdr.IsDBNull(19)) obj.ColCharMin = Convert.ToString(rdr.GetValue(19));
-                    if (!rdr.IsDBNull(20)) obj.ColCharMax = Convert.ToString(rdr.GetValue(20));
-                    if (!rdr.IsDBNull(21)) obj.ColNcharMin = Convert.ToString(rdr.GetValue(21));
-                    if (!rdr.IsDBNull(22)) obj.ColNcharMax = Convert.ToString(rdr.GetValue(22));
-                    if (!rdr.IsDBNull(23)) obj.ColDate = Convert.ToDateTime(rdr.GetValue(23));
-                    if (!rdr.IsDBNull(24)) obj.ColTimestamp = Convert.ToDateTime(rdr.GetValue(24));
-                    if (!rdr.IsDBNull(25)) obj.ColTimestampPrec0 = Convert.ToDateTime(rdr.GetValue(25));
-                    if (!rdr.IsDBNull(26)) obj.ColTimestampPrec9 = Convert.ToDateTime(rdr.GetValue(26));
-                    if (!rdr.IsDBNull(27)) obj.ColTimestampTZ = DateTimeOffset.Parse(rdr.GetValue(27).ToString());
-                    if (!rdr.IsDBNull(28)) obj.ColTimestampTZPrec0 = DateTimeOffset.Parse(rdr.GetValue(28).ToString());
-                    if (!rdr.IsDBNull(29)) obj.ColTimestampTZPrec9 = DateTimeOffset.Parse(rdr.GetValue(29).ToString());
-                    if (!rdr.IsDBNull(30)) obj.ColTimestampLTZ = Convert.ToDateTime(rdr.GetValue(30));
-                    if (!rdr.IsDBNull(31)) obj.ColTimestampLTZPrec0 = Convert.ToDateTime(rdr.GetValue(31));
-                    if (!rdr.IsDBNull(32)) obj.ColTimestampLTZPrec9 = Convert.ToDateTime(rdr.GetValue(32));
-                    if (!rdr.IsDBNull(33)) obj.ColBlob = rdr.GetOracleBlob(33).Value;
-                    if (!rdr.IsDBNull(34)) obj.ColClob = rdr.GetOracleClob(34).Value;
-                    if (!rdr.IsDBNull(35)) obj.ColNclob = rdr.GetOracleClob(35).Value;
-                    if (!rdr.IsDBNull(36)) obj.Abstract = Convert.ToString(rdr.GetValue(36));
-                    if (!rdr.IsDBNull(37)) obj.Base = Convert.ToString(rdr.GetValue(37));
-                    if (!rdr.IsDBNull(38)) obj.Void = Convert.ToString(rdr.GetValue(38));
-                    if (!rdr.IsDBNull(39)) obj.Class = Convert.ToString(rdr.GetValue(39));
-                    if (!rdr.IsDBNull(40)) obj.Namespace = Convert.ToString(rdr.GetValue(40));
-                    if (!rdr.IsDBNull(41)) obj.Readonly = Convert.ToString(rdr.GetValue(41));
-                    if (!rdr.IsDBNull(42)) obj.Partial = Convert.ToString(rdr.GetValue(42));
-                    if (!rdr.IsDBNull(43)) obj.Const = Convert.ToString(rdr.GetValue(43));
-                    if (!rdr.IsDBNull(44)) obj.Using = Convert.ToString(rdr.GetValue(44));
-                    if (!rdr.IsDBNull(45)) obj.ColLast = Convert.ToString(rdr.GetValue(45));
-                    __ret.Add(obj);
-                    if (optionalMaxNumberRowsToReadFromAnyCursor != null && __ret.Count >= optionalMaxNumberRowsToReadFromAnyCursor) break;
-                }
-            }
-            return __ret;
-        } // ReadResultITTableBig
-
         public interface ITTableBigChar {
-            Int64? Id { set; }
-            String ColVarcharMin { set; }
-            String ColVarcharMax { set; }
-            String ColVarchar2Min { set; }
-            String ColVarchar2Max { set; }
-            String ColNvarchar2Min { set; }
-            String ColNvarchar2Max { set; }
-            String ColCharMin { set; }
-            String ColCharMax { set; }
-            String ColNcharMin { set; }
-            String ColNcharMax { set; }
-            String ColLast { set; }
+            Int64? Id { get; init; }
+            String ColVarcharMin { get; init; }
+            String ColVarcharMax { get; init; }
+            String ColVarchar2Min { get; init; }
+            String ColVarchar2Max { get; init; }
+            String ColNvarchar2Min { get; init; }
+            String ColNvarchar2Max { get; init; }
+            String ColCharMin { get; init; }
+            String ColCharMax { get; init; }
+            String ColNcharMin { get; init; }
+            String ColNcharMax { get; init; }
+            String ColLast { get; init; }
         } // ITTableBigChar
-
-        public ICollection<TypeITTableBigChar> ReadResultITTableBigChar<TypeITTableBigChar>(OracleDataReader rdr, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null)
-                where TypeITTableBigChar : class, ITTableBigChar, new() {
-            ICollection<TypeITTableBigChar> __ret = new List<TypeITTableBigChar>();
-            if (rdr != null && rdr.HasRows) {
-                while (rdr.Read()) {
-                    TypeITTableBigChar obj = new TypeITTableBigChar();
-                    if (!rdr.IsDBNull(0)) obj.Id = Convert.ToInt64(rdr.GetValue(0));
-                    if (!rdr.IsDBNull(1)) obj.ColVarcharMin = Convert.ToString(rdr.GetValue(1));
-                    if (!rdr.IsDBNull(2)) obj.ColVarcharMax = Convert.ToString(rdr.GetValue(2));
-                    if (!rdr.IsDBNull(3)) obj.ColVarchar2Min = Convert.ToString(rdr.GetValue(3));
-                    if (!rdr.IsDBNull(4)) obj.ColVarchar2Max = Convert.ToString(rdr.GetValue(4));
-                    if (!rdr.IsDBNull(5)) obj.ColNvarchar2Min = Convert.ToString(rdr.GetValue(5));
-                    if (!rdr.IsDBNull(6)) obj.ColNvarchar2Max = Convert.ToString(rdr.GetValue(6));
-                    if (!rdr.IsDBNull(7)) obj.ColCharMin = Convert.ToString(rdr.GetValue(7));
-                    if (!rdr.IsDBNull(8)) obj.ColCharMax = Convert.ToString(rdr.GetValue(8));
-                    if (!rdr.IsDBNull(9)) obj.ColNcharMin = Convert.ToString(rdr.GetValue(9));
-                    if (!rdr.IsDBNull(10)) obj.ColNcharMax = Convert.ToString(rdr.GetValue(10));
-                    if (!rdr.IsDBNull(11)) obj.ColLast = Convert.ToString(rdr.GetValue(11));
-                    __ret.Add(obj);
-                    if (optionalMaxNumberRowsToReadFromAnyCursor != null && __ret.Count >= optionalMaxNumberRowsToReadFromAnyCursor) break;
-                }
-            }
-            return __ret;
-        } // ReadResultITTableBigChar
 
         public void DeleteRow(Int64? pId, OracleConnection optionalPreexistingOpenConnection = null) {
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
@@ -4250,15 +4033,15 @@ namespace Schema.Odpt.Package {
                     int __rowsAffected = __cmd.ExecuteNonQuery();
                     if (!((OracleRefCursor)__cmd.Parameters["!RETURN"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["!RETURN"].Value).GetDataReader()) {
-                            __ret = ReadResultITTableBigFltUnused<TypeITTableBigFltUnused>(__rdr, optionalMaxNumberRowsToReadFromAnyCursor);
+                            __ret = Hydrator.ReadResult<TypeITTableBigFltUnused>(__rdr, false, false, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     if (!((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR"].Value).GetDataReader()) {
-                            pRefCursor = ReadResultITTableBigFltUnused<TypeITTableBigFltUnused>(__rdr, optionalMaxNumberRowsToReadFromAnyCursor);
+                            pRefCursor = Hydrator.ReadResult<TypeITTableBigFltUnused>(__rdr, false, false, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     if (!((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR2"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR2"].Value).GetDataReader()) {
-                            pRefCursor2 = ReadResultITTableBigFltUnused<TypeITTableBigFltUnused>(__rdr, optionalMaxNumberRowsToReadFromAnyCursor);
+                            pRefCursor2 = Hydrator.ReadResult<TypeITTableBigFltUnused>(__rdr, false, false, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     if (__cmdTrace != null) TraceCompletion(__cmdTrace, __ret.Count);
                 } // using OracleCommand
@@ -4326,15 +4109,15 @@ namespace Schema.Odpt.Package {
                     int __rowsAffected = __cmd.ExecuteNonQuery();
                     if (!((OracleRefCursor)__cmd.Parameters["!RETURN"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["!RETURN"].Value).GetDataReader()) {
-                            __ret = FltrPkgRecUsed.Instance.ReadResultITTableBigFltUsed<TypeITTableBigFltUsed>(__rdr, optionalMaxNumberRowsToReadFromAnyCursor);
+                            __ret = Hydrator.ReadResult<TypeITTableBigFltUsed>(__rdr, false, false, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     if (!((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR"].Value).GetDataReader()) {
-                            pRefCursor = FltrPkgRecUsed.Instance.ReadResultITTableBigFltUsed<TypeITTableBigFltUsed>(__rdr, optionalMaxNumberRowsToReadFromAnyCursor);
+                            pRefCursor = Hydrator.ReadResult<TypeITTableBigFltUsed>(__rdr, false, false, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     if (!((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR2"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR2"].Value).GetDataReader()) {
-                            pRefCursor2 = FltrPkgRecUsed.Instance.ReadResultITTableBigFltUsed<TypeITTableBigFltUsed>(__rdr, optionalMaxNumberRowsToReadFromAnyCursor);
+                            pRefCursor2 = Hydrator.ReadResult<TypeITTableBigFltUsed>(__rdr, false, false, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     if (__cmdTrace != null) TraceCompletion(__cmdTrace, __ret.Count);
                 } // using OracleCommand
@@ -4398,7 +4181,7 @@ namespace Schema.Odpt.Package {
                         : Convert.ToInt64(__cmd.Parameters["!RETURN"].Value.ToString());
                     if (!((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR"].Value).GetDataReader()) {
-                            pRefCursor = ReadResultITTableBig<TypeITTableBig>(__rdr, optionalMaxNumberRowsToReadFromAnyCursor);
+                            pRefCursor = Hydrator.ReadResult<TypeITTableBig>(__rdr, false, false, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     if (__cmdTrace != null) TraceCompletion(__cmdTrace);
                 } // using OracleCommand
@@ -4470,11 +4253,11 @@ namespace Schema.Odpt.Package {
                         : Convert.ToInt64(__cmd.Parameters["!RETURN"].Value.ToString());
                     if (!((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR"].Value).GetDataReader()) {
-                            pRefCursor = ReadResultITTableBig<TypeITTableBig>(__rdr, optionalMaxNumberRowsToReadFromAnyCursor);
+                            pRefCursor = Hydrator.ReadResult<TypeITTableBig>(__rdr, false, false, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     if (!((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR2"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR2"].Value).GetDataReader()) {
-                            pRefCursor2 = ReadResultITTableBigChar<TypeITTableBigChar>(__rdr, optionalMaxNumberRowsToReadFromAnyCursor);
+                            pRefCursor2 = Hydrator.ReadResult<TypeITTableBigChar>(__rdr, false, false, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     if (__cmdTrace != null) TraceCompletion(__cmdTrace);
                 } // using OracleCommand
@@ -4544,15 +4327,15 @@ namespace Schema.Odpt.Package {
                     int __rowsAffected = __cmd.ExecuteNonQuery();
                     if (!((OracleRefCursor)__cmd.Parameters["!RETURN"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["!RETURN"].Value).GetDataReader()) {
-                            __ret = ReadResultITTableBig<TypeITTableBig>(__rdr, optionalMaxNumberRowsToReadFromAnyCursor);
+                            __ret = Hydrator.ReadResult<TypeITTableBig>(__rdr, false, false, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     if (!((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR"].Value).GetDataReader()) {
-                            pRefCursor = ReadResultITTableBig<TypeITTableBig>(__rdr, optionalMaxNumberRowsToReadFromAnyCursor);
+                            pRefCursor = Hydrator.ReadResult<TypeITTableBig>(__rdr, false, false, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     if (!((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR2"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR2"].Value).GetDataReader()) {
-                            pRefCursor2 = ReadResultITTableBigChar<TypeITTableBigChar>(__rdr, optionalMaxNumberRowsToReadFromAnyCursor);
+                            pRefCursor2 = Hydrator.ReadResult<TypeITTableBigChar>(__rdr, false, false, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     if (__cmdTrace != null) TraceCompletion(__cmdTrace, __ret.Count);
                 } // using OracleCommand
@@ -4614,11 +4397,11 @@ namespace Schema.Odpt.Package {
                     int __rowsAffected = __cmd.ExecuteNonQuery();
                     if (!((OracleRefCursor)__cmd.Parameters["!RETURN"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["!RETURN"].Value).GetDataReader()) {
-                            __ret = ReadResultITTableBig<TypeITTableBig>(__rdr, optionalMaxNumberRowsToReadFromAnyCursor);
+                            __ret = Hydrator.ReadResult<TypeITTableBig>(__rdr, false, false, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     if (!((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR"].Value).GetDataReader()) {
-                            pRefCursor = ReadResultITTableBig<TypeITTableBig>(__rdr, optionalMaxNumberRowsToReadFromAnyCursor);
+                            pRefCursor = Hydrator.ReadResult<TypeITTableBig>(__rdr, false, false, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     if (__cmdTrace != null) TraceCompletion(__cmdTrace, __ret.Count);
                 } // using OracleCommand
@@ -4673,7 +4456,7 @@ namespace Schema.Odpt.Package {
                     int __rowsAffected = __cmd.ExecuteNonQuery();
                     if (!((OracleRefCursor)__cmd.Parameters["!RETURN"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["!RETURN"].Value).GetDataReader()) {
-                            __ret = ReadResultITTableBig<TypeITTableBig>(__rdr, optionalMaxNumberRowsToReadFromAnyCursor);
+                            __ret = Hydrator.ReadResult<TypeITTableBig>(__rdr, false, false, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     if (__cmdTrace != null) TraceCompletion(__cmdTrace, __ret.Count);
                 } // using OracleCommand
@@ -5420,118 +5203,51 @@ namespace Schema.Odpt.Package {
         public static OdptPkgTableNumber Instance { get { return _instance; } }
 
         public interface ITTableNumber {
-            Int64? Id { set; }
-            Decimal? ColNumber { set; }
-            SByte? ColNumber1 { set; }
-            SByte? ColNumber2 { set; }
-            Int16? ColNumber3 { set; }
-            Int16? ColNumber4 { set; }
-            Int32? ColNumber5 { set; }
-            Int32? ColNumber6 { set; }
-            Int32? ColNumber7 { set; }
-            Int32? ColNumber8 { set; }
-            Int32? ColNumber9 { set; }
-            Int64? ColNumber10 { set; }
-            Int64? ColNumber18 { set; }
-            Int64? ColNumber19 { set; }
-            Int64? ColNumber38 { set; }
-            SByte? ColNumber1Scale0 { set; }
-            SByte? ColNumber2Scale0 { set; }
-            Int16? ColNumber3Scale0 { set; }
-            Int16? ColNumber4Scale0 { set; }
-            Int32? ColNumber5Scale0 { set; }
-            Int32? ColNumber9Scale0 { set; }
-            Int64? ColNumber10Scale0 { set; }
-            Int64? ColNumber18Scale0 { set; }
-            Int64? ColNumber19Scale0 { set; }
-            Int64? ColNumber28Scale0 { set; }
-            Int64? ColNumber29Scale0 { set; }
-            Int64? ColNumber38Scale0 { set; }
-            Decimal? ColNumber2Scale1 { set; }
-            Decimal? ColNumber5Scale3 { set; }
-            Decimal? ColNumber15Scale11 { set; }
-            Decimal? ColNumber31Scale21 { set; }
-            Decimal? ColNumber38Scale37 { set; }
-            Decimal? ColNumberLast { set; }
+            Int64? Id { get; init; }
+            Decimal? ColNumber { get; init; }
+            SByte? ColNumber1 { get; init; }
+            SByte? ColNumber2 { get; init; }
+            Int16? ColNumber3 { get; init; }
+            Int16? ColNumber4 { get; init; }
+            Int32? ColNumber5 { get; init; }
+            Int32? ColNumber6 { get; init; }
+            Int32? ColNumber7 { get; init; }
+            Int32? ColNumber8 { get; init; }
+            Int32? ColNumber9 { get; init; }
+            Int64? ColNumber10 { get; init; }
+            Int64? ColNumber18 { get; init; }
+            Int64? ColNumber19 { get; init; }
+            Int64? ColNumber38 { get; init; }
+            SByte? ColNumber1Scale0 { get; init; }
+            SByte? ColNumber2Scale0 { get; init; }
+            Int16? ColNumber3Scale0 { get; init; }
+            Int16? ColNumber4Scale0 { get; init; }
+            Int32? ColNumber5Scale0 { get; init; }
+            Int32? ColNumber9Scale0 { get; init; }
+            Int64? ColNumber10Scale0 { get; init; }
+            Int64? ColNumber18Scale0 { get; init; }
+            Int64? ColNumber19Scale0 { get; init; }
+            Int64? ColNumber28Scale0 { get; init; }
+            Int64? ColNumber29Scale0 { get; init; }
+            Int64? ColNumber38Scale0 { get; init; }
+            Decimal? ColNumber2Scale1 { get; init; }
+            Decimal? ColNumber5Scale3 { get; init; }
+            Decimal? ColNumber15Scale11 { get; init; }
+            Decimal? ColNumber31Scale21 { get; init; }
+            Decimal? ColNumber38Scale37 { get; init; }
+            Decimal? ColNumberLast { get; init; }
         } // ITTableNumber
 
-        public ICollection<TypeITTableNumber> ReadResultITTableNumber<TypeITTableNumber>(OracleDataReader rdr, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null)
-                where TypeITTableNumber : class, ITTableNumber, new() {
-            ICollection<TypeITTableNumber> __ret = new List<TypeITTableNumber>();
-            if (rdr != null && rdr.HasRows) {
-                while (rdr.Read()) {
-                    TypeITTableNumber obj = new TypeITTableNumber();
-                    if (!rdr.IsDBNull(0)) obj.Id = Convert.ToInt64(rdr.GetValue(0));
-                    if (!rdr.IsDBNull(1)) obj.ColNumber = (Decimal?)OracleDecimal.SetPrecision(rdr.GetOracleDecimal(1), 28);
-                    if (!rdr.IsDBNull(2)) obj.ColNumber1 = Convert.ToSByte(rdr.GetValue(2));
-                    if (!rdr.IsDBNull(3)) obj.ColNumber2 = Convert.ToSByte(rdr.GetValue(3));
-                    if (!rdr.IsDBNull(4)) obj.ColNumber3 = Convert.ToInt16(rdr.GetValue(4));
-                    if (!rdr.IsDBNull(5)) obj.ColNumber4 = Convert.ToInt16(rdr.GetValue(5));
-                    if (!rdr.IsDBNull(6)) obj.ColNumber5 = Convert.ToInt32(rdr.GetValue(6));
-                    if (!rdr.IsDBNull(7)) obj.ColNumber6 = Convert.ToInt32(rdr.GetValue(7));
-                    if (!rdr.IsDBNull(8)) obj.ColNumber7 = Convert.ToInt32(rdr.GetValue(8));
-                    if (!rdr.IsDBNull(9)) obj.ColNumber8 = Convert.ToInt32(rdr.GetValue(9));
-                    if (!rdr.IsDBNull(10)) obj.ColNumber9 = Convert.ToInt32(rdr.GetValue(10));
-                    if (!rdr.IsDBNull(11)) obj.ColNumber10 = Convert.ToInt64(rdr.GetValue(11));
-                    if (!rdr.IsDBNull(12)) obj.ColNumber18 = Convert.ToInt64(rdr.GetValue(12));
-                    if (!rdr.IsDBNull(13)) obj.ColNumber19 = Convert.ToInt64(rdr.GetValue(13));
-                    if (!rdr.IsDBNull(14)) obj.ColNumber38 = Convert.ToInt64(rdr.GetValue(14));
-                    if (!rdr.IsDBNull(15)) obj.ColNumber1Scale0 = Convert.ToSByte(rdr.GetValue(15));
-                    if (!rdr.IsDBNull(16)) obj.ColNumber2Scale0 = Convert.ToSByte(rdr.GetValue(16));
-                    if (!rdr.IsDBNull(17)) obj.ColNumber3Scale0 = Convert.ToInt16(rdr.GetValue(17));
-                    if (!rdr.IsDBNull(18)) obj.ColNumber4Scale0 = Convert.ToInt16(rdr.GetValue(18));
-                    if (!rdr.IsDBNull(19)) obj.ColNumber5Scale0 = Convert.ToInt32(rdr.GetValue(19));
-                    if (!rdr.IsDBNull(20)) obj.ColNumber9Scale0 = Convert.ToInt32(rdr.GetValue(20));
-                    if (!rdr.IsDBNull(21)) obj.ColNumber10Scale0 = Convert.ToInt64(rdr.GetValue(21));
-                    if (!rdr.IsDBNull(22)) obj.ColNumber18Scale0 = Convert.ToInt64(rdr.GetValue(22));
-                    if (!rdr.IsDBNull(23)) obj.ColNumber19Scale0 = Convert.ToInt64(rdr.GetValue(23));
-                    if (!rdr.IsDBNull(24)) obj.ColNumber28Scale0 = Convert.ToInt64(rdr.GetValue(24));
-                    if (!rdr.IsDBNull(25)) obj.ColNumber29Scale0 = Convert.ToInt64(rdr.GetValue(25));
-                    if (!rdr.IsDBNull(26)) obj.ColNumber38Scale0 = Convert.ToInt64(rdr.GetValue(26));
-                    if (!rdr.IsDBNull(27)) obj.ColNumber2Scale1 = (Decimal?)OracleDecimal.SetPrecision(rdr.GetOracleDecimal(27), 28);
-                    if (!rdr.IsDBNull(28)) obj.ColNumber5Scale3 = (Decimal?)OracleDecimal.SetPrecision(rdr.GetOracleDecimal(28), 28);
-                    if (!rdr.IsDBNull(29)) obj.ColNumber15Scale11 = (Decimal?)OracleDecimal.SetPrecision(rdr.GetOracleDecimal(29), 28);
-                    if (!rdr.IsDBNull(30)) obj.ColNumber31Scale21 = (Decimal?)OracleDecimal.SetPrecision(rdr.GetOracleDecimal(30), 28);
-                    if (!rdr.IsDBNull(31)) obj.ColNumber38Scale37 = (Decimal?)OracleDecimal.SetPrecision(rdr.GetOracleDecimal(31), 28);
-                    if (!rdr.IsDBNull(32)) obj.ColNumberLast = (Decimal?)OracleDecimal.SetPrecision(rdr.GetOracleDecimal(32), 28);
-                    __ret.Add(obj);
-                    if (optionalMaxNumberRowsToReadFromAnyCursor != null && __ret.Count >= optionalMaxNumberRowsToReadFromAnyCursor) break;
-                }
-            }
-            return __ret;
-        } // ReadResultITTableNumber
-
         public interface ITTableNumberDec {
-            Int64? Id { set; }
-            Decimal? ColNumber { set; }
-            Decimal? ColNumber2Scale1 { set; }
-            Decimal? ColNumber5Scale3 { set; }
-            Decimal? ColNumber15Scale11 { set; }
-            Decimal? ColNumber31Scale21 { set; }
-            Decimal? ColNumber38Scale37 { set; }
-            Decimal? ColNumberLast { set; }
+            Int64? Id { get; init; }
+            Decimal? ColNumber { get; init; }
+            Decimal? ColNumber2Scale1 { get; init; }
+            Decimal? ColNumber5Scale3 { get; init; }
+            Decimal? ColNumber15Scale11 { get; init; }
+            Decimal? ColNumber31Scale21 { get; init; }
+            Decimal? ColNumber38Scale37 { get; init; }
+            Decimal? ColNumberLast { get; init; }
         } // ITTableNumberDec
-
-        public ICollection<TypeITTableNumberDec> ReadResultITTableNumberDec<TypeITTableNumberDec>(OracleDataReader rdr, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null)
-                where TypeITTableNumberDec : class, ITTableNumberDec, new() {
-            ICollection<TypeITTableNumberDec> __ret = new List<TypeITTableNumberDec>();
-            if (rdr != null && rdr.HasRows) {
-                while (rdr.Read()) {
-                    TypeITTableNumberDec obj = new TypeITTableNumberDec();
-                    if (!rdr.IsDBNull(0)) obj.Id = Convert.ToInt64(rdr.GetValue(0));
-                    if (!rdr.IsDBNull(1)) obj.ColNumber = (Decimal?)OracleDecimal.SetPrecision(rdr.GetOracleDecimal(1), 28);
-                    if (!rdr.IsDBNull(2)) obj.ColNumber2Scale1 = (Decimal?)OracleDecimal.SetPrecision(rdr.GetOracleDecimal(2), 28);
-                    if (!rdr.IsDBNull(3)) obj.ColNumber5Scale3 = (Decimal?)OracleDecimal.SetPrecision(rdr.GetOracleDecimal(3), 28);
-                    if (!rdr.IsDBNull(4)) obj.ColNumber15Scale11 = (Decimal?)OracleDecimal.SetPrecision(rdr.GetOracleDecimal(4), 28);
-                    if (!rdr.IsDBNull(5)) obj.ColNumber31Scale21 = (Decimal?)OracleDecimal.SetPrecision(rdr.GetOracleDecimal(5), 28);
-                    if (!rdr.IsDBNull(6)) obj.ColNumber38Scale37 = (Decimal?)OracleDecimal.SetPrecision(rdr.GetOracleDecimal(6), 28);
-                    if (!rdr.IsDBNull(7)) obj.ColNumberLast = (Decimal?)OracleDecimal.SetPrecision(rdr.GetOracleDecimal(7), 28);
-                    __ret.Add(obj);
-                    if (optionalMaxNumberRowsToReadFromAnyCursor != null && __ret.Count >= optionalMaxNumberRowsToReadFromAnyCursor) break;
-                }
-            }
-            return __ret;
-        } // ReadResultITTableNumberDec
 
         public void DeleteRow(Int64? pId, OracleConnection optionalPreexistingOpenConnection = null) {
             OracleConnection __conn = optionalPreexistingOpenConnection ?? GetConnection();
@@ -5604,7 +5320,7 @@ namespace Schema.Odpt.Package {
                         : Convert.ToInt64(__cmd.Parameters["!RETURN"].Value.ToString());
                     if (!((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR"].Value).GetDataReader()) {
-                            pRefCursor = ReadResultITTableNumber<TypeITTableNumber>(__rdr, optionalMaxNumberRowsToReadFromAnyCursor);
+                            pRefCursor = Hydrator.ReadResult<TypeITTableNumber>(__rdr, false, false, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     if (__cmdTrace != null) TraceCompletion(__cmdTrace);
                 } // using OracleCommand
@@ -5676,11 +5392,11 @@ namespace Schema.Odpt.Package {
                         : Convert.ToInt64(__cmd.Parameters["!RETURN"].Value.ToString());
                     if (!((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR"].Value).GetDataReader()) {
-                            pRefCursor = ReadResultITTableNumber<TypeITTableNumber>(__rdr, optionalMaxNumberRowsToReadFromAnyCursor);
+                            pRefCursor = Hydrator.ReadResult<TypeITTableNumber>(__rdr, false, false, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     if (!((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR2"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR2"].Value).GetDataReader()) {
-                            pRefCursor2 = ReadResultITTableNumberDec<TypeITTableNumberDec>(__rdr, optionalMaxNumberRowsToReadFromAnyCursor);
+                            pRefCursor2 = Hydrator.ReadResult<TypeITTableNumberDec>(__rdr, false, false, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     if (__cmdTrace != null) TraceCompletion(__cmdTrace);
                 } // using OracleCommand
@@ -5750,15 +5466,15 @@ namespace Schema.Odpt.Package {
                     int __rowsAffected = __cmd.ExecuteNonQuery();
                     if (!((OracleRefCursor)__cmd.Parameters["!RETURN"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["!RETURN"].Value).GetDataReader()) {
-                            __ret = ReadResultITTableNumber<TypeITTableNumber>(__rdr, optionalMaxNumberRowsToReadFromAnyCursor);
+                            __ret = Hydrator.ReadResult<TypeITTableNumber>(__rdr, false, false, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     if (!((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR"].Value).GetDataReader()) {
-                            pRefCursor = ReadResultITTableNumber<TypeITTableNumber>(__rdr, optionalMaxNumberRowsToReadFromAnyCursor);
+                            pRefCursor = Hydrator.ReadResult<TypeITTableNumber>(__rdr, false, false, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     if (!((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR2"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR2"].Value).GetDataReader()) {
-                            pRefCursor2 = ReadResultITTableNumberDec<TypeITTableNumberDec>(__rdr, optionalMaxNumberRowsToReadFromAnyCursor);
+                            pRefCursor2 = Hydrator.ReadResult<TypeITTableNumberDec>(__rdr, false, false, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     if (__cmdTrace != null) TraceCompletion(__cmdTrace, __ret.Count);
                 } // using OracleCommand
@@ -5820,11 +5536,11 @@ namespace Schema.Odpt.Package {
                     int __rowsAffected = __cmd.ExecuteNonQuery();
                     if (!((OracleRefCursor)__cmd.Parameters["!RETURN"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["!RETURN"].Value).GetDataReader()) {
-                            __ret = ReadResultITTableNumber<TypeITTableNumber>(__rdr, optionalMaxNumberRowsToReadFromAnyCursor);
+                            __ret = Hydrator.ReadResult<TypeITTableNumber>(__rdr, false, false, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     if (!((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["P_REF_CURSOR"].Value).GetDataReader()) {
-                            pRefCursor = ReadResultITTableNumber<TypeITTableNumber>(__rdr, optionalMaxNumberRowsToReadFromAnyCursor);
+                            pRefCursor = Hydrator.ReadResult<TypeITTableNumber>(__rdr, false, false, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     if (__cmdTrace != null) TraceCompletion(__cmdTrace, __ret.Count);
                 } // using OracleCommand
@@ -5879,7 +5595,7 @@ namespace Schema.Odpt.Package {
                     int __rowsAffected = __cmd.ExecuteNonQuery();
                     if (!((OracleRefCursor)__cmd.Parameters["!RETURN"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["!RETURN"].Value).GetDataReader()) {
-                            __ret = ReadResultITTableNumber<TypeITTableNumber>(__rdr, optionalMaxNumberRowsToReadFromAnyCursor);
+                            __ret = Hydrator.ReadResult<TypeITTableNumber>(__rdr, false, false, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     if (__cmdTrace != null) TraceCompletion(__cmdTrace, __ret.Count);
                 } // using OracleCommand
@@ -6319,32 +6035,13 @@ namespace Schema.Odpt.Package {
         public static XmplPkgExample Instance { get { return _instance; } }
 
         public interface ITTableBigPartial {
-            Int64? Id { set; }
-            Int64? ColInteger { set; }
-            Decimal? ColNumber { set; }
-            String ColVarchar2Max { set; }
-            DateTime? ColDate { set; }
-            DateTime? ColTimestamp { set; }
+            Int64? Id { get; init; }
+            Int64? ColInteger { get; init; }
+            Decimal? ColNumber { get; init; }
+            String ColVarchar2Max { get; init; }
+            DateTime? ColDate { get; init; }
+            DateTime? ColTimestamp { get; init; }
         } // ITTableBigPartial
-
-        public ICollection<TypeITTableBigPartial> ReadResultITTableBigPartial<TypeITTableBigPartial>(OracleDataReader rdr, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null)
-                where TypeITTableBigPartial : class, ITTableBigPartial, new() {
-            ICollection<TypeITTableBigPartial> __ret = new List<TypeITTableBigPartial>();
-            if (rdr != null && rdr.HasRows) {
-                while (rdr.Read()) {
-                    TypeITTableBigPartial obj = new TypeITTableBigPartial();
-                    if (!rdr.IsDBNull(0)) obj.Id = Convert.ToInt64(rdr.GetValue(0));
-                    if (!rdr.IsDBNull(1)) obj.ColInteger = Convert.ToInt64(rdr.GetValue(1));
-                    if (!rdr.IsDBNull(2)) obj.ColNumber = (Decimal?)OracleDecimal.SetPrecision(rdr.GetOracleDecimal(2), 28);
-                    if (!rdr.IsDBNull(3)) obj.ColVarchar2Max = Convert.ToString(rdr.GetValue(3));
-                    if (!rdr.IsDBNull(4)) obj.ColDate = Convert.ToDateTime(rdr.GetValue(4));
-                    if (!rdr.IsDBNull(5)) obj.ColTimestamp = Convert.ToDateTime(rdr.GetValue(5));
-                    __ret.Add(obj);
-                    if (optionalMaxNumberRowsToReadFromAnyCursor != null && __ret.Count >= optionalMaxNumberRowsToReadFromAnyCursor) break;
-                }
-            }
-            return __ret;
-        } // ReadResultITTableBigPartial
 
         public ICollection<TypeITTableBigPartial> GetRowsTypedRet<TypeITTableBigPartial>(Decimal? pInNumber, ref String pInOutVarchar2, ref IList<Int64?> pInOutAssocarrayInteger, out DateTime? pOutDate, 
                 bool mapColumnToObjectPropertyByPosition = false, bool allowUnmappedColumnsToBeExcluded = false, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null, OracleConnection optionalPreexistingOpenConnection = null)
@@ -6416,7 +6113,7 @@ namespace Schema.Odpt.Package {
                     int __rowsAffected = __cmd.ExecuteNonQuery();
                     if (!((OracleRefCursor)__cmd.Parameters["!RETURN"].Value).IsNull)
                         using (OracleDataReader __rdr = ((OracleRefCursor)__cmd.Parameters["!RETURN"].Value).GetDataReader()) {
-                            __ret = ReadResultITTableBigPartial<TypeITTableBigPartial>(__rdr, optionalMaxNumberRowsToReadFromAnyCursor);
+                            __ret = Hydrator.ReadResult<TypeITTableBigPartial>(__rdr, false, false, optionalMaxNumberRowsToReadFromAnyCursor);
                         } // using OracleDataReader
                     pInOutVarchar2 = __cmd.Parameters["P_IN_OUT_VARCHAR2"].Status == OracleParameterStatus.NullFetched
                         ? (String)null
