@@ -923,12 +923,9 @@ namespace Odapter {
                         // prevent creating duplicate entity/interface/reader
                         if (pack.RecordsToGenerate.Exists(r => r.EntityName == rec.EntityName)) continue;
 
-                        if (!rec.IsIgnoredDueToOracleTypes(out string reasonMsg)) {
-                            // create interface for record class
-                            classText.AppendLine();
-                            classText.Append(GenerateEntityInterface(rec, Parameter.Instance.TargetDtoInterfaceCategoryRecord, 1));
-                            classText.AppendLine();
-                        }
+                        classText.AppendLine();
+                        classText.Append(GenerateEntityInterface(rec, Parameter.Instance.TargetDtoInterfaceCategoryRecord, 1));
+                        classText.AppendLine();
 
                         // create DTO 
                         bool ignored = false;
@@ -939,7 +936,7 @@ namespace Odapter {
                                 Parameter.Instance.IsDataContractPackageRecord, Parameter.Instance.IsXmlElementPackageRecord, 2, out ignored));
                         }
 
-                        if (!rec.IsIgnoredDueToOracleTypes(out reasonMsg) && !usingDtoImmutable) {
+                        if (!rec.IsIgnoredDueToOracleTypes(out string reasonMsg) && !usingDtoImmutable) {
                             // create custom reader
                             classText.AppendLine();
                             classText.Append(GenerateRecordTypeReadResultMethod(rec));
@@ -1058,11 +1055,25 @@ namespace Odapter {
                 CS.AccessModifierInterface.PUBLIC,
                 CSL.InterfaceNameOfClassName(entity.Translater.CSharpClassName),
                 entity.Attributes.Select(a => CSL.PropertyInterface(
-                    Trns.PropertyNameOfOracleIdentifier(a.AttrName, a.EntityName), 
-                    a.Translater.CSharpType, 
-                    CSL.TypeNone, 
+                    Trns.PropertyNameOfOracleIdentifier(a.AttrName, a.EntityName),
+                    a.Translater.CSharpType,
+                    CSL.TypeNone,
                     CSL.DtoInterfacePropertyAccessor(dtoInterfaceCategory))));
-            return CSL.CodeInterface(tabIndentCount + 1, typeInterface);
+
+            //////////////////////////////////////////////////////////////////
+            // bypass creation of entities that use unimplemented Oracle types
+            if (entity.IsIgnoredDueToOracleTypes(out string ignoreReason)) {
+                string entityType = entity.GetType().Name.Replace("Package", String.Empty).Replace("Type", String.Empty).ToUpper();
+                var interfaceCode = CSL.CodeInterface(0, typeInterface);
+                string codeFirstLine = interfaceCode.Substring(0, interfaceCode.IndexOf(Environment.NewLine));
+                StringBuilder commentText = new StringBuilder(String.Empty);
+                int tab = 2;
+                commentText.AppendLine(Tab(tab) + $"// **{entityType} IGNORED** - {ignoreReason}");
+                commentText.Append(Tab(tab) + "// " + codeFirstLine);
+                return commentText.ToString();
+            } else { 
+                return CSL.CodeInterface(tabIndentCount + 1, typeInterface);
+            }
         }
 
         private void WriteNonPackagedEntityClasses<I_Entity>(List<IEntity> entities, string entityNamespace, string ancestorClassName, 
