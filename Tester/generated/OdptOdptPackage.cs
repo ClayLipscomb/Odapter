@@ -525,70 +525,34 @@ namespace Schema.Odpt.Odpt.Package {
         // **RECORD IGNORED** - .NET cannot send/receive an associative array type field in a record
         // public interface ITIgnoreAaInteger {
 
-        // **RECORD IGNORED** - .NET cannot send/receive an associative array type field in a record
-        // public abstract partial class TIgnoreAaInteger : Schema.Odpt.Odpt.OdptPackageRecord, ITIgnoreAaInteger {
-
         // **RECORD IGNORED** - Code generation for BFILE type has not been implemented
         // public interface ITIgnoreBfile {
-
-        // **RECORD IGNORED** - Code generation for BFILE type has not been implemented
-        // public abstract partial class TIgnoreBfile : Schema.Odpt.Odpt.OdptPackageRecord, ITIgnoreBfile {
 
         // **RECORD IGNORED** - .NET cannot send/receive a PL/SQL BOOLEAN type
         // public interface ITIgnoreBoolean {
 
-        // **RECORD IGNORED** - .NET cannot send/receive a PL/SQL BOOLEAN type
-        // public abstract partial class TIgnoreBoolean : Schema.Odpt.Odpt.OdptPackageRecord, ITIgnoreBoolean {
-
         // **RECORD IGNORED** - Code generation for LONG type will not be implemented due to Oracle deprecation
         // public interface ITIgnoreLong {
-
-        // **RECORD IGNORED** - Code generation for LONG type will not be implemented due to Oracle deprecation
-        // public abstract partial class TIgnoreLong : Schema.Odpt.Odpt.OdptPackageRecord, ITIgnoreLong {
 
         // **RECORD IGNORED** - Code generation for LONG RAW type will not be implemented due to Oracle deprecation
         // public interface ITIgnoreLongRaw {
 
-        // **RECORD IGNORED** - Code generation for LONG RAW type will not be implemented due to Oracle deprecation
-        // public abstract partial class TIgnoreLongRaw : Schema.Odpt.Odpt.OdptPackageRecord, ITIgnoreLongRaw {
-
         // **RECORD IGNORED** - Code generation for RAW type has not been implemented
         // public interface ITIgnoreRaw {
-
-        // **RECORD IGNORED** - Code generation for RAW type has not been implemented
-        // public abstract partial class TIgnoreRaw : Schema.Odpt.Odpt.OdptPackageRecord, ITIgnoreRaw {
 
         // **RECORD IGNORED** - Code generation for ROWID type has not been implemented
         // public interface ITIgnoreRowid {
 
-        // **RECORD IGNORED** - Code generation for ROWID type has not been implemented
-        // public abstract partial class TIgnoreRowid : Schema.Odpt.Odpt.OdptPackageRecord, ITIgnoreRowid {
-
         // **RECORD IGNORED** - Code generation for UROWID type has not been implemented
         // public interface ITIgnoreUrowid {
 
-        // **RECORD IGNORED** - Code generation for UROWID type has not been implemented
-        // public abstract partial class TIgnoreUrowid : Schema.Odpt.Odpt.OdptPackageRecord, ITIgnoreUrowid {
-
         // **RECORD IGNORED** - XMLTYPE type is not available in ODP.NET managed
         // public interface ITIgnoreXmltype {
-
-        // **RECORD IGNORED** - XMLTYPE type is not available in ODP.NET managed
-        // public abstract partial class TIgnoreXmltype : Schema.Odpt.Odpt.OdptPackageRecord, ITIgnoreXmltype {
 
         public interface ITRecFldSameName {
             Decimal? FNumber { set; }
             Decimal? TRecFldSameNameTRecFldSameName { set; }
         } // ITRecFldSameName
-
-        [DataContract(Namespace="http://odpt.business.com")][Serializable()]
-        public abstract partial class TRecFldSameName : Schema.Odpt.Odpt.OdptPackageRecord, ITRecFldSameName {
-            private Byte propertyToEnsuresPartialClassNamesAreUniqueAtCompileTime { get; set; }
-            [DataMember(Order=0, IsRequired=false)][XmlElement(Order=0, IsNullable=true)]
-            public virtual Decimal? FNumber { get; set; }
-            [DataMember(Order=1, IsRequired=false)][XmlElement(Order=1, IsNullable=true)]
-            public virtual Decimal? TRecFldSameNameTRecFldSameName { get; set; }
-        } // TRecFldSameName
 
         public ICollection<TypeITRecFldSameName> ReadResultITRecFldSameName<TypeITRecFldSameName>(OracleDataReader rdr, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null)
                 where TypeITRecFldSameName : class, ITRecFldSameName, new() {
@@ -3850,103 +3814,6 @@ namespace Schema.Odpt.Odpt.Package {
             String ColLast { set; }
         } // IFltrPkgRecUnusedTTableBigFltUnused
 
-        [DataContract(Namespace="http://odpt.business.com")][Serializable()]
-        public abstract partial class FltrPkgRecUnusedTTableBigFltUnused : Schema.Odpt.Odpt.OdptPackageRecord, IFltrPkgRecUnusedTTableBigFltUnused {
-            private Byte propertyToEnsuresPartialClassNamesAreUniqueAtCompileTime { get; set; }
-            [DataMember(Order=0, IsRequired=false)][XmlElement(Order=0, IsNullable=true)]
-            public virtual Int64? Id { get; set; }
-            [DataMember(Order=1, IsRequired=false)][XmlElement(Order=1, IsNullable=true)]
-            public virtual Int64? ColNumberId { get; set; }
-            [DataMember(Order=2, IsRequired=false)][XmlElement(Order=2, IsNullable=true)]
-            public virtual Int64? ColInteger { get; set; }
-            [DataMember(Order=3, IsRequired=false)][XmlElement(Order=3, IsNullable=true)]
-            public virtual Int64? ColInt { get; set; }
-            [DataMember(Order=4, IsRequired=false)][XmlElement(Order=4, IsNullable=true)]
-            public virtual Int64? ColSmallint { get; set; }
-            [DataMember(Order=5, IsRequired=false)][XmlElement(Order=5, IsNullable=true)]
-            public virtual Int64? ColNumeric { get; set; }
-            [DataMember(Order=6, IsRequired=false)][XmlElement(Order=6, IsNullable=true)]
-            public virtual Int64? ColDecimal { get; set; }
-            [DataMember(Order=7, IsRequired=false)][XmlElement(Order=7, IsNullable=true)]
-            public virtual Decimal? ColNumber { get; set; }
-            [DataMember(Order=8, IsRequired=false)][XmlElement(Order=8, IsNullable=true)]
-            public virtual Decimal? ColDoublePrecision { get; set; }
-            [DataMember(Order=9, IsRequired=false)][XmlElement(Order=9, IsNullable=true)]
-            public virtual Decimal? ColFloat { get; set; }
-            [DataMember(Order=10, IsRequired=false)][XmlElement(Order=10, IsNullable=true)]
-            public virtual Decimal? ColReal { get; set; }
-            [DataMember(Order=11, IsRequired=false)][XmlElement(Order=11, IsNullable=true)]
-            public virtual Single? ColBinaryFloat { get; set; }
-            [DataMember(Order=12, IsRequired=false)][XmlElement(Order=12, IsNullable=true)]
-            public virtual Double? ColBinaryDouble { get; set; }
-            [DataMember(Order=13, IsRequired=false)][XmlElement(Order=13, IsNullable=true)]
-            public virtual String ColVarcharMin { get; set; }
-            [DataMember(Order=14, IsRequired=false)][XmlElement(Order=14, IsNullable=true)]
-            public virtual String ColVarcharMax { get; set; }
-            [DataMember(Order=15, IsRequired=false)][XmlElement(Order=15, IsNullable=true)]
-            public virtual String ColVarchar2Min { get; set; }
-            [DataMember(Order=16, IsRequired=false)][XmlElement(Order=16, IsNullable=true)]
-            public virtual String ColVarchar2Max { get; set; }
-            [DataMember(Order=17, IsRequired=false)][XmlElement(Order=17, IsNullable=true)]
-            public virtual String ColNvarchar2Min { get; set; }
-            [DataMember(Order=18, IsRequired=false)][XmlElement(Order=18, IsNullable=true)]
-            public virtual String ColNvarchar2Max { get; set; }
-            [DataMember(Order=19, IsRequired=false)][XmlElement(Order=19, IsNullable=true)]
-            public virtual String ColCharMin { get; set; }
-            [DataMember(Order=20, IsRequired=false)][XmlElement(Order=20, IsNullable=true)]
-            public virtual String ColCharMax { get; set; }
-            [DataMember(Order=21, IsRequired=false)][XmlElement(Order=21, IsNullable=true)]
-            public virtual String ColNcharMin { get; set; }
-            [DataMember(Order=22, IsRequired=false)][XmlElement(Order=22, IsNullable=true)]
-            public virtual String ColNcharMax { get; set; }
-            [DataMember(Order=23, IsRequired=false)][XmlElement(Order=23, IsNullable=true)]
-            public virtual DateTime? ColDate { get; set; }
-            [DataMember(Order=24, IsRequired=false)][XmlElement(Order=24, IsNullable=true)]
-            public virtual DateTime? ColTimestamp { get; set; }
-            [DataMember(Order=25, IsRequired=false)][XmlElement(Order=25, IsNullable=true)]
-            public virtual DateTime? ColTimestampPrec0 { get; set; }
-            [DataMember(Order=26, IsRequired=false)][XmlElement(Order=26, IsNullable=true)]
-            public virtual DateTime? ColTimestampPrec9 { get; set; }
-            [DataMember(Order=27, IsRequired=false)][XmlElement(Order=27, IsNullable=true)]
-            public virtual DateTimeOffset? ColTimestampTZ { get; set; }
-            [DataMember(Order=28, IsRequired=false)][XmlElement(Order=28, IsNullable=true)]
-            public virtual DateTimeOffset? ColTimestampTZPrec0 { get; set; }
-            [DataMember(Order=29, IsRequired=false)][XmlElement(Order=29, IsNullable=true)]
-            public virtual DateTimeOffset? ColTimestampTZPrec9 { get; set; }
-            [DataMember(Order=30, IsRequired=false)][XmlElement(Order=30, IsNullable=true)]
-            public virtual DateTime? ColTimestampLTZ { get; set; }
-            [DataMember(Order=31, IsRequired=false)][XmlElement(Order=31, IsNullable=true)]
-            public virtual DateTime? ColTimestampLTZPrec0 { get; set; }
-            [DataMember(Order=32, IsRequired=false)][XmlElement(Order=32, IsNullable=true)]
-            public virtual DateTime? ColTimestampLTZPrec9 { get; set; }
-            [DataMember(Order=33, IsRequired=false)][XmlElement(Order=33, IsNullable=true)]
-            public virtual Byte[] ColBlob { get; set; }
-            [DataMember(Order=34, IsRequired=false)][XmlElement(Order=34, IsNullable=true)]
-            public virtual String ColClob { get; set; }
-            [DataMember(Order=35, IsRequired=false)][XmlElement(Order=35, IsNullable=true)]
-            public virtual String ColNclob { get; set; }
-            [DataMember(Order=36, IsRequired=false)][XmlElement(Order=36, IsNullable=true)]
-            public virtual String Abstract { get; set; }
-            [DataMember(Order=37, IsRequired=false)][XmlElement(Order=37, IsNullable=true)]
-            public virtual String Base { get; set; }
-            [DataMember(Order=38, IsRequired=false)][XmlElement(Order=38, IsNullable=true)]
-            public virtual String Void { get; set; }
-            [DataMember(Order=39, IsRequired=false)][XmlElement(Order=39, IsNullable=true)]
-            public virtual String Class { get; set; }
-            [DataMember(Order=40, IsRequired=false)][XmlElement(Order=40, IsNullable=true)]
-            public virtual String Namespace { get; set; }
-            [DataMember(Order=41, IsRequired=false)][XmlElement(Order=41, IsNullable=true)]
-            public virtual String Readonly { get; set; }
-            [DataMember(Order=42, IsRequired=false)][XmlElement(Order=42, IsNullable=true)]
-            public virtual String Partial { get; set; }
-            [DataMember(Order=43, IsRequired=false)][XmlElement(Order=43, IsNullable=true)]
-            public virtual String Const { get; set; }
-            [DataMember(Order=44, IsRequired=false)][XmlElement(Order=44, IsNullable=true)]
-            public virtual String Using { get; set; }
-            [DataMember(Order=45, IsRequired=false)][XmlElement(Order=45, IsNullable=true)]
-            public virtual String ColLast { get; set; }
-        } // FltrPkgRecUnusedTTableBigFltUnused
-
         public ICollection<TypeIFltrPkgRecUnusedTTableBigFltUnused> ReadResultIFltrPkgRecUnusedTTableBigFltUnused<TypeIFltrPkgRecUnusedTTableBigFltUnused>(OracleDataReader rdr, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null)
                 where TypeIFltrPkgRecUnusedTTableBigFltUnused : class, IFltrPkgRecUnusedTTableBigFltUnused, new() {
             ICollection<TypeIFltrPkgRecUnusedTTableBigFltUnused> __ret = new List<TypeIFltrPkgRecUnusedTTableBigFltUnused>();
@@ -4054,103 +3921,6 @@ namespace Schema.Odpt.Odpt.Package {
             String Using { set; }
             String ColLast { set; }
         } // IFltrPkgRecUsedTTableBigFltUsed
-
-        [DataContract(Namespace="http://odpt.business.com")][Serializable()]
-        public abstract partial class FltrPkgRecUsedTTableBigFltUsed : Schema.Odpt.Odpt.OdptPackageRecord, IFltrPkgRecUsedTTableBigFltUsed {
-            private Byte propertyToEnsuresPartialClassNamesAreUniqueAtCompileTime { get; set; }
-            [DataMember(Order=0, IsRequired=false)][XmlElement(Order=0, IsNullable=true)]
-            public virtual Int64? Id { get; set; }
-            [DataMember(Order=1, IsRequired=false)][XmlElement(Order=1, IsNullable=true)]
-            public virtual Int64? ColNumberId { get; set; }
-            [DataMember(Order=2, IsRequired=false)][XmlElement(Order=2, IsNullable=true)]
-            public virtual Int64? ColInteger { get; set; }
-            [DataMember(Order=3, IsRequired=false)][XmlElement(Order=3, IsNullable=true)]
-            public virtual Int64? ColInt { get; set; }
-            [DataMember(Order=4, IsRequired=false)][XmlElement(Order=4, IsNullable=true)]
-            public virtual Int64? ColSmallint { get; set; }
-            [DataMember(Order=5, IsRequired=false)][XmlElement(Order=5, IsNullable=true)]
-            public virtual Int64? ColNumeric { get; set; }
-            [DataMember(Order=6, IsRequired=false)][XmlElement(Order=6, IsNullable=true)]
-            public virtual Int64? ColDecimal { get; set; }
-            [DataMember(Order=7, IsRequired=false)][XmlElement(Order=7, IsNullable=true)]
-            public virtual Decimal? ColNumber { get; set; }
-            [DataMember(Order=8, IsRequired=false)][XmlElement(Order=8, IsNullable=true)]
-            public virtual Decimal? ColDoublePrecision { get; set; }
-            [DataMember(Order=9, IsRequired=false)][XmlElement(Order=9, IsNullable=true)]
-            public virtual Decimal? ColFloat { get; set; }
-            [DataMember(Order=10, IsRequired=false)][XmlElement(Order=10, IsNullable=true)]
-            public virtual Decimal? ColReal { get; set; }
-            [DataMember(Order=11, IsRequired=false)][XmlElement(Order=11, IsNullable=true)]
-            public virtual Single? ColBinaryFloat { get; set; }
-            [DataMember(Order=12, IsRequired=false)][XmlElement(Order=12, IsNullable=true)]
-            public virtual Double? ColBinaryDouble { get; set; }
-            [DataMember(Order=13, IsRequired=false)][XmlElement(Order=13, IsNullable=true)]
-            public virtual String ColVarcharMin { get; set; }
-            [DataMember(Order=14, IsRequired=false)][XmlElement(Order=14, IsNullable=true)]
-            public virtual String ColVarcharMax { get; set; }
-            [DataMember(Order=15, IsRequired=false)][XmlElement(Order=15, IsNullable=true)]
-            public virtual String ColVarchar2Min { get; set; }
-            [DataMember(Order=16, IsRequired=false)][XmlElement(Order=16, IsNullable=true)]
-            public virtual String ColVarchar2Max { get; set; }
-            [DataMember(Order=17, IsRequired=false)][XmlElement(Order=17, IsNullable=true)]
-            public virtual String ColNvarchar2Min { get; set; }
-            [DataMember(Order=18, IsRequired=false)][XmlElement(Order=18, IsNullable=true)]
-            public virtual String ColNvarchar2Max { get; set; }
-            [DataMember(Order=19, IsRequired=false)][XmlElement(Order=19, IsNullable=true)]
-            public virtual String ColCharMin { get; set; }
-            [DataMember(Order=20, IsRequired=false)][XmlElement(Order=20, IsNullable=true)]
-            public virtual String ColCharMax { get; set; }
-            [DataMember(Order=21, IsRequired=false)][XmlElement(Order=21, IsNullable=true)]
-            public virtual String ColNcharMin { get; set; }
-            [DataMember(Order=22, IsRequired=false)][XmlElement(Order=22, IsNullable=true)]
-            public virtual String ColNcharMax { get; set; }
-            [DataMember(Order=23, IsRequired=false)][XmlElement(Order=23, IsNullable=true)]
-            public virtual DateTime? ColDate { get; set; }
-            [DataMember(Order=24, IsRequired=false)][XmlElement(Order=24, IsNullable=true)]
-            public virtual DateTime? ColTimestamp { get; set; }
-            [DataMember(Order=25, IsRequired=false)][XmlElement(Order=25, IsNullable=true)]
-            public virtual DateTime? ColTimestampPrec0 { get; set; }
-            [DataMember(Order=26, IsRequired=false)][XmlElement(Order=26, IsNullable=true)]
-            public virtual DateTime? ColTimestampPrec9 { get; set; }
-            [DataMember(Order=27, IsRequired=false)][XmlElement(Order=27, IsNullable=true)]
-            public virtual DateTimeOffset? ColTimestampTZ { get; set; }
-            [DataMember(Order=28, IsRequired=false)][XmlElement(Order=28, IsNullable=true)]
-            public virtual DateTimeOffset? ColTimestampTZPrec0 { get; set; }
-            [DataMember(Order=29, IsRequired=false)][XmlElement(Order=29, IsNullable=true)]
-            public virtual DateTimeOffset? ColTimestampTZPrec9 { get; set; }
-            [DataMember(Order=30, IsRequired=false)][XmlElement(Order=30, IsNullable=true)]
-            public virtual DateTime? ColTimestampLTZ { get; set; }
-            [DataMember(Order=31, IsRequired=false)][XmlElement(Order=31, IsNullable=true)]
-            public virtual DateTime? ColTimestampLTZPrec0 { get; set; }
-            [DataMember(Order=32, IsRequired=false)][XmlElement(Order=32, IsNullable=true)]
-            public virtual DateTime? ColTimestampLTZPrec9 { get; set; }
-            [DataMember(Order=33, IsRequired=false)][XmlElement(Order=33, IsNullable=true)]
-            public virtual Byte[] ColBlob { get; set; }
-            [DataMember(Order=34, IsRequired=false)][XmlElement(Order=34, IsNullable=true)]
-            public virtual String ColClob { get; set; }
-            [DataMember(Order=35, IsRequired=false)][XmlElement(Order=35, IsNullable=true)]
-            public virtual String ColNclob { get; set; }
-            [DataMember(Order=36, IsRequired=false)][XmlElement(Order=36, IsNullable=true)]
-            public virtual String Abstract { get; set; }
-            [DataMember(Order=37, IsRequired=false)][XmlElement(Order=37, IsNullable=true)]
-            public virtual String Base { get; set; }
-            [DataMember(Order=38, IsRequired=false)][XmlElement(Order=38, IsNullable=true)]
-            public virtual String Void { get; set; }
-            [DataMember(Order=39, IsRequired=false)][XmlElement(Order=39, IsNullable=true)]
-            public virtual String Class { get; set; }
-            [DataMember(Order=40, IsRequired=false)][XmlElement(Order=40, IsNullable=true)]
-            public virtual String Namespace { get; set; }
-            [DataMember(Order=41, IsRequired=false)][XmlElement(Order=41, IsNullable=true)]
-            public virtual String Readonly { get; set; }
-            [DataMember(Order=42, IsRequired=false)][XmlElement(Order=42, IsNullable=true)]
-            public virtual String Partial { get; set; }
-            [DataMember(Order=43, IsRequired=false)][XmlElement(Order=43, IsNullable=true)]
-            public virtual String Const { get; set; }
-            [DataMember(Order=44, IsRequired=false)][XmlElement(Order=44, IsNullable=true)]
-            public virtual String Using { get; set; }
-            [DataMember(Order=45, IsRequired=false)][XmlElement(Order=45, IsNullable=true)]
-            public virtual String ColLast { get; set; }
-        } // FltrPkgRecUsedTTableBigFltUsed
 
         public ICollection<TypeIFltrPkgRecUsedTTableBigFltUsed> ReadResultIFltrPkgRecUsedTTableBigFltUsed<TypeIFltrPkgRecUsedTTableBigFltUsed>(OracleDataReader rdr, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null)
                 where TypeIFltrPkgRecUsedTTableBigFltUsed : class, IFltrPkgRecUsedTTableBigFltUsed, new() {
@@ -4260,103 +4030,6 @@ namespace Schema.Odpt.Odpt.Package {
             String ColLast { set; }
         } // ITTableBig
 
-        [DataContract(Namespace="http://odpt.business.com")][Serializable()]
-        public abstract partial class TTableBig : Schema.Odpt.Odpt.OdptPackageRecord, ITTableBig {
-            private Byte propertyToEnsuresPartialClassNamesAreUniqueAtCompileTime { get; set; }
-            [DataMember(Order=0, IsRequired=false)][XmlElement(Order=0, IsNullable=true)]
-            public virtual Int64? Id { get; set; }
-            [DataMember(Order=1, IsRequired=false)][XmlElement(Order=1, IsNullable=true)]
-            public virtual Int64? ColNumberId { get; set; }
-            [DataMember(Order=2, IsRequired=false)][XmlElement(Order=2, IsNullable=true)]
-            public virtual Int64? ColInteger { get; set; }
-            [DataMember(Order=3, IsRequired=false)][XmlElement(Order=3, IsNullable=true)]
-            public virtual Int64? ColInt { get; set; }
-            [DataMember(Order=4, IsRequired=false)][XmlElement(Order=4, IsNullable=true)]
-            public virtual Int64? ColSmallint { get; set; }
-            [DataMember(Order=5, IsRequired=false)][XmlElement(Order=5, IsNullable=true)]
-            public virtual Int64? ColNumeric { get; set; }
-            [DataMember(Order=6, IsRequired=false)][XmlElement(Order=6, IsNullable=true)]
-            public virtual Int64? ColDecimal { get; set; }
-            [DataMember(Order=7, IsRequired=false)][XmlElement(Order=7, IsNullable=true)]
-            public virtual Decimal? ColNumber { get; set; }
-            [DataMember(Order=8, IsRequired=false)][XmlElement(Order=8, IsNullable=true)]
-            public virtual Decimal? ColDoublePrecision { get; set; }
-            [DataMember(Order=9, IsRequired=false)][XmlElement(Order=9, IsNullable=true)]
-            public virtual Decimal? ColFloat { get; set; }
-            [DataMember(Order=10, IsRequired=false)][XmlElement(Order=10, IsNullable=true)]
-            public virtual Decimal? ColReal { get; set; }
-            [DataMember(Order=11, IsRequired=false)][XmlElement(Order=11, IsNullable=true)]
-            public virtual Single? ColBinaryFloat { get; set; }
-            [DataMember(Order=12, IsRequired=false)][XmlElement(Order=12, IsNullable=true)]
-            public virtual Double? ColBinaryDouble { get; set; }
-            [DataMember(Order=13, IsRequired=false)][XmlElement(Order=13, IsNullable=true)]
-            public virtual String ColVarcharMin { get; set; }
-            [DataMember(Order=14, IsRequired=false)][XmlElement(Order=14, IsNullable=true)]
-            public virtual String ColVarcharMax { get; set; }
-            [DataMember(Order=15, IsRequired=false)][XmlElement(Order=15, IsNullable=true)]
-            public virtual String ColVarchar2Min { get; set; }
-            [DataMember(Order=16, IsRequired=false)][XmlElement(Order=16, IsNullable=true)]
-            public virtual String ColVarchar2Max { get; set; }
-            [DataMember(Order=17, IsRequired=false)][XmlElement(Order=17, IsNullable=true)]
-            public virtual String ColNvarchar2Min { get; set; }
-            [DataMember(Order=18, IsRequired=false)][XmlElement(Order=18, IsNullable=true)]
-            public virtual String ColNvarchar2Max { get; set; }
-            [DataMember(Order=19, IsRequired=false)][XmlElement(Order=19, IsNullable=true)]
-            public virtual String ColCharMin { get; set; }
-            [DataMember(Order=20, IsRequired=false)][XmlElement(Order=20, IsNullable=true)]
-            public virtual String ColCharMax { get; set; }
-            [DataMember(Order=21, IsRequired=false)][XmlElement(Order=21, IsNullable=true)]
-            public virtual String ColNcharMin { get; set; }
-            [DataMember(Order=22, IsRequired=false)][XmlElement(Order=22, IsNullable=true)]
-            public virtual String ColNcharMax { get; set; }
-            [DataMember(Order=23, IsRequired=false)][XmlElement(Order=23, IsNullable=true)]
-            public virtual DateTime? ColDate { get; set; }
-            [DataMember(Order=24, IsRequired=false)][XmlElement(Order=24, IsNullable=true)]
-            public virtual DateTime? ColTimestamp { get; set; }
-            [DataMember(Order=25, IsRequired=false)][XmlElement(Order=25, IsNullable=true)]
-            public virtual DateTime? ColTimestampPrec0 { get; set; }
-            [DataMember(Order=26, IsRequired=false)][XmlElement(Order=26, IsNullable=true)]
-            public virtual DateTime? ColTimestampPrec9 { get; set; }
-            [DataMember(Order=27, IsRequired=false)][XmlElement(Order=27, IsNullable=true)]
-            public virtual DateTimeOffset? ColTimestampTZ { get; set; }
-            [DataMember(Order=28, IsRequired=false)][XmlElement(Order=28, IsNullable=true)]
-            public virtual DateTimeOffset? ColTimestampTZPrec0 { get; set; }
-            [DataMember(Order=29, IsRequired=false)][XmlElement(Order=29, IsNullable=true)]
-            public virtual DateTimeOffset? ColTimestampTZPrec9 { get; set; }
-            [DataMember(Order=30, IsRequired=false)][XmlElement(Order=30, IsNullable=true)]
-            public virtual DateTime? ColTimestampLTZ { get; set; }
-            [DataMember(Order=31, IsRequired=false)][XmlElement(Order=31, IsNullable=true)]
-            public virtual DateTime? ColTimestampLTZPrec0 { get; set; }
-            [DataMember(Order=32, IsRequired=false)][XmlElement(Order=32, IsNullable=true)]
-            public virtual DateTime? ColTimestampLTZPrec9 { get; set; }
-            [DataMember(Order=33, IsRequired=false)][XmlElement(Order=33, IsNullable=true)]
-            public virtual Byte[] ColBlob { get; set; }
-            [DataMember(Order=34, IsRequired=false)][XmlElement(Order=34, IsNullable=true)]
-            public virtual String ColClob { get; set; }
-            [DataMember(Order=35, IsRequired=false)][XmlElement(Order=35, IsNullable=true)]
-            public virtual String ColNclob { get; set; }
-            [DataMember(Order=36, IsRequired=false)][XmlElement(Order=36, IsNullable=true)]
-            public virtual String Abstract { get; set; }
-            [DataMember(Order=37, IsRequired=false)][XmlElement(Order=37, IsNullable=true)]
-            public virtual String Base { get; set; }
-            [DataMember(Order=38, IsRequired=false)][XmlElement(Order=38, IsNullable=true)]
-            public virtual String Void { get; set; }
-            [DataMember(Order=39, IsRequired=false)][XmlElement(Order=39, IsNullable=true)]
-            public virtual String Class { get; set; }
-            [DataMember(Order=40, IsRequired=false)][XmlElement(Order=40, IsNullable=true)]
-            public virtual String Namespace { get; set; }
-            [DataMember(Order=41, IsRequired=false)][XmlElement(Order=41, IsNullable=true)]
-            public virtual String Readonly { get; set; }
-            [DataMember(Order=42, IsRequired=false)][XmlElement(Order=42, IsNullable=true)]
-            public virtual String Partial { get; set; }
-            [DataMember(Order=43, IsRequired=false)][XmlElement(Order=43, IsNullable=true)]
-            public virtual String Const { get; set; }
-            [DataMember(Order=44, IsRequired=false)][XmlElement(Order=44, IsNullable=true)]
-            public virtual String Using { get; set; }
-            [DataMember(Order=45, IsRequired=false)][XmlElement(Order=45, IsNullable=true)]
-            public virtual String ColLast { get; set; }
-        } // TTableBig
-
         public ICollection<TypeITTableBig> ReadResultITTableBig<TypeITTableBig>(OracleDataReader rdr, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null)
                 where TypeITTableBig : class, ITTableBig, new() {
             ICollection<TypeITTableBig> __ret = new List<TypeITTableBig>();
@@ -4430,35 +4103,6 @@ namespace Schema.Odpt.Odpt.Package {
             String ColNcharMax { set; }
             String ColLast { set; }
         } // ITTableBigChar
-
-        [DataContract(Namespace="http://odpt.business.com")][Serializable()]
-        public abstract partial class TTableBigChar : Schema.Odpt.Odpt.OdptPackageRecord, ITTableBigChar {
-            private Byte propertyToEnsuresPartialClassNamesAreUniqueAtCompileTime { get; set; }
-            [DataMember(Order=0, IsRequired=false)][XmlElement(Order=0, IsNullable=true)]
-            public virtual Int64? Id { get; set; }
-            [DataMember(Order=1, IsRequired=false)][XmlElement(Order=1, IsNullable=true)]
-            public virtual String ColVarcharMin { get; set; }
-            [DataMember(Order=2, IsRequired=false)][XmlElement(Order=2, IsNullable=true)]
-            public virtual String ColVarcharMax { get; set; }
-            [DataMember(Order=3, IsRequired=false)][XmlElement(Order=3, IsNullable=true)]
-            public virtual String ColVarchar2Min { get; set; }
-            [DataMember(Order=4, IsRequired=false)][XmlElement(Order=4, IsNullable=true)]
-            public virtual String ColVarchar2Max { get; set; }
-            [DataMember(Order=5, IsRequired=false)][XmlElement(Order=5, IsNullable=true)]
-            public virtual String ColNvarchar2Min { get; set; }
-            [DataMember(Order=6, IsRequired=false)][XmlElement(Order=6, IsNullable=true)]
-            public virtual String ColNvarchar2Max { get; set; }
-            [DataMember(Order=7, IsRequired=false)][XmlElement(Order=7, IsNullable=true)]
-            public virtual String ColCharMin { get; set; }
-            [DataMember(Order=8, IsRequired=false)][XmlElement(Order=8, IsNullable=true)]
-            public virtual String ColCharMax { get; set; }
-            [DataMember(Order=9, IsRequired=false)][XmlElement(Order=9, IsNullable=true)]
-            public virtual String ColNcharMin { get; set; }
-            [DataMember(Order=10, IsRequired=false)][XmlElement(Order=10, IsNullable=true)]
-            public virtual String ColNcharMax { get; set; }
-            [DataMember(Order=11, IsRequired=false)][XmlElement(Order=11, IsNullable=true)]
-            public virtual String ColLast { get; set; }
-        } // TTableBigChar
 
         public ICollection<TypeITTableBigChar> ReadResultITTableBigChar<TypeITTableBigChar>(OracleDataReader rdr, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null)
                 where TypeITTableBigChar : class, ITTableBigChar, new() {
@@ -5765,77 +5409,6 @@ namespace Schema.Odpt.Odpt.Package {
             Decimal? ColNumberLast { set; }
         } // ITTableNumber
 
-        [DataContract(Namespace="http://odpt.business.com")][Serializable()]
-        public abstract partial class TTableNumber : Schema.Odpt.Odpt.OdptPackageRecord, ITTableNumber {
-            private Byte propertyToEnsuresPartialClassNamesAreUniqueAtCompileTime { get; set; }
-            [DataMember(Order=0, IsRequired=false)][XmlElement(Order=0, IsNullable=true)]
-            public virtual Int64? Id { get; set; }
-            [DataMember(Order=1, IsRequired=false)][XmlElement(Order=1, IsNullable=true)]
-            public virtual Decimal? ColNumber { get; set; }
-            [DataMember(Order=2, IsRequired=false)][XmlElement(Order=2, IsNullable=true)]
-            public virtual SByte? ColNumber1 { get; set; }
-            [DataMember(Order=3, IsRequired=false)][XmlElement(Order=3, IsNullable=true)]
-            public virtual SByte? ColNumber2 { get; set; }
-            [DataMember(Order=4, IsRequired=false)][XmlElement(Order=4, IsNullable=true)]
-            public virtual Int16? ColNumber3 { get; set; }
-            [DataMember(Order=5, IsRequired=false)][XmlElement(Order=5, IsNullable=true)]
-            public virtual Int16? ColNumber4 { get; set; }
-            [DataMember(Order=6, IsRequired=false)][XmlElement(Order=6, IsNullable=true)]
-            public virtual Int32? ColNumber5 { get; set; }
-            [DataMember(Order=7, IsRequired=false)][XmlElement(Order=7, IsNullable=true)]
-            public virtual Int32? ColNumber6 { get; set; }
-            [DataMember(Order=8, IsRequired=false)][XmlElement(Order=8, IsNullable=true)]
-            public virtual Int32? ColNumber7 { get; set; }
-            [DataMember(Order=9, IsRequired=false)][XmlElement(Order=9, IsNullable=true)]
-            public virtual Int32? ColNumber8 { get; set; }
-            [DataMember(Order=10, IsRequired=false)][XmlElement(Order=10, IsNullable=true)]
-            public virtual Int32? ColNumber9 { get; set; }
-            [DataMember(Order=11, IsRequired=false)][XmlElement(Order=11, IsNullable=true)]
-            public virtual Int64? ColNumber10 { get; set; }
-            [DataMember(Order=12, IsRequired=false)][XmlElement(Order=12, IsNullable=true)]
-            public virtual Int64? ColNumber18 { get; set; }
-            [DataMember(Order=13, IsRequired=false)][XmlElement(Order=13, IsNullable=true)]
-            public virtual Int64? ColNumber19 { get; set; }
-            [DataMember(Order=14, IsRequired=false)][XmlElement(Order=14, IsNullable=true)]
-            public virtual Int64? ColNumber38 { get; set; }
-            [DataMember(Order=15, IsRequired=false)][XmlElement(Order=15, IsNullable=true)]
-            public virtual SByte? ColNumber1Scale0 { get; set; }
-            [DataMember(Order=16, IsRequired=false)][XmlElement(Order=16, IsNullable=true)]
-            public virtual SByte? ColNumber2Scale0 { get; set; }
-            [DataMember(Order=17, IsRequired=false)][XmlElement(Order=17, IsNullable=true)]
-            public virtual Int16? ColNumber3Scale0 { get; set; }
-            [DataMember(Order=18, IsRequired=false)][XmlElement(Order=18, IsNullable=true)]
-            public virtual Int16? ColNumber4Scale0 { get; set; }
-            [DataMember(Order=19, IsRequired=false)][XmlElement(Order=19, IsNullable=true)]
-            public virtual Int32? ColNumber5Scale0 { get; set; }
-            [DataMember(Order=20, IsRequired=false)][XmlElement(Order=20, IsNullable=true)]
-            public virtual Int32? ColNumber9Scale0 { get; set; }
-            [DataMember(Order=21, IsRequired=false)][XmlElement(Order=21, IsNullable=true)]
-            public virtual Int64? ColNumber10Scale0 { get; set; }
-            [DataMember(Order=22, IsRequired=false)][XmlElement(Order=22, IsNullable=true)]
-            public virtual Int64? ColNumber18Scale0 { get; set; }
-            [DataMember(Order=23, IsRequired=false)][XmlElement(Order=23, IsNullable=true)]
-            public virtual Int64? ColNumber19Scale0 { get; set; }
-            [DataMember(Order=24, IsRequired=false)][XmlElement(Order=24, IsNullable=true)]
-            public virtual Int64? ColNumber28Scale0 { get; set; }
-            [DataMember(Order=25, IsRequired=false)][XmlElement(Order=25, IsNullable=true)]
-            public virtual Int64? ColNumber29Scale0 { get; set; }
-            [DataMember(Order=26, IsRequired=false)][XmlElement(Order=26, IsNullable=true)]
-            public virtual Int64? ColNumber38Scale0 { get; set; }
-            [DataMember(Order=27, IsRequired=false)][XmlElement(Order=27, IsNullable=true)]
-            public virtual Decimal? ColNumber2Scale1 { get; set; }
-            [DataMember(Order=28, IsRequired=false)][XmlElement(Order=28, IsNullable=true)]
-            public virtual Decimal? ColNumber5Scale3 { get; set; }
-            [DataMember(Order=29, IsRequired=false)][XmlElement(Order=29, IsNullable=true)]
-            public virtual Decimal? ColNumber15Scale11 { get; set; }
-            [DataMember(Order=30, IsRequired=false)][XmlElement(Order=30, IsNullable=true)]
-            public virtual Decimal? ColNumber31Scale21 { get; set; }
-            [DataMember(Order=31, IsRequired=false)][XmlElement(Order=31, IsNullable=true)]
-            public virtual Decimal? ColNumber38Scale37 { get; set; }
-            [DataMember(Order=32, IsRequired=false)][XmlElement(Order=32, IsNullable=true)]
-            public virtual Decimal? ColNumberLast { get; set; }
-        } // TTableNumber
-
         public ICollection<TypeITTableNumber> ReadResultITTableNumber<TypeITTableNumber>(OracleDataReader rdr, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null)
                 where TypeITTableNumber : class, ITTableNumber, new() {
             ICollection<TypeITTableNumber> __ret = new List<TypeITTableNumber>();
@@ -5892,27 +5465,6 @@ namespace Schema.Odpt.Odpt.Package {
             Decimal? ColNumber38Scale37 { set; }
             Decimal? ColNumberLast { set; }
         } // ITTableNumberDec
-
-        [DataContract(Namespace="http://odpt.business.com")][Serializable()]
-        public abstract partial class TTableNumberDec : Schema.Odpt.Odpt.OdptPackageRecord, ITTableNumberDec {
-            private Byte propertyToEnsuresPartialClassNamesAreUniqueAtCompileTime { get; set; }
-            [DataMember(Order=0, IsRequired=false)][XmlElement(Order=0, IsNullable=true)]
-            public virtual Int64? Id { get; set; }
-            [DataMember(Order=1, IsRequired=false)][XmlElement(Order=1, IsNullable=true)]
-            public virtual Decimal? ColNumber { get; set; }
-            [DataMember(Order=2, IsRequired=false)][XmlElement(Order=2, IsNullable=true)]
-            public virtual Decimal? ColNumber2Scale1 { get; set; }
-            [DataMember(Order=3, IsRequired=false)][XmlElement(Order=3, IsNullable=true)]
-            public virtual Decimal? ColNumber5Scale3 { get; set; }
-            [DataMember(Order=4, IsRequired=false)][XmlElement(Order=4, IsNullable=true)]
-            public virtual Decimal? ColNumber15Scale11 { get; set; }
-            [DataMember(Order=5, IsRequired=false)][XmlElement(Order=5, IsNullable=true)]
-            public virtual Decimal? ColNumber31Scale21 { get; set; }
-            [DataMember(Order=6, IsRequired=false)][XmlElement(Order=6, IsNullable=true)]
-            public virtual Decimal? ColNumber38Scale37 { get; set; }
-            [DataMember(Order=7, IsRequired=false)][XmlElement(Order=7, IsNullable=true)]
-            public virtual Decimal? ColNumberLast { get; set; }
-        } // TTableNumberDec
 
         public ICollection<TypeITTableNumberDec> ReadResultITTableNumberDec<TypeITTableNumberDec>(OracleDataReader rdr, UInt32? optionalMaxNumberRowsToReadFromAnyCursor = null)
                 where TypeITTableNumberDec : class, ITTableNumberDec, new() {
