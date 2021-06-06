@@ -214,6 +214,7 @@ module internal TypeComposable =
     let private createClassName t           = t |> ComposableClassName
     let private createArray t               = t |> ComposableArray
     let private createCollectionGeneric t   = t |> ComposableCollectionGeneric
+    let private createNone t                = t |> ComposableNone
     let internal ofITypeComposable (iTypeComposable:ITypeComposable) = 
         match iTypeComposable with
         | :? TypeGenericParameter as t  -> createGenericParameter t
@@ -223,7 +224,8 @@ module internal TypeComposable =
         | :? ClassName as t             -> createClassName t
         | :? TypeArray as t             -> createArray t
         | :? TypeCollectionGeneric as t -> createCollectionGeneric t
-        | _ -> failwith $"Type '{iTypeComposable.Code}' not recognized as valid {nameof TypeComposable}"
+        | :? TypeNone
+        | _                             -> createNone TypeNone.NoType
     let internal ofITypeTargetable (iTypeTargetable:ITypeTargetable) = 
         match iTypeTargetable with
         | :? TypeGenericParameter as t  -> createGenericParameter t
@@ -233,7 +235,8 @@ module internal TypeComposable =
         | :? ClassName as t             -> createClassName t
         | :? TypeArray as t             -> createArray t
         | :? TypeCollectionGeneric as t -> createCollectionGeneric t
-        | _ -> failwith $"Type '{iTypeTargetable.Code}' not recognized as valid {nameof TypeTarget}"
+        | :? TypeNone
+        | _                             -> createNone TypeNone.NoType
     let internal ofITypeTargetableOption (iTypeTargetable: ITypeTargetable) =
         match iTypeTargetable |> TypeTarget.ofITypeTargetable with
             | TargetNone _                                                                  -> None
@@ -347,7 +350,7 @@ module internal OdpNetOracleDbTypeEnum =
         | TypeValue.Decimal | TypeValue.OracleDecimal   -> OdpNetOracleDbTypeEnum.Decimal
         | TypeValue.Double                              -> OdpNetOracleDbTypeEnum.BinaryDouble
         | TypeValue.Single                              -> OdpNetOracleDbTypeEnum.BinaryFloat
-        | _                                             -> OdpNetOracleDbTypeEnum.Byte //failwith $"{tv.ToString} not defined as *numeric* {nameof TypeValue} in fromTypeValueNumeric" 
+        | _                                             -> OdpNetOracleDbTypeEnum.Byte 
 
 [<RequireQualifiedAccess>]
 module internal MethodNameReaderGetter =

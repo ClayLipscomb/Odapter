@@ -176,6 +176,7 @@ open Odapter.CSharp.Logic;
         interface ITypeTargetable with
             member this.Code = this.Code
             member this.SansNullable = this :> ITypeTargetable
+        interface ITypeComposable
 
     [<Struct>]
     type TypeCollection = | List | IList | ICollection with
@@ -203,6 +204,7 @@ open Odapter.CSharp.Logic;
             | ComposableClassName t         -> t :> ITypeTargetable
             | ComposableArray t             -> t :> ITypeTargetable
             | ComposableCollectionGeneric t -> t :> ITypeTargetable
+            | ComposableNone t              -> t :> ITypeTargetable
     and [<Struct>] TypeArray = internal TypeArray of TypeComposable with 
         member this.SubType with get() = let (TypeArray typeComposable) = this in typeComposable
         member this.Code = let (TypeArray.TypeArray typeComposable) = this in typeComposable.Code + BRACKETS
@@ -221,6 +223,7 @@ open Odapter.CSharp.Logic;
         | ComposableClassName of ClassName:ClassName
         | ComposableArray of TypeArray:TypeArray
         | ComposableCollectionGeneric of TypeCollectionGeneric:TypeCollectionGeneric
+        | ComposableNone of TypeNone:TypeNone
         member this.Code = 
             match this with
             | ComposableGenericParameter t  -> t.Code
@@ -230,21 +233,22 @@ open Odapter.CSharp.Logic;
             | ComposableClassName t         -> t.Code
             | ComposableArray t             -> t.Code
             | ComposableCollectionGeneric t -> t.Code
+            | ComposableNone t              -> t.Code
         override this.ToString() = this.Code
         member this.AsITypeComposable =
             match this with
             | ComposableGenericParameter t  -> t :> ITypeComposable
-            ///| ComposableGeneric t           -> t :> ITypeComposable
             | ComposableValueNullable t     -> t :> ITypeComposable
             | ComposableValue t             -> t :> ITypeComposable
             | ComposableReference t         -> t :> ITypeComposable
             | ComposableClassName t         -> t :> ITypeComposable
             | ComposableArray t             -> t :> ITypeComposable
             | ComposableCollectionGeneric t -> t :> ITypeComposable
+            | ComposableNone t              -> t :> ITypeComposable
         member this.ValueNullableToValue = 
             match this with
             | ComposableValueNullable t -> ComposableValue t.TypeValue
-            | ComposableGenericParameter _ | ComposableValue _ | ComposableReference _ | ComposableClassName _ | ComposableArray _ | ComposableCollectionGeneric _ -> this
+            | ComposableGenericParameter _ | ComposableValue _ | ComposableReference _ | ComposableClassName _ | ComposableArray _ | ComposableCollectionGeneric _ | ComposableNone _ -> this
 
     [<Struct>]
     type TypeTarget = 
