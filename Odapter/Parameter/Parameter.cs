@@ -71,18 +71,18 @@ namespace Odapter {
 
             IsSavePassword = false;
             IsGeneratePackage = true;
-            IsGenerateRecord = IsGenerateObjectType = IsGenerateTable = IsGenerateView = IsGenerateBaseEntities = false;
+            IsGenerateObjectType = IsGenerateTable = IsGenerateView = IsGenerateBaseEntities = false;
             IsPartialPackage = IsPartialObjectType = IsPartialTable = IsPartialView = false;
-            IsSerializablePackageRecord = IsSerializableObjectType = IsSerializableTable = IsSerializableView = false;
-            IsXmlElementPackageRecord = IsXmlElementObjectType = IsXmlElementTable = IsXmlElementView = false;
-            IsDataContractPackageRecord = IsDataContractObjectType = IsDataContractTable = IsDataContractView = false;
+            IsSerializableObjectType = IsSerializableTable = IsSerializableView = false;
+            IsXmlElementObjectType = IsXmlElementTable = IsXmlElementView = false;
+            IsDataContractObjectType = IsDataContractTable = IsDataContractView = false;
             IsIncludeFilterPrefixInNaming = true;
 
             NamespaceBase = "Schema";
             NamespacePackage = NamespaceObjectType = NamespaceTable = NamespaceView = NamespaceBaseAdapter = NamespaceBaseEntity = String.Empty;
             NamespaceDataContract = String.Empty;
 
-            AncestorClassNamePackage = AncestorClassNamePackageRecord = AncestorClassNameObjectType = AncestorClassNameTable = AncestorClassNameView = String.Empty;
+            AncestorClassNamePackage = AncestorClassNameObjectType = AncestorClassNameTable = AncestorClassNameView = String.Empty;
             FileNamePackage = FileNameObject = FileNameTable = FileNameView = FileNameBaseAdapter = FileNameBaseEntity = String.Empty;
 
             MaxAssocArraySize = UInt16.MaxValue;
@@ -172,7 +172,6 @@ namespace Odapter {
 
         // ancestor class names
         public string AncestorClassNamePackage { get; set; }
-        public string AncestorClassNamePackageRecord { get; set; }
         public string AncestorClassNameObjectType { get; set; }
         public string AncestorClassNameTable { get; set; }
         public string AncestorClassNameView { get; set; }
@@ -193,24 +192,20 @@ namespace Odapter {
         }
 
         public bool IsGeneratePackage { get; set; }
-        public bool IsGenerateRecord { get; set; }
         public bool IsGenerateObjectType { get; set; }
         public bool IsGenerateTable { get; set; }
         public bool IsGenerateView { get; set; }
         public bool IsGenerateBaseAdapter { get; set; } 
         public bool IsGenerateBaseEntities { get; set; }
 
-        public bool IsDataContractPackageRecord { get; set; }
         public bool IsDataContractObjectType { get; set; }
         public bool IsDataContractTable { get; set; }
         public bool IsDataContractView { get; set; }
 
-        public bool IsXmlElementPackageRecord { get; set; }
         public bool IsXmlElementObjectType { get; set; }
         public bool IsXmlElementTable { get; set; }
         public bool IsXmlElementView { get; set; }
 
-        public bool IsSerializablePackageRecord { get; set; }
         public bool IsSerializableObjectType { get; set; }
         public bool IsSerializableTable { get; set; }
         public bool IsSerializableView { get; set; }

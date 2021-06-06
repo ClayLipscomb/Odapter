@@ -29,7 +29,6 @@ namespace Odapter {
 
         string AncestorClassNameObjectType { get; set; }
         string AncestorClassNamePackage { get; set; }
-        string AncestorClassNamePackageRecord { get; set; }
         string AncestorClassNameTable { get; set; }
         string AncestorClassNameView { get; set; }
 
@@ -40,7 +39,6 @@ namespace Odapter {
         bool IsDeployResources { get; set; }
 
         bool IsDataContractObjectType { get; set; }
-        bool IsDataContractPackageRecord { get; set; }
         bool IsDataContractTable { get; set; }
         bool IsDataContractView { get; set; }
 
@@ -50,12 +48,10 @@ namespace Odapter {
         bool IsPartialView { get; set; }
 
         bool IsSerializableObjectType { get; set; }
-        bool IsSerializablePackageRecord { get; set; }
         bool IsSerializableTable { get; set; }
         bool IsSerializableView { get; set; }
 
         bool IsXmlElementObjectType { get; set; }
-        bool IsXmlElementPackageRecord { get; set; }
         bool IsXmlElementTable { get; set; }
         bool IsXmlElementView { get; set; }
 
@@ -63,7 +59,6 @@ namespace Odapter {
         string NamespaceDataContract { get; set; }
         string NamespaceObjectType { get; set; }
         string NamespacePackage { get; set; }
-        //string NamespaceSchema { get; set; }
         string NamespaceTable { get; set; }
         string NamespaceView { get; set; }
         string NamespaceBaseAdapter { get; set; }

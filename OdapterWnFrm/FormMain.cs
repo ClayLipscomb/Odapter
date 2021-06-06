@@ -158,7 +158,7 @@ namespace OdapterWnFrm {
             }
 
             // 4. check required class name text box fields that have respective check box
-            reqTexBoxesWithCheckBox = new List<TextBox> { txtPackageAncestorClass, txtRecordTypeAncestorClass, txtObjectAncestorClass, txtTableAncestorClass, txtViewAncestorClass };
+            reqTexBoxesWithCheckBox = new List<TextBox> { txtPackageAncestorClass, txtObjectAncestorClass, txtTableAncestorClass, txtViewAncestorClass };
             var labelAncestorClass = this.lblAncestorClass.Text;
             foreach (TextBox tb in reqTexBoxesWithCheckBox) {
                 CheckBox cb = (CheckBox)FindControl(this, "cbGenerate" + tb.Name.Substring(3, tb.Name.Length - 16));
@@ -207,7 +207,6 @@ namespace OdapterWnFrm {
             // namespaces
             //Parameter.Instance.NamespaceSchema = Generator.GenerateNamespaceSchema(baseNamespace, schema, filterInName); // immediately store because UI has no field
             txtPackageNamespace.Text = Generator.GenerateNamespacePackage(baseNamespace, schema, filterInName);
-            txtRecordTypeNamespace.Text = Generator.GenerateNamespacePackage(baseNamespace, schema, filterInName);
             txtObjectNamespace.Text = Generator.GenerateNamespaceObjectType(baseNamespace, schema, filterInName);
             txtTableNamespace.Text = Generator.GenerateNamespaceTable(baseNamespace, schema, filterInName);
             txtViewNamespace.Text = Generator.GenerateNamespaceView(baseNamespace, schema, filterInName);
@@ -216,7 +215,6 @@ namespace OdapterWnFrm {
 
             // base classes
             txtPackageAncestorClass.Text = Generator.GenerateBaseAdapterClassName(schema);
-            txtRecordTypeAncestorClass.Text = Generator.GenerateBaseRecordClassName(schema);
             txtObjectAncestorClass.Text = Generator.GenerateBaseObjectTypeClassName(schema);
             txtTableAncestorClass.Text = Generator.GenerateBaseTableClassName(schema);
             txtViewAncestorClass.Text = Generator.GenerateBaseViewClassName(schema);
@@ -354,31 +352,30 @@ namespace OdapterWnFrm {
         }
 
         private void txtPackageNamespace_TextChanged(object sender, EventArgs e) {
-            txtRecordTypeNamespace.Text = txtPackageNamespace.Text;
         }
 
         private void cbGeneratePackage_CheckedChanged(object sender, EventArgs e) {
             // enable/disable
             txtPackageNamespace.Enabled = txtPackageAncestorClass.Enabled = txtPackageFileName.Enabled = cbPartialPackageClasses.Enabled =         
-                cbGenerateRecordType.Enabled = txtRecordTypeAncestorClass.Enabled = lblRecordDto.Enabled = cbSerializablePOCOs.Enabled = cbDataContractPackageRecord.Enabled = cbXmlElementPackageRecord.Enabled =
+                //cbGenerateRecordType.Enabled = txtRecordTypeAncestorClass.Enabled = lblRecordDto.Enabled = cbSerializablePOCOs.Enabled = cbDataContractPackageRecord.Enabled = cbXmlElementPackageRecord.Enabled =
                 cbGenerateBaseAdapter.Enabled = lblBaseAdapter.Enabled = txtBaseAdapterNamespace.Enabled = //lblBaseAdapter.Enabled =
                 // set above from:
                 cbGeneratePackage.Checked;
 
             // check/uncheck
-            cbGenerateRecordType.Checked = cbGenerateBaseAdapter.Checked = cbGeneratePackage.Checked;
+            cbGenerateBaseAdapter.Checked = cbGeneratePackage.Checked;
 
             if (cbGeneratePackage.Checked) cbGenerateBaseAdapter.Checked = true;
         }
 
         private void cbPartialPackage_CheckedChanged(object sender, EventArgs e) {
-            cbPartialPOCOs.Checked = cbPartialPackageClasses.Checked;
+            //cbPartialPOCOs.Checked = cbPartialPackageClasses.Checked;
         }
 
         private void cmbClientHome_SelectedIndexChanged(object sender, EventArgs e) => BindTnsNames();
 
         private void cbPartialPOCOs_CheckedChanged(object sender, EventArgs e) {
-            if (cbPartialPOCOs.Checked) cbPartialPackageClasses.Checked = true;
+            //if (cbPartialPOCOs.Checked) cbPartialPackageClasses.Checked = true;
         }
 
         private void cbGenerateTable_CheckedChanged(object sender, EventArgs e) {
@@ -529,7 +526,6 @@ namespace OdapterWnFrm {
                 : Parameter.Instance.NamespaceBaseEntity;
 
             txtPackageAncestorClass.Text = Parameter.Instance.AncestorClassNamePackage;
-            txtRecordTypeAncestorClass.Text = Parameter.Instance.AncestorClassNamePackageRecord;
             txtObjectAncestorClass.Text = Parameter.Instance.AncestorClassNameObjectType;
             txtTableAncestorClass.Text = Parameter.Instance.AncestorClassNameTable;
             txtViewAncestorClass.Text = Parameter.Instance.AncestorClassNameView;
@@ -556,30 +552,25 @@ namespace OdapterWnFrm {
                 : Parameter.Instance.FileNameBaseEntity;
 
             cbGeneratePackage.Checked = Parameter.Instance.IsGeneratePackage;
-            cbGenerateRecordType.Checked = Parameter.Instance.IsGenerateRecord;
             cbGenerateObject.Checked = Parameter.Instance.IsGenerateObjectType;
             cbGenerateTable.Checked = Parameter.Instance.IsGenerateTable;
             cbGenerateView.Checked = Parameter.Instance.IsGenerateView;
             cbGenerateBaseAdapter.Checked = Parameter.Instance.IsGenerateBaseAdapter;
             cbGenerateBaseEntity.Checked = Parameter.Instance.IsGenerateBaseEntities;
 
-            cbDataContractPackageRecord.Checked = Parameter.Instance.IsDataContractPackageRecord;
             cbDataContractObjectType.Checked = Parameter.Instance.IsDataContractObjectType;
             cbDataContractTable.Checked = Parameter.Instance.IsDataContractTable;
             cbDataContractView.Checked = Parameter.Instance.IsDataContractView;
 
-            cbXmlElementPackageRecord.Checked = Parameter.Instance.IsXmlElementPackageRecord;
             cbXmlElementObjectType.Checked = Parameter.Instance.IsXmlElementObjectType;
             cbXmlElementTable.Checked = Parameter.Instance.IsXmlElementTable;
             cbXmlElementView.Checked = Parameter.Instance.IsXmlElementView;
 
-            cbSerializablePOCOs.Checked = Parameter.Instance.IsSerializablePackageRecord;
             cbSerializableObjectTypes.Checked = Parameter.Instance.IsSerializableObjectType;
             cbSerializableTables.Checked = Parameter.Instance.IsSerializableTable;
             cbSerializableViews.Checked = Parameter.Instance.IsSerializableView;
 
             cbPartialPackageClasses.Checked = Parameter.Instance.IsPartialPackage;
-            cbPartialPOCOs.Checked = Parameter.Instance.IsPartialPackage;
             cbPartialObjectTypes.Checked = Parameter.Instance.IsPartialObjectType;
             cbPartialTables.Checked = Parameter.Instance.IsPartialTable;
             cbPartialViews.Checked = Parameter.Instance.IsPartialView;
@@ -633,7 +624,6 @@ namespace OdapterWnFrm {
             Parameter.Instance.NamespaceBaseEntity = txtBaseEntityNamespace.Text;
 
             Parameter.Instance.AncestorClassNamePackage = txtPackageAncestorClass.Text;
-            Parameter.Instance.AncestorClassNamePackageRecord = txtRecordTypeAncestorClass.Text;
             Parameter.Instance.AncestorClassNameObjectType = txtObjectAncestorClass.Text;
             Parameter.Instance.AncestorClassNameTable = txtTableAncestorClass.Text;
             Parameter.Instance.AncestorClassNameView = txtViewAncestorClass.Text;
@@ -664,24 +654,20 @@ namespace OdapterWnFrm {
             Parameter.Instance.IsConvertOracleNumberToIntegerIfColumnNameIsId = cbConvertOracleNumberToIntegerIfColumnNameIsId.Checked;
 
             Parameter.Instance.IsGeneratePackage = cbGeneratePackage.Checked;
-            Parameter.Instance.IsGenerateRecord = cbGenerateRecordType.Checked;
             Parameter.Instance.IsGenerateObjectType = cbGenerateObject.Checked;
             Parameter.Instance.IsGenerateTable = cbGenerateTable.Checked;
             Parameter.Instance.IsGenerateView = cbGenerateView.Checked;
             Parameter.Instance.IsGenerateBaseAdapter = cbGenerateBaseAdapter.Checked;
             Parameter.Instance.IsGenerateBaseEntities = cbGenerateBaseEntity.Checked;
 
-            Parameter.Instance.IsDataContractPackageRecord = cbDataContractPackageRecord.Checked;
             Parameter.Instance.IsDataContractObjectType = cbDataContractObjectType.Checked;
             Parameter.Instance.IsDataContractTable = cbDataContractTable.Checked;
             Parameter.Instance.IsDataContractView = cbDataContractView.Checked;
 
-            Parameter.Instance.IsXmlElementPackageRecord = cbXmlElementPackageRecord.Checked;
             Parameter.Instance.IsXmlElementObjectType = cbXmlElementObjectType.Checked;
             Parameter.Instance.IsXmlElementTable = cbXmlElementTable.Checked;
             Parameter.Instance.IsXmlElementView = cbXmlElementView.Checked;
 
-            Parameter.Instance.IsSerializablePackageRecord = cbSerializablePOCOs.Checked;
             Parameter.Instance.IsSerializableObjectType = cbSerializableObjectTypes.Checked;
             Parameter.Instance.IsSerializableTable = cbSerializableTables.Checked;
             Parameter.Instance.IsSerializableView = cbSerializableViews.Checked;
@@ -737,8 +723,8 @@ namespace OdapterWnFrm {
         private void cbUseAutoImplementedProperties_CheckedChanged(object sender, EventArgs e) { }
 
         private void cbGenerateRecordType_CheckedChanged(object sender, EventArgs e) {
-            this.cbDuplicatePackageRecordOriginatingOutsideFilterAndSchema.Enabled = lblDuplicatePackageRecordOriginatingOutsideFilterAndSchema.Enabled =
-                cbGenerateRecordType.Checked;
+            //this.cbDuplicatePackageRecordOriginatingOutsideFilterAndSchema.Enabled = lblDuplicatePackageRecordOriginatingOutsideFilterAndSchema.Enabled =
+            //    cbGenerateRecordType.Checked;
         }
 
         private void ListViewMessage_DrawColumnHeader(object sender, DrawListViewColumnHeaderEventArgs e) {

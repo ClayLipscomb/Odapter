@@ -120,9 +120,6 @@
   <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
-  <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
   <data name="lblDtoInterfaceCategory.ToolTip" xml:space="preserve">
     <value>An interface is generated for each package record associated with a typed 
 REF CURSOR. In order to be used by generated code, a developer-created 
@@ -131,11 +128,11 @@ the respective method signatures. This setting determines the nature of the
 interface (and contraints) generated.</value>
   </data>
   <data name="lblDuplicatePackageRecordOriginatingOutsideFilterAndSchema.ToolTip" xml:space="preserve">
-    <value>Package record types may be defined by referencing another package's record. If the 
-referenced package lies outside the Filter Prefix, the generated package record code 
-will not compile unless that referenced package is generated separately. This can lead 
-to an unending cycle of uncompiled references. Simply generating a "duplicate" record 
-defintion in the package eliminates this possible issue.</value>
+    <value>Package records may be defined by referencing another package's record. If the 
+referenced package lies outside the Filter Prefix, the generated record interface code 
+will not compile unless that referenced package is generated separately. This can 
+lead to an unending cycle of uncompiled references. Simply generating a "duplicate" 
+interface defintion in the package adapter eliminates this possible issue.</value>
   </data>
   <data name="lblGeneratedDynamicMethodForTypedCursor.ToolTip" xml:space="preserve">
     <value>An additional method overload that uses mapping to a cursor will be generated when the underlying procedure's cursors 

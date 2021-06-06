@@ -840,13 +840,12 @@ namespace Odapter {
         }
 
         private void WritePackageClasses(List<IPackage> packages, IList<IPackageRecord> records, 
-            string packageNamespace, string ancestorAdapterClassName, bool partialPackage, string ancestorRecordTypeClassName) {
+            string packageNamespace, string ancestorAdapterClassName, bool partialPackage) {
 
             if (packages.Count == 0) return;
 
             string fileName = $"{_outputPath}\\{Parameter.Instance.FileNamePackage}";
             DisplayMessage("Coding packages (" + fileName.Substring(fileName.LastIndexOf('\\') + 1) + ")...");
-            if (Parameter.Instance.IsGenerateRecord) DisplayMessage(@"** WARNING: Record DTOs Deprecated **");
 
             try {
                 StreamWriter outFilePackage = new StreamWriter(fileName);
@@ -924,19 +923,10 @@ namespace Odapter {
                         if (pack.RecordsToGenerate.Exists(r => r.EntityName == rec.EntityName)) continue;
 
                         classText.AppendLine();
-                        classText.Append(GenerateEntityInterface(rec, Parameter.Instance.TargetDtoInterfaceCategoryRecord, 1));
+                        classText.Append(GenerateEntityInterface(rec, Parameter.Instance.TargetDtoInterfaceCategoryRecord, 1, out bool ignored));
                         classText.AppendLine();
 
-                        // create DTO 
-                        bool ignored = false;
-                        if (Parameter.Instance.IsGenerateRecord) {
-                            classText.AppendLine();
-                            classText.Append(GenerateEntityClass(rec, ancestorRecordTypeClassName,
-                                Parameter.Instance.IsSerializablePackageRecord, Parameter.Instance.IsPartialPackage,
-                                Parameter.Instance.IsDataContractPackageRecord, Parameter.Instance.IsXmlElementPackageRecord, 2, out ignored));
-                        }
-
-                        if (!rec.IsIgnoredDueToOracleTypes(out string reasonMsg) && !usingDtoImmutable) {
+                        if (!ignored && !usingDtoImmutable) {
                             // create custom reader
                             classText.AppendLine();
                             classText.Append(GenerateRecordTypeReadResultMethod(rec));
@@ -1050,7 +1040,7 @@ namespace Odapter {
         /// <param name="entity"></param>
         /// <param name="tabIndentCount">number of tabs to indent</param>
         /// <returns></returns>
-        private string GenerateEntityInterface(IEntity entity, CS.DtoInterfaceCategory dtoInterfaceCategory, UInt32 tabIndentCount) {
+        private string GenerateEntityInterface(IEntity entity, CS.DtoInterfaceCategory dtoInterfaceCategory, UInt32 tabIndentCount, out bool ignored) {
             var typeInterface = CSL.TypeInterface(
                 CS.AccessModifierInterface.PUBLIC,
                 CSL.InterfaceNameOfClassName(entity.Translater.CSharpClassName),
@@ -1070,8 +1060,10 @@ namespace Odapter {
                 int tab = 2;
                 commentText.AppendLine(Tab(tab) + $"// **{entityType} IGNORED** - {ignoreReason}");
                 commentText.Append(Tab(tab) + "// " + codeFirstLine);
+                ignored = true;
                 return commentText.ToString();
-            } else { 
+            } else {
+                ignored = false;
                 return CSL.CodeInterface(tabIndentCount + 1, typeInterface);
             }
         }
@@ -1161,7 +1153,7 @@ namespace Odapter {
             // generate schema-derived classes
             if (Parameter.Instance.IsGeneratePackage)
                 generator.WritePackageClasses(loader.Packages, loader.PackageRecordTypes, Parameter.Instance.NamespacePackage, Parameter.Instance.AncestorClassNamePackage, 
-                    Parameter.Instance.IsPartialPackage, Parameter.Instance.AncestorClassNamePackageRecord);
+                    Parameter.Instance.IsPartialPackage);
             if (Parameter.Instance.IsGenerateObjectType)
                 generator.WriteNonPackagedEntityClasses<IObjectType>(loader.ObjectTypes, Parameter.Instance.NamespaceObjectType, Generator.GenerateBaseObjectTypeClassName(Parameter.Instance.Schema),
                     Parameter.Instance.IsSerializableObjectType, Parameter.Instance.IsPartialObjectType, Parameter.Instance.IsDataContractObjectType, Parameter.Instance.IsXmlElementObjectType,
