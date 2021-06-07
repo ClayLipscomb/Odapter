@@ -320,8 +320,10 @@ module internal TypeInterface =
         match dtoInterfaceCategory with
         | DtoInterfaceCategory.MutableSet       -> PropertyAccessor.SetOnly
         | DtoInterfaceCategory.ImmutableGetInit -> PropertyAccessor.GetInit
-    let private code (typeInterface: TypeInterface) = 
+    let codeFirstLine (typeInterface: TypeInterface) = 
         codeSpaced[|typeInterface.AccessModifier; INTERFACE; typeInterface.InterfaceName; CURLY_OPEN|] 
+    let private code typeInterface = 
+        codeFirstLine typeInterface
         + NEWLINE + codeTabbedLines (typeInterface.Properties, 1u)
         + NEWLINE + codeSpaced[|CURLY_CLOSE; @"//"; typeInterface.InterfaceName|]
     let codeTabbed tabCnt typeInterface = Coder.codeTabbed tabCnt (typeInterface |> code)
@@ -455,7 +457,9 @@ module Api =
     let CodeUsing (nmspace: Namespace) = Namespace.toCodeUsing nmspace
     let CodeReadResultAssignment (cSharpType:ITypeTargetable, cSharpOdpNetSafeType: ITypeTargetable, readerName: string, position: int, objectName: string, propertyName: PropertyName) =
         codeReadResultAssignment (cSharpType |> TypeTarget.ofITypeTargetable, cSharpOdpNetSafeType |> TypeTarget.ofITypeTargetable, readerName, position, objectName, propertyName)
+
     let CodeInterface (tabCnt: uint32, typeInterface: TypeInterface) = TypeInterface.codeTabbed tabCnt typeInterface
+    let CodeInterfaceFirstLine (typeInterface: TypeInterface) = TypeInterface.codeFirstLine typeInterface
     let CodeTypeGenericConstraints (typeGenericParameters: TypeGenericParameter seq, tabCnt: uint32) = TypeGenericParameter.codeConstraints (typeGenericParameters, tabCnt)
 
     // constructor wrappers
