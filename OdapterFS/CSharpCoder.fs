@@ -44,6 +44,7 @@ module internal Coder =
             emptyString
         else
             objects 
+            |> Seq.map (fun x -> x :> Object)
             |> Seq.reduce codeLinesPair
             |> codeTabbed tabCnt
 
