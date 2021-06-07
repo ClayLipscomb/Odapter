@@ -574,8 +574,6 @@ namespace OdapterWnFrm {
             this.lblFileName.TabIndex = 65;
             this.lblFileName.Text = "* Generated File";
             this.lblFileName.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.toolTip1.SetToolTip(this.lblFileName, "Each base class will be inherited in generated code regardless of whether the cla" +
-        "ss is generated.");
             // 
             // txtProcedureNamespace
             // 
