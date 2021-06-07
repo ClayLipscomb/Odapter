@@ -1044,6 +1044,14 @@ namespace Odapter {
         /// <param name="tabIndentCount">number of tabs to indent</param>
         /// <returns></returns>
         private string GenerateEntityInterface(IEntity entity, CS.DtoInterfaceCategory dtoInterfaceCategory, UInt32 tabIndentCount, out bool ignored) {
+
+            // only object type can have a database ancestor
+            var dbAncestorTypeName = (entity is IObjectType type) ? type.DbAncestorTypeName : null;
+            var ancestorInterfaceNames = 
+                String.IsNullOrWhiteSpace(dbAncestorTypeName) 
+                    ? new List<CS.InterfaceName>() 
+                    : new List<CS.InterfaceName>() { Trns.InterfaceNameOfOracleIdentifier(dbAncestorTypeName) };
+
             var typeInterface = CSL.TypeInterface(
                 CS.AccessModifierInterface.PUBLIC,
                 CSL.InterfaceNameOfClassName(entity.Translater.CSharpClassName),
@@ -1051,7 +1059,8 @@ namespace Odapter {
                     Trns.PropertyNameOfOracleIdentifier(a.AttrName, a.EntityName),
                     a.Translater.CSharpType,
                     CSL.TypeNone,
-                    CSL.DtoInterfacePropertyAccessor(dtoInterfaceCategory))));
+                    CSL.DtoInterfacePropertyAccessor(dtoInterfaceCategory))),
+                ancestorInterfaceNames);
 
             // bypass creation of entities that use unimplemented Oracle types
             if (entity.IsIgnoredDueToOracleTypes(out string ignoreReason)) {

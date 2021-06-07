@@ -320,8 +320,14 @@ open Odapter.CSharp.Logic;
     type AccessModifierInterface = | PUBLIC | INTERNAL with
         member this.Code = this |> UtilUnion.fromDuCaseToString |> toLower
         override this.ToString() = this.Code
+
     [<Struct>]
-    type TypeInterface = { AccessModifier: AccessModifierInterface; InterfaceName: InterfaceName; Properties: Property seq }
+    type TypeInterface = { 
+        AccessModifier: AccessModifierInterface
+        InterfaceName: InterfaceName
+        Properties: Property seq
+        AncestorInterfaceNames: InterfaceName seq option
+    }
 
     [<Struct>]
     type internal TypeClassDto = { 

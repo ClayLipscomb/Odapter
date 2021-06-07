@@ -314,17 +314,23 @@ module internal Property =
 
 [<RequireQualifiedAccess>]
 module internal TypeInterface = 
-    let create (accessModifier: AccessModifierInterface, interfaceName: InterfaceName, properties: Property seq) = 
-        { AccessModifier = accessModifier; InterfaceName = interfaceName; Properties = properties }
+    let create (accessModifier: AccessModifierInterface, interfaceName: InterfaceName, properties: Property seq, ancestorInterfaceNames : InterfaceName seq option) = 
+        { AccessModifier = accessModifier; InterfaceName = interfaceName; Properties = properties; AncestorInterfaceNames = ancestorInterfaceNames }
     let dtoInterfacePropertyAccessor (dtoInterfaceCategory: DtoInterfaceCategory) = 
         match dtoInterfaceCategory with
         | DtoInterfaceCategory.MutableSet       -> PropertyAccessor.SetOnly
         | DtoInterfaceCategory.ImmutableGetInit -> PropertyAccessor.GetInit
+    let private codeAncestorInterfaceNames (interfaceNamesOption : InterfaceName seq option) = 
+        (match interfaceNamesOption with
+        | Some interfaceNames -> 
+            if Seq.isEmpty interfaceNames then emptyString 
+            else codeSpaced[|COLON; (interfaceNames |> Seq.map(fun x -> x :> Object) |> codeCommaSpaced)|]
+        | None -> emptyString);
     let codeFirstLine (typeInterface: TypeInterface) = 
-        codeSpaced[|typeInterface.AccessModifier; INTERFACE; typeInterface.InterfaceName; CURLY_OPEN|] 
+        codeSpaced[|typeInterface.AccessModifier; INTERFACE; typeInterface.InterfaceName; codeAncestorInterfaceNames typeInterface.AncestorInterfaceNames; CURLY_OPEN|] 
     let private code typeInterface = 
         codeFirstLine typeInterface
-        + NEWLINE + codeTabbedLines (typeInterface.Properties, 1u)
+        + if Seq.isEmpty typeInterface.Properties then emptyString else NEWLINE + codeTabbedLines (typeInterface.Properties, 1u)
         + NEWLINE + codeSpaced[|CURLY_CLOSE; @"//"; typeInterface.InterfaceName|]
     let codeTabbed tabCnt typeInterface = Coder.codeTabbed tabCnt (typeInterface |> code)
 
@@ -483,7 +489,8 @@ module Api =
     let GetSubType (iTypeTargetable: ITypeTargetable) = iTypeTargetable |> TypeTarget.ofITypeTargetable |> TypeTarget.getSubType
 
     let DtoInterfacePropertyAccessor (dtoInterfaceCategory: DtoInterfaceCategory) = TypeInterface.dtoInterfacePropertyAccessor  dtoInterfaceCategory
-    let TypeInterface (accessModifier: AccessModifierInterface, interfaceName: InterfaceName, properties: Property seq) = TypeInterface.create (accessModifier, interfaceName, properties)
+    let TypeInterface (accessModifier: AccessModifierInterface, interfaceName: InterfaceName, properties: Property seq, ancestorIntefaceNames: InterfaceName seq) = 
+        TypeInterface.create (accessModifier, interfaceName, properties, if Seq.isEmpty ancestorIntefaceNames then None else Some ancestorIntefaceNames)
 
     let PropertyClass (propertyName: PropertyName, propertyType: ITypeTargetable, containerType: ITypeTargetable, accessor: PropertyAccessor, accessModifier: AccessModifier, isVirtual: bool, isDataMember: bool, isXmlElement: bool) = 
         Property.create (propertyName, propertyType |> TypeComposable.ofITypeTargetable, containerType |> TypeComposable.ofITypeTargetableOption, accessor, Some accessModifier, None, isVirtual, isDataMember, isXmlElement)
