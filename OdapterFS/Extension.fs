@@ -23,8 +23,12 @@ open System.Globalization
 
 [<AutoOpen>]
 module internal StringExtension =
+    let isNullOrWhiteSpace str = String.IsNullOrWhiteSpace str
+    let isNull (str: string) = (str = null)
     let toUpper (str: string) = str.ToUpper()
     let toLower (str: string) = str.ToLower() 
+    let isUpper (str: string) = if isNullOrWhiteSpace str then false else (str = toUpper str)
+    let isLower (str: string) = if isNullOrWhiteSpace str then false else (str = toLower str)
     let startsWith prefix (str: string) = str.StartsWith(prefix)
     let endsWith (prefix: string) (str : string) = str.EndsWith(prefix)
     let toCharArray (str: string) = str.ToCharArray()
@@ -34,8 +38,6 @@ module internal StringExtension =
     let trim (str: string) = str.Trim()
     let concat (sep: string) (strings: string seq) = String.concat sep strings
     let replicate count str = String.replicate count str
-    let isNullOrWhiteSpace str = String.IsNullOrWhiteSpace str
-    let isNull (str: string) = str = null
     let emptyString = String.Empty
     let length = String.length
     let subString startIndex length (str: string) = str.Substring(startIndex, length)

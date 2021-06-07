@@ -69,11 +69,21 @@ module internal PropertyName =
 
 [<RequireQualifiedAccess>]
 module internal InterfaceName = 
-    let [<Literal>] private INTEFACE_PREFIX = @"I"
-    let private interfacePrefixPascalCase = PascalCase.create INTEFACE_PREFIX
-    let private create baseStr = (INTEFACE_PREFIX + baseStr) |> PascalCase |> InterfaceName
+    let [<Literal>] private INTERFACE_PREFIX = @"I"
+    let private interfacePrefixPascalCase = PascalCase.create INTERFACE_PREFIX
+    let private create baseStr = (INTERFACE_PREFIX + baseStr) |> PascalCase |> InterfaceName
     let private createOfPascalCase basePascalCase = PascalCase.concat [|interfacePrefixPascalCase; basePascalCase|] |> InterfaceName
     let ofClassName (className: ClassName) = createOfPascalCase className.Value
+    let fromCode interfaceNameCandidate = 
+        if (isNullOrWhiteSpace interfaceNameCandidate |> not) 
+            && length interfaceNameCandidate >= 3                   // at least 3 characters long
+            && isUpper (subString 0 2 interfaceNameCandidate)       // first 2 characters are uppercase
+            && isLower (subString 2 1 interfaceNameCandidate)       // 3rd character is lowercase
+            && (startsWith INTERFACE_PREFIX interfaceNameCandidate) then 
+            interfaceNameCandidate |> PascalCase |> createOfPascalCase |> Some
+        else 
+            None
+    let (|ValidCode|_|) = fromCode
 
 [<RequireQualifiedAccess>]
 module internal TypeGenericName = 
@@ -88,7 +98,11 @@ module internal TypeGenericName =
             None
     let (|ValidCode|_|) = fromCode
     let createOfInterfaceName (interfaceName: InterfaceName) = create interfaceName.Value
-    let createOfTypeTarget (typeTarget: TypeTarget) = match typeTarget with | TargetClassName className -> className |> InterfaceName.ofClassName |> createOfInterfaceName | _ -> emptyString |> PascalCase |> create 
+    let createOfTypeTarget (typeTarget: TypeTarget) = 
+        match typeTarget with 
+        | TargetClassName className -> className |> InterfaceName.ofClassName |> createOfInterfaceName 
+        | TargetInterfaceName interfaceName -> interfaceName |> createOfInterfaceName 
+        | _ -> emptyString |> PascalCase |> create 
 
 [<RequireQualifiedAccess>]
 module internal TypeGenericParameterConstraint = 
@@ -105,6 +119,7 @@ module internal TypeGenericParameter =
     let createOfTypeTarget typeTarget = 
         match typeTarget with 
             | TargetClassName tcn -> tcn |> InterfaceName.ofClassName |> createTyped 
+            | TargetInterfaceName interfaceName -> interfaceName |> createTyped 
             | _ -> emptyString |> PascalCase |> createUntyped 
     let codeConstraints (typeGenericParameters: TypeGenericParameter seq, tabCnt) = codeTabbedLines (typeGenericParameters |> Seq.map (fun x -> x.Constraint), tabCnt)
 
@@ -165,6 +180,7 @@ module internal TypeArray =
             | TypeReference.ValidCode t         -> t |> ComposableReference |> create |> Some
             //| TypeCollectionGeneric.ValidCode t -> t |> ComposableReference |> create |> Some // cyclic reference
             //| TypeGenericName.ValidCode t       -> t |> ComposableGenericParameter |> create |> Some
+            | InterfaceName.ValidCode t         -> t |> ComposableInterfaceName |> create |> Some
             | ClassName.ValidCode t             -> t |> ComposableClassName |> create |> Some
             | _ -> None
         | _ -> None
@@ -179,6 +195,7 @@ module internal TypeTarget =
         | :? TypeReference as t         -> TargetReference t 
         | :? TypeGenericParameter as t  -> TargetGenericParameter t
         | :? ClassName as t             -> TargetClassName t
+        | :? InterfaceName as t         -> TargetInterfaceName t
         | :? TypeCollectionGeneric as t -> TargetCollectionGeneric t
         | :? TypeArray as t             -> TargetArray t
         | :? TypeNone as t              -> TargetNone t
@@ -186,18 +203,18 @@ module internal TypeTarget =
     let private isOdpNetLobType typeTarget = 
         match typeTarget with
         | TargetReference t -> t.Equals(TypeReference.OracleBlob) || t.Equals(TypeReference.OracleClob) // typeTarget.ToCode |> (endsWith @"lob")
-        | TargetValue _ | TargetValueNullable _| TargetGenericParameter _ | TargetClassName _ | TargetCollectionGeneric _ | TargetArray _ | TargetNone _ -> false
+        | TargetValue _ | TargetValueNullable _| TargetGenericParameter _ | TargetClassName _ | TargetInterfaceName _ | TargetCollectionGeneric _ | TargetArray _ | TargetNone _ -> false
     let (|IsOdpNetLobType|_|) typeTarget = if (typeTarget |> isOdpNetLobType) then Some true else None
     let isOdpNet typeTarget = 
         match typeTarget with
         | TargetValue _ | TargetValueNullable _ | TargetReference _ -> typeTarget.Code |> (startsWith Oracle.Code)
-        | TargetGenericParameter _ | TargetClassName _ | TargetCollectionGeneric _ | TargetArray _ | TargetNone _ -> false
+        | TargetGenericParameter _ | TargetClassName _ | TargetInterfaceName _ | TargetCollectionGeneric _ | TargetArray _ | TargetNone _ -> false
     let (|IsOdpNet|_|) typeTarget = if (typeTarget |> isOdpNet) then Some true else None
     //let asNullable typeTarget = match typeTarget with | TargetValue t -> t.Nullable :> ITypeTargetable | _ -> typeTarget.AsITypeTargetable
     let isDataTable typeTarget = 
         match typeTarget with 
         | TargetReference tr -> tr.Equals(TypeReference.DataTable) 
-        | TargetGenericParameter _ | TargetValue _ | TargetValueNullable _ | TargetClassName _ | TargetCollectionGeneric _ | TargetArray _ | TargetNone _ -> false
+        | TargetGenericParameter _ | TargetValue _ | TargetValueNullable _ | TargetClassName _ | TargetInterfaceName _ | TargetCollectionGeneric _ | TargetArray _ | TargetNone _ -> false
     let isTypeCollectionGeneric typeTarget = match typeTarget with | TargetCollectionGeneric t -> true | _-> false
     let getSubType typeTarget = 
         match typeTarget with 
@@ -212,6 +229,7 @@ module internal TypeComposable =
     let private createValue t               = t |> ComposableValue
     let private createReference t           = t |> ComposableReference
     let private createClassName t           = t |> ComposableClassName
+    let private createInterfaceName t       = t |> ComposableInterfaceName
     let private createArray t               = t |> ComposableArray
     let private createCollectionGeneric t   = t |> ComposableCollectionGeneric
     let private createNone t                = t |> ComposableNone
@@ -222,6 +240,7 @@ module internal TypeComposable =
         | :? TypeValue as t             -> createValue t
         | :? TypeReference as t         -> createReference t
         | :? ClassName as t             -> createClassName t
+        | :? InterfaceName as t         -> createInterfaceName t
         | :? TypeArray as t             -> createArray t
         | :? TypeCollectionGeneric as t -> createCollectionGeneric t
         | :? TypeNone
@@ -233,15 +252,16 @@ module internal TypeComposable =
         | :? TypeValue as t             -> createValue t
         | :? TypeReference as t         -> createReference t
         | :? ClassName as t             -> createClassName t
+        | :? InterfaceName as t         -> createInterfaceName t
         | :? TypeArray as t             -> createArray t
         | :? TypeCollectionGeneric as t -> createCollectionGeneric t
         | :? TypeNone
         | _                             -> createNone TypeNone.NoType
     let internal ofITypeTargetableOption (iTypeTargetable: ITypeTargetable) =
         match iTypeTargetable |> TypeTarget.ofITypeTargetable with
-            | TargetNone _                                                                  -> None
+            | TargetNone _                                                                          -> None
             | TargetValueNullable _ | TargetValue _ | TargetReference _ | TargetGenericParameter _ 
-            | TargetClassName _ | TargetCollectionGeneric _ | TargetArray _                 -> iTypeTargetable |> ofITypeTargetable |> Some; 
+            | TargetClassName _ | TargetInterfaceName _ | TargetCollectionGeneric _ | TargetArray _ -> iTypeTargetable |> ofITypeTargetable |> Some; 
     let isEquals (typeComposable: TypeComposable) (iTypeComposable: ITypeComposable) = typeComposable.Equals(ofITypeComposable iTypeComposable)
 
 [<RequireQualifiedAccess>]
@@ -271,6 +291,7 @@ module internal TypeCollectionGeneric =
                 | TypeArray.ValidCode t         -> (typeCollection, ComposableArray t) |> create |> Some
                 | ValidCode t                   -> (typeCollection, ComposableCollectionGeneric t) |> create |> Some
                 | TypeGenericName.ValidCode t   -> (typeCollection, t.Value |> TypeGenericParameter.createUntyped |> ComposableGenericParameter) |> create |> Some
+                | InterfaceName.ValidCode t     -> (typeCollection, ComposableInterfaceName t) |> create |> Some
                 | ClassName.ValidCode t         -> (typeCollection, ComposableClassName t) |> create |> Some
                 | _ -> None
             | _ -> None
@@ -283,6 +304,7 @@ module internal TypeCollectionGeneric =
         | TargetReference t         -> create(typeCollection, t :> ITypeComposable |> TypeComposable.ofITypeComposable)
         | TargetGenericParameter t  -> create(typeCollection, t :> ITypeComposable |> TypeComposable.ofITypeComposable)
         | TargetClassName t         -> create(typeCollection, t :> ITypeComposable |> TypeComposable.ofITypeComposable)
+        | TargetInterfaceName t     -> create(typeCollection, t :> ITypeComposable |> TypeComposable.ofITypeComposable)
         | TargetCollectionGeneric t -> create(typeCollection, t :> ITypeComposable |> TypeComposable.ofITypeComposable)
         | TargetArray t             -> create(typeCollection, t :> ITypeComposable |> TypeComposable.ofITypeComposable)
         | TargetNone _              -> create(typeCollection, TypeReference.Void :> ITypeComposable |> TypeComposable.ofITypeComposable)
@@ -367,7 +389,7 @@ module internal MethodNameReaderGetter =
         | TargetReference t when t.Equals(TypeReference.OracleBlob) -> MethodNameReaderGetter.GetOracleBlob
         | TargetReference t when t.Equals(TypeReference.OracleClob) -> MethodNameReaderGetter.GetOracleClob
         | TargetValueNullable _ | TargetValue _ | TargetReference _ | TargetGenericParameter _ 
-        | TargetClassName _ | TargetCollectionGeneric _ | TargetArray _ | TargetNone _ -> MethodNameReaderGetter.GetOracleValue
+        | TargetClassName _ | TargetInterfaceName _ | TargetCollectionGeneric _ | TargetArray _ | TargetNone _ -> MethodNameReaderGetter.GetOracleValue
 
 [<AutoOpen>]
 module internal CodeLogic =
@@ -376,19 +398,19 @@ module internal CodeLogic =
         match typeTarget with 
         | TargetValue t         -> t.Equals(typeValueMatch) 
         | TargetValueNullable t -> t.TypeValue.Equals(typeValueMatch) 
-        | TargetReference _ | TargetGenericParameter _ | TargetClassName _ | TargetCollectionGeneric _ | TargetArray _ | TargetNone _ -> false
+        | TargetReference _ | TargetGenericParameter _ | TargetClassName _ | TargetInterfaceName _ | TargetCollectionGeneric _ | TargetArray _ | TargetNone _ -> false
     let (|IsRequiresParseFromOutParameter|_|) typeTarget = if typeTarget |> isRequiresParseFromOutParameter then Some true else None
     let private isRequiresOracleDecimalSetPrecision typeTarget = 
         let typeValueMatch = TypeValue.Decimal
         match typeTarget with 
         | TargetValue t         -> t.Equals(typeValueMatch)
         | TargetValueNullable t -> t.TypeValue.Equals(typeValueMatch)
-        | TargetReference _ | TargetGenericParameter _ | TargetClassName _ | TargetCollectionGeneric _ | TargetArray _ | TargetNone _ -> false
+        | TargetReference _ | TargetGenericParameter _ | TargetClassName _ | TargetInterfaceName _| TargetCollectionGeneric _ | TargetArray _ | TargetNone _ -> false
     let (|IsRequiresOracleDecimalSetPrecision|_|) typeTarget = if (typeTarget |> isRequiresOracleDecimalSetPrecision) then Some true else None 
     let isRequiresOutParmBindSize typeTarget = 
         match typeTarget with 
         | TargetReference t -> t.Equals(TypeReference.String) 
-        | TargetValue _ | TargetValueNullable _ |TargetReference _ | TargetGenericParameter _ | TargetClassName _ | TargetCollectionGeneric _ | TargetArray _ | TargetNone _ -> false
+        | TargetValue _ | TargetValueNullable _ |TargetReference _ | TargetGenericParameter _ | TargetClassName _ | TargetInterfaceName _ | TargetCollectionGeneric _ | TargetArray _ | TargetNone _ -> false
     let codeReadResultAssignment(cSharpType, cSharpOdpNetSafeType, readerName:string, position:int, objectName:string, propertyName:PropertyName) =
         let assignmentTarget = codeAdjacent([|IF ; @" (!" ; readerName ; PERIOD ; $"{IsDBNull}({position})) " ; objectName ; PERIOD ; propertyName|]) 
         let assignmentValue = 
@@ -415,6 +437,7 @@ module internal Decode =
         | TypeReference.ValidCode t             -> t :> ITypeTargetable |> Some
         | TypeValueNullable.ValidCode t         -> t :> ITypeTargetable |> Some
         | TypeValue.ValidCode t                 -> t :> ITypeTargetable |> Some
+        | InterfaceName.ValidCode t             -> t :> ITypeTargetable |> Some
         | ClassName.ValidCode t                 -> t :> ITypeTargetable |> Some
         //| TypeNone.ValidCode t                -> t :> ITypeTargetable |> Some
         | _ -> None 
@@ -424,7 +447,7 @@ module private ApiHelper =
     let nullableToOption = function | null -> None | x -> Some x
     let optionToNullable = function | Some x -> x | None -> null
     let ifNoneThrowElseValue (optionType, errorMsg) = if optionType |> Option.isNone then failwith errorMsg else optionType.Value 
-    let failwithNullOrEmpty desc = failwith $"{desc} cannot be null or empty" 
+    //let failwithNullOrEmpty desc = failwith $"{desc} cannot be null or empty" 
 
 /// API for consumption by C#
 module Api =
@@ -434,16 +457,6 @@ module Api =
     let IsDataTable (iTypeTargetable: ITypeTargetable) =  iTypeTargetable |> TypeTarget.ofITypeTargetable |> TypeTarget.isDataTable
     let IsRequiresParseFromOutParameter (iTypeTargetable: ITypeTargetable) = iTypeTargetable |> TypeTarget.ofITypeTargetable |> CodeLogic.isRequiresParseFromOutParameter 
     let IsRequiresOutParmBindSize (iTypeTargetable: ITypeTargetable) = iTypeTargetable |> TypeTarget.ofITypeTargetable |> CodeLogic.isRequiresOutParmBindSize 
-
-    // decoding (transitional/temporary)
-    //let FromCodeTypeValue str               = ifNoneThrowElseValue(TypeValue.fromCode str, $"'{str}' is not valid C# code for {nameof TypeValue}")
-    //let FromCodeTypeCollection str          = ifNoneThrowElseValue(TypeCollection.fromCode str, $"'{str}' is not valid C# code for {nameof TypeCollection}")
-    //let FromCodeTypeCollectionGeneric str   = ifNoneThrowElseValue(TypeCollectionGeneric.fromCode str, $"'{str}' is not valid C# code for {nameof TypeCollectionGeneric}")
-    //let FromCodeTypeComposable str          = ifNoneThrowElseValue(TypeComposable.fromCode str, $"'{str}' is not valid C# code for {nameof TypeComposable}")
-    //let FromCodeTypeTargetable str          = ifNoneThrowElseValue(fromCode str,  $"'{str}' is not valid C# code for {nameof ITypeTargetable}")
-    //let IsCodeValidGenericCollectionType typeCandidate = typeCandidate |> (TypeCollectionGeneric.fromCode >> Option.isSome)
-    //let IsCodeKeyword kw = Keyword.isKeyword kw    
-    //let IsCodeOdpNet typeStr = typeStr |> Decode.fromCode |> Option.map(fun t -> TypeUtil.isOdpNet t) |> (Option.defaultValue false)
 
     // decoding for types persisted in config file
     let FromCodeTypeCollectionWithDefault str typeCollectionDefault = str |> TypeCollection.fromCode |> (Option.defaultValue typeCollectionDefault)
