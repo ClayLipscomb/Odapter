@@ -79,8 +79,9 @@ namespace Schema.Odpt.Type.Object {
     // **OBJECT IGNORED** - Code generation for NESTED TABLE type has not been implemented
     // public interface IOdptNestedTableOt {
 
-    // **OBJECT IGNORED** - Code generation for OBJECT type has not been implemented
-    // public interface IOdptObjectOt {
+    public interface IOdptObjectOt {
+        IOdptBigOt AttrOdptBigOt { set; }
+    } // IOdptObjectOt
 
     public interface IOdptPoVendorOt : IOdptScTtTblUniqueOt {
         Int64? VendorId { set; }

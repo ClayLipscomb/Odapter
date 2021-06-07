@@ -2857,7 +2857,7 @@ namespace Schema.Odpt.Odpt.Safe.Package {
         } // FuncNvarchar2
 
         // **PROC IGNORED** - OBJECT type is not available in ODP.NET managed
-        // public OdptBigOt FuncObjectType(OdptBigOt pIn, ref OdptBigOt pInOut, out OdptBigOt pOut, OracleConnection optionalPreexistingOpenConnection = null)
+        // public IOdptBigOt FuncObjectType(IOdptBigOt pIn, ref IOdptBigOt pInOut, out IOdptBigOt pOut, OracleConnection optionalPreexistingOpenConnection = null)
 
         public OracleDecimal? FuncOptionalParam(OracleDecimal? pInNumberRequired, ref OracleDecimal? pInOutNumberRequired, OracleDecimal? pInNumberOptional = null, String pInVarchar2Optional = null, 
                 OracleConnection optionalPreexistingOpenConnection = null) {

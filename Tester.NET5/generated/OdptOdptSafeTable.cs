@@ -207,6 +207,10 @@ namespace Schema.Odpt.Odpt.Safe.Table {
         OracleDecimal? ColNumberLast { get; init; }
     } // IOdptTableNumber
 
-    // **TABLE IGNORED** - Code generation for OBJECT type has not been implemented
-    // public interface IOdptTableObject {
+    public interface IOdptTableObject {
+        OracleDecimal? Id { get; init; }
+        IOdptBigOt ColObject { get; init; }
+        IOdptBigOt ColRefObject { get; init; }
+        OracleDecimal? ColLast { get; init; }
+    } // IOdptTableObject
 } // Schema.Odpt.Odpt.Safe.Table

@@ -207,6 +207,10 @@ namespace Schema.Odpt.Table {
         Decimal? ColNumberLast { get; init; }
     } // IOdptTableNumber
 
-    // **TABLE IGNORED** - Code generation for OBJECT type has not been implemented
-    // public interface IOdptTableObject {
+    public interface IOdptTableObject {
+        Int64? Id { get; init; }
+        IOdptBigOt ColObject { get; init; }
+        IOdptBigOt ColRefObject { get; init; }
+        Int64? ColLast { get; init; }
+    } // IOdptTableObject
 } // Schema.Odpt.Table
