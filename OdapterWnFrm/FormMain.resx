@@ -125,7 +125,8 @@
 REF CURSOR. In order to be used by generated code, a developer-created 
 DTO must implement the interface and adhere to generic constraints in 
 the respective method signatures. This setting determines the nature of the 
-interface (and contraints) generated.</value>
+interface (and contraints) generated. Additionally, an interface can be 
+generated for objects, tables and views.</value>
   </data>
   <data name="lblDuplicatePackageRecordOriginatingOutsideFilterAndSchema.ToolTip" xml:space="preserve">
     <value>Package records may be defined by referencing another package's record. If the 

@@ -8,7 +8,7 @@
 using System;
 using Oracle.ManagedDataAccess.Types;
 
-namespace Schema.Odpt.Odpt.Safe.Type.Object {
+namespace Schema.Odpt.Odpt.Type.Object {
     // **OBJECT IGNORED** - ANYDATA type is not available in ODP.NET managed
     // public interface IOdptAnydataOt {
 
@@ -29,31 +29,31 @@ namespace Schema.Odpt.Odpt.Safe.Type.Object {
         String FlexibleColumn14 { set; }
         String FlexibleColumn15 { set; }
         String FlexibleColumn16 { set; }
-        OracleClob FlexibleColumn17 { set; }
-        OracleDate? FlexibleColumn18 { set; }
-        OracleDate? FlexibleColumn19 { set; }
-        OracleTimeStamp? FlexibleColumn20 { set; }
-        OracleDecimal? FlexibleColumn21 { set; }
-        OracleDecimal? FlexibleColumn22 { set; }
-        OracleDecimal? FlexibleColumn23 { set; }
-        OracleDecimal? FlexibleColumn24 { set; }
-        OracleDecimal? FlexibleColumn25 { set; }
+        String FlexibleColumn17 { set; }
+        DateTime? FlexibleColumn18 { set; }
+        DateTime? FlexibleColumn19 { set; }
+        DateTime? FlexibleColumn20 { set; }
+        Decimal? FlexibleColumn21 { set; }
+        Decimal? FlexibleColumn22 { set; }
+        Decimal? FlexibleColumn23 { set; }
+        Decimal? FlexibleColumn24 { set; }
+        Decimal? FlexibleColumn25 { set; }
     } // IOdptBaseScTransTypeOt
 
     public interface IOdptBigOt {
-        OracleDecimal? Id { set; }
-        OracleDecimal? AttrNumberId { set; }
-        OracleDecimal? AttrInteger { set; }
-        OracleDecimal? AttrInt { set; }
-        OracleDecimal? AttrSmallint { set; }
-        OracleDecimal? AttrNumber { set; }
-        OracleDecimal? AttrNumeric { set; }
+        Int64? Id { set; }
+        Int64? AttrNumberId { set; }
+        Int64? AttrInteger { set; }
+        Int64? AttrInt { set; }
+        Int64? AttrSmallint { set; }
+        Decimal? AttrNumber { set; }
+        Int64? AttrNumeric { set; }
         Decimal? AttrNumeric31Scale21 { set; }
-        OracleDecimal? AttrDecimal { set; }
+        Int64? AttrDecimal { set; }
         Decimal? AttrDecima38Scale37 { set; }
-        OracleDecimal? AttrFloat { set; }
-        OracleDecimal? AttrReal { set; }
-        OracleDecimal? AttrDoublePrecision { set; }
+        Decimal? AttrFloat { set; }
+        Decimal? AttrReal { set; }
+        Decimal? AttrDoublePrecision { set; }
         Single? AttrBinaryFloat { set; }
         Double? AttrBinaryDouble { set; }
         String AttrVarchar { set; }
@@ -66,14 +66,14 @@ namespace Schema.Odpt.Odpt.Safe.Type.Object {
         String AttrCharMax { set; }
         String AttrNchar { set; }
         String AttrNcharMax { set; }
-        OracleDate? AttrDate { set; }
-        OracleTimeStamp? AttrTimestamp { set; }
-        OracleTimeStampLTZ? AttrTimestampWLTimeZone { set; }
-        OracleTimeStampTZ? AttrTimestampWTimeZone { set; }
-        OracleBlob AttrBlob { set; }
-        OracleClob AttrClob { set; }
-        OracleClob AttrNclob { set; }
-        OracleDecimal? AttrLast { set; }
+        DateTime? AttrDate { set; }
+        DateTime? AttrTimestamp { set; }
+        DateTime? AttrTimestampWLTimeZone { set; }
+        DateTimeOffset? AttrTimestampWTimeZone { set; }
+        Byte[] AttrBlob { set; }
+        String AttrClob { set; }
+        String AttrNclob { set; }
+        Int64? AttrLast { set; }
     } // IOdptBigOt
 
     // **OBJECT IGNORED** - Code generation for NESTED TABLE type has not been implemented
@@ -83,9 +83,9 @@ namespace Schema.Odpt.Odpt.Safe.Type.Object {
     // public interface IOdptObjectOt {
 
     public interface IOdptPoVendorOt {
-        OracleDecimal? VendorId { set; }
-        OracleDate? LastUpdateDate { set; }
-        OracleDecimal? LastUpdatedBy { set; }
+        Int64? VendorId { set; }
+        DateTime? LastUpdateDate { set; }
+        Decimal? LastUpdatedBy { set; }
         String VendorName { set; }
         String Segment1 { set; }
         String SummaryFlag { set; }
@@ -94,51 +94,51 @@ namespace Schema.Odpt.Odpt.Safe.Type.Object {
         String Segment3 { set; }
         String Segment4 { set; }
         String Segment5 { set; }
-        OracleDecimal? LastUpdateLogin { set; }
-        OracleDate? CreationDate { set; }
-        OracleDecimal? CreatedBy { set; }
-        OracleDecimal? EmployeeId { set; }
-        OracleDecimal? ValidationNumber { set; }
+        Decimal? LastUpdateLogin { set; }
+        DateTime? CreationDate { set; }
+        Decimal? CreatedBy { set; }
+        Int64? EmployeeId { set; }
+        Decimal? ValidationNumber { set; }
         String VendorTypeLookupCode { set; }
         String CustomerNum { set; }
         String OneTimeFlag { set; }
-        OracleDecimal? ParentVendorId { set; }
-        OracleDecimal? MinOrderAmount { set; }
-        OracleDecimal? ShipToLocationId { set; }
-        OracleDecimal? BillToLocationId { set; }
+        Int64? ParentVendorId { set; }
+        Decimal? MinOrderAmount { set; }
+        Int64? ShipToLocationId { set; }
+        Int64? BillToLocationId { set; }
         String ShipViaLookupCode { set; }
         String FreightTermsLookupCode { set; }
         String FobLookupCode { set; }
-        OracleDecimal? TermsId { set; }
-        OracleDecimal? SetOfBooksId { set; }
+        Int64? TermsId { set; }
+        Int64? SetOfBooksId { set; }
         String CreditStatusLookupCode { set; }
-        OracleDecimal? CreditLimit { set; }
+        Decimal? CreditLimit { set; }
         String AlwaysTakeDiscFlag { set; }
         String PayDateBasisLookupCode { set; }
         String PayGroupLookupCode { set; }
-        OracleDecimal? PaymentPriority { set; }
+        Decimal? PaymentPriority { set; }
         String InvoiceCurrencyCode { set; }
         String PaymentCurrencyCode { set; }
-        OracleDecimal? InvoiceAmountLimit { set; }
+        Decimal? InvoiceAmountLimit { set; }
         String ExchangeDateLookupCode { set; }
         String HoldAllPaymentsFlag { set; }
         String HoldFuturePaymentsFlag { set; }
         String HoldReason { set; }
-        OracleDecimal? DistributionSetId { set; }
-        OracleDecimal? AcctsPayCodeCombinationId { set; }
-        OracleDecimal? DiscLostCodeCombinationId { set; }
-        OracleDecimal? DiscTakenCodeCombinationId { set; }
-        OracleDecimal? ExpenseCodeCombinationId { set; }
-        OracleDecimal? PrepayCodeCombinationId { set; }
+        Int64? DistributionSetId { set; }
+        Int64? AcctsPayCodeCombinationId { set; }
+        Int64? DiscLostCodeCombinationId { set; }
+        Int64? DiscTakenCodeCombinationId { set; }
+        Int64? ExpenseCodeCombinationId { set; }
+        Int64? PrepayCodeCombinationId { set; }
         String Num1099 { set; }
         String Type1099 { set; }
         String WithholdingStatusLookupCode { set; }
-        OracleDate? WithholdingStartDate { set; }
+        DateTime? WithholdingStartDate { set; }
         String OrganizationTypeLookupCode { set; }
         String VatCode { set; }
-        OracleDate? StartDateActive { set; }
-        OracleDate? EndDateActive { set; }
-        OracleDecimal? QtyRcvTolerance { set; }
+        DateTime? StartDateActive { set; }
+        DateTime? EndDateActive { set; }
+        Decimal? QtyRcvTolerance { set; }
         String OverToleranceErrorFlag { set; }
         String MinorityGroupLookupCode { set; }
         String PaymentMethodLookupCode { set; }
@@ -157,23 +157,23 @@ namespace Schema.Odpt.Odpt.Safe.Type.Object {
         String Attribute5 { set; }
         String HoldFlag { set; }
         String PurchasingHoldReason { set; }
-        OracleDecimal? HoldBy { set; }
-        OracleDate? HoldDate { set; }
+        Int64? HoldBy { set; }
+        DateTime? HoldDate { set; }
         String TermsDateBasis { set; }
-        OracleDecimal? PriceTolerance { set; }
+        Decimal? PriceTolerance { set; }
         String InspectionRequiredFlag { set; }
         String ReceiptRequiredFlag { set; }
         String QtyRcvExceptionCode { set; }
         String EnforceShipToLocationCode { set; }
-        OracleDecimal? DaysEarlyReceiptAllowed { set; }
-        OracleDecimal? DaysLateReceiptAllowed { set; }
+        Decimal? DaysEarlyReceiptAllowed { set; }
+        Decimal? DaysLateReceiptAllowed { set; }
         String ReceiptDaysExceptionCode { set; }
-        OracleDecimal? ReceivingRoutingId { set; }
+        Int64? ReceivingRoutingId { set; }
         String AllowSubstituteReceiptsFlag { set; }
         String AllowUnorderedReceiptsFlag { set; }
         String HoldUnmatchedInvoicesFlag { set; }
         String ExclusivePaymentFlag { set; }
-        OracleDate? TaxVerificationDate { set; }
+        DateTime? TaxVerificationDate { set; }
         String NameControl { set; }
         String StateReportableFlag { set; }
         String FederalReportableFlag { set; }
@@ -187,10 +187,10 @@ namespace Schema.Odpt.Odpt.Safe.Type.Object {
         String Attribute13 { set; }
         String Attribute14 { set; }
         String Attribute15 { set; }
-        OracleDecimal? RequestId { set; }
-        OracleDecimal? ProgramApplicationId { set; }
-        OracleDecimal? ProgramId { set; }
-        OracleDate? ProgramUpdateDate { set; }
+        Int64? RequestId { set; }
+        Int64? ProgramApplicationId { set; }
+        Int64? ProgramId { set; }
+        DateTime? ProgramUpdateDate { set; }
         String OffsetVatCode { set; }
         String VatRegistrationNum { set; }
         String AutoCalculateInterestFlag { set; }
@@ -199,7 +199,7 @@ namespace Schema.Odpt.Odpt.Safe.Type.Object {
         String CheckDigits { set; }
         String BankNumber { set; }
         String AllowAwtFlag { set; }
-        OracleDecimal? AwtGroupId { set; }
+        Int64? AwtGroupId { set; }
         String VendorNameAlt { set; }
         String ApTaxRoundingRule { set; }
         String AutoTaxCalcFlag { set; }
@@ -234,11 +234,11 @@ namespace Schema.Odpt.Odpt.Safe.Type.Object {
         String BankChargeBearer { set; }
         String BankBranchType { set; }
         String MatchOption { set; }
-        OracleDecimal? FutureDatedPaymentCcid { set; }
+        Int64? FutureDatedPaymentCcid { set; }
         String CreateDebitMemoFlag { set; }
         String OffsetTaxFlag { set; }
-        OracleDecimal? UniqueTaxReferenceNum { set; }
-        OracleDecimal? PartnershipUtr { set; }
+        Int64? UniqueTaxReferenceNum { set; }
+        Int64? PartnershipUtr { set; }
         String PartnershipName { set; }
         String CisEnabledFlag { set; }
         String FirstName { set; }
@@ -250,13 +250,13 @@ namespace Schema.Odpt.Odpt.Safe.Type.Object {
         String CompanyRegistrationNumber { set; }
         String NationalInsuranceNumber { set; }
         String VerificationNumber { set; }
-        OracleDecimal? VerificationRequestId { set; }
+        Int64? VerificationRequestId { set; }
         String MatchStatusFlag { set; }
-        OracleDate? CisVerificationDate { set; }
+        DateTime? CisVerificationDate { set; }
         String Individual1099 { set; }
-        OracleDecimal? CisParentVendorId { set; }
-        OracleDate? BusClassLastCertifiedDate { set; }
-        OracleDecimal? BusClassLastCertifiedBy { set; }
+        Int64? CisParentVendorId { set; }
+        DateTime? BusClassLastCertifiedDate { set; }
+        Decimal? BusClassLastCertifiedBy { set; }
     } // IOdptPoVendorOt
 
     public interface IOdptScTtTblUniqueOt {
@@ -265,4 +265,4 @@ namespace Schema.Odpt.Odpt.Safe.Type.Object {
 
     // **OBJECT IGNORED** - XMLTYPE type is not available in ODP.NET managed
     // public interface IOdptXmltypeOt {
-} // Schema.Odpt.Odpt.Safe.Type.Object
+} // Schema.Odpt.Odpt.Type.Object

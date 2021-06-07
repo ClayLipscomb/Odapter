@@ -1527,15 +1527,19 @@ namespace Odapter.Tester.NET5 {
                 OdptPkgSql pkgSql = OdptPkgSql.Instance;
                 OdptPkgLog pkgLog = OdptPkgLog.Instance;
 
-                OdptTableBig tablBig = new OdptTableBig(); ;
-                OdptTableNumber tableNumber = new OdptTableNumber();
+                IOdptLogs tableLogs;
+                IOdptTableBig tableBig;
+                IOdptTableCsKeyword tableCsKeyword;
+                IOdptTableNamingConflict tableNamingConflict;
+                IOdptTableNumber tableNumber;
                 //OdptTableObject tableObject = new OdptTableObject();
-                OdptLogs tableLogs = new OdptLogs();
 
-                OdptViewBigV viewBig = new OdptViewBigV();
+                IOdptViewBigV viewBig;
 
-                OdptBigOt objectBig = new OdptBigOt();
-                OdptPoVendorOt objectPoVendor = new OdptPoVendorOt();
+                IOdptBaseScTransTypeOt odptBaseScTransTypeOt;
+                IOdptBigOt objectBig;
+                IOdptPoVendorOt objectPoVendor;
+                IOdptScTtTblUniqueOt odptScTtTblUniqueOt;
 
                 // package names with special characters
                 OdptPkgIncludeexclamationpointchar odptPkgIncludeexclamationpointchar = OdptPkgIncludeexclamationpointchar.Instance;
