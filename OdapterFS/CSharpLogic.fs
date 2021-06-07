@@ -44,7 +44,7 @@ module internal Keyword =
 [<RequireQualifiedAccess>]
 module internal Namespace = 
     let ofPascalCase pascalCase = Namespace pascalCase
-    let create segments = (join PERIOD segments) |> PascalCase |> Namespace 
+    let create segmentOptions = segmentOptions |> Seq.choose id |> join PERIOD |> PascalCase |> Namespace 
     let value = WrappedString.value    
     let toCodeUsing (nmspace:Namespace) = (codeSpaced [|USING;nmspace|]) + SEMICOLON
 
@@ -465,7 +465,7 @@ module Api =
     let InterfaceNameOfClassName (className: ClassName) = InterfaceName.ofClassName className
     let NumericOdpNetOracleDbTypeEnum tvn = OdpNetOracleDbTypeEnum.fromTypeValueNullableNumeric tvn
     let TypeNone = TypeNone.NoType
-    let Namespace (segments: string seq) = if segments |> Seq.exists(fun s -> isNullOrWhiteSpace s) then failwithNullOrEmpty $"{nameof Namespace} segments" else Namespace.create segments
+    let Namespace (segments: string seq) = segments |> Seq.map (fun s -> if isNullOrWhiteSpace s then None else Some s) |> Namespace.create 
 
     let TypeGenericParameterOfInterface (interfaceName: InterfaceName) = TypeGenericParameter.createTyped interfaceName
     let TypeGenericParameterUntyped (pascalCase: PascalCase) = TypeGenericParameter.createUntyped pascalCase
