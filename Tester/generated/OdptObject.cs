@@ -82,7 +82,7 @@ namespace Schema.Odpt.Type.Object {
     // **OBJECT IGNORED** - Code generation for OBJECT type has not been implemented
     // public interface IOdptObjectOt {
 
-    public interface IOdptPoVendorOt {
+    public interface IOdptPoVendorOt : IOdptScTtTblUniqueOt {
         Int64? VendorId { set; }
         DateTime? LastUpdateDate { set; }
         Decimal? LastUpdatedBy { set; }
@@ -259,8 +259,7 @@ namespace Schema.Odpt.Type.Object {
         Decimal? BusClassLastCertifiedBy { set; }
     } // IOdptPoVendorOt
 
-    public interface IOdptScTtTblUniqueOt {
-
+    public interface IOdptScTtTblUniqueOt : IOdptBaseScTransTypeOt {
     } // IOdptScTtTblUniqueOt
 
     // **OBJECT IGNORED** - XMLTYPE type is not available in ODP.NET managed

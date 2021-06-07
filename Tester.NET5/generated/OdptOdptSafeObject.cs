@@ -82,7 +82,7 @@ namespace Schema.Odpt.Odpt.Safe.Type.Object {
     // **OBJECT IGNORED** - Code generation for OBJECT type has not been implemented
     // public interface IOdptObjectOt {
 
-    public interface IOdptPoVendorOt {
+    public interface IOdptPoVendorOt : IOdptScTtTblUniqueOt {
         OracleDecimal? VendorId { get; init; }
         OracleDate? LastUpdateDate { get; init; }
         OracleDecimal? LastUpdatedBy { get; init; }
@@ -259,8 +259,7 @@ namespace Schema.Odpt.Odpt.Safe.Type.Object {
         OracleDecimal? BusClassLastCertifiedBy { get; init; }
     } // IOdptPoVendorOt
 
-    public interface IOdptScTtTblUniqueOt {
-
+    public interface IOdptScTtTblUniqueOt : IOdptBaseScTransTypeOt {
     } // IOdptScTtTblUniqueOt
 
     // **OBJECT IGNORED** - XMLTYPE type is not available in ODP.NET managed
