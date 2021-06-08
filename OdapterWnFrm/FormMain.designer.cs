@@ -1300,8 +1300,9 @@ namespace OdapterWnFrm {
             this.lblConvertOracleNumberToIntegerIfColumnNameIsId.TabIndex = 69;
             this.lblConvertOracleNumberToIntegerIfColumnNameIsId.Text = "Map \"ID\" NUMBER  as INTEGER?";
             this.lblConvertOracleNumberToIntegerIfColumnNameIsId.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.toolTip1.SetToolTip(this.lblConvertOracleNumberToIntegerIfColumnNameIsId, "If column, attribute, or parameter type is NUMBER with no precision/scale, \r\nand " +
-        "its name is \"ID\" or ends with \"_ID\", then treat as an INTEGER.\r\n");
+            this.toolTip1.SetToolTip(this.lblConvertOracleNumberToIntegerIfColumnNameIsId, "If column, attribute, or parameter type is a NUMBER without precision or scale, \r" +
+        "\nand its name is \"ID\" or ends with \"_ID\", then translate as an Oracle INTEGER.\r\n" +
+        "");
             // 
             // cbGeneratedDynamicMethodForTypedCursor
             // 
@@ -1313,7 +1314,7 @@ namespace OdapterWnFrm {
             this.cbGeneratedDynamicMethodForTypedCursor.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbGeneratedDynamicMethodForTypedCursor.ForeColor = System.Drawing.Color.DeepSkyBlue;
             this.cbGeneratedDynamicMethodForTypedCursor.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.cbGeneratedDynamicMethodForTypedCursor.Location = new System.Drawing.Point(435, 118);
+            this.cbGeneratedDynamicMethodForTypedCursor.Location = new System.Drawing.Point(435, 119);
             this.cbGeneratedDynamicMethodForTypedCursor.Margin = new System.Windows.Forms.Padding(4);
             this.cbGeneratedDynamicMethodForTypedCursor.Name = "cbGeneratedDynamicMethodForTypedCursor";
             this.cbGeneratedDynamicMethodForTypedCursor.RightToLeft = System.Windows.Forms.RightToLeft.No;
@@ -1333,7 +1334,7 @@ namespace OdapterWnFrm {
             this.cbExcludeObjectNamesWithSpecificChars.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbExcludeObjectNamesWithSpecificChars.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbExcludeObjectNamesWithSpecificChars.ForeColor = System.Drawing.Color.DeepSkyBlue;
-            this.cbExcludeObjectNamesWithSpecificChars.Location = new System.Drawing.Point(435, 93);
+            this.cbExcludeObjectNamesWithSpecificChars.Location = new System.Drawing.Point(435, 94);
             this.cbExcludeObjectNamesWithSpecificChars.Margin = new System.Windows.Forms.Padding(4);
             this.cbExcludeObjectNamesWithSpecificChars.Name = "cbExcludeObjectNamesWithSpecificChars";
             this.cbExcludeObjectNamesWithSpecificChars.RightToLeft = System.Windows.Forms.RightToLeft.No;
@@ -1615,7 +1616,7 @@ namespace OdapterWnFrm {
             this.cbConvertOracleNumberToIntegerIfColumnNameIsId.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbConvertOracleNumberToIntegerIfColumnNameIsId.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbConvertOracleNumberToIntegerIfColumnNameIsId.ForeColor = System.Drawing.Color.DeepSkyBlue;
-            this.cbConvertOracleNumberToIntegerIfColumnNameIsId.Location = new System.Drawing.Point(246, 125);
+            this.cbConvertOracleNumberToIntegerIfColumnNameIsId.Location = new System.Drawing.Point(246, 126);
             this.cbConvertOracleNumberToIntegerIfColumnNameIsId.Margin = new System.Windows.Forms.Padding(4);
             this.cbConvertOracleNumberToIntegerIfColumnNameIsId.Name = "cbConvertOracleNumberToIntegerIfColumnNameIsId";
             this.cbConvertOracleNumberToIntegerIfColumnNameIsId.Size = new System.Drawing.Size(18, 21);
@@ -1690,7 +1691,7 @@ namespace OdapterWnFrm {
             this.cbDuplicatePackageRecordOriginatingOutsideFilterAndSchema.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbDuplicatePackageRecordOriginatingOutsideFilterAndSchema.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbDuplicatePackageRecordOriginatingOutsideFilterAndSchema.ForeColor = System.Drawing.Color.DeepSkyBlue;
-            this.cbDuplicatePackageRecordOriginatingOutsideFilterAndSchema.Location = new System.Drawing.Point(435, 68);
+            this.cbDuplicatePackageRecordOriginatingOutsideFilterAndSchema.Location = new System.Drawing.Point(435, 69);
             this.cbDuplicatePackageRecordOriginatingOutsideFilterAndSchema.Margin = new System.Windows.Forms.Padding(4);
             this.cbDuplicatePackageRecordOriginatingOutsideFilterAndSchema.Name = "cbDuplicatePackageRecordOriginatingOutsideFilterAndSchema";
             this.cbDuplicatePackageRecordOriginatingOutsideFilterAndSchema.RightToLeft = System.Windows.Forms.RightToLeft.No;
@@ -1726,7 +1727,7 @@ namespace OdapterWnFrm {
             this.cbDeployResources.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbDeployResources.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbDeployResources.ForeColor = System.Drawing.Color.DeepSkyBlue;
-            this.cbDeployResources.Location = new System.Drawing.Point(435, 43);
+            this.cbDeployResources.Location = new System.Drawing.Point(435, 44);
             this.cbDeployResources.Margin = new System.Windows.Forms.Padding(4);
             this.cbDeployResources.Name = "cbDeployResources";
             this.cbDeployResources.RightToLeft = System.Windows.Forms.RightToLeft.No;
@@ -1742,7 +1743,7 @@ namespace OdapterWnFrm {
             this.cbPartialPackageClasses.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbPartialPackageClasses.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbPartialPackageClasses.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.cbPartialPackageClasses.Location = new System.Drawing.Point(435, 143);
+            this.cbPartialPackageClasses.Location = new System.Drawing.Point(435, 144);
             this.cbPartialPackageClasses.Margin = new System.Windows.Forms.Padding(4);
             this.cbPartialPackageClasses.Name = "cbPartialPackageClasses";
             this.cbPartialPackageClasses.Size = new System.Drawing.Size(17, 21);
