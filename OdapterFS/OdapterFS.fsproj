@@ -16,6 +16,7 @@
     <Compile Include="CSharpCoder.fs" />
     <Compile Include="CSharpDomain.fs" />
     <Compile Include="CSharpLogic.fs" />
+    <Compile Include="CSharpLogicApi.fs" />
     <Compile Include="Translate.fs" />
     <Compile Include="CSharpTest.fs" />
   </ItemGroup>
