@@ -675,7 +675,7 @@ namespace Odapter {
         #region Package Record Type Generation
         private string GenerateRecordTypeReadResultMethod(IPackageRecord rec) {
             StringBuilder classText = new StringBuilder(String.Empty);
-            var interfaceName = CSL.InterfaceNameOfClassName(rec.Translater.CSharpClassName);
+            var interfaceName = rec.Translater.CSharpInterfaceName;
             var genericTypeParam = CSL.TypeGenericParameterOfInterface(interfaceName);
             var methodName = CSL.MethodNameReadResult(interfaceName);
             string paramNameOracleReader = "rdr"; // Oracle clash not possible
@@ -970,14 +970,14 @@ namespace Odapter {
         private string GenerateEntityClass(IEntity entity, string ancestorClassName, bool isSerializable, bool isPartial, 
             bool isDataContract, bool isXmlElement, int tabIndentCount, out bool ignored) {
 
-            var className = entity.Translater.CSharpClassName;
+            //var className = entity.Translater.CSharpInterfaceName;
             bool isPackageRecord = entity is IPackageRecord;
             StringBuilder classText = new StringBuilder("");
 
             string dbAncestorTypeName = null;   // only object type can have a database ancestor
             if (entity is IObjectType type) dbAncestorTypeName = type.DbAncestorTypeName;
 
-            string classFirstLine = entity.Translater.CSharpAccessModifier + (entity.IsInstantiable ? "" : " abstract") + (isPartial ? " partial" : "") + " " + entity.Translater.CSharpType + " " + className
+            string classFirstLine = entity.Translater.CSharpAccessModifier + (entity.IsInstantiable ? "" : " abstract") + (isPartial ? " partial" : "") + " " + entity.Translater.CSharpType + " " //+ className
                 //+ (!String.IsNullOrEmpty(dbAncestorTypeName)
                 //        ? " : " + Trns.ClassNameOfOracleIdentifier(dbAncestorTypeName).Code // Oracle ancestor gets precedence
                 //        : (!String.IsNullOrEmpty(ancestorClassName)
@@ -1032,7 +1032,7 @@ namespace Odapter {
                 //    : " protected " + (attr.ContainerClassName == null ? "" : attr.ContainerClassName + ".") + cSharpType + " " + nonPublicMemberName + ";");
             }
 
-            classText.AppendLine(Tab(tabIndentCount) + "} // " + className); // end entity type class
+            classText.AppendLine(Tab(tabIndentCount) + "} // "); //+ className); // end entity type class
             ignored = false;
             return classText.ToString();
         }
@@ -1054,7 +1054,7 @@ namespace Odapter {
 
             var typeInterface = CSL.TypeInterface(
                 CS.AccessModifierInterface.PUBLIC,
-                CSL.InterfaceNameOfClassName(entity.Translater.CSharpClassName),
+                entity.Translater.CSharpInterfaceName,
                 entity.Attributes.Select(a => CSL.PropertyInterface(
                     Trns.PropertyNameOfOracleIdentifier(a.AttrName, a.EntityName),
                     a.Translater.CSharpType,

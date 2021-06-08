@@ -28,9 +28,9 @@ namespace Odapter {
 
         internal TranslaterRecordEntity(string dataTypeFull) {
             DataTypeFull = dataTypeFull;
-            CSharpClassName = Trns.ClassNameOfOracleIdentifier(dataTypeFull);
+            CSharpInterfaceName = Trns.InterfaceNameOfOracleIdentifier(dataTypeFull);
         }
-        public ClassName CSharpClassName { get; private set; }
+        public InterfaceName CSharpInterfaceName { get; private set; }
         public AccessModifier CSharpAccessModifier { get => AccessModifier.PUBLIC; }
         public string CSharpType { get => Keyword.CLASS.Code; }
 

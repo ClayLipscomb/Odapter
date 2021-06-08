@@ -65,7 +65,6 @@ module Api =
     let MethodNameReadResult (interfaceName: InterfaceName) = MethodName.methodNameReadResult interfaceName
     let MethodNameReadResultTypeParameter (typeGenericParameter: TypeGenericParameter) = MethodName.methodNameReadResultTypeParameter typeGenericParameter
 
-    let InterfaceNameOfClassName (className: ClassName) = InterfaceName.ofClassName className
     let NumericOdpNetOracleDbTypeEnum tvn = OdpNetOracleDbTypeEnum.fromTypeValueNullableNumeric tvn
     let TypeNone = TypeNone.NoType
     let Namespace (segments: string seq) = segments |> Seq.map (fun s -> if isNullOrWhiteSpace s then None else Some s) |> Namespace.create 
