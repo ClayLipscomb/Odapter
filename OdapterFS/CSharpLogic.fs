@@ -120,7 +120,8 @@ module internal TypeGenericParameter =
         match typeTarget with 
             | TargetClassName tcn -> tcn |> InterfaceName.ofClassName |> createTyped 
             | TargetInterfaceName interfaceName -> interfaceName |> createTyped 
-            | _ -> emptyString |> PascalCase |> createUntyped 
+            | TargetReference _ | TargetValue _ | TargetValueNullable _ | TargetGenericParameter _ 
+            | TargetClassName _ | TargetInterfaceName _ | TargetCollectionGeneric _ | TargetArray _ | TargetNone _ -> emptyString |> PascalCase |> createUntyped 
     let codeConstraints (typeGenericParameters: TypeGenericParameter seq, tabCnt) = codeTabbedLines (typeGenericParameters |> Seq.map (fun x -> x.Constraint), tabCnt)
 
 [<RequireQualifiedAccess>]
@@ -128,7 +129,10 @@ module internal MethodName =
     let private create = PascalCase.create >> MethodName
     let ofPascalCase pascalCase = MethodName pascalCase
     let methodNameReadResult (interfaceName: InterfaceName) = create (CodeFrag.ReadResult.Code + interfaceName.Code);
-    let methodNameReadResultTypeParameter typeGenericParameter = match typeGenericParameter.Constraint.InterfaceName with | Some i -> create (CodeFrag.ReadResult.Code + i.Code) | None -> create emptyString
+    let methodNameReadResultTypeParameter typeGenericParameter = 
+        match typeGenericParameter.Constraint.InterfaceName with 
+        | Some i -> create (CodeFrag.ReadResult.Code + i.Code) 
+        | None -> create emptyString
     let doubleName (MethodName pascalCase) = PascalCase.concat [|pascalCase; pascalCase|] |> ofPascalCase
 
 [<RequireQualifiedAccess>]
@@ -218,9 +222,11 @@ module internal TypeTarget =
     let isTypeCollectionGeneric typeTarget = match typeTarget with | TargetCollectionGeneric t -> true | _-> false
     let getSubType typeTarget = 
         match typeTarget with 
-        | TargetCollectionGeneric t -> t.SubType.AsITypeComposable :> ITypeTargetable
-        | TargetArray t             -> t.SubType.AsITypeComposable :> ITypeTargetable
-        | _                         -> TypeNone.NoType :> ITypeTargetable
+        | TargetCollectionGeneric t                                                 -> t.SubType.AsITypeComposable :> ITypeTargetable
+        | TargetArray t                                                             -> t.SubType.AsITypeComposable :> ITypeTargetable
+        | TargetReference _ | TargetValue _ | TargetValueNullable _ 
+        | TargetGenericParameter _ | TargetClassName _ | TargetInterfaceName _ 
+        | TargetCollectionGeneric _ | TargetArray _ | TargetNone _                  -> TypeNone.NoType :> ITypeTargetable
 
 [<RequireQualifiedAccess>]
 module internal TypeComposable =
