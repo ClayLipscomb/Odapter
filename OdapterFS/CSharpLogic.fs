@@ -102,7 +102,9 @@ module internal TypeGenericName =
         match typeTarget with 
         | TargetClassName className -> className |> InterfaceName.ofClassName |> createOfInterfaceName 
         | TargetInterfaceName interfaceName -> interfaceName |> createOfInterfaceName 
-        | _ -> emptyString |> PascalCase |> create 
+        | TargetReference _ | TargetValue _ | TargetValueNullable _ 
+        | TargetGenericParameter _ | TargetClassName _ | TargetInterfaceName _ 
+        | TargetCollectionGeneric _ | TargetArray _ | TargetNone _ -> emptyString |> PascalCase |> create 
 
 [<RequireQualifiedAccess>]
 module internal TypeGenericParameterConstraint = 
