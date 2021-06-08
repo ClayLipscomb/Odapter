@@ -205,7 +205,7 @@ namespace OdapterWnFrm {
 
             // namespaces
             //Parameter.Instance.NamespaceSchema = Generator.GenerateNamespaceSchema(baseNamespace, schema, filterInName); // immediately store because UI has no field
-            txtPackageNamespace.Text = Generator.GenerateNamespacePackage(baseNamespace, schema, filterInName);
+            txtPackageNamespace.Text = txtRecordNamespace.Text = Generator.GenerateNamespacePackage(baseNamespace, schema, filterInName);
             txtObjectNamespace.Text = Generator.GenerateNamespaceObjectType(baseNamespace, schema, filterInName);
             txtTableNamespace.Text = Generator.GenerateNamespaceTable(baseNamespace, schema, filterInName);
             txtViewNamespace.Text = Generator.GenerateNamespaceView(baseNamespace, schema, filterInName);
@@ -215,7 +215,7 @@ namespace OdapterWnFrm {
             txtPackageAncestorClass.Text = Generator.GenerateBaseAdapterClassName(schema);
 
             // file names
-            txtPackageFileName.Text = Generator.GenerateFileNamePackage(schema, filterInName);
+            txtPackageFileName.Text = txtRecordFileName.Text = Generator.GenerateFileNamePackage(schema, filterInName);
             txtObjectFileName.Text = Generator.GenerateFileNameObject(schema, filterInName);
             txtTableFileName.Text = Generator.GenerateFileNameTable(schema, filterInName);
             txtViewFileName.Text = Generator.GenerateFileNameView(schema, filterInName);
@@ -236,8 +236,6 @@ namespace OdapterWnFrm {
         #endregion
 
         #region Events
-        private void cbGeneratePOCOExtension_CheckStateChanged(object sender, EventArgs e) {
-        }
 
         private void FormMain_Load(object sender, EventArgs e) {
         }
@@ -345,12 +343,14 @@ namespace OdapterWnFrm {
         }
 
         private void txtPackageNamespace_TextChanged(object sender, EventArgs e) {
+            txtRecordNamespace.Text = txtPackageNamespace.Text;
         }
 
         private void cbGeneratePackage_CheckedChanged(object sender, EventArgs e) {
             // enable/disable
             txtPackageNamespace.Enabled = txtPackageAncestorClass.Enabled = txtPackageFileName.Enabled = cbPartialPackageClasses.Enabled =         
                 cbGenerateBaseAdapter.Enabled = lblBaseAdapter.Enabled = txtBaseAdapterNamespace.Enabled = //lblBaseAdapter.Enabled =
+                cbGenerateRecord.Checked = 
                 // set above from:
                 cbGeneratePackage.Checked;
 
@@ -496,7 +496,7 @@ namespace OdapterWnFrm {
             cmbDtoInterfaceCategoryView.SelectedValue = Parameter.Instance.TargetDtoInterfaceCategoryView;
 
             txtBaseNamespace.Text = Parameter.Instance.NamespaceBase;
-            txtPackageNamespace.Text = Parameter.Instance.NamespacePackage;
+            txtPackageNamespace.Text = txtRecordNamespace.Text = Parameter.Instance.NamespacePackage;
             txtObjectNamespace.Text = Parameter.Instance.NamespaceObjectType;
             txtTableNamespace.Text = Parameter.Instance.NamespaceTable;
             txtViewNamespace.Text = Parameter.Instance.NamespaceView;
@@ -509,7 +509,7 @@ namespace OdapterWnFrm {
 
             // set file name fields for backward compatibility 
             var filter = GetFilterValueIfUsedInNaming();
-            txtPackageFileName.Text = String.IsNullOrWhiteSpace(Parameter.Instance.FileNamePackage) 
+            txtPackageFileName.Text = txtRecordFileName.Text = String.IsNullOrWhiteSpace(Parameter.Instance.FileNamePackage) 
                 ? Generator.GenerateFileNamePackage(Parameter.Instance.Schema, filter)
                 : Parameter.Instance.FileNamePackage;
             txtObjectFileName.Text = String.IsNullOrWhiteSpace(Parameter.Instance.FileNameObject)
@@ -525,7 +525,7 @@ namespace OdapterWnFrm {
                 ? Generator.GenerateFileNameBaseAdapter(Parameter.Instance.Schema, filter)
                 : Parameter.Instance.FileNameBaseAdapter;
 
-            cbGeneratePackage.Checked = Parameter.Instance.IsGeneratePackage;
+            cbGeneratePackage.Checked = cbGenerateRecord.Checked = Parameter.Instance.IsGeneratePackage;
             cbGenerateObject.Checked = Parameter.Instance.IsGenerateObjectType;
             cbGenerateTable.Checked = Parameter.Instance.IsGenerateTable;
             cbGenerateView.Checked = Parameter.Instance.IsGenerateView;
@@ -673,6 +673,10 @@ namespace OdapterWnFrm {
 
         private void cmbCSharpVersion_SelectedIndexChanged(object sender, EventArgs e) {
             BindDtoInterfaceCategory();
+        }
+
+        private void txtPackageFileName_TextChanged(object sender, EventArgs e) {
+            txtRecordFileName.Text = txtPackageFileName.Text;
         }
     }
 }
