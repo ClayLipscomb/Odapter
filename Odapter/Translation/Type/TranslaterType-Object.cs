@@ -35,11 +35,11 @@ namespace Odapter {
         public bool IsIgnoredAsParameter { get => true; }
         public string IgnoredReasonAsParameter { get => TranslaterMessage.IgnoreNotAvailableOdpNetMananged(OrclType); }
         public (bool isIgnored, string reasonMsg) IsIgnoredAsRecordField() => (true, TranslaterMessage.IgnoreNotAvailableOdpNetMananged(OrclType));
-        public bool IsIgnoredAsAttribute { get => true; }
-        public string IgnoredReasonAsAttribute { get => TranslaterMessage.IgnoreNotImplemented(OrclType); }
+        public bool IsIgnoredAsAttribute { get => false; }
+        public string IgnoredReasonAsAttribute { get => String.Empty; }
         internal TranslaterObjectType(string dataTypeFull) {
             DataTypeFull = dataTypeFull;
-            CSharpType = Trns.ClassNameOfOracleIdentifier(dataTypeFull);
+            CSharpType = Trns.InterfaceNameOfOracleIdentifier(dataTypeFull);
         }
         private TranslaterObjectType() { }
         public override string ToString() { return DataTypeFull; }

@@ -117,9 +117,12 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="bin\Debug\_Odpt-Example.config" />
-    <None Include="bin\Debug\_Odpt-NoFilter.config" />
-    <None Include="bin\Debug\_Odpt-SafeType.config" />
-    <None Include="bin\Debug\_Odpt.config" />
+    <None Include="bin\Debug\_Odpt.NET4-NoFilter.config" />
+    <None Include="bin\Debug\_Odpt.NET4-SafeType.config" />
+    <None Include="bin\Debug\_Odpt.NET4.config" />
+    <None Include="bin\Debug\_Odpt.NET5-NoFilter.config" />
+    <None Include="bin\Debug\_Odpt.NET5-SafeType.config" />
+    <None Include="bin\Debug\_Odpt.NET5.config" />
     <None Include="bin\Release\_Odpt-Example.config" />
     <None Include="bin\x64\Debug\_Odpt-Example.config" />
     <None Include="bin\x64\Debug\_Odpt-NoFilter.config" />

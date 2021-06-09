@@ -86,10 +86,10 @@
     <Compile Include="generated\CaseConversion.cs" />
     <Compile Include="generated\OdptBaseAdapter.cs" />
     <Compile Include="generated\OdptBaseEntity.cs" />
-    <Compile Include="generated\OdptObjectType.cs" />
+    <Compile Include="generated\OdptObject.cs" />
     <Compile Include="generated\OdptOdptBaseAdapter.cs" />
     <Compile Include="generated\OdptOdptBaseEntity.cs" />
-    <Compile Include="generated\OdptOdptObjectType.cs" />
+    <Compile Include="generated\OdptOdptObject.cs" />
     <Compile Include="generated\OdptOdptPackage.cs" />
     <Compile Include="generated\OdptOdptSafeBaseAdapter.cs" />
     <Compile Include="generated\OdptOdptSafeBaseEntity.cs" />

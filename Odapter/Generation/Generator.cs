@@ -228,7 +228,7 @@ namespace Odapter {
         /// </summary>
         /// <param name="args"></param>
         /// <returns></returns>
-        private string GenerateMethodArgumentsCommaDelimited(List<IArgument> args, bool methodHasGenerics, bool dynamicMapping,
+        private string GenerateMethodArgumentsCommaDelimited(List<IArgument> args, bool methodHasGenerics, bool useCustomMapping,
                                                             bool commentOutOnWrap, bool excludeTypes) {
 
             // based on Oracle params, determine all the C# optional params that can be implemented
@@ -255,29 +255,27 @@ namespace Odapter {
                 }
             }
 
-            // if method is using generics (i.e., proc has an out cursor) then add optional arguments 
-            if (methodHasGenerics) {
-                if (dynamicMapping) {
-                    // mapping arguments with defaults 
-                    argList.Add(("\r\n" + Tab(2) + (commentOutOnWrap ? "//" : "") + Tab(2)) // wrap as argument count increases
-                        + (excludeTypes ? "" : "bool ") + PARAM_NAME_MAP_BY_POSITION
-                        + (excludeTypes ? "" : " = false") );
-                    argNum++;
-                    argList.Add("" // wrap as argument count increases
-                        + (excludeTypes ? "" : "bool ") + PARAM_NAME_ALLOW_UNMAPPED_COLUMNS
-                        + (excludeTypes ? "" :  " = false") );
-                    argNum++;
-                } 
+            // if method is using generics (i.e., proc has an out cursor) and custom mapping then add optional arguments 
+            if (methodHasGenerics && useCustomMapping) {
+                // mapping arguments with defaults 
+                argList.Add(("\r\n" + Tab(2) + (commentOutOnWrap ? "//" : "") + Tab(2)) // wrap as argument count increases
+                     + (excludeTypes ? "" : "bool ") + PARAM_NAME_MAP_BY_POSITION
+                     + (excludeTypes ? "" : " = false") );
+                argNum++;
+                argList.Add("" // wrap as argument count increases
+                    + (excludeTypes ? "" : "bool ") + PARAM_NAME_ALLOW_UNMAPPED_COLUMNS
+                    + (excludeTypes ? "" :  " = false") );
+                argNum++;
             }
 
             // Datatable column name conversion to title case arg
-            if (dynamicMapping && TranslaterManager.UseDatatableForUntypedCursor) {
+            if (useCustomMapping && TranslaterManager.UseDatatableForUntypedCursor) {
                 argList.Add((((argNum++ - 5) % 6 == 0) ? "\r\n" + Tab(2) + (commentOutOnWrap ? "//" : "") + Tab(2) : "") // wrap as argument count increases
                     + CS.TypeReference.Boolean + " " + PARAM_NAME_CONVERT_COLUMN_NAME_TO_TITLE_CASE + " = false");
             }
 
             // row count limit argument for any method with cursor (List or Datatable)
-            if (methodHasGenerics || (dynamicMapping && TranslaterManager.UseDatatableForUntypedCursor)) {
+            if (methodHasGenerics || (useCustomMapping && TranslaterManager.UseDatatableForUntypedCursor)) {
                 argList.Add((((argNum++ - 5) % 6 == 0) ? "\r\n" + Tab(2) + (commentOutOnWrap ? "//" : "") + Tab(2) : "") // wrap as argument count increases
                     + CS.TypeValue.UInt32 + "? " + PARAM_NAME_MAXIMUM_ROWS_CURSOR + " = null");
             }
@@ -294,27 +292,26 @@ namespace Odapter {
         /// </summary>
         /// <param name="genericTypes"></param>
         /// <returns></returns>
-        private string GenerateMethodConstraintsCode(List<GenericType> genericTypes, bool forceDynamicMapping) {
+        private string GenerateMethodConstraintsCode(List<GenericType> genericTypes, bool forceUntyped) {
             StringBuilder sb = new StringBuilder("");
             foreach (GenericType gt in genericTypes) {
                 sb.AppendLine();
                 if (gt.Untyped)
                     sb.Append(Tab(4) + gt.TypeGeneric.Constraint.Code);
-                else if (forceDynamicMapping)
+                else if (forceUntyped)
                     sb.Append(Tab(4) + CSL.CodeSpaced(new Object[] { CS.Keyword.WHERE, gt.TypeGeneric, ":", (CS.Keyword.CLASS + ",")
                         , CS.Keyword.NEW }) + @"()");
                 else
-                    sb.Append(Tab(4) + CSL.CodeSpaced(new Object[] { CS.Keyword.WHERE, gt.TypeGeneric, ":", (CS.Keyword.CLASS + ","),
-                        ((gt.InterfaceClassNameCode == null ? "" : gt.InterfaceClassNameCode + ".") + gt.TypeGeneric.CodeInterface + ",")
+                    sb.Append(Tab(4) + CSL.CodeSpaced(new Object[] { CS.Keyword.WHERE, gt.TypeGeneric, ":", CS.Keyword.CLASS + ",",
+                        ((gt.InterfaceClassNameCode == null ? String.Empty : gt.InterfaceClassNameCode + ".") + gt.TypeGeneric.CodeInterface + ",")
                         , CS.Keyword.NEW }) + @"()");
             }
             return sb.ToString();
         }
 
         private string GenerateRefCursorOutArgumentRetrieveCode(List<GenericType> genericTypesUsed, CS.ITypeTargetable cSharpArgType, string cSharpArgName, string oracleArgName,
-                ushort tabIndentCount, bool dynamicMapping = false) {
+                ushort tabIndentCount, bool useCustomMapping, bool usingDtoImmutable) {
 
-            bool isDataTable = CSL.IsDataTable(cSharpArgType); 
             string returnListSubTypeFullyQualifiedPackageTypeName = null;
             var subType = CSL.GetSubType(cSharpArgType);
             if (genericTypesUsed.Count > 0) {
@@ -326,13 +323,14 @@ namespace Odapter {
             sb.AppendLine(Tab(tabIndentCount) + "if (" + "!((" + CS.TypeReference.OracleRefCursor + ")" + LOCAL_VAR_NAME_COMMAND_PARAMS + "[\"" + oracleArgName + "\"].Value).IsNull" + ")");
             sb.AppendLine(Tab(tabIndentCount + 1) + "using (OracleDataReader " + LOCAL_VAR_NAME_READER + " = ((" + CS.TypeReference.OracleRefCursor + ")" + LOCAL_VAR_NAME_COMMAND_PARAMS + "[\"" + oracleArgName + "\"].Value).GetDataReader()) {");
             sb.Append(Tab(tabIndentCount + 2) + cSharpArgName + " = ");
-            if (dynamicMapping) {
+            if (useCustomMapping || usingDtoImmutable) {
+                bool isDataTable = CSL.IsDataTable(cSharpArgType);
                 sb.AppendLine(ORCL_UTIL_CLASS + "." + CS.CodeFrag.ReadResult
                     + (isDataTable ? "" : "<" + subType + ">")
                     + "(" + LOCAL_VAR_NAME_READER
                             + (isDataTable
                                 ? ", " + PARAM_NAME_CONVERT_COLUMN_NAME_TO_TITLE_CASE
-                                : ", " + PARAM_NAME_MAP_BY_POSITION + ", " + PARAM_NAME_ALLOW_UNMAPPED_COLUMNS)
+                                : (useCustomMapping ? ", " + PARAM_NAME_MAP_BY_POSITION + ", " + PARAM_NAME_ALLOW_UNMAPPED_COLUMNS : ", false, false"))
                                     + ", " + PARAM_NAME_MAXIMUM_ROWS_CURSOR // max rows to read
                     + ");");
             } else {
@@ -386,7 +384,7 @@ namespace Odapter {
         /// <param name="args"></param>
         /// <param name="parametersVarName"></param>
         /// <returns></returns>
-        private string GenerateOutArgumentRetrieveCode(List<IArgument> args, List<GenericType> genericTypesUsed, bool dynamicMapping = false) {
+        private string GenerateOutArgumentRetrieveCode(List<IArgument> args, List<GenericType> genericTypesUsed, bool useCustomMapping, bool usingDtoImmutable) {
             StringBuilder sb = new StringBuilder("");
             bool prevArgIsAssocArray = false, isAssocArray = false;
 
@@ -402,7 +400,7 @@ namespace Odapter {
                 if (isAssocArray || prevArgIsAssocArray) sb.AppendLine(); // visually delimit assoc array code with blank line
 
                 if (arg.DataType == Orcl.REF_CURSOR) {
-                    sb.Append(GenerateRefCursorOutArgumentRetrieveCode(genericTypesUsed, cSharpArgType, cSharpArgName, oracleArgName, 5, dynamicMapping));
+                    sb.Append(GenerateRefCursorOutArgumentRetrieveCode(genericTypesUsed, cSharpArgType, cSharpArgName, oracleArgName, 5, useCustomMapping, usingDtoImmutable));
                 } else if (isAssocArray) {
                     sb.Append(GenerateAssocArrayOutArgumentRetrieveCode(cSharpArgType, cSharpArgName, arg, 5));
                 } else { // standard types (built-ins)
@@ -520,7 +518,7 @@ namespace Odapter {
         /// </summary>
         /// <param name="proc"></param>
         /// <returns></returns>
-        private string GenerateMethodCode(IProcedure proc, IPackage pack, bool forceDynamicMapping) {
+        private string GenerateMethodCode(IProcedure proc, IPackage pack, bool useCustomMapping, bool usingDtoImmutable) {
             StringBuilder methodText = new StringBuilder("");
             var methodName = TranslaterName.MethodNameOf(proc, pack);
             var returnType = GenerateMethodReturnType(proc);
@@ -531,13 +529,12 @@ namespace Odapter {
 
             /////////////////////////////////////////////////////////////////////////
             // bypass creation of methods that use certain types of arguments/returns
-            string ignoreReason;
-            if (proc.IsIgnoredDueToOracleTypes(out ignoreReason)) {
+            if (proc.IsIgnoredDueToOracleTypes(out string ignoreReason)) {
                 methodText.AppendLine();
                 methodText.AppendLine(Tab(2) + "// **PROC IGNORED** - " + ignoreReason);
                 methodText.Append(Tab(2) + CSL.CodeSpaced(new object[]{ @"//", CS.AccessModifier.PUBLIC, returnType, methodName }));
                 if (genericTypesUsed.Count > 0) methodText.Append("<" + String.Join(", ", genericTypesUsed.Select(gt => gt.TypeGeneric.GenericName).ToList()) + ">");
-                methodText.Append("(" + GenerateMethodArgumentsCommaDelimited(proc.Arguments, genericTypesUsed.Count > 0, forceDynamicMapping, true, false) + ")");
+                methodText.Append("(" + GenerateMethodArgumentsCommaDelimited(proc.Arguments, genericTypesUsed.Count > 0, useCustomMapping, true, false) + ")");
                 return methodText.ToString();
             }
 
@@ -549,10 +546,10 @@ namespace Odapter {
             if (genericTypesUsed.Count > 0) methodText.Append("<" + String.Join(", ", genericTypesUsed.Select(gt => gt.TypeGeneric.GenericName).ToList())  + ">");
 
             // arguments
-            methodText.Append("(" + GenerateMethodArgumentsCommaDelimited(proc.Arguments, genericTypesUsed.Count > 0, forceDynamicMapping, false, false) + ")");
+            methodText.Append("(" + GenerateMethodArgumentsCommaDelimited(proc.Arguments, genericTypesUsed.Count > 0, useCustomMapping, false, false) + ")");
 
             // generic constraint
-            if (genericTypesUsed.Count > 0) methodText.Append(GenerateMethodConstraintsCode(genericTypesUsed, forceDynamicMapping));
+            if (genericTypesUsed.Count > 0) methodText.Append(GenerateMethodConstraintsCode(genericTypesUsed, forceUntyped: useCustomMapping));
 
             methodText.Append(" {");
             methodText.AppendLine();
@@ -601,7 +598,7 @@ namespace Odapter {
             methodText.AppendLine(Tab(5) + "int " + LOCAL_VAR_NAME_ROWS_AFFECTED + " = " + LOCAL_VAR_NAME_COMMAND + ".ExecuteNonQuery();");
 
             // set returned values for OUT parameters and return
-            methodText.Append(GenerateOutArgumentRetrieveCode(proc.Arguments, genericTypesUsed, forceDynamicMapping));
+            methodText.Append(GenerateOutArgumentRetrieveCode(proc.Arguments, genericTypesUsed, useCustomMapping, usingDtoImmutable));
 
             // trace completion of command
             methodText.AppendLine(Tab(5) + "if (" + LOCAL_VAR_NAME_COMMAND_TRACE + " != null) TraceCompletion(" + LOCAL_VAR_NAME_COMMAND_TRACE 
@@ -636,31 +633,32 @@ namespace Odapter {
         /// </summary>
         /// <param name="proc"></param>
         /// <param name="classText"></param>
-        private void GenerateAllMethodVersions(IProcedure proc, IPackage pack, ref StringBuilder classText) {
+        private void GenerateAllMethodVersions(IProcedure proc, IPackage pack, ref StringBuilder classText, bool usingDtoImmutable) {
 
             // if method has at least one cursor, main version of method will use generics 
             if (proc.HasArgumentOfOracleType(Orcl.REF_CURSOR)) {
                 // mapping version
                 if ((proc.HasUntypedCursor() || Parameter.Instance.IsGenerateDynamicMappingMethodForTypedCursor) && !proc.HasInArgumentOfOracleTypeRefCursor()) {
-                    classText.AppendLine(GenerateMethodCode(proc, pack, true));
+                    classText.AppendLine(GenerateMethodCode(proc, pack, useCustomMapping:true, usingDtoImmutable));
                 }
                 // no mapping version
-                if (!proc.HasUntypedCursor()) classText.AppendLine(GenerateMethodCode(proc, pack, false));
+                if (!proc.HasUntypedCursor()) classText.AppendLine(GenerateMethodCode(proc, pack, useCustomMapping:false, usingDtoImmutable));
 
-                // create extra method (w/o generics) for DataTable version of weakly typed cursors in return/args
+                // non-generic mapping DataTable version if untyped cursors in return/args
                 if (proc.HasUntypedCursor() && !proc.HasInArgumentOfOracleTypeRefCursor()) {
                     TranslaterManager.UseDatatableForUntypedCursor = true;
-                    classText.AppendLine(GenerateMethodCode(proc, pack, true));
+                    classText.AppendLine(GenerateMethodCode(proc, pack, useCustomMapping:true, usingDtoImmutable));
                     TranslaterManager.UseDatatableForUntypedCursor = false;
                 }
             } else {
                 // just create basic non-generic method 
-                classText.AppendLine(GenerateMethodCode(proc, pack, false));
+                classText.AppendLine(GenerateMethodCode(proc, pack, useCustomMapping:false, usingDtoImmutable));
             }
         }
         #endregion
 
         #region Base Class Generation
+        [Obsolete]
         private string GenerateBaseEntityClass(string baseClassName, string classNamespace, string ancestorClassName) {
             StringBuilder classText = new StringBuilder("");
 
@@ -677,7 +675,7 @@ namespace Odapter {
         #region Package Record Type Generation
         private string GenerateRecordTypeReadResultMethod(IPackageRecord rec) {
             StringBuilder classText = new StringBuilder(String.Empty);
-            var interfaceName = CSL.InterfaceNameOfClassName(rec.Translater.CSharpClassName);
+            var interfaceName = rec.Translater.CSharpInterfaceName;
             var genericTypeParam = CSL.TypeGenericParameterOfInterface(interfaceName);
             var methodName = CSL.MethodNameReadResult(interfaceName);
             string paramNameOracleReader = "rdr"; // Oracle clash not possible
@@ -711,6 +709,7 @@ namespace Odapter {
             return classText.ToString();
         }
 
+        [Obsolete]
         private void WriteBaseEntityClasses(string fileNameBaseEntity) {
             string fileName = $"{_outputPath}\\{fileNameBaseEntity}";
 
@@ -727,21 +726,21 @@ namespace Odapter {
                 outFile.Write(headerText);
 
                 // namespace should be at schema level to avoid class name clashes
-                outFile.WriteLine("namespace " + Parameter.Instance.NamespaceBaseEntity + " {");
+                //outFile.WriteLine("namespace " + Parameter.Instance.NamespaceBaseEntity + " {");
 
                 // determine the class name of the base entity
                 string baseEntityClassName = $"{Trns.PascalCaseOfOracleIdentifier(_schema).Value}Entity";
 
                 // create all base entity classes
-                var schemaPascalCase = Trns.PascalCaseOfOracleIdentifier(_schema);
-                outFile.WriteLine(GenerateBaseEntityClass(baseEntityClassName, Parameter.Instance.NamespaceBaseEntity, null));
-                outFile.WriteLine(GenerateBaseEntityClass($"{schemaPascalCase.Value}PackageRecord", Parameter.Instance.NamespaceBaseEntity, baseEntityClassName));
-                outFile.WriteLine(GenerateBaseEntityClass($"{schemaPascalCase.Value}Table", Parameter.Instance.NamespaceBaseEntity,  baseEntityClassName));
-                outFile.WriteLine(GenerateBaseEntityClass($"{schemaPascalCase.Value}View", Parameter.Instance.NamespaceBaseEntity, baseEntityClassName));
-                outFile.WriteLine(GenerateBaseEntityClass($"{schemaPascalCase.Value}ObjectType", Parameter.Instance.NamespaceBaseEntity, baseEntityClassName));
+                //var schemaPascalCase = Trns.PascalCaseOfOracleIdentifier(_schema);
+                //outFile.WriteLine(GenerateBaseEntityClass(baseEntityClassName, Parameter.Instance.NamespaceBaseEntity, null));
+                //outFile.WriteLine(GenerateBaseEntityClass($"{schemaPascalCase.Value}PackageRecord", Parameter.Instance.NamespaceBaseEntity, baseEntityClassName));
+                //outFile.WriteLine(GenerateBaseEntityClass($"{schemaPascalCase.Value}Table", Parameter.Instance.NamespaceBaseEntity,  baseEntityClassName));
+                //outFile.WriteLine(GenerateBaseEntityClass($"{schemaPascalCase.Value}View", Parameter.Instance.NamespaceBaseEntity, baseEntityClassName));
+                //outFile.WriteLine(GenerateBaseEntityClass($"{schemaPascalCase.Value}ObjectType", Parameter.Instance.NamespaceBaseEntity, baseEntityClassName));
 
                 // close namespace 
-                outFile.Write("" + "} // " + Parameter.Instance.NamespaceBaseEntity);
+                //outFile.Write("" + "} // " + Parameter.Instance.NamespaceBaseEntity);
 
                 outFile.Close();
             } catch (UnauthorizedAccessException) {
@@ -843,13 +842,12 @@ namespace Odapter {
         }
 
         private void WritePackageClasses(List<IPackage> packages, IList<IPackageRecord> records, 
-            string packageNamespace, string ancestorAdapterClassName, bool partialPackage, string ancestorRecordTypeClassName) {
+            string packageNamespace, string ancestorAdapterClassName, bool partialPackage) {
 
             if (packages.Count == 0) return;
 
             string fileName = $"{_outputPath}\\{Parameter.Instance.FileNamePackage}";
             DisplayMessage("Coding packages (" + fileName.Substring(fileName.LastIndexOf('\\') + 1) + ")...");
-            if (Parameter.Instance.IsGenerateRecord) DisplayMessage(@"** WARNING: Record DTOs Deprecated **");
 
             try {
                 StreamWriter outFilePackage = new StreamWriter(fileName);
@@ -881,6 +879,8 @@ namespace Odapter {
 
                 // write namespace 
                 outFilePackage.WriteLine("namespace " + packageNamespace + " {");
+
+                bool usingDtoImmutable = Parameter.Instance.IsRecordDtoInterfaceImmutable; 
 
                 foreach (IPackage pack in packages) {
                     string className = Trns.ClassNameOfOracleIdentifier(pack.PackageName).Code;
@@ -924,23 +924,11 @@ namespace Odapter {
                         // prevent creating duplicate entity/interface/reader
                         if (pack.RecordsToGenerate.Exists(r => r.EntityName == rec.EntityName)) continue;
 
-                        if (!rec.IsIgnoredDueToOracleTypes(out string reasonMsg)) {
-                            // create interface for record class
-                            classText.AppendLine();
-                            classText.Append(GenerateEntityInterface(rec, 1));
-                            classText.AppendLine();
-                        }
+                        classText.AppendLine();
+                        classText.Append(GenerateEntityInterface(rec, Parameter.Instance.TargetDtoInterfaceCategoryRecord, 2, out bool ignored));
+                        classText.AppendLine();
 
-                        // create DTO 
-                        bool ignored = false;
-                        if (Parameter.Instance.IsGenerateRecord) {
-                            classText.AppendLine();
-                            classText.Append(GenerateEntityClass(rec, ancestorRecordTypeClassName,
-                                Parameter.Instance.IsSerializablePackageRecord, Parameter.Instance.IsPartialPackage,
-                                Parameter.Instance.IsDataContractPackageRecord, Parameter.Instance.IsXmlElementPackageRecord, 2, out ignored));
-                        }
-
-                        if (!rec.IsIgnoredDueToOracleTypes(out reasonMsg)) {
+                        if (!ignored && !usingDtoImmutable) {
                             // create custom reader
                             classText.AppendLine();
                             classText.Append(GenerateRecordTypeReadResultMethod(rec));
@@ -949,7 +937,7 @@ namespace Odapter {
                     }
 
                     // create method for each package proc
-                    foreach (IProcedure proc in pack.Procedures) GenerateAllMethodVersions(proc, pack, ref classText);
+                    foreach (IProcedure proc in pack.Procedures) GenerateAllMethodVersions(proc, pack, ref classText, usingDtoImmutable);
                     classText.AppendLine(Tab() + "} // " + className);
 
                     // write entire class to file
@@ -978,22 +966,23 @@ namespace Odapter {
         /// <param name="isPartial"></param>
         /// <param name="tabIndentCount"></param>
         /// <returns></returns>
+        [Obsolete]
         private string GenerateEntityClass(IEntity entity, string ancestorClassName, bool isSerializable, bool isPartial, 
             bool isDataContract, bool isXmlElement, int tabIndentCount, out bool ignored) {
 
-            var className = entity.Translater.CSharpClassName;
+            //var className = entity.Translater.CSharpInterfaceName;
             bool isPackageRecord = entity is IPackageRecord;
             StringBuilder classText = new StringBuilder("");
 
             string dbAncestorTypeName = null;   // only object type can have a database ancestor
             if (entity is IObjectType type) dbAncestorTypeName = type.DbAncestorTypeName;
 
-            string classFirstLine = entity.Translater.CSharpAccessModifier + (entity.IsInstantiable ? "" : " abstract") + (isPartial ? " partial" : "") + " " + entity.Translater.CSharpType + " " + className
-                + (!String.IsNullOrEmpty(dbAncestorTypeName)
-                        ? " : " + Trns.ClassNameOfOracleIdentifier(dbAncestorTypeName).Code // Oracle ancestor gets precedence
-                        : (!String.IsNullOrEmpty(ancestorClassName)
-                            ? " : " + Parameter.Instance.NamespaceBaseEntity + "." + ancestorClassName + (isPackageRecord ? ", " + CSL.InterfaceNameOfClassName(className) : "")
-                            : "")) // user defined ancestor
+            string classFirstLine = entity.Translater.CSharpAccessModifier + (entity.IsInstantiable ? "" : " abstract") + (isPartial ? " partial" : "") + " " + entity.Translater.CSharpType + " " //+ className
+                //+ (!String.IsNullOrEmpty(dbAncestorTypeName)
+                //        ? " : " + Trns.ClassNameOfOracleIdentifier(dbAncestorTypeName).Code // Oracle ancestor gets precedence
+                //        : (!String.IsNullOrEmpty(ancestorClassName)
+                //            ? " : " + Parameter.Instance.NamespaceBaseEntity + "." + ancestorClassName + (isPackageRecord ? ", " + CSL.InterfaceNameOfClassName(className) : "")
+                //            : "")) // user defined ancestor
                 + " {"; // start entity type class;
 
             /////////////////////////////////////////////////////////////////////////////
@@ -1009,7 +998,7 @@ namespace Odapter {
 
             // C# attributes: DataContract, Serializable
             if (isDataContract || isSerializable) classText.Append(Tab(tabIndentCount));
-            if (isDataContract) classText.Append(GenerateDataContractAttribute());
+            //if (isDataContract) classText.Append(GenerateDataContractAttribute());
             if (isSerializable) classText.Append(CS.Attribute.SERIALIZABLE);
             if (isDataContract || isSerializable) classText.AppendLine();
 
@@ -1032,18 +1021,18 @@ namespace Odapter {
                 if (isXmlElement) classText.Append("[XmlElement(Order=" + attr.Position.ToString() + ", IsNullable=true)]");
                 if (isDataContract || isXmlElement) classText.AppendLine();
 
-                classText.Append(Tab(tabIndentCount + 1) 
-                    + CSL.CodeSpaced(new object[] { CS.Keyword.PUBLIC, CS.Keyword.VIRTUAL, (attr.ContainerClassName == null ? String.Empty : attr.ContainerClassName + "."), cSharpType, 
-                                    Trns.PropertyNameOfOracleIdentifier(attr.AttrName, attr.EntityName) })
-                    + (Parameter.Instance.IsUseAutoImplementedProperties 
-                        ? " { get; set; }"
-                        : " { get { return this." + nonPublicMemberName + "; } set { this." + nonPublicMemberName + " = value; } }"));
-                classText.AppendLine(Parameter.Instance.IsUseAutoImplementedProperties 
-                    ? ""
-                    : " protected " + (attr.ContainerClassName == null ? "" : attr.ContainerClassName + ".") + cSharpType + " " + nonPublicMemberName + ";");
+                //classText.Append(Tab(tabIndentCount + 1) 
+                //    + CSL.CodeSpaced(new object[] { CS.Keyword.PUBLIC, CS.Keyword.VIRTUAL, (attr.ContainerClassName == null ? String.Empty : attr.ContainerClassName + "."), cSharpType, 
+                //                    Trns.PropertyNameOfOracleIdentifier(attr.AttrName, attr.EntityName) })
+                //    + (Parameter.Instance.IsUseAutoImplementedProperties 
+                //        ? " { get; set; }"
+                //        : " { get { return this." + nonPublicMemberName + "; } set { this." + nonPublicMemberName + " = value; } }"));
+                //classText.AppendLine(Parameter.Instance.IsUseAutoImplementedProperties 
+                //    ? ""
+                //    : " protected " + (attr.ContainerClassName == null ? "" : attr.ContainerClassName + ".") + cSharpType + " " + nonPublicMemberName + ";");
             }
 
-            classText.AppendLine(Tab(tabIndentCount) + "} // " + className); // end entity type class
+            classText.AppendLine(Tab(tabIndentCount) + "} // "); //+ className); // end entity type class
             ignored = false;
             return classText.ToString();
         }
@@ -1054,16 +1043,41 @@ namespace Odapter {
         /// <param name="entity"></param>
         /// <param name="tabIndentCount">number of tabs to indent</param>
         /// <returns></returns>
-        private string GenerateEntityInterface(IEntity entity, UInt32 tabIndentCount) {
+        private string GenerateEntityInterface(IEntity entity, CS.DtoInterfaceCategory dtoInterfaceCategory, UInt32 tabIndentCount, out bool ignored) {
+
+            // only object type can have a database ancestor
+            var dbAncestorTypeName = (entity is IObjectType type) ? type.DbAncestorTypeName : null;
+            var ancestorInterfaceNames = 
+                String.IsNullOrWhiteSpace(dbAncestorTypeName) 
+                    ? new List<CS.InterfaceName>() 
+                    : new List<CS.InterfaceName>() { Trns.InterfaceNameOfOracleIdentifier(dbAncestorTypeName) };
+
             var typeInterface = CSL.TypeInterface(
                 CS.AccessModifierInterface.PUBLIC,
-                CSL.InterfaceNameOfClassName(entity.Translater.CSharpClassName),
-                entity.Attributes.Select(a => CSL.PropertyInterface(Trns.PropertyNameOfOracleIdentifier(a.AttrName, a.EntityName), a.Translater.CSharpType, CSL.TypeNone, CS.PropertyGetSet.SetOnly)));
-            return CSL.CodeInterface(tabIndentCount + 1, typeInterface);
+                entity.Translater.CSharpInterfaceName,
+                entity.Attributes.Select(a => CSL.PropertyInterface(
+                    Trns.PropertyNameOfOracleIdentifier(a.AttrName, a.EntityName),
+                    a.Translater.CSharpType,
+                    CSL.TypeNone,
+                    CSL.DtoInterfacePropertyAccessor(dtoInterfaceCategory))),
+                ancestorInterfaceNames);
+
+            // bypass creation of entities that use unimplemented Oracle types
+            if (entity.IsIgnoredDueToOracleTypes(out string ignoreReason)) {
+                string entityType = entity.GetType().Name.Replace("Package", String.Empty).Replace("Type", String.Empty).ToUpper();
+                string codeFirstLine = CSL.CodeInterfaceFirstLine(typeInterface);
+                var commentText = new StringBuilder();
+                commentText.AppendLine(Tab(Convert.ToInt32(tabIndentCount)) + $"// **{entityType} IGNORED** - {ignoreReason}");
+                commentText.Append(Tab(Convert.ToInt32(tabIndentCount)) + "// " + codeFirstLine);
+                ignored = true;
+                return commentText.ToString();
+            } else {
+                ignored = false;
+                return CSL.CodeInterface(tabIndentCount, typeInterface);
+            }
         }
 
-        private void WriteNonPackagedEntityClasses<I_Entity>(List<IEntity> entities, string entityNamespace, string ancestorClassName, 
-            bool isSerializable, bool isPartial, bool isDataMember, bool isXmlElement, string fileNameEntity)
+        private void WriteNonPackagedEntityInterfaces<I_Entity>(List<IEntity> entities, string entityNamespace, CS.DtoInterfaceCategory dtoInterfaceCategory, string fileNameEntity)
             where I_Entity : IEntity {
 
             string entityTypeName = typeof(I_Entity).Name.TrimStart(@"I".ToCharArray());
@@ -1079,9 +1093,6 @@ namespace Odapter {
                 // create using statements
                 StringBuilder headerText = new StringBuilder("");
                 headerText.AppendLine("using System;");
-                headerText.AppendLine("using System.Runtime.Serialization;");
-                headerText.AppendLine("using System.Xml;");
-                headerText.AppendLine("using System.Xml.Serialization;");
                 headerText.AppendLine(USING_ORACLE_DATAACCESS_TYPES + ";");
                 if (typeof(I_Entity).Equals(typeof(ITable)) || typeof(I_Entity).Equals(typeof(IView)))
                     headerText.AppendLine("using " + _objectTypeNamespace + ";"); // tables and views need access to object type in case column uses one as a type
@@ -1093,7 +1104,7 @@ namespace Odapter {
 
                 foreach (IEntity entity in entities) {
                     if (entities.IndexOf(entity) != 0) outFile.WriteLine();
-                    outFile.Write(GenerateEntityClass(entity, ancestorClassName, isSerializable, isPartial, isDataMember, isXmlElement, 1, out bool ignore));
+                    outFile.WriteLine(GenerateEntityInterface(entity, Parameter.Instance.TargetDtoInterfaceCategoryRecord, 1, out bool ignored));
                 }
 
                 // close class and namespace for package
@@ -1138,27 +1149,26 @@ namespace Odapter {
             Generator generator = new Generator(Parameter.Instance.Schema, Parameter.Instance.OutputPath, displayMessageMethod, Parameter.Instance.DatabaseInstance,
                                                 Parameter.Instance.UserLogin, Parameter.Instance.Password, Parameter.Instance.NamespaceBase, Parameter.Instance.NamespaceObjectType);
 
+            displayMessageMethod($"C# { (Parameter.Instance.IsCSharp90 ? "9.0" : "4.0") }:");
+
             ////////////////////////
             // generate base classes
             if (Parameter.Instance.IsGenerateBaseAdapter) generator.WriteBasePackageClass(Parameter.Instance.FileNameBaseAdapter, Parameter.Instance.AncestorClassNamePackage);
-            if (Parameter.Instance.IsGenerateBaseEntities) generator.WriteBaseEntityClasses(Parameter.Instance.FileNameBaseEntity);
+            //if (Parameter.Instance.IsGenerateBaseEntities) generator.WriteBaseEntityClasses(Parameter.Instance.FileNameBaseEntity);
 
             //////////////////////////////////
             // generate schema-derived classes
             if (Parameter.Instance.IsGeneratePackage)
                 generator.WritePackageClasses(loader.Packages, loader.PackageRecordTypes, Parameter.Instance.NamespacePackage, Parameter.Instance.AncestorClassNamePackage, 
-                    Parameter.Instance.IsPartialPackage, Parameter.Instance.AncestorClassNamePackageRecord);
+                    Parameter.Instance.IsPartialPackage);
             if (Parameter.Instance.IsGenerateObjectType)
-                generator.WriteNonPackagedEntityClasses<IObjectType>(loader.ObjectTypes, Parameter.Instance.NamespaceObjectType, Generator.GenerateBaseObjectTypeClassName(Parameter.Instance.Schema),
-                    Parameter.Instance.IsSerializableObjectType, Parameter.Instance.IsPartialObjectType, Parameter.Instance.IsDataContractObjectType, Parameter.Instance.IsXmlElementObjectType,
+                generator.WriteNonPackagedEntityInterfaces<IObjectType>(loader.ObjectTypes, Parameter.Instance.NamespaceObjectType, Parameter.Instance.TargetDtoInterfaceCategoryObject,
                     Parameter.Instance.FileNameObject);
             if (Parameter.Instance.IsGenerateTable)
-                generator.WriteNonPackagedEntityClasses<ITable>(loader.Tables, Parameter.Instance.NamespaceTable, Generator.GenerateBaseTableClassName(Parameter.Instance.Schema),
-                    Parameter.Instance.IsSerializableTable, Parameter.Instance.IsPartialTable, Parameter.Instance.IsDataContractTable, Parameter.Instance.IsXmlElementTable,
+                generator.WriteNonPackagedEntityInterfaces<ITable>(loader.Tables, Parameter.Instance.NamespaceTable, Parameter.Instance.TargetDtoInterfaceCategoryTable, 
                     Parameter.Instance.FileNameTable);
             if (Parameter.Instance.IsGenerateView)
-                generator.WriteNonPackagedEntityClasses<IView>(loader.Views, Parameter.Instance.NamespaceView, Generator.GenerateBaseViewClassName(Parameter.Instance.Schema),
-                    Parameter.Instance.IsSerializableView, Parameter.Instance.IsPartialView, Parameter.Instance.IsDataContractView, Parameter.Instance.IsXmlElementView,
+                generator.WriteNonPackagedEntityInterfaces<IView>(loader.Views, Parameter.Instance.NamespaceView, Parameter.Instance.TargetDtoInterfaceCategoryView, 
                     Parameter.Instance.FileNameView);
 
             generator.DeployUtilityClasses(Parameter.Instance.IsDeployResources);
@@ -1248,14 +1258,6 @@ namespace Odapter {
                 default: // VARCHAR2, VARCHAR, NVARCHAR2 or equivalents
                     return Parameter.Instance.MaxReturnAndOutArgStringSize; // custom defined value
             }
-        }
-
-        private string GenerateDataContractAttribute() {
-            return @"[" + CS.Attribute.DATA_CONTRACT + "("
-                + (String.IsNullOrEmpty(Parameter.Instance.NamespaceDataContract)
-                    ? ""
-                    : @"Namespace=""" + Parameter.Instance.NamespaceDataContract + @"""") 
-                + ")]";
         }
 
         private static string GenerateLocalVariableName(string baseLocalVarName) => Parameter.Instance.LocalVariableNameSuffix + baseLocalVarName;

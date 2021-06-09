@@ -36,7 +36,7 @@ open Odapter.CSharp.Logic;
         inherit ITypeTargetable
     
     [<Struct>]
-    type CSharpVersion = | FourZero with //| FiveZero
+    type CSharpVersion = | FourZero | NineZero with
         member this.ToString = this |> UtilUnion.fromDuCaseToString
 
     [<Struct>]
@@ -56,7 +56,7 @@ open Odapter.CSharp.Logic;
         | BYTE | FIXED | OVERRIDE | TRY | CASE | FLOAT | PARAMS | TYPEOF | CATCH | FOR | PRIVATE | UINT | CHAR | FOREACH | PROTECTED | ULONG | CHECKED | GOTO | PUBLIC 
         | UNCHECKED | CLASS | IF | READONLY | UNSAFE | CONST | IMPLICIT | REF | USHORT | CONTINUE | IN | RETURN | USING | DECIMAL | INT | SBYTE | VIRTUAL | DEFAULT | INTERFACE 
         | SEALED | VOLATILE | DELEGATE | INTERNAL | SHORT | VOID | DO | IS | SIZEOF | WHILE | DOUBLE | LOCK | STACKALLOC | ELSE | LONG | STATIC | ENUM | NAMESPACE | STRING 
-        | DYNAMIC | GET | LET | PARTIAL | SET | VALUE | VAR | WHERE  // a few contextual keywords
+        | DYNAMIC | GET | LET | PARTIAL | SET | VALUE | VAR | WHERE | INIT // a few contextual keywords
         member this.Code = this |> UtilUnion.fromDuCaseToString |> toLower
         override this.ToString() = this.Code
     [<Struct>]
@@ -96,6 +96,10 @@ open Odapter.CSharp.Logic;
         member this.Code = let (InterfaceName pascalCase) = this in (pascalCase :> IWrappedString).Value
         member this.Value = let (InterfaceName pascalCase) = this in pascalCase
         override this.ToString() = this.Code
+        interface ITypeTargetable with
+            member this.Code = this.Code
+            member this.SansNullable = this :> ITypeTargetable
+        interface ITypeComposable
     [<Struct>]
     type ClassName = internal ClassName of PascalCase with
         member this.Code = let (ClassName pascalCase) = this in (pascalCase :> IWrappedString).Value
@@ -176,6 +180,7 @@ open Odapter.CSharp.Logic;
         interface ITypeTargetable with
             member this.Code = this.Code
             member this.SansNullable = this :> ITypeTargetable
+        interface ITypeComposable
 
     [<Struct>]
     type TypeCollection = | List | IList | ICollection with
@@ -201,8 +206,10 @@ open Odapter.CSharp.Logic;
             | ComposableValue t             -> t :> ITypeTargetable
             | ComposableReference t         -> t :> ITypeTargetable
             | ComposableClassName t         -> t :> ITypeTargetable
+            | ComposableInterfaceName t     -> t :> ITypeTargetable
             | ComposableArray t             -> t :> ITypeTargetable
             | ComposableCollectionGeneric t -> t :> ITypeTargetable
+            | ComposableNone t              -> t :> ITypeTargetable
     and [<Struct>] TypeArray = internal TypeArray of TypeComposable with 
         member this.SubType with get() = let (TypeArray typeComposable) = this in typeComposable
         member this.Code = let (TypeArray.TypeArray typeComposable) = this in typeComposable.Code + BRACKETS
@@ -219,8 +226,10 @@ open Odapter.CSharp.Logic;
         | ComposableValue of TypeValue:TypeValue
         | ComposableValueNullable of TypeValueNullable:TypeValueNullable
         | ComposableClassName of ClassName:ClassName
+        | ComposableInterfaceName of InterfaceName:InterfaceName
         | ComposableArray of TypeArray:TypeArray
         | ComposableCollectionGeneric of TypeCollectionGeneric:TypeCollectionGeneric
+        | ComposableNone of TypeNone:TypeNone
         member this.Code = 
             match this with
             | ComposableGenericParameter t  -> t.Code
@@ -228,23 +237,26 @@ open Odapter.CSharp.Logic;
             | ComposableValue t             -> t.Code
             | ComposableReference t         -> t.Code
             | ComposableClassName t         -> t.Code
+            | ComposableInterfaceName t     -> t.Code
             | ComposableArray t             -> t.Code
             | ComposableCollectionGeneric t -> t.Code
+            | ComposableNone t              -> t.Code
         override this.ToString() = this.Code
         member this.AsITypeComposable =
             match this with
             | ComposableGenericParameter t  -> t :> ITypeComposable
-            ///| ComposableGeneric t           -> t :> ITypeComposable
             | ComposableValueNullable t     -> t :> ITypeComposable
             | ComposableValue t             -> t :> ITypeComposable
             | ComposableReference t         -> t :> ITypeComposable
             | ComposableClassName t         -> t :> ITypeComposable
+            | ComposableInterfaceName t     -> t :> ITypeComposable
             | ComposableArray t             -> t :> ITypeComposable
             | ComposableCollectionGeneric t -> t :> ITypeComposable
+            | ComposableNone t              -> t :> ITypeComposable
         member this.ValueNullableToValue = 
             match this with
             | ComposableValueNullable t -> ComposableValue t.TypeValue
-            | ComposableGenericParameter _ | ComposableValue _ | ComposableReference _ | ComposableClassName _ | ComposableArray _ | ComposableCollectionGeneric _ -> this
+            | ComposableGenericParameter _ | ComposableValue _ | ComposableReference _ | ComposableClassName _ | ComposableInterfaceName _ | ComposableArray _ | ComposableCollectionGeneric _ | ComposableNone _ -> this
 
     [<Struct>]
     type TypeTarget = 
@@ -254,6 +266,7 @@ open Odapter.CSharp.Logic;
         | TargetReference of TypeReference:TypeReference
         | TargetGenericParameter of TypeGenericParameter:TypeGenericParameter
         | TargetClassName of ClassName:ClassName
+        | TargetInterfaceName of InterfaceName:InterfaceName
         | TargetCollectionGeneric of TypeCollectionGeneric:TypeCollectionGeneric
         | TargetArray of TypeArray:TypeArray
         | TargetNone of TypeNone:TypeNone with
@@ -264,6 +277,7 @@ open Odapter.CSharp.Logic;
             | TargetReference t         -> t :> ITypeTargetable
             | TargetGenericParameter t  -> t :> ITypeTargetable
             | TargetClassName t         -> t :> ITypeTargetable
+            | TargetInterfaceName t     -> t :> ITypeTargetable
             | TargetCollectionGeneric t -> t :> ITypeTargetable
             | TargetArray t             -> t :> ITypeTargetable
             | TargetNone t              -> t :> ITypeTargetable
@@ -274,6 +288,7 @@ open Odapter.CSharp.Logic;
             | TargetReference t         -> t.Code
             | TargetGenericParameter t  -> t.Code
             | TargetClassName t         -> t.Code
+            | TargetInterfaceName t     -> t.Code
             | TargetCollectionGeneric t -> t.Code
             | TargetArray t             -> t.Code
             | TargetNone t              -> t.Code
@@ -281,7 +296,7 @@ open Odapter.CSharp.Logic;
         member this.SansNullable =
             match this with
             | TargetValueNullable t -> t.TypeValue |> TargetValue
-            | TargetGenericParameter _ | TargetValue _ | TargetReference _ | TargetClassName _ | TargetCollectionGeneric _ | TargetArray _ | TargetNone _ -> this 
+            | TargetGenericParameter _ | TargetValue _ | TargetReference _ | TargetClassName _ | TargetInterfaceName _ | TargetCollectionGeneric _ | TargetArray _ | TargetNone _ -> this 
 
     [<Struct>]
     type FieldProtected = { FieldName: FieldNameProtected; FieldType: TypeComposable } with
@@ -289,23 +304,41 @@ open Odapter.CSharp.Logic;
         override this.ToString() = this.Code
 
     [<Struct>]
-    type PropertyGetSet = | GetOnly | SetOnly | Both
+    type PropertyAccessor = | GetOnly | GetInit | SetOnly | GetSet with
+        member this.Code = 
+            match this with 
+            | GetSet _ -> codeSpaced[|GET.Code + SEMICOLON; SET.Code + SEMICOLON|]
+            | GetInit _ -> codeSpaced[|GET.Code + SEMICOLON; INIT.Code + SEMICOLON|]
+            | GetOnly _ -> GET.Code + SEMICOLON
+            | SetOnly _ -> SET.Code + SEMICOLON
+        override this.ToString() = this.Code
     [<Struct>]
     type Property = { PropertyName: PropertyName; PropertyType: TypeComposable; ContainerType: TypeComposable option; 
-                        AccessModifier: AccessModifier option; GetSet: PropertyGetSet; BackingField: FieldProtected option;
+                        AccessModifier: AccessModifier option; GetSet: PropertyAccessor; BackingField: FieldProtected option;
                         IsVirtual: bool; IsDataMember: bool; IsXmlElement: bool } with
-        member this.Code = 
-            (match this.AccessModifier with | Some am -> am.Code + SPACE | None _ -> emptyString)
-            + (match this.ContainerType with | Some ct -> ct.Code + PERIOD | None _ -> emptyString) + this.PropertyType.ToString() + SPACE
-            + codeSpaced[|this.PropertyName; @"{"; (match this.GetSet with | Both _ -> @"get; set;" | GetOnly _ -> @"get;" | SetOnly _ -> @"set;"); @"}"|]
+        member this.Code = codeSpaced [|
+            (match this.AccessModifier with | Some am -> am.Code + SPACE | None _ -> emptyString);
+            (match this.ContainerType with | Some ct -> ct.Code + PERIOD | None _ -> emptyString) + this.PropertyType.ToString();
+            this.PropertyName; 
+            CURLY_OPEN; this.GetSet; CURLY_CLOSE|]
         override this.ToString() = this.Code
+
+    [<Struct>]
+    type DtoInterfaceCategory =
+        | MutableSet | ImmutableGetInit
 
     [<Struct>]
     type AccessModifierInterface = | PUBLIC | INTERNAL with
         member this.Code = this |> UtilUnion.fromDuCaseToString |> toLower
         override this.ToString() = this.Code
+
     [<Struct>]
-    type TypeInterface = { AccessModifier: AccessModifierInterface; InterfaceName: InterfaceName; Properties: Property seq }
+    type TypeInterface = { 
+        AccessModifier: AccessModifierInterface
+        InterfaceName: InterfaceName
+        Properties: Property seq
+        AncestorInterfaceNames: InterfaceName seq option
+    }
 
     [<Struct>]
     type internal TypeClassDto = { 

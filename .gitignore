@@ -42,6 +42,16 @@ Tester/bin/x64/Debug/*.config
 Tester/bin/x64/Debug/*.exe.config
 Tester/bin/x64/Release/*.exe.config
 
+# Tester.NET5 - x64 Release and x86
+Tester.NET5/bin/
+Tester.NET5/bin/Release/
+Tester.NET5/bin/Debug/
+Tester.NET5/bin/Release/net5.0/
+Tester.NET5/bin/Debug/net5.0/*.dll
+Tester.NET5/bin/Debug/net5.0/*.config
+Tester.NET5/bin/Debug/net5.0/*.exe.config
+Tester.NET5/bin/Release/net5.0/*.exe.config
+
 # Example - x64 Release and x86
 Example/bin/
 Example/bin/x64/Release/
@@ -323,3 +333,6 @@ __pycache__/
 /OdapterWnFrm/bin/Release/Odapter.exe.config
 /OdapterWnFrm/bin/Release/OdapterCore.dll.config
 /OdapterWnFrm/bin/Release/_Odpt-Example.config
+/Odapter/Generation/Generator - Copy.cs
+/Odapter/Generation/Generator - Old.cs
+/Odapter/Generation/Generator - Copy2.cs

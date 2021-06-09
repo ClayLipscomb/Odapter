@@ -30,9 +30,9 @@ namespace Odapter {
         /// </summary>
         IOrclType OrclType { get; }
         /// <summary>
-        /// Translated C# class name
+        /// Translated C# interface name
         /// </summary>
-        ClassName CSharpClassName { get; }
+        InterfaceName CSharpInterfaceName { get; }
         AccessModifier CSharpAccessModifier { get; }
         string CSharpType { get; }
     }

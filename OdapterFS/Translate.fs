@@ -53,6 +53,7 @@ module internal Naming =
     let internal camelCaseOfOracleIdentifier = snakeCaseOfOracleIdentifier >> CamelCase.ofSnakeCase 
 
     let internal classNameOfOracleIdentifier = pascalCaseOfOracleIdentifier >> ClassName.ofPascalCase
+    let internal interfaceNameOfOracleIdentifier = classNameOfOracleIdentifier >> InterfaceName.ofClassName
     let internal propertyNameOfOracleIdentifier (identifier, identifierEntity) = 
         let className = identifierEntity |> classNameOfOracleIdentifier
         let propertyName = identifier |> pascalCaseOfOracleIdentifier |> PropertyName.ofPascalCase
@@ -67,6 +68,7 @@ module Api =
     let CamelCaseOfOracleIdentifier identifier = camelCaseOfOracleIdentifier identifier
 
     let ClassNameOfOracleIdentifier identifier = classNameOfOracleIdentifier identifier
+    let InterfaceNameOfOracleIdentifier identfier = interfaceNameOfOracleIdentifier identfier
     let PropertyNameOfOracleIdentifier (identifier, identifierEntity) = propertyNameOfOracleIdentifier (identifier, identifierEntity)
     let MethodNameOfOracleIdentifier identifier = methodNameOfOracleIdentifier identifier
     let TypeGenericNameOfOracleIdentifier identifier = typeGenericNameOfOracleIdentifier identifier

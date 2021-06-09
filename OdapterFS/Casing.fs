@@ -78,10 +78,11 @@ module internal SnakeCase =
 [<AutoOpen>]
 module internal PascalCase =
     let create input = WrappedString.create (*canonicalize:*)singleLineTrimmed PascalCase input
-    let value = WrappedString.value
+    let value (pascalCae: PascalCase) = WrappedString.value pascalCae
     let map f (PascalCase pascalCaseStr) = pascalCaseStr |> f |> create
+    let private zero = create emptyString
     let private concatPair pc1 pc2 = PascalCase (value pc1 + value pc2)
-    let concat seqPascalCase = Seq.reduce concatPair seqPascalCase
+    let concat seqPascalCase = Seq.fold concatPair zero seqPascalCase  // monoid
     let private fromSnakeCaseStrToPascalCaseStr str = 
         if str |> trim |> isNullOrWhiteSpace then 
             emptyString
