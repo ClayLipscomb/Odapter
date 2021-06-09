@@ -49,7 +49,6 @@
     <Compile Include="Example.cs" />
     <Compile Include="generated\CaseConversion.cs" />
     <Compile Include="generated\OdptXmplBaseAdapter.cs" />
-    <Compile Include="generated\OdptXmplBaseEntity.cs" />
     <Compile Include="generated\OdptXmplPackage.cs" />
     <Compile Include="generated\OrclPower.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

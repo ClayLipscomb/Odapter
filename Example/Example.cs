@@ -34,13 +34,17 @@ namespace OdapterExample {
     // The following DTO classes will be used in different ways for the same result set.
 
     // Inherits the package record type DTO, adding custom properties 
-    public class DtoInherited : XmplPkgExample.TTableBigPartial {   // no mapping required
-        public String StringPropertyExtra { get; set; }             // custom property
-        public List<Int32> Int32ListPropertyExtra { get; set; }     // custom property
+    public class DtoImplemented : XmplPkgExample.ITTableBigPartial {   // no mapping required
+        public Int64? Id { get; set; }
+        public Int64? ColInteger { get; set; }
+        public Decimal? ColNumber { get; set; }
+        public String ColVarchar2Max { get; set; }
+        public DateTime? ColDate { get; set; }
+        public OracleTimeStamp? ColTimestamp { get; set; }      // ODP.NET safe type struct
     }
 
     // Implements the package record type's interface, adding custom properties 
-    public class DtoImplemented : XmplPkgExample.ITTableBigPartial {  // no mapping required
+    public class DtoImplementedWithCustom : XmplPkgExample.ITTableBigPartial {  // no mapping required
         public Int64? Id { get; set; }
         public Int64? ColInteger { get; set; }
         public Decimal? ColNumber { get; set; }
@@ -99,24 +103,24 @@ namespace OdapterExample {
             IList<Int64?> pInOutListInt64, somePrimeNumbers = new List<Int64?> { 2, 3, 5, 7, 11, 13, 17, 19, 29, 31 };
 
             // DTO IList<T>s and a datatable to be hydrated from Oracle cursor
-            IList<DtoInherited> dtoInheritedResultSet;
-            IList<DtoImplemented> dtoImplementedResultSet;
+            IList<DtoImplemented> dtoInheritedResultSet;
+            IList<DtoImplementedWithCustom> dtoImplementedResultSet;
             IList<DtoCustomMapByName> dtoOriginalMapByNameResultSet;
             IList<DtoCustomMapByPosition> dtoOriginalMapByPositionLResultSet;
             DataTable dataTable;
 
-            // 1. Hydrate DTO IList<T> from typed result set by using DTO inherited from package record type DTO.
+            // 1. Hydrate DTO IList<T> from typed result set by using DTO implementing package record interface.
             pInOutListInt64 = somePrimeNumbers; 
-            dtoInheritedResultSet = XmplPkgExample.Instance.GetRowsTypedRet<DtoInherited>(pInDecimal, ref pInOutString, ref pInOutListInt64, out pOutDate, rowLimit);
+            dtoInheritedResultSet = XmplPkgExample.Instance.GetRowsTypedRet<DtoImplemented>(pInDecimal, ref pInOutString, ref pInOutListInt64, out pOutDate, rowLimit);
             Debug.Assert(dtoInheritedResultSet.Count == rowLimit);
             Debug.Assert(pInOutString.Equals(GOODBYE));                             // confirm OUT string arg from package function
             for (int i = 0; i < pInOutListInt64.Count; i++)
                 Debug.Assert(pInOutListInt64[i].Equals(somePrimeNumbers[i] * 7));   // confirm all values were multiplied by 7 in func
             Debug.Assert(pOutDate.Equals(new DateTime(1999, 12, 31)));              // confirm OUT date arg from package function
 
-            // 2. Hydrate DTO IList<T> from typed result set by using DTO implementing package record type interface.
+            // 2. Hydrate DTO IList<T> from typed result set by using DTO implementing package record interface with additional properties.
             pInOutListInt64 = somePrimeNumbers;
-            dtoImplementedResultSet = XmplPkgExample.Instance.GetRowsTypedRet<DtoImplemented>(pInDecimal, ref pInOutString, ref pInOutListInt64, out pOutDate, rowLimit);
+            dtoImplementedResultSet = XmplPkgExample.Instance.GetRowsTypedRet<DtoImplementedWithCustom>(pInDecimal, ref pInOutString, ref pInOutListInt64, out pOutDate, rowLimit);
             Debug.Assert(dtoImplementedResultSet.Count == rowLimit);
             Debug.Assert(pInOutString.Equals(GOODBYE));                             // confirm OUT string arg from package function
             for (int i = 0; i < pInOutListInt64.Count; i++)
