@@ -152,11 +152,11 @@ namespace OdapterWnFrm {
             this.ListViewMessage.BackColor = System.Drawing.Color.Black;
             this.ListViewMessage.ForeColor = System.Drawing.Color.Yellow;
             this.ListViewMessage.HideSelection = false;
-            this.ListViewMessage.Location = new System.Drawing.Point(859, 10);
+            this.ListViewMessage.Location = new System.Drawing.Point(837, 10);
             this.ListViewMessage.Margin = new System.Windows.Forms.Padding(4);
             this.ListViewMessage.Name = "ListViewMessage";
             this.ListViewMessage.OwnerDraw = true;
-            this.ListViewMessage.Size = new System.Drawing.Size(409, 408);
+            this.ListViewMessage.Size = new System.Drawing.Size(443, 408);
             this.ListViewMessage.TabIndex = 7;
             this.ListViewMessage.UseCompatibleStateImageBehavior = false;
             this.ListViewMessage.View = System.Windows.Forms.View.Details;
@@ -168,10 +168,10 @@ namespace OdapterWnFrm {
             this.BtnStart.BackColor = System.Drawing.Color.Black;
             this.BtnStart.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BtnStart.ForeColor = System.Drawing.Color.DeepSkyBlue;
-            this.BtnStart.Location = new System.Drawing.Point(732, 14);
+            this.BtnStart.Location = new System.Drawing.Point(707, 14);
             this.BtnStart.Margin = new System.Windows.Forms.Padding(4);
             this.BtnStart.Name = "BtnStart";
-            this.BtnStart.Size = new System.Drawing.Size(101, 43);
+            this.BtnStart.Size = new System.Drawing.Size(110, 43);
             this.BtnStart.TabIndex = 1;
             this.BtnStart.Text = "Generate Code";
             this.BtnStart.UseVisualStyleBackColor = false;
@@ -183,7 +183,7 @@ namespace OdapterWnFrm {
             this.lblDBInstance.BackColor = System.Drawing.Color.Transparent;
             this.lblDBInstance.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblDBInstance.ForeColor = System.Drawing.Color.DeepSkyBlue;
-            this.lblDBInstance.Location = new System.Drawing.Point(414, 21);
+            this.lblDBInstance.Location = new System.Drawing.Point(393, 21);
             this.lblDBInstance.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblDBInstance.Name = "lblDBInstance";
             this.lblDBInstance.Size = new System.Drawing.Size(80, 17);
@@ -209,7 +209,7 @@ namespace OdapterWnFrm {
             this.lblPassword.BackColor = System.Drawing.Color.Transparent;
             this.lblPassword.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblPassword.ForeColor = System.Drawing.Color.DeepSkyBlue;
-            this.lblPassword.Location = new System.Drawing.Point(406, 78);
+            this.lblPassword.Location = new System.Drawing.Point(385, 78);
             this.lblPassword.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblPassword.Name = "lblPassword";
             this.lblPassword.Size = new System.Drawing.Size(88, 17);
@@ -253,7 +253,7 @@ namespace OdapterWnFrm {
             this.txtSchema.Location = new System.Drawing.Point(123, 46);
             this.txtSchema.Margin = new System.Windows.Forms.Padding(4);
             this.txtSchema.Name = "txtSchema";
-            this.txtSchema.Size = new System.Drawing.Size(265, 23);
+            this.txtSchema.Size = new System.Drawing.Size(243, 23);
             this.txtSchema.TabIndex = 3;
             this.txtSchema.TextChanged += new System.EventHandler(this.txtSchema_TextChanged);
             this.txtSchema.Leave += new System.EventHandler(this.txtSchema_Leave);
@@ -267,14 +267,14 @@ namespace OdapterWnFrm {
             this.txtLogin.Location = new System.Drawing.Point(124, 73);
             this.txtLogin.Margin = new System.Windows.Forms.Padding(4);
             this.txtLogin.Name = "txtLogin";
-            this.txtLogin.Size = new System.Drawing.Size(265, 23);
+            this.txtLogin.Size = new System.Drawing.Size(243, 23);
             this.txtLogin.TabIndex = 5;
             // 
             // txtPassword
             // 
             this.txtPassword.BackColor = System.Drawing.Color.Black;
             this.txtPassword.ForeColor = System.Drawing.Color.Yellow;
-            this.txtPassword.Location = new System.Drawing.Point(501, 73);
+            this.txtPassword.Location = new System.Drawing.Point(480, 73);
             this.txtPassword.Margin = new System.Windows.Forms.Padding(4);
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.PasswordChar = '*';
@@ -290,7 +290,7 @@ namespace OdapterWnFrm {
             this.txtOutputPath.Location = new System.Drawing.Point(464, 16);
             this.txtOutputPath.Margin = new System.Windows.Forms.Padding(4);
             this.txtOutputPath.Name = "txtOutputPath";
-            this.txtOutputPath.Size = new System.Drawing.Size(319, 23);
+            this.txtOutputPath.Size = new System.Drawing.Size(285, 23);
             this.txtOutputPath.TabIndex = 1;
             // 
             // gbCodeToGenerate
@@ -344,7 +344,7 @@ namespace OdapterWnFrm {
             this.gbCodeToGenerate.Margin = new System.Windows.Forms.Padding(4);
             this.gbCodeToGenerate.Name = "gbCodeToGenerate";
             this.gbCodeToGenerate.Padding = new System.Windows.Forms.Padding(4);
-            this.gbCodeToGenerate.Size = new System.Drawing.Size(833, 252);
+            this.gbCodeToGenerate.Size = new System.Drawing.Size(816, 252);
             this.gbCodeToGenerate.TabIndex = 2;
             this.gbCodeToGenerate.TabStop = false;
             this.gbCodeToGenerate.Text = "Code to Generate";
@@ -358,7 +358,7 @@ namespace OdapterWnFrm {
             this.txtRecordFileName.Location = new System.Drawing.Point(591, 95);
             this.txtRecordFileName.Margin = new System.Windows.Forms.Padding(4);
             this.txtRecordFileName.Name = "txtRecordFileName";
-            this.txtRecordFileName.Size = new System.Drawing.Size(232, 23);
+            this.txtRecordFileName.Size = new System.Drawing.Size(213, 23);
             this.txtRecordFileName.TabIndex = 84;
             // 
             // txtRecordNamespace
@@ -453,7 +453,7 @@ namespace OdapterWnFrm {
             this.lblIncludeFilterPrefixInNaming.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblIncludeFilterPrefixInNaming.ForeColor = System.Drawing.Color.DeepSkyBlue;
             this.lblIncludeFilterPrefixInNaming.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.lblIncludeFilterPrefixInNaming.Location = new System.Drawing.Point(180, 227);
+            this.lblIncludeFilterPrefixInNaming.Location = new System.Drawing.Point(159, 227);
             this.lblIncludeFilterPrefixInNaming.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblIncludeFilterPrefixInNaming.Name = "lblIncludeFilterPrefixInNaming";
             this.lblIncludeFilterPrefixInNaming.Size = new System.Drawing.Size(622, 18);
@@ -495,7 +495,7 @@ namespace OdapterWnFrm {
             this.txtBaseAdapterFileName.Location = new System.Drawing.Point(591, 121);
             this.txtBaseAdapterFileName.Margin = new System.Windows.Forms.Padding(4);
             this.txtBaseAdapterFileName.Name = "txtBaseAdapterFileName";
-            this.txtBaseAdapterFileName.Size = new System.Drawing.Size(232, 23);
+            this.txtBaseAdapterFileName.Size = new System.Drawing.Size(213, 23);
             this.txtBaseAdapterFileName.TabIndex = 9;
             // 
             // txtViewFileName
@@ -506,7 +506,7 @@ namespace OdapterWnFrm {
             this.txtViewFileName.Location = new System.Drawing.Point(591, 199);
             this.txtViewFileName.Margin = new System.Windows.Forms.Padding(4);
             this.txtViewFileName.Name = "txtViewFileName";
-            this.txtViewFileName.Size = new System.Drawing.Size(232, 23);
+            this.txtViewFileName.Size = new System.Drawing.Size(213, 23);
             this.txtViewFileName.TabIndex = 21;
             // 
             // txtTableFileName
@@ -517,7 +517,7 @@ namespace OdapterWnFrm {
             this.txtTableFileName.Location = new System.Drawing.Point(591, 173);
             this.txtTableFileName.Margin = new System.Windows.Forms.Padding(4);
             this.txtTableFileName.Name = "txtTableFileName";
-            this.txtTableFileName.Size = new System.Drawing.Size(232, 23);
+            this.txtTableFileName.Size = new System.Drawing.Size(213, 23);
             this.txtTableFileName.TabIndex = 17;
             // 
             // txtObjectFileName
@@ -528,7 +528,7 @@ namespace OdapterWnFrm {
             this.txtObjectFileName.Location = new System.Drawing.Point(591, 147);
             this.txtObjectFileName.Margin = new System.Windows.Forms.Padding(4);
             this.txtObjectFileName.Name = "txtObjectFileName";
-            this.txtObjectFileName.Size = new System.Drawing.Size(232, 23);
+            this.txtObjectFileName.Size = new System.Drawing.Size(213, 23);
             this.txtObjectFileName.TabIndex = 13;
             // 
             // txtPackageFileName
@@ -539,7 +539,7 @@ namespace OdapterWnFrm {
             this.txtPackageFileName.Location = new System.Drawing.Point(591, 69);
             this.txtPackageFileName.Margin = new System.Windows.Forms.Padding(4);
             this.txtPackageFileName.Name = "txtPackageFileName";
-            this.txtPackageFileName.Size = new System.Drawing.Size(232, 23);
+            this.txtPackageFileName.Size = new System.Drawing.Size(213, 23);
             this.txtPackageFileName.TabIndex = 6;
             this.txtPackageFileName.TextChanged += new System.EventHandler(this.txtPackageFileName_TextChanged);
             // 
@@ -548,12 +548,12 @@ namespace OdapterWnFrm {
             this.lblFileName.AutoSize = true;
             this.lblFileName.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblFileName.ForeColor = System.Drawing.Color.DeepSkyBlue;
-            this.lblFileName.Location = new System.Drawing.Point(650, 49);
+            this.lblFileName.Location = new System.Drawing.Point(610, 49);
             this.lblFileName.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblFileName.Name = "lblFileName";
-            this.lblFileName.Size = new System.Drawing.Size(127, 17);
+            this.lblFileName.Size = new System.Drawing.Size(173, 17);
             this.lblFileName.TabIndex = 65;
-            this.lblFileName.Text = "* Generated File";
+            this.lblFileName.Text = "* Generated File Name";
             this.lblFileName.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // txtProcedureNamespace
@@ -582,7 +582,7 @@ namespace OdapterWnFrm {
             this.btnSelectPath.BackColor = System.Drawing.Color.Black;
             this.btnSelectPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSelectPath.ForeColor = System.Drawing.Color.DeepSkyBlue;
-            this.btnSelectPath.Location = new System.Drawing.Point(785, 15);
+            this.btnSelectPath.Location = new System.Drawing.Point(752, 16);
             this.btnSelectPath.Margin = new System.Windows.Forms.Padding(4);
             this.btnSelectPath.Name = "btnSelectPath";
             this.btnSelectPath.Size = new System.Drawing.Size(35, 25);
@@ -751,7 +751,7 @@ namespace OdapterWnFrm {
             this.txtMaxReturnArgStringSize.Location = new System.Drawing.Point(435, 193);
             this.txtMaxReturnArgStringSize.Margin = new System.Windows.Forms.Padding(4);
             this.txtMaxReturnArgStringSize.Name = "txtMaxReturnArgStringSize";
-            this.txtMaxReturnArgStringSize.Size = new System.Drawing.Size(99, 23);
+            this.txtMaxReturnArgStringSize.Size = new System.Drawing.Size(71, 23);
             this.txtMaxReturnArgStringSize.TabIndex = 8;
             this.txtMaxReturnArgStringSize.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
@@ -778,7 +778,7 @@ namespace OdapterWnFrm {
             this.txtMaxAssocArraySize.Location = new System.Drawing.Point(435, 219);
             this.txtMaxAssocArraySize.Margin = new System.Windows.Forms.Padding(4);
             this.txtMaxAssocArraySize.Name = "txtMaxAssocArraySize";
-            this.txtMaxAssocArraySize.Size = new System.Drawing.Size(99, 23);
+            this.txtMaxAssocArraySize.Size = new System.Drawing.Size(71, 23);
             this.txtMaxAssocArraySize.TabIndex = 9;
             this.txtMaxAssocArraySize.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
@@ -801,7 +801,7 @@ namespace OdapterWnFrm {
             this.lblFilter.AutoSize = true;
             this.lblFilter.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblFilter.ForeColor = System.Drawing.Color.DeepSkyBlue;
-            this.lblFilter.Location = new System.Drawing.Point(403, 50);
+            this.lblFilter.Location = new System.Drawing.Point(382, 50);
             this.lblFilter.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblFilter.Name = "lblFilter";
             this.lblFilter.Size = new System.Drawing.Size(91, 17);
@@ -817,7 +817,7 @@ namespace OdapterWnFrm {
             this.txtFilter.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtFilter.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtFilter.ForeColor = System.Drawing.Color.Yellow;
-            this.txtFilter.Location = new System.Drawing.Point(501, 46);
+            this.txtFilter.Location = new System.Drawing.Point(480, 46);
             this.txtFilter.Margin = new System.Windows.Forms.Padding(4);
             this.txtFilter.Name = "txtFilter";
             this.txtFilter.Size = new System.Drawing.Size(319, 23);
@@ -848,7 +848,7 @@ namespace OdapterWnFrm {
             this.gbDatabase.Margin = new System.Windows.Forms.Padding(4);
             this.gbDatabase.Name = "gbDatabase";
             this.gbDatabase.Padding = new System.Windows.Forms.Padding(4);
-            this.gbDatabase.Size = new System.Drawing.Size(831, 103);
+            this.gbDatabase.Size = new System.Drawing.Size(814, 103);
             this.gbDatabase.TabIndex = 1;
             this.gbDatabase.TabStop = false;
             this.gbDatabase.Text = "Oracle Database";
@@ -857,7 +857,7 @@ namespace OdapterWnFrm {
             // 
             this.lblSavePassword.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblSavePassword.ForeColor = System.Drawing.Color.DeepSkyBlue;
-            this.lblSavePassword.Location = new System.Drawing.Point(660, 75);
+            this.lblSavePassword.Location = new System.Drawing.Point(639, 75);
             this.lblSavePassword.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblSavePassword.Name = "lblSavePassword";
             this.lblSavePassword.Size = new System.Drawing.Size(176, 17);
@@ -917,7 +917,7 @@ namespace OdapterWnFrm {
             this.btnSaveSettings.BackColor = System.Drawing.Color.Black;
             this.btnSaveSettings.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSaveSettings.ForeColor = System.Drawing.Color.DeepSkyBlue;
-            this.btnSaveSettings.Location = new System.Drawing.Point(399, 14);
+            this.btnSaveSettings.Location = new System.Drawing.Point(374, 14);
             this.btnSaveSettings.Margin = new System.Windows.Forms.Padding(4);
             this.btnSaveSettings.Name = "btnSaveSettings";
             this.btnSaveSettings.Size = new System.Drawing.Size(125, 28);
@@ -1153,7 +1153,7 @@ namespace OdapterWnFrm {
             this.gbSettings.Margin = new System.Windows.Forms.Padding(4);
             this.gbSettings.Name = "gbSettings";
             this.gbSettings.Padding = new System.Windows.Forms.Padding(4);
-            this.gbSettings.Size = new System.Drawing.Size(697, 52);
+            this.gbSettings.Size = new System.Drawing.Size(671, 52);
             this.gbSettings.TabIndex = 0;
             this.gbSettings.TabStop = false;
             this.gbSettings.Text = "Settings";
@@ -1163,7 +1163,7 @@ namespace OdapterWnFrm {
             this.btnRestoreDefaults.BackColor = System.Drawing.Color.Black;
             this.btnRestoreDefaults.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnRestoreDefaults.ForeColor = System.Drawing.Color.DeepSkyBlue;
-            this.btnRestoreDefaults.Location = new System.Drawing.Point(530, 14);
+            this.btnRestoreDefaults.Location = new System.Drawing.Point(505, 14);
             this.btnRestoreDefaults.Margin = new System.Windows.Forms.Padding(4);
             this.btnRestoreDefaults.Name = "btnRestoreDefaults";
             this.btnRestoreDefaults.Size = new System.Drawing.Size(153, 28);
@@ -1242,7 +1242,7 @@ namespace OdapterWnFrm {
             this.gbAdvancedProcOptions.Margin = new System.Windows.Forms.Padding(4);
             this.gbAdvancedProcOptions.Name = "gbAdvancedProcOptions";
             this.gbAdvancedProcOptions.Padding = new System.Windows.Forms.Padding(4);
-            this.gbAdvancedProcOptions.Size = new System.Drawing.Size(637, 317);
+            this.gbAdvancedProcOptions.Size = new System.Drawing.Size(645, 317);
             this.gbAdvancedProcOptions.TabIndex = 4;
             this.gbAdvancedProcOptions.TabStop = false;
             this.gbAdvancedProcOptions.Text = "Advanced Options";
@@ -1255,7 +1255,7 @@ namespace OdapterWnFrm {
             this.txtLocalVariableNameSuffix.Location = new System.Drawing.Point(435, 167);
             this.txtLocalVariableNameSuffix.Margin = new System.Windows.Forms.Padding(4);
             this.txtLocalVariableNameSuffix.Name = "txtLocalVariableNameSuffix";
-            this.txtLocalVariableNameSuffix.Size = new System.Drawing.Size(99, 23);
+            this.txtLocalVariableNameSuffix.Size = new System.Drawing.Size(71, 23);
             this.txtLocalVariableNameSuffix.TabIndex = 7;
             this.txtLocalVariableNameSuffix.TextChanged += new System.EventHandler(this.txtLocalVariableNameSuffix_TextChanged);
             // 
@@ -1264,10 +1264,10 @@ namespace OdapterWnFrm {
             this.txtExcludeChars.BackColor = System.Drawing.Color.Black;
             this.txtExcludeChars.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtExcludeChars.ForeColor = System.Drawing.Color.Yellow;
-            this.txtExcludeChars.Location = new System.Drawing.Point(459, 93);
+            this.txtExcludeChars.Location = new System.Drawing.Point(459, 92);
             this.txtExcludeChars.Margin = new System.Windows.Forms.Padding(4);
             this.txtExcludeChars.Name = "txtExcludeChars";
-            this.txtExcludeChars.Size = new System.Drawing.Size(72, 23);
+            this.txtExcludeChars.Size = new System.Drawing.Size(91, 23);
             this.txtExcludeChars.TabIndex = 4;
             // 
             // lblGenerateStatus
@@ -1275,10 +1275,10 @@ namespace OdapterWnFrm {
             this.lblGenerateStatus.BackColor = System.Drawing.Color.Black;
             this.lblGenerateStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblGenerateStatus.ForeColor = System.Drawing.Color.DeepSkyBlue;
-            this.lblGenerateStatus.Location = new System.Drawing.Point(864, 11);
+            this.lblGenerateStatus.Location = new System.Drawing.Point(839, 11);
             this.lblGenerateStatus.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblGenerateStatus.Name = "lblGenerateStatus";
-            this.lblGenerateStatus.Size = new System.Drawing.Size(402, 32);
+            this.lblGenerateStatus.Size = new System.Drawing.Size(441, 32);
             this.lblGenerateStatus.TabIndex = 0;
             this.lblGenerateStatus.Text = "Generate Status";
             this.lblGenerateStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1594,7 +1594,7 @@ namespace OdapterWnFrm {
             this.cmbSettingsFile.Location = new System.Drawing.Point(111, 16);
             this.cmbSettingsFile.Margin = new System.Windows.Forms.Padding(4);
             this.cmbSettingsFile.Name = "cmbSettingsFile";
-            this.cmbSettingsFile.Size = new System.Drawing.Size(278, 25);
+            this.cmbSettingsFile.Size = new System.Drawing.Size(255, 25);
             this.cmbSettingsFile.TabIndex = 0;
             this.cmbSettingsFile.SelectedIndexChanged += new System.EventHandler(this.cmbSettingsFile_SelectedIndexChanged);
             // 
@@ -1605,7 +1605,7 @@ namespace OdapterWnFrm {
             this.cbIsSavePassword.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbIsSavePassword.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbIsSavePassword.ForeColor = System.Drawing.Color.DeepSkyBlue;
-            this.cbIsSavePassword.Location = new System.Drawing.Point(638, 74);
+            this.cbIsSavePassword.Location = new System.Drawing.Point(617, 74);
             this.cbIsSavePassword.Margin = new System.Windows.Forms.Padding(4);
             this.cbIsSavePassword.Name = "cbIsSavePassword";
             this.cbIsSavePassword.Size = new System.Drawing.Size(17, 21);
@@ -1622,7 +1622,7 @@ namespace OdapterWnFrm {
             this.cmbDBInstance.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbDBInstance.ForeColor = System.Drawing.Color.Yellow;
             this.cmbDBInstance.FormattingEnabled = true;
-            this.cmbDBInstance.Location = new System.Drawing.Point(501, 16);
+            this.cmbDBInstance.Location = new System.Drawing.Point(480, 16);
             this.cmbDBInstance.Margin = new System.Windows.Forms.Padding(4);
             this.cmbDBInstance.Name = "cmbDBInstance";
             this.cmbDBInstance.Size = new System.Drawing.Size(319, 25);
@@ -1642,7 +1642,7 @@ namespace OdapterWnFrm {
             this.cmbClientHome.Location = new System.Drawing.Point(123, 16);
             this.cmbClientHome.Margin = new System.Windows.Forms.Padding(4);
             this.cmbClientHome.Name = "cmbClientHome";
-            this.cmbClientHome.Size = new System.Drawing.Size(265, 25);
+            this.cmbClientHome.Size = new System.Drawing.Size(243, 25);
             this.cmbClientHome.TabIndex = 1;
             this.cmbClientHome.SelectedIndexChanged += new System.EventHandler(this.cmbClientHome_SelectedIndexChanged);
             // 
@@ -1734,7 +1734,7 @@ namespace OdapterWnFrm {
             this.cbIncludeFilterPrefixInNaming.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbIncludeFilterPrefixInNaming.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbIncludeFilterPrefixInNaming.ForeColor = System.Drawing.Color.DeepSkyBlue;
-            this.cbIncludeFilterPrefixInNaming.Location = new System.Drawing.Point(806, 227);
+            this.cbIncludeFilterPrefixInNaming.Location = new System.Drawing.Point(785, 227);
             this.cbIncludeFilterPrefixInNaming.Margin = new System.Windows.Forms.Padding(4);
             this.cbIncludeFilterPrefixInNaming.Name = "cbIncludeFilterPrefixInNaming";
             this.cbIncludeFilterPrefixInNaming.RightToLeft = System.Windows.Forms.RightToLeft.No;
@@ -1831,7 +1831,7 @@ namespace OdapterWnFrm {
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.ClientSize = new System.Drawing.Size(1282, 745);
+            this.ClientSize = new System.Drawing.Size(1330, 745);
             this.Controls.Add(this.lblGenerateStatus);
             this.Controls.Add(this.gbAdvancedProcOptions);
             this.Controls.Add(this.gbOracleToCSharpCustomTranslation);

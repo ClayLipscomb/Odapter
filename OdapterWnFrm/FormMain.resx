@@ -144,10 +144,12 @@ mapping driven method is always generated for a procedure that has an untyped cu
 </value>
   </data>
   <data name="cbGeneratedDynamicMethodForTypedCursor.ToolTip" xml:space="preserve">
-    <value>An additional method overload that uses mapping to a cursor will be generated when the underlying procedure's cursors 
-are all typed. This overload can be advantageous when migrating a legacy application to generated code since its DTOs 
-can preserve their public property names. Otherwise, only a standard (non-mapping) method is generated. Regardless, a 
-mapping driven method is always generated for a procedure that has an untyped cursor. </value>
+    <value>An overload method that uses mapping will be generated despite the underlying 
+procedure cursor(s) being typed. This overload can be advantageous when migrating 
+a legacy application to generated code since existing DTOs can preserve their public 
+property names. Otherwise, only a standard (non-mapping) method is generated. 
+Regardless, a mapping driven method is always generated for a procedure that has 
+an untyped cursor. </value>
   </data>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>25</value>
