@@ -1831,7 +1831,7 @@ namespace OdapterWnFrm {
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.ClientSize = new System.Drawing.Size(1290, 745);
+            this.ClientSize = new System.Drawing.Size(1294, 746);
             this.Controls.Add(this.lblGenerateStatus);
             this.Controls.Add(this.gbAdvancedProcOptions);
             this.Controls.Add(this.gbOracleToCSharpCustomTranslation);
