@@ -155,7 +155,7 @@ END xmpl_pkg_example;
 /
 ```
 
-###### Generation for C# 4.0 (.NET 4.0+)
+###### Generation for C# 4.0 
 
 ![](Example/ExampleCodeScreenShot.png "")
 
@@ -477,7 +477,7 @@ namespace OdapterExample {
 }
 ```
 
-###### Generation for C# 9.0 (.NET 9.0+)
+###### Generation for C# 9.0
 
 ![](Example.NET5/ExampleCodeScreenShot.NET5.png "")
 

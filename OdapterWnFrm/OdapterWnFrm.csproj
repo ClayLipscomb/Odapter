@@ -116,7 +116,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <None Include="bin\Debug\_Odpt-Example.config" />
     <None Include="bin\Debug\_Odpt.NET4-NoFilter.config" />
     <None Include="bin\Debug\_Odpt.NET4-SafeType.config" />
     <None Include="bin\Debug\_Odpt.NET4.config" />
