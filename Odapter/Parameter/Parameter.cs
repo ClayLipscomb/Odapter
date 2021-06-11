@@ -80,7 +80,7 @@ namespace Odapter {
             NamespacePackage = NamespaceObjectType = NamespaceTable = NamespaceView = NamespaceBaseAdapter = String.Empty;
 
             AncestorClassNamePackage = String.Empty;
-            FileNamePackage = FileNameObject = FileNameTable = FileNameView = FileNameBaseAdapter = FileNameBaseEntity = String.Empty;
+            FileNamePackage = FileNameObject = FileNameTable = FileNameView = FileNameBaseAdapter = String.Empty;
 
             MaxAssocArraySize = UInt16.MaxValue;
             MaxReturnAndOutArgStringSize = Int16.MaxValue;
@@ -194,7 +194,6 @@ namespace Odapter {
         public string FileNameTable { get; set; }
         public string FileNameView { get; set; }
         public string FileNameBaseAdapter { get; set; }
-        public string FileNameBaseEntity { get; set; }
 
         // code to generate
         private string _outputPath;

@@ -172,7 +172,6 @@ namespace Odapter {
         public static string GenerateFileNameTable(string schema, string filter) => $"{GenerateFileNameBase(schema, filter)}Table.cs";
         public static string GenerateFileNameView(string schema, string filter) => $"{GenerateFileNameBase(schema, filter)}View.cs";
         public static string GenerateFileNameBaseAdapter(string schema, string filter) => $"{GenerateFileNameBase(schema, filter)}BaseAdapter.cs";
-        public static string GenerateFileNameBaseEntity(string schema, string filter) => $"{GenerateFileNameBase(schema, filter)}BaseEntity.cs";
         #endregion
 
         #region Package Method Generation
@@ -1154,7 +1153,6 @@ namespace Odapter {
             ////////////////////////
             // generate base classes
             if (Parameter.Instance.IsGenerateBaseAdapter) generator.WriteBasePackageClass(Parameter.Instance.FileNameBaseAdapter, Parameter.Instance.AncestorClassNamePackage);
-            //if (Parameter.Instance.IsGenerateBaseEntities) generator.WriteBaseEntityClasses(Parameter.Instance.FileNameBaseEntity);
 
             //////////////////////////////////
             // generate schema-derived classes
