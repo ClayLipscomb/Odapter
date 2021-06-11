@@ -72,7 +72,7 @@ namespace Odapter {
 
             IsSavePassword = false;
             IsGeneratePackage = true;
-            IsGenerateObjectType = IsGenerateTable = IsGenerateView = IsGenerateBaseEntities = false;
+            IsGenerateObjectType = IsGenerateTable = IsGenerateView = false;
             IsPartialPackage = false;
             IsIncludeFilterPrefixInNaming = true;
 
@@ -208,7 +208,6 @@ namespace Odapter {
         public bool IsGenerateTable { get; set; }
         public bool IsGenerateView { get; set; }
         public bool IsGenerateBaseAdapter { get; set; } 
-        public bool IsGenerateBaseEntities { get; set; }
 
         public bool IsPartialPackage { get; set; }
 

@@ -23,7 +23,5 @@ namespace Odapter {
         bool IsGenerateTable { get; set; }
         bool IsGenerateView { get; set; }
         bool IsGenerateBaseAdapter { get; set; }  
-        bool IsGenerateBaseEntities { get; set; } 
-
     }
 }
