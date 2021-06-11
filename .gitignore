@@ -63,6 +63,16 @@ Example/bin/x64/Debug/*.config
 Example/bin/x64/Debug/*.exe.config
 Example/bin/x64/Release/*.exe.config
 
+# Example - x64 Release and x86
+Example.NET5/bin/
+Example.NET5/bin/Release/
+Example.NET5/bin/Debug/
+Example.NET5/bin/Release/net5.0/
+Example.NET5/bin/Debug/net5.0/*.dll
+Example.NET5/bin/Debug/net5.0/*.json
+Example.NET5/bin/Debug/net5.0/*.exe.config
+Example.NET5/bin/Release/net5.0/*.exe.config
+
 #################
 
 # User-specific files
