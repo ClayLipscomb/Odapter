@@ -348,8 +348,10 @@ namespace OdapterWnFrm {
 
         private void cbGeneratePackage_CheckedChanged(object sender, EventArgs e) {
             // enable/disable
-            txtPackageNamespace.Enabled = txtPackageAncestorClass.Enabled = txtPackageFileName.Enabled = cbPartialPackageClasses.Enabled =         
-                cbGenerateBaseAdapter.Enabled = lblBaseAdapter.Enabled = txtBaseAdapterNamespace.Enabled = //lblBaseAdapter.Enabled =
+            txtPackageNamespace.Enabled = txtPackageAncestorClass.Enabled = txtPackageFileName.Enabled = 
+                cbGenerateBaseAdapter.Enabled = lblBaseAdapter.Enabled = txtBaseAdapterNamespace.Enabled =
+                cbPartialPackageClasses.Enabled = cbDuplicatePackageRecordOriginatingOutsideFilterAndSchema.Enabled = cbGeneratedDynamicMethodForTypedCursor.Enabled = 
+                cbDeployResources.Enabled = txtMaxAssocArraySize.Enabled = txtMaxReturnArgStringSize.Enabled = txtLocalVariableNameSuffix.Enabled =
                 cbGenerateRecord.Checked = 
                 // set above from:
                 cbGeneratePackage.Checked;
@@ -377,8 +379,6 @@ namespace OdapterWnFrm {
         }
         private void cbGenerateBaseAdapterClass_CheckedChanged(object sender, EventArgs e) {
             txtBaseAdapterNamespace.Enabled = txtBaseAdapterFileName.Enabled = cbGenerateBaseAdapter.Checked;
-        }
-        private void cbGenerateBaseEntity_CheckedChanged(object sender, EventArgs e) {
         }
         private void txtBaseConnectionClass_TextChanged(object sender, EventArgs e) {
         }
