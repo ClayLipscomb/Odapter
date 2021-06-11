@@ -1,7 +1,7 @@
 Odapter - a C# code generator for Oracle packages
 ========================================
 
-Odapter is a [single-file desktop application](/OdapterWnFrm/bin/Release) that generates C# adapter classes to provide integration with Oracle packages. An adapter class handles the invocation of a package's procedures and the hydration of DTO collections from returned cursor results sets, both typed (record based) and untyped (simple REF CURSOR). From within the IDE, the generated C# provides the developer de facto compile-time resolution with the packages. Optionally, standalone C# DTOs can be generated from Oracle objects, tables and views. 
+Odapter is a [single-file desktop application](/OdapterWnFrm/bin/Release) that generates C# adapter classes to provide integration with Oracle packages. An adapter class handles the invocation of a package's procedures and the hydration of interface implementing DTO collections from returned cursor results sets, both typed (record based) and untyped (simple REF CURSOR). From within the IDE, the generated C# provides the developer de facto compile-time resolution with the packages. Optionally, standalone C# DTOs (class or record) can be generated from Oracle objects, tables and views. 
 
 ### Minimum System Requirements
 
@@ -11,7 +11,8 @@ Odapter is a [single-file desktop application](/OdapterWnFrm/bin/Release) that g
     - Generator application:    .NET 4.6.2 minimum 
     - Destination project:      .NET 4.0 (minimum) or .NET 5.0 (minimum)
 * ODP.NET for destination project
-    - Managed Driver 12.2.1100, targeting .NET 4.0 or or .NET 5.0
+    - .NET 4.x:     Managed Driver 12.2.x
+    - .NET 5.0+:    Managed Driver Core (latest)
 
 ### Oracle to C# Translation Examples
 
@@ -29,7 +30,7 @@ Odapter is a [single-file desktop application](/OdapterWnFrm/bin/Release) that g
 ### Code Generation Features
 
 * Generates adapter class for each package with respective method for each procedure/function
-* Generates nested interface for each package record 
+* Generates nested interface for each package record as either:
     - mutable class
     - immutable record, including positional with parameterless constructor (C# 9.0 only)
 * Translates all common Oracle data types to C#
@@ -39,7 +40,9 @@ Odapter is a [single-file desktop application](/OdapterWnFrm/bin/Release) that g
 * Configurable translation of Oracle BLOB and CLOB/NCLOB types, including options for ODP.NET safe types (OracleBlob, OracleClob)
 * Translates Oracle IN, OUT and IN OUT parameters to C#
 * Translates Oracle optional (defaulted) parameters to C#
-* Generates interface for each object, table, and view
+* Generates interface for each object, table, and view as either:
+    - mutable class
+    - immutable record, including positional with parameterless constructor (C# 9.0 only)
 * Generates ancestor adapter class for customization
 * Generates default database connection logic for customization
 * Configurable C# namespaces, ancestor class names and file names
@@ -72,12 +75,13 @@ Odapter is a [single-file desktop application](/OdapterWnFrm/bin/Release) that g
 4. Enter Schema, Login and Password
 5. If your project uses only a prefixed subset of the schema's packages, enter Filter Prefix value
 6. Enter the Output Path for all generated files (your project folder)
-7. For all other fields, use default settings
-8. Click Generate 
-9. After successful generation, enter a project based .config file name in File Source and click Save Current
-10. Open your project and add the generated files
-11. Add a reference for the managed ODP.NET driver.
-12. Add "using Schema.YourSchemaName.YourFilterPrefixIfAny.Package" to project files in order to access packages
+7. Select either 4.0 or 9.0 for C# Version Generated
+8. For all other fields, use default settings
+9. Click Generate 
+10. After successful generation, enter a project based .config file name in File Source and click Save Current
+11. Open your project and add the generated files
+12. Install the managed ODP.NET driver, OracleManagedDataAccess 12.2.x for C# 4.0 and OracleManagedDataAccess.Core latest for C# 9.0.
+13. Add "using Schema.YourSchemaName.YourFilterPrefixIfAny.Package" to project files in order to access packages
 
 For examples, see code below and [Tester.cs](/Tester).
 
