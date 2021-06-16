@@ -83,7 +83,7 @@ Odapter is a [single-file desktop application](/OdapterWnFrm/bin/Release) that g
 12. Install the managed ODP.NET driver, OracleManagedDataAccess 12.2.x for C# 4.0 and OracleManagedDataAccess.Core 3.2.x for C# 9.0.
 13. Add "using Schema.YourSchemaName.YourFilterPrefixIfAny.Package" to destination project files in order to access packages
 
-For examples, see code below and [Tester.cs](/Tester).
+For examples, see code below, [Tester.cs](/Tester) and [Tester.NET5.cs](/Tester.NET5).
 
 ### Code Example
 ###### Package Specification - Tester/schema/package/xmpl_pkg_example.pks
