@@ -1,0 +1,9 @@
+CREATE OR REPLACE TYPE ODPT.odpt_sc_tt_tbl_unique_ot UNDER ODPT.odpt_base_sc_trans_type_ot (
+
+   CONSTRUCTOR FUNCTION odpt_sc_tt_tbl_unique_ot RETURN SELF AS RESULT
+   
+   --NOT OVERRIDING NOT FINAL NOT INSTANTIABLE MEMBER FUNCTION has_same_state(p_base_object odpt_base_sc_trans_type_ot) RETURN BOOLEAN,  
+   --NOT OVERRIDING NOT FINAL NOT INSTANTIABLE MEMBER FUNCTION get_pk_id RETURN VARCHAR2   
+   
+) NOT INSTANTIABLE NOT FINAL;
+/

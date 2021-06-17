@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{D73822E5-E6E0-43E3-A9D7-F812CAAE6C2F}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>Tester.Schema</RootNamespace>
+    <AssemblyName>Tester.Schema</AssemblyName>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Include="create schema.sql" />
+    <Content Include="misc\odpt_sequences.sql" />
+    <Content Include="table\odpt_table_big.sql" />
+    <Content Include="table\odpt_table_cs_keyword.sql" />
+    <Content Include="table\odpt_table_ignore_any.sql" />
+    <Content Include="table\odpt_table_ignore_nested_table.sql" />
+    <Content Include="table\odpt_table_logs.sql" />
+    <Content Include="table\odpt_table_naming_conflict.sql" />
+    <Content Include="table\odpt_table_number.sql" />
+    <Content Include="table\odpt_table_object.sql" />
+    <Content Include="type\odpt_varchar2_nt.sql" />
+    <Content Include="view\odpt_view_big.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="package\fltr_pkg_empty.pks" />
+    <None Include="package\fltr_pkg_rec_unused.pks" />
+    <None Include="package\fltr_pkg_rec_used.pkb" />
+    <None Include="package\fltr_pkg_rec_used.pks" />
+    <None Include="package\odpt_pkg_empty.pks" />
+    <None Include="package\odpt_pkg_exclude#.pks" />
+    <None Include="package\odpt_pkg_exclude%24.pks" />
+    <None Include="package\odpt_pkg_include!.pks" />
+    <None Include="package\odpt_pkg_include%25.pks" />
+    <None Include="package\odpt_pkg_include&amp;.pks" />
+    <None Include="package\odpt_pkg_log.pkb" />
+    <None Include="package\odpt_pkg_log.pks" />
+    <None Include="package\odpt_pkg_main.pkb" />
+    <None Include="package\odpt_pkg_main.pks" />
+    <None Include="package\odpt_pkg_sql.pkb" />
+    <None Include="package\odpt_pkg_sql.pks" />
+    <None Include="package\odpt_pkg_table_big.pkb" />
+    <None Include="package\odpt_pkg_table_big.pks" />
+    <None Include="package\odpt_pkg_table_cs_keyword.pkb" />
+    <None Include="package\odpt_pkg_table_cs_keyword.pks" />
+    <None Include="package\odpt_pkg_table_number.pkb" />
+    <None Include="package\odpt_pkg_table_number.pks" />
+    <None Include="package\xmpl_pkg_example.pkb" />
+    <None Include="package\xmpl_pkg_example.pks" />
+    <None Include="type\odpt_anydata_ot.tps" />
+    <None Include="type\odpt_base_sc_trans_type_ot.tpb" />
+    <None Include="type\odpt_base_sc_trans_type_ot.tps" />
+    <None Include="type\odpt_big_ot.tps" />
+    <None Include="type\odpt_nested_table_ot.tps" />
+    <None Include="type\odpt_object_ot.tps" />
+    <None Include="type\odpt_po_vendor_ot.tpb" />
+    <None Include="type\odpt_po_vendor_ot.tps" />
+    <None Include="type\odpt_sc_tt_tbl_unique_ot.tpb" />
+    <None Include="type\odpt_sc_tt_tbl_unique_ot.tps" />
+    <None Include="type\odpt_xmltype_ot.tps" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
