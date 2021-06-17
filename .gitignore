@@ -9,8 +9,6 @@
 # x86
 Odapter/bin/Debug/
 Odapter/bin/Release/
-#OdapterWnFrm/bin/Debug/
-#OdapterWnFrm/bin/Release/
 
 # Odapter - x64 config files
 Odapter/bin/x64/Debug/*.dll.config
@@ -30,6 +28,7 @@ OdapterWnFrm/bin/x64/Release/*.config
 # executables
 *.exe
 !/OdapterWnFrm/bin/x64/Release/Odapter.exe
+!/OdapterWnFrm/bin/x64/Debug/Odapter.exe
 
 # Tester - x64 Release and x86
 Tester/bin/
@@ -63,7 +62,7 @@ Example/bin/x64/Debug/*.config
 Example/bin/x64/Debug/*.exe.config
 Example/bin/x64/Release/*.exe.config
 
-# Example - x64 Release and x86
+# Example.NET5 - x64 Release and x86
 Example.NET5/bin/
 Example.NET5/bin/Release/
 Example.NET5/bin/Debug/
@@ -343,7 +342,4 @@ __pycache__/
 /OdapterWnFrm/bin/Release/Odapter.exe.config
 /OdapterWnFrm/bin/Release/OdapterCore.dll.config
 /OdapterWnFrm/bin/Release/_Odpt-Example.config
-/Odapter/Generation/Generator - Copy.cs
-/Odapter/Generation/Generator - Old.cs
-/Odapter/Generation/Generator - Copy2.cs
 /OdapterWnFrm/bin/Debug/_Odpt-Example.NET5.config
