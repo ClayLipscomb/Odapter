@@ -10,10 +10,6 @@
 Odapter/bin/Debug/
 Odapter/bin/Release/
 
-# Odapter - x64 config files
-Odapter/bin/x64/Debug/*.dll.config
-Odapter/bin/x64/Release/*.config
-
 # OdapterWnFrm - x64 config files
 OdapterWnFrm/bin/x64/Debug/*.config
 OdapterWnFrm/bin/x64/Debug/*.exe.config
@@ -343,3 +339,5 @@ __pycache__/
 /OdapterWnFrm/bin/Release/OdapterCore.dll.config
 /OdapterWnFrm/bin/Release/_Odpt-Example.config
 /OdapterWnFrm/bin/Debug/_Odpt-Example.NET5.config
+/Odapter/bin/x64/Debug/OdapterCore.dll.config
+/Odapter/bin/x64/Release/OdapterCore.dll.config
