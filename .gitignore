@@ -15,7 +15,7 @@ Odapter/bin/x64/Debug/*.dll.config
 Odapter/bin/x64/Release/*.config
 
 # OdapterWnFrm - x64 config files
-OdapterWnFrm/bin/x64/Debug/EI.config
+OdapterWnFrm/bin/x64/Debug/*.config
 OdapterWnFrm/bin/x64/Debug/*.exe.config
 OdapterWnFrm/bin/x64/Release/*.config
 
