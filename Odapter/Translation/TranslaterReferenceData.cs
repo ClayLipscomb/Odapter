@@ -36,8 +36,26 @@ namespace Odapter {
         }
 
         public static readonly IList<CSharpVersionOption> CSharpOptions = new List<CSharpVersionOption> {
-            new CSharpVersionOption(CSharpVersion.FourZero , @"4.0 (.NET 4.0) minimum")
+            new CSharpVersionOption(CSharpVersion.FourZero , @"4.0 (.NET 4.0) minimum"),
+            new CSharpVersionOption(CSharpVersion.NineZero , @"9.0 (.NET 5.0) minimum")
         };
+
+        public class DtoInterfaceCategoryOption {
+            public DtoInterfaceCategory Category { get; private set; }
+            public string DisplayDescription { get; private set; }
+            public DtoInterfaceCategoryOption(DtoInterfaceCategory category, string displayDescription) {
+                Category = category;
+                DisplayDescription = displayDescription;
+            }
+        }
+
+        public static IList<DtoInterfaceCategoryOption> GetDtoInterfaceCategoryOptions(bool isCSharpFourZero) {
+            var options = new List<DtoInterfaceCategoryOption> {
+                new DtoInterfaceCategoryOption(DtoInterfaceCategory.MutableSet , @"mutable class")
+            };
+            if (!isCSharpFourZero) options.Add(new DtoInterfaceCategoryOption(DtoInterfaceCategory.ImmutableGetInit, @"immutable record"));
+            return options;
+        }
 
         public class CustomTranslatedCSharpType {
             public string CSharpType { get; private set; }

@@ -120,12 +120,20 @@
   <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
+  <data name="lblDtoInterfaceCategory.ToolTip" xml:space="preserve">
+    <value>An interface is generated for each package record associated with a typed 
+REF CURSOR. In order to be used by generated code, a developer-created 
+DTO must implement the interface and adhere to generic constraints in 
+the respective method signatures. This setting determines the nature of the 
+interface (and contraints) generated. Additionally, an interface can be 
+generated for objects, tables and views.</value>
+  </data>
   <data name="lblDuplicatePackageRecordOriginatingOutsideFilterAndSchema.ToolTip" xml:space="preserve">
-    <value>Package record types may be defined by referencing another package's record. If the 
-referenced package lies outside the Filter Prefix, the generated package record code 
-will not compile unless that referenced package is generated separately. This can lead 
-to an unending cycle of uncompiled references. Simply generating a "duplicate" record 
-defintion in the package eliminates this possible issue.</value>
+    <value>Package records may be defined by referencing another package's record. If the 
+referenced package lies outside the Filter Prefix, the generated record interface code 
+will not compile unless that referenced package is generated separately. This can 
+lead to an unending cycle of uncompiled references. Simply generating a "duplicate" 
+interface defintion in the package adapter eliminates this possible issue.</value>
   </data>
   <data name="lblGeneratedDynamicMethodForTypedCursor.ToolTip" xml:space="preserve">
     <value>An additional method overload that uses mapping to a cursor will be generated when the underlying procedure's cursors 
@@ -136,10 +144,12 @@ mapping driven method is always generated for a procedure that has an untyped cu
 </value>
   </data>
   <data name="cbGeneratedDynamicMethodForTypedCursor.ToolTip" xml:space="preserve">
-    <value>An additional method overload that uses mapping to a cursor will be generated when the underlying procedure's cursors 
-are all typed. This overload can be advantageous when migrating a legacy application to generated code since its DTOs 
-can preserve their public property names. Otherwise, only a standard (non-mapping) method is generated. Regardless, a 
-mapping driven method is always generated for a procedure that has an untyped cursor. </value>
+    <value>An overload method that uses mapping will be generated despite the underlying 
+procedure cursor(s) being typed. This overload can be advantageous when migrating 
+a legacy application to generated code since existing DTOs can preserve their public 
+property names. Otherwise, only a standard (non-mapping) method is generated. 
+Regardless, a mapping driven method is always generated for a procedure that has 
+an untyped cursor. </value>
   </data>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>25</value>

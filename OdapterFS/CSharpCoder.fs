@@ -40,9 +40,13 @@ module internal Coder =
 
     let codeTabbedLines(objects, tabCnt) =
         let codeLinesPair (pc1: Object) (pc2: Object) = (pc1.ToString() + NEWLINE + pc2.ToString()) :> Object
-        objects |> Seq.map (fun x -> x :> Object)
-        |> Seq.reduce codeLinesPair
-        |> codeTabbed tabCnt
+        if (Seq.isEmpty objects) then
+            emptyString
+        else
+            objects 
+            |> Seq.map (fun x -> x :> Object)
+            |> Seq.reduce codeLinesPair
+            |> codeTabbed tabCnt
 
     let codeTabbed1 object = codeTabbed 1u object
     let codeTabbed2 object = codeTabbed 2u object

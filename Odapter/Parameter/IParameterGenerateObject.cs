@@ -19,12 +19,9 @@
 namespace Odapter {
     public interface IParameterGenerateObject {
         bool IsGeneratePackage { get; set; }
-        bool IsGenerateRecord { get; set; }
         bool IsGenerateObjectType { get; set; }
         bool IsGenerateTable { get; set; }
         bool IsGenerateView { get; set; }
         bool IsGenerateBaseAdapter { get; set; }  
-        bool IsGenerateBaseEntities { get; set; } 
-
     }
 }

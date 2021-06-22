@@ -64,6 +64,7 @@ namespace Odapter {
         private static readonly CS.TypeReference TypeTargetForOracleClobDefault = CS.TypeReference.String;
         private static readonly CS.ITypeTargetable TypeTargetForOracleBlobDefault = CSL.TypeArrayOf(CS.TypeValue.Byte);
         private static readonly CS.ITypeTargetable TypeTargetForOracleBfileDefault = CSL.TypeArrayOf(CS.TypeValue.Byte);
+        private static readonly CS.DtoInterfaceCategory TargetDtoInterfaceCategory = CS.DtoInterfaceCategory.MutableSet;
         #endregion
 
         public void RestoreDefaults() {
@@ -71,22 +72,19 @@ namespace Odapter {
 
             IsSavePassword = false;
             IsGeneratePackage = true;
-            IsGenerateRecord = IsGenerateObjectType = IsGenerateTable = IsGenerateView = IsGenerateBaseEntities = false;
-            IsPartialPackage = IsPartialObjectType = IsPartialTable = IsPartialView = false;
-            IsSerializablePackageRecord = IsSerializableObjectType = IsSerializableTable = IsSerializableView = false;
-            IsXmlElementPackageRecord = IsXmlElementObjectType = IsXmlElementTable = IsXmlElementView = false;
-            IsDataContractPackageRecord = IsDataContractObjectType = IsDataContractTable = IsDataContractView = false;
+            IsGenerateObjectType = IsGenerateTable = IsGenerateView = false;
+            IsPartialPackage = false;
             IsIncludeFilterPrefixInNaming = true;
 
             NamespaceBase = "Schema";
-            NamespacePackage = NamespaceObjectType = NamespaceTable = NamespaceView = NamespaceBaseAdapter = NamespaceBaseEntity = String.Empty;
-            NamespaceDataContract = String.Empty;
+            NamespacePackage = NamespaceObjectType = NamespaceTable = NamespaceView = NamespaceBaseAdapter = String.Empty;
 
-            AncestorClassNamePackage = AncestorClassNamePackageRecord = AncestorClassNameObjectType = AncestorClassNameTable = AncestorClassNameView = String.Empty;
-            FileNamePackage = FileNameObject = FileNameTable = FileNameView = FileNameBaseAdapter = FileNameBaseEntity = String.Empty;
+            AncestorClassNamePackage = String.Empty;
+            FileNamePackage = FileNameObject = FileNameTable = FileNameView = FileNameBaseAdapter = String.Empty;
 
             MaxAssocArraySize = UInt16.MaxValue;
             MaxReturnAndOutArgStringSize = Int16.MaxValue;
+            TargetDtoInterfaceCategoryRecord = CS.DtoInterfaceCategory.MutableSet;
             TargetCSharpVersion = CS.CSharpVersion.FourZero;
             IsDuplicatePackageRecordOriginatingOutsideFilterAndSchema = true;
             IsExcludeObjectsNamesWithSpecificChars = true;
@@ -94,7 +92,6 @@ namespace Odapter {
             LocalVariableNameSuffix = "__";
             IsGenerateDynamicMappingMethodForTypedCursor = false;
             IsConvertOracleNumberToIntegerIfColumnNameIsId = true;
-            IsUseAutoImplementedProperties = true;
 
             TypeTargetForOracleRefCursor = TypeTargetForOracleRefCursorDefault;
             TypeTargetForOracleAssociativeArray = TypeTargetForOracleAssociativeArrayDefault;
@@ -135,6 +132,34 @@ namespace Odapter {
         public string Password { get; set; }
         public bool IsSavePassword { get; set; }
 
+        [XmlIgnore]
+        public CS.DtoInterfaceCategory TargetDtoInterfaceCategoryRecord { get; set; }
+        public string DtoInterfaceCategoryRecord {
+            get => TargetDtoInterfaceCategoryRecord.ToString();
+            set => TargetDtoInterfaceCategoryRecord = CSL.DtoInterfaceCategoryOfStringWithDefault(value, TargetDtoInterfaceCategory);
+        }
+
+        [XmlIgnore]
+        public CS.DtoInterfaceCategory TargetDtoInterfaceCategoryObject { get; set; }
+        public string DtoInterfaceCategoryObject {
+            get => TargetDtoInterfaceCategoryObject.ToString();
+            set => TargetDtoInterfaceCategoryObject = CSL.DtoInterfaceCategoryOfStringWithDefault(value, TargetDtoInterfaceCategory);
+        }
+
+        [XmlIgnore]
+        public CS.DtoInterfaceCategory TargetDtoInterfaceCategoryTable { get; set; }
+        public string DtoInterfaceCategoryTable {
+            get => TargetDtoInterfaceCategoryTable.ToString();
+            set => TargetDtoInterfaceCategoryTable = CSL.DtoInterfaceCategoryOfStringWithDefault(value, TargetDtoInterfaceCategory);
+        }
+
+        [XmlIgnore]
+        public CS.DtoInterfaceCategory TargetDtoInterfaceCategoryView { get; set; }
+        public string DtoInterfaceCategoryView {
+            get => TargetDtoInterfaceCategoryView.ToString();
+            set => TargetDtoInterfaceCategoryView = CSL.DtoInterfaceCategoryOfStringWithDefault(value, TargetDtoInterfaceCategory);
+        }
+
         // .NET/C# version
         [XmlIgnore]
         public CS.CSharpVersion TargetCSharpVersion { get; set; }
@@ -143,7 +168,9 @@ namespace Odapter {
             set => TargetCSharpVersion = CSL.CSharpVersionOfStringWithDefault(value, CS.CSharpVersion.FourZero);
         }
         [XmlIgnore]
-        public bool IsCSharp40 { get => TargetCSharpVersion.Equals(CS.CSharpVersion.FourZero); }
+        public bool IsCSharp90 { get => TargetCSharpVersion.Equals(CS.CSharpVersion.NineZero); }
+        [XmlIgnore]
+        public bool IsRecordDtoInterfaceImmutable { get => TargetDtoInterfaceCategoryRecord.Equals(CS.DtoInterfaceCategory.ImmutableGetInit); }
 
         // namespaces
         private string _namespaceBase;
@@ -157,15 +184,9 @@ namespace Odapter {
         public string NamespaceTable { get; set; }
         public string NamespaceView { get; set; }
         public string NamespaceBaseAdapter { get; set; }
-        public string NamespaceBaseEntity { get; set; }
-        public string NamespaceDataContract { get; set; }
 
         // ancestor class names
         public string AncestorClassNamePackage { get; set; }
-        public string AncestorClassNamePackageRecord { get; set; }
-        public string AncestorClassNameObjectType { get; set; }
-        public string AncestorClassNameTable { get; set; }
-        public string AncestorClassNameView { get; set; }
 
         // file names
         public string FileNamePackage { get; set; }
@@ -173,7 +194,6 @@ namespace Odapter {
         public string FileNameTable { get; set; }
         public string FileNameView { get; set; }
         public string FileNameBaseAdapter { get; set; }
-        public string FileNameBaseEntity { get; set; }
 
         // code to generate
         private string _outputPath;
@@ -183,32 +203,12 @@ namespace Odapter {
         }
 
         public bool IsGeneratePackage { get; set; }
-        public bool IsGenerateRecord { get; set; }
         public bool IsGenerateObjectType { get; set; }
         public bool IsGenerateTable { get; set; }
         public bool IsGenerateView { get; set; }
         public bool IsGenerateBaseAdapter { get; set; } 
-        public bool IsGenerateBaseEntities { get; set; }
-
-        public bool IsDataContractPackageRecord { get; set; }
-        public bool IsDataContractObjectType { get; set; }
-        public bool IsDataContractTable { get; set; }
-        public bool IsDataContractView { get; set; }
-
-        public bool IsXmlElementPackageRecord { get; set; }
-        public bool IsXmlElementObjectType { get; set; }
-        public bool IsXmlElementTable { get; set; }
-        public bool IsXmlElementView { get; set; }
-
-        public bool IsSerializablePackageRecord { get; set; }
-        public bool IsSerializableObjectType { get; set; }
-        public bool IsSerializableTable { get; set; }
-        public bool IsSerializableView { get; set; }
 
         public bool IsPartialPackage { get; set; }
-        public bool IsPartialObjectType { get; set; }
-        public bool IsPartialTable { get; set; }
-        public bool IsPartialView { get; set; }
 
         private bool _isIncludeFilterPrefixInNaming;
         public bool IsIncludeFilterPrefixInNaming {
@@ -297,7 +297,6 @@ namespace Odapter {
         public bool IsExcludeObjectsNamesWithSpecificChars { get; set; }
         public char[] ObjectNameCharsToExclude { get; set; }
         public bool IsGenerateDynamicMappingMethodForTypedCursor { get; set; }
-        public bool IsUseAutoImplementedProperties { get; set; }
         public string LocalVariableNameSuffix { get; set; }
 
         // miscellaneous

@@ -32,6 +32,7 @@ namespace Odapter {
         private string Filter { get; set; }
         private string UserLogin { get; set; }
         private string Password { get; set; }
+        private string OracleVersionBanner { get; set; }
         private bool IsExcludeObjectsNamesWithSpecificChars { get; set; }
         private char[] ObjectNameCharsToExclude { get; set; }
 
@@ -103,6 +104,22 @@ namespace Odapter {
         #endregion
 
         #region Loading Methods
+
+        private void LoadOracleBannerVersion(OracleConnection connection) {
+            try {
+                var banner = connection.Query<string>(
+                        @"SELECT banner FROM v$version WHERE banner LIKE :bannerPrefix || '%' ",
+                        new { bannerPrefix = "Oracle" })
+                    .FirstOrDefault();
+                OracleVersionBanner = banner?.Replace(@"Edition ", String.Empty)?.Replace(@"Release ", String.Empty);
+                DisplayMessage(OracleVersionBanner);
+            } catch (Exception ex) {
+                DisplayMessage(@"Warning: failed to detect Oracle version");
+                DisplayMessage($"Warning: {ex.Message}");
+            }
+            return;
+        }
+
         public void Load() {
             Load<Package, Procedure, PackageRecord, Field, Argument, ObjectType, ObjectTypeAttribute, Table, View, Column>();
         }
@@ -129,6 +146,7 @@ namespace Odapter {
             _views              = new List<IEntity>();
 
             using (OracleConnection connection = (OracleConnection)GetConnection()) {
+                LoadOracleBannerVersion(connection);
                 if (IsLoadPackage) LoadPackages<T_Package, T_Procedure, T_PackageRecord, T_Field, T_Argument>(connection);
                 if (IsLoadObjectType) LoadNonPackagedEntities<T_ObjectType, T_ObjectTypeAttribute>(connection, ref _objectTypes, ref _objectTypeAttributes);
                 if (IsLoadTable) LoadNonPackagedEntities<T_Table, T_Column>(connection, ref _tables, ref _columns);

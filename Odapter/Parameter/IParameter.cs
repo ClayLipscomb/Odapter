@@ -27,59 +27,36 @@ namespace Odapter {
 
         bool IsSavePassword { get; set; }
 
-        string AncestorClassNameObjectType { get; set; }
         string AncestorClassNamePackage { get; set; }
-        string AncestorClassNamePackageRecord { get; set; }
-        string AncestorClassNameTable { get; set; }
-        string AncestorClassNameView { get; set; }
 
+        CS.DtoInterfaceCategory TargetDtoInterfaceCategoryRecord { get; set; }
+        CS.DtoInterfaceCategory TargetDtoInterfaceCategoryObject { get; set; }
+        CS.DtoInterfaceCategory TargetDtoInterfaceCategoryTable { get; set; }
+        CS.DtoInterfaceCategory TargetDtoInterfaceCategoryView { get; set; }
         CS.CSharpVersion TargetCSharpVersion { get; set; }
-        bool IsCSharp40 { get; }
+        bool IsCSharp90 { get; }
 
         bool IsDeployResources { get; set; }
 
-        bool IsDataContractObjectType { get; set; }
-        bool IsDataContractPackageRecord { get; set; }
-        bool IsDataContractTable { get; set; }
-        bool IsDataContractView { get; set; }
-
-        bool IsPartialObjectType { get; set; }
         bool IsPartialPackage { get; set; }
-        bool IsPartialTable { get; set; }
-        bool IsPartialView { get; set; }
 
-        bool IsSerializableObjectType { get; set; }
-        bool IsSerializablePackageRecord { get; set; }
-        bool IsSerializableTable { get; set; }
-        bool IsSerializableView { get; set; }
-
-        bool IsXmlElementObjectType { get; set; }
-        bool IsXmlElementPackageRecord { get; set; }
-        bool IsXmlElementTable { get; set; }
-        bool IsXmlElementView { get; set; }
 
         string NamespaceBase { get; set; }
-        string NamespaceDataContract { get; set; }
         string NamespaceObjectType { get; set; }
         string NamespacePackage { get; set; }
-        //string NamespaceSchema { get; set; }
         string NamespaceTable { get; set; }
         string NamespaceView { get; set; }
         string NamespaceBaseAdapter { get; set; }
-        string NamespaceBaseEntity { get; set; }
 
         string FileNamePackage { get; set; }
         string FileNameObject { get; set; }
         string FileNameTable { get; set; }
         string FileNameView { get; set; }
         string FileNameBaseAdapter { get; set; }
-        string FileNameBaseEntity { get; set; }
-
 
         bool IsDuplicatePackageRecordOriginatingOutsideFilterAndSchema { get; set; }
         bool IsGenerateDynamicMappingMethodForTypedCursor { get; set; }
         bool IsIncludeFilterPrefixInNaming { get; set; }
-        bool IsUseAutoImplementedProperties { get; set; }
         string LocalVariableNameSuffix { get; set; }
         int MaxAssocArraySize { get; set; }
         short MaxReturnAndOutArgStringSize { get; set; }
